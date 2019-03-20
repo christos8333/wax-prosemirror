@@ -1,0 +1,32 @@
+{
+  "name": "wax-prosemirror-monorepo",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Collaborative Knowledge Foundation",
+  "description":
+    "Monorepo for wax-prosemirror, its components and its integrations",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.coko.foundation:wax/wax-prosemirror.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean": "lerna clean -f --yes && rm -rf node_modules",
+    "reset": "yarn run clean && yarn",
+    "editoria": "cd editors/editoria && yarn start",
+    "micropubs": "cd editors/micropubs && yarn start"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^2.6.0"
+  },
+  "workspaces": [
+    "wax-prosemirror-core/*",
+    "wax-prosemirror-schema/*",
+    "wax-prosemirror-components/*",
+    "wax-prosemirror-themes/*",
+    "wax-prosemirror-utilities/*"
+    "editors/*",
+  ]
+}

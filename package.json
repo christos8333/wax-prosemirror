@@ -26,7 +26,7 @@
     "wax-prosemirror-schema/*",
     "wax-prosemirror-components/*",
     "wax-prosemirror-themes/*",
-    "wax-prosemirror-utilities/*"
-    "editors/*",
+    "wax-prosemirror-utilities/*",
+    "editors/*"
   ]
 }

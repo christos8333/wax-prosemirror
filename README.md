@@ -8,7 +8,9 @@ yarn default should bring the default editor
   
 Commands: `yarn` , `yarn clean`, `yarn reset`  
 
-Create a new project in Editors. create-react-app can be used to setup a new project
+Create a new project in Editors. 
+
+`create-react-app` can be used to setup a new project
 
 `cd editors`
   
@@ -67,3 +69,5 @@ Inside "my-editor" run `yarn start`
   and run `yarn myeditor`
   
 Now you can add the dependencies to build your editor.
+
+**TODO Create a script to build the default-editor inside your project**

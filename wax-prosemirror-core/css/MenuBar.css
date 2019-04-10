@@ -1,0 +1,29 @@
+.main-toolbar {
+  position: fixed;
+  display: flex;
+  margin: 0;
+  z-index: 999;
+}
+
+button {
+  background: #fff;
+  border: none;
+  font-size: inherit;
+  cursor: pointer;
+  color: #777;
+  border-radius: 0;
+  padding: 5px 10px;
+}
+
+button:hover {
+  color: #000;
+  background: #f6f6f6;
+}
+
+button.active {
+  color: #000;
+}
+
+button:disabled {
+  color: #ccc;
+}

@@ -1,19 +1,19 @@
-.wax-e-default {
+.wax-t-default {
   background: #fff;
 }
 
-.wax-e-default hr {
+.wax-t-default hr {
   padding: 2px 10px;
   border: none;
   margin: 1em 0;
 }
 
-.wax-e-default .epigraph-poetry {
+.wax-t-default .epigraph-poetry {
   border-left: 2px solid #e0e4e4;
   padding-left: 30px;
 }
 
-.wax-e-default hr:after {
+.wax-t-default hr:after {
   content: "";
   display: block;
   height: 1px;
@@ -21,33 +21,33 @@
   line-height: 2px;
 }
 
-.wax-e-default ul,
-.wax-e-default ol {
+.wax-t-default ul,
+.wax-t-default ol {
   padding-left: 30px;
 }
 
-.wax-e-default blockquote {
+.wax-t-default blockquote {
   padding-left: 1em;
   border-left: 3px solid #eee;
   margin-left: 0;
   margin-right: 0;
 }
 
-.wax-e-default img {
+.wax-t-default img {
   cursor: default;
 }
 
-.wax-e-default table {
+.wax-t-default table {
   border-spacing: 0px;
 }
 
-.wax-e-default th,
-.wax-e-default td {
+.wax-t-default th,
+.wax-t-default td {
   border: 1px solid #eee;
   padding: 2px 5px;
 }
 
-.wax-e-default sup,
-.wax-e-default sub {
+.wax-t-default sup,
+.wax-t-default sub {
   line-height: 0;
 }

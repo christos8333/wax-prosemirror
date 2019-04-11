@@ -20,7 +20,6 @@ class Editor extends Component {
 
   createEditorView = node => {
     const { autoFocus, readonly, onBlur, debug } = this.props;
-    console.log(this.props);
     if (!this.view) {
       this.view = new EditorView(node, {
         editable: () => !readonly,
@@ -109,9 +108,11 @@ class Editor extends Component {
 
   render() {
     const { theme } = this.props;
-    let WaxClasses = `Wax`;
-    if (theme) WaxClasses = `Wax wax-e-${theme}`;
-    const editor = <div ref={this.createEditorView} className={WaxClasses} />;
+    const WaxTheme = theme
+      ? `wax-surface-container wax-t-${theme}`
+      : "wax-surface-container";
+
+    const editor = <div ref={this.createEditorView} className={WaxTheme} />;
     return this.props.renderLayout({
       state: this.state.state,
       dispatch: this.dispatchTransaction,

@@ -76,30 +76,33 @@ class Wax extends Component {
       readonly,
       value,
       onBlur,
+      layout,
       theme,
       debug
     } = this.props;
     const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
-      <React.Fragment>
-        <div className="main-editor">{editor}</div>
-      </React.Fragment>
+      <React.Fragment>{editor}</React.Fragment>
     );
 
     const WaxRender = renderLayout ? renderLayout : defaultRender;
-
+    const WaxLayout = layout
+      ? `wax-container wax-l-${layout}`
+      : "wax-container";
     return (
-      <Editor
-        autoFocus={autoFocus}
-        readonly={readonly}
-        options={this.WaxOptions}
-        placeholder={placeholder}
-        fileUpload={fileUpload}
-        renderLayout={WaxRender}
-        theme={theme}
-        onBlur={onBlur || (value => true)}
-        onChange={this.onChange || (value => true)}
-        debug={debug}
-      />
+      <div className={WaxLayout}>
+        <Editor
+          autoFocus={autoFocus}
+          readonly={readonly}
+          options={this.WaxOptions}
+          placeholder={placeholder}
+          fileUpload={fileUpload}
+          renderLayout={WaxRender}
+          theme={theme}
+          onBlur={onBlur || (value => true)}
+          onChange={this.onChange || (value => true)}
+          debug={debug}
+        />
+      </div>
     );
   }
 }

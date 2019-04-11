@@ -43,6 +43,7 @@ class Wax extends Component {
         ? options.keys
         : new WaxKeys({ schema: schema, shortCuts: {} });
 
+    const editorContent = value ? value : "";
     // TO DO Find a way to start plugins with options
     plugins.push(...[placeholder({ content: this.props.placeholder }), keys]);
 
@@ -55,7 +56,7 @@ class Wax extends Component {
 
     const parse = parser(schema);
     const serialize = serializer(schema);
-    this.WaxOptions.doc = parse(value);
+    this.WaxOptions.doc = parse(editorContent);
 
     this.onChange = debounce(
       value => {
@@ -73,6 +74,7 @@ class Wax extends Component {
       renderLayout,
       fileUpload,
       readonly,
+      value,
       onBlur,
       theme,
       debug

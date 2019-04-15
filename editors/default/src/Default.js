@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Wax } from "wax-prosemirror-core";
-import "./default.css";
 
 class Default extends Component {
   render() {

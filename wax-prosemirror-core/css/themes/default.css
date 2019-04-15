@@ -51,3 +51,20 @@
 .wax-t-default sub {
   line-height: 0;
 }
+
+.wax-t-default .ProseMirror:focus {
+  outline: none;
+}
+
+/* placeholder */
+.wax-t-default .empty-node::before {
+  color: #aaa;
+  float: left;
+  font-style: italic;
+  pointer-events: none;
+  height: 0;
+}
+
+.wax-t-default p.empty-node:first-child::before {
+  content: attr(data-content);
+}

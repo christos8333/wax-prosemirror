@@ -4,7 +4,6 @@ import { defaultSchema } from "wax-prosemirror-schema";
 
 class Default extends Component {
   render() {
-    console.log(defaultSchema);
     return (
       <Wax
         placeholder="Type Something..."

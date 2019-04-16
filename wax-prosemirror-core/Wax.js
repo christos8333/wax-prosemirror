@@ -35,9 +35,9 @@ const serializer = schema => {
 class Wax extends Component {
   componentWillMount() {
     const { value, onChange, options } = this.props;
+    const { schema } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
-    const schema = WaxSchema();
     const keys =
       options && options.keys
         ? options.keys

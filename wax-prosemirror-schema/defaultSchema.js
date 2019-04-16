@@ -1,17 +1,23 @@
 const pDOM = ["p", 0];
 const defaultSchema = {
-  doc: {
-    content: "block+"
-  },
+  nodes: {
+    doc: {
+      content: "block+"
+    },
+    text: {
+      group: "inline"
+    },
 
-  paragraph: {
-    content: "inline*",
-    group: "block",
-    parseDOM: [{ tag: "p" }],
-    toDOM() {
-      return pDOM;
+    paragraph: {
+      content: "inline*",
+      group: "block",
+      parseDOM: [{ tag: "p" }],
+      toDOM() {
+        return pDOM;
+      }
     }
-  }
+  },
+  marks: {}
 };
 
 export default defaultSchema;

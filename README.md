@@ -4,23 +4,33 @@ Clone the repo
   
 yarn with node > 9.11.2
   
-yarn default should bring the default editor
+Running `yarn default` should bring the default editor
   
-Commands: `yarn` , `yarn clean`, `yarn reset`  
+Scripts: `yarn` , `yarn clean`, `yarn reset`  
 
-Create a new project in Editors. 
+Create a new project in Editors.
 
-`create-react-app` can be used to setup a new project
+**CREATE-REACT-APP** can be used to setup a new project
 
-`cd editors`
+A simple `sh` script exists in the root folder which will
+create a default editor by running `./create.sh your-editor-name`.
+
+Alternatively:
+
+
+*  `cd editors`
   
-`yarn create react-app my-editor`
+
+*  `yarn create react-app my-editor`
   
-`npm install react-app-rewired --save-dev`
+
+*  `npm install react-app-rewired --save-dev` (to let you overide Webpack's config)
   
-Create a `config-overrides.js` file in the root of "my-editor"
+
+*  Create a `config-overrides.js` file in the root of "my-editor"
   
-add the following code
+
+*  add the following code
 
 ```
 module.exports = function override(config, env) {
@@ -50,7 +60,8 @@ module.exports = function override(config, env) {
   return config;
 };
 ```
-finally edit the package.json file and replace scripts with the following
+
+*  finally edit the package.json file and replace scripts with the following
 
 ```
 "scripts": {
@@ -69,5 +80,3 @@ Inside "my-editor" run `yarn start`
   and run `yarn myeditor`
   
 Now you can add the dependencies to build your editor.
-
-**TODO Create a script to build the default-editor inside your project**

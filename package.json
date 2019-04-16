@@ -39,6 +39,7 @@
     "wax-prosemirror-components",
     "wax-prosemirror-themes",
     "wax-prosemirror-utilities",
+    "wax-prosemirror-layouts",
     "editors/*"
   ]
 }

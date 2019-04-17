@@ -1,1 +1,0 @@
-Editoria Editor's readme

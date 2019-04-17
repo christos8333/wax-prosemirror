@@ -12,21 +12,36 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean": "lerna clean -f --yes && rm -rf node_modules",
-    "reset": "yarn run clean && yarn",
-    "editoria": "cd editors/editoria && yarn start",
-    "micropubs": "cd editors/micropubs && yarn start"
+    "bootstrap": "lerna bootstrap --no-ci --hoist",
+    "clean":
+      "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
+    "clean:artifacts": "lerna run clean --parallel",
+    "clean:packages": "lerna clean --yes",
+    "clean:root": "rm -rf node_modules",
+    "reset": "yarn clean && yarn",
+    "build": "lerna run build --concurrency=1 --stream",
+    "aleksis": "cd editors/aleksis && yarn start",
+    "default": "cd editors/default && yarn start"
   },
   "dependencies": {},
   "devDependencies": {
-    "lerna": "^2.6.0"
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "css-loader": "^0.28.11",
+    "lerna": "^2.6.0",
+    "style-loader": "^0.23.1",
+    "stylelint": "^8.2.0",
+    "svg-inline-loader": "^0.8.0"
   },
   "workspaces": [
-    "wax-prosemirror-core/*",
-    "wax-prosemirror-schema/*",
-    "wax-prosemirror-components/*",
-    "wax-prosemirror-themes/*",
-    "wax-prosemirror-utilities/*",
+    "wax-prosemirror-core",
+    "wax-prosemirror-schema",
+    "wax-prosemirror-components",
+    "wax-prosemirror-themes",
+    "wax-prosemirror-utilities",
+    "wax-prosemirror-layouts",
+    "wax-prosemirror-plugins",   
     "editors/*"
   ]
 }

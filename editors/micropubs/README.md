@@ -1,1 +1,0 @@
-Micropubs editor's readme

@@ -8,6 +8,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "styled-components": "^3.2.5",
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.4",
+    "prosemirror-commands": "^1.0.1",
+    "prosemirror-dropcursor": "^1.0.0",
+    "prosemirror-gapcursor": "^1.0.0",
+    "prosemirror-history": "^1.0.0",
+    "prosemirror-inputrules": "^1.0.0",
+    "prosemirror-keymap": "^1.0.0",
+    "prosemirror-model": "^1.0.0",
+    "prosemirror-schema-list": "^1.0.0",
+    "prosemirror-state": "^1.0.1",
+    "prosemirror-tables": "^0.7.5",
+    "prosemirror-view": "^1.0.0",
+    "prosemirror-dev-tools": "^2.1.1"
+  },
   "devDependencies": {}
 }

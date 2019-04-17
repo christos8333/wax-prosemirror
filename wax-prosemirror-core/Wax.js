@@ -4,7 +4,7 @@ import debounce from "lodash/debounce";
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 
 import Editor from "./Editor";
-import plugins from "./config/plugins";
+import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
 
 import WaxKeys from "./config/classes/WaxKeys";
@@ -32,7 +32,7 @@ const serializer = schema => {
 class Wax extends Component {
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema } = options;
+    const { schema, plugins } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
     const keys =
@@ -42,11 +42,13 @@ class Wax extends Component {
 
     const editorContent = value ? value : "";
     // TO DO Find a way to start plugins with options
-    plugins.push(...[placeholder({ content: this.props.placeholder }), keys]);
+    defaultPlugins.push(
+      ...[placeholder({ content: this.props.placeholder }), keys]
+    );
 
     this.WaxOptions = {
       schema,
-      plugins
+      plugins: defaultPlugins
     };
 
     const parse = parser(schema);

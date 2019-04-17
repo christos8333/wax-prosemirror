@@ -24,16 +24,14 @@
     "prosemirror-inputrules": "^1.0.0",
     "prosemirror-keymap": "^1.0.0",
     "prosemirror-model": "^1.0.0",
-    "prosemirror-schema-basic": "^1.0.0",
     "prosemirror-schema-list": "^1.0.0",
     "prosemirror-state": "^1.0.1",
     "prosemirror-tables": "^0.7.5",
     "prosemirror-view": "^1.0.0",
     "uuid": "^3.3.2",
     "react-dropdown": "^1.6.2",
-    "codemirror": "5.40.2"
-  },
-  "devDependencies": {
+    "codemirror": "5.40.2",
     "prosemirror-dev-tools": "^2.1.1"
-  }
+  },
+  "devDependencies": {}
 }

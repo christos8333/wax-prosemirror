@@ -91,7 +91,6 @@ class WaxKeys {
   }
 
   extendKeys() {
-    // TODO needed?
     const keys = this.getKeys();
   }
 }

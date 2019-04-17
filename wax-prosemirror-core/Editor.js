@@ -7,8 +7,6 @@ import { EditorView } from "prosemirror-view";
 import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
 import "./css/index.css";
-import CodeBlockView from "./config/classes/CodeBlockView";
-import FootnoteView from "./config/classes/FootnoteView";
 
 class Editor extends Component {
   constructor(props) {
@@ -32,14 +30,6 @@ class Editor extends Component {
                 onBlur(view.state.doc.content);
               }
             : null
-        },
-        nodeViews: {
-          codeMirrorNode(node, view, getPos) {
-            return new CodeBlockView(node, view, getPos);
-          },
-          footnote(node, view, getPos) {
-            return new FootnoteView(node, view, getPos);
-          }
         }
       });
 

@@ -7,9 +7,9 @@ import {
   ellipsis
 } from "prosemirror-inputrules";
 
-import WaxSchema from "./classes/WaxSchema";
+// import WaxSchema from "./classes/WaxSchema";
 
-const schema = WaxSchema();
+// const schema = WaxSchema();
 
 export default inputRules({
   rules: [

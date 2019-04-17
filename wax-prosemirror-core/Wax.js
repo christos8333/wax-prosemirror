@@ -4,7 +4,6 @@ import debounce from "lodash/debounce";
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 
 import Editor from "./Editor";
-import WaxSchema from "./config/classes/WaxSchema";
 import plugins from "./config/plugins";
 import placeholder from "./config/plugins/placeholder";
 

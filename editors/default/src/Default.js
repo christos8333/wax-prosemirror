@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import { Schema } from "prosemirror-model";
-import { Wax } from "wax-prosemirror-core";
+import { Wax, createSchema } from "wax-prosemirror-core";
 import { defaultSchema } from "wax-prosemirror-schema";
 
-const { nodes, marks } = defaultSchema;
+const plugins = [];
+const keys = {};
 
 const options = {
-  schema: new Schema({ nodes, marks })
+  schema: new createSchema(defaultSchema)
 };
 
 class Default extends Component {
   render() {
-    console.log(options.schema);
     return (
       <Wax
-        placeholder="Type Something..."
         options={options}
         autoFocus
+        placeholder="Type Something..."
         theme="default"
         layout="default"
         debug

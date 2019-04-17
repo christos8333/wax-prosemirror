@@ -20,18 +20,19 @@
     "clean:root": "rm -rf node_modules",
     "reset": "yarn clean && yarn",
     "build": "lerna run build --concurrency=1 --stream",
+    "aleksis": "cd editors/aleksis && yarn start",
     "default": "cd editors/default && yarn start"
   },
   "dependencies": {},
   "devDependencies": {
-    "lerna": "^2.6.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
     "css-loader": "^0.28.11",
+    "lerna": "^2.6.0",
     "style-loader": "^0.23.1",
-    "svg-inline-loader": "^0.8.0",
-    "stylelint": "^8.2.0"
+    "stylelint": "^8.2.0",
+    "svg-inline-loader": "^0.8.0"
   },
   "workspaces": [
     "wax-prosemirror-core",

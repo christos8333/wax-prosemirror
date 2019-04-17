@@ -16,9 +16,9 @@ import { undo, redo } from "prosemirror-history";
 import { TextSelection } from "prosemirror-state";
 import { keymap } from "prosemirror-keymap";
 
-import WaxSchema from "./WaxSchema";
+// import WaxSchema from "./WaxSchema";
 
-const schema = WaxSchema();
+// const schema = WaxSchema();
 
 class CodeBlockView {
   constructor(node, view, getPos) {

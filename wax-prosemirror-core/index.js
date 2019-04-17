@@ -1,6 +1,6 @@
 export { default as Wax } from "./Wax";
 
-export { default as WaxSchema } from "./config/classes/WaxSchema";
+export { default as createSchema } from "./config/classes/createSchema";
 export { default as plugins } from "./config/plugins";
 
 //Components

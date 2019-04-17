@@ -1,11 +1,23 @@
-const pDOM = ["p", 0];
+const pDOM = ["p", 0],
+  brDOM = ["br"];
 const defaultSchema = {
   nodes: {
     doc: {
       content: "block+"
     },
+
     text: {
       group: "inline"
+    },
+
+    hard_break: {
+      inline: true,
+      group: "inline",
+      selectable: false,
+      parseDOM: [{ tag: "br" }],
+      toDOM() {
+        return brDOM;
+      }
     },
 
     paragraph: {

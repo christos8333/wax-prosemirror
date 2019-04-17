@@ -7,7 +7,7 @@ import {
   liftListItem,
   sinkListItem
 } from "prosemirror-schema-list";
-// import { goToNextCell } from "prosemirror-tables";
+
 import {
   baseKeymap,
   toggleMark,
@@ -20,8 +20,6 @@ import {
   lift,
   selectParentNode
 } from "prosemirror-commands";
-
-import { goToNextCell } from "prosemirror-tables";
 
 class WaxKeys {
   constructor(config) {
@@ -88,9 +86,7 @@ class WaxKeys {
       "Shift-Ctrl-4": setBlockType(this.schema.nodes.heading, { level: 4 }),
       "Shift-Ctrl-5": setBlockType(this.schema.nodes.heading, { level: 5 }),
       "Shift-Ctrl-6": setBlockType(this.schema.nodes.heading, { level: 6 }),
-      "Mod-_": this.insertRule,
-      Tab: goToNextCell(1),
-      "Shift-Tab": goToNextCell(-1)
+      "Mod-_": this.insertRule
     };
   }
 

@@ -7,8 +7,6 @@ import Editor from "./Editor";
 import plugins from "./config/plugins";
 import placeholder from "./config/plugins/placeholder";
 
-import MainMenuBar from "./components/menu/MainMenuBar";
-import defaultMenuItems from "./config/DefaultMenuItems";
 import WaxKeys from "./config/classes/WaxKeys";
 
 const parser = schema => {
@@ -46,12 +44,10 @@ class Wax extends Component {
     // TO DO Find a way to start plugins with options
     plugins.push(...[placeholder({ content: this.props.placeholder }), keys]);
 
-    this.WaxOptions = options
-      ? options
-      : {
-          plugins,
-          schema
-        };
+    this.WaxOptions = {
+      schema,
+      plugins
+    };
 
     const parse = parser(schema);
     const serialize = serializer(schema);

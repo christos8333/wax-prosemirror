@@ -6,7 +6,6 @@ import { EditorView } from "prosemirror-view";
 
 import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
-import "./css/index.css";
 
 class Editor extends Component {
   constructor(props) {

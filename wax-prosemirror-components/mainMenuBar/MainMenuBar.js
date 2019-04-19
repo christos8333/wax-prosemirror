@@ -1,7 +1,7 @@
 import React from "react";
 import map from "lodash/map";
-import classes from "../../css/MenuBar.css";
-import menu from "../../config/menu";
+import classes from "./MenuBar.css";
+import menu from "./menu";
 
 const filtered = (menu, menuItems) =>
   Object.keys(menu)

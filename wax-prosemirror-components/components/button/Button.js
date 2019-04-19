@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import classnames from "classnames";
-import classes from "../../css/MenuBar.css";
+import classes from "./button.css";
 
 const ButtonStyled = styled.button`
   display: ${props => (props.select ? "inline" : "none")};

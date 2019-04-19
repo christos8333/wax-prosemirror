@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Wax, createSchema } from "wax-prosemirror-core";
 import { defaultSchema } from "wax-prosemirror-schema";
+import "wax-prosemirror-layouts/defaultLayout.css";
+import "wax-prosemirror-themes/defaultTheme.css";
 
 const plugins = [];
 const keys = {};

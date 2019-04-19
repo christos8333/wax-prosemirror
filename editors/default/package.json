@@ -7,7 +7,10 @@
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
     "wax-prosemirror-core": "0.0.1",
-    "wax-prosemirror-schema": "0.0.1"
+    "wax-prosemirror-schema": "0.0.1",
+    "wax-prosemirror-themes": "0.0.1",
+    "wax-prosemirror-layouts": "0.0.1",
+    "wax-prosemirror-components": "0.0.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

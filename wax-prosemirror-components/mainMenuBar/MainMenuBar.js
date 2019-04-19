@@ -1,7 +1,7 @@
 import React from "react";
-import map from "lodash/map";
-import classes from "../../css/MenuBar.css";
-import menu from "../../config/menu";
+import { forEach, map } from "lodash";
+import classes from "./MenuBar.css";
+import menu from "./menu";
 
 const filtered = (menu, menuItems) =>
   Object.keys(menu)
@@ -11,8 +11,18 @@ const filtered = (menu, menuItems) =>
       return obj;
     }, {});
 
+const setMenuItems = (menu, menuItems) => {
+  let items = menuItems;
+  if (menuItems.length === 0) {
+    forEach(menu, (key, index) => {
+      items.push(index);
+    });
+  }
+  return filtered(menu, items);
+};
+
 const MainMenuBar = ({
-  menuItems,
+  menuItems = [],
   children,
   state,
   dispatch,
@@ -23,7 +33,7 @@ const MainMenuBar = ({
     {children && <span className={classes.group}>{children}</span>}
     {
       <span className={classes.group}>
-        {map(filtered(menu, menuItems), item =>
+        {map(setMenuItems(menu, menuItems), item =>
           item.menu({ state, dispatch, item, fileUpload })
         )}
       </span>

@@ -1,10 +1,3 @@
-.main-toolbar {
-  position: fixed;
-  display: flex;
-  margin: 0;
-  z-index: 999;
-}
-
 button {
   background: #fff;
   border: none;

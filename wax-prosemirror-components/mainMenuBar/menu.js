@@ -15,12 +15,12 @@ import { addColumnBefore } from "prosemirror-tables";
 import { redo, undo } from "prosemirror-history";
 import { wrapInList } from "prosemirror-schema-list";
 
-import icons from "./icons";
+import icons from "../icons/icons";
 //Components
-import Button from "../components/menu/Button";
-import TableDropDown from "../components/menu/TableDropDown";
-import ImageUpload from "../components/menu/ImageUpload";
-import HeadingsDropDown from "../components/menu/HeadingsDropDown";
+import Button from "../components/button/Button";
+import TableDropDown from "../components/TableDropDown";
+import ImageUpload from "../components/ImageUpload";
+import HeadingsDropDown from "../components/HeadingsDropDown";
 
 const markActive = type => state => {
   const { from, $from, to, empty } = state.selection;
@@ -90,94 +90,7 @@ export default {
     select: state => true,
     menu: props => <HeadingsDropDown key={uuid()} {...props} />
   },
-  heading1: {
-    title: "Change to Title",
-    content: "Title",
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.heading, { level: 1 })(
-        state,
-        dispatch
-      );
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  subtitle: {
-    title: "Change to Subtilte",
-    content: "Subtilte",
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.subtitle)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  epigraph: {
-    title: "Change to Epigraph",
-    content: "Epigraph",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.epigraph)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  heading2: {
-    title: "Change to heading level 1",
-    content: "Heading 1",
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.heading, { level: 2 })(
-        state,
-        dispatch
-      );
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  heading3: {
-    title: "Change to heading level 2",
-    content: "Heading 2",
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.heading, { level: 3 })(
-        state,
-        dispatch
-      );
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  heading4: {
-    title: "Change to heading level 3",
-    content: "Heading 3",
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.heading, { level: 3 })(
-        state,
-        dispatch
-      );
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  heading5: {
-    title: "Change to heading level 4",
-    content: "Heading 4",
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.heading, { level: 4 })(
-        state,
-        dispatch
-      );
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
+
   plain: {
     title: "Change to General Text",
     // content: icons.paragraph,
@@ -191,86 +104,7 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  imageTitle: {
-    title: "Change to Image Title",
-    // content: icons.paragraph,
-    content: "Image Title",
-    // active: blockActive(schema.nodes.paragraph),
-    // enable: setBlockType(schema.nodes.paragraph),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.figureTitle)(state, dispatch);
-    },
 
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  imageCaption: {
-    title: "Change to Image Caption",
-    // content: icons.paragraph,
-    content: "Image Caption",
-    // active: blockActive(schema.nodes.paragraph),
-    // enable: setBlockType(schema.nodes.paragraph),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.figureCaption)(state, dispatch);
-    },
-
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  quote: {
-    title: "Change to Quote",
-    content: "Quote",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.quote)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  special: {
-    title: "Change to Special",
-    content: "Special",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.special)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  important: {
-    title: "Change to Important",
-    content: "Important",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.important)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  recommended: {
-    title: "Change to Recommended",
-    content: "Recommended",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.recommended)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  caution: {
-    title: "Change to Caution",
-    content: "Caution",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.caution)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  tip: {
-    title: "Change to tip",
-    content: "Tip",
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.tip)(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
   em: {
     title: "Toggle emphasis",
     content: icons.em,
@@ -396,17 +230,7 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  footnote: {
-    title: "Insert footnote",
-    content: icons.footnote,
-    // enable: canInsert(schema.nodes.footnote),
-    select: state => true,
-    run: (state, dispatch) => {
-      const footnote = state.config.schema.nodes.footnote.create();
-      dispatch(state.tr.replaceSelectionWith(footnote));
-    },
-    menu: props => <Button key={uuid()} {...props} />
-  },
+
   blockquote: {
     title: "Wrap in block quote",
     content: icons.blockquote,
@@ -464,55 +288,5 @@ export default {
     select: state => true,
     run: option => true,
     menu: props => <ImageUpload key={uuid()} {...props} />
-  },
-
-  table: {
-    title: "Insert table",
-    content: icons.table,
-    // enable: canInsert(schema.nodes.table),
-    run: (state, dispatch) => {
-      // const { from } = state.selection
-      let rowCount = window && window.prompt("How many rows?", 2);
-      let colCount = window && window.prompt("How many columns?", 2);
-
-      const cells = [];
-      while (colCount--) {
-        cells.push(state.config.schema.nodes.table_cell.createAndFill());
-      }
-
-      const rows = [];
-      while (rowCount--) {
-        rows.push(
-          state.config.schema.nodes.table_row.createAndFill(null, cells)
-        );
-      }
-
-      const table = state.config.schema.nodes.table.createAndFill(null, rows);
-      dispatch(state.tr.replaceSelectionWith(table));
-
-      // const tr = state.tr.replaceSelectionWith(table)
-      // tr.setSelection(Selection.near(tr.doc.resolve(from)))
-      // dispatch(tr.scrollIntoView())
-      // view.focus()
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  tableDropDownOptions: {
-    content: "table",
-    run: option => true,
-    title: "Select Options",
-    select: state => addColumnBefore(state),
-    menu: props => <TableDropDown key={uuid()} {...props} />
-  },
-  selectParentNode: {
-    title: "Toggle strong",
-    content: "FindP",
-    // active: markActive(schema.marks.strong),
-    run(state, dispatch) {
-      selectParentNode(state, dispatch);
-    },
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
   }
 };

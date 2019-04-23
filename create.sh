@@ -19,8 +19,6 @@ rm -rf src/App.test.js
 rm -rf src/logo.svg
 sed -i "s/default/$1/" package.json
 cd ../../
-yarn reset
-wait
 sed -i '/"build": "lerna run build --concurrency=1 --stream",/a "'$1'": "cd editors/'$1' && yarn start",' package.json
 yarn $1
 fi

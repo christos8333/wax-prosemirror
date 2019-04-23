@@ -1,1 +1,1 @@
-export { default as MainMenuBar } from "./mainMenuBar/MainMenuBar";
+export { default as MainMenuBar } from "./src/mainMenuBar/MainMenuBar";

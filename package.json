@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "author": "Collaborative Knowledge Foundation",
-  "description":
-    "Monorepo for wax-prosemirror, its components and its integrations",
+  "description": "Monorepo for wax-prosemirror, its components and its integrations",
   "repository": {
     "type": "git",
     "url": "git@gitlab.coko.foundation:wax/wax-prosemirror.git"
@@ -13,14 +12,12 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap --no-ci --hoist",
-    "clean":
-      "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
+    "clean": "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rm -rf node_modules",
     "reset": "yarn clean && yarn",
     "build": "lerna run build --concurrency=1 --stream",
-    "aleksis": "cd editors/aleksis && yarn start",
     "default": "cd editors/default && yarn start"
   },
   "dependencies": {},
@@ -30,6 +27,7 @@
     "@babel/preset-react": "^7.0.0",
     "css-loader": "^0.28.11",
     "lerna": "^2.6.0",
+    "react-app-rewired": "^2.1.2",
     "style-loader": "^0.23.1",
     "stylelint": "^8.2.0",
     "svg-inline-loader": "^0.8.0"
@@ -41,7 +39,7 @@
     "wax-prosemirror-themes",
     "wax-prosemirror-utilities",
     "wax-prosemirror-layouts",
-    "wax-prosemirror-plugins",   
+    "wax-prosemirror-plugins",
     "editors/*"
   ]
 }

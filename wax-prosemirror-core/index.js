@@ -1,2 +1,2 @@
-export { default as Wax } from "./Wax";
-export { default as createSchema } from "./config/classes/createSchema";
+export { default as Wax } from "./src/Wax";
+export { default as createSchema } from "./src/config/classes/createSchema";

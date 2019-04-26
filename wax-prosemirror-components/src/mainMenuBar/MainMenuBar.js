@@ -29,15 +29,18 @@ const MainMenuBar = ({
   className,
   fileUpload
 }) => (
-  <div className={className}>
-    {children && <span className={classes.group}>{children}</span>}
-    {
-      <span className={classes.group}>
-        {map(setMenuItems(menu, menuItems), item =>
-          item.menu({ state, dispatch, item, fileUpload })
-        )}
-      </span>
-    }
+  <div className={`${className} main-menu-container`}>
+    <div className="main-menu-inner">
+      <div className="main-menu">
+        {
+          <span className={classes.group}>
+            {map(setMenuItems(menu, menuItems), item =>
+              item.menu({ state, dispatch, item, fileUpload })
+            )}
+          </span>
+        }
+      </div>
+    </div>
   </div>
 );
 

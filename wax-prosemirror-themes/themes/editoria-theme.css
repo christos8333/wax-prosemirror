@@ -1,16 +1,7 @@
-.wax-t-editoria {
-  background: #fff;
-}
-
 .wax-t-editoria hr {
   padding: 2px 10px;
   border: none;
   margin: 1em 0;
-}
-
-.wax-t-editoria .epigraph-poetry {
-  border-left: 2px solid #e0e4e4;
-  padding-left: 30px;
 }
 
 .wax-t-editoria hr:after {

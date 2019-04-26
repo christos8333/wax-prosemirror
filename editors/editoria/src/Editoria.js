@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled, { createGlobalStyle } from "styled-components";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 import { MainMenuBar } from "wax-prosemirror-components";
@@ -12,23 +13,40 @@ const options = {
   schema: new CreateSchema(EditoriaSchema)
 };
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`;
+const PageWrapper = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+`;
+
 class Editoria extends Component {
   render() {
     return (
-      <Wax
-        options={options}
-        autoFocus
-        placeholder="Type Something..."
-        theme="editoria"
-        layout="editoria"
-        debug
-        renderLayout={({ editor, ...props }) => (
-          <React.Fragment>
-            <MainMenuBar {...props} />
-            <div>{editor}</div>
-          </React.Fragment>
-        )}
-      />
+      <React.Fragment>
+        <GlobalStyle />
+        <PageWrapper>
+          <Wax
+            options={options}
+            autoFocus
+            placeholder="Type Something..."
+            theme="editoria"
+            layout="editoria"
+            debug
+            renderLayout={({ editor, ...props }) => (
+              <React.Fragment>
+                <MainMenuBar {...props} />
+                <div className="wax-surface-scroll">{editor}</div>
+              </React.Fragment>
+            )}
+          />
+        </PageWrapper>
+      </React.Fragment>
     );
   }
 }

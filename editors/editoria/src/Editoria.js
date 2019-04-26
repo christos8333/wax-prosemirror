@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
-import { DefaultSchema } from "wax-prosemirror-schema";
+import { EditoriaSchema } from "wax-prosemirror-schema";
 import { MainMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/defaultLayout.css";
 import "wax-prosemirror-themes/defaultTheme.css";
@@ -9,7 +9,7 @@ const plugins = [];
 const keys = {};
 
 const options = {
-  schema: new CreateSchema(DefaultSchema)
+  schema: new CreateSchema(EditoriaSchema)
 };
 
 class Editoria extends Component {

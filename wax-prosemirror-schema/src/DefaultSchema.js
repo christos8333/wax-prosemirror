@@ -1,6 +1,6 @@
 const pDOM = ["p", 0],
   brDOM = ["br"];
-const defaultSchema = {
+const DefaultSchema = {
   nodes: {
     doc: {
       content: "block+"
@@ -32,4 +32,4 @@ const defaultSchema = {
   marks: {}
 };
 
-export default defaultSchema;
+export default DefaultSchema;

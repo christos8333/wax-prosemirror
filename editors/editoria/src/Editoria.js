@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+
+    .page-wrapper {
+      height: ${props => (props.debug ? "50vh" : "100vh")}
+    }
   }
 `;
 const PageWrapper = styled.div`
@@ -30,14 +34,13 @@ class Editoria extends Component {
     return (
       <React.Fragment>
         <GlobalStyle />
-        <PageWrapper>
+        <PageWrapper className="page-wrapper">
           <Wax
             options={options}
             autoFocus
             placeholder="Type Something..."
             theme="editoria"
             layout="editoria"
-            debug
             renderLayout={({ editor, ...props }) => (
               <React.Fragment>
                 <MainMenuBar {...props} />

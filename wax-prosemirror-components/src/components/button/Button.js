@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import classnames from "classnames";
-import classes from "./button.css";
+import classes from "./Button.module.css";
 
+console.log(classes);
 const ButtonStyled = styled.button`
   display: ${props => (props.select ? "inline" : "none")};
 `;

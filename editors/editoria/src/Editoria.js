@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 import { MainMenuBar } from "wax-prosemirror-components";
-import "wax-prosemirror-layouts/defaultLayout.css";
-import "wax-prosemirror-themes/defaultTheme.css";
+import "wax-prosemirror-layouts/layouts/editoria-layout.css";
+import "wax-prosemirror-themes/themes/editoria-theme.css";
 
 const plugins = [];
 const keys = {};
@@ -19,8 +19,8 @@ class Editoria extends Component {
         options={options}
         autoFocus
         placeholder="Type Something..."
-        theme="default"
-        layout="default"
+        theme="editoria"
+        layout="editoria"
         debug
         renderLayout={({ editor, ...props }) => (
           <React.Fragment>

@@ -71,6 +71,7 @@ class Wax extends Component {
       renderLayout,
       fileUpload,
       readonly,
+      className,
       value,
       onBlur,
       layout,
@@ -81,12 +82,14 @@ class Wax extends Component {
       <React.Fragment>{editor}</React.Fragment>
     );
 
+    console.log(className);
+
     const WaxRender = renderLayout ? renderLayout : defaultRender;
     const WaxLayout = layout
       ? `wax-container wax-l-${layout}`
       : "wax-container";
     return (
-      <div className={WaxLayout}>
+      <div className={`${WaxLayout} ${className}`}>
         <Editor
           autoFocus={autoFocus}
           readonly={readonly}

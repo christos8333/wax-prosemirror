@@ -17,16 +17,12 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-
-    .page-wrapper {
-      height: ${props => (props.debug ? "50vh" : "100vh")}
-    }
   }
 `;
-const PageWrapper = styled.div`
-  position: relative;
-  height: 100vh;
-  width: 100vw;
+const StyledWax = styled(Wax)`
+  .wax-surface-scroll {
+    height: ${props => (props.debug ? "50vh" : "100%")};
+  }
 `;
 
 class Editoria extends Component {
@@ -34,21 +30,19 @@ class Editoria extends Component {
     return (
       <React.Fragment>
         <GlobalStyle />
-        <PageWrapper className="page-wrapper">
-          <Wax
-            options={options}
-            autoFocus
-            placeholder="Type Something..."
-            theme="editoria"
-            layout="editoria"
-            renderLayout={({ editor, ...props }) => (
-              <React.Fragment>
-                <MainMenuBar {...props} />
-                <div className="wax-surface-scroll">{editor}</div>
-              </React.Fragment>
-            )}
-          />
-        </PageWrapper>
+        <StyledWax
+          options={options}
+          autoFocus
+          placeholder="Type Something..."
+          theme="editoria"
+          layout="editoria"
+          renderLayout={({ editor, ...props }) => (
+            <React.Fragment>
+              <MainMenuBar {...props} />
+              <div className="wax-surface-scroll">{editor}</div>
+            </React.Fragment>
+          )}
+        />
       </React.Fragment>
     );
   }

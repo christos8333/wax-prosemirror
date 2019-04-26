@@ -99,8 +99,8 @@ class Editor extends Component {
   render() {
     const { theme } = this.props;
     const WaxTheme = theme
-      ? `wax-surface-container wax-t-${theme}`
-      : "wax-surface-container";
+      ? `wax-surface-scroll wax-t-${theme}`
+      : "wax-surface-scroll";
 
     const editor = <div ref={this.createEditorView} className={WaxTheme} />;
     return this.props.renderLayout({

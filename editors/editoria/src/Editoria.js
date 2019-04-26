@@ -17,6 +17,11 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+    overflow-y: hidden;
+  #root {
+    height:100vh;
+    width:100vw;
+  }
   }
 `;
 const StyledWax = styled(Wax)`
@@ -36,10 +41,11 @@ class Editoria extends Component {
           placeholder="Type Something..."
           theme="editoria"
           layout="editoria"
+          debug
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
               <MainMenuBar {...props} />
-              <div className="wax-surface-scroll">{editor}</div>
+              <div className="wax-surface-container">{editor}</div>
             </React.Fragment>
           )}
         />

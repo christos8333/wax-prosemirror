@@ -41,7 +41,6 @@ class Editoria extends Component {
           placeholder="Type Something..."
           theme="editoria"
           layout="editoria"
-          debug
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
               <MainMenuBar {...props} />

@@ -3,15 +3,9 @@ import styled from "styled-components";
 import classnames from "classnames";
 import classes from "./Button.module.css";
 
-console.log(classes);
 const ButtonStyled = styled.button`
   display: ${props => (props.select ? "inline" : "none")};
 `;
-
-const checkActive = (item, state) => {
-  console.log(item.active(state));
-  return item.active(state);
-};
 
 const Button = ({ dispatch, state, item }) => (
   <ButtonStyled

@@ -108,7 +108,9 @@ export default {
   em: {
     title: "Toggle emphasis",
     content: icons.em,
-    // active: markActive(schema.marks.em),
+    active: state => {
+      return markActive(state.config.schema.marks.em)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.em)(state, dispatch);
     },
@@ -118,7 +120,9 @@ export default {
   strong: {
     title: "Toggle strong",
     content: icons.strong,
-    // active: markActive(schema.marks.strong),
+    active: state => {
+      return markActive(state.config.schema.marks.strong)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.strong)(state, dispatch);
     },
@@ -128,7 +132,9 @@ export default {
   code: {
     title: "Toggle code",
     content: icons.code,
-    // active: markActive(schema.marks.code),
+    active: state => {
+      return markActive(state.config.schema.marks.code)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.code)(state, dispatch);
     },
@@ -161,7 +167,9 @@ export default {
   subscript: {
     title: "Toggle subscript",
     content: icons.subscript,
-    // active: markActive(schema.marks.subscript),
+    active: state => {
+      return markActive(state.config.schema.marks.subscript)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.subscript)(state, dispatch);
     },
@@ -171,7 +179,9 @@ export default {
   superscript: {
     title: "Toggle superscript",
     content: icons.superscript,
-    // active: markActive(schema.marks.superscript),
+    active: state => {
+      return markActive(state.config.schema.marks.superscript)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.superscript)(state, dispatch);
     },
@@ -181,7 +191,9 @@ export default {
   underline: {
     title: "Toggle underline",
     content: icons.underline,
-    // active: markActive(schema.marks.underline),
+    active: state => {
+      return markActive(state.config.schema.marks.underline)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.underline)(state, dispatch);
     },
@@ -192,7 +204,9 @@ export default {
   strikethrough: {
     title: "Toggle strikethrough",
     content: icons.strikethrough,
-    // active: markActive(schema.marks.strikethrough),
+    active: state => {
+      return markActive(state.config.schema.marks.strikethrough)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.strikethrough)(state, dispatch);
     },
@@ -202,7 +216,9 @@ export default {
   link: {
     title: "Add or remove link",
     content: icons.link,
-    // active: markActive(schema.marks.link),
+    active: state => {
+      return markActive(state.config.schema.marks.link)(state);
+    },
     enable: state => !state.selection.empty,
     run(state, dispatch) {
       if (markActive(state.config.schema.marks.link)(state)) {

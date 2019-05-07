@@ -1,7 +1,7 @@
 import React from "react";
 import { forEach, map } from "lodash";
 import classes from "./MenuBar.css";
-import menu from "./menu";
+import MainMenuBarItems from "./MainMenuBarItems";
 
 const filtered = (menu, menuItems) =>
   Object.keys(menu)
@@ -34,7 +34,7 @@ const MainMenuBar = ({
       <div className="main-menu">
         {
           <span className={classes.group}>
-            {map(setMenuItems(menu, menuItems), item =>
+            {map(setMenuItems(MainMenuBarItems, menuItems), item =>
               item.menu({ state, dispatch, item, fileUpload })
             )}
           </span>

@@ -30,6 +30,8 @@ const StyledWax = styled(Wax)`
   }
 `;
 
+const menuItems = ["em"];
+
 class Editoria extends Component {
   render() {
     return (
@@ -43,7 +45,7 @@ class Editoria extends Component {
           layout="editoria"
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
-              <MainMenuBar {...props} />
+              <MainMenuBar {...props} menuItems={menuItems} />
               <div className="wax-surface-container">{editor}</div>
             </React.Fragment>
           )}

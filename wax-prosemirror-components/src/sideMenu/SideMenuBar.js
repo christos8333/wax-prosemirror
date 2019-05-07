@@ -1,7 +1,7 @@
 import React from "react";
 import { forEach, map } from "lodash";
-import classes from "./MenuBar.css";
-import MainMenuBarItems from "./MainMenuBarItems";
+// import classes from "./MenuBar.css";
+import SideMenuItems from "./SideMenuItems";
 
 const filtered = (menu, menuItems) =>
   Object.keys(menu)
@@ -21,7 +21,7 @@ const setMenuItems = (menu, menuItems) => {
   return filtered(menu, items);
 };
 
-const MainMenuBar = ({
+const SideMenuBar = ({
   menuItems = [],
   children,
   state,
@@ -34,7 +34,7 @@ const MainMenuBar = ({
       <div className="main-menu">
         {
           <span className={classes.group}>
-            {map(setMenuItems(MainMenuBarItems, menuItems), item =>
+            {map(setMenuItems(menu, menuItems), item =>
               item.menu({ state, dispatch, item, fileUpload })
             )}
           </span>
@@ -44,4 +44,4 @@ const MainMenuBar = ({
   </div>
 );
 
-export default MainMenuBar;
+export default SideMenuBar;

@@ -6,6 +6,7 @@ import { EditorView } from "prosemirror-view";
 
 import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
+import "prosemirror-gapcursor/style/gapcursor.css";
 
 class Editor extends Component {
   constructor(props) {
@@ -98,8 +99,8 @@ class Editor extends Component {
   render() {
     const { theme } = this.props;
     const WaxTheme = theme
-      ? `wax-surface-container wax-t-${theme}`
-      : "wax-surface-container";
+      ? `wax-surface-scroll wax-t-${theme}`
+      : "wax-surface-scroll";
 
     const editor = <div ref={this.createEditorView} className={WaxTheme} />;
     return this.props.renderLayout({

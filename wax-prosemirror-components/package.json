@@ -11,7 +11,7 @@
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "styled-components": "^3.2.5",
+    "styled-components": "^4.2.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.4",
     "@fortawesome/fontawesome": "^1.1.2",
@@ -19,6 +19,6 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "uuid": "^3.3.2",
     "react-dropdown": "^1.6.2"
-    },
+  },
   "devDependencies": {}
 }

@@ -11,21 +11,25 @@
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "styled-components": "^3.2.5",
+    "styled-components": "^4.2.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.4",
-    "prosemirror-commands": "^1.0.1",
-    "prosemirror-dropcursor": "^1.0.0",
-    "prosemirror-gapcursor": "^1.0.0",
-    "prosemirror-history": "^1.0.0",
-    "prosemirror-inputrules": "^1.0.0",
-    "prosemirror-keymap": "^1.0.0",
-    "prosemirror-model": "^1.0.0",
+    "prosemirror-commands": "^1.0.7",
+    "prosemirror-dropcursor": "^1.1.1",
+    "prosemirror-gapcursor": "^1.0.3",
+    "prosemirror-history": "^1.0.4",
+    "prosemirror-inputrules": "^1.0.1",
+    "prosemirror-keymap": "^1.0.1",
+    "prosemirror-model": "^1.7.0",
     "prosemirror-schema-list": "^1.0.0",
-    "prosemirror-state": "^1.0.1",
-    "prosemirror-tables": "^0.7.5",
-    "prosemirror-view": "^1.0.0",
+    "prosemirror-transform": "^1.1.3",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-tables": "^0.7.10",
+    "prosemirror-view": "^1.8.9",
     "prosemirror-dev-tools": "^2.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^3.4.2",
+    "prosemirror-test-builder": "^1.0.1"
+  }
 }

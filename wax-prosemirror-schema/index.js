@@ -1,1 +1,2 @@
-export { default as defaultSchema } from "./src/defaultSchema";
+export { default as DefaultSchema } from "./src/DefaultSchema";
+export { default as EditoriaSchema } from "./src/EditoriaSchema";

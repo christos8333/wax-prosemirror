@@ -108,7 +108,9 @@ export default {
   em: {
     title: "Toggle emphasis",
     content: icons.em,
-    // active: markActive(schema.marks.em),
+    active: state => {
+      return markActive(state.config.schema.marks.em)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.em)(state, dispatch);
     },
@@ -118,7 +120,9 @@ export default {
   strong: {
     title: "Toggle strong",
     content: icons.strong,
-    // active: markActive(schema.marks.strong),
+    active: state => {
+      return markActive(state.config.schema.marks.strong)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.strong)(state, dispatch);
     },
@@ -128,7 +132,9 @@ export default {
   code: {
     title: "Toggle code",
     content: icons.code,
-    // active: markActive(schema.marks.code),
+    active: state => {
+      return markActive(state.config.schema.marks.code)(state);
+    },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.code)(state, dispatch);
     },
@@ -161,7 +167,9 @@ export default {
   subscript: {
     title: "Toggle subscript",
     content: icons.subscript,
-    // active: markActive(schema.marks.subscript),
+    // active: state => {
+    //   return markActive(state.config.schema.marks.subscript)(state);
+    // },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.subscript)(state, dispatch);
     },

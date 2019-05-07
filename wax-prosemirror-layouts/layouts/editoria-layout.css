@@ -1,0 +1,50 @@
+.wax-l-editoria {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wax-l-editoria .main-menu-container {
+  background: #fff;
+  height: 36px;
+  line-height: 32px;
+  position: relative;
+  user-select: none;
+}
+
+.wax-l-editoria .main-menu-inner {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.wax-l-editoria .main-menu {
+  background: #fff;
+  /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.26);*/
+  /*box-sizing: border-box;*/
+  overflow: hidden;
+  padding: 2px 2px 2px 0;
+  position: relative;
+}
+
+.wax-l-editoria .wax-surface-container {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.wax-l-editoria .wax-surface-scroll {
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin-left: 20px;
+}

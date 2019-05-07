@@ -1,4 +1,4 @@
-button {
+.button {
   background: #fff;
   border: none;
   font-size: inherit;
@@ -8,15 +8,15 @@ button {
   padding: 5px 10px;
 }
 
-button:hover {
+.button:hover {
   color: #000;
   background: #f6f6f6;
 }
 
-button.active {
-  color: #000;
+.button.active {
+  color: #4990e2;
 }
 
-button:disabled {
+.button:disabled {
   color: #ccc;
 }

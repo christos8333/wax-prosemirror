@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { Wax, createSchema } from "wax-prosemirror-core";
-import { defaultSchema } from "wax-prosemirror-schema";
-import "wax-prosemirror-layouts/defaultLayout.css";
-import "wax-prosemirror-themes/defaultTheme.css";
+import { Wax, CreateSchema } from "wax-prosemirror-core";
+import { DefaultSchema } from "wax-prosemirror-schema";
+import "wax-prosemirror-layouts/layouts/default-layout.css";
+import "wax-prosemirror-themes/themes/default-theme.css";
 
 const plugins = [];
 const keys = {};
 
 const options = {
-  schema: new createSchema(defaultSchema)
+  schema: new CreateSchema(DefaultSchema)
 };
 
 class Default extends Component {

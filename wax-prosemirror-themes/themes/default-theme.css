@@ -8,11 +8,6 @@
   margin: 1em 0;
 }
 
-.wax-t-default .epigraph-poetry {
-  border-left: 2px solid #e0e4e4;
-  padding-left: 30px;
-}
-
 .wax-t-default hr:after {
   content: "";
   display: block;

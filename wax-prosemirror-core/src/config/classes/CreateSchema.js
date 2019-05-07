@@ -1,6 +1,6 @@
 import { Schema } from "prosemirror-model";
 
-class createSchema {
+class CreateSchema {
   constructor(schema) {
     if (!schema) {
       throw new Error("schema is mandatory");
@@ -30,4 +30,4 @@ class createSchema {
   setDefaultSchema() {}
 }
 
-export default createSchema;
+export default CreateSchema;

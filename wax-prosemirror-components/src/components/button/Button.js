@@ -8,6 +8,11 @@ const ButtonStyled = styled.button`
   display: ${props => (props.select ? "inline" : "none")};
 `;
 
+const checkActive = (item, state) => {
+  console.log(item.active(state));
+  return item.active(state);
+};
+
 const Button = ({ dispatch, state, item }) => (
   <ButtonStyled
     type="button"

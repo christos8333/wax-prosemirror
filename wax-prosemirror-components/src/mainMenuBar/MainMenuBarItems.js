@@ -167,9 +167,9 @@ export default {
   subscript: {
     title: "Toggle subscript",
     content: icons.subscript,
-    active: state => {
-      return markActive(state.config.schema.marks.subscript)(state);
-    },
+    // active: state => {
+    //   return markActive(state.config.schema.marks.subscript)(state);
+    // },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.subscript)(state, dispatch);
     },
@@ -179,9 +179,7 @@ export default {
   superscript: {
     title: "Toggle superscript",
     content: icons.superscript,
-    active: state => {
-      return markActive(state.config.schema.marks.superscript)(state);
-    },
+    // active: markActive(schema.marks.superscript),
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.superscript)(state, dispatch);
     },
@@ -191,9 +189,7 @@ export default {
   underline: {
     title: "Toggle underline",
     content: icons.underline,
-    active: state => {
-      return markActive(state.config.schema.marks.underline)(state);
-    },
+    // active: markActive(schema.marks.underline),
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.underline)(state, dispatch);
     },
@@ -204,9 +200,7 @@ export default {
   strikethrough: {
     title: "Toggle strikethrough",
     content: icons.strikethrough,
-    active: state => {
-      return markActive(state.config.schema.marks.strikethrough)(state);
-    },
+    // active: markActive(schema.marks.strikethrough),
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.strikethrough)(state, dispatch);
     },
@@ -216,9 +210,7 @@ export default {
   link: {
     title: "Add or remove link",
     content: icons.link,
-    active: state => {
-      return markActive(state.config.schema.marks.link)(state);
-    },
+    // active: markActive(schema.marks.link),
     enable: state => !state.selection.empty,
     run(state, dispatch) {
       if (markActive(state.config.schema.marks.link)(state)) {

@@ -2,7 +2,7 @@ Wax prosemirror Monorepo
 
 Clone the repo
   
-yarn with node > 9.11.2
+yarn with node > 11
   
 Running `yarn default` should bring the default editor
   
@@ -37,23 +37,40 @@ module.exports = function override(config, env) {
   config.module = {
     rules: [
       {
-        test: /\.(js|jsx|mjs)$/,
-        loader: "babel-loader",
-        options: {
-          presets: [
-            [require("@babel/preset-env"), { modules: false }],
-            require("@babel/preset-react")
-          ],
-          plugins: [require("@babel/plugin-proposal-class-properties")]
-        }
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      {
-        test: /\.svg$/,
-        use: "svg-inline-loader"
+        oneOf: [
+          {
+            test: /\.js$/,
+            loader: "babel-loader",
+            exclude: /node_modules/,
+            options: {
+              presets: [
+                [require("@babel/preset-env"), { modules: false }],
+                require("@babel/preset-react")
+              ],
+              plugins: [require("@babel/plugin-proposal-class-properties")]
+            }
+          },
+          {
+            test: /\.module\.css$/,
+            use: [
+              "style-loader",
+              {
+                loader: "css-loader",
+                options: {
+                  modules: true
+                }
+              }
+            ]
+          },
+          {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"]
+          },
+          {
+            test: /\.svg$/,
+            use: "svg-inline-loader"
+          }
+        ]
       }
     ]
   };

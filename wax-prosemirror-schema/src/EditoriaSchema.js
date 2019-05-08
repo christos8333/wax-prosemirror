@@ -86,6 +86,61 @@ const EditoriaSchema = {
       toDOM() {
         return codeDOM;
       }
+    },
+    subscript: {
+      excludes: "superscript",
+      parseDOM: [{ tag: "sub" }, { style: "vertical-align=sub" }],
+      toDOM: () => ["sub"]
+    },
+    superscript: {
+      excludes: "subscript",
+      parseDOM: [{ tag: "sup" }, { style: "vertical-align=super" }],
+      toDOM: () => ["sup"]
+    },
+    strikethrough: {
+      parseDOM: [
+        { tag: "strike" },
+        { style: "text-decoration:line-through" },
+        { style: "text-decoration-line:line-through" }
+      ],
+      toDOM: () => [
+        "span",
+        {
+          style: "text-decoration-line:line-through"
+        }
+      ]
+    },
+    underline: {
+      parseDOM: [{ tag: "u" }, { style: "text-decoration:underline" }],
+      toDOM: () => [
+        "span",
+        {
+          style: "text-decoration:underline"
+        }
+      ]
+    },
+    small_caps: {
+      attrs: {
+        class: { default: "small-caps" }
+      },
+      inclusive: false,
+      parseDOM: [
+        {
+          tag: "span",
+          getAttrs(dom) {
+            return { class: dom.getAttribute("class") };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["span", node.attrs, 0];
+      }
+    },
+    source: {
+      parseDOM: [{ tag: "cite" }],
+      toDOM() {
+        return ["cite", 0];
+      }
     }
   }
 };

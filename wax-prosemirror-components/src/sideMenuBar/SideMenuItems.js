@@ -10,8 +10,6 @@ const blockActive = (type, attrs = {}) => state => {
   if (node) {
     return node.hasMarkup(type, attrs);
   }
-  console.log("type", $from.end());
-  // console.log(to <= $from.end() && $from.parent.hasMarkup(type, attrs));
   return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
 };
 

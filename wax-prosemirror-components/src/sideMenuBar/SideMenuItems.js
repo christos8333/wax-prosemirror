@@ -4,12 +4,24 @@ import { setBlockType } from "prosemirror-commands";
 
 import Button from "../components/button/Button";
 
+const blockActive = (type, attrs = {}) => state => {
+  const { $from, to, node } = state.selection;
+
+  if (node) {
+    return node.hasMarkup(type, attrs);
+  }
+
+  return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
+};
+
 export default {
   plain: {
     title: "Change to General Text",
     // content: icons.paragraph,
     content: "General Text",
-    // active: blockActive(schema.nodes.paragraph),
+    active: state => {
+      return blockActive(state.config.schema.nodes.paragraph)(state);
+    },
     // enable: setBlockType(schema.nodes.paragraph),
     run(state, dispatch) {
       setBlockType(state.config.schema.nodes.paragraph)(state, dispatch);

@@ -34,6 +34,49 @@ const EditoriaSchema = {
       toDOM() {
         return pDOM;
       }
+    },
+    subtitle: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "cst" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    heading: {
+      attrs: { class: { default: "ct" }, level: { default: 1 } },
+      content: "inline*",
+      group: "block",
+      defining: true,
+      parseDOM: [
+        { tag: "h1", attrs: { level: 1 } },
+        { tag: "h2", attrs: { level: 2 } },
+        { tag: "h3", attrs: { level: 3 } },
+        { tag: "h4", attrs: { level: 4 } },
+        { tag: "h5", attrs: { level: 5 } },
+        { tag: "h6", attrs: { level: 6 } }
+      ],
+      toDOM(node) {
+        if (node.attrs.level === 1) {
+          return ["h" + node.attrs.level, node.attrs, 0];
+        } else {
+          return ["h" + node.attrs.level, 0];
+        }
+      }
     }
   },
   marks: {

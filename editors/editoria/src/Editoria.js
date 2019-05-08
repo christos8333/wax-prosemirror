@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
-import { MainMenuBar } from "wax-prosemirror-components";
+import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
 
@@ -44,7 +44,10 @@ class Editoria extends Component {
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
               <MainMenuBar {...props} />
-              <div className="wax-surface-container">{editor}</div>
+              <div className="wax-surface-container">
+                <SideMenuBar {...props} />
+                {editor}
+              </div>
             </React.Fragment>
           )}
         />

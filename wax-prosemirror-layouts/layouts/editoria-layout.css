@@ -31,6 +31,17 @@
   position: relative;
 }
 
+.wax-l-editoria .side-menu-container {
+  display: flex;
+  width: 10%;
+  height: 98%;
+  border-right: 1px solid rgba(0, 0, 0, 0.26);
+}
+
+.wax-l-editoria .side-menu {
+  margin-top: 15px;
+}
+
 .wax-l-editoria .wax-surface-container {
   flex: 1;
   position: relative;
@@ -46,5 +57,5 @@
   top: 0;
   box-sizing: border-box;
   padding: 0;
-  margin-left: 20px;
+  margin-left: 12%;
 }

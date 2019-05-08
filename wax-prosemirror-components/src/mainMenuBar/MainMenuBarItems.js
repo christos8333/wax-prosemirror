@@ -90,21 +90,6 @@ export default {
     select: state => true,
     menu: props => <HeadingsDropDown key={uuid()} {...props} />
   },
-
-  plain: {
-    title: "Change to General Text",
-    // content: icons.paragraph,
-    content: "General Text",
-    // active: blockActive(schema.nodes.paragraph),
-    // enable: setBlockType(schema.nodes.paragraph),
-    run(state, dispatch) {
-      setBlockType(state.config.schema.nodes.paragraph)(state, dispatch);
-    },
-
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-
   em: {
     title: "Toggle emphasis",
     content: icons.em,

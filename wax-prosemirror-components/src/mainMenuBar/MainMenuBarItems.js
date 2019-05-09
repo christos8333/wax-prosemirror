@@ -81,15 +81,6 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  headings: {
-    title: "Change to heading level 1",
-    content: icons.heading,
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run: option => true,
-    select: state => true,
-    menu: props => <HeadingsDropDown key={uuid()} {...props} />
-  },
   em: {
     title: "Toggle emphasis",
     content: icons.em,

@@ -58,7 +58,7 @@ const EditoriaSchema = {
       }
     },
     heading: {
-      attrs: { class: { default: "ct" }, level: { default: 1 } },
+      attrs: { level: { default: 1 } },
       content: "inline*",
       group: "block",
       defining: true,
@@ -71,11 +71,7 @@ const EditoriaSchema = {
         { tag: "h6", attrs: { level: 6 } }
       ],
       toDOM(node) {
-        if (node.attrs.level === 1) {
-          return ["h" + node.attrs.level, node.attrs, 0];
-        } else {
-          return ["h" + node.attrs.level, 0];
-        }
+        return ["h" + node.attrs.level, 0];
       }
     }
   },

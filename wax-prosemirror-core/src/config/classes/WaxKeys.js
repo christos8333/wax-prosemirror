@@ -1,12 +1,6 @@
 import { keymap } from "prosemirror-keymap";
 import { undoInputRule } from "prosemirror-inputrules";
 import { undo, redo } from "prosemirror-history";
-import {
-  wrapInList,
-  splitListItem,
-  liftListItem,
-  sinkListItem
-} from "prosemirror-schema-list";
 
 import {
   baseKeymap,
@@ -69,15 +63,10 @@ class WaxKeys {
       "Mod-i": toggleMark(this.schema.marks.em),
       "Mod-u": toggleMark(this.schema.marks.underline),
       "Mod-`": toggleMark(this.schema.marks.code),
-      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bullet_list),
-      "Shift-Ctrl-9": wrapInList(this.schema.nodes.ordered_list),
       "Ctrl->": wrapIn(this.schema.nodes.blockquote),
       "Mod-Enter": chainCommands(exitCode, this.insertBreak),
       "Shift-Enter": chainCommands(exitCode, this.insertBreak),
       "Ctrl-Enter": chainCommands(exitCode, this.insertBreak), // mac-only?
-      Enter: splitListItem(this.schema.nodes.list_item),
-      "Mod-[": liftListItem(this.schema.nodes.list_item),
-      "Mod-]": sinkListItem(this.schema.nodes.list_item),
       "Shift-Ctrl-0": setBlockType(this.schema.nodes.paragraph),
       "Shift-Ctrl-\\": setBlockType(this.schema.nodes.code_block),
       "Shift-Ctrl-1": setBlockType(this.schema.nodes.heading, { level: 1 }),

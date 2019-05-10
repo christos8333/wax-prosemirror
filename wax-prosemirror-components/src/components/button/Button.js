@@ -4,7 +4,8 @@ import classnames from "classnames";
 import classes from "./Button.module.css";
 
 const ButtonStyled = styled.button`
-  display: ${props => (props.select ? "inline" : "none")};
+  opacity: ${props => (props.select ? 1 : 0.4)};
+  pointer-events: ${props => (props.select ? "default" : "none")};
 `;
 
 const Button = ({ dispatch, state, item }) => (

@@ -81,15 +81,6 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  headings: {
-    title: "Change to heading level 1",
-    content: icons.heading,
-    // active: blockActive(schema.nodes.heading, { level: 1 }),
-    // enable: setBlockType(schema.nodes.heading, { level: 1 }),
-    run: option => true,
-    select: state => true,
-    menu: props => <HeadingsDropDown key={uuid()} {...props} />
-  },
   em: {
     title: "Toggle emphasis",
     content: icons.em,
@@ -122,19 +113,6 @@ export default {
     },
     run(state, dispatch) {
       toggleMark(state.config.schema.marks.code)(state, dispatch);
-    },
-
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-  source: {
-    title: "Toggle Source",
-    content: icons.source,
-    active: state => {
-      return markActive(state.config.schema.marks.source)(state);
-    },
-    run(state, dispatch) {
-      toggleMark(state.config.schema.marks.source)(state, dispatch);
     },
 
     select: state => true,
@@ -223,19 +201,6 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  codeBlock: {
-    title: "Change to code block",
-    content: icons.code_block,
-    // active: blockActive(schema.nodes.code_block),
-    // enable: setBlockType(schema.nodes.code_block),
-    run(state, dispatch) {
-      wrapIn(state.config.schema.nodes.codeBlock)(state, dispatch);
-    },
-
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
-
   blockquote: {
     title: "Wrap in block quote",
     content: icons.blockquote,
@@ -293,5 +258,39 @@ export default {
     select: state => true,
     run: option => true,
     menu: props => <ImageUpload key={uuid()} {...props} />
+  },
+  table: {
+    title: "Insert table",
+    content: icons.table,
+    // enable: canInsert(schema.nodes.table),
+    run: (state, dispatch) => {
+      // const { from } = state.selection
+      let rowCount = window && window.prompt("How many rows?", 2);
+      let colCount = window && window.prompt("How many columns?", 2);
+
+      const cells = [];
+      while (colCount--) {
+        cells.push(state.config.schema.nodes.table_cell.createAndFill());
+      }
+
+      const rows = [];
+      while (rowCount--) {
+        rows.push(
+          state.config.schema.nodes.table_row.createAndFill(null, cells)
+        );
+      }
+
+      const table = state.config.schema.nodes.table.createAndFill(null, rows);
+      dispatch(state.tr.replaceSelectionWith(table));
+    },
+    select: state => true,
+    menu: props => <Button key={uuid()} {...props} />
+  },
+  tableDropDownOptions: {
+    content: "table",
+    run: option => true,
+    title: "Select Options",
+    select: state => addColumnBefore(state),
+    menu: props => <TableDropDown key={uuid()} {...props} />
   }
 };

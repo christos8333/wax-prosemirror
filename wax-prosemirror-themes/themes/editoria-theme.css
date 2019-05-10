@@ -28,16 +28,6 @@
   cursor: default;
 }
 
-.wax-t-editoria table {
-  border-spacing: 0px;
-}
-
-.wax-t-editoria th,
-.wax-t-editoria td {
-  border: 1px solid #eee;
-  padding: 2px 5px;
-}
-
 .wax-t-editoria sup,
 .wax-t-editoria sub {
   line-height: 0;
@@ -45,6 +35,55 @@
 
 .wax-t-editoria .ProseMirror:focus {
   outline: none;
+}
+
+/* Tables */
+
+.wax-t-editoria table {
+  border-spacing: 0px;
+  table-layout: fixed;
+  width: 50%;
+  overflow: hidden;
+}
+
+.wax-t-editoria th,
+.wax-t-editoria td {
+  border: 1px solid #eee;
+  padding: 2px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.wax-t-editoria .tableWrapper {
+  overflow-x: auto;
+}
+
+.wax-t-editoria .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  z-index: 20;
+  background-color: #adf;
+  pointer-events: none;
+}
+.wax-t-editoria .ProseMirror.resize-cursor.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+/* Give selected cells a blue overlay */
+.wax-t-editoria .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
 }
 
 /* placeholder */

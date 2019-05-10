@@ -5,7 +5,6 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.0",
     "styled-components": "^4.2.0",
     "wax-prosemirror-core": "0.0.1",
     "wax-prosemirror-schema": "0.0.1",
@@ -24,6 +23,7 @@
   },
   "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
-    "react-app-rewired": "^2.1.1"
+    "react-app-rewired": "^2.1.1",
+    "react-scripts": "3.0.1"
   }
 }

@@ -17,7 +17,7 @@ import {
   goToNextCell
 } from "prosemirror-tables";
 
-import { Wax, CreateSchema, WaxKeys } from "wax-prosemirror-core";
+import { Wax, CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
@@ -60,7 +60,7 @@ const shortCuts = {
   "Shift-Ctrl-9": wrapInList(schema.nodes.ordered_list)
 };
 
-const keys = new WaxKeys({ schema: schema, shortCuts: shortCuts });
+const keys = new CreateShortCuts({ schema: schema, shortCuts: shortCuts });
 
 const options = {
   schema,

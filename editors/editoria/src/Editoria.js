@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { orderedList, bulletList, listItem } from "prosemirror-schema-list";
+import {
+  tableNodes,
+  columnResizing,
+  tableEditing,
+  goToNextCell
+} from "prosemirror-tables";
+
 import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
-import { orderedList, bulletList, listItem } from "prosemirror-schema-list";
-import { tableNodes } from "prosemirror-tables";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
-
-const plugins = [];
-const keys = {};
 
 const extraNodes = {
   ordered_list: {
@@ -34,9 +37,12 @@ const extraNodes = {
 };
 
 EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
+const plugins = [columnResizing(), tableEditing()];
+const keys = {};
 
 const options = {
-  schema: new CreateSchema(EditoriaSchema)
+  schema: new CreateSchema(EditoriaSchema),
+  plugins
 };
 
 const GlobalStyle = createGlobalStyle`

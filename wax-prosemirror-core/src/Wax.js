@@ -41,9 +41,9 @@ class Wax extends Component {
         : new WaxKeys({ schema: schema, shortCuts: {} });
 
     const editorContent = value ? value : "";
-    // TO DO Find a way to start plugins with options
+
     defaultPlugins.push(
-      ...[placeholder({ content: this.props.placeholder }), keys]
+      ...[placeholder({ content: this.props.placeholder }), ...plugins, keys]
     );
 
     this.WaxOptions = {
@@ -81,8 +81,6 @@ class Wax extends Component {
     const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
       <React.Fragment>{editor}</React.Fragment>
     );
-
-    console.log(className);
 
     const WaxRender = renderLayout ? renderLayout : defaultRender;
     const WaxLayout = layout

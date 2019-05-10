@@ -15,7 +15,7 @@ import {
   selectParentNode
 } from "prosemirror-commands";
 
-class WaxKeys {
+class CreateShortCuts {
   constructor(config) {
     this.schema = config.schema;
     this.shortCuts = config.shortCuts;
@@ -84,4 +84,4 @@ class WaxKeys {
   }
 }
 
-export default WaxKeys;
+export default CreateShortCuts;

@@ -7,7 +7,7 @@ import Editor from "./Editor";
 import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
 
-import WaxKeys from "./config/classes/WaxKeys";
+import CreateShortCuts from "./config/classes/CreateShortCuts";
 
 const parser = schema => {
   const parser = DOMParser.fromSchema(schema);
@@ -38,7 +38,7 @@ class Wax extends Component {
     const keys =
       options && options.keys
         ? options.keys
-        : new WaxKeys({ schema: schema, shortCuts: {} });
+        : new CreateShortCuts({ schema: schema, shortCuts: {} });
 
     const editorContent = value ? value : "";
 

@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { orderedList, bulletList, listItem } from "prosemirror-schema-list";
+import {
+  orderedList,
+  bulletList,
+  listItem,
+  wrapInList,
+  splitListItem,
+  liftListItem,
+  sinkListItem
+} from "prosemirror-schema-list";
+
 import {
   tableNodes,
   columnResizing,
@@ -8,7 +17,7 @@ import {
   goToNextCell
 } from "prosemirror-tables";
 
-import { Wax, CreateSchema } from "wax-prosemirror-core";
+import { Wax, CreateSchema, WaxKeys } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
@@ -37,12 +46,26 @@ const extraNodes = {
 };
 
 EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
+const schema = new CreateSchema(EditoriaSchema);
+
 const plugins = [columnResizing(), tableEditing()];
-const keys = {};
+
+const shortCuts = {
+  Tab: goToNextCell(1),
+  "Shift-Tab": goToNextCell(-1),
+  Enter: splitListItem(schema.nodes.list_item),
+  "Mod-[": liftListItem(schema.nodes.list_item),
+  "Mod-]": sinkListItem(schema.nodes.list_item),
+  "Shift-Ctrl-8": wrapInList(schema.nodes.bullet_list),
+  "Shift-Ctrl-9": wrapInList(schema.nodes.ordered_list)
+};
+
+const keys = new WaxKeys({ schema: schema, shortCuts: shortCuts });
 
 const options = {
-  schema: new CreateSchema(EditoriaSchema),
-  plugins
+  schema,
+  plugins,
+  keys
 };
 
 const GlobalStyle = createGlobalStyle`

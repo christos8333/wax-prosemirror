@@ -19,4 +19,5 @@
 
 .button:disabled {
   color: #ccc;
+  pointer-events: none;
 }

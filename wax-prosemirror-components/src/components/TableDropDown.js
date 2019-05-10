@@ -5,9 +5,15 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
 const DropdownStyled = styled(Dropdown)`
-  display: ${props => (props.select ? "inline-flex" : "none")};
+  display: inline-flex;
+  cursor: not-allowed;
+  opacity: ${props => (props.select ? 1 : 0.4)};
+  pointer-events: ${props => (props.select ? "default" : "none")};
   .Dropdown-control {
     border: none;
+  }
+  .Dropdown-arrow {
+    top: 21px;
   }
 `;
 

@@ -74,23 +74,13 @@ class Editoria extends Component {
           theme="editoria"
           layout="editoria"
           debug
-          value="<p>hello</p><table>
-  <tr>
-    <th>Firstname</th>
-    <th>Lastname</th>
-    <th>Age</th>
-  </tr>
-  <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>Jackson</td>
-    <td>94</td>
-  </tr>
-</table>"
+          value="<p>hello</p>
+          <ul><li>listItem 1</li><li>listItem 2</li><li>listItem 3</li></ul>
+          <table>
+            <tr> <th>Firstname</th> <th>Lastname</th> <th>Age</th></tr>
+           <tr><td>Jill</td><td>Smith</td><td>50</td></tr>
+           <tr><td>Eve</td><td>Jackson</td><td>94</td></tr>
+         </table>"
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
               <MainMenuBar {...props} />

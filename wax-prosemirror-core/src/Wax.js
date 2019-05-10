@@ -32,13 +32,10 @@ const serializer = schema => {
 class Wax extends Component {
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema, plugins } = options;
+    const { schema, plugins, shortCuts } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
-    const keys =
-      options && options.keys
-        ? options.keys
-        : new CreateShortCuts({ schema: schema, shortCuts: {} });
+    const keys = new CreateShortCuts({ schema: schema, shortCuts: shortCuts });
 
     const editorContent = value ? value : "";
 

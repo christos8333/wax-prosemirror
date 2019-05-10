@@ -17,7 +17,7 @@ import {
   goToNextCell
 } from "prosemirror-tables";
 
-import { Wax, CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
+import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 import { LinkToolTipPlugin } from "wax-prosemirror-plugins";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
@@ -61,12 +61,10 @@ const shortCuts = {
   "Shift-Ctrl-9": wrapInList(schema.nodes.ordered_list)
 };
 
-const keys = new CreateShortCuts({ schema: schema, shortCuts: shortCuts });
-
 const options = {
   schema,
   plugins,
-  keys
+  shortCuts
 };
 
 const GlobalStyle = createGlobalStyle`

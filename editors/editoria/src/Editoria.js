@@ -2,12 +2,33 @@ import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
+import { orderedList, bulletList, listItem } from "prosemirror-schema-list";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
 
 const plugins = [];
 const keys = {};
+
+const extraNodes = {
+  ordered_list: {
+    ...orderedList,
+    content: "list_item+",
+    group: "block"
+  },
+  bullet_list: {
+    ...bulletList,
+    content: "list_item+",
+    group: "block"
+  },
+  list_item: {
+    ...listItem,
+    content: "paragraph block*",
+    group: "block"
+  }
+};
+
+EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
 
 const options = {
   schema: new CreateSchema(EditoriaSchema)
@@ -41,6 +62,7 @@ class Editoria extends Component {
           placeholder="Type Something..."
           theme="editoria"
           layout="editoria"
+          debug
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
               <MainMenuBar {...props} />

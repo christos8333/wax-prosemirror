@@ -226,7 +226,6 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-
   blockquote: {
     title: "Wrap in block quote",
     content: icons.blockquote,

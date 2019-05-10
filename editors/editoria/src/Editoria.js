@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 import { orderedList, bulletList, listItem } from "prosemirror-schema-list";
+import { tableNodes } from "prosemirror-tables";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
@@ -25,7 +26,11 @@ const extraNodes = {
     ...listItem,
     content: "paragraph block*",
     group: "block"
-  }
+  },
+  ...tableNodes({
+    tableGroup: "block",
+    cellContent: "block+"
+  })
 };
 
 EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
@@ -63,6 +68,23 @@ class Editoria extends Component {
           theme="editoria"
           layout="editoria"
           debug
+          value="<p>hello</p><table>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+</table>"
           renderLayout={({ editor, ...props }) => (
             <React.Fragment>
               <MainMenuBar {...props} />

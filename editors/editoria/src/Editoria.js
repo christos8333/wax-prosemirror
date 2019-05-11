@@ -17,8 +17,11 @@ import {
   goToNextCell
 } from "prosemirror-tables";
 
+import { emDash, ellipsis } from "prosemirror-inputrules";
+
 import { Wax, CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
+import { LinkToolTipPlugin } from "wax-prosemirror-plugins";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
@@ -48,7 +51,7 @@ const extraNodes = {
 EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
 const schema = new CreateSchema(EditoriaSchema);
 
-const plugins = [columnResizing(), tableEditing()];
+const plugins = [columnResizing(), tableEditing(), LinkToolTipPlugin];
 
 const shortCuts = {
   Tab: goToNextCell(1),
@@ -60,12 +63,14 @@ const shortCuts = {
   "Shift-Ctrl-9": wrapInList(schema.nodes.ordered_list)
 };
 
-const keys = new CreateShortCuts({ schema: schema, shortCuts: shortCuts });
+const keys = new CreateShortCuts({ schema, shortCuts });
 
+const rules = [emDash, ellipsis];
 const options = {
   schema,
   plugins,
-  keys
+  keys,
+  rules
 };
 
 const GlobalStyle = createGlobalStyle`

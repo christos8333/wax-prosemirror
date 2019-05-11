@@ -18,6 +18,11 @@ import {
 } from "prosemirror-tables";
 
 import { emDash, ellipsis } from "prosemirror-inputrules";
+import invisibles, {
+  space,
+  hardBreak,
+  paragraph
+} from "@guardian/prosemirror-invisibles";
 
 import { Wax, CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
@@ -51,7 +56,12 @@ const extraNodes = {
 EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
 const schema = new CreateSchema(EditoriaSchema);
 
-const plugins = [columnResizing(), tableEditing(), LinkToolTipPlugin];
+const plugins = [
+  columnResizing(),
+  tableEditing(),
+  LinkToolTipPlugin,
+  invisibles([hardBreak()])
+];
 
 const shortCuts = {
   Tab: goToNextCell(1),
@@ -101,7 +111,6 @@ class Editoria extends Component {
           placeholder="Type Something..."
           theme="editoria"
           layout="editoria"
-          debug
           value="<p>hello</p>
           <ul><li>listItem 1</li><li>listItem 2</li><li>listItem 3</li></ul>
           <table>

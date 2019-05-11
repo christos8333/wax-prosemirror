@@ -42,7 +42,7 @@
 .wax-t-editoria table {
   border-spacing: 0px;
   table-layout: fixed;
-  width: 50%;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -97,6 +97,34 @@
 
 .wax-t-editoria p.empty-node:first-child::before {
   content: attr(data-content);
+}
+
+/* invisible characters */
+.invisible {
+  pointer-events: none;
+  user-select: none;
+}
+
+.invisible:before {
+  caret-color: inherit;
+  color: gray;
+  display: inline-block;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1em;
+  width: 0;
+}
+
+.invisible--space:before {
+  content: "·";
+}
+
+.invisible--break:before {
+  content: "¬";
+}
+
+.invisible--par:after {
+  content: "¶";
 }
 
 /*LinkToolTip */

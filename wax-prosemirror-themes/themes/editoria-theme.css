@@ -40,15 +40,21 @@
 /* Tables */
 
 .wax-t-editoria table {
-  border-spacing: 0px;
+  border-collapse: initial;
+  border-spacing: 0;
+  border-width: 0 thin thin 0;
+  border: 1px solid #eee;
   table-layout: fixed;
-  width: 100%;
+  width: 900px;
+  margin: 0;
   overflow: hidden;
+  page-break-inside: avoid;
 }
 
 .wax-t-editoria th,
 .wax-t-editoria td {
   border: 1px solid #eee;
+  /*width: 200px;*/
   padding: 2px 5px;
   vertical-align: top;
   box-sizing: border-box;

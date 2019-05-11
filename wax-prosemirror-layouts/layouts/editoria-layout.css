@@ -39,7 +39,7 @@
 
 .wax-l-editoria .side-menu-container {
   display: flex;
-  width: 10%;
+  width: 12%;
   height: 98%;
   /*background: rgba(0, 0, 0, 0.01);*/
 }
@@ -79,7 +79,7 @@
   top: 0;
   box-sizing: border-box;
   padding: 0;
-  margin-left: 12%;
+  margin-left: 14%;
   padding: 2px;
 }
 .wax-l-editoria .wax-surface-scroll .ProseMirror {

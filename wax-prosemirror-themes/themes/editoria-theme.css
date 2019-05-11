@@ -45,7 +45,7 @@
   border-width: 0 thin thin 0;
   border: 1px solid #eee;
   table-layout: fixed;
-  width: 900px;
+  width: 100%;
   margin: 0;
   overflow: hidden;
   page-break-inside: avoid;

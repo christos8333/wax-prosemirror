@@ -4,12 +4,4 @@ import { gapCursor } from "prosemirror-gapcursor";
 import "prosemirror-gapcursor/style/gapcursor.css";
 import placeholderPlugin from "./plugins/placeholderPlugin";
 
-// import rules from "./rules";
-
-export default [
-  // rules,
-  dropCursor(),
-  gapCursor(),
-  history(),
-  placeholderPlugin
-];
+export default [dropCursor(), gapCursor(), history(), placeholderPlugin];

@@ -8,6 +8,7 @@ import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
 
 import CreateShortCuts from "./config/classes/CreateShortCuts";
+import CreateRules from "./config/classes/CreateRules";
 
 const parser = schema => {
   const parser = DOMParser.fromSchema(schema);
@@ -32,15 +33,20 @@ const serializer = schema => {
 class Wax extends Component {
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema, plugins, shortCuts } = options;
+    const { schema, plugins, keys, rules } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
-    const keys = new CreateShortCuts({ schema: schema, shortCuts: shortCuts });
+    const WaxKeys =
+      options && options.keys
+        ? options.keys
+        : new CreateShortCuts({ schema: schema, shortCuts: {} });
+
+    const WaxRules = new CreateRules({ schema: schema, rules: rules });
 
     const editorContent = value ? value : "";
 
     defaultPlugins.push(
-      ...[placeholder({ content: this.props.placeholder }), keys]
+      ...[placeholder({ content: this.props.placeholder }), WaxKeys, WaxRules]
     );
 
     if (plugins) defaultPlugins.push(...plugins);

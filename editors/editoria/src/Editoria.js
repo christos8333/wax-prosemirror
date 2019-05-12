@@ -26,7 +26,7 @@ import invisibles, {
 
 import { Wax, CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
 import { EditoriaSchema } from "wax-prosemirror-schema";
-import { LinkToolTipPlugin } from "wax-prosemirror-plugins";
+import { LinkToolTipPlugin, TrackChangePlugin } from "wax-prosemirror-plugins";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
@@ -61,6 +61,7 @@ const plugins = [
   columnResizing(),
   tableEditing(),
   // LinkToolTipPlugin,
+  TrackChangePlugin({ options: {} }),
   invisibles([hardBreak()])
 ];
 

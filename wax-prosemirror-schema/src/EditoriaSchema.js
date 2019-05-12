@@ -377,6 +377,44 @@ const EditoriaSchema = {
       toDOM() {
         return ["cite", 0];
       }
+    },
+    deletion: {
+      attrs: {
+        user: {
+          default: 0
+        },
+        username: {
+          default: ""
+        },
+        date: {
+          default: 0
+        }
+      },
+      inclusive: false,
+      group: "track",
+      parseDOM: [
+        {
+          tag: "span.deletion",
+          getAttrs(dom) {
+            return {
+              user: { id: "123" },
+              username: "chris",
+              date: "2333"
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return [
+          "span",
+          {
+            class: `deletion user-chris`,
+            "data-user": '{id: "123"}',
+            "data-username": "chris",
+            "data-date": "32323"
+          }
+        ];
+      }
     }
   }
 };

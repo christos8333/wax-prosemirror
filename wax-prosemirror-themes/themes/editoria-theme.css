@@ -182,33 +182,9 @@ span.insertion {
 
 .selected-insertion,
 .selected-deletion,
-.selected-format_change,
-.selected-block_change {
+.selected-format-change,
+.selected-block-change {
   background-color: #fffacf;
-}
-
-.tag.selected-insertion,
-.contributor.selected-insertion,
-.tag.selected-deletion,
-.contributor.selected-deletion {
-  background-color: #fffacf;
-  color: #000;
-}
-
-.margin-box.track > div {
-  padding: 10px;
-}
-
-.margin-box .track-title {
-  font-weight: 700;
-}
-
-.margin-box .format-change-info {
-  margin-bottom: 9px;
-}
-
-.margin-box .format-change-info b {
-  font-weight: 700;
 }
 
 [data-track] {

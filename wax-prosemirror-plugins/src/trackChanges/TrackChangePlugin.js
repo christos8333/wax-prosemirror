@@ -18,14 +18,12 @@ export default options => {
         const userIds = ["33"];
         state.doc.descendants(node => {
           if (node.attrs.track) {
-            console.log("11111111");
             node.attrs.track.forEach(track => {
               if (!userIds.includes(track.user) && track.user !== 0) {
                 userIds.push(track.user);
               }
             });
           } else {
-            console.log(node.marks);
             node.marks.forEach(mark => {
               if (
                 ["deletion", "insertion", "format_change"].includes(
@@ -63,7 +61,6 @@ export default options => {
             ? Decoration.node
             : Decoration.inline;
           if (insertion) {
-            console.log("insertion");
             decos = decos.add(tr.doc, [
               decoType(
                 insertion.from,
@@ -76,7 +73,6 @@ export default options => {
             ]);
           }
           if (deletion) {
-            console.log("deletion");
             decos = decos.add(tr.doc, [
               decoType(
                 deletion.from,
@@ -89,13 +85,12 @@ export default options => {
             ]);
           }
           if (formatChange) {
-            console.log("change format");
             decos = decos.add(tr.doc, [
               decoType(
                 formatChange.from,
                 formatChange.to,
                 {
-                  class: "selected-format_change"
+                  class: "selected-format-change"
                 },
                 selectedChangeFormatSpec
               )
@@ -116,7 +111,7 @@ export default options => {
       },
       handleDOMEvents: {
         focus: (view, _event) => {
-          // view.dispatch(deactivateAllSelectedChanges(view.state.tr));
+          view.dispatch(deactivateAllSelectedChanges(view.state.tr));
         }
       }
     }

@@ -9,7 +9,16 @@ import {
 } from "prosemirror-transform";
 import { CellSelection } from "prosemirror-tables";
 
-function markInsertion(tr, from, to, user, username, date1, date10, approved) {
+const markInsertion = (
+  tr,
+  from,
+  to,
+  user,
+  username,
+  date1,
+  date10,
+  approved
+) => {
   tr.removeMark(from, to, tr.doc.type.schema.marks.deletion);
   tr.removeMark(from, to, tr.doc.type.schema.marks.insertion);
   const insertionMark = tr.doc.type.schema.marks.insertion.create({
@@ -49,9 +58,9 @@ function markInsertion(tr, from, to, user, username, date1, date10, approved) {
       return false;
     }
   });
-}
+};
 
-function markDeletion(tr, from, to, user, username, date1, date10) {
+const markDeletion = (tr, from, to, user, username, date1, date10) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
     user,
     username,
@@ -142,9 +151,9 @@ function markDeletion(tr, from, to, user, username, date1, date10) {
   });
 
   return deletionMap;
-}
+};
 
-function markWrapping(tr, pos, oldNode, newNode, user, username, date1) {
+const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
   let track = oldNode.attrs.track.slice(),
     blockTrack = track.find(track => track.type === "block_change");
 
@@ -180,9 +189,9 @@ function markWrapping(tr, pos, oldNode, newNode, user, username, date1) {
     track.push(blockTrack);
   }
   tr.setNodeMarkup(pos, null, Object.assign({}, newNode.attrs, { track }));
-}
+};
 
-export function amendTransaction(tr, state, editor) {
+const trackedTransaction = (tr, state, editor) => {
   if (
     !tr.steps.length ||
     (tr.meta &&
@@ -193,11 +202,13 @@ export function amendTransaction(tr, state, editor) {
     // don't replace history TRs
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {
-    // None of the transactions change the doc, or all are remote, come from footnotes, are footnote creations, history or fixing IDs. Give up.
+    console.log(tr);
     return tr;
   }
-  const user = "editor.user.id", // current user
+  const user = "editor.user.id",
     approved = false,
+    // !editor.view.state.doc.firstChild.attrs.tracked &&
+    // editor.docInfo.access_rights !== "write-tracked",
     newTr = state.tr,
     map = new Mapping(),
     exactDate = Date.now(),
@@ -456,10 +467,10 @@ export function amendTransaction(tr, state, editor) {
     }
   });
 
-  // We copy the input type meta data from the original transaction.
   if (tr.getMeta("inputType")) {
     newTr.setMeta(tr.getMeta("inputType"));
   }
+
   if (tr.getMeta("uiEvent")) {
     newTr.setMeta(tr.getMeta("uiEvent"));
   }
@@ -484,4 +495,6 @@ export function amendTransaction(tr, state, editor) {
   }
 
   return newTr;
-}
+};
+
+export default trackedTransaction;

@@ -3,3 +3,4 @@ export { default as CreateSchema } from "./src/config/classes/CreateSchema";
 export {
   default as CreateShortCuts
 } from "./src/config/classes/CreateShortCuts";
+export { amendTransaction } from "./src/amend_transaction";

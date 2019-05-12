@@ -116,7 +116,7 @@ export default options => {
       },
       handleDOMEvents: {
         focus: (view, _event) => {
-          view.dispatch(deactivateAllSelectedChanges(view.state.tr));
+          // view.dispatch(deactivateAllSelectedChanges(view.state.tr));
         }
       }
     }

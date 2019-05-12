@@ -7,6 +7,22 @@ const emDOM = ["em", 0],
   strongDOM = ["strong", 0],
   codeDOM = ["code", 0];
 
+const parseFormatList = str => {
+  if (!str) {
+    return [];
+  }
+  let formatList;
+  try {
+    formatList = JSON.parse(str);
+  } catch (error) {
+    return [];
+  }
+  if (!Array.isArray(formatList)) {
+    return [];
+  }
+  return formatList.filter(format => typeof format === "string"); // ensure there are only strings in list
+};
+
 const EditoriaSchema = {
   nodes: {
     doc: {
@@ -378,6 +394,63 @@ const EditoriaSchema = {
         return ["cite", 0];
       }
     },
+    insertion: {
+      attrs: {
+        user: {
+          default: 0
+        },
+        username: {
+          default: ""
+        },
+        date: {
+          default: 0
+        },
+        approved: {
+          default: true
+        }
+      },
+      inclusive: false,
+      group: "track",
+      parseDOM: [
+        {
+          tag: "span.insertion",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date),
+              inline: true,
+              approved: false
+            };
+          }
+        },
+        {
+          tag: "span.approved-insertion",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date),
+              inline: true,
+              approved: true
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return [
+          "span",
+          {
+            class: node.attrs.approved
+              ? "approved-insertion"
+              : `insertion user-${node.attrs.user}`,
+            "data-user": node.attrs.user,
+            "data-username": node.attrs.username,
+            "data-date": node.attrs.date
+          }
+        ];
+      }
+    },
     deletion: {
       attrs: {
         user: {
@@ -397,9 +470,9 @@ const EditoriaSchema = {
           tag: "span.deletion",
           getAttrs(dom) {
             return {
-              user: { id: "123" },
-              username: "chris",
-              date: "2333"
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date)
             };
           }
         }
@@ -408,10 +481,58 @@ const EditoriaSchema = {
         return [
           "span",
           {
-            class: `deletion user-chris`,
-            "data-user": '{id: "123"}',
-            "data-username": "chris",
-            "data-date": "32323"
+            class: `deletion user-${node.attrs.user}`,
+            "data-user": node.attrs.user,
+            "data-username": node.attrs.username,
+            "data-date": node.attrs.date
+          }
+        ];
+      }
+    },
+    format_change: {
+      attrs: {
+        user: {
+          default: 0
+        },
+        username: {
+          default: ""
+        },
+        date: {
+          default: 0
+        },
+        before: {
+          default: []
+        },
+        after: {
+          default: []
+        }
+      },
+      inclusive: false,
+      group: "track",
+      parseDOM: [
+        {
+          tag: "span.format-change",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date),
+              before: parseFormatList(dom.dataset.before),
+              after: parseFormatList(dom.dataset.after)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return [
+          "span",
+          {
+            class: `format-change user-${node.attrs.user}`,
+            "data-user": node.attrs.user,
+            "data-username": node.attrs.username,
+            "data-date": node.attrs.date,
+            "data-before": JSON.stringify(node.attrs.before),
+            "data-after": JSON.stringify(node.attrs.after)
           }
         ];
       }

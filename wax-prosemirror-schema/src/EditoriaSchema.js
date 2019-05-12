@@ -78,24 +78,28 @@ const EditoriaSchema = {
   marks: {
     link: {
       attrs: {
-        href: {},
+        href: { default: null },
+        rel: { default: "" },
+        target: { default: "blank" },
         title: { default: null }
       },
       inclusive: false,
       parseDOM: [
         {
           tag: "a[href]",
-          getAttrs(dom) {
+          getAttrs: dom => {
+            const href = dom.getAttribute("href");
+            const target = href && href.indexOf("#") === 0 ? "" : "blank";
             return {
               href: dom.getAttribute("href"),
-              title: dom.getAttribute("title")
+              title: dom.getAttribute("title"),
+              target
             };
           }
         }
       ],
       toDOM(node) {
-        let { href, title } = node.attrs;
-        return ["a", { href, title }, 0];
+        return ["a", node.attrs, 0];
       }
     },
     em: {

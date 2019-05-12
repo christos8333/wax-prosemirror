@@ -95,8 +95,11 @@ class WaxView extends Component {
   };
 
   dispatchTransaction = transaction => {
-    const trackedTr = trackedTransaction(transaction, this.view.state, this);
-    const state = this.view.state.apply(trackedTr);
+    const { TrackChange } = this.props;
+    const tr = TrackChange
+      ? trackedTransaction(transaction, this.view.state, this)
+      : transaction;
+    const state = this.view.state.apply(tr);
     this.view.updateState(state);
     this.props.onChange(state.doc.content);
     this.forceUpdate();

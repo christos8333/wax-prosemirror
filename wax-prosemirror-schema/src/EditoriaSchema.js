@@ -355,23 +355,23 @@ const EditoriaSchema = {
         }
       ]
     },
-    small_caps: {
-      attrs: {
-        class: { default: "small-caps" }
-      },
-      inclusive: false,
-      parseDOM: [
-        {
-          tag: "span",
-          getAttrs(dom) {
-            return { class: dom.getAttribute("class") };
-          }
-        }
-      ],
-      toDOM(node) {
-        return ["span", node.attrs, 0];
-      }
-    },
+    // small_caps: {
+    //   attrs: {
+    //     class: { default: "small-caps" }
+    //   },
+    //   inclusive: false,
+    //   parseDOM: [
+    //     {
+    //       tag: "span",
+    //       getAttrs(dom) {
+    //         return { class: dom.getAttribute("class") };
+    //       }
+    //     }
+    //   ],
+    //   toDOM(node) {
+    //     return ["span", node.attrs, 0];
+    //   }
+    // },
     source: {
       parseDOM: [{ tag: "cite" }],
       toDOM() {

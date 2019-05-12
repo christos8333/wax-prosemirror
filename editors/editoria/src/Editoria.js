@@ -124,6 +124,7 @@ class Editoria extends Component {
           theme="editoria"
           layout="editoria"
           fileUpload={file => renderImage(file)}
+          debug
           value=""
         >
           {({ editor, view, ...props }) => (

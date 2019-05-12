@@ -1,5 +1,5 @@
 import { Plugin, PluginKey } from "prosemirror-state";
-import { Decoration, DecorationSet, EditorView } from "prosemirror-view";
+import { Decoration, DecorationSet } from "prosemirror-view";
 
 import { findSelectedChanges } from "./find_selected_changes";
 import { deactivateAllSelectedChanges } from "./helpers";
@@ -15,18 +15,18 @@ export default options => {
     key,
     state: {
       init(config, state) {
-        // Make sure there are colors for all users who have left marks in the document
-        const userIds = "33";
+        const userIds = ["33"];
         state.doc.descendants(node => {
           if (node.attrs.track) {
+            console.log("11111111");
             node.attrs.track.forEach(track => {
               if (!userIds.includes(track.user) && track.user !== 0) {
                 userIds.push(track.user);
               }
             });
           } else {
+            console.log(node.marks);
             node.marks.forEach(mark => {
-              console.log("dkddkdkdk");
               if (
                 ["deletion", "insertion", "format_change"].includes(
                   mark.type.name
@@ -63,6 +63,7 @@ export default options => {
             ? Decoration.node
             : Decoration.inline;
           if (insertion) {
+            console.log("insertion");
             decos = decos.add(tr.doc, [
               decoType(
                 insertion.from,
@@ -75,6 +76,7 @@ export default options => {
             ]);
           }
           if (deletion) {
+            console.log("deletion");
             decos = decos.add(tr.doc, [
               decoType(
                 deletion.from,
@@ -87,6 +89,7 @@ export default options => {
             ]);
           }
           if (formatChange) {
+            console.log("change format");
             decos = decos.add(tr.doc, [
               decoType(
                 formatChange.from,
@@ -113,7 +116,6 @@ export default options => {
       },
       handleDOMEvents: {
         focus: (view, _event) => {
-          console.log(view);
           view.dispatch(deactivateAllSelectedChanges(view.state.tr));
         }
       }

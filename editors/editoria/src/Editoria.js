@@ -29,6 +29,7 @@ import { EditoriaSchema } from "wax-prosemirror-schema";
 import { LinkToolTipPlugin } from "wax-prosemirror-plugins";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
+import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
 
 const extraNodes = {

@@ -35,6 +35,182 @@ const EditoriaSchema = {
         return pDOM;
       }
     },
+    author: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "author" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    epigraphProse: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "epigraph-prose" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    epigraphPoetry: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "epigraph-poetry" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    sourceNote: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "source-note" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    paragraphCont: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "paragraph-cont" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    extractProse: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "extract-prose" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    extractPoetry: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "extract-poetry" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    title: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "title" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
     subtitle: {
       content: "inline*",
       group: "block",

@@ -40,15 +40,21 @@
 /* Tables */
 
 .wax-t-editoria table {
-  border-spacing: 0px;
+  border-collapse: initial;
+  border-spacing: 0;
+  border-width: 0 thin thin 0;
+  border: 1px solid #eee;
   table-layout: fixed;
-  width: 50%;
+  width: 100%;
+  margin: 0;
   overflow: hidden;
+  page-break-inside: avoid;
 }
 
 .wax-t-editoria th,
 .wax-t-editoria td {
   border: 1px solid #eee;
+  /*width: 200px;*/
   padding: 2px 5px;
   vertical-align: top;
   box-sizing: border-box;
@@ -97,6 +103,34 @@
 
 .wax-t-editoria p.empty-node:first-child::before {
   content: attr(data-content);
+}
+
+/* invisible characters */
+.invisible {
+  pointer-events: none;
+  user-select: none;
+}
+
+.invisible:before {
+  caret-color: inherit;
+  color: gray;
+  display: inline-block;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1em;
+  width: 0;
+}
+
+.invisible--space:before {
+  content: "·";
+}
+
+.invisible--break:before {
+  content: "¬";
+}
+
+.invisible--par:after {
+  content: "¶";
 }
 
 /*LinkToolTip */

@@ -35,6 +35,182 @@ const EditoriaSchema = {
         return pDOM;
       }
     },
+    author: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "author" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    epigraphProse: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "epigraph-prose" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    epigraphPoetry: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "epigraph-poetry" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    sourceNote: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "source-note" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    paragraphCont: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "paragraph-cont" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    extractProse: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "extract-prose" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    extractPoetry: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "extract-poetry" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
+    title: {
+      content: "inline*",
+      group: "block",
+      priority: 0,
+      defining: true,
+      attrs: {
+        class: { default: "title" }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return ["p", node.attrs, 0];
+      }
+    },
     subtitle: {
       content: "inline*",
       group: "block",
@@ -78,24 +254,28 @@ const EditoriaSchema = {
   marks: {
     link: {
       attrs: {
-        href: {},
+        href: { default: null },
+        rel: { default: "" },
+        target: { default: "blank" },
         title: { default: null }
       },
       inclusive: false,
       parseDOM: [
         {
           tag: "a[href]",
-          getAttrs(dom) {
+          getAttrs: dom => {
+            const href = dom.getAttribute("href");
+            const target = href && href.indexOf("#") === 0 ? "" : "blank";
             return {
               href: dom.getAttribute("href"),
-              title: dom.getAttribute("title")
+              title: dom.getAttribute("title"),
+              target
             };
           }
         }
       ],
       toDOM(node) {
-        let { href, title } = node.attrs;
-        return ["a", { href, title }, 0];
+        return ["a", node.attrs, 0];
       }
     },
     em: {

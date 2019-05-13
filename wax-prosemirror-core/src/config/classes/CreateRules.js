@@ -7,7 +7,7 @@ import {
 
 class CreateRules {
   constructor(config) {
-    this.allRules = this.allRules.bind(this);
+    this.rules = config.rules;
     this.schema = config.schema;
     return inputRules(this.allRules(this.rules));
   }

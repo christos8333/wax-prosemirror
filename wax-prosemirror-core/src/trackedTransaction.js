@@ -54,7 +54,6 @@ const markInsertion = (
       );
     }
     if (node.type.name === "table") {
-      // A table was inserted. We don't add track marks to elements inside of it.
       return false;
     }
   });

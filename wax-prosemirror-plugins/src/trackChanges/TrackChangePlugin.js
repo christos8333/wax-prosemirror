@@ -1,7 +1,7 @@
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 
-import { findSelectedChanges } from "./find_selected_changes";
+import { findSelectedChanges } from "./FindSelectedChanges";
 import { deactivateAllSelectedChanges } from "./helpers";
 
 export const key = new PluginKey("track");

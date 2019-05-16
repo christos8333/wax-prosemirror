@@ -1,6 +1,6 @@
 import { getFromToMark } from "./helpers";
 
-export function findSelectedChanges(state) {
+const findSelectedChanges = state => {
   const selection = state.selection,
     selectedChanges = {
       insertion: false,
@@ -97,6 +97,7 @@ export function findSelectedChanges(state) {
       ? { from: formatChangePos, to: formatChangePos + formatChangeSize }
       : getFromToMark(state.doc, formatChangePos, formatChangeMark);
   }
-  console.log(selectedChanges);
   return selectedChanges;
-}
+};
+
+export { findSelectedChanges };

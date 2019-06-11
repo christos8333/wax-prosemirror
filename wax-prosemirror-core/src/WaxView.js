@@ -40,7 +40,7 @@ class WaxView extends Component {
   }
 
   uploadImage = file => {
-    const { state, dispatch } = this.view;
+    const { state } = this.view;
     const { findPlaceholder } = this;
     const { fileUpload } = this.props;
 
@@ -55,7 +55,7 @@ class WaxView extends Component {
       add: { id, pos: tr.selection.from }
     });
     
-    dispatch(tr);
+    this.view.dispatch(tr);
 
     fileUpload(file).then(
       url => {
@@ -81,7 +81,7 @@ class WaxView extends Component {
       },
       () => {
         // On failure, just clean up the placeholder
-        dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
+        this.view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
       }
     );
   };
@@ -97,6 +97,7 @@ class WaxView extends Component {
     const state = this.view.state.apply(transaction);
     this.view.updateState(state);
     this.props.onChange(state.doc.content);
+    this.forceUpdate()
   };
 
   render() {

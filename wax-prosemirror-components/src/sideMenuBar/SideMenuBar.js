@@ -23,8 +23,7 @@ const setMenuItems = (menu, menuItems) => {
 const SideMenuBar = ({
   menuItems = [],
   children,
-  state,
-  dispatch,
+  view,
   className,
   fileUpload
 }) => (
@@ -34,7 +33,7 @@ const SideMenuBar = ({
         {
           <span>
             {map(setMenuItems(SideMenuItems, menuItems), item =>
-              item.menu({ state, dispatch, item, fileUpload })
+              item.menu({ view, item, fileUpload })
             )}
           </span>
         }

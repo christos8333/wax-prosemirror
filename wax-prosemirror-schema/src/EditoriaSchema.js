@@ -26,7 +26,24 @@ const EditoriaSchema = {
         return brDOM;
       }
     },
-
+    image: {
+      inline: true,
+      attrs: {
+        src: {},
+        alt: {default: null},
+        title: {default: null}
+      },
+      group: "inline",
+      draggable: true,
+      parseDOM: [{tag: "img[src]", getAttrs(dom) {
+        return {
+          src: dom.getAttribute("src"),
+          title: dom.getAttribute("title"),
+          alt: dom.getAttribute("alt")
+        }
+      }}],
+      toDOM(node) { let {src, alt, title} = node.attrs; return ["img", {src, alt, title}] }
+    },
     paragraph: {
       content: "inline*",
       group: "block",

@@ -8,20 +8,20 @@ const ButtonStyled = styled.button`
   pointer-events: ${props => (props.select ? "default" : "none")};
 `;
 
-const Button = ({ dispatch, state, item }) => (
+const Button = ({ view = {}, item }) => (
   <ButtonStyled
     type="button"
     className={classnames({
       [classes.button]: true,
-      [classes.active]: item.active && item.active(state)
+      [classes.active]: item.active && item.active(view.state)
     })}
     title={item.title}
-    disabled={item.enable && !item.enable(state)}
+    disabled={item.enable && !item.enable(view.state)}
     onMouseDown={e => {
       e.preventDefault();
-      item.run(state, dispatch);
+      item.run(view.state, view.dispatch);
     }}
-    select={item.select && item.select(state)}
+    select={item.select && item.select(view.state)}
   >
     {item.content}
   </ButtonStyled>

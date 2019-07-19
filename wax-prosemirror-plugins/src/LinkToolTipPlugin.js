@@ -12,7 +12,8 @@ class LinkToolTip {
   constructor(view) {
     this.tooltip = document.createElement("div");
     this.tooltip.className = "tooltip";
-    view.dom.parentNode.appendChild(this.tooltip);
+
+    view.dom.appendChild(this.tooltip);
 
     this.update(view, null);
   }

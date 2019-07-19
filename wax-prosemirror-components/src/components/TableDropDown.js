@@ -32,7 +32,7 @@ const dropDownOptions = [
   { label: "Toggle header cells", value: "toggleHeaderCell" }
 ];
 
-const TableDropDown = ({ dispatch, state, item }) => (
+const TableDropDown = ({ view: { dispatch, state }, item }) => (
   <DropdownStyled
     options={dropDownOptions}
     onChange={option => {

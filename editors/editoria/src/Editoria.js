@@ -60,7 +60,7 @@ const schema = new CreateSchema(EditoriaSchema);
 const plugins = [
   columnResizing(),
   tableEditing(),
-  LinkToolTipPlugin,
+  // LinkToolTipPlugin,
   invisibles([hardBreak()])
 ];
 
@@ -112,6 +112,15 @@ class Editoria extends Component {
           placeholder="Type Something..."
           theme="editoria"
           layout="editoria"
+          fileUpload={file => {
+            let reader = new FileReader();
+            return new Promise((accept, fail) => {
+              reader.onload = () => accept(reader.result);
+              reader.onerror = () => fail(reader.error);
+              // Some extra delay to make the asynchronicity visible
+              setTimeout(() => reader.readAsDataURL(file), 1500);
+            });
+          }}
           value="<p>hello</p>
           <ul><li>listItem 1</li><li>listItem 2</li><li>listItem 3</li></ul>
           <table>
@@ -119,16 +128,17 @@ class Editoria extends Component {
            <tr><td>Jill</td><td>Smith</td><td>50</td></tr>
            <tr><td>Eve</td><td>Jackson</td><td>94</td></tr>
          </table>"
-          renderLayout={({ editor, ...props }) => (
+        >
+          {({ editor, view, ...props }) => (
             <React.Fragment>
-              <MainMenuBar {...props} />
+              <MainMenuBar view={view} {...props} />
               <div className="wax-surface-container">
-                <SideMenuBar {...props} />
+                <SideMenuBar view={view} {...props} />
                 {editor}
               </div>
             </React.Fragment>
           )}
-        />
+        </StyledWax>
       </React.Fragment>
     );
   }

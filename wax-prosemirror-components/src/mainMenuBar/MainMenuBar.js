@@ -24,8 +24,7 @@ const setMenuItems = (menu, menuItems) => {
 const MainMenuBar = ({
   menuItems = [],
   children,
-  state,
-  dispatch,
+  view,
   className,
   fileUpload
 }) => (
@@ -35,7 +34,7 @@ const MainMenuBar = ({
         {
           <span className={classes.group}>
             {map(setMenuItems(MainMenuBarItems, menuItems), item =>
-              item.menu({ state, dispatch, item, fileUpload })
+              item.menu({ view, item, fileUpload })
             )}
           </span>
         }

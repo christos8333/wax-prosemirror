@@ -71,7 +71,7 @@ export default {
     enable: undo,
     run: undo,
     select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
+  menu: props => <Button key={uuid()} {...props} />
   },
   redo: {
     title: "Redo last undone change",

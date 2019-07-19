@@ -11,9 +11,9 @@ import "prosemirror-gapcursor/style/gapcursor.css";
 class WaxView extends Component {
   constructor(props) {
     super(props);
-    const {readonly, onBlur } = this.props;
+    const { readonly, onBlur } = this.props;
 
-    this.editorRef = React.createRef()
+    this.editorRef = React.createRef();
 
     // Create view of Editor
     this.view = new EditorView(null, {
@@ -33,7 +33,7 @@ class WaxView extends Component {
 
   componentDidMount() {
     const { autoFocus, debug } = this.props;
-    this.editorRef.current.appendChild(this.view.dom)
+    this.editorRef.current.appendChild(this.view.dom);
 
     if (debug) applyDevTools(this.view);
     if (autoFocus) this.view.focus();
@@ -54,7 +54,7 @@ class WaxView extends Component {
     tr.setMeta(placeholderPlugin, {
       add: { id, pos: tr.selection.from }
     });
-    
+
     this.view.dispatch(tr);
 
     fileUpload(file).then(
@@ -88,7 +88,6 @@ class WaxView extends Component {
 
   findPlaceholder = (state, id) => {
     const decos = placeholderPlugin.getState(state);
-    debugger;
     const found = decos.find(null, null, spec => spec.id === id);
     return found.length ? found[0].from : null;
   };
@@ -97,7 +96,7 @@ class WaxView extends Component {
     const state = this.view.state.apply(transaction);
     this.view.updateState(state);
     this.props.onChange(state.doc.content);
-    this.forceUpdate()
+    this.forceUpdate();
   };
 
   render() {

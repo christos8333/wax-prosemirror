@@ -101,7 +101,6 @@ class Wax extends Component {
           options={this.WaxOptions}
           placeholder={placeholder}
           fileUpload={fileUpload}
-          // renderLayout={WaxRender}
           theme={theme}
           onBlur={onBlur || (value => true)}
           onChange={this.onChange || (value => true)}

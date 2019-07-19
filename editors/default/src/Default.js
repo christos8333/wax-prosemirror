@@ -21,7 +21,9 @@ class Default extends Component {
         theme="default"
         layout="default"
         debug
-      />
+      >
+        {({ editor }) => <React.Fragment>{editor}</React.Fragment>}
+      </Wax>
     );
   }
 }

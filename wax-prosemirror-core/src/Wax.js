@@ -89,7 +89,7 @@ class Wax extends Component {
       <React.Fragment>{editor}</React.Fragment>
     );
 
-    const WaxRender = children.length ? children : defaultRender;
+    const WaxRender = children ? children : defaultRender;
     const WaxLayout = layout
       ? `wax-container wax-l-${layout}`
       : "wax-container";

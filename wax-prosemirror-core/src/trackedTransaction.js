@@ -194,14 +194,12 @@ const trackedTransaction = (tr, state, editor) => {
   if (
     !tr.steps.length ||
     (tr.meta &&
-      !Object.keys(tr.meta).every(
-        // Only replace TRs that have no metadata or only inputType metadata
-        metadata => ["inputType", "uiEvent", "paste"].includes(metadata)
+      !Object.keys(tr.meta).every(metadata =>
+        ["inputType", "uiEvent", "paste"].includes(metadata)
       )) ||
     // don't replace history TRs
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {
-    // None of the transactions change the doc, or all are remote, come from footnotes, are footnote creations, history or fixing IDs. Give up.
     return tr;
   }
   const user = "editor.user.id",
@@ -466,7 +464,7 @@ const trackedTransaction = (tr, state, editor) => {
     }
   });
 
-  // We copy the input type meta data from the original transaction.
+  // copy the input type meta data from the original transaction.
   if (tr.getMeta("inputType")) {
     newTr.setMeta(tr.getMeta("inputType"));
   }
@@ -491,8 +489,9 @@ const trackedTransaction = (tr, state, editor) => {
   }
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
+    const caretPos = map.map(tr.selection.from, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   }
-
   return newTr;
 };
 

@@ -201,7 +201,6 @@ const trackedTransaction = (tr, state, editor) => {
     // don't replace history TRs
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {
-    console.log(tr);
     return tr;
   }
   const user = "editor.user.id",

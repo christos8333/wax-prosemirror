@@ -23,6 +23,29 @@ const parseFormatList = str => {
   return formatList.filter(format => typeof format === "string"); // ensure there are only strings in list
 };
 
+const parseTracks = str => {
+  if (!str) {
+    return [];
+  }
+  let tracks;
+  try {
+    tracks = JSON.parse(str);
+  } catch (error) {
+    return [];
+  }
+  if (!Array.isArray(tracks)) {
+    return [];
+  }
+  return tracks.filter(
+    (
+      track // ensure required fields are present
+    ) =>
+      track.hasOwnProperty("user") &&
+      track.hasOwnProperty("username") &&
+      track.hasOwnProperty("date")
+  );
+};
+
 const EditoriaSchema = {
   nodes: {
     doc: {
@@ -46,26 +69,51 @@ const EditoriaSchema = {
       inline: true,
       attrs: {
         src: {},
-        alt: {default: null},
-        title: {default: null}
+        alt: { default: null },
+        title: { default: null }
       },
       group: "inline",
       draggable: true,
-      parseDOM: [{tag: "img[src]", getAttrs(dom) {
-        return {
-          src: dom.getAttribute("src"),
-          title: dom.getAttribute("title"),
-          alt: dom.getAttribute("alt")
+      parseDOM: [
+        {
+          tag: "img[src]",
+          getAttrs(dom) {
+            return {
+              src: dom.getAttribute("src"),
+              title: dom.getAttribute("title"),
+              alt: dom.getAttribute("alt")
+            };
+          }
         }
-      }}],
-      toDOM(node) { let {src, alt, title} = node.attrs; return ["img", {src, alt, title}] }
+      ],
+      toDOM(node) {
+        let { src, alt, title } = node.attrs;
+        return ["img", { src, alt, title }];
+      }
     },
     paragraph: {
-      content: "inline*",
       group: "block",
-      parseDOM: [{ tag: "p" }],
-      toDOM() {
-        return pDOM;
+      content: "inline*",
+      attrs: {
+        track: {
+          default: []
+        }
+      },
+      parseDOM: [
+        {
+          tag: "p",
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        const attrs = node.attrs.track.length
+          ? { "data-track": JSON.stringify(node.attrs.track) }
+          : {};
+        return ["p", attrs, 0];
       }
     },
     author: {

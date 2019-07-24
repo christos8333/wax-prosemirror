@@ -489,8 +489,14 @@ const trackedTransaction = (tr, state, editor) => {
   }
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    if (
+      tr.selection instanceof TextSelection &&
+      (tr.selection.from < state.selection.from ||
+        tr.getMeta("inputType") === "deleteContentBackward")
+    ) {
+      const caretPos = map.map(tr.selection.from, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    }
   }
   return newTr;
 };

@@ -192,12 +192,6 @@ const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
 
 const trackedTransaction = (tr, state, editor) => {
   if (
-    !tr.steps.length ||
-    (tr.meta &&
-      !Object.keys(tr.meta).every(
-        // Only replace TRs that have no metadata or only inputType metadata
-        metadata => ["inputType", "uiEvent"].includes(metadata)
-      )) ||
     // don't replace history TRs
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {
@@ -465,10 +459,10 @@ const trackedTransaction = (tr, state, editor) => {
     }
   });
 
+  // We copy the input type meta data from the original transaction.
   if (tr.getMeta("inputType")) {
     newTr.setMeta(tr.getMeta("inputType"));
   }
-
   if (tr.getMeta("uiEvent")) {
     newTr.setMeta(tr.getMeta("uiEvent"));
   }

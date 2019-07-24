@@ -126,7 +126,7 @@ class Editoria extends Component {
           fileUpload={file => renderImage(file)}
           debug
           TrackChange
-          value=""
+          value="<p>this is</p><p>a second</p"
         >
           {({ editor, view, ...props }) => (
             <React.Fragment>

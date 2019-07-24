@@ -46,6 +46,13 @@ const parseTracks = str => {
   );
 };
 
+const blockLevelToDOM = node => {
+  const attrs = node.attrs.track.length
+    ? { "data-track": JSON.stringify(node.attrs.track) }
+    : {};
+  return attrs;
+};
+
 const EditoriaSchema = {
   nodes: {
     doc: {
@@ -110,9 +117,7 @@ const EditoriaSchema = {
         }
       ],
       toDOM(node) {
-        const attrs = node.attrs.track.length
-          ? { "data-track": JSON.stringify(node.attrs.track) }
-          : {};
+        const attrs = blockLevelToDOM(node);
         return ["p", attrs, 0];
       }
     },

@@ -112,6 +112,12 @@ const renderImage = file => {
   });
 };
 
+const text = `<h1> this is a title</h1><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+</p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+</p>`;
+
 class Editoria extends Component {
   render() {
     return (
@@ -126,7 +132,7 @@ class Editoria extends Component {
           fileUpload={file => renderImage(file)}
           debug
           TrackChange
-          value="<p>this is</p><p>a second</p"
+          value={text}
         >
           {({ editor, view, ...props }) => (
             <React.Fragment>

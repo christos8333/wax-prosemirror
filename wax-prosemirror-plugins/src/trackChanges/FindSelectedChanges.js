@@ -28,7 +28,6 @@ const findSelectedChanges = state => {
         insertionPos = selection.from;
       }
       deletionMark = marks.find(mark => mark.type.name === "deletion");
-      console.log("selection", state);
       if (deletionMark) {
         deletionPos = selection.from;
       }
@@ -56,7 +55,6 @@ const findSelectedChanges = state => {
         }
       }
       if (!deletionMark) {
-        console.log("deletion");
         deletionMark = node.attrs.track
           ? node.attrs.track.find(trackAttr => trackAttr.type === "deletion")
           : node.marks.find(mark => mark.type.name === "deletion");

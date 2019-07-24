@@ -191,7 +191,6 @@ const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
 };
 
 const trackedTransaction = (tr, state, editor) => {
-  console.log(Object.keys(tr.meta));
   if (
     !tr.steps.length ||
     (tr.meta &&

@@ -48,7 +48,9 @@ const parseTracks = str => {
 
 const blockLevelToDOM = node => {
   const attrs = node.attrs.track.length
-    ? { "data-track": JSON.stringify(node.attrs.track) }
+    ? {
+        "data-track": JSON.stringify(node.attrs.track)
+      }
     : {};
   return attrs;
 };
@@ -102,15 +104,17 @@ const EditoriaSchema = {
       group: "block",
       content: "inline*",
       attrs: {
+        class: { default: "paragraph" },
         track: {
           default: []
         }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.paragraph",
           getAttrs(dom) {
             return {
+              class: dom.getAttribute("class"),
               track: parseTracks(dom.dataset.track)
             };
           }
@@ -127,20 +131,25 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "author" }
+        class: { default: "author" },
+        track: {
+          default: []
+        }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.author",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     epigraphProse: {

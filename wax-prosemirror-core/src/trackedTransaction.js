@@ -361,10 +361,7 @@ const trackedTransaction = (tr, state, editor) => {
             step.mark
           );
         }
-        if (
-          ["em", "strong", "underline"].includes(step.mark.type.name) &&
-          !node.marks.find(mark => mark.type === step.mark.type)
-        ) {
+        if (!node.marks.find(mark => mark.type === step.mark.type)) {
           const formatChangeMark = node.marks.find(
             mark => mark.type.name === "format_change"
           );
@@ -418,11 +415,7 @@ const trackedTransaction = (tr, state, editor) => {
             step.mark
           );
         }
-
-        if (
-          ["em", "strong", "underline"].includes(step.mark.type.name) &&
-          node.marks.find(mark => mark.type === step.mark.type)
-        ) {
+        if (node.marks.find(mark => mark.type === step.mark.type)) {
           const formatChangeMark = node.marks.find(
             mark => mark.type.name === "format_change"
           );

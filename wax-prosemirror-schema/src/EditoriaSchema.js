@@ -49,9 +49,10 @@ const parseTracks = str => {
 const blockLevelToDOM = node => {
   const attrs = node.attrs.track.length
     ? {
+        class: node.attrs.class,
         "data-track": JSON.stringify(node.attrs.track)
       }
-    : {};
+    : { class: node.attrs.class };
   return attrs;
 };
 
@@ -105,9 +106,7 @@ const EditoriaSchema = {
       content: "inline*",
       attrs: {
         class: { default: "paragraph" },
-        track: {
-          default: []
-        }
+        track: { default: [] }
       },
       parseDOM: [
         {
@@ -132,9 +131,7 @@ const EditoriaSchema = {
       defining: true,
       attrs: {
         class: { default: "author" },
-        track: {
-          default: []
-        }
+        track: { default: [] }
       },
       parseDOM: [
         {
@@ -158,20 +155,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "epigraph-prose" }
+        class: { default: "epigraph-prose" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     epigraphPoetry: {
@@ -180,20 +180,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "epigraph-poetry" }
+        class: { default: "epigraph-poetry" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     sourceNote: {
@@ -202,20 +205,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "source-note" }
+        class: { default: "source-note" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     paragraphCont: {
@@ -224,20 +230,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "paragraph-cont" }
+        class: { default: "paragraph-cont" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     extractProse: {
@@ -246,20 +255,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "extract-prose" }
+        class: { default: "extract-prose" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     extractPoetry: {
@@ -268,20 +280,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "extract-poetry" }
+        class: { default: "extract-poetry" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     title: {
@@ -290,20 +305,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "title" }
+        class: { default: "title" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     subtitle: {
@@ -312,37 +330,68 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "cst" }
+        class: { default: "cst" },
+        track: { default: [] }
       },
       parseDOM: [
         {
           tag: "p",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     heading: {
-      attrs: { level: { default: 1 } },
+      attrs: {
+        level: { default: 1 },
+        track: { default: [] }
+      },
       content: "inline*",
       group: "block",
       defining: true,
       parseDOM: [
-        { tag: "h1", attrs: { level: 1 } },
-        { tag: "h2", attrs: { level: 2 } },
-        { tag: "h3", attrs: { level: 3 } },
-        { tag: "h4", attrs: { level: 4 } },
-        { tag: "h5", attrs: { level: 5 } },
-        { tag: "h6", attrs: { level: 6 } }
+        {
+          tag: "h1",
+          attrs: { level: 1 },
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        },
+        {
+          tag: "h2",
+          attrs: { level: 2 },
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        },
+        {
+          tag: "h3",
+          attrs: { level: 3 },
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
       ],
       toDOM(node) {
-        return ["h" + node.attrs.level, 0];
+        const attrs = {};
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
+        return [`h${node.attrs.level}`, attrs, 0];
       }
     }
   },

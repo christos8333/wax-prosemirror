@@ -179,12 +179,15 @@ const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
       date: date1,
       before: { type: oldNode.type.name, attrs: oldNode.attrs }
     };
-    if (blockTrack.before.attrs.id) {
-      delete blockTrack.before.attrs.id;
-    }
+
+    // if (blockTrack.before.attrs.id) {
+    //   delete blockTrack.before.attrs.id;
+    // }
+
     if (blockTrack.before.attrs.track) {
       delete blockTrack.before.attrs.track;
     }
+
     track.push(blockTrack);
   }
   tr.setNodeMarkup(pos, null, Object.assign({}, newNode.attrs, { track }));
@@ -491,8 +494,7 @@ const trackedTransaction = (tr, state, editor) => {
     newTr.scrollIntoView();
     if (
       tr.selection instanceof TextSelection &&
-      (tr.selection.from < state.selection.from ||
-        tr.getMeta("inputType") === "deleteContentBackward")
+      tr.selection.from < state.selection.from
     ) {
       const caretPos = map.map(tr.selection.from, -1);
       newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));

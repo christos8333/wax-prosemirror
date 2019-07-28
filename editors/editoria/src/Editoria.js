@@ -20,7 +20,7 @@ import {
 import { emDash, ellipsis } from "prosemirror-inputrules";
 import invisibles, {
   space,
-  hardBreak,
+  hardBreak, 
   paragraph
 } from "@guardian/prosemirror-invisibles";
 

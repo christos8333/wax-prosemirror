@@ -83,7 +83,8 @@ class Wax extends Component {
       layout,
       theme,
       debug,
-      TrackChange
+      TrackChange,
+      user
     } = this.props;
 
     const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
@@ -107,6 +108,7 @@ class Wax extends Component {
           onChange={this.onChange || (value => true)}
           debug={debug}
           TrackChange={TrackChange}
+          user={user}
         >
           {WaxRender}
         </WaxView>

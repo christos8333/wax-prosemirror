@@ -205,7 +205,7 @@ const trackedTransaction = (tr, state, editor) => {
   ) {
     return tr;
   }
-  const user = "editor.user.id",
+  const user = editor.props.user.userId,
     approved = false,
     // !editor.view.state.doc.firstChild.attrs.tracked &&
     // editor.docInfo.access_rights !== "write-tracked",
@@ -214,7 +214,7 @@ const trackedTransaction = (tr, state, editor) => {
     exactDate = Date.now(),
     date10 = Math.floor(exactDate / 600000) * 10, // 10 minute interval
     date1 = Math.floor(exactDate / 60000), // 1 minute interval
-    username = "editor.user.username",
+    username = editor.props.user.username,
     // We only insert content if this is not directly a tr for cell deletion. This is because tables delete rows by deleting the
     // contents of each cell and replacing it with an empty paragraph.
     cellDeleteTr =

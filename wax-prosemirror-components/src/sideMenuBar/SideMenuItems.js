@@ -43,7 +43,6 @@ export default {
     title: "Change to Author",
     content: "Author",
     enable: state => {
-      console.log(state);
       return setBlockType(state.config.schema.nodes.author)(state);
     },
     run(state, dispatch) {

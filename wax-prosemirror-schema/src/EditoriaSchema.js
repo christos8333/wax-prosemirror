@@ -47,6 +47,7 @@ const parseTracks = str => {
 };
 
 const blockLevelToDOM = node => {
+  console.log(node);
   const attrs = node.attrs.track.length
     ? {
         class: node.attrs.class,

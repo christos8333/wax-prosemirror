@@ -187,6 +187,10 @@ span.insertion {
   background-color: #fffacf;
 }
 
+.format-change {
+  border-bottom: 2px solid blue;
+}
+
 [data-track] {
   position: relative;
 }
@@ -194,9 +198,9 @@ span.insertion {
 [data-track]::before {
   content: "";
   position: absolute;
-  border-left: 1px solid black;
+  border-left: 2px solid blue;
   left: -10px;
-  height: 22px;
+  height: 100%;
 }
 
 li[data-track]::before,

@@ -160,7 +160,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.epigraph-prose",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -185,7 +185,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.epigraph-poetry",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -210,7 +210,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.source-note",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -235,7 +235,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.paragraph-cont",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -260,7 +260,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.extract-prose",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -285,7 +285,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.extract-poetry",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -310,7 +310,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.title",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
@@ -335,7 +335,7 @@ const EditoriaSchema = {
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.cst",
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),

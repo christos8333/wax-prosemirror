@@ -94,9 +94,10 @@ export default {
     title: "Change to heading level 1",
     content: "Heading 1",
     enable: state => {
-      return setBlockType(state.config.schema.nodes.heading, { level: 1 })(
-        state
-      );
+      return setBlockType(state.config.schema.nodes.heading, {
+        level: 1,
+        track: []
+      })(state);
     },
     run(state, dispatch) {
       setBlockType(state.config.schema.nodes.heading, { level: 1 })(
@@ -111,9 +112,10 @@ export default {
     title: "Change to heading level 2",
     content: "Heading 2",
     enable: state => {
-      return setBlockType(state.config.schema.nodes.heading, { level: 2 })(
-        state
-      );
+      return setBlockType(state.config.schema.nodes.heading, {
+        level: 2,
+        track: []
+      })(state);
     },
     run(state, dispatch) {
       setBlockType(state.config.schema.nodes.heading, { level: 2 })(
@@ -128,9 +130,10 @@ export default {
     title: "Change to heading level 3",
     content: "Heading 3",
     enable: state => {
-      return setBlockType(state.config.schema.nodes.heading, { level: 3 })(
-        state
-      );
+      return setBlockType(state.config.schema.nodes.heading, {
+        level: 3,
+        track: []
+      })(state);
     },
     run(state, dispatch) {
       setBlockType(state.config.schema.nodes.heading, { level: 3 })(

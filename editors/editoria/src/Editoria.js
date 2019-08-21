@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import {
-  orderedList,
-  bulletList,
-  listItem,
   wrapInList,
   splitListItem,
   liftListItem,
@@ -20,7 +17,7 @@ import {
 import { emDash, ellipsis } from "prosemirror-inputrules";
 import invisibles, {
   space,
-  hardBreak, 
+  hardBreak,
   paragraph
 } from "@guardian/prosemirror-invisibles";
 
@@ -33,21 +30,6 @@ import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
 
 const extraNodes = {
-  ordered_list: {
-    ...orderedList,
-    content: "list_item+",
-    group: "block"
-  },
-  bullet_list: {
-    ...bulletList,
-    content: "list_item+",
-    group: "block"
-  },
-  list_item: {
-    ...listItem,
-    content: "paragraph block*",
-    group: "block"
-  },
   ...tableNodes({
     tableGroup: "block",
     cellContent: "block+"
@@ -112,7 +94,7 @@ const renderImage = file => {
   });
 };
 
-const text = `<h1>this is a title</h1><p class="paragraph" data-track="[{&quot;type&quot;:&quot;block_change&quot;,&quot;user&quot;:&quot;editor.user.id&quot;,&quot;username&quot;:&quot;editor.user.username&quot;,&quot;date&quot;:26069447,&quot;before&quot;:{&quot;type&quot;:&quot;author&quot;,&quot;attrs&quot;:{&quot;class&quot;:&quot;author&quot;}}}]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p class="author">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>`;
+const text = `<ul><li>sl jlkf jlfkjdf</li><li>sl jlkf jlfkjdf</li></ul><h1>this is a title</h1><p class="paragraph" data-track="[{&quot;type&quot;:&quot;block_change&quot;,&quot;user&quot;:&quot;editor.user.id&quot;,&quot;username&quot;:&quot;editor.user.username&quot;,&quot;date&quot;:26069447,&quot;before&quot;:{&quot;type&quot;:&quot;author&quot;,&quot;attrs&quot;:{&quot;class&quot;:&quot;author&quot;}}}]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p class="author">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>`;
 
 class Editoria extends Component {
   render() {

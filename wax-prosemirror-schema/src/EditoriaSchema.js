@@ -7,6 +7,55 @@ const emDOM = ["em", 0],
   strongDOM = ["strong", 0],
   codeDOM = ["code", 0];
 
+const parseFormatList = str => {
+  if (!str) {
+    return [];
+  }
+  let formatList;
+  try {
+    formatList = JSON.parse(str);
+  } catch (error) {
+    return [];
+  }
+  if (!Array.isArray(formatList)) {
+    return [];
+  }
+  return formatList.filter(format => typeof format === "string"); // ensure there are only strings in list
+};
+
+const parseTracks = str => {
+  if (!str) {
+    return [];
+  }
+  let tracks;
+  try {
+    tracks = JSON.parse(str);
+  } catch (error) {
+    return [];
+  }
+  if (!Array.isArray(tracks)) {
+    return [];
+  }
+  return tracks.filter(
+    (
+      track // ensure required fields are present
+    ) =>
+      track.hasOwnProperty("user") &&
+      track.hasOwnProperty("username") &&
+      track.hasOwnProperty("date")
+  );
+};
+
+const blockLevelToDOM = node => {
+  const attrs = node.attrs.track.length
+    ? {
+        class: node.attrs.class,
+        "data-track": JSON.stringify(node.attrs.track)
+      }
+    : { class: node.attrs.class };
+  return attrs;
+};
+
 const EditoriaSchema = {
   nodes: {
     doc: {
@@ -30,26 +79,56 @@ const EditoriaSchema = {
       inline: true,
       attrs: {
         src: {},
-        alt: {default: null},
-        title: {default: null}
+        alt: { default: null },
+        title: { default: null },
+        track: { default: [] }
       },
       group: "inline",
       draggable: true,
-      parseDOM: [{tag: "img[src]", getAttrs(dom) {
-        return {
-          src: dom.getAttribute("src"),
-          title: dom.getAttribute("title"),
-          alt: dom.getAttribute("alt")
+      parseDOM: [
+        {
+          tag: "img[src]",
+          getAttrs(dom) {
+            return {
+              src: dom.getAttribute("src"),
+              title: dom.getAttribute("title"),
+              track: parseTracks(dom.dataset.track),
+              alt: dom.getAttribute("alt")
+            };
+          }
         }
-      }}],
-      toDOM(node) { let {src, alt, title} = node.attrs; return ["img", {src, alt, title}] }
+      ],
+      toDOM(node) {
+        const attrs = {};
+        let temp = "";
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
+        let { src, alt, title } = node.attrs;
+        return ["img", { src, alt, title }];
+      }
     },
     paragraph: {
-      content: "inline*",
       group: "block",
-      parseDOM: [{ tag: "p" }],
-      toDOM() {
-        return pDOM;
+      content: "inline*",
+      attrs: {
+        class: { default: "paragraph" },
+        track: { default: [] }
+      },
+      parseDOM: [
+        {
+          tag: "p.paragraph",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     author: {
@@ -58,20 +137,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "author" }
+        class: { default: "author" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.author",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     epigraphProse: {
@@ -80,20 +162,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "epigraph-prose" }
+        class: { default: "epigraph-prose" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.epigraph-prose",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     epigraphPoetry: {
@@ -102,20 +187,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "epigraph-poetry" }
+        class: { default: "epigraph-poetry" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.epigraph-poetry",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     sourceNote: {
@@ -124,20 +212,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "source-note" }
+        class: { default: "source-note" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.source-note",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     paragraphCont: {
@@ -146,20 +237,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "paragraph-cont" }
+        class: { default: "paragraph-cont" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.paragraph-cont",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     extractProse: {
@@ -168,20 +262,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "extract-prose" }
+        class: { default: "extract-prose" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.extract-prose",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     extractPoetry: {
@@ -190,20 +287,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "extract-poetry" }
+        class: { default: "extract-poetry" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.extract-poetry",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     title: {
@@ -212,20 +312,23 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "title" }
+        class: { default: "title" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.title",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     subtitle: {
@@ -234,38 +337,146 @@ const EditoriaSchema = {
       priority: 0,
       defining: true,
       attrs: {
-        class: { default: "cst" }
+        class: { default: "cst" },
+        track: { default: [] }
       },
       parseDOM: [
         {
-          tag: "p",
+          tag: "p.cst",
           getAttrs(dom) {
             return {
-              class: dom.getAttribute("class")
+              class: dom.getAttribute("class"),
+              track: parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        return ["p", node.attrs, 0];
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     },
     heading: {
-      attrs: { level: { default: 1 } },
+      attrs: {
+        level: { default: 1 },
+        track: { default: [] }
+      },
       content: "inline*",
       group: "block",
       defining: true,
       parseDOM: [
-        { tag: "h1", attrs: { level: 1 } },
-        { tag: "h2", attrs: { level: 2 } },
-        { tag: "h3", attrs: { level: 3 } },
-        { tag: "h4", attrs: { level: 4 } },
-        { tag: "h5", attrs: { level: 5 } },
-        { tag: "h6", attrs: { level: 6 } }
+        {
+          tag: "h1",
+          attrs: { level: 1 },
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        },
+        {
+          tag: "h2",
+          attrs: { level: 2 },
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        },
+        {
+          tag: "h3",
+          attrs: { level: 3 },
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
       ],
       toDOM(node) {
-        return ["h" + node.attrs.level, 0];
+        const attrs = {};
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
+        return [`h${node.attrs.level}`, attrs, 0];
       }
+    },
+    ordered_list: {
+      group: "block",
+      content: "list_item+",
+      attrs: {
+        order: { default: 1 },
+        track: { default: [] }
+      },
+      parseDOM: [
+        {
+          tag: "ol",
+          getAttrs(dom) {
+            return {
+              order: dom.hasAttribute("start") ? +dom.getAttribute("start") : 1,
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        const attrs = {};
+        if (node.attrs.order !== 1) {
+          attrs.start = node.attrs.order;
+        }
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
+        return ["ol", attrs, 0];
+      }
+    },
+    bullet_list: {
+      group: "block",
+      content: "list_item+",
+      attrs: {
+        track: { default: [] }
+      },
+      parseDOM: [
+        {
+          tag: "ul",
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        const attrs = {};
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
+        return ["ul", attrs, 0];
+      }
+    },
+    list_item: {
+      content: "block+",
+      attrs: {
+        track: { default: [] }
+      },
+      parseDOM: [
+        {
+          tag: "li",
+          getAttrs(dom) {
+            return {
+              track: parseTracks(dom.dataset.track)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        const attrs = {};
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
+        return ["li", attrs, 0];
+      },
+      defining: true
     }
   },
   marks: {
@@ -355,27 +566,170 @@ const EditoriaSchema = {
         }
       ]
     },
-    small_caps: {
-      attrs: {
-        class: { default: "small-caps" }
-      },
-      inclusive: false,
-      parseDOM: [
-        {
-          tag: "span",
-          getAttrs(dom) {
-            return { class: dom.getAttribute("class") };
-          }
-        }
-      ],
-      toDOM(node) {
-        return ["span", node.attrs, 0];
-      }
-    },
+    // small_caps: {
+    //   attrs: {
+    //     class: { default: "small-caps" }
+    //   },
+    //   inclusive: false,
+    //   parseDOM: [
+    //     {
+    //       tag: "span",
+    //       getAttrs(dom) {
+    //         return { class: dom.getAttribute("class") };
+    //       }
+    //     }
+    //   ],
+    //   toDOM(node) {
+    //     return ["span", node.attrs, 0];
+    //   }
+    // },
     source: {
       parseDOM: [{ tag: "cite" }],
       toDOM() {
         return ["cite", 0];
+      }
+    },
+    insertion: {
+      attrs: {
+        user: {
+          default: 0
+        },
+        username: {
+          default: ""
+        },
+        date: {
+          default: 0
+        },
+        approved: {
+          default: true
+        }
+      },
+      inclusive: false,
+      group: "track",
+      parseDOM: [
+        {
+          tag: "span.insertion",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date),
+              inline: true,
+              approved: false
+            };
+          }
+        },
+        {
+          tag: "span.approved-insertion",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date),
+              inline: true,
+              approved: true
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return [
+          "span",
+          {
+            class: node.attrs.approved
+              ? "approved-insertion"
+              : `insertion user-${node.attrs.user}`,
+            "data-user": node.attrs.user,
+            "data-username": node.attrs.username,
+            "data-date": node.attrs.date
+          }
+        ];
+      }
+    },
+    deletion: {
+      attrs: {
+        user: {
+          default: 0
+        },
+        username: {
+          default: ""
+        },
+        date: {
+          default: 0
+        }
+      },
+      inclusive: false,
+      group: "track",
+      parseDOM: [
+        {
+          tag: "span.deletion",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return [
+          "span",
+          {
+            class: `deletion user-${node.attrs.user}`,
+            "data-user": node.attrs.user,
+            "data-username": node.attrs.username,
+            "data-date": node.attrs.date
+          }
+        ];
+      }
+    },
+    format_change: {
+      attrs: {
+        user: {
+          default: 0
+        },
+        username: {
+          default: ""
+        },
+        date: {
+          default: 0
+        },
+        before: {
+          default: []
+        },
+        after: {
+          default: []
+        }
+      },
+      inclusive: false,
+      group: "track",
+      parseDOM: [
+        {
+          tag: "span.format-change",
+          getAttrs(dom) {
+            return {
+              user: parseInt(dom.dataset.user),
+              username: dom.dataset.username,
+              date: parseInt(dom.dataset.date),
+              before: parseFormatList(dom.dataset.before),
+              after: parseFormatList(dom.dataset.after)
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        return [
+          "span",
+          {
+            class: `format-change user-${node.attrs.user}`,
+            "data-user": node.attrs.user,
+            "data-username": node.attrs.username,
+            "data-date": node.attrs.date,
+            "data-before": JSON.stringify(node.attrs.before),
+            "data-after": JSON.stringify(node.attrs.after)
+          }
+        ];
       }
     }
   }

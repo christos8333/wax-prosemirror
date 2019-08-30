@@ -7,6 +7,7 @@ import { EditorView } from "prosemirror-view";
 import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
 import "prosemirror-gapcursor/style/gapcursor.css";
+import trackedTransaction from "./config/track-changes/trackedTransaction";
 
 class WaxView extends Component {
   constructor(props) {
@@ -93,7 +94,11 @@ class WaxView extends Component {
   };
 
   dispatchTransaction = transaction => {
-    const state = this.view.state.apply(transaction);
+    const { TrackChange } = this.props;
+    const tr = TrackChange
+      ? trackedTransaction(transaction, this.view.state, this)
+      : transaction;
+    const state = this.view.state.apply(tr);
     this.view.updateState(state);
     this.props.onChange(state.doc.content);
     this.forceUpdate();

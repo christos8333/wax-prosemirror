@@ -82,7 +82,9 @@ class Wax extends Component {
       onBlur,
       layout,
       theme,
-      debug
+      debug,
+      TrackChange,
+      user
     } = this.props;
 
     const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
@@ -105,6 +107,8 @@ class Wax extends Component {
           onBlur={onBlur || (value => true)}
           onChange={this.onChange || (value => true)}
           debug={debug}
+          TrackChange={TrackChange}
+          user={user}
         >
           {WaxRender}
         </WaxView>

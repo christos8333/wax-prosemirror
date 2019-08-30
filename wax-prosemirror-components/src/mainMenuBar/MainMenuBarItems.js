@@ -118,19 +118,19 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  small_caps: {
-    title: "Toggle Small Caps",
-    content: icons.small_caps,
-    active: state => {
-      return markActive(state.config.schema.marks.small_caps)(state);
-    },
-    run(state, dispatch) {
-      toggleMark(state.config.schema.marks.small_caps)(state, dispatch);
-    },
-
-    select: state => true,
-    menu: props => <Button key={uuid()} {...props} />
-  },
+  // small_caps: {
+  //   title: "Toggle Small Caps",
+  //   content: icons.small_caps,
+  //   active: state => {
+  //     return markActive(state.config.schema.marks.small_caps)(state);
+  //   },
+  //   run(state, dispatch) {
+  //     toggleMark(state.config.schema.marks.small_caps)(state, dispatch);
+  //   },
+  //
+  //   select: state => true,
+  //   menu: props => <Button key={uuid()} {...props} />
+  // },
   subscript: {
     title: "Toggle subscript",
     content: icons.subscript,

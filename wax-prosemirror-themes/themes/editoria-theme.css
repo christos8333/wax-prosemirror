@@ -170,3 +170,40 @@
   border-bottom-width: 0;
   border-top-color: white;
 }
+
+span.deletion {
+  text-decoration: line-through;
+  color: red;
+}
+
+span.insertion {
+  color: blue;
+}
+
+.selected-insertion,
+.selected-deletion,
+.selected-format-change,
+.selected-block-change {
+  background-color: #fffacf;
+}
+
+.format-change {
+  border-bottom: 2px solid blue;
+}
+
+[data-track] {
+  position: relative;
+}
+
+[data-track]::before {
+  content: "";
+  position: absolute;
+  border-left: 2px solid blue;
+  left: -10px;
+  height: 100%;
+}
+
+li[data-track]::before,
+li [data-track]::before {
+  left: -5px;
+}

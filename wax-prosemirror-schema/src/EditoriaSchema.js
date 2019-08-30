@@ -47,7 +47,6 @@ const parseTracks = str => {
 };
 
 const blockLevelToDOM = node => {
-  console.log(node);
   const attrs = node.attrs.track.length
     ? {
         class: node.attrs.class,
@@ -81,7 +80,8 @@ const EditoriaSchema = {
       attrs: {
         src: {},
         alt: { default: null },
-        title: { default: null }
+        title: { default: null },
+        track: { default: [] }
       },
       group: "inline",
       draggable: true,
@@ -92,12 +92,18 @@ const EditoriaSchema = {
             return {
               src: dom.getAttribute("src"),
               title: dom.getAttribute("title"),
+              track: parseTracks(dom.dataset.track),
               alt: dom.getAttribute("alt")
             };
           }
         }
       ],
       toDOM(node) {
+        const attrs = {};
+        let temp = "";
+        if (node.attrs.track.length) {
+          attrs["data-track"] = JSON.stringify(node.attrs.track);
+        }
         let { src, alt, title } = node.attrs;
         return ["img", { src, alt, title }];
       }

@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { Wax, CreateSchema } from "wax-prosemirror-core";
-import { DefaultSchema } from "wax-prosemirror-schema";
+import { XpubSchema } from "wax-prosemirror-schema";
 import "wax-prosemirror-layouts/layouts/default-layout.css";
 import "wax-prosemirror-themes/themes/default-theme.css";
 
-const plugins = [];
-const keys = {};
-
 const options = {
-  schema: new CreateSchema(DefaultSchema)
+  schema: new CreateSchema(XpubSchema)
 };
 
 class Xpub extends Component {
@@ -17,9 +14,9 @@ class Xpub extends Component {
       <Wax
         options={options}
         autoFocus
-        placeholder="Type Something..."
         theme="default"
         layout="default"
+        value="<p>this is a par</p> <h1>this is a heading</h1><ul><li> one list</li></ul>"
       />
     );
   }

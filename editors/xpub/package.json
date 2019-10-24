@@ -1,17 +1,12 @@
 {
-  "name": "editoria",
+  "name": "xpub",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@guardian/prosemirror-invisibles": "^1.2.0",
-    "prosemirror-schema-list": "^1.0.0",
-    "prosemirror-tables": "^0.7.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.2.0",
-    "wax-prosemirror-components": "0.0.1",
     "wax-prosemirror-core": "0.0.1",
-    "wax-prosemirror-layouts": "0.0.1",
     "wax-prosemirror-schema": "0.0.1",
     "wax-prosemirror-themes": "0.0.1"
   },

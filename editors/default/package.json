@@ -24,6 +24,8 @@
   "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
     "react-app-rewired": "^2.1.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.2.0",
+    "babel-loader": "8.0.6",
+    "babel-eslint": "10.0.3"
   }
 }

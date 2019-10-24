@@ -12,6 +12,7 @@ class Xpub extends Component {
     return (
       <Wax
         options={options}
+        readonly
         theme="default"
         readonly
         value="<p>this is a par</p> <h1>this is a heading</h1><ul><li> one list</li></ul>"

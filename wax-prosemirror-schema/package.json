@@ -11,6 +11,5 @@
   "dependencies": {
     "prosemirror-schema-list": "^1.0.0",
     "prosemirror-tables": "^0.7.10"
-  },
-  "devDependencies": {}
+  }
 }

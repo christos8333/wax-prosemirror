@@ -11,6 +11,5 @@
   "dependencies": {
     "prosemirror-state": "^1.2.2",
     "prosemirror-view": "^1.8.9"
-  },
-  "devDependencies": {}
+  }
 }

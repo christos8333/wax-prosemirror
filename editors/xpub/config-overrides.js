@@ -6,7 +6,7 @@ module.exports = function override(config, env) {
           {
             test: /\.js$/,
             loader: "babel-loader",
-            exclude: /node_modules\/(?!(wax-prosemirror-core|wax-prosemirror-components|wax-prosemirror-plugins|wax-prosemirror-schema|wax-prosemirror-utilities)\/).*/,
+            exclude: /node_modules/,
             options: {
               presets: [
                 [require("@babel/preset-env"), { modules: false }],

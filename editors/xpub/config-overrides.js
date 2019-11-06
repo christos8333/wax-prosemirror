@@ -6,6 +6,7 @@ module.exports = function override(config, env) {
           {
             test: /\.js$/,
             loader: "babel-loader",
+            exclude: /node_modules/,
             options: {
               presets: [
                 [require("@babel/preset-env"), { modules: false }],

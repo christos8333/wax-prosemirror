@@ -1,65 +1,14 @@
 import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import {
-  wrapInList,
-  splitListItem,
-  liftListItem,
-  sinkListItem
-} from "prosemirror-schema-list";
 
-import {
-  tableNodes,
-  columnResizing,
-  tableEditing,
-  goToNextCell
-} from "prosemirror-tables";
-
-import { emDash, ellipsis } from "prosemirror-inputrules";
-import invisibles, {
-  space,
-  hardBreak,
-  paragraph
-} from "@guardian/prosemirror-invisibles";
-
-import { Wax, CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
-import { EditoriaSchema } from "wax-prosemirror-schema";
-import { LinkToolTipPlugin, TrackChangePlugin } from "wax-prosemirror-plugins";
+import { Wax } from "wax-prosemirror-core";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
 import "wax-prosemirror-themes/themes/editoria-theme.css";
 
-const extraNodes = {
-  ...tableNodes({
-    tableGroup: "block",
-    cellContent: "block+"
-  })
-};
+import { schema, keys, plugins, rules } from "./EditorConfig";
 
-EditoriaSchema.nodes = { ...EditoriaSchema.nodes, ...extraNodes };
-const schema = new CreateSchema(EditoriaSchema);
-
-const plugins = [
-  columnResizing(),
-  tableEditing(),
-  // LinkToolTipPlugin,
-  TrackChangePlugin({ options: {} }),
-  invisibles([hardBreak()])
-];
-
-const shortCuts = {
-  Tab: goToNextCell(1),
-  "Shift-Tab": goToNextCell(-1),
-  Enter: splitListItem(schema.nodes.list_item),
-  "Mod-[": liftListItem(schema.nodes.list_item),
-  "Mod-]": sinkListItem(schema.nodes.list_item),
-  "Shift-Ctrl-8": wrapInList(schema.nodes.bullet_list),
-  "Shift-Ctrl-9": wrapInList(schema.nodes.ordered_list)
-};
-
-const keys = new CreateShortCuts({ schema, shortCuts });
-
-const rules = [emDash, ellipsis];
 const options = {
   schema,
   plugins,
@@ -78,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
   }
   }
 `;
+
 const StyledWax = styled(Wax)`
   .wax-surface-scroll {
     height: ${props => (props.debug ? "50vh" : "100%")};

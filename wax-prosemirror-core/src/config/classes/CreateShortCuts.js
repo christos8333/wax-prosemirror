@@ -4,14 +4,9 @@ import { undo, redo } from "prosemirror-history";
 
 import {
   baseKeymap,
-  toggleMark,
-  wrapIn,
   setBlockType,
   chainCommands,
   exitCode,
-  joinUp,
-  joinDown,
-  lift,
   selectParentNode
 } from "prosemirror-commands";
 
@@ -55,26 +50,10 @@ class CreateShortCuts {
       "Shift-Mod-z": redo,
       Backspace: undoInputRule,
       "Mod-y": redo,
-      "Alt-ArrowUp": joinUp,
-      "Alt-ArrowDown": joinDown,
-      "Mod-BracketLeft": lift,
       Escape: selectParentNode,
-      "Mod-b": toggleMark(this.schema.marks.strong),
-      "Mod-i": toggleMark(this.schema.marks.em),
-      "Mod-u": toggleMark(this.schema.marks.underline),
-      "Mod-`": toggleMark(this.schema.marks.code),
-      "Ctrl->": wrapIn(this.schema.nodes.blockquote),
       "Mod-Enter": chainCommands(exitCode, this.insertBreak),
       "Shift-Enter": chainCommands(exitCode, this.insertBreak),
       "Ctrl-Enter": chainCommands(exitCode, this.insertBreak), // mac-only?
-      "Shift-Ctrl-0": setBlockType(this.schema.nodes.paragraph),
-      "Shift-Ctrl-\\": setBlockType(this.schema.nodes.code_block),
-      "Shift-Ctrl-1": setBlockType(this.schema.nodes.heading, { level: 1 }),
-      "Shift-Ctrl-2": setBlockType(this.schema.nodes.heading, { level: 2 }),
-      "Shift-Ctrl-3": setBlockType(this.schema.nodes.heading, { level: 3 }),
-      "Shift-Ctrl-4": setBlockType(this.schema.nodes.heading, { level: 4 }),
-      "Shift-Ctrl-5": setBlockType(this.schema.nodes.heading, { level: 5 }),
-      "Shift-Ctrl-6": setBlockType(this.schema.nodes.heading, { level: 6 }),
       "Mod-_": this.insertRule
     };
   }

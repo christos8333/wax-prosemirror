@@ -17,7 +17,7 @@ const ButtonStyled = styled.button`
     pointer-events: none;
   }
   &:hover {
-    color: #000;
+    color: ${props => (props.isActive ? props.theme.colorPrimary : "#000")};
     background: #f6f6f6;
   }
 `;

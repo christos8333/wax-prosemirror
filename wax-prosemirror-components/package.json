@@ -12,7 +12,6 @@
     "@fortawesome/fontawesome": "^1.1.2",
     "@fortawesome/fontawesome-free-solid": "^5.0.4",
     "@fortawesome/react-fontawesome": "^0.0.17",
-    "classnames": "^2.2.6",
     "lodash": "^4.17.4",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import { Wax } from "wax-prosemirror-core";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
-import { ThemeProvider } from "styled-components";
+import { cokoTheme } from "wax-prosemirror-themes";
+
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
 
-import { cokoTheme } from "wax-prosemirror-themes";
 import { schema, keys, plugins, rules } from "./EditorConfig";
 
 const options = {

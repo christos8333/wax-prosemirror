@@ -55,21 +55,21 @@ const text = `<ul><li><p class="paragraph">this is the li content</p></li><li><p
 class Editoria extends Component {
   render() {
     return (
-      <ThemeProvider theme={cokoTheme}>
-        <React.Fragment>
-          <GlobalStyle />
-          <StyledWax
-            options={options}
-            autoFocus
-            placeholder="Type Something..."
-            theme="editoria"
-            layout="editoria"
-            fileUpload={file => renderImage(file)}
-            debug
-            value=""
-            user={user}
-          >
-            {({ editor, view, ...props }) => (
+      <React.Fragment>
+        <GlobalStyle />
+        <StyledWax
+          options={options}
+          autoFocus
+          placeholder="Type Something..."
+          theme="editoria"
+          layout="editoria"
+          fileUpload={file => renderImage(file)}
+          debug
+          value=""
+          user={user}
+        >
+          {({ editor, view, ...props }) => (
+            <ThemeProvider theme={cokoTheme}>
               <React.Fragment>
                 <MainMenuBar view={view} {...props} />
                 <div className="wax-surface-container">
@@ -77,10 +77,10 @@ class Editoria extends Component {
                   {editor}
                 </div>
               </React.Fragment>
-            )}
-          </StyledWax>
-        </React.Fragment>
-      </ThemeProvider>
+            </ThemeProvider>
+          )}
+        </StyledWax>
+      </React.Fragment>
     );
   }
 }

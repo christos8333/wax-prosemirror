@@ -17,6 +17,8 @@ const cokoTheme = {
   colorTextPlaceholder: "#595959",
   colorWarning: "#ffc107",
 
+  /*Buttons*/
+  colorButton: "#777",
   /* Text variables */
 
   // fonts

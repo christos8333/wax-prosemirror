@@ -1,12 +1,9 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import { Wax } from "wax-prosemirror-core";
-import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
+import { EditoriaLayout } from "wax-prosemirror-layouts";
 import { cokoTheme } from "wax-prosemirror-themes";
-
-import "wax-prosemirror-layouts/layouts/editoria-layout.css";
-import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
 
 import { schema, keys, plugins, rules } from "./EditorConfig";
 
@@ -55,14 +52,12 @@ const user = {
 class Editoria extends Component {
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <GlobalStyle />
         <StyledWax
           options={options}
           autoFocus
           placeholder="Type Something..."
-          theme="editoria"
-          layout="editoria"
           fileUpload={file => renderImage(file)}
           debug
           value=""
@@ -70,17 +65,11 @@ class Editoria extends Component {
         >
           {({ editor, view, ...props }) => (
             <ThemeProvider theme={cokoTheme}>
-              <React.Fragment>
-                <MainMenuBar view={view} {...props} />
-                <div className="wax-surface-container">
-                  <SideMenuBar view={view} {...props} />
-                  {editor}
-                </div>
-              </React.Fragment>
+              <EditoriaLayout editor={editor} view={view} {...props} />
             </ThemeProvider>
           )}
         </StyledWax>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

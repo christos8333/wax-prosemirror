@@ -27,9 +27,9 @@ const SideMenuBar = ({
   className,
   fileUpload
 }) => (
-  <div className={`${className} side-menu-container`}>
-    <div className="side-menu-inner">
-      <div className="side-menu">
+  <div>
+    <div>
+      <div>
         {
           <span>
             {map(setMenuItems(SideMenuItems, menuItems), item =>

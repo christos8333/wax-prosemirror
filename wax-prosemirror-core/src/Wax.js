@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import debounce from "lodash/debounce";
 
 import { DOMParser, DOMSerializer } from "prosemirror-model";
@@ -46,8 +46,8 @@ class Wax extends Component {
     const editorContent = value ? value : "";
 
     const finalPlugins = defaultPlugins.concat([
-      placeholder({ content: this.props.placeholder }), 
-      WaxKeys, 
+      placeholder({ content: this.props.placeholder }),
+      WaxKeys,
       WaxRules
     ]);
     if (plugins) finalPlugins.push(...plugins);
@@ -89,22 +89,18 @@ class Wax extends Component {
     } = this.props;
 
     const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
-      <React.Fragment>{editor}</React.Fragment>
+      <Fragment>{editor}</Fragment>
     );
 
     const WaxRender = children ? children : defaultRender;
-    const WaxLayout = layout
-      ? `wax-container wax-l-${layout}`
-      : "wax-container";
     return (
-      <div className={`${WaxLayout} ${className}`}>
+      <div className={`${className}`}>
         <WaxView
           autoFocus={autoFocus}
           readonly={readonly}
           options={this.WaxOptions}
           placeholder={placeholder}
           fileUpload={fileUpload}
-          theme={theme}
           onBlur={onBlur || (value => true)}
           onChange={this.onChange || (value => true)}
           debug={debug}

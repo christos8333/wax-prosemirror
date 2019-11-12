@@ -105,12 +105,7 @@ class WaxView extends Component {
   };
 
   render() {
-    const { theme } = this.props;
-    const WaxTheme = theme
-      ? `wax-surface-scroll wax-t-${theme}`
-      : "wax-surface-scroll";
-
-    const editor = <div ref={this.editorRef} className={WaxTheme} />;
+    const editor = <div ref={this.editorRef} />;
     return this.props.children({
       view: this.view,
       fileUpload: this.uploadImage,

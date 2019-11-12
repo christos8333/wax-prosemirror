@@ -27,9 +27,9 @@ const MainMenuBar = ({
   className,
   fileUpload
 }) => (
-  <div className={`${className} main-menu-container`}>
-    <div className="main-menu-inner">
-      <div className="main-menu">
+  <div>
+    <div>
+      <div>
         {
           <span>
             {map(setMenuItems(MainMenuBarItems, menuItems), item =>

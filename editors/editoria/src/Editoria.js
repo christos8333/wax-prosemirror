@@ -3,10 +3,11 @@ import styled, { createGlobalStyle } from "styled-components";
 
 import { Wax } from "wax-prosemirror-core";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
+import { ThemeProvider } from "styled-components";
 import "wax-prosemirror-layouts/layouts/editoria-layout.css";
 import "wax-prosemirror-layouts/vars/wax-editoria-vars.css";
-import "wax-prosemirror-themes/themes/editoria-theme.css";
 
+import { cokoTheme } from "wax-prosemirror-themes";
 import { schema, keys, plugins, rules } from "./EditorConfig";
 
 const options = {
@@ -54,30 +55,32 @@ const text = `<ul><li><p class="paragraph">this is the li content</p></li><li><p
 class Editoria extends Component {
   render() {
     return (
-      <React.Fragment>
-        <GlobalStyle />
-        <StyledWax
-          options={options}
-          autoFocus
-          placeholder="Type Something..."
-          theme="editoria"
-          layout="editoria"
-          fileUpload={file => renderImage(file)}
-          debug
-          value=""
-          user={user}
-        >
-          {({ editor, view, ...props }) => (
-            <React.Fragment>
-              <MainMenuBar view={view} {...props} />
-              <div className="wax-surface-container">
-                <SideMenuBar view={view} {...props} />
-                {editor}
-              </div>
-            </React.Fragment>
-          )}
-        </StyledWax>
-      </React.Fragment>
+      <ThemeProvider theme={cokoTheme}>
+        <React.Fragment>
+          <GlobalStyle />
+          <StyledWax
+            options={options}
+            autoFocus
+            placeholder="Type Something..."
+            theme="editoria"
+            layout="editoria"
+            fileUpload={file => renderImage(file)}
+            debug
+            value=""
+            user={user}
+          >
+            {({ editor, view, ...props }) => (
+              <React.Fragment>
+                <MainMenuBar view={view} {...props} />
+                <div className="wax-surface-container">
+                  <SideMenuBar view={view} {...props} />
+                  {editor}
+                </div>
+              </React.Fragment>
+            )}
+          </StyledWax>
+        </React.Fragment>
+      </ThemeProvider>
     );
   }
 }

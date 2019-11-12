@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import React, { Fragment } from "react";
-
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 
 const WaxSurfaceContainer = styled.div`

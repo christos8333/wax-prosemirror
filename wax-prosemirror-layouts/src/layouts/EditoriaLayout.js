@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import { MainMenuBar, SideMenuBar, InfoArea } from "wax-prosemirror-components";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
+import ComponentPlugins from "./ComponentPlugins";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ const EditoriaLayout = ({ editor, view, ...props }) => (
         <SideMenuBar view={view} {...props} />
         <WaxSurfaceScroll className="wax-surface-scroll">
           {editor}
+          <ComponentPlugins state={view.state} />
         </WaxSurfaceScroll>
       </WaxSurfaceContainer>
       <InfoArea />

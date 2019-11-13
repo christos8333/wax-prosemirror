@@ -1,20 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import classnames from "classnames";
-import classes from "./Button.module.css";
+import { ButtonStyles } from "wax-prosemirror-themes";
 
 const ButtonStyled = styled.button`
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? "default" : "none")};
+  color: ${props =>
+    props.isActive ? props.theme.colorPrimary : props.theme.colorButton};
+  &:hover {
+    color: ${props => (props.isActive ? props.theme.colorPrimary : "#000")};
+  }
+  ${ButtonStyles};
 `;
 
-const Button = ({ view = {}, item }) => (
+const tesy = ({ view = {}, item }) => (
   <ButtonStyled
     type="button"
-    className={classnames({
-      [classes.button]: true,
-      [classes.active]: item.active && item.active(view.state)
-    })}
+    isActive={item.active && item.active(view.state)}
     title={item.title}
     disabled={item.enable && !item.enable(view.state)}
     onMouseDown={e => {
@@ -27,4 +29,4 @@ const Button = ({ view = {}, item }) => (
   </ButtonStyled>
 );
 
-export default Button;
+export default tesy;

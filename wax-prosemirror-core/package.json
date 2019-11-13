@@ -9,7 +9,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
     "lodash": "^4.17.4",
     "prosemirror-commands": "^1.0.7",
     "prosemirror-dev-tools": "^2.1.1",

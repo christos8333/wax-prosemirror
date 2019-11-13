@@ -4,8 +4,11 @@
   "version": "0.0.2",
   "description": "Wax prosemirror layouts",
   "license": "MIT",
-  "main": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@pubsweet/ui-toolkit": "^2.2.13"
   }
 }

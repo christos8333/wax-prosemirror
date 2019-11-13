@@ -75,7 +75,6 @@ const keys = new CreateShortCuts({ schema, shortCuts });
 const plugins = [
   columnResizing(),
   tableEditing(),
-  // LinkToolTipPlugin,
   TrackChangePlugin({ options: {} }),
   invisibles([hardBreak()])
 ];

@@ -1,6 +1,34 @@
 import React from "react";
+import styled from "styled-components";
+
 import { forEach, map } from "lodash";
 import MainMenuBarItems from "./MainMenuBarItems";
+
+const MainMenuContainer = styled.div`
+  background: #fff;
+  height: 52px;
+  line-height: 32px;
+  position: relative;
+  user-select: none;
+`;
+const MainMenuInner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent;
+  z-index: 9999;
+`;
+const MainMenu = styled.div`
+  background: #fff;
+  padding: 2px 2px 2px 0;
+  position: relative;
+  background: transparent;
+`;
 
 const filtered = (menu, menuItems) =>
   Object.keys(menu)
@@ -27,9 +55,9 @@ const MainMenuBar = ({
   className,
   fileUpload
 }) => (
-  <div>
-    <div>
-      <div>
+  <MainMenuContainer>
+    <MainMenuInner>
+      <MainMenu>
         {
           <span>
             {map(setMenuItems(MainMenuBarItems, menuItems), item =>
@@ -37,9 +65,9 @@ const MainMenuBar = ({
             )}
           </span>
         }
-      </div>
-    </div>
-  </div>
+      </MainMenu>
+    </MainMenuInner>
+  </MainMenuContainer>
 );
 
 export default MainMenuBar;

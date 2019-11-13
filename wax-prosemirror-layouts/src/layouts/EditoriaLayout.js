@@ -2,6 +2,12 @@ import styled from "styled-components";
 import React, { Fragment } from "react";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 
+const LayoutWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
 const WaxSurfaceContainer = styled.div`
   flex: 1;
   position: relative;
@@ -9,13 +15,13 @@ const WaxSurfaceContainer = styled.div`
 `;
 
 const EditoriaLayout = ({ editor, view, ...props }) => (
-  <Fragment>
+  <LayoutWrapper>
     <MainMenuBar view={view} {...props} />
     <WaxSurfaceContainer>
       <SideMenuBar view={view} {...props} />
       {editor}
     </WaxSurfaceContainer>
-  </Fragment>
+  </LayoutWrapper>
 );
 
 export default EditoriaLayout;

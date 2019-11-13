@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import React, { Fragment } from "react";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 import EditorElements from "./EditorElements";
+import { cokoTheme } from "wax-prosemirror-themes";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ const WaxSurfaceScroll = styled.div`
     width: 65%;
     min-height: 90%;
     padding: 40px;
+    font-family: ${props => props.theme.fontReading};
     &:focus {
       outline: none;
     }
@@ -41,13 +43,15 @@ const WaxSurfaceScroll = styled.div`
 `;
 
 const EditoriaLayout = ({ editor, view, ...props }) => (
-  <LayoutWrapper>
-    <MainMenuBar view={view} {...props} />
-    <WaxSurfaceContainer>
-      <SideMenuBar view={view} {...props} />
-      <WaxSurfaceScroll>{editor}</WaxSurfaceScroll>
-    </WaxSurfaceContainer>
-  </LayoutWrapper>
+  <ThemeProvider theme={cokoTheme}>
+    <LayoutWrapper>
+      <MainMenuBar view={view} {...props} />
+      <WaxSurfaceContainer>
+        <SideMenuBar view={view} {...props} />
+        <WaxSurfaceScroll>{editor}</WaxSurfaceScroll>
+      </WaxSurfaceContainer>
+    </LayoutWrapper>
+  </ThemeProvider>
 );
 
 export default EditoriaLayout;

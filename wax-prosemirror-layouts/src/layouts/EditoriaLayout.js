@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { Fragment } from "react";
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
+import EditorElements from "./EditorElements";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ const WaxSurfaceScroll = styled.div`
     &:focus {
       outline: none;
     }
+    ${EditorElements};
   }
 `;
 

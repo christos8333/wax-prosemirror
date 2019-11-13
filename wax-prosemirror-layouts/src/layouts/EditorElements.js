@@ -1,6 +1,20 @@
 import styled, { css } from "styled-components";
 
+/* All styles regarding ProseMirror surface and elements */
+
 export default css`{
+  .ProseMirror {
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+    width: 65%;
+    min-height: 90%;
+    padding: 40px;
+    font-family: ${props => props.theme.fontReading};
+    &:focus {
+      outline: none;
+    }
+  }
   hr {
     padding: 2px 10px;
     border: none;
@@ -74,7 +88,8 @@ export default css`{
     background-color: #adf;
     pointer-events: none;
   }
-  .ProseMirror.resize-cursor.resize-cursor {
+
+  .ProseMirror.resize-cursor {
     cursor: ew-resize;
     cursor: col-resize;
   }

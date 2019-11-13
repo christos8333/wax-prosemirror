@@ -27,19 +27,7 @@ const WaxSurfaceScroll = styled.div`
   padding: 0;
   margin-left: 14%;
   padding: 2px;
-  .ProseMirror {
-    -moz-box-shadow: 0 0 3px #ccc;
-    -webkit-box-shadow: 0 0 3px #ccc;
-    box-shadow: 0 0 3px #ccc;
-    width: 65%;
-    min-height: 90%;
-    padding: 40px;
-    font-family: ${props => props.theme.fontReading};
-    &:focus {
-      outline: none;
-    }
-    ${EditorElements};
-  }
+  ${EditorElements};
 `;
 
 const EditoriaLayout = ({ editor, view, ...props }) => (

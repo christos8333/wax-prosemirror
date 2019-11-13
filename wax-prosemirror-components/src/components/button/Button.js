@@ -1,28 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import { ButtonStyles } from "wax-prosemirror-themes";
 
 const ButtonStyled = styled.button`
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? "default" : "none")};
-  background: #fff;
-  border: none;
-  font-size: inherit;
-  cursor: pointer;
   color: ${props =>
     props.isActive ? props.theme.colorPrimary : props.theme.colorButton};
-  border-radius: 0;
-  padding: 5px 10px;
-  &:disabled {
-    color: #ccc;
-    pointer-events: none;
-  }
   &:hover {
     color: ${props => (props.isActive ? props.theme.colorPrimary : "#000")};
-    background: #f6f6f6;
   }
+  ${ButtonStyles};
 `;
 
-const Button = ({ view = {}, item }) => (
+const tesy = ({ view = {}, item }) => (
   <ButtonStyled
     type="button"
     isActive={item.active && item.active(view.state)}
@@ -38,4 +29,4 @@ const Button = ({ view = {}, item }) => (
   </ButtonStyled>
 );
 
-export default Button;
+export default tesy;

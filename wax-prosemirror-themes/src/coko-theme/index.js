@@ -2,6 +2,8 @@
 import "typeface-fira-sans-condensed";
 import "typeface-vollkorn";
 
+import { Button } from "./elements";
+
 const cokoTheme = {
   /* Colors */
   colorBackground: "white",
@@ -63,7 +65,11 @@ const cokoTheme = {
   transitionTimingFunction: "ease",
   transitionDelay: "0",
   /* Breakpoints */
-  breakpoints: [480, 768, 1000, 1272]
+  breakpoints: [480, 768, 1000, 1272],
+
+  cssOverrides: {
+    Button
+  }
 };
 
 export default cokoTheme;

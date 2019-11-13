@@ -13,8 +13,8 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.4",
     "@fortawesome/react-fontawesome": "^0.0.17",
     "lodash": "^4.17.4",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-dropdown": "^1.6.2",
     "styled-components": "^4.2.0",
     "uuid": "^3.3.2"

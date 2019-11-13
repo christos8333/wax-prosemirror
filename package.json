@@ -36,7 +36,8 @@
     "svg-inline-loader": "^0.8.0"
   },
   "resolutions": {
-    "styled-components": "4.2.0"
+    "styled-components": "4.2.0",
+    "prosemirror-model": "1.8.0"
   },
   "workspaces": [
     "wax-prosemirror-core",

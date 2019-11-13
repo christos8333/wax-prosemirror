@@ -1,6 +1,6 @@
 import styled, { ThemeProvider } from "styled-components";
 import React, { Fragment } from "react";
-import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
+import { MainMenuBar, SideMenuBar, InfoArea } from "wax-prosemirror-components";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 
@@ -35,7 +35,6 @@ const WaxSurfaceScroll = styled.div`
 
 const CommentsContainer = styled.div``;
 const NotesContainer = styled.div``;
-const InfoAreaContainer = styled.div``;
 
 const EditoriaLayout = ({ editor, view, ...props }) => (
   <ThemeProvider theme={cokoTheme}>
@@ -47,6 +46,7 @@ const EditoriaLayout = ({ editor, view, ...props }) => (
           {editor}
         </WaxSurfaceScroll>
       </WaxSurfaceContainer>
+      <InfoArea />
     </LayoutWrapper>
   </ThemeProvider>
 );

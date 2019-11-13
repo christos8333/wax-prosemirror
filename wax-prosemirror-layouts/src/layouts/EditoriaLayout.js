@@ -33,6 +33,10 @@ const WaxSurfaceScroll = styled.div`
   ${EditorElements};
 `;
 
+const CommentsContainer = styled.div``;
+const NotesContainer = styled.div``;
+const InfoAreaContainer = styled.div``;
+
 const EditoriaLayout = ({ editor, view, ...props }) => (
   <ThemeProvider theme={cokoTheme}>
     <LayoutWrapper>

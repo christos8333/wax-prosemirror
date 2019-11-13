@@ -101,7 +101,7 @@ class Wax extends Component {
 
     const WaxRender = children ? children : defaultRender;
     return (
-      <LayoutWrapper className={`${className} wax-editor`}>
+      <LayoutWrapper className={`${className}`}>
         <WaxView
           autoFocus={autoFocus}
           readonly={readonly}

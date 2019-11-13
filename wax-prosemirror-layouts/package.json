@@ -7,5 +7,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@pubsweet/ui-toolkit": "^2.2.13",
+    "styled-components": "^4.1.1"
   }
 }

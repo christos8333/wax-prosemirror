@@ -8,5 +8,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@pubsweet/ui-toolkit": "^2.2.13",
+    "cokourier-prime-sans":
+      "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git",
+    "styled-components": "^4.1.1",
+    "typeface-fira-sans-condensed": "^0.0.54",
+    "typeface-vollkorn": "^0.0.54"
+  }
 }

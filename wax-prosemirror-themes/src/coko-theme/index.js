@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
-// import "typeface-fira-sans-condensed";
-// import "typeface-vollkorn";
+import "typeface-fira-sans-condensed";
+import "typeface-vollkorn";
 
 const cokoTheme = {
   /* Colors */

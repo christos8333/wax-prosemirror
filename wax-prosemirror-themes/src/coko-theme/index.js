@@ -2,7 +2,7 @@
 import "typeface-fira-sans-condensed";
 import "typeface-vollkorn";
 
-import { Button } from "./elements";
+import { ButtonStyled } from "./elements";
 
 const cokoTheme = {
   /* Colors */
@@ -69,7 +69,7 @@ const cokoTheme = {
 
   cssOverrides: {
     ui: {
-      Button
+      ButtonStyled
     }
   }
 };

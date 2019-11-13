@@ -35,6 +35,9 @@
     "stylelint": "^8.2.0",
     "svg-inline-loader": "^0.8.0"
   },
+  "resolutions": {
+    "styled-components": "4.2.0"
+  },
   "workspaces": [
     "wax-prosemirror-core",
     "wax-prosemirror-schema",

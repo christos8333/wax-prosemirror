@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from "react";
 import debounce from "lodash/debounce";
+import styled from "styled-components";
 
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 
@@ -29,6 +30,12 @@ const serializer = schema => {
     return container.innerHTML;
   };
 };
+
+const LayoutWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 99%;
+`;
 
 class Wax extends Component {
   componentWillMount() {
@@ -94,7 +101,7 @@ class Wax extends Component {
 
     const WaxRender = children ? children : defaultRender;
     return (
-      <div className={`${className}`}>
+      <LayoutWrapper className={`${className} wax-editor`}>
         <WaxView
           autoFocus={autoFocus}
           readonly={readonly}
@@ -109,7 +116,7 @@ class Wax extends Component {
         >
           {WaxRender}
         </WaxView>
-      </div>
+      </LayoutWrapper>
     );
   }
 }

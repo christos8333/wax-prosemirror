@@ -105,7 +105,7 @@ class WaxView extends Component {
   };
 
   render() {
-    const editor = <div ref={this.editorRef} />;
+    const editor = <span ref={this.editorRef} />;
     return this.props.children({
       view: this.view,
       fileUpload: this.uploadImage,

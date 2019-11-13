@@ -14,6 +14,9 @@ const WaxSurfaceContainer = styled.div`
   flex: 1;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const WaxSurfaceScroll = styled.div`
@@ -24,9 +27,9 @@ const WaxSurfaceScroll = styled.div`
   right: 0;
   top: 0;
   box-sizing: border-box;
-  padding: 0;
   margin-left: 14%;
   padding: 2px;
+  height: 100%;
   ${EditorElements};
 `;
 
@@ -36,7 +39,9 @@ const EditoriaLayout = ({ editor, view, ...props }) => (
       <MainMenuBar view={view} {...props} />
       <WaxSurfaceContainer>
         <SideMenuBar view={view} {...props} />
-        <WaxSurfaceScroll>{editor}</WaxSurfaceScroll>
+        <WaxSurfaceScroll className="wax-surface-scroll">
+          {editor}
+        </WaxSurfaceScroll>
       </WaxSurfaceContainer>
     </LayoutWrapper>
   </ThemeProvider>

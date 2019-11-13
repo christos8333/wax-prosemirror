@@ -59,7 +59,6 @@ class Editoria extends Component {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          debug
           value=""
           user={user}
         >

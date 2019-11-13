@@ -13,7 +13,7 @@ const ButtonStyled = styled.button`
   ${ButtonStyles};
 `;
 
-const tesy = ({ view = {}, item }) => (
+const Button = ({ view = {}, item }) => (
   <ButtonStyled
     type="button"
     isActive={item.active && item.active(view.state)}
@@ -29,4 +29,4 @@ const tesy = ({ view = {}, item }) => (
   </ButtonStyled>
 );
 
-export default tesy;
+export default Button;

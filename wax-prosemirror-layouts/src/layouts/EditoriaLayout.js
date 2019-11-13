@@ -32,6 +32,9 @@ const WaxSurfaceScroll = styled.div`
     width: 65%;
     min-height: 90%;
     padding: 40px;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 

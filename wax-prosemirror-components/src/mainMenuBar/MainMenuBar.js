@@ -58,13 +58,9 @@ const MainMenuBar = ({
   <MainMenuContainer>
     <MainMenuInner>
       <MainMenu>
-        {
-          <span>
-            {map(setMenuItems(MainMenuBarItems, menuItems), item =>
-              item.menu({ view, item, fileUpload })
-            )}
-          </span>
-        }
+        {map(setMenuItems(MainMenuBarItems, menuItems), item =>
+          item.menu({ view, item, fileUpload })
+        )}
       </MainMenu>
     </MainMenuInner>
   </MainMenuContainer>

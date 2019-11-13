@@ -57,13 +57,9 @@ const SideMenuBar = ({
   <SideMenuContainer>
     <SideMenuInner>
       <SideMenu>
-        {
-          <span>
-            {map(setMenuItems(SideMenuItems, menuItems), item =>
-              item.menu({ view, item, fileUpload })
-            )}
-          </span>
-        }
+        {map(setMenuItems(SideMenuItems, menuItems), item =>
+          item.menu({ view, item, fileUpload })
+        )}
       </SideMenu>
     </SideMenuInner>
   </SideMenuContainer>

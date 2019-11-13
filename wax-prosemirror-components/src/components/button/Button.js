@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ButtonStyles } from "wax-prosemirror-themes";
+import { override } from "@pubsweet/ui-toolkit";
 
 const ButtonStyled = styled.button`
   opacity: ${props => (props.select ? 1 : 0.4)};
@@ -10,7 +10,7 @@ const ButtonStyled = styled.button`
   &:hover {
     color: ${props => (props.isActive ? props.theme.colorPrimary : "#000")};
   }
-  ${ButtonStyles};
+  ${override("ui.Button")};
 `;
 
 const Button = ({ view = {}, item }) => (

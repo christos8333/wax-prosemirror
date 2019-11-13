@@ -68,7 +68,9 @@ const cokoTheme = {
   breakpoints: [480, 768, 1000, 1272],
 
   cssOverrides: {
-    Button
+    ui: {
+      Button
+    }
   }
 };
 

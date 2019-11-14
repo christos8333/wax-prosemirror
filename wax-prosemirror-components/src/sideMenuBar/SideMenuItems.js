@@ -3,16 +3,7 @@ import { v4 as uuid } from "uuid";
 import { setBlockType } from "prosemirror-commands";
 
 import Button from "../components/button/Button";
-
-const blockActive = (type, attrs = {}) => state => {
-  const { $from, to, node } = state.selection;
-
-  if (node) {
-    return node.hasMarkup(type, attrs);
-  }
-  return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
-};
-
+import { blockActive } from "./SideMenuItems";
 export default {
   title: {
     title: "Change to Title",

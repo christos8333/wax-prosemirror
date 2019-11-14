@@ -1,6 +1,5 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-
 import {
   joinUp,
   lift,
@@ -71,7 +70,7 @@ export default {
     enable: undo,
     run: undo,
     select: state => true,
-  menu: props => <Button key={uuid()} {...props} />
+    menu: props => <Button key={uuid()} {...props} />
   },
   redo: {
     title: "Redo last undone change",
@@ -204,7 +203,9 @@ export default {
   blockquote: {
     title: "Wrap in block quote",
     content: icons.blockquote,
-    // active: blockActive(schema.nodes.blockquote),
+    active: state => {
+      return blockActive(state.config.schema.nodes.blockquote)(state);
+    },
     // enable: wrapIn(schema.nodes.blockquote),
     run(state, dispatch) {
       wrapIn(state.config.schema.nodes.blockquote)(state, dispatch);
@@ -215,7 +216,9 @@ export default {
   bullet_list: {
     title: "Wrap in bullet list",
     content: icons.bullet_list,
-    // active: blockActive(schema.nodes.bullet_list),
+    active: state => {
+      return blockActive(state.config.schema.nodes.bullet_list)(state);
+    },
     // enable: wrapInList(schema.nodes.bullet_list),
     run(state, dispatch) {
       wrapInList(state.config.schema.nodes.bullet_list)(state, dispatch);
@@ -226,7 +229,9 @@ export default {
   ordered_list: {
     title: "Wrap in ordered list",
     content: icons.ordered_list,
-    // active: blockActive(schema.nodes.ordered_list),
+    active: state => {
+      return blockActive(state.config.schema.nodes.ordered_list)(state);
+    },
     // enable: wrapInList(schema.nodes.ordered_list),
     run(state, dispatch) {
       wrapInList(state.config.schema.nodes.ordered_list)(state, dispatch);
@@ -264,7 +269,6 @@ export default {
     content: icons.table,
     // enable: canInsert(schema.nodes.table),
     run: (state, dispatch) => {
-      // const { from } = state.selection
       let rowCount = window && window.prompt("How many rows?", 2);
       let colCount = window && window.prompt("How many columns?", 2);
 

@@ -75,7 +75,7 @@ const findNodesWithSameMark = (doc, from, to, markType) => {
   };
 };
 
-const WithStatePLugin = Component => ({ state }) => {
+const WithStatePlugin = Component => ({ state }) => {
   const { doc, selection, schema } = state;
   const markType = schema.marks.strong;
   if (!markType) {
@@ -101,3 +101,40 @@ const FindAndReplacePlugin = new Plugin({
 });
 
 export default FindAndReplacePlugin;
+
+const ToolBarPlugin = new Plugin({
+  key: FindAndReplaceKey,
+  state: {
+    init() {
+      return { component: WithStatePlugin(Component) };
+    },
+    apply(tr, oldState, newState) {
+      return this.getState(newState);
+    }
+  }
+});
+
+const LinkPlugin = new Plugin({
+  key: FindAndReplaceKey,
+  state: {
+    init() {
+      return { items };
+    },
+    apply(tr, oldState, newState) {
+      return this.getState(newState);
+    }
+  }
+});
+
+ToolBar(Plugin) = RenderReactComponentPlugin(
+  Component,
+  RenderArea,
+  ShowHideCommand
+);
+
+Component;
+RenderArea;
+ShowHideCommand;
+Position;
+items;
+ItemCommands;

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { forEach, map } from "lodash";
+import { map } from "lodash";
 import SideMenuItems from "./SideMenuItems";
+import { setMenuItems } from "../helpers";
 
 const SideMenuContainer = styled.div`
   display: flex;
@@ -22,43 +23,19 @@ const SideMenu = styled.div`
   margin-top: 15px;
   button {
     display: flex;
-    margin-left: 5%;
     flex-direction: column;
+    font-family: ${props => props.theme.fontInterface};
+    margin-left: 5%;
     width: 90%;
-    background: transparent;
   }
 `;
 
-const filtered = (menu, menuItems) =>
-  Object.keys(menu)
-    .filter(key => menuItems.includes(key))
-    .reduce((obj, key) => {
-      obj[key] = menu[key];
-      return obj;
-    }, {});
-
-const setMenuItems = (menu, menuItems) => {
-  let items = menuItems;
-  if (menuItems.length === 0) {
-    forEach(menu, (key, index) => {
-      items.push(index);
-    });
-  }
-  return filtered(menu, items);
-};
-
-const SideMenuBar = ({
-  menuItems = [],
-  children,
-  view,
-  className,
-  fileUpload
-}) => (
+const SideMenuBar = ({ menuItems = [], view, className }) => (
   <SideMenuContainer>
     <SideMenuInner>
       <SideMenu>
         {map(setMenuItems(SideMenuItems, menuItems), item =>
-          item.menu({ view, item, fileUpload })
+          item.menu({ view, item })
         )}
       </SideMenu>
     </SideMenuInner>

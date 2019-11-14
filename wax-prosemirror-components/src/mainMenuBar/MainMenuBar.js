@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { forEach, map } from "lodash";
+import { map } from "lodash";
 import MainMenuBarItems from "./MainMenuBarItems";
+import { setMenuItems } from "../helpers";
 
 const MainMenuContainer = styled.div`
   background: #fff;
@@ -30,31 +31,7 @@ const MainMenu = styled.div`
   background: transparent;
 `;
 
-const filtered = (menu, menuItems) =>
-  Object.keys(menu)
-    .filter(key => menuItems.includes(key))
-    .reduce((obj, key) => {
-      obj[key] = menu[key];
-      return obj;
-    }, {});
-
-const setMenuItems = (menu, menuItems) => {
-  let items = menuItems;
-  if (menuItems.length === 0) {
-    forEach(menu, (key, index) => {
-      items.push(index);
-    });
-  }
-  return filtered(menu, items);
-};
-
-const MainMenuBar = ({
-  menuItems = [],
-  children,
-  view,
-  className,
-  fileUpload
-}) => (
+const MainMenuBar = ({ menuItems = [], view, className, fileUpload }) => (
   <MainMenuContainer>
     <MainMenuInner>
       <MainMenu>

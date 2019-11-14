@@ -206,7 +206,9 @@ export default {
     active: state => {
       return blockActive(state.config.schema.nodes.blockquote)(state);
     },
-    // enable: wrapIn(schema.nodes.blockquote),
+    enable: state => {
+      return wrapIn(state.config.schema.nodes.blockquote)(state);
+    },
     run(state, dispatch) {
       wrapIn(state.config.schema.nodes.blockquote)(state, dispatch);
     },
@@ -219,7 +221,9 @@ export default {
     active: state => {
       return blockActive(state.config.schema.nodes.bullet_list)(state);
     },
-    // enable: wrapInList(schema.nodes.bullet_list),
+    enable: state => {
+      return wrapInList(state.config.schema.nodes.bullet_list)(state);
+    },
     run(state, dispatch) {
       wrapInList(state.config.schema.nodes.bullet_list)(state, dispatch);
     },
@@ -232,7 +236,9 @@ export default {
     active: state => {
       return blockActive(state.config.schema.nodes.ordered_list)(state);
     },
-    // enable: wrapInList(schema.nodes.ordered_list),
+    enable: state => {
+      return wrapInList(state.config.schema.nodes.ordered_list)(state);
+    },
     run(state, dispatch) {
       wrapInList(state.config.schema.nodes.ordered_list)(state, dispatch);
     },
@@ -259,7 +265,9 @@ export default {
   image: {
     title: "Insert image",
     content: icons.image,
-    // enable: canInsert(schema.nodes.image),
+    enable: state => {
+      return canInsert(state.config.schema.nodes.image)(state);
+    },
     select: state => true,
     run: option => true,
     menu: props => <ImageUpload key={uuid()} {...props} />
@@ -267,7 +275,9 @@ export default {
   table: {
     title: "Insert table",
     content: icons.table,
-    // enable: canInsert(schema.nodes.table),
+    enable: state => {
+      return canInsert(state.config.schema.nodes.table)(state);
+    },
     run: (state, dispatch) => {
       let rowCount = window && window.prompt("How many rows?", 2);
       let colCount = window && window.prompt("How many columns?", 2);

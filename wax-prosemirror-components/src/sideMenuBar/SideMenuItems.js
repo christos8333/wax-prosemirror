@@ -2,7 +2,7 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 import { setBlockType } from "prosemirror-commands";
 
-import Button from "../components/button/Button";
+import Button from "../components/Button";
 import { blockActive } from "./SideMenuItems";
 export default {
   title: {

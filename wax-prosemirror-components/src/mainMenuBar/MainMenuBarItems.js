@@ -16,7 +16,7 @@ import { wrapInList } from "prosemirror-schema-list";
 
 import icons from "../icons/icons";
 //Components
-import Button from "../components/button/Button";
+import Button from "../components/Button";
 import TableDropDown from "../components/TableDropDown";
 import ImageUpload from "../components/ImageUpload";
 import HeadingsDropDown from "../components/HeadingsDropDown";

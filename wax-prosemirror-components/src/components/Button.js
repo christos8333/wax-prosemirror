@@ -10,7 +10,8 @@ const ButtonStyled = styled.button`
   background-color: ${props =>
     props.isActive ? props.theme.colorPrimary : "transparent"};
   &:hover {
-    color: ${props => (props.isActive ? props.theme.colorPrimary : "#000")};
+    background-color: ${props =>
+      props.isActive ? props.theme.colorPrimary : "transparent"};
   }
 `;
 

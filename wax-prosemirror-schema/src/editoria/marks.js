@@ -93,7 +93,7 @@ const marks = {
     attrs: {
       class: { default: "small-caps" }
     },
-    inclusive: false,
+    // inclusive: false,
     parseDOM: [
       {
         tag: "span.small-caps",

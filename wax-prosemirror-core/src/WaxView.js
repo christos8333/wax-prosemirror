@@ -6,7 +6,6 @@ import { EditorView } from "prosemirror-view";
 
 import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
-import "prosemirror-gapcursor/style/gapcursor.css";
 import trackedTransaction from "./config/track-changes/trackedTransaction";
 
 class WaxView extends Component {

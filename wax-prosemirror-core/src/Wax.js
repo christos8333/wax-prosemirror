@@ -51,12 +51,13 @@ class Wax extends Component {
 
     const editorContent = value ? value : "";
 
+    if (plugins) defaultPlugins.push(...plugins);
+
     const finalPlugins = defaultPlugins.concat([
       placeholder({ content: this.props.placeholder }),
       WaxShortCuts,
       WaxRules
     ]);
-    if (plugins) finalPlugins.push(...plugins);
 
     this.WaxOptions = {
       schema,

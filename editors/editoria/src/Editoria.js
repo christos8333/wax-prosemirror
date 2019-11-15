@@ -12,7 +12,6 @@ import text from "./text";
 const options = {
   schema,
   plugins,
-  keys,
   rules
 };
 

@@ -1,6 +1,7 @@
 // Npdes
 const pDOM = ["p", 0],
-  brDOM = ["br"];
+  brDOM = ["br"],
+  blockquoteDOM = ["blockquote", 0];
 
 //Marks
 const emDOM = ["em", 0],
@@ -477,6 +478,15 @@ const EditoriaSchema = {
         return ["li", attrs, 0];
       },
       defining: true
+    },
+    blockquote: {
+      content: "block+",
+      group: "block",
+      defining: true,
+      parseDOM: [{ tag: "blockquote" }],
+      toDOM() {
+        return blockquoteDOM;
+      }
     }
   },
   marks: {

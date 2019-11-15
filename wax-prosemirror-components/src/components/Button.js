@@ -3,14 +3,15 @@ import styled from "styled-components";
 import { ButtonStyles } from "wax-prosemirror-themes";
 
 const ButtonStyled = styled.button`
+  ${ButtonStyles};
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? "default" : "none")};
-  color: ${props =>
-    props.isActive ? props.theme.colorPrimary : props.theme.colorButton};
+  color: ${props => (props.isActive ? "white" : props.theme.colorButton)};
+  background-color: ${props =>
+    props.isActive ? props.theme.colorPrimary : "transparent"};
   &:hover {
     color: ${props => (props.isActive ? props.theme.colorPrimary : "#000")};
   }
-  ${ButtonStyles};
 `;
 
 const Button = ({ view = {}, item }) => (

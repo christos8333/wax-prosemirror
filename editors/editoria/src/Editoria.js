@@ -3,7 +3,6 @@ import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import { Wax } from "wax-prosemirror-core";
 import { EditoriaLayout } from "wax-prosemirror-layouts";
-import { cokoTheme } from "wax-prosemirror-themes";
 
 import { schema, keys, plugins, rules } from "./EditorConfig";
 
@@ -62,9 +61,7 @@ class Editoria extends Component {
           user={user}
         >
           {({ editor, view, ...props }) => (
-            <ThemeProvider theme={cokoTheme}>
-              <EditoriaLayout editor={editor} view={view} {...props} />
-            </ThemeProvider>
+            <EditoriaLayout editor={editor} view={view} {...props} />
           )}
         </StyledWax>
       </Fragment>

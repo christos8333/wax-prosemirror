@@ -2,21 +2,13 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 import { setBlockType } from "prosemirror-commands";
 
-import Button from "../components/button/Button";
-
-const blockActive = (type, attrs = {}) => state => {
-  const { $from, to, node } = state.selection;
-
-  if (node) {
-    return node.hasMarkup(type, attrs);
-  }
-  return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
-};
-
+import Button from "../components/Button";
+import { blockActive } from "./SideMenuItems";
 export default {
   title: {
     title: "Change to Title",
     content: "Title",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.title)(state);
     },
@@ -30,6 +22,7 @@ export default {
   subtitle: {
     title: "Change to Subtilte",
     content: "Subtilte",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.subtitle)(state);
     },
@@ -42,6 +35,7 @@ export default {
   author: {
     title: "Change to Author",
     content: "Author",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.author)(state);
     },
@@ -54,6 +48,7 @@ export default {
   epigraphPoetry: {
     title: "Change to Epigraph Poetry",
     content: "Epigraph Poetry",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.epigraphPoetry)(state);
     },
@@ -66,6 +61,7 @@ export default {
   epigraphProse: {
     title: "Change to Epigraph Prose",
     content: "Epigraph Prose",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.epigraphProse)(state);
     },
@@ -77,8 +73,8 @@ export default {
   },
   plain: {
     title: "Change to General Text",
-    // content: icons.paragraph,
     content: "General Text",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.paragraph)(state);
     },
@@ -92,6 +88,7 @@ export default {
   heading1: {
     title: "Change to heading level 1",
     content: "Heading 1",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.heading, {
         level: 1,
@@ -110,6 +107,7 @@ export default {
   heading2: {
     title: "Change to heading level 2",
     content: "Heading 2",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.heading, {
         level: 2,
@@ -128,6 +126,7 @@ export default {
   heading3: {
     title: "Change to heading level 3",
     content: "Heading 3",
+    group: "",
     enable: state => {
       return setBlockType(state.config.schema.nodes.heading, {
         level: 3,

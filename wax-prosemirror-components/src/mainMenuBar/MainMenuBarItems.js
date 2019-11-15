@@ -1,6 +1,5 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-
 import {
   joinUp,
   lift,
@@ -17,52 +16,18 @@ import { wrapInList } from "prosemirror-schema-list";
 
 import icons from "../icons/icons";
 //Components
-import Button from "../components/button/Button";
+import Button from "../components/Button";
 import TableDropDown from "../components/TableDropDown";
 import ImageUpload from "../components/ImageUpload";
 import HeadingsDropDown from "../components/HeadingsDropDown";
 
-const markActive = type => state => {
-  const { from, $from, to, empty } = state.selection;
-
-  return empty
-    ? type.isInSet(state.storedMarks || $from.marks())
-    : state.doc.rangeHasMark(from, to, type);
-};
-
-const blockActive = (type, attrs = {}) => state => {
-  const { $from, to, node } = state.selection;
-
-  if (node) {
-    return node.hasMarkup(type, attrs);
-  }
-
-  return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
-};
-
-const canInsert = type => state => {
-  const { $from } = state.selection;
-
-  for (let d = $from.depth; d >= 0; d--) {
-    const index = $from.index(d);
-
-    if ($from.node(d).canReplaceWith(index, index, type)) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-const promptForURL = () => {
-  let url = window && window.prompt("Enter the URL", "https://");
-
-  if (url && !/^https?:\/\//i.test(url)) {
-    url = "http://" + url;
-  }
-
-  return url;
-};
+import {
+  markActive,
+  blockActive,
+  canInsert,
+  promptForURL,
+  createTable
+} from "./MainMenuCommands";
 
 export default {
   undo: {
@@ -71,7 +36,7 @@ export default {
     enable: undo,
     run: undo,
     select: state => true,
-  menu: props => <Button key={uuid()} {...props} />
+    menu: props => <Button key={uuid()} {...props} />
   },
   redo: {
     title: "Redo last undone change",
@@ -118,19 +83,19 @@ export default {
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />
   },
-  // small_caps: {
-  //   title: "Toggle Small Caps",
-  //   content: icons.small_caps,
-  //   active: state => {
-  //     return markActive(state.config.schema.marks.small_caps)(state);
-  //   },
-  //   run(state, dispatch) {
-  //     toggleMark(state.config.schema.marks.small_caps)(state, dispatch);
-  //   },
-  //
-  //   select: state => true,
-  //   menu: props => <Button key={uuid()} {...props} />
-  // },
+  small_caps: {
+    title: "Toggle Small Caps",
+    content: icons.small_caps,
+    active: state => {
+      return markActive(state.config.schema.marks.small_caps)(state);
+    },
+    run(state, dispatch) {
+      toggleMark(state.config.schema.marks.small_caps)(state, dispatch);
+    },
+
+    select: state => true,
+    menu: props => <Button key={uuid()} {...props} />
+  },
   subscript: {
     title: "Toggle subscript",
     content: icons.subscript,
@@ -204,8 +169,12 @@ export default {
   blockquote: {
     title: "Wrap in block quote",
     content: icons.blockquote,
-    // active: blockActive(schema.nodes.blockquote),
-    // enable: wrapIn(schema.nodes.blockquote),
+    active: state => {
+      return blockActive(state.config.schema.nodes.blockquote)(state);
+    },
+    enable: state => {
+      return wrapIn(state.config.schema.nodes.blockquote)(state);
+    },
     run(state, dispatch) {
       wrapIn(state.config.schema.nodes.blockquote)(state, dispatch);
     },
@@ -215,8 +184,12 @@ export default {
   bullet_list: {
     title: "Wrap in bullet list",
     content: icons.bullet_list,
-    // active: blockActive(schema.nodes.bullet_list),
-    // enable: wrapInList(schema.nodes.bullet_list),
+    active: state => {
+      return blockActive(state.config.schema.nodes.bullet_list)(state);
+    },
+    enable: state => {
+      return wrapInList(state.config.schema.nodes.bullet_list)(state);
+    },
     run(state, dispatch) {
       wrapInList(state.config.schema.nodes.bullet_list)(state, dispatch);
     },
@@ -226,8 +199,12 @@ export default {
   ordered_list: {
     title: "Wrap in ordered list",
     content: icons.ordered_list,
-    // active: blockActive(schema.nodes.ordered_list),
-    // enable: wrapInList(schema.nodes.ordered_list),
+    active: state => {
+      return blockActive(state.config.schema.nodes.ordered_list)(state);
+    },
+    enable: state => {
+      return wrapInList(state.config.schema.nodes.ordered_list)(state);
+    },
     run(state, dispatch) {
       wrapInList(state.config.schema.nodes.ordered_list)(state, dispatch);
     },
@@ -254,7 +231,9 @@ export default {
   image: {
     title: "Insert image",
     content: icons.image,
-    // enable: canInsert(schema.nodes.image),
+    enable: state => {
+      return canInsert(state.config.schema.nodes.image)(state);
+    },
     select: state => true,
     run: option => true,
     menu: props => <ImageUpload key={uuid()} {...props} />
@@ -262,26 +241,11 @@ export default {
   table: {
     title: "Insert table",
     content: icons.table,
-    // enable: canInsert(schema.nodes.table),
+    enable: state => {
+      return canInsert(state.config.schema.nodes.table)(state);
+    },
     run: (state, dispatch) => {
-      // const { from } = state.selection
-      let rowCount = window && window.prompt("How many rows?", 2);
-      let colCount = window && window.prompt("How many columns?", 2);
-
-      const cells = [];
-      while (colCount--) {
-        cells.push(state.config.schema.nodes.table_cell.createAndFill());
-      }
-
-      const rows = [];
-      while (rowCount--) {
-        rows.push(
-          state.config.schema.nodes.table_row.createAndFill(null, cells)
-        );
-      }
-
-      const table = state.config.schema.nodes.table.createAndFill(null, rows);
-      dispatch(state.tr.replaceSelectionWith(table));
+      return createTable(state, dispatch);
     },
     select: state => true,
     menu: props => <Button key={uuid()} {...props} />

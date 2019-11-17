@@ -5,7 +5,7 @@ import { TextSelection } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 
 const Component = ({ state }) => {
-  return <div>{state.selection.from}</div>;
+  return <div>11111{state.selection.from}</div>;
 };
 
 const findNodesWithSameMark = (doc, from, to, markType) => {
@@ -76,14 +76,15 @@ const findNodesWithSameMark = (doc, from, to, markType) => {
 };
 
 const WithStatePlugin = Component => ({ state }) => {
-  const { doc, selection, schema } = state;
-  const markType = schema.marks.strong;
-  if (!markType) {
-    return null;
-  }
-  const { from, to } = selection;
-  const result = findNodesWithSameMark(doc, from, to, markType);
-  return result ? <Component state={state} /> : null;
+  // const { doc, selection, schema } = state;
+  // const markType = schema.marks.strong;
+  // if (!markType) {
+  //   return null;
+  // }
+  // const { from, to } = selection;
+  // const result = findNodesWithSameMark(doc, from, to, markType);
+  //return result ? <Component state={state} /> : null;
+  return <Component state={state} />;
 };
 
 export const FindAndReplaceKey = new PluginKey("findandreplace");
@@ -92,7 +93,10 @@ const FindAndReplacePlugin = new Plugin({
   key: FindAndReplaceKey,
   state: {
     init() {
-      return { show: false, component: WithStatePLugin(Component) };
+      return {
+        renderArea: "leftSideBar",
+        component: WithStatePlugin(Component)
+      };
     },
     apply(tr, oldState, newState) {
       return this.getState(newState);
@@ -101,40 +105,3 @@ const FindAndReplacePlugin = new Plugin({
 });
 
 export default FindAndReplacePlugin;
-
-const ToolBarPlugin = new Plugin({
-  key: FindAndReplaceKey,
-  state: {
-    init() {
-      return { component: WithStatePlugin(Component) };
-    },
-    apply(tr, oldState, newState) {
-      return this.getState(newState);
-    }
-  }
-});
-
-const LinkPlugin = new Plugin({
-  key: FindAndReplaceKey,
-  state: {
-    init() {
-      return { items };
-    },
-    apply(tr, oldState, newState) {
-      return this.getState(newState);
-    }
-  }
-});
-
-ToolBar(Plugin) = RenderReactComponentPlugin(
-  Component,
-  RenderArea,
-  ShowHideCommand
-);
-
-Component;
-RenderArea;
-ShowHideCommand;
-Position;
-items;
-ItemCommands;

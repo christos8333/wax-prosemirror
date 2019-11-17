@@ -1,9 +1,11 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import debounce from "lodash/debounce";
 import styled from "styled-components";
 
 import { DOMParser, DOMSerializer } from "prosemirror-model";
+import { DefaultLayout } from "wax-prosemirror-layouts";
 
+import WaxContext from "./helpers/WaxContext";
 import WaxView from "./WaxView";
 import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
@@ -92,14 +94,12 @@ class Wax extends Component {
       theme,
       debug,
       TrackChange,
-      user
+      user,
+      Layout
     } = this.props;
 
-    const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
-      <Fragment>{editor}</Fragment>
-    );
+    const WaxRender = Layout ? Layout : DefaultLayout;
 
-    const WaxRender = children ? children : defaultRender;
     return (
       <LayoutWrapper className={`${className}`}>
         <WaxView
@@ -114,7 +114,11 @@ class Wax extends Component {
           TrackChange={TrackChange}
           user={user}
         >
-          {WaxRender}
+          {({ view, editor }) => (
+            <WaxContext.Provider value={{ view }}>
+              <WaxRender editor={editor} />
+            </WaxContext.Provider>
+          )}
         </WaxView>
       </LayoutWrapper>
     );

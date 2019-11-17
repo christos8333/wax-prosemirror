@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 
-import { Wax } from "wax-prosemirror-core";
+import { Wax, setLayout } from "wax-prosemirror-core";
 import { EditoriaLayout } from "wax-prosemirror-layouts";
 
 import { schema, keys, plugins, rules } from "./EditorConfig";
@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const StyledWax = styled(Wax)`
+const StyledWax = styled(setLayout("EditoriaLayout"))`
   .wax-surface-scroll {
     height: ${props => (props.debug ? "50vh" : "100%")};
   }
@@ -60,11 +60,7 @@ class Editoria extends Component {
           fileUpload={file => renderImage(file)}
           value=""
           user={user}
-        >
-          {({ editor, view, ...props }) => (
-            <EditoriaLayout editor={editor} view={view} {...props} />
-          )}
-        </StyledWax>
+        />
       </Fragment>
     );
   }

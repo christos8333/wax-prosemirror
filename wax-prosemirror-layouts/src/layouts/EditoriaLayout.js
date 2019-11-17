@@ -1,9 +1,13 @@
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import React, { Fragment } from "react";
-import { MainMenuBar, SideMenuBar, InfoArea } from "wax-prosemirror-components";
+import {
+  MainMenuBar,
+  SideMenuBar,
+  InfoArea,
+  componentPlugin
+} from "wax-prosemirror-components";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
-import ComponentPlugins from "./ComponentPlugins";
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -34,20 +38,25 @@ const WaxSurfaceScroll = styled.div`
   ${EditorElements};
 `;
 
-const CommentsContainer = styled.div``;
-const NotesContainer = styled.div``;
+const LeftSideBar = componentPlugin("leftSideBar");
+const RightSideBar = componentPlugin("rightSideBar");
+const TopBar = componentPlugin("topBar");
+const BottomBar = componentPlugin("bottomBar");
+const EditorTools = componentPlugin("editorTools");
 
 const EditoriaLayout = ({ editor, view, ...props }) => (
   <ThemeProvider theme={cokoTheme}>
     <LayoutWrapper>
-      <MainMenuBar view={view} {...props} />
+      <TopBar />
       <WaxSurfaceContainer>
-        <SideMenuBar view={view} {...props} />
+        <LeftSideBar />
         <WaxSurfaceScroll className="wax-surface-scroll">
           {editor}
-          <ComponentPlugins state={view.state} />
+          <EditorTools />
         </WaxSurfaceScroll>
+        <RightSideBar />
       </WaxSurfaceContainer>
+      <BottomBar />
       <InfoArea />
     </LayoutWrapper>
   </ThemeProvider>

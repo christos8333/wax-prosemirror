@@ -27,7 +27,11 @@ import invisibles, {
 } from "@guardian/prosemirror-invisibles";
 
 import { CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
-import { LinkToolTipPlugin, TrackChangePlugin } from "wax-prosemirror-plugins";
+import {
+  LinkToolTipPlugin,
+  FindAndReplacePlugin,
+  TrackChangePlugin
+} from "wax-prosemirror-plugins";
 import { tableNodes, columnResizing, tableEditing } from "prosemirror-tables";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 
@@ -76,7 +80,8 @@ const plugins = [
   columnResizing(),
   tableEditing(),
   TrackChangePlugin({ options: {} }),
-  invisibles([hardBreak()])
+  invisibles([hardBreak()]),
+  FindAndReplacePlugin
 ];
 
 // Add Rules

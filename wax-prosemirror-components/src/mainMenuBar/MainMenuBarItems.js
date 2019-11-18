@@ -29,7 +29,10 @@ import {
   createTable
 } from "./MainMenuCommands";
 
+import sideMenuBarItems from "../sideMenuBar/SideMenuItems";
+
 export default {
+  ...sideMenuBarItems,
   undo: {
     title: "Undo last change",
     content: icons.undo,

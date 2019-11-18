@@ -30,8 +30,12 @@ import { CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
 import {
   LinkToolTipPlugin,
   FindAndReplacePlugin,
-  TrackChangePlugin
+  TrackChangePlugin,
+  MenuBarPlugin
 } from "wax-prosemirror-plugins";
+
+import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
+
 import { tableNodes, columnResizing, tableEditing } from "prosemirror-tables";
 import { EditoriaSchema } from "wax-prosemirror-schema";
 
@@ -81,7 +85,17 @@ const plugins = [
   tableEditing(),
   TrackChangePlugin({ options: {} }),
   invisibles([hardBreak()]),
-  FindAndReplacePlugin
+  // FindAndReplacePlugin,
+  MenuBarPlugin({
+    Component: MainMenuBar,
+    renderArea: "topBar",
+    menuItems: ["undo", "redo"]
+  }),
+  MenuBarPlugin({
+    Component: SideMenuBar,
+    renderArea: "leftSideBar",
+    menuItems: ["plain"]
+  })
 ];
 
 // Add Rules

@@ -12,7 +12,9 @@ const ComponentPlugin = renderArea => props => (
           state[plugin.key].component
         ) {
           const Component = state[plugin.key].component;
-          return <Component key={plugin.key} state={state} />;
+          return (
+            <Component key={plugin.key} view={context.view} state={state} />
+          );
         }
 
         return null;

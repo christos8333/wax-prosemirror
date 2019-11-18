@@ -94,7 +94,7 @@ const FindAndReplacePlugin = new Plugin({
   state: {
     init() {
       return {
-        renderArea: "leftSideBar",
+        renderArea: "rightSideBar",
         component: WithStatePlugin(Component)
       };
     },

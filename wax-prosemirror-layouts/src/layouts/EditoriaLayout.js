@@ -44,7 +44,7 @@ const TopBar = componentPlugin("topBar");
 const BottomBar = componentPlugin("bottomBar");
 const EditorTools = componentPlugin("editorTools");
 
-const EditoriaLayout = ({ editor, view, ...props }) => (
+const EditoriaLayout = ({ editor }) => (
   <ThemeProvider theme={cokoTheme}>
     <LayoutWrapper>
       <TopBar />

@@ -1,8 +1,7 @@
-import React, { Fragment, Component } from "react";
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import React, { Fragment } from "react";
+import styled, { createGlobalStyle } from "styled-components";
 
-import { Wax, setLayout } from "wax-prosemirror-core";
-import { EditoriaLayout } from "wax-prosemirror-layouts";
+import { setLayout } from "wax-prosemirror-core";
 
 import { schema, keys, plugins, rules } from "./EditorConfig";
 
@@ -48,22 +47,19 @@ const user = {
   username: "demo"
 };
 
-class Editoria extends Component {
-  render() {
-    return (
-      <Fragment>
-        <GlobalStyle />
-        <StyledWax
-          options={options}
-          autoFocus
-          placeholder="Type Something..."
-          fileUpload={file => renderImage(file)}
-          value=""
-          user={user}
-        />
-      </Fragment>
-    );
-  }
-}
+const Wax = setLayout("EditoriaLayout");
+const Editoria = () => (
+  <Fragment>
+    <GlobalStyle />
+    <Wax
+      options={options}
+      autoFocus
+      placeholder="Type Something..."
+      fileUpload={file => renderImage(file)}
+      value=""
+      user={user}
+    />
+  </Fragment>
+);
 
 export default Editoria;

@@ -93,8 +93,8 @@ const plugins = [
   }),
   MenuBarPlugin({
     Component: SideMenuBar,
-    renderArea: "leftSideBar",
-    menuItems: ["plain"]
+    renderArea: "leftSideBar"
+    //menuItems: ["plain"]
   })
 ];
 

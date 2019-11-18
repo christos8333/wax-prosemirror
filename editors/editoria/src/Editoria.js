@@ -47,11 +47,10 @@ const user = {
   username: "demo"
 };
 
-const Wax = setLayout("EditoriaLayout");
 const Editoria = () => (
   <Fragment>
     <GlobalStyle />
-    <Wax
+    <StyledWax
       options={options}
       autoFocus
       placeholder="Type Something..."

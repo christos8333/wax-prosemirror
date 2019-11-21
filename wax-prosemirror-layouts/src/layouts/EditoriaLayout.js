@@ -37,7 +37,7 @@ const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
 const BottomBar = componentPlugin("bottomBar");
-const EditorTools = componentPlugin("editorTools");
+const EditorOverlays = componentPlugin("editorOverlays");
 
 const EditoriaLayout = ({ editor }) => (
   <ThemeProvider theme={cokoTheme}>
@@ -47,7 +47,7 @@ const EditoriaLayout = ({ editor }) => (
         <LeftSideBar />
         <WaxSurfaceScroll className="wax-surface-scroll">
           {editor}
-          <EditorTools />
+          <EditorOverlays />
         </WaxSurfaceScroll>
         <RightSideBar />
       </WaxSurfaceContainer>

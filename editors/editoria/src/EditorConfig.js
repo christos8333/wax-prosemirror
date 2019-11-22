@@ -31,7 +31,9 @@ import {
   LinkToolTipPlugin,
   FindAndReplacePlugin,
   TrackChangePlugin,
-  MenuBarPlugin
+  MenuBarPlugin,
+  LinkService,
+  LayoutService
 } from "wax-prosemirror-plugins";
 
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
@@ -98,7 +100,9 @@ const plugins = [
   })
 ];
 
+const services = [new LayoutService(), new LinkService()];
+
 // Add Rules
 const rules = [emDash, ellipsis];
 
-export { schema, keys, plugins, rules };
+export { schema, keys, plugins, rules, services };

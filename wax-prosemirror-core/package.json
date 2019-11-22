@@ -23,7 +23,10 @@
     "prosemirror-view": "^1.13.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "inversify": "^5.0.1",
+    "inversify-inject-decorators": "^3.1.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 
 import { setLayout } from "wax-prosemirror-core";
 
-import { schema, keys, plugins, rules } from "./EditorConfig";
+import { schema, keys, plugins, rules, services } from "./EditorConfig";
 
 import text from "./text";
 
@@ -11,7 +11,8 @@ const options = {
   schema,
   plugins,
   keys,
-  rules
+  rules,
+  services
 };
 
 const GlobalStyle = createGlobalStyle`

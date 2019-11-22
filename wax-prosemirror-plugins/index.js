@@ -2,3 +2,5 @@ export { default as TrackChangePlugin } from "./src/trackChanges/TrackChangePlug
 export { default as FindAndReplacePlugin } from "./src/FindAndReplacePlugin";
 export { default as MenuBarPlugin } from "./src/menuBar/MenuBarPlugin";
 export { default as OverlayPlugin } from "./src/overlay/OverlayPlugin";
+export { default as LayoutService } from "./src/LayoutService/LayoutService";
+export { default as LinkService } from "./src/LinkService/LinkService";

@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "author": "Collaborative Knowledge Foundation",
-  "description":
-    "Monorepo for wax-prosemirror, its components and its integrations",
+  "description": "Monorepo for wax-prosemirror, its components and its integrations",
   "repository": {
     "type": "git",
     "url": "git@gitlab.coko.foundation:wax/wax-prosemirror.git"
@@ -13,8 +12,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap --no-ci --hoist",
-    "clean":
-      "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
+    "clean": "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rm -rf node_modules",
@@ -26,6 +24,7 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "css-loader": "^0.28.11",

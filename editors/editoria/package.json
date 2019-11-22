@@ -13,7 +13,8 @@
     "wax-prosemirror-core": "^0.0.3",
     "wax-prosemirror-layouts": "^0.0.3",
     "wax-prosemirror-schema": "^0.0.3",
-    "wax-prosemirror-themes": "^0.0.3"
+    "wax-prosemirror-themes": "^0.0.3",
+    "babel-plugin-parameter-decorator": "1.0.12"
   },
   "scripts": {
     "start": "react-app-rewired start",

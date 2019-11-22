@@ -27,63 +27,54 @@ const OverlayPlugin = args => {
 
 export default OverlayPlugin;
 
+// reactComponent
 
-reactComponent 
+// overlayPlugin position
 
-overlayPlugin position 
+// linkPlugin showhide
 
-linkPlugin showhide
+// linkPlugin = createplugin(reactComponent, overlay);
 
+// const createPlugin = (reactComponent, overlayPlugin) => {
+//   return new Plugin({
+//     key,
+//     state,
+//     view
+//   });
+// };
 
-linkPlugin = createplugin (reactComponent, overlay)
+// createPlugin = () => class {
+//   name: "test",
+//   renderArea,
+//   component: () => {},
+//   itemsMenus: [],
+//   plugins: [plugin, plugin]
+// }
 
+// class createPlugin {
+//   constructor() {
+//     this.name;
+//     this.plugins.push(overlayPlugin(Component, showCommand));
+//   }
+//   plugins() {
+//     return [];
+//   }
+// }
 
+// class waxPlugin {
+//   constructor() {
+//     this.name;
+//   }
 
-const createPlugin = (reactComponent, overlayPlugin) => {
+//   createPlugin() {}
+// }
 
-  return new Plugin ({
-     key,
-     state,
-     view,
-  })
-}
+// class linkPlugin extends waxPlugin {
+//   component:
+//   renderArea:
+//   showCommand:
+//   itemsMenus:
 
-createPlugin = () => class {
-  name: "test",
-  renderArea,
-  component: () => {},
-  itemsMenus: [],
-  plugins: [plugin, plugin]
-}
+// }
 
-
-
-class createPlugin {
-  constructor() {
-    this.name
-    this.plugins.push(overlayPlugin(Component, showCommand))
-  }
-  plugins () { return []}
-}
-
-
-class waxPlugin {
-  constructor() {
-    this.name 
-    
-  }
-
-  createPlugin () {
-    
-  }
-}
-
-class linkPlugin extends waxPlugin {
-  component:
-  renderArea:
-  showCommand:
-  itemsMenus:
-  
-}
-
-new(OverlayPlugin)
+// new(OverlayPlugin)

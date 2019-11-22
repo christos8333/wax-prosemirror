@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import WaxProvider from "./ioc-react";
+import container from "./ioc";
+
 import debounce from "lodash/debounce";
 import styled from "styled-components";
 
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 import { DefaultLayout } from "wax-prosemirror-layouts";
 
-import WaxContext from "./helpers/WaxContext";
 import WaxView from "./WaxView";
 import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
@@ -42,7 +44,7 @@ const LayoutWrapper = styled.div`
 class Wax extends Component {
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema, plugins, keys, rules } = options;
+    const { schema, plugins, keys, rules, services } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
     const WaxShortCuts = keys
@@ -61,6 +63,12 @@ class Wax extends Component {
       WaxRules
     ]);
 
+    services.map(plugin => {
+      if (plugin.register) {
+        plugin.register();
+      }
+    });
+
     this.WaxOptions = {
       schema,
       plugins: finalPlugins
@@ -69,6 +77,12 @@ class Wax extends Component {
     const parse = parser(schema);
     const serialize = serializer(schema);
     this.WaxOptions.doc = parse(editorContent);
+
+    services.map(plugin => {
+      if (plugin.register) {
+        plugin.boot();
+      }
+    });
 
     this.onChange = debounce(
       value => {
@@ -115,9 +129,9 @@ class Wax extends Component {
           user={user}
         >
           {({ view, editor }) => (
-            <WaxContext.Provider value={{ view }}>
+            <WaxProvider view={view} container={container}>
               <WaxRender editor={editor} />
-            </WaxContext.Provider>
+            </WaxProvider>
           )}
         </WaxView>
       </LayoutWrapper>

@@ -1,6 +1,6 @@
 {
   "name": "editoria",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {
     "@guardian/prosemirror-invisibles": "^1.2.0",
@@ -9,11 +9,11 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.2.0",
-    "wax-prosemirror-components": "^0.0.2",
-    "wax-prosemirror-core": "^0.0.2",
-    "wax-prosemirror-layouts": "^0.0.2",
-    "wax-prosemirror-schema": "^0.0.2",
-    "wax-prosemirror-themes": "^0.0.2"
+    "wax-prosemirror-components": "^0.0.3",
+    "wax-prosemirror-core": "^0.0.3",
+    "wax-prosemirror-layouts": "^0.0.3",
+    "wax-prosemirror-schema": "^0.0.3",
+    "wax-prosemirror-themes": "^0.0.3"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -24,7 +24,12 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",

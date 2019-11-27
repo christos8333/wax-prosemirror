@@ -27,14 +27,9 @@ This is a two part process, first ask for comments, then ask for the changes to 
 Ask for feedback generate a Merge Request (Pull Request) from the GitLab interface but do not assign this request to anyone. You do this from the Gitlab
 UI on your branch.
 Look at the feedback and alter your branch as necessary.
-To merge with master - generate a merge request (Pull Request) and assign to Jure Triglav. You do this from the Gitlab UI on your branch.
+To merge with master - generate a merge request (Pull Request). You do this from the Gitlab UI on your branch.
 We encourage feedback and discussion from as many people as possible on Merge Requests!
 
-Before merging all PRs must fulfill these three simple rules:
-
-1.  Before a PR can be merged, it must pass the tests and CI.
-2.  Before a PR can be merged, it shouldn't reduce the test coverage.
-3.  Bugfixes go in PRs and a bugfix PR shouldn't be merged without a regression test.
 
 ## Conventional commits
 
@@ -43,7 +38,7 @@ We use conventional commits and verify that commit messages match the pattern, y
 ## Bug reports, feature requests, support questions
 
 This is all done through GitLab using their native issue tracker
-Visit the master issue tracker for PubSweet (https://gitlab.coko.foundation/pubsweet/pubsweet/issues)
+Visit the master issue tracker for PubSweet (https://gitlab.coko.foundation/wax/wax-prosemirror/issues)
 Add an issue
 Tag the issue with 'support', 'bug', or 'feature' to identify the nature of your issue
 

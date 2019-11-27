@@ -9,6 +9,8 @@ This application is being developed by the [Coko Foundation](https://coko.founda
 
 Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information. 
 
+## Introduction
+
 Wax is a Monorepo that consists of several packages.
 
 <h3> wax-prosemirror-core </h3>
@@ -32,9 +34,6 @@ React components
  <h3> Editors </h3>
  
  Editors are private pakages inside the monorepo, for development/demo purposes.
-
-## Table of Contents
-- [Get up and running](#get-up-and-running)
 
 ## Get up and running
 

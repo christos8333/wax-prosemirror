@@ -19,7 +19,7 @@ export default class LinkPlugin {
   plugins = [];
 
   constructor(
-    @inject("Layout") layout,
+    //@inject("Layout") layout,
     @inject("findPlugin") find,
     @inject("placeholderPlugin") placeholder
   ) {
@@ -27,9 +27,9 @@ export default class LinkPlugin {
     this.placeholder = placeholder;
 
     //console.log(this.find, this.placeholder);
-    layout
-      .addComponent("topBar", Component2)
-      .addComponent("leftSideBar", Component1);
+    // layout
+    //   .addComponent("topBar", Component2)
+    //   .addComponent("leftSideBar", Component1);
 
     this.initPlugins();
   }

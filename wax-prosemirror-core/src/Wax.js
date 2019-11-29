@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import WaxProvider from "./ioc-react";
 import container from "./ioc";
+import LayoutService from "./services/LayoutService/LayoutService";
 
 import debounce from "lodash/debounce";
 import styled from "styled-components";
 
 import { DOMParser, DOMSerializer } from "prosemirror-model";
-import { DefaultLayout } from "wax-prosemirror-layouts";
 
 import WaxView from "./WaxView";
 import defaultPlugins from "./config/defaultPlugins";
@@ -42,6 +42,18 @@ const LayoutWrapper = styled.div`
 `;
 
 class Wax extends Component {
+  constructor(props) {
+    super(props);
+    const { options } = props;
+    const { services } = options;
+
+    services.push(new LayoutService());
+    services.map(plugin => {
+      if (plugin.register) {
+        plugin.register();
+      }
+    });
+  }
   componentWillMount() {
     const { value, onChange, options } = this.props;
     const { schema, plugins, keys, rules, services } = options;
@@ -62,12 +74,6 @@ class Wax extends Component {
       WaxShortCuts,
       WaxRules
     ]);
-
-    services.map(plugin => {
-      if (plugin.register) {
-        plugin.register();
-      }
-    });
 
     this.WaxOptions = {
       schema,
@@ -104,15 +110,17 @@ class Wax extends Component {
       className,
       value,
       onBlur,
-      layout,
-      theme,
       debug,
       TrackChange,
       user,
-      Layout
+      layout
     } = this.props;
 
-    const WaxRender = Layout ? Layout : DefaultLayout;
+    const Layout = container.get("Layout");
+    if (layout) {
+      Layout.setLayout(layout);
+    }
+    const WaxRender = Layout.layoutComponent;
 
     return (
       <LayoutWrapper className={`${className}`}>

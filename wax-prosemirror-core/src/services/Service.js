@@ -1,4 +1,4 @@
-import { Container } from "wax-prosemirror-core";
+import Container from "../ioc";
 
 export default class Service {
   constructor() {

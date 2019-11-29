@@ -1,5 +1,5 @@
 import LinkPlugin from "./LinkPlugin";
-import Service from "../Service";
+import Service from "wax-prosemirror-core/src/services/Service";
 import find from "./pmPlugins/find";
 import placeholder from "./pmPlugins/placeholder";
 

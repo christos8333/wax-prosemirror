@@ -25,6 +25,7 @@ import invisibles, {
   hardBreak,
   paragraph
 } from "@guardian/prosemirror-invisibles";
+// import LayoutService from "./customServices/LayoutService";
 
 import { CreateSchema, CreateShortCuts } from "wax-prosemirror-core";
 import {
@@ -32,8 +33,7 @@ import {
   FindAndReplacePlugin,
   TrackChangePlugin,
   MenuBarPlugin,
-  LinkService,
-  LayoutService
+  LinkService
 } from "wax-prosemirror-plugins";
 
 import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
@@ -100,7 +100,7 @@ const plugins = [
   })
 ];
 
-const services = [new LayoutService(), new LinkService()];
+const services = [new LinkService()];
 
 // Add Rules
 const rules = [emDash, ellipsis];

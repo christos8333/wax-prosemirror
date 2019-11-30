@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import DefaultLayout from "wax-prosemirror-layout";
+import { DefaultLayout } from "wax-prosemirror-layouts";
 import LayoutFactory from "./components/LayoutFactory";
 
 @injectable()
@@ -13,6 +13,7 @@ export default class Layout {
   }
 
   render(renderArea) {
+    if (!this.components[renderArea]) return null;
     return this.components[renderArea].values();
   }
 

@@ -33,28 +33,30 @@ const WaxSurfaceScroll = styled.div`
   ${EditorElements};
 `;
 
-const LeftSideBar = componentPlugin("leftSideBar");
-const RightSideBar = componentPlugin("rightSideBar");
-const TopBar = componentPlugin("topBar");
-const BottomBar = componentPlugin("bottomBar");
-const EditorOverlays = componentPlugin("editorOverlays");
-
-const EditoriaLayout = ({ editor }) => (
-  <ThemeProvider theme={cokoTheme}>
-    <LayoutWrapper>
-      <TopBar />
-      <WaxSurfaceContainer>
-        <LeftSideBar />
-        <WaxSurfaceScroll className="wax-surface-scroll">
-          {editor}
-          <EditorOverlays />
-        </WaxSurfaceScroll>
-        <RightSideBar />
-      </WaxSurfaceContainer>
-      <BottomBar />
-      <InfoArea />
-    </LayoutWrapper>
-  </ThemeProvider>
-);
+const EditoriaLayout = ({ editor, componentPlugin }) => {
+  console.log("1111111111111111111111");
+  const LeftSideBar = componentPlugin("leftSideBar");
+  const RightSideBar = componentPlugin("rightSideBar");
+  const TopBar = componentPlugin("topBar");
+  const BottomBar = componentPlugin("bottomBar");
+  const EditorOverlays = componentPlugin("editorOverlays");
+  return (
+    <ThemeProvider theme={cokoTheme}>
+      <LayoutWrapper>
+        <TopBar />
+        <WaxSurfaceContainer>
+          <LeftSideBar />
+          <WaxSurfaceScroll className="wax-surface-scroll">
+            {editor}
+            <EditorOverlays />
+          </WaxSurfaceScroll>
+          <RightSideBar />
+        </WaxSurfaceContainer>
+        <BottomBar />
+        <InfoArea />
+      </LayoutWrapper>
+    </ThemeProvider>
+  );
+};
 
 export default EditoriaLayout;

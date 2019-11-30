@@ -85,7 +85,7 @@ class Wax extends Component {
     this.WaxOptions.doc = parse(editorContent);
 
     services.map(plugin => {
-      if (plugin.register) {
+      if (plugin.boot) {
         plugin.boot();
       }
     });

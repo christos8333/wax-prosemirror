@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-
-import { setLayout } from "wax-prosemirror-core";
+import { Wax } from "wax-prosemirror-core";
 
 import { schema, keys, plugins, rules, services } from "./EditorConfig";
 
@@ -27,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const StyledWax = styled(setLayout("EditoriaLayout"))`
+const StyledWax = styled(Wax)`
   .wax-surface-scroll {
     height: ${props => (props.debug ? "50vh" : "100%")};
   }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import WaxProvider from "./ioc-react";
-import container from "./ioc";
-import LayoutService from "./services/LayoutService/LayoutService";
+import Application from "./Application";
 
 import debounce from "lodash/debounce";
 import styled from "styled-components";
@@ -42,21 +41,16 @@ const LayoutWrapper = styled.div`
 `;
 
 class Wax extends Component {
+  application = {};
   constructor(props) {
     super(props);
-    const { options } = props;
-    const { services } = options;
-
-    services.push(new LayoutService());
-    services.map(plugin => {
-      if (plugin.register) {
-        plugin.register();
-      }
-    });
+    const { config } = props;
+    this.application = Application.create(config);
   }
+
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema, plugins, keys, rules, services } = options;
+    const { schema, plugins, keys, rules } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
     const WaxShortCuts = keys
@@ -84,11 +78,7 @@ class Wax extends Component {
     const serialize = serializer(schema);
     this.WaxOptions.doc = parse(editorContent);
 
-    services.map(plugin => {
-      if (plugin.boot) {
-        plugin.boot();
-      }
-    });
+    this.application.bootServices();
 
     this.onChange = debounce(
       value => {
@@ -116,7 +106,7 @@ class Wax extends Component {
       layout
     } = this.props;
 
-    const Layout = container.get("Layout");
+    const Layout = this.application.container.get("Layout");
     if (layout) {
       Layout.setLayout(layout);
     }
@@ -137,7 +127,7 @@ class Wax extends Component {
           user={user}
         >
           {({ view, editor }) => (
-            <WaxProvider view={view} container={container}>
+            <WaxProvider view={view} app={this.application}>
               <WaxRender editor={editor} />
             </WaxProvider>
           )}

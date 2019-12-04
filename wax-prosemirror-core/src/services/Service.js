@@ -1,8 +1,15 @@
-import Container from "../ioc";
-
 export default class Service {
-  constructor() {
-    this.container = Container;
+  app = {};
+  setApp(app) {
+    this.app = app;
+  }
+
+  get container() {
+    return this.app.container;
+  }
+
+  get config() {
+    return this.app.config;
   }
 
   boot() {}

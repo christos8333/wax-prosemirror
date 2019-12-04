@@ -1,8 +1,10 @@
 import React, { Fragment } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { EditoriaLayout } from "wax-prosemirror-layouts";
 import { Wax } from "wax-prosemirror-core";
 
 import { schema, keys, plugins, rules, services } from "./EditorConfig";
+import { menu } from "./config";
 
 import text from "./text";
 
@@ -51,11 +53,13 @@ const Editoria = () => (
   <Fragment>
     <GlobalStyle />
     <StyledWax
+      config={menu}
       options={options}
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
       value=""
+      layout={EditoriaLayout}
       user={user}
     />
   </Fragment>

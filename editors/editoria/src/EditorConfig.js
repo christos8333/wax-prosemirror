@@ -100,7 +100,7 @@ const plugins = [
   })
 ];
 
-const services = [new LayoutService(), new LinkService()];
+const services = [new LinkService()];
 
 // Add Rules
 const rules = [emDash, ellipsis];

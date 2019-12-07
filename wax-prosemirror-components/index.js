@@ -2,3 +2,5 @@ export { default as MainMenuBar } from "./src/mainMenuBar/MainMenuBar";
 export { default as SideMenuBar } from "./src/sideMenuBar/SideMenuBar";
 export { default as InfoArea } from "./src/components/infoArea/InfoArea";
 export { default as Overlay } from "./src/components/Overlay";
+export { default as Button } from "./src/components/Button";
+export { default as icons } from "./src/icons/icons";

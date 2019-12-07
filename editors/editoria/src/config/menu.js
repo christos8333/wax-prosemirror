@@ -1,13 +1,9 @@
 export default {
-  menus: [
+  MenuService: [
     {
+      name: "top",
       templateArea: "topBar",
-      tools: ["redo", "undo"],
-      groups: [
-        "redo-undo",
-        "annotations",
-        { group: "Annotation", exclude: [], include: [] }
-      ]
+      groupTools: [{ name: "RedoUndo", exclude: [] }]
     }
   ]
 };

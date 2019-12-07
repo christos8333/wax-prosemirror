@@ -86,18 +86,18 @@ const plugins = [
   columnResizing(),
   tableEditing(),
   TrackChangePlugin({ options: {} }),
-  invisibles([hardBreak()]),
+  invisibles([hardBreak()])
   // FindAndReplacePlugin,
-  MenuBarPlugin({
-    Component: MainMenuBar,
-    renderArea: "topBar",
-    menuItems: ["undo", "redo"]
-  }),
-  MenuBarPlugin({
-    Component: SideMenuBar,
-    renderArea: "leftSideBar"
-    //menuItems: ["plain"]
-  })
+  // MenuBarPlugin({
+  //   Component: MainMenuBar,
+  //   renderArea: "topBar",
+  //   menuItems: ["undo", "redo"]
+  // }),
+  // MenuBarPlugin({
+  //   Component: SideMenuBar,
+  //   renderArea: "leftSideBar"
+  //   //menuItems: ["plain"]
+  // })
 ];
 
 const services = [new LinkService()];

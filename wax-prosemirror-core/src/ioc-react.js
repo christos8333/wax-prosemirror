@@ -10,12 +10,15 @@ export default props => (
 
 export function useInjection(identifier) {
   const {
-    app: { container }
+    app: { container },
+    view
   } = useContext(WaxContext);
 
   if (!container) {
     throw new Error();
   }
 
-  return container.isBound(identifier) ? container.get(identifier) : null;
+  return container.isBound(identifier)
+    ? { view, instance: container.get(identifier) }
+    : null;
 }

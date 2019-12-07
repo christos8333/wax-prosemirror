@@ -26,9 +26,8 @@ export default class Application {
 
   setConfig(config) {
     this.config = this.container.get("Config");
-
     Object.keys(config).forEach(conf => {
-      this.config.pushToArray(conf, config[conf]);
+      this.config = this.config.pushToArray(conf, config[conf]);
     });
   }
 
@@ -63,6 +62,7 @@ export default class Application {
     const app = container.get("Wax");
     app.setConfig(config);
     app.registerServices();
+
     return app;
   }
 }

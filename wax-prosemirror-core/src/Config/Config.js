@@ -3,27 +3,28 @@ import { injectable, inject } from "inversify";
 
 @injectable()
 export default class Config {
-  config = {};
+  _config = {};
   constructor(@inject("config") config) {
-    this.config = config;
+    this._config = config;
   }
 
   set(key, value) {
-    set(this.config, key, value);
-    return this.config;
+    set(this._config, key, value);
+    return this._config;
   }
 
   get(key) {
-    return get(this.config, key);
+    return get(this._config, key);
   }
 
   pushToArray(key, value) {
-    const oldValue = this.get(key);
-    let newValue = value;
-    if (oldValue && isArrayLikeObject(oldValue)) {
-      newValue = oldValue.push(value);
+    let oldValue = this.get(key);
+    if (oldValue) {
+      oldValue.push(value);
+    } else {
+      oldValue = value;
     }
-
-    return this.set(key, newValue);
+    this.set(key, oldValue);
+    return this;
   }
 }

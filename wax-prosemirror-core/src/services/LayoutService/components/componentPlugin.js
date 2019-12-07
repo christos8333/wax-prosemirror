@@ -2,11 +2,14 @@ import React from "react";
 import { useInjection } from "../../../ioc-react";
 
 const ComponentPlugin = renderArea => props => {
-  const Layout = useInjection("Layout");
-  const Components = Layout.render(renderArea);
+  const { view, instance } = useInjection("Layout");
 
-  return (Components || []).map(Component => (
-    <Component renderArea={renderArea} />
-  ));
+  const components = instance.render(renderArea);
+
+  return components
+    ? components.map(Component => {
+        return <Component view={view} />;
+      })
+    : null;
 };
 export default ComponentPlugin;

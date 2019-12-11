@@ -12,7 +12,6 @@ export default class Menu {
     this.name = config.name;
     this.config = config;
     this.groupTools = createTools(this.config.groupTools);
-
     this.excludeIncludeTools();
   }
 

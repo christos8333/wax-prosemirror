@@ -45,10 +45,13 @@ export default class MenuService extends Service {
             tools.push(tl);
           } catch (error) {
             throw Error(
-              `Could not load Service ${tool.name}. Please configure service through config`
+              `Could not load Service ${
+                tool.name
+              }. Please configure service through config`
             );
           }
         });
+        console.log(tools);
         return tools;
       };
     });

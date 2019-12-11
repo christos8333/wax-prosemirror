@@ -44,7 +44,6 @@ class Wax extends Component {
   application = {};
   constructor(props) {
     super(props);
-    const { config } = props;
     console.log("Appp Started", props);
     this.application = Application.create(props);
   }

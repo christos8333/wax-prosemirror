@@ -21,19 +21,24 @@ export default class Tools {
   }
 
   get enable() {
-    return true;
+    return () => true;
   }
 
   select() {
     return () => true;
   }
 
+  get active() {
+    return () => false;
+  }
+
   toJSON() {
     return {
       title: this.title,
       content: this.content,
+      active: this.active,
       run: this.run,
-      enable: () => this.enable,
+      enable: this.enable,
       select: this.select
     };
   }

@@ -31,7 +31,6 @@ export default class MenuService extends Service {
     this.container.bind("createTools").toFactory(context => {
       return configTools => {
         const tools = [];
-        debugger;
         configTools.forEach(tool => {
           try {
             let tl = {};

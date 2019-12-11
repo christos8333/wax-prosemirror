@@ -15,7 +15,7 @@ export default class Application {
 
   registerServices() {
     this.config.get("services").map(service => {
-      /* 
+      /*
       set App to every service
       so services can have access to containers and config
       */

@@ -4,7 +4,6 @@ import applyDevTools from "prosemirror-dev-tools";
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 
-import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
 import trackedTransaction from "./config/track-changes/trackedTransaction";
 

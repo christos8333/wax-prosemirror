@@ -17,7 +17,6 @@ export default class Strong extends Tools {
 
   get active() {
     return state => {
-      console.log(state, "dddd");
       return markActive(state.config.schema.marks.strong)(state);
     };
   }

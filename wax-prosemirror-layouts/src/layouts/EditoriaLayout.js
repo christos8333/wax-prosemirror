@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { InfoArea, componentPlugin } from "wax-prosemirror-components";
+import { InfoArea } from "wax-prosemirror-components";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 

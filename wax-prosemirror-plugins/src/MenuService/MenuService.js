@@ -51,7 +51,6 @@ export default class MenuService extends Service {
             );
           }
         });
-        console.log(tools);
         return tools;
       };
     });

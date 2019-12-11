@@ -46,7 +46,8 @@ class Wax extends Component {
     super(props);
     const { config } = props;
     console.log("Appp Started", config);
-    this.application = Application.create(config);
+    debugger;
+    this.application = Application.create(props);
   }
 
   componentWillMount() {
@@ -54,21 +55,23 @@ class Wax extends Component {
     const { schema, plugins, keys, rules } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
-    const WaxShortCuts = keys
-      ? keys
-      : new CreateShortCuts({ schema: schema, shortCuts: {} });
+    // const WaxShortCuts = keys
+    //   ? keys
+    //   : new CreateShortCuts({ schema: schema, shortCuts: {} });
 
-    const WaxRules = new CreateRules({ schema: schema, rules: rules });
+    // const WaxRules = new CreateRules({ schema: schema, rules: rules });
 
     const editorContent = value ? value : "";
 
-    if (plugins) defaultPlugins.push(...plugins);
+    // if (plugins) defaultPlugins.push(...plugins);
 
-    const finalPlugins = defaultPlugins.concat([
-      placeholder({ content: this.props.placeholder }),
-      WaxShortCuts,
-      WaxRules
-    ]);
+    // const finalPlugins = defaultPlugins.concat([
+    //   placeholder({ content: this.props.placeholder }),
+    //   WaxShortCuts,
+    //   WaxRules
+    // ]);
+
+    const finalPlugins = this.application.getPlugins();
 
     this.WaxOptions = {
       schema,

@@ -1,14 +1,20 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import { Button } from "wax-prosemirror-components";
 
 @injectable()
 export default class Tools {
   title = "title";
   content = "content";
-
   _isEnabled = true;
+  config = {};
+  pmplugins = {};
+
+  constructor(@inject("Config") config, @inject("PmPlugins") pmplugins) {
+    this.config = config;
+    this.pmplugins = pmplugins;
+  }
 
   get run() {
     return true;
@@ -38,11 +44,11 @@ export default class Tools {
     ) : null;
   }
 
-  disable() {
+  disableTool() {
     this._isEnabled = false;
   }
 
-  enable() {
+  enableTool() {
     this._isEnabled = true;
   }
 }

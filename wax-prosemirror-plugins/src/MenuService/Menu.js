@@ -11,7 +11,6 @@ export default class Menu {
   constructor(config, createTools) {
     this.name = config.name;
     this.config = config;
-    console.log(this.config, "menu config");
     this.groupTools = createTools(this.config.groupTools);
 
     this.excludeIncludeTools();

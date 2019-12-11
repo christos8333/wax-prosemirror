@@ -2,7 +2,6 @@ import LinkPlugin from "./LinkPlugin";
 import Service from "wax-prosemirror-core/src/services/Service";
 import find from "./pmPlugins/find";
 import placeholder from "./pmPlugins/placeholder";
-import { config } from "@fortawesome/fontawesome";
 
 export default class myLinkPluginService extends Service {
   name = "LinkPlugin";

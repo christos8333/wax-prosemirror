@@ -9,6 +9,6 @@ export default class Service {
   }
 
   get config() {
-    return this.app.config.get(this.name);
+    return this.app.config.get(`config.${this.name}`);
   }
 }

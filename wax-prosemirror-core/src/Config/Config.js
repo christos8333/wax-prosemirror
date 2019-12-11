@@ -20,7 +20,13 @@ export default class Config {
   pushToArray(key, value) {
     let oldValue = this.get(key);
     if (oldValue) {
-      oldValue.push(value);
+      if (isArrayLikeObject(value)) {
+        value.forEach(v => {
+          oldValue.push(v);
+        });
+      } else {
+        oldValue.push(value);
+      }
     } else {
       oldValue = value;
     }

@@ -2,12 +2,15 @@ import { Container } from "inversify";
 import "reflect-metadata";
 import Config from "./Config/Config";
 import defaultConfig from "./Config/defaultConfig";
+import PmPlugins from "./PmPlugins";
 
 export default class Application {
   container = {};
   config = {};
+  PmPlugins = {};
   constructor(container) {
     this.container = container;
+    this.PmPlugins = container.get("PmPlugins");
   }
 
   registerServices() {
@@ -40,6 +43,10 @@ export default class Application {
     });
   }
 
+  getPlugins() {
+    return this.PmPlugins.getAll();
+  }
+
   static create(config) {
     /*
     Create Container
@@ -49,6 +56,10 @@ export default class Application {
     /*
     Set base bindings for the App to work
     */
+    container
+      .bind("PmPlugins")
+      .to(PmPlugins)
+      .inSingletonScope();
     container.bind("Wax").toFactory(() => new Application(container));
     container.bind("config").toConstantValue(defaultConfig);
     container

@@ -31,17 +31,24 @@ export default class MenuService extends Service {
     this.container.bind("createTools").toFactory(context => {
       return configTools => {
         const tools = [];
+        debugger;
         configTools.forEach(tool => {
-          let tl = {};
-          if (isPlainObject(tool)) {
-            tl = context.container.get(tool.name);
-            tl.setGroupConfig(tool);
-          } else if (isFunction(tool)) {
-            tl = context.container.get(tool());
-          } else {
-            tl = context.container.get(tool);
+          try {
+            let tl = {};
+            if (isPlainObject(tool)) {
+              tl = context.container.get(tool.name);
+              tl.setGroupConfig(tool);
+            } else if (isFunction(tool)) {
+              tl = context.container.get(tool());
+            } else {
+              tl = context.container.get(tool);
+            }
+            tools.push(tl);
+          } catch (error) {
+            throw Error(
+              `Could not load Service ${tool.name}. Please configure service through config`
+            );
           }
-          tools.push(tl);
         });
         return tools;
       };

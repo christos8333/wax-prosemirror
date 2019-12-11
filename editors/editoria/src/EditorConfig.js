@@ -32,11 +32,10 @@ import {
   LinkToolTipPlugin,
   FindAndReplacePlugin,
   TrackChangePlugin,
-  MenuBarPlugin,
   LinkService
 } from "wax-prosemirror-plugins";
 
-import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
+// import { MainMenuBar, SideMenuBar } from "wax-prosemirror-components";
 
 import { tableNodes, columnResizing, tableEditing } from "prosemirror-tables";
 import { EditoriaSchema } from "wax-prosemirror-schema";

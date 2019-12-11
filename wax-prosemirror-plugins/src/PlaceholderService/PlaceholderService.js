@@ -1,6 +1,6 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 import placeholderPlugin from "./pmPlugins/placeholderPlugin";
-const PLUGIN_KEY = "placeHolder";
+const PLUGIN_KEY = "imagePlaceHolder";
 
 export default class PlaceholderService extends Service {
   name = "PlaceholderService";

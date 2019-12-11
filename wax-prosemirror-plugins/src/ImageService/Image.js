@@ -25,7 +25,7 @@ export default class Image extends Tools {
     const upload = fileUpload(
       view,
       this.config.get("fileUpload"),
-      this.pmplugins.get("placeHolder")
+      this.pmplugins.get("imagePlaceHolder")
     );
     return this._isEnabled ? (
       <ImageUpload key={uuid()} item={this.toJSON()} fileUpload={upload} />

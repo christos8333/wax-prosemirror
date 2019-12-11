@@ -1,8 +1,8 @@
 import { injectable, inject } from "inversify";
-import GroupTool from "../lib/GroupTool";
+import ToolGroup from "../lib/ToolGroup";
 
 @injectable()
-export default class RedoUndo extends GroupTool {
+export default class RedoUndo extends ToolGroup {
   tools = [];
   constructor(@inject("Redo") redo, @inject("Undo") undo) {
     super();

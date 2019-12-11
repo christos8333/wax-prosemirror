@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 
 @injectable()
-export default class GroupTool {
+export default class ToolGroup {
   _config = {};
   constructor() {}
   setGroupConfig(config) {

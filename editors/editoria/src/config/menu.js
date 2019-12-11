@@ -2,11 +2,11 @@ export default {
   MenuService: [
     {
       templateArea: "topBar",
-      groupTools: ["Annotation", { name: "RedoUndo", exclude: ["Redo"] }]
+      toolGroups: ["Annotation", { name: "RedoUndo", exclude: ["Redo"] }]
     },
     {
       templateArea: "leftSideBar",
-      groupTools: ["TextStyle"]
+      toolGroups: ["TextStyle"]
     }
   ]
 };

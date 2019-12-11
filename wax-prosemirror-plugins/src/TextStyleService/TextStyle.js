@@ -1,8 +1,8 @@
 import { injectable, inject } from "inversify";
-import GroupTool from "../lib/GroupTool";
+import ToolGroup from "../lib/ToolGroup";
 
 @injectable()
-export default class Annotation extends GroupTool {
+export default class Annotation extends ToolGroup {
   tools = [];
   constructor(
     @inject("Author") author,

@@ -1,30 +1,30 @@
 import React from "react";
 import { injectable } from "inversify";
-import GroupTool from "../lib/GroupTool";
+import ToolGroup from "../lib/ToolGroup";
 
 import MenuWrapper from "./MenuWrapper";
 @injectable()
 export default class Menu {
-  groupTools = [];
+  toolGroups = [];
   config = {};
   name = "";
   constructor(config, createTools) {
     this.name = config.name;
     this.config = config;
-    this.groupTools = createTools(this.config.groupTools);
+    this.toolGroups = createTools(this.config.toolGroups);
     this.excludeIncludeTools();
   }
 
   excludeIncludeTools() {
-    this.groupTools.forEach(groupTool => {
-      if (groupTool instanceof GroupTool) {
-        groupTool.excludeIncludeTools();
+    this.toolGroups.forEach(toolGroup => {
+      if (toolGroup instanceof ToolGroup) {
+        toolGroup.excludeIncludeTools();
       }
     });
   }
 
   render() {
-    return view => <MenuWrapper items={this.groupTools} view={view} />;
+    return view => <MenuWrapper items={this.toolGroups} view={view} />;
   }
 }
 

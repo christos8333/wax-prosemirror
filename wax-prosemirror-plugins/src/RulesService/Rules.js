@@ -1,3 +1,4 @@
+import { injectable, inject } from "inversify";
 import {
   inputRules,
   wrappingInputRule,
@@ -5,11 +6,15 @@ import {
   smartQuotes
 } from "prosemirror-inputrules";
 
-class CreateRules {
-  constructor(config) {
-    this.rules = config.rules;
-    this.schema = config.schema;
-    return inputRules(this.allRules(this.rules));
+@injectable()
+class Rules {
+  config = {};
+  name = "";
+  constructor(@inject("Config") config, @inject("PmPlugins") pmplugins) {
+    console.log("config", config);
+    // this.rules = config.rules;
+    // this.schema = config.schema;
+    // return inputRules(this.allRules(this.rules));
   }
 
   allRules(rules = []) {
@@ -45,4 +50,4 @@ class CreateRules {
   }
 }
 
-export default CreateRules;
+export default Rules;

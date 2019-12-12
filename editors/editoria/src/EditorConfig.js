@@ -18,8 +18,6 @@ import {
   sinkListItem
 } from "prosemirror-schema-list";
 
-import { emDash, ellipsis } from "prosemirror-inputrules";
-
 import invisibles, {
   space,
   hardBreak,
@@ -102,6 +100,5 @@ const plugins = [
 const services = [new LinkService()];
 
 // Add Rules
-const rules = [emDash, ellipsis];
 
-export { schema, keys, plugins, rules, services };
+export { schema, keys, plugins, services };

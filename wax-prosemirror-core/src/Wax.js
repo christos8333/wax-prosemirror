@@ -57,17 +57,10 @@ class Wax extends Component {
     //   ? keys
     //   : new CreateShortCuts({ schema: schema, shortCuts: {} });
 
-    // const WaxRules = new CreateRules({ schema: schema, rules: rules });
-
     const editorContent = value ? value : "";
 
     if (plugins) defaultPlugins.push(...plugins);
 
-    // const finalPlugins = defaultPlugins.concat([
-    //   placeholder({ content: this.props.placeholder }),
-    //   WaxShortCuts,
-    //   WaxRules
-    // ]);
     const finalPlugins = defaultPlugins.concat([
       placeholder({ content: this.props.placeholder }),
       ...this.application.getPlugins()

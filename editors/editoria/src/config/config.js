@@ -1,3 +1,5 @@
+import { emDash, ellipsis } from "prosemirror-inputrules";
+
 export default {
   MenuService: [
     {
@@ -7,6 +9,11 @@ export default {
     {
       templateArea: "leftSideBar",
       toolGroups: ["TextStyle"]
+    }
+  ],
+  RulesService: [
+    {
+      rules: [emDash, ellipsis]
     }
   ]
 };

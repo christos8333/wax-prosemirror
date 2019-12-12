@@ -55,7 +55,6 @@ class Wax extends Component {
     // const WaxShortCuts = keys
     //   ? keys
     //   : new CreateShortCuts({ schema: schema, shortCuts: {} });
-
     const editorContent = value ? value : "";
 
     if (plugins) defaultPlugins.push(...plugins);

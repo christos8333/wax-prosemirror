@@ -4,12 +4,14 @@ import Rules from "./Rules";
 export default class RulesService extends Service {
   name = "RulesService";
 
-  boot() {}
-
   register() {
+    const { schema } = this.container.get("config").options;
+
     this.container.bind("Rules").toFactory(context => {
-      return new Rules(this.config[0]);
+      const rules = new Rules(this.config[0], schema);
+      this.app.PmPlugins.add("rules", rules);
     });
+
     this.container.get("Rules");
   }
 }

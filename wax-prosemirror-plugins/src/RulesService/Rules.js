@@ -10,11 +10,10 @@ import {
 class Rules {
   config = {};
   name = "";
-  constructor(@inject("Config") config, @inject("PmPlugins") pmplugins) {
-    console.log("config", config);
-    // this.rules = config.rules;
-    // this.schema = config.schema;
-    // return inputRules(this.allRules(this.rules));
+  constructor(@inject("Config") config, schema) {
+    this.rules = config.rules;
+    this.schema = schema;
+    return inputRules(this.allRules(this.rules));
   }
 
   allRules(rules = []) {

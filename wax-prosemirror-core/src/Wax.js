@@ -12,7 +12,6 @@ import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
 
 import CreateShortCuts from "./config/classes/CreateShortCuts";
-import CreateRules from "./config/classes/CreateRules";
 
 const parser = schema => {
   const parser = DOMParser.fromSchema(schema);

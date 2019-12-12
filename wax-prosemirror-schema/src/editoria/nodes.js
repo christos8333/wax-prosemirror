@@ -63,11 +63,21 @@ const nodes = {
     },
     parseDOM: [
       {
+        tag: "p[data-track]",
+        getAttrs(dom) {
+          debugger;
+          return {
+            track: parseTracks(dom.dataset.track)
+          };
+        }
+      },
+      {
         tag: "p.paragraph",
         getAttrs(dom) {
+          console.log(dom.getAttribute("class"));
+          debugger;
           return {
-            class: dom.getAttribute("class"),
-            track: parseTracks(dom.dataset.track)
+            class: dom.getAttribute("class")
           };
         }
       }

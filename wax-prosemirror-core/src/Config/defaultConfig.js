@@ -5,7 +5,8 @@ import {
   RedoUndoService,
   TextStyleService,
   PlaceholderService,
-  ImageService
+  ImageService,
+  RulesService
 } from "wax-prosemirror-plugins";
 
 export default {
@@ -16,6 +17,7 @@ export default {
     new AnnotationService(),
     new TextStyleService(),
     new PlaceholderService(),
-    new ImageService()
+    new ImageService(),
+    new RulesService()
   ]
 };

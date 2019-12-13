@@ -19,5 +19,7 @@ export {
 } from "./src/PlaceholderService/PlaceholderService";
 export { default as ImageService } from "./src/ImageService/ImageService";
 export { default as RulesService } from "./src/RulesService/RulesService";
-
+export {
+  default as ShortCutsService
+} from "./src/ShortCutsService/ShortCutsService";
 export { default as Tool } from "./src/lib/Tools";

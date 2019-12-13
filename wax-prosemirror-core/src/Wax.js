@@ -11,8 +11,6 @@ import WaxView from "./WaxView";
 import defaultPlugins from "./config/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
 
-import CreateShortCuts from "./config/classes/CreateShortCuts";
-
 const parser = schema => {
   const parser = DOMParser.fromSchema(schema);
 

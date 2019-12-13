@@ -1,3 +1,4 @@
+import { injectable } from "inversify";
 import { keymap } from "prosemirror-keymap";
 import { undoInputRule } from "prosemirror-inputrules";
 import { undo, redo } from "prosemirror-history";
@@ -10,7 +11,8 @@ import {
   selectParentNode
 } from "prosemirror-commands";
 
-class CreateShortCuts {
+@injectable()
+class ShortCuts {
   constructor(config) {
     this.schema = config.schema;
     this.shortCuts = config.shortCuts;
@@ -63,4 +65,4 @@ class CreateShortCuts {
   }
 }
 
-export default CreateShortCuts;
+export default ShortCuts;

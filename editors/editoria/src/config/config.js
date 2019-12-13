@@ -15,5 +15,10 @@ export default {
     {
       rules: [emDash, ellipsis]
     }
+  ],
+  RulesService: [
+    {
+      shortCuts: {}
+    }
   ]
 };

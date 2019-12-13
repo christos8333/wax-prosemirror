@@ -4,13 +4,9 @@ import Rules from "./Rules";
 export default class RulesService extends Service {
   name = "RulesService";
 
-  // boot() {
-  //   const rules =
-  //   //rules.addRule(configRules);
-  // }
   register() {
     const { schema } = this.container.get("config").options;
-    const configRules = this.config[0];
+    const configRules = this.config[0].rules;
     const PmPlugins = this.app.PmPlugins;
 
     this.container

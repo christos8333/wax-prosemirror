@@ -8,15 +8,14 @@ import {
 
 @injectable()
 class Rules {
-  // constructor(schema, plugins) {
-  //   console.log("rules?", schema, plugins);
-  //   this.PmPlugins = plugins;
-  //   this.schema = schema;
-  // }
+  constructor(schema, plugins) {
+    this.PmPlugins = plugins;
+    this.schema = schema;
+  }
 
   addRule(rules) {
-    console.log(rules);
-    // return inputRules(this.allRules(rules));
+    const rulesCreated = inputRules(this.allRules(rules));
+    this.PmPlugins.add("rules", rulesCreated);
   }
 
   allRules(rules = []) {

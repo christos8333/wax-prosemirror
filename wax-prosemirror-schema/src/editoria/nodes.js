@@ -65,7 +65,6 @@ const nodes = {
       {
         tag: "p[data-track]",
         getAttrs(dom) {
-          debugger;
           return {
             track: parseTracks(dom.dataset.track)
           };
@@ -75,7 +74,6 @@ const nodes = {
         tag: "p.paragraph",
         getAttrs(dom) {
           console.log(dom.getAttribute("class"));
-          debugger;
           return {
             class: dom.getAttribute("class")
           };

@@ -86,7 +86,7 @@ class Wax extends Component {
       readonly,
       TrackChange,
       value,
-      user,
+      user
     } = this.props;
 
     const Layout = this.application.container.get("Layout");

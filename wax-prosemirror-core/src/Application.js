@@ -1,7 +1,7 @@
 import { Container } from "inversify";
 import "reflect-metadata";
-import Config from "./Config/Config";
-import defaultConfig from "./Config/defaultConfig";
+import Config from "./config/Config";
+import defaultConfig from "./config/defaultConfig";
 import PmPlugins from "./PmPlugins";
 
 export default class Application {

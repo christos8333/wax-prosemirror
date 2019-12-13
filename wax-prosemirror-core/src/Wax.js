@@ -8,8 +8,8 @@ import styled from "styled-components";
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 
 import WaxView from "./WaxView";
-import defaultPlugins from "./config/plugins/defaultPlugins";
-import placeholder from "./config/plugins/placeholder";
+import defaultPlugins from "./plugins/defaultPlugins";
+import placeholder from "./plugins/placeholder";
 
 const parser = schema => {
   const parser = DOMParser.fromSchema(schema);

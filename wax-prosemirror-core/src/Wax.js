@@ -51,11 +51,9 @@ class Wax extends Component {
     const { value, onChange, options } = this.props;
     const { schema, plugins, keys, rules } = options;
     const WaxOnchange = onChange ? onChange : value => true;
+
     this.application.bootServices();
 
-    // const WaxShortCuts = keys
-    //   ? keys
-    //   : new CreateShortCuts({ schema: schema, shortCuts: {} });
     const editorContent = value ? value : "";
 
     if (plugins) defaultPlugins.push(...plugins);
@@ -64,7 +62,7 @@ class Wax extends Component {
       placeholder({ content: this.props.placeholder }),
       ...this.application.getPlugins()
     ]);
-    console.log("cretated?");
+
     this.WaxOptions = {
       schema,
       plugins: finalPlugins

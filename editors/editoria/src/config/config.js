@@ -13,7 +13,7 @@ export default {
   ],
   RulesService: [
     {
-      rules: [ellipsis]
+      rules: [emDash, ellipsis]
     }
   ]
 };

@@ -11,13 +11,13 @@ import {
 
 export default {
   services: [
+    new RulesService(),
     new LayoutService(),
     new MenuService(),
     new RedoUndoService(),
     new AnnotationService(),
     new TextStyleService(),
     new PlaceholderService(),
-    new ImageService(),
-    new RulesService()
+    new ImageService()
   ]
 };

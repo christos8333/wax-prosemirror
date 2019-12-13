@@ -16,7 +16,7 @@ export default class RulesService extends Service {
       .bind("Rules")
       .toDynamicValue(() => new Rules(schema, PmPlugins))
       .inSingletonScope();
-    const configRules = this.config[0].rules;
+    const configRules = this.config;
     const rules = this.container.get("Rules");
     rules.addRule(configRules);
   }

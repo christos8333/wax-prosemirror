@@ -1,4 +1,10 @@
 import { emDash, ellipsis } from "prosemirror-inputrules";
+import { columnResizing, tableEditing } from "prosemirror-tables";
+import invisibles, {
+  space,
+  hardBreak,
+  paragraph
+} from "@guardian/prosemirror-invisibles";
 
 export default {
   MenuService: [
@@ -11,14 +17,15 @@ export default {
       toolGroups: ["TextStyle"]
     }
   ],
-  RulesService: [
-    {
-      rules: [emDash, ellipsis]
-    }
-  ],
-  ShortCutsService: [
-    {
-      shortCuts: {}
-    }
+
+  RulesService: [emDash, ellipsis],
+
+  ShortCutsService: {},
+
+  PluginsService: [
+    columnResizing(),
+    tableEditing(),
+    // TrackChangePlugin({ options: {} }),
+    invisibles([hardBreak()])
   ]
 };

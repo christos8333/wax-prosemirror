@@ -7,13 +7,15 @@ import {
   PlaceholderService,
   RulesService,
   ShortCutsService,
-  TextStyleService
+  TextStyleService,
+  PluginsService
 } from "wax-prosemirror-plugins";
 
 export default {
   services: [
     new RulesService(),
     new ShortCutsService(),
+    new PluginsService(),
     new LayoutService(),
     new MenuService(),
     new RedoUndoService(),

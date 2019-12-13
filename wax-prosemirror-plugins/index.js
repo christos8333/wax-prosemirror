@@ -22,4 +22,5 @@ export { default as RulesService } from "./src/RulesService/RulesService";
 export {
   default as ShortCutsService
 } from "./src/ShortCutsService/ShortCutsService";
+export { default as PluginsService } from "./src/PluginsService/PluginsService";
 export { default as Tool } from "./src/lib/Tools";

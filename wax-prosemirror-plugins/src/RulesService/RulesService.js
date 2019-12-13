@@ -11,12 +11,12 @@ export default class RulesService extends Service {
   register() {
     const { schema } = this.container.get("config").options;
     const PmPlugins = this.app.PmPlugins;
+    const configRules = this.config;
 
     this.container
       .bind("Rules")
       .toDynamicValue(() => new Rules(schema, PmPlugins))
       .inSingletonScope();
-    const configRules = this.config;
     const rules = this.container.get("Rules");
     rules.addRule(configRules);
   }

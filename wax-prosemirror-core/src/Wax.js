@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 
 import WaxView from "./WaxView";
-import defaultPlugins from "./config/defaultPlugins";
+import defaultPlugins from "./config/plugins/defaultPlugins";
 import placeholder from "./config/plugins/placeholder";
 
 const parser = schema => {
@@ -41,20 +41,17 @@ class Wax extends Component {
   application = {};
   constructor(props) {
     super(props);
-    console.log("Appp Started", props);
     this.application = Application.create(props);
   }
 
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema, plugins, keys, rules } = options;
+    const { schema } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
     this.application.bootServices();
 
     const editorContent = value ? value : "";
-
-    if (plugins) defaultPlugins.push(...plugins);
 
     const finalPlugins = defaultPlugins.concat([
       placeholder({ content: this.props.placeholder }),
@@ -82,9 +79,7 @@ class Wax extends Component {
   render() {
     const {
       autoFocus,
-      children,
       placeholder,
-      renderLayout,
       fileUpload,
       readonly,
       className,

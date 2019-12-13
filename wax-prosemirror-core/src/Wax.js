@@ -76,16 +76,17 @@ class Wax extends Component {
   render() {
     const {
       autoFocus,
-      placeholder,
-      fileUpload,
-      readonly,
+      children,
       className,
-      value,
-      onBlur,
       debug,
+      fileUpload,
+      layout,
+      onBlur,
+      placeholder,
+      readonly,
       TrackChange,
+      value,
       user,
-      layout
     } = this.props;
 
     const Layout = this.application.container.get("Layout");

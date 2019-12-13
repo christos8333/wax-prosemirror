@@ -42,14 +42,11 @@ class Wax extends Component {
   constructor(props) {
     super(props);
     this.application = Application.create(props);
-  }
+    this.application.bootServices();
 
-  componentWillMount() {
     const { value, onChange, options } = this.props;
     const { schema } = options;
     const WaxOnchange = onChange ? onChange : value => true;
-
-    this.application.bootServices();
 
     const editorContent = value ? value : "";
 

@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import { EditoriaLayout } from "wax-prosemirror-layouts";
 import { Wax } from "wax-prosemirror-core";
 
-import { schema, keys, plugins, rules, services } from "./EditorConfig";
+import { schema, services } from "./EditorConfig";
 import { config } from "./config";
 
 import text from "./text";

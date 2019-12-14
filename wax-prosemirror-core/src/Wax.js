@@ -49,7 +49,7 @@ class Wax extends Component {
 
   componentWillMount() {
     const { value, onChange, options } = this.props;
-    const { schema, plugins, keys, rules } = options;
+    const { plugins, keys, rules } = options;
     const WaxOnchange = onChange ? onChange : value => true;
 
     // const WaxShortCuts = keys
@@ -63,6 +63,8 @@ class Wax extends Component {
       placeholder({ content: this.props.placeholder }),
       ...this.application.getPlugins()
     ]);
+
+    const schema = this.application.getSchema();
 
     this.WaxOptions = {
       schema,

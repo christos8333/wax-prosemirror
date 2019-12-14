@@ -6,11 +6,13 @@ import {
   TextStyleService,
   PlaceholderService,
   ImageService,
-  RulesService
+  RulesService,
+  SchemaService
 } from "wax-prosemirror-plugins";
 
 export default {
   services: [
+    new SchemaService(),
     new LayoutService(),
     new MenuService(),
     new RedoUndoService(),

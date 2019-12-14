@@ -27,11 +27,3 @@ export default class Menu {
     return view => <MenuWrapper items={this.toolGroups} view={view} />;
   }
 }
-
-// {
-//   templateArea: "topBar",
-//   tools: [
-//     "redo-undo",
-//     { name: "Annotations", exclude: [], include: [] }
-//   ]
-// }

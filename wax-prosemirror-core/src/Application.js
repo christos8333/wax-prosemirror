@@ -1,4 +1,5 @@
 import { Container } from "inversify";
+import { Schema } from "prosemirror-model";
 import "reflect-metadata";
 import Config from "./Config/Config";
 import defaultConfig from "./Config/defaultConfig";
@@ -45,6 +46,11 @@ export default class Application {
 
   getPlugins() {
     return this.PmPlugins.getAll();
+  }
+
+  getSchema() {
+    const schema = this.container.get("Schema");
+    return new Schema(schema.getSchema());
   }
 
   static create(config) {

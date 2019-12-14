@@ -1,25 +1,30 @@
 import LayoutService from "../services/LayoutService/LayoutService";
 import {
-  MenuService,
   AnnotationService,
+  ImageService,
+  MenuService,
   RedoUndoService,
-  TextStyleService,
   PlaceholderService,
   ImageService,
   RulesService,
-  SchemaService
+  SchemaService,
+  ShortCutsService,
+  TextStyleService,
+  PluginsService
 } from "wax-prosemirror-plugins";
 
 export default {
   services: [
     new SchemaService(),
+    new RulesService(),
+    new ShortCutsService(),
+    new PluginsService(),
     new LayoutService(),
     new MenuService(),
     new RedoUndoService(),
     new AnnotationService(),
     new TextStyleService(),
     new PlaceholderService(),
-    new ImageService(),
-    new RulesService()
+    new ImageService()
   ]
 };

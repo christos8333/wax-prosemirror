@@ -5,7 +5,7 @@ import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 
 import "prosemirror-view/style/prosemirror.css";
-import trackedTransaction from "./config/track-changes/trackedTransaction";
+import trackedTransaction from "./track-changes/trackedTransaction";
 
 class WaxView extends Component {
   constructor(props) {

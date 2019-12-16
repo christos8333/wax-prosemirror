@@ -51,12 +51,12 @@ const marks = {
       return strongDOM;
     }
   },
-  code: {
-    parseDOM: [{ tag: "code" }],
-    toDOM() {
-      return codeDOM;
-    }
-  },
+  // code: {
+  //   parseDOM: [{ tag: "code" }],
+  //   toDOM() {
+  //     return codeDOM;
+  //   }
+  // },
   subscript: {
     excludes: "superscript",
     parseDOM: [{ tag: "sub" }, { style: "vertical-align=sub" }],

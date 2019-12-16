@@ -1,6 +1,7 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 import Schema from "./Schema";
 import Node from "./Node";
+import Mark from "./Mark";
 
 export default class SchemaService extends Service {
   name = "SchemaService";

@@ -14,17 +14,21 @@ export default class Application {
   }
 
   registerServices() {
-    this.config.get("services").map(service => {
+    let count = 0;
+    while (count < this.config.get("services").length) {
+      const service = this.config.get("services")[count];
       /*
-      set App to every service
-      so services can have access to containers and config
-      */
+        set App to every service
+        so services can have access to containers and config
+        */
       service.setApp(this);
 
       if (service.register) {
         service.register();
       }
-    });
+
+      count += 1;
+    }
   }
 
   setConfig(config) {

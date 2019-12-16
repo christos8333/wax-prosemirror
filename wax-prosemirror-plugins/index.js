@@ -25,3 +25,6 @@ export {
   default as ShortCutsService
 } from "./src/ShortCutsService/ShortCutsService";
 export { default as Tool } from "./src/lib/Tools";
+export {
+  default as InlineAnnotationsService
+} from "./src/InlineAnnotations/InlineAnnotationsService";

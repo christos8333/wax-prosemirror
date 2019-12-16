@@ -19,7 +19,6 @@ class WaxView extends Component {
       editable: () => !readonly,
       state: EditorState.create(options),
       dispatchTransaction: this.dispatchTransaction,
-      fileUpload: this.uploadImage,
       handleDOMEvents: {
         blur: onBlur
           ? view => {

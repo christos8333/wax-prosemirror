@@ -5,7 +5,6 @@ import {
   MenuService,
   RedoUndoService,
   PlaceholderService,
-  ImageService,
   RulesService,
   SchemaService,
   ShortCutsService,

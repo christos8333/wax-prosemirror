@@ -2,16 +2,6 @@ import Service from "wax-prosemirror-core/src/services/Service";
 import placeholderPlugin from "./pmPlugins/placeholderPlugin";
 const PLUGIN_KEY = "imagePlaceHolder";
 
-const blockLevelToDOM = node => {
-  const attrs = node.attrs.track.length
-    ? {
-        class: node.attrs.class,
-        "data-track": JSON.stringify(node.attrs.track)
-      }
-    : { class: node.attrs.class };
-  return attrs;
-};
-
 const parseTracks = str => {
   if (!str) {
     return [];
@@ -85,7 +75,6 @@ export default class PlaceholderService extends Service {
           }
         },
         toDOM(hook, next) {
-          const attrs = blockLevelToDOM(hook.node);
           Object.assign(hook.value[1], {
             "data-track": JSON.stringify(hook.node.attrs.track)
           });

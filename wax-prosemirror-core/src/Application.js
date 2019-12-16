@@ -1,5 +1,4 @@
 import { Container } from "inversify";
-import { Schema } from "prosemirror-model";
 import "reflect-metadata";
 import Config from "./config/Config";
 import defaultConfig from "./config/defaultConfig";
@@ -50,7 +49,7 @@ export default class Application {
 
   getSchema() {
     const schema = this.container.get("Schema");
-    return new Schema(schema.getSchema());
+    return schema.getSchema();
   }
 
   static create(config) {
@@ -58,7 +57,7 @@ export default class Application {
     Create Container
     */
     const container = new Container();
-
+    const configPlugins = config.config.PmPlugins;
     /*
     Set base bindings for the App to work
     */
@@ -78,6 +77,9 @@ export default class Application {
     */
     const app = container.get("Wax");
     app.setConfig(config);
+    configPlugins.forEach(configPlugin => {
+      app.PmPlugins.add(configPlugin.key, configPlugin);
+    });
     app.registerServices();
 
     return app;

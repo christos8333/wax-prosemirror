@@ -1,13 +1,15 @@
+import { Schema as PmPschema } from "prosemirror-model";
+import { injectable } from "inversify";
+
 import Node from "./Node";
 import Mark from "./Mark";
 import { EditoriaSchema } from "wax-prosemirror-schema";
-import { injectable } from "inversify";
 
 @injectable()
 export default class Schema {
   _nodes = {};
   _marks = {};
-
+  schema = null;
   has(instance) {
     if (instance instanceof Node) {
       return this._nodes[instance.name] ? this._nodes[instance.name] : false;
@@ -37,7 +39,7 @@ export default class Schema {
 
   getSchema() {
     /* this is temporally until all of the packages moved to schemas */
-
+    if (this.schema) return this.schema;
     const nodes = EditoriaSchema.nodes;
     const marks = EditoriaSchema.marks;
 
@@ -48,10 +50,6 @@ export default class Schema {
     for (let index in this._marks) {
       marks[index] = this._marks[index].toJSON();
     }
-
-    return {
-      nodes,
-      marks
-    };
+    return new PmPschema({ nodes, marks });
   }
 }

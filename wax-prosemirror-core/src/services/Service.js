@@ -11,4 +11,8 @@ export default class Service {
   get config() {
     return this.app.config.get(`config.${this.name}`);
   }
+
+  get schema() {
+    return this.app.getSchema();
+  }
 }

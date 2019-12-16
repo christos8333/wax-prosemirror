@@ -37,8 +37,7 @@ export default class PlaceholderService extends Service {
         group: "block",
         content: "inline*",
         attrs: {
-          class: { default: "paragraph" },
-          track: { default: [] }
+          class: { default: "paragraph" }
         },
         parseDOM: {
           tag: "p.paragraph",

@@ -22,7 +22,7 @@ export default {
 
   ShortCutsService: {},
 
-  PluginsService: [
+  PmPlugins: [
     columnResizing(),
     tableEditing(),
     // TrackChangePlugin({ options: {} }),

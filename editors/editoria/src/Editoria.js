@@ -3,15 +3,9 @@ import styled, { createGlobalStyle } from "styled-components";
 import { EditoriaLayout } from "wax-prosemirror-layouts";
 import { Wax } from "wax-prosemirror-core";
 
-import { schema, services } from "./EditorConfig";
 import { config } from "./config";
 
 import text from "./text";
-
-const options = {
-  schema,
-  services
-};
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -51,7 +45,6 @@ const Editoria = () => (
     <GlobalStyle />
     <StyledWax
       config={config}
-      options={options}
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}

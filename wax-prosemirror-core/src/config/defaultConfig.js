@@ -8,8 +8,7 @@ import {
   RulesService,
   SchemaService,
   ShortCutsService,
-  TextStyleService,
-  PluginsService
+  TextStyleService
 } from "wax-prosemirror-plugins";
 
 export default {
@@ -17,7 +16,6 @@ export default {
     new SchemaService(),
     new RulesService(),
     new ShortCutsService(),
-    new PluginsService(),
     new LayoutService(),
     new MenuService(),
     new RedoUndoService(),

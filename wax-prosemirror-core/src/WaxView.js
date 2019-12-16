@@ -11,13 +11,13 @@ class WaxView extends Component {
   constructor(props) {
     super(props);
     const { readonly, onBlur } = this.props;
-
+    const { options } = props;
     this.editorRef = React.createRef();
 
     // Create view of Editor
     this.view = new EditorView(null, {
       editable: () => !readonly,
-      state: EditorState.create(props.options),
+      state: EditorState.create(options),
       dispatchTransaction: this.dispatchTransaction,
       fileUpload: this.uploadImage,
       handleDOMEvents: {

@@ -40,7 +40,7 @@ export default class Application {
 
   bootServices() {
     const services = this.config.get("services");
-    services.map(plugin => {
+    services.forEach(plugin => {
       if (plugin.boot) {
         plugin.boot();
       }

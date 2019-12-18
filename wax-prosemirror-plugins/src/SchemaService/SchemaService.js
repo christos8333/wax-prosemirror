@@ -6,8 +6,6 @@ import Mark from "./Mark";
 export default class SchemaService extends Service {
   name = "SchemaService";
 
-  boot() {}
-
   register() {
     this.container
       .bind("Schema")

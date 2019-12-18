@@ -3,30 +3,36 @@ import Middleware from "../lib/Middleware";
 
 export default class ParseRule {
   tag = "";
-  exporter = {};
+  exporter = null;
 
   constructor({ getAttrs, tag }) {
     this.tag = tag;
-    this.exporter = new Middleware();
+    if (getAttrs) {
+      this.exporter = new Middleware();
+    }
     this.addStack(getAttrs);
   }
 
   addStack(getAttrs) {
-    this.exporter.use(getAttrs);
+    if (getAttrs) {
+      this.exporter.use(getAttrs);
+    }
   }
 
   parseSchema(exporter) {
-    return {
-      tag: this.tag,
-      getAttrs(dom) {
+    const rule = { tag: this.tag };
+    if (this.exporter) {
+      rule.getAttrs = dom => {
         let hooks = {};
 
         exporter.go({ dom }, hook => {
           hooks = hook;
         });
         return omit(hooks, ["dom"]);
-      }
-    };
+      };
+    }
+    console.log(rule, "rule");
+    return rule;
   }
 
   combineRules() {

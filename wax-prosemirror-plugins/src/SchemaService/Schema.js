@@ -10,6 +10,7 @@ export default class Schema {
   _nodes = {};
   _marks = {};
   schema = null;
+
   has(instance) {
     if (instance instanceof Node) {
       return this._nodes[instance.name] ? this._nodes[instance.name] : false;
@@ -50,6 +51,7 @@ export default class Schema {
     for (let index in this._marks) {
       marks[index] = this._marks[index].toJSON();
     }
+
     return new PmPschema({ nodes, marks });
   }
 }

@@ -8,6 +8,7 @@ export default class Application {
   container = {};
   config = {};
   PmPlugins = {};
+
   constructor(container) {
     this.container = container;
     this.PmPlugins = container.get("PmPlugins");

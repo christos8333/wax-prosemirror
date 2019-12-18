@@ -5,9 +5,10 @@ console.log(codeMark);
 class CodeService extends Service {
   boot() {
     const createMark = this.container.get("CreateMark");
+
     createMark({
       code: {
-        parseDOM: [{ tag: "code" }],
+        parseDOM: { tag: "code" },
         toDOM(hook, next) {
           hook.value = ["code", 0];
           next();

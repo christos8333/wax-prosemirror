@@ -3,15 +3,6 @@ const emDOM = ["em", 0],
   codeDOM = ["code", 0];
 
 const marks = {
-  underline: {
-    parseDOM: [{ tag: "u" }, { style: "text-decoration:underline" }],
-    toDOM: () => [
-      "span",
-      {
-        style: "text-decoration:underline"
-      }
-    ]
-  },
   small_caps: {
     attrs: {
       class: { default: "small-caps" }

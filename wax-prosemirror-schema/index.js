@@ -12,6 +12,7 @@ export { default as emphasisMark } from "./src/marks/emphasisMark";
 export { default as subscriptMark } from "./src/marks/subscriptMark";
 export { default as superscriptMark } from "./src/marks/superscriptMark";
 export { default as strikethroughMark } from "./src/marks/strikethroughMark";
+export { default as underlineMark } from "./src/marks/underlineMark";
 export { default as smallcapsMark } from "./src/marks/smallcapsMark";
 /*
 LIST OF SUPPORTED NODES

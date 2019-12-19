@@ -1,7 +1,8 @@
 const code = {
-  parseDOM: [{ tag: "code" }],
-  toDOM() {
-    return ["code", 0];
+  parseDOM: { tag: "code" },
+  toDOM(hook, next) {
+    hook.value = ["code", 0];
+    next();
   }
 };
 

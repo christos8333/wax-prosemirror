@@ -1,5 +1,6 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 import Code from "./Code";
+
 class CodeService extends Service {
   boot() {}
 

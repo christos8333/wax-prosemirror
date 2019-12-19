@@ -12,8 +12,12 @@ export default class Schema {
   schema = null;
 
   constructor(
-    @multiInject("schema") @named("mark") marks,
-    @multiInject("schema") @named("node") nodes
+    @multiInject("schema")
+    @named("mark")
+    marks,
+    @multiInject("schema")
+    @named("node")
+    nodes
   ) {
     this.setNodes(nodes);
     this.setMarks(marks);
@@ -94,10 +98,10 @@ export default class Schema {
       nodes[index] = this._nodes[index].toJSON();
     }
 
+    console.log(this._marks);
     for (let index in this._marks) {
       marks[index] = this._marks[index].toJSON();
     }
-
     this.schema = new PmPschema({ nodes, marks });
     return this.schema;
   }

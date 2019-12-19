@@ -17,8 +17,7 @@ export default class StrikeThrough extends Tools {
 
   get active() {
     return state => {
-      console.log(state.config);
-      // return markActive(state.config.schema.marks.strikethrough)(state);
+      return markActive(state.config.schema.marks.strikethrough)(state);
     };
   }
 }

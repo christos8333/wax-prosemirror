@@ -31,7 +31,7 @@ export default class ParseRule {
         return omit(hooks, ["dom"]);
       };
     }
-    console.log(rule, "rule");
+
     return rule;
   }
 

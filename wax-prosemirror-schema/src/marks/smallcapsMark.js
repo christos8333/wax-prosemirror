@@ -11,8 +11,9 @@ const smallcaps = {
       }
     }
   ],
-  toDOM(node) {
-    return ["span", node.attrs, 0];
+  toDOM(hook, next) {
+    hook.value = ["span", hook.node.attrs, 0];
+    next();
   }
 };
 

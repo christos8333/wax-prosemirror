@@ -5,6 +5,7 @@ import SubscriptService from "./SubscriptService/SubscriptService";
 import SuperscriptService from "./SuperscriptService/SuperscriptService";
 import StrikeThroughService from "./StrikeThroughService/StrikeThroughService";
 import UnderlineService from "./UnderlineService/UnderlineService";
+import SmallCapsService from "./SmallCapsService/SmallCapsService";
 
 export default [
   new CodeService(),
@@ -13,5 +14,6 @@ export default [
   new SubscriptService(),
   new SuperscriptService(),
   new StrikeThroughService(),
-  new UnderlineService()
+  new UnderlineService(),
+  new SmallCapsService()
 ];

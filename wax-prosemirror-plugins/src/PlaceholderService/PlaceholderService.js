@@ -33,54 +33,60 @@ export default class PlaceholderService extends Service {
   }
 
   register() {
-    this.container.bind("schema").toConstantValue({
-      paragraph: {
-        group: "block",
-        content: "inline*",
-        attrs: {
-          class: { default: "paragraph" }
-        },
-        parseDOM: {
-          tag: "p.paragraph",
-          getAttrs(hook, next) {
-            Object.assign(hook, {
-              class: hook.dom.getAttribute("class")
+    this.container
+      .bind("schema")
+      .toConstantValue({
+        paragraph: {
+          group: "block",
+          content: "inline*",
+          attrs: {
+            class: { default: "paragraph" }
+          },
+          parseDOM: {
+            tag: "p.paragraph",
+            getAttrs(hook, next) {
+              Object.assign(hook, {
+                class: hook.dom.getAttribute("class")
+              });
+              next();
+            }
+          },
+          toDOM(hook, next) {
+            const attrs = { class: hook.node.attrs.class };
+
+            hook.value = ["p", attrs, 0];
+            next();
+          }
+        }
+      })
+      .whenTargetNamed("node");
+
+    this.container
+      .bind("schema")
+      .toConstantValue({
+        paragraph: {
+          group: "block",
+          content: "inline*",
+          attrs: {
+            track: { default: [] }
+          },
+          parseDOM: {
+            tag: "p.paragraph",
+            getAttrs(hook, next) {
+              Object.assign(hook, {
+                track: parseTracks(hook.dom.dataset.track)
+              });
+              next();
+            }
+          },
+          toDOM(hook, next) {
+            Object.assign(hook.value[1], {
+              "data-track": JSON.stringify(hook.node.attrs.track)
             });
             next();
           }
-        },
-        toDOM(hook, next) {
-          const attrs = { class: hook.node.attrs.class };
-
-          hook.value = ["p", attrs, 0];
-          next();
         }
-      }
-    });
-
-    this.container.bind("schema").toConstantValue({
-      paragraph: {
-        group: "block",
-        content: "inline*",
-        attrs: {
-          track: { default: [] }
-        },
-        parseDOM: {
-          tag: "p.paragraph",
-          getAttrs(hook, next) {
-            Object.assign(hook, {
-              track: parseTracks(hook.dom.dataset.track)
-            });
-            next();
-          }
-        },
-        toDOM(hook, next) {
-          Object.assign(hook.value[1], {
-            "data-track": JSON.stringify(hook.node.attrs.track)
-          });
-          next();
-        }
-      }
-    });
+      })
+      .whenTargetNamed("node");
   }
 }

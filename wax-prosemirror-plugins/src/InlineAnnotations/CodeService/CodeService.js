@@ -1,9 +1,7 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 import Code from "./Code";
 class CodeService extends Service {
-  boot() {
-    this.container.bind("Code").to(Code);
-  }
+  boot() {}
 
   register() {
     this.container
@@ -17,7 +15,9 @@ class CodeService extends Service {
           }
         }
       })
-      .whenTargetNamed("node");
+      .whenTargetNamed("mark");
+
+    this.container.bind("Code").to(Code);
   }
 }
 

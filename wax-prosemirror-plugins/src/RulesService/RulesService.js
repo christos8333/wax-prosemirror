@@ -16,7 +16,13 @@ export default class RulesService extends Service {
 
     this.container
       .bind("Rules")
-      .toDynamicValue(() => new Rules(PmPlugins))
+      .toDynamicValue(() => {
+        const {
+          schema: { schema }
+        } = this.app;
+
+        return new Rules(PmPlugins, schema);
+      })
       .inSingletonScope();
   }
 }

@@ -12,42 +12,42 @@ export default class SchemaService extends Service {
       .to(Schema)
       .inSingletonScope();
 
-    this.container.bind("CreateNode").toFactory(context => {
-      return schemaConfig => {
-        const schema = context.container.get("Schema");
-        const name = Object.keys(schemaConfig)[0];
-        const config = schemaConfig[name];
+    //     this.container.bind("CreateNode").toFactory(context => {
+    //       return schemaConfig => {
+    //         const schema = context.container.get("Schema");
+    //         const name = Object.keys(schemaConfig)[0];
+    //         const config = schemaConfig[name];
 
-        const node = new Node(name);
-        let nd = {};
-        if ((nd = schema.has(node))) {
-          nd.fromJSON(config);
-          return nd;
-        } else {
-          node.fromJSON(config);
-          schema.addSchema(node);
-          return node;
-        }
-      };
-    });
+    //         const node = new Node(name);
+    //         let nd = {};
+    //         if ((nd = schema.has(node))) {
+    //           nd.fromJSON(config);
+    //           return nd;
+    //         } else {
+    //           node.fromJSON(config);
+    //           schema.addSchema(node);
+    //           return node;
+    //         }
+    //       };
+    //     });
 
-    this.container.bind("CreateMark").toFactory(context => {
-      return schemaConfig => {
-        const schema = context.container.get("Schema");
-        const name = Object.keys(schemaConfig)[0];
-        const config = schemaConfig[name];
+    //     this.container.bind("CreateMark").toFactory(context => {
+    //       return schemaConfig => {
+    //         const schema = context.container.get("Schema");
+    //         const name = Object.keys(schemaConfig)[0];
+    //         const config = schemaConfig[name];
 
-        const mark = new Mark(name);
-        let mr = {};
-        if ((mr = schema.has(mark))) {
-          mr.fromJSON(config);
-          return mr;
-        } else {
-          mark.fromJSON(config);
-          schema.addSchema(mark);
-          return mark;
-        }
-      };
-    });
+    //         const mark = new Mark(name);
+    //         let mr = {};
+    //         if ((mr = schema.has(mark))) {
+    //           mr.fromJSON(config);
+    //           return mr;
+    //         } else {
+    //           mark.fromJSON(config);
+    //           schema.addSchema(mark);
+    //           return mark;
+    //         }
+    //       };
+    //     });
   }
 }

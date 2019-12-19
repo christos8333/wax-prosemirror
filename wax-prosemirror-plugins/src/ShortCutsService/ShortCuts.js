@@ -13,13 +13,12 @@ import {
 
 @injectable()
 class ShortCuts {
-  constructor(config) {
-    this.schema = config.schema;
-    this.shortCuts = config.shortCuts;
+  constructor(plugins, schema) {
+    this.PmPlugins = plugins;
+    this.schema = schema;
 
     this.insertBreak = this.insertBreak.bind(this);
     this.insertRule = this.insertRule.bind(this);
-    return keymap(this.createKeyBindings());
   }
 
   insertBreak(state, dispatch) {
@@ -32,6 +31,15 @@ class ShortCuts {
     const hr = this.schema.nodes.horizontal_rule.create();
     dispatch(state.tr.replaceSelectionWith(hr).scrollIntoView());
     return true;
+  }
+
+  createShortCuts() {
+    const shortCuts = keymap(this.createKeyBindings());
+    this.PmPlugins.add("shortcuts", shortCuts);
+  }
+
+  addShortCut() {
+    /* TODO add shortcut from each package*/
   }
 
   createKeyBindings() {

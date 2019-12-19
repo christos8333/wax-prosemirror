@@ -3,24 +3,6 @@ const emDOM = ["em", 0],
   codeDOM = ["code", 0];
 
 const marks = {
-  superscript: {
-    excludes: "subscript",
-    parseDOM: [{ tag: "sup" }, { style: "vertical-align=super" }],
-    toDOM: () => ["sup"]
-  },
-  strikethrough: {
-    parseDOM: [
-      { tag: "strike" },
-      { style: "text-decoration:line-through" },
-      { style: "text-decoration-line:line-through" }
-    ],
-    toDOM: () => [
-      "span",
-      {
-        style: "text-decoration-line:line-through"
-      }
-    ]
-  },
   underline: {
     parseDOM: [{ tag: "u" }, { style: "text-decoration:underline" }],
     toDOM: () => [

@@ -1,5 +1,6 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 import LinkComponent from "./LinkComponent";
+import { linkMark } from "wax-prosemirror-schema";
 import LinkTool from "./LinkTool";
 
 export default class LinkService extends Service {
@@ -12,37 +13,13 @@ export default class LinkService extends Service {
   }
 
   register() {
+    this.container.bind("Link").to(LinkTool);
+
     this.container
       .bind("schema")
       .toConstantValue({
-        link: {
-          attrs: {
-            href: { default: null },
-            rel: { default: "" },
-            target: { default: "blank" },
-            title: { default: null }
-          },
-          inclusive: false,
-          parseDOM: {
-            tag: "a[href]",
-            getAttrs: (hook, next) => {
-              const href = hook.dom.getAttribute("href");
-              const target = href && href.indexOf("#") === 0 ? "" : "blank";
-              Object.assign(hook, {
-                href: hook.dom.getAttribute("href"),
-                title: hook.dom.getAttribute("title"),
-                target
-              });
-              next();
-            }
-          },
-          toDOM(hook, next) {
-            hook.value = ["a", node.attrs, 0];
-            next();
-          }
-        }
+        link: linkMark
       })
       .whenTargetNamed("mark");
-    this.container.bind("Link").to(LinkTool);
   }
 }

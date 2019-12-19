@@ -10,7 +10,7 @@ import {
 class Rules {
   constructor(plugins, schema) {
     this.PmPlugins = plugins;
-    debugger;
+
     this.schema = schema;
     this.extendedRules = this.allRules();
   }
@@ -42,7 +42,7 @@ class Rules {
       wrappingInputRule(/^\s*([-+*])\s$/, this.schema.nodes.bullet_list),
 
       // ``` code block
-      schema => textblockTypeInputRule(/^```$/, schema.nodes.code_block),
+      textblockTypeInputRule(/^```$/, this.schema.nodes.code_block),
 
       // # heading
       textblockTypeInputRule(

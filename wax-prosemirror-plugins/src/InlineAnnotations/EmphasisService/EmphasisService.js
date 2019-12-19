@@ -3,14 +3,15 @@ import { emphasisMark } from "wax-prosemirror-schema";
 import Emphasis from "./Emphasis";
 
 class EmphasisService extends Service {
-  boot() {
-    const createMark = this.container.get("CreateMark");
-
-    createMark({ em: emphasisMark });
-  }
-
   register() {
     this.container.bind("Emphasis").to(Emphasis);
+
+    this.container
+      .bind("schema")
+      .toConstantValue({
+        em: emphasisMark
+      })
+      .whenTargetNamed("mark");
   }
 }
 

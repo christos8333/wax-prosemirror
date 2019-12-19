@@ -15,3 +15,5 @@ const strong = {
     next();
   }
 };
+
+export default strong;

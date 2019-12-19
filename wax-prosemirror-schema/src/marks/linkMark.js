@@ -20,8 +20,8 @@ const link = {
       }
     }
   ],
-  toDOM(hook, next, node) {
-    hook.value = ["a", node.attrs, 0];
+  toDOM(hook, next) {
+    hook.value = ["a", hook.node.attrs, 0];
     next();
   }
 };

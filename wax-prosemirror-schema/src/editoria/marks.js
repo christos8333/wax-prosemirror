@@ -1,14 +1,4 @@
-const emDOM = ["em", 0],
-  strongDOM = ["strong", 0],
-  codeDOM = ["code", 0];
-
 const marks = {
-  source: {
-    parseDOM: [{ tag: "cite" }],
-    toDOM() {
-      return ["cite", 0];
-    }
-  },
   insertion: {
     attrs: {
       user: {

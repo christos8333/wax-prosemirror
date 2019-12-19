@@ -1,2 +1,3 @@
 import CodeService from "./CodeService/CodeService";
-export default [new CodeService()];
+import StrongService from "./StrongService/StrongService";
+export default [new CodeService(), new StrongService()];

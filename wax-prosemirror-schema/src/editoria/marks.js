@@ -3,11 +3,6 @@ const emDOM = ["em", 0],
   codeDOM = ["code", 0];
 
 const marks = {
-  subscript: {
-    excludes: "superscript",
-    parseDOM: [{ tag: "sub" }, { style: "vertical-align=sub" }],
-    toDOM: () => ["sub"]
-  },
   superscript: {
     excludes: "subscript",
     parseDOM: [{ tag: "sup" }, { style: "vertical-align=super" }],

@@ -1,21 +1,45 @@
-import LinkPlugin from "./LinkPlugin";
 import Service from "wax-prosemirror-core/src/services/Service";
-import find from "./pmPlugins/find";
-import placeholder from "./pmPlugins/placeholder";
+import LinkComponent from "./LinkComponent";
+import LinkTool from "./LinkTool";
 
-export default class myLinkPluginService extends Service {
+export default class LinkService extends Service {
   name = "LinkPlugin";
 
   boot() {
-    const test = this.container.get("LinkPlugin");
-    console.log(test);
+    //Set Layout
+    const layout = this.container.get("Layout");
+    layout.addComponent("editorOverlays", LinkComponent);
   }
 
   register() {
-    this.container.bind(this.name).to(LinkPlugin);
-
-    this.container.bind("findPlugin").toFactory(find);
-
-    this.container.bind("placeholderPlugin").toFactory(placeholder);
+    this.container.bind("schema").toConstantValue({
+      link: {
+        attrs: {
+          href: { default: null },
+          rel: { default: "" },
+          target: { default: "blank" },
+          title: { default: null }
+        },
+        inclusive: false,
+        parseDOM: {
+          tag: "a[href]",
+          getAttrs: (hook, next) => {
+            const href = hook.dom.getAttribute("href");
+            const target = href && href.indexOf("#") === 0 ? "" : "blank";
+            Object.assign(hook, {
+              href: hook.dom.getAttribute("href"),
+              title: hook.dom.getAttribute("title"),
+              target
+            });
+            next();
+          }
+        },
+        toDOM(hook, next) {
+          hook.value = ["a", node.attrs, 0];
+          next();
+        }
+      }
+    });
+    this.container.bind("Link").to(LinkTool);
   }
 }

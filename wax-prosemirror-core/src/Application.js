@@ -8,6 +8,7 @@ export default class Application {
   container = {};
   config = {};
   PmPlugins = {};
+  schema = {};
 
   constructor(container) {
     this.container = container;
@@ -53,8 +54,8 @@ export default class Application {
   }
 
   getSchema() {
-    const schema = this.container.get("Schema");
-    return schema.getSchema();
+    this.schema = this.container.get("Schema");
+    return this.schema.getSchema();
   }
 
   static create(config) {
@@ -70,6 +71,7 @@ export default class Application {
       .bind("PmPlugins")
       .to(PmPlugins)
       .inSingletonScope();
+
     container.bind("Wax").toFactory(() => new Application(container));
     container.bind("config").toConstantValue(defaultConfig);
     container

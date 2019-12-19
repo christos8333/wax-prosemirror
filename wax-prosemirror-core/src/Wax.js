@@ -42,6 +42,7 @@ class Wax extends Component {
   constructor(props) {
     super(props);
     this.application = Application.create(props);
+    const schema = this.application.getSchema();
     this.application.bootServices();
 
     const { value, onChange } = this.props;
@@ -54,8 +55,6 @@ class Wax extends Component {
       placeholder({ content: this.props.placeholder }),
       ...this.application.getPlugins()
     ]);
-
-    const schema = this.application.getSchema();
 
     this.WaxOptions = {
       schema,

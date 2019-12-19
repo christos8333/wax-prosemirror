@@ -28,11 +28,12 @@ const parseTracks = str => {
 export default class PlaceholderService extends Service {
   name = "PlaceholderService";
 
-  register() {
+  boot() {
     this.app.PmPlugins.add(PLUGIN_KEY, placeholderPlugin(PLUGIN_KEY));
+  }
 
-    const createNode = this.container.get("CreateNode");
-    createNode({
+  register() {
+    this.container.bind("schema").toConstantValue({
       paragraph: {
         group: "block",
         content: "inline*",
@@ -57,7 +58,7 @@ export default class PlaceholderService extends Service {
       }
     });
 
-    createNode({
+    this.container.bind("schema").toConstantValue({
       paragraph: {
         group: "block",
         content: "inline*",

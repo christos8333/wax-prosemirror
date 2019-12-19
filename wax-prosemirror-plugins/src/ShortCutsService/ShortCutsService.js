@@ -5,5 +5,6 @@ export default class ShortCutsService extends Service {
   name = "ShortCutsService";
 
   boot() {}
+
   register() {}
 }

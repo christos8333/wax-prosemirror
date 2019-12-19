@@ -3,13 +3,14 @@ import {
   AnnotationService,
   ImageService,
   MenuService,
+  SchemaService,
   RedoUndoService,
   PlaceholderService,
   RulesService,
-  SchemaService,
   ShortCutsService,
   TextStyleService,
-  InlineAnnotationsService
+  InlineAnnotationsService,
+  LinkService
 } from "wax-prosemirror-plugins";
 
 export default {
@@ -24,6 +25,7 @@ export default {
     new TextStyleService(),
     new PlaceholderService(),
     new ImageService(),
-    new InlineAnnotationsService()
+    new InlineAnnotationsService(),
+    new LinkService()
   ]
 };

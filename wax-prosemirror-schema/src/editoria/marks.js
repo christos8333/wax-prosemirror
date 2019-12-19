@@ -3,60 +3,6 @@ const emDOM = ["em", 0],
   codeDOM = ["code", 0];
 
 const marks = {
-  // link: {
-  //   attrs: {
-  //     href: { default: null },
-  //     rel: { default: "" },
-  //     target: { default: "blank" },
-  //     title: { default: null }
-  //   },
-  //   inclusive: false,
-  //   parseDOM: [
-  //     {
-  //       tag: "a[href]",
-  //       getAttrs: dom => {
-  //         const href = dom.getAttribute("href");
-  //         const target = href && href.indexOf("#") === 0 ? "" : "blank";
-  //         return {
-  //           href: dom.getAttribute("href"),
-  //           title: dom.getAttribute("title"),
-  //           target
-  //         };
-  //       }
-  //     }
-  //   ],
-  //   toDOM(node) {
-  //     return ["a", node.attrs, 0];
-  //   }
-  // },
-  em: {
-    parseDOM: [{ tag: "i" }, { tag: "em" }, { style: "font-style=italic" }],
-    toDOM() {
-      return emDOM;
-    }
-  },
-  // strong: {
-  //   parseDOM: [
-  //     { tag: "strong" },
-  //     {
-  //       tag: "b",
-  //       getAttrs: node => node.style.fontWeight != "normal" && null
-  //     },
-  //     {
-  //       style: "font-weight",
-  //       getAttrs: value => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null
-  //     }
-  //   ],
-  //   toDOM() {
-  //     return strongDOM;
-  //   }
-  // },
-  // code: {
-  //   parseDOM: [{ tag: "code" }],
-  //   toDOM() {
-  //     return codeDOM;
-  //   }
-  // },
   subscript: {
     excludes: "superscript",
     parseDOM: [{ tag: "sub" }, { style: "vertical-align=sub" }],

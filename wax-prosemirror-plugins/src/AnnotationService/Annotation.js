@@ -6,7 +6,7 @@ export default class Annotation extends ToolGroup {
   tools = [];
   constructor(
     @inject("Code") code,
-    @inject("Em") em,
+    @inject("Emphasis") emphasis,
     @inject("Link") link,
     @inject("SmallCaps") smallcaps,
     @inject("StrikeThrough") strikethrough,
@@ -22,7 +22,7 @@ export default class Annotation extends ToolGroup {
     super();
     this.tools = [
       code,
-      em,
+      emphasis,
       link,
       smallcaps,
       strikethrough,

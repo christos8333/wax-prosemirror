@@ -5,7 +5,7 @@ import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 
 @injectable()
-export default class Em extends Tools {
+export default class Emphasis extends Tools {
   title = "Toggle emphasis";
   content = icons.em;
 

@@ -2,11 +2,13 @@ import { omit } from "lodash";
 import Middleware from "../lib/Middleware";
 
 export default class ParseRule {
-  tag = "";
+  tag = null;
+  style = null;
   exporter = null;
 
-  constructor({ getAttrs, tag }) {
+  constructor({ getAttrs, tag, style }) {
     this.tag = tag;
+    this.style = style;
     if (getAttrs) {
       this.exporter = new Middleware();
     }
@@ -20,7 +22,15 @@ export default class ParseRule {
   }
 
   parseSchema(exporter) {
-    const rule = { tag: this.tag };
+    let rule = {};
+    if (this.tag) {
+      rule = { tag: this.tag };
+    }
+
+    if (this.style) {
+      rule = { style: this.style };
+    }
+
     if (this.exporter) {
       rule.getAttrs = dom => {
         let hooks = {};

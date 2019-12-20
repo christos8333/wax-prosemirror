@@ -1,3 +1,4 @@
+import { isPlainObject } from "lodash";
 import ParseRule from "./ParseRule";
 import Middleware from "../lib/Middleware";
 
@@ -32,15 +33,23 @@ export default class Mark {
     Object.assign(this._attrs, value);
   }
 
-  set parseDOM(value) {
-    let parseRule = this._parseRules.find(
-      parseRule => parseRule.tag === value.tag
-    );
-    if (!parseRule) {
-      parseRule = new ParseRule(value);
-      this._parseRules.push(parseRule);
+  set parseDOM(parseDom) {
+    let values = parseDom;
+    if (isPlainObject(parseDom)) {
+      values = [parseDom];
     }
-    parseRule.addStack(value.getAttrs);
+    values.forEach(value => {
+      let parseRule = this._parseRules.find(parseRule => {
+        if (value.tag) return parseRule.tag === value.tag;
+        if (value.style) return parseRule.style === value.style;
+        return false;
+      });
+      if (!parseRule) {
+        parseRule = new ParseRule(value);
+        this._parseRules.push(parseRule);
+      }
+      parseRule.addStack(value.getAttrs);
+    });
   }
 
   toJSON() {

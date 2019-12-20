@@ -43,6 +43,7 @@ class Wax extends Component {
     super(props);
     this.application = Application.create(props);
     const schema = this.application.getSchema();
+    console.log(schema);
     this.application.bootServices();
 
     const { value, onChange } = this.props;

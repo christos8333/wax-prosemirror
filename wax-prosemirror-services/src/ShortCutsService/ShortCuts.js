@@ -13,10 +13,11 @@ import {
 
 @injectable()
 class ShortCuts {
+  keys = {};
   constructor(plugins, schema) {
     this.PmPlugins = plugins;
     this.schema = schema;
-
+    this.keys = this.getKeys();
     this.insertBreak = this.insertBreak.bind(this);
     this.insertRule = this.insertRule.bind(this);
   }
@@ -38,12 +39,13 @@ class ShortCuts {
     this.PmPlugins.add("shortcuts", shortCuts);
   }
 
-  addShortCut() {
-    /* TODO add shortcut from each package*/
+  addShortCut(shortcut) {
+    this.keys = Object.assign(this.keys, shortcut);
+    this.createShortCuts();
   }
 
   createKeyBindings() {
-    const keys = Object.assign(this.getKeys(), this.shortCuts);
+    const keys = this.keys;
     Object.keys(baseKeymap).forEach(key => {
       if (keys[key]) {
         keys[key] = chainCommands(keys[key], baseKeymap[key]);

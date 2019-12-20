@@ -11,7 +11,7 @@ import {
   TextStyleService,
   InlineAnnotationsService,
   LinkService
-} from "wax-prosemirror-plugins";
+} from "wax-prosemirror-services";
 
 export default {
   services: [

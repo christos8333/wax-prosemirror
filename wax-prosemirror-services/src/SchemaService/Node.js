@@ -56,10 +56,10 @@ export default class Node {
     const importer = this.importer;
 
     return {
-      inline: this.inline,
-      group: this.group,
-      content: this.content,
-      draggable: this.draggable,
+      // inline: this.inline,
+      // group: this.group,
+      // content: this.content,
+      // draggable: this.draggable,
       attrs: this._attrs,
       parseDOM: this._parseRules.map(rule => rule.combineRules()),
       toDOM: node => {

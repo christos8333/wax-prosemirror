@@ -21,7 +21,7 @@ const bulletlist = {
       attrs["data-track"] = JSON.stringify(hook.node.attrs.track);
     }
     hook.value = ["ul", attrs, 0];
-    next;
+    next();
   }
 };
 

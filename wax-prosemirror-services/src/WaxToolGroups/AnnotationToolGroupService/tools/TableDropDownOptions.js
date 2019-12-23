@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import { canInsert } from "../../lib/Utils";
-import Tools from "../../lib/Tools";
+import { canInsert } from "../../../lib/Utils";
+import Tools from "../../../lib/Tools";
 import { injectable } from "inversify";
 import { TableDropDown } from "wax-prosemirror-components";
 import { addColumnBefore } from "prosemirror-tables";

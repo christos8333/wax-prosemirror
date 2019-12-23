@@ -4,9 +4,6 @@ export {
   default as RedoUndoService
 } from "./src/RedoUndoService/RedoUndoService";
 export {
-  default as AnnotationService
-} from "./src/AnnotationService/AnnotationService";
-export {
   default as TextStyleService
 } from "./src/TextStyleService/TextStyleService";
 export {
@@ -25,3 +22,13 @@ export {
 export { default as ListsService } from "./src/ListsService/ListsService";
 
 export { default as Tool } from "./src/lib/Tools";
+
+/*
+ToolGroups
+*/
+export {
+  default as AnnotationToolGroupService
+} from "./src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService";
+export {
+  default as ListToolGroupService
+} from "./src/WaxToolGroups/ListToolGroupService/ListToolGroupService";

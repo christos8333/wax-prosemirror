@@ -1,6 +1,6 @@
 import LayoutService from "../services/LayoutService/LayoutService";
 import {
-  AnnotationService,
+  AnnotationToolGroupService,
   ImageService,
   MenuService,
   SchemaService,
@@ -11,7 +11,8 @@ import {
   TextStyleService,
   InlineAnnotationsService,
   LinkService,
-  ListsService
+  ListsService,
+  ListToolGroupService
 } from "wax-prosemirror-services";
 
 export default {
@@ -22,7 +23,8 @@ export default {
     new LayoutService(),
     new MenuService(),
     new RedoUndoService(),
-    new AnnotationService(),
+    new AnnotationToolGroupService(),
+    new ListToolGroupService(),
     new TextStyleService(),
     new PlaceholderService(),
     new ImageService(),

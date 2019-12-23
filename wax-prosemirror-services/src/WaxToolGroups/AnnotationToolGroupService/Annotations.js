@@ -1,8 +1,8 @@
 import { injectable, inject } from "inversify";
-import ToolGroup from "../lib/ToolGroup";
+import ToolGroup from "../../lib/ToolGroup";
 
 @injectable()
-export default class Annotation extends ToolGroup {
+class Annotations extends ToolGroup {
   tools = [];
   constructor(
     @inject("Code") code,
@@ -16,10 +16,6 @@ export default class Annotation extends ToolGroup {
     @inject("Underline") underline,
     @inject("Blockquote") blockquote,
     @inject("Image") image,
-    @inject("OrderedList") orderedlist,
-    @inject("BulletList") bulletlist,
-    @inject("JoinUp") joinup,
-    @inject("Lift") lift,
     @inject("Table") table,
     @inject("TableDropDownOptions") tableDropDownOptions
   ) {
@@ -37,11 +33,7 @@ export default class Annotation extends ToolGroup {
       blockquote,
       tableDropDownOptions,
       image,
-      table,
-      orderedlist,
-      bulletlist,
-      joinup,
-      lift
+      table
     ];
   }
 
@@ -53,3 +45,5 @@ export default class Annotation extends ToolGroup {
     return tools;
   }
 }
+
+export default Annotations;

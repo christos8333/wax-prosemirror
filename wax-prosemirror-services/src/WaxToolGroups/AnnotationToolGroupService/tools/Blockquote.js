@@ -1,8 +1,8 @@
-import Tools from "../../lib/Tools";
+import Tools from "../../../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 import { wrapIn } from "prosemirror-commands";
-import { blockActive } from "../../lib/Utils";
+import { blockActive } from "../../../lib/Utils";
 
 @injectable()
 export default class Blockquote extends Tools {

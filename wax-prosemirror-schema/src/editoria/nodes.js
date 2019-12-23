@@ -325,30 +325,6 @@ const nodes = {
       return [`h${node.attrs.level}`, attrs, 0];
     }
   },
-  list_item: {
-    content: "block+",
-    attrs: {
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "li",
-        getAttrs(dom) {
-          return {
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      return ["li", attrs, 0];
-    },
-    defining: true
-  },
   blockquote: {
     content: "block+",
     group: "block",

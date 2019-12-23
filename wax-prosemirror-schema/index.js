@@ -30,3 +30,4 @@ export { default as extractPoetryNode } from "./src/nodes/extractPoetryNode";
 export { default as titleNode } from "./src/nodes/titleNode";
 export { default as orderedListNode } from "./src/nodes/orderedListNode";
 export { default as bulletListNode } from "./src/nodes/bulletListNode";
+export { default as listItemNode } from "./src/nodes/listItemNode";

@@ -18,6 +18,8 @@ export default class Annotation extends ToolGroup {
     @inject("Image") image,
     @inject("OrderedList") orderedlist,
     @inject("BulletList") bulletlist,
+    @inject("JoinUp") joinup,
+    @inject("Lift") lift,
     @inject("Table") table,
     @inject("TableDropDownOptions") tableDropDownOptions
   ) {
@@ -37,7 +39,9 @@ export default class Annotation extends ToolGroup {
       image,
       table,
       orderedlist,
-      bulletlist
+      bulletlist,
+      joinup,
+      lift
     ];
   }
 

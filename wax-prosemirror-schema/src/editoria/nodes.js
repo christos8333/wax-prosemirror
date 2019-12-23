@@ -355,35 +355,35 @@ const nodes = {
       return [`h${node.attrs.level}`, attrs, 0];
     }
   },
-  ordered_list: {
-    group: "block",
-    content: "list_item+",
-    attrs: {
-      order: { default: 1 },
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "ol",
-        getAttrs(dom) {
-          return {
-            order: dom.hasAttribute("start") ? +dom.getAttribute("start") : 1,
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      if (node.attrs.order !== 1) {
-        attrs.start = node.attrs.order;
-      }
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      return ["ol", attrs, 0];
-    }
-  },
+  // ordered_list: {
+  //   group: "block",
+  //   content: "list_item+",
+  //   attrs: {
+  //     order: { default: 1 },
+  //     track: { default: [] }
+  //   },
+  //   parseDOM: [
+  //     {
+  //       tag: "ol",
+  //       getAttrs(dom) {
+  //         return {
+  //           order: dom.hasAttribute("start") ? +dom.getAttribute("start") : 1,
+  //           track: parseTracks(dom.dataset.track)
+  //         };
+  //       }
+  //     }
+  //   ],
+  //   toDOM(node) {
+  //     const attrs = {};
+  //     if (node.attrs.order !== 1) {
+  //       attrs.start = node.attrs.order;
+  //     }
+  //     if (node.attrs.track.length) {
+  //       attrs["data-track"] = JSON.stringify(node.attrs.track);
+  //     }
+  //     return ["ol", attrs, 0];
+  //   }
+  // },
   bullet_list: {
     group: "block",
     content: "list_item+",

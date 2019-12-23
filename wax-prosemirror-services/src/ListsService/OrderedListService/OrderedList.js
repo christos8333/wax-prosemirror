@@ -11,19 +11,19 @@ export default class OrderedList extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapInList(state.config.schema.nodes.ordered_list)(state, dispatch);
+      wrapInList(state.config.schema.nodes.orderedlist)(state, dispatch);
     };
   }
 
-  get enable() {
-    return state => {
-      return wrapInList(state.config.schema.nodes.ordered_list)(state);
-    };
-  }
+  // get enable() {
+  //   return state => {
+  //     return wrapInList(state.config.schema.nodes.orderedlist)(state);
+  //   };
+  // }
 
   get active() {
     return state => {
-      return blockActive(state.config.schema.nodes.ordered_list)(state);
+      return blockActive(state.config.schema.nodes.orderedlist)(state);
     };
   }
 }

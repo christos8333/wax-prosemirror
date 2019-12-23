@@ -22,5 +22,6 @@ export {
 export {
   default as InlineAnnotationsService
 } from "./src/InlineAnnotations/InlineAnnotationsService";
+export { default as ListsService } from "./src/ListsService/ListsService";
 
 export { default as Tool } from "./src/lib/Tools";

@@ -10,7 +10,8 @@ import {
   ShortCutsService,
   TextStyleService,
   InlineAnnotationsService,
-  LinkService
+  LinkService,
+  ListsService
 } from "wax-prosemirror-services";
 
 export default {
@@ -26,6 +27,7 @@ export default {
     new PlaceholderService(),
     new ImageService(),
     new InlineAnnotationsService(),
-    new LinkService()
+    new LinkService(),
+    new ListsService()
   ]
 };

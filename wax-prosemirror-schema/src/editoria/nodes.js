@@ -55,36 +55,6 @@ const nodes = {
       return ["img", { src, alt, title }];
     }
   },
-  paragraph: {
-    group: "block",
-    content: "inline*",
-    attrs: {
-      class: { default: "paragraph" },
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "p[data-track]",
-        getAttrs(dom) {
-          return {
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      },
-      {
-        tag: "p.paragraph",
-        getAttrs(dom) {
-          return {
-            class: dom.getAttribute("class")
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = blockLevelToDOM(node);
-      return ["p", attrs, 0];
-    }
-  },
   author: {
     content: "inline*",
     group: "block",
@@ -353,30 +323,6 @@ const nodes = {
         attrs["data-track"] = JSON.stringify(node.attrs.track);
       }
       return [`h${node.attrs.level}`, attrs, 0];
-    }
-  },
-  bullet_list: {
-    group: "block",
-    content: "list_item+",
-    attrs: {
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "ul",
-        getAttrs(dom) {
-          return {
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      return ["ul", attrs, 0];
     }
   },
   list_item: {

@@ -1,7 +1,7 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
-import { wrapInList } from "prosemirror-commands";
+import { wrapInList } from "prosemirror-schema-list";
 import { blockActive } from "../../lib/Utils";
 
 @injectable()
@@ -15,11 +15,11 @@ export default class OrderedList extends Tools {
     };
   }
 
-  // get enable() {
-  //   return state => {
-  //     return wrapInList(state.config.schema.nodes.orderedlist)(state);
-  //   };
-  // }
+  get enable() {
+    return state => {
+      return wrapInList(state.config.schema.nodes.orderedlist)(state);
+    };
+  }
 
   get active() {
     return state => {

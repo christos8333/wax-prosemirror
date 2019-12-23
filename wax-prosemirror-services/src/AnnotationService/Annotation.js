@@ -17,6 +17,7 @@ export default class Annotation extends ToolGroup {
     @inject("Blockquote") blockquote,
     @inject("Image") image,
     @inject("OrderedList") orderedlist,
+    @inject("BulletList") bulletlist,
     @inject("Table") table,
     @inject("TableDropDownOptions") tableDropDownOptions
   ) {
@@ -35,7 +36,8 @@ export default class Annotation extends ToolGroup {
       tableDropDownOptions,
       image,
       table,
-      orderedlist
+      orderedlist,
+      bulletlist
     ];
   }
 

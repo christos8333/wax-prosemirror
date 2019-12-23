@@ -11,19 +11,19 @@ export default class BulletList extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapInList(state.config.schema.nodes.bullet_list)(state, dispatch);
+      wrapInList(state.config.schema.nodes.bulletlist)(state, dispatch);
     };
   }
 
-  get enable() {
-    return state => {
-      return wrapInList(state.config.schema.nodes.bullet_list)(state);
-    };
-  }
+  // get enable() {
+  //   return state => {
+  //     return wrapInList(state.config.schema.nodes.bulletlist)(state);
+  //   };
+  // }
 
   get active() {
     return state => {
-      return blockActive(state.config.schema.nodes.bullet_list)(state);
+      return blockActive(state.config.schema.nodes.bulletlist)(state);
     };
   }
 }

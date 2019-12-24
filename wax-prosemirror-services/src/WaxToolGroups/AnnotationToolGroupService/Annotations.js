@@ -15,9 +15,7 @@ class Annotations extends ToolGroup {
     @inject("Superscript") superscript,
     @inject("Underline") underline,
     @inject("Blockquote") blockquote,
-    @inject("Image") image,
-    @inject("Table") table,
-    @inject("TableDropDownOptions") tableDropDownOptions
+    @inject("Image") image
   ) {
     super();
     this.tools = [
@@ -31,9 +29,7 @@ class Annotations extends ToolGroup {
       superscript,
       underline,
       blockquote,
-      tableDropDownOptions,
-      image,
-      table
+      image
     ];
   }
 

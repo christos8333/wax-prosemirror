@@ -1,5 +1,5 @@
-import Tools from "../../../lib/Tools";
-import { createTable, canInsert } from "../../../lib/Utils";
+import Tools from "../../lib/Tools";
+import { createTable, canInsert } from "../../lib/Utils";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 

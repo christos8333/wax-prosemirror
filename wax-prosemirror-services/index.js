@@ -41,5 +41,9 @@ export {
   default as ListToolGroupService
 } from "./src/WaxToolGroups/ListToolGroupService/ListToolGroupService";
 export {
+  default as ImageToolGroupService
+} from "./src/WaxToolGroups/ImageToolGroupService/ImageToolGroupService";
+
+export {
   default as TableToolGroupService
 } from "./src/WaxToolGroups/TableToolGroupService/TableToolGroupService";

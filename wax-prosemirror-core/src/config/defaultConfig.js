@@ -16,7 +16,8 @@ import {
   TablesService,
   TableToolGroupService,
   BaseService,
-  BaseToolGroupService
+  BaseToolGroupService,
+  ImageToolGroupService
 } from "wax-prosemirror-services";
 
 export default {
@@ -37,6 +38,7 @@ export default {
     new TableToolGroupService(),
     new TablesService(),
     new BaseService(),
-    new BaseToolGroupService()
+    new BaseToolGroupService(),
+    new ImageToolGroupService()
   ]
 };

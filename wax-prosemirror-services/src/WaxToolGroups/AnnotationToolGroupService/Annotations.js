@@ -14,8 +14,7 @@ class Annotations extends ToolGroup {
     @inject("Subscript") subscript,
     @inject("Superscript") superscript,
     @inject("Underline") underline,
-    @inject("Blockquote") blockquote,
-    @inject("Image") image
+    @inject("Blockquote") blockquote
   ) {
     super();
     this.tools = [
@@ -28,8 +27,7 @@ class Annotations extends ToolGroup {
       subscript,
       superscript,
       underline,
-      blockquote,
-      image
+      blockquote
     ];
   }
 

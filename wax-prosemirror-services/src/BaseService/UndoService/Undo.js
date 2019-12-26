@@ -1,5 +1,5 @@
 import { undo } from "prosemirror-history";
-import Tools from "../lib/Tools";
+import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 

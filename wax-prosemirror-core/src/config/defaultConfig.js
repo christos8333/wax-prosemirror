@@ -1,19 +1,22 @@
 import LayoutService from "../services/LayoutService/LayoutService";
 import {
-  AnnotationToolGroupService,
-  ImageService,
-  MenuService,
   SchemaService,
-  PlaceholderService,
+  MenuService,
   RulesService,
   ShortCutsService,
+  /*TODO MOVE FROM DEFAULT CONFIG*/
+  AnnotationToolGroupService,
+  ImageService,
+  PlaceholderService,
   TextStyleService,
   InlineAnnotationsService,
   LinkService,
   ListsService,
   ListToolGroupService,
   TablesService,
-  TableToolGroupService
+  TableToolGroupService,
+  BaseService,
+  BaseToolGroupService
 } from "wax-prosemirror-services";
 
 export default {
@@ -32,6 +35,8 @@ export default {
     new LinkService(),
     new ListsService(),
     new TableToolGroupService(),
-    new TablesService()
+    new TablesService(),
+    new BaseService(),
+    new BaseToolGroupService()
   ]
 };

@@ -10,7 +10,7 @@ export default {
   MenuService: [
     {
       templateArea: "topBar",
-      toolGroups: ["Annotations", "Lists", "Tables"]
+      toolGroups: ["Base", "Annotations", "Lists", "Tables"]
     },
     {
       templateArea: "leftSideBar",

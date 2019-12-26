@@ -20,6 +20,7 @@ export { default as Tool } from "./src/lib/Tools";
 /*
 All Elements services
 */
+export { default as BaseService } from "./src/BaseService/BaseService";
 export {
   default as InlineAnnotationsService
 } from "./src/InlineAnnotations/InlineAnnotationsService";
@@ -29,6 +30,10 @@ export { default as TablesService } from "./src/TablesService/TablesService";
 /*
 ToolGroups
 */
+export {
+  default as BaseToolGroupService
+} from "./src/WaxToolGroups/BaseToolGroupService/BaseToolGroupService";
+
 export {
   default as AnnotationToolGroupService
 } from "./src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService";

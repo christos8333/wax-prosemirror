@@ -1,5 +1,6 @@
-export { default as LinkService } from "./src/LinkService/LinkService";
 export { default as MenuService } from "./src/MenuService/MenuService";
+export { default as LinkService } from "./src/LinkService/LinkService";
+
 export {
   default as RedoUndoService
 } from "./src/RedoUndoService/RedoUndoService";
@@ -16,12 +17,17 @@ export { default as SchemaService } from "./src/SchemaService/SchemaService";
 export {
   default as ShortCutsService
 } from "./src/ShortCutsService/ShortCutsService";
+
+export { default as Tool } from "./src/lib/Tools";
+
+/*
+All Elements services
+*/
 export {
   default as InlineAnnotationsService
 } from "./src/InlineAnnotations/InlineAnnotationsService";
 export { default as ListsService } from "./src/ListsService/ListsService";
-
-export { default as Tool } from "./src/lib/Tools";
+export { default as TablesService } from "./src/TablesService/TablesService";
 
 /*
 ToolGroups
@@ -32,3 +38,6 @@ export {
 export {
   default as ListToolGroupService
 } from "./src/WaxToolGroups/ListToolGroupService/ListToolGroupService";
+export {
+  default as TableToolGroupService
+} from "./src/WaxToolGroups/TableToolGroupService/TableToolGroupService";

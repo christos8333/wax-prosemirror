@@ -12,7 +12,9 @@ import {
   InlineAnnotationsService,
   LinkService,
   ListsService,
-  ListToolGroupService
+  ListToolGroupService,
+  TablesService,
+  TableToolGroupService
 } from "wax-prosemirror-services";
 
 export default {
@@ -30,6 +32,8 @@ export default {
     new ImageService(),
     new InlineAnnotationsService(),
     new LinkService(),
-    new ListsService()
+    new ListsService(),
+    new TableToolGroupService(),
+    new TablesService()
   ]
 };

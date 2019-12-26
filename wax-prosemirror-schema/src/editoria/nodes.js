@@ -1,4 +1,4 @@
-import { tableNodes, columnResizing, tableEditing } from "prosemirror-tables";
+import { tableNodes } from "prosemirror-tables";
 import { parseFormatList, parseTracks, blockLevelToDOM } from "./helpers";
 const pDOM = ["p", 0],
   brDOM = ["br"],

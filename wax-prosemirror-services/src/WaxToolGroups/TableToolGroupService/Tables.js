@@ -2,16 +2,14 @@ import { injectable, inject } from "inversify";
 import ToolGroup from "../../lib/ToolGroup";
 
 @injectable()
-class Table extends ToolGroup {
+class Tables extends ToolGroup {
   tools = [];
   constructor(
-    @inject("OrderedList") orderedlist,
-    @inject("BulletList") bulletlist,
-    @inject("JoinUp") joinup,
-    @inject("Lift") lift
+    @inject("Table") table,
+    @inject("TableDropDownOptions") tableDropDownOptions
   ) {
     super();
-    this.tools = [orderedlist, bulletlist, joinup, lift];
+    this.tools = [table, tableDropDownOptions];
   }
 
   renderTools(view) {
@@ -23,4 +21,4 @@ class Table extends ToolGroup {
   }
 }
 
-export default Table;
+export default Tables;

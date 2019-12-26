@@ -13,6 +13,7 @@ export default {
       toolGroups: [
         "Annotations",
         "Lists",
+        "Tables",
         { name: "RedoUndo", exclude: ["Redo"] }
       ]
     },

@@ -1,3 +1,4 @@
+import { tableNodes } from "prosemirror-tables";
 import Service from "wax-prosemirror-core/src/services/Service";
 import Table from "./Table";
 

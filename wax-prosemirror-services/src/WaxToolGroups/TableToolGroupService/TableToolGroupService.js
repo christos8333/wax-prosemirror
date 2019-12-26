@@ -1,11 +1,11 @@
-import Table from "./Table";
+import Tables from "./Tables";
 import Service from "wax-prosemirror-core/src/services/Service";
 
 class TableToolGroupService extends Service {
   name = "TableToolGroupService";
 
   register() {
-    this.container.bind("Table").to(Table);
+    this.container.bind("Tables").to(Tables);
   }
 }
 

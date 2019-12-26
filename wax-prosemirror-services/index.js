@@ -2,9 +2,6 @@ export { default as MenuService } from "./src/MenuService/MenuService";
 export { default as LinkService } from "./src/LinkService/LinkService";
 
 export {
-  default as RedoUndoService
-} from "./src/RedoUndoService/RedoUndoService";
-export {
   default as TextStyleService
 } from "./src/TextStyleService/TextStyleService";
 export {

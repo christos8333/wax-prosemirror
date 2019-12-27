@@ -9,6 +9,7 @@ export default key =>
         return DecorationSet.empty;
       },
       apply: function apply(tr, set) {
+        console.log(tr, "placeholderPLugin");
         // Adjust decoration positions to changes made by the transaction
         set = set.map(tr.mapping, tr.doc);
         // See if the transaction adds or removes any placeholders

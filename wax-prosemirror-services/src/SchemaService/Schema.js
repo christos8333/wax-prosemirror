@@ -9,6 +9,7 @@ import { EditoriaSchema } from "wax-prosemirror-schema";
 export default class Schema {
   _nodes = {};
   _marks = {};
+  prosemirrorSchema = { nodes: {}, marks: {} };
   schema = null;
 
   constructor(
@@ -88,6 +89,13 @@ export default class Schema {
     }
   }
 
+  addProsemirrorSchema(nodes, type) {
+    this.prosemirrorSchema[type] = Object.assign(
+      this.prosemirrorSchema[type],
+      nodes
+    );
+  }
+
   getSchema() {
     /* this is temporally until all of the packages moved to schemas */
     if (this.schema) return this.schema;
@@ -101,7 +109,11 @@ export default class Schema {
     for (let index in this._marks) {
       marks[index] = this._marks[index].toJSON();
     }
-    this.schema = new PmPschema({ nodes, marks });
+
+    this.schema = new PmPschema({
+      nodes: Object.assign(nodes, this.prosemirrorSchema.nodes),
+      marks: Object.assign(marks, this.prosemirrorSchema.marks)
+    });
     return this.schema;
   }
 }

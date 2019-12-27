@@ -1,15 +1,21 @@
 import Service from "wax-prosemirror-core/src/services/Service";
+
 import LinkComponent from "./LinkComponent";
+import LinkPlugin from "./pmPlugins/LinkPlugin";
 import { linkMark } from "wax-prosemirror-schema";
 import LinkTool from "./LinkTool";
+import { OverlayService } from "../..";
+
+const PLUGIN_KEY = "LinkPlugin";
 
 export default class LinkService extends Service {
   name = "LinkPlugin";
 
   boot() {
-    //Set Layout
-    const layout = this.container.get("Layout");
-    layout.addComponent("editorOverlays", LinkComponent);
+    // this.app.PmPlugins.add(PLUGIN_KEY, LinkPlugin(PLUGIN_KEY));
+
+    const createOverlay = this.container.get("CreateOverlay");
+    createOverlay(LinkComponent);
   }
 
   register() {
@@ -22,4 +28,6 @@ export default class LinkService extends Service {
       })
       .whenTargetNamed("mark");
   }
+
+  dependencies = [new OverlayService()];
 }

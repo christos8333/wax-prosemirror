@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useMemo, Component } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { InfoArea } from "wax-prosemirror-components";
+import { componentPlugin, Service } from "wax-prosemirror-core";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 
@@ -78,24 +79,26 @@ const SideMenuInner = styled.div`
   }
 `;
 
-const EditoriaLayout = ({ editor, componentPlugin }) => {
-  const LeftSideBar = componentPlugin("leftSideBar");
-  const RightSideBar = componentPlugin("rightSideBar");
-  const TopBar = componentPlugin("topBar");
-  const BottomBar = componentPlugin("bottomBar");
-  const EditorOverlays = componentPlugin("editorOverlays");
+const LeftSideBar = componentPlugin("leftSideBar");
+const RightSideBar = componentPlugin("rightSideBar");
+const TopBar = componentPlugin("topBar");
+const BottomBar = componentPlugin("bottomBar");
+const EditorOverlays = componentPlugin("editorOverlays");
+
+const EditoriaLayout = ({ editor }) => {
+  console.log("dsaasdsd");
   return (
     <ThemeProvider theme={cokoTheme}>
       <LayoutWrapper>
         <MainMenuContainer>
           <MainMenuInner>
-            <TopBar />
+            <TopBar id="topBar" />
           </MainMenuInner>
         </MainMenuContainer>
         <WaxSurfaceContainer>
           <SideMenuContainer>
             <SideMenuInner>
-              <LeftSideBar />
+              <LeftSideBar id="leftSideBar" />
             </SideMenuInner>
           </SideMenuContainer>
           <WaxSurfaceScroll className="wax-surface-scroll">

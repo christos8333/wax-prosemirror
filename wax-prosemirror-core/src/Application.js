@@ -25,6 +25,10 @@ export default class Application {
         */
       service.setApp(this);
 
+      if (service.dependencies) {
+        this.config.pushToArray("services", service.dependencies);
+      }
+
       if (service.register) {
         service.register();
       }

@@ -1,4 +1,11 @@
-import React, { Component } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+  Component
+} from "react";
+import ReactDOM from "react-dom";
 import applyDevTools from "prosemirror-dev-tools";
 
 import { EditorState } from "prosemirror-state";
@@ -6,55 +13,49 @@ import { EditorView } from "prosemirror-view";
 
 import "prosemirror-view/style/prosemirror.css";
 import trackedTransaction from "./track-changes/trackedTransaction";
+import { WaxContext } from "./ioc-react";
 
-class WaxView extends Component {
-  constructor(props) {
-    super(props);
-    const { readonly, onBlur } = this.props;
-    const { options } = props;
-    this.editorRef = React.createRef();
+export default props => {
+  const { readonly, onBlur, options, debug, autoFocus, WaxRender } = props;
+  const editorRef = useRef();
 
-    // Create view of Editor
-    this.view = new EditorView(null, {
-      editable: () => !readonly,
-      state: EditorState.create(options),
-      dispatchTransaction: this.dispatchTransaction,
-      handleDOMEvents: {
-        blur: onBlur
-          ? view => {
-              onBlur(view.state.doc.content);
-            }
-          : null
+  const context = useContext(WaxContext);
+
+  useEffect(() => {
+    const view = new EditorView(
+      { mount: editorRef.current },
+      {
+        editable: () => !readonly,
+        state: EditorState.create(options),
+        dispatchTransaction: transaction => {
+          const { TrackChange } = props;
+          const tr = TrackChange
+            ? trackedTransaction(transaction, view.state, this)
+            : transaction;
+
+          const state = view.state.apply(tr);
+          view.updateState(state);
+          context.updateView({ view });
+
+          props.onChange(state.doc.content);
+        },
+        handleDOMEvents: {
+          blur: onBlur
+            ? view => {
+                onBlur(view.state.doc.content);
+              }
+            : null
+        }
       }
-    });
-  }
+    );
+    context.updateView({ view });
 
-  componentDidMount() {
-    const { autoFocus, debug } = this.props;
-    this.editorRef.current.appendChild(this.view.dom);
+    if (debug) applyDevTools(view);
+    if (autoFocus) view.focus();
+  }, []);
 
-    if (debug) applyDevTools(this.view);
-    if (autoFocus) this.view.focus();
-  }
-
-  dispatchTransaction = transaction => {
-    const { TrackChange } = this.props;
-    const tr = TrackChange
-      ? trackedTransaction(transaction, this.view.state, this)
-      : transaction;
-    const state = this.view.state.apply(tr);
-    this.view.updateState(state);
-    this.props.onChange(state.doc.content);
-    this.forceUpdate();
-  };
-
-  render() {
-    const editor = <span ref={this.editorRef} />;
-    return this.props.children({
-      view: this.view,
-      editor
-    });
-  }
-}
-
-export default WaxView;
+  const editor = <div ref={editorRef}></div>;
+  return props.children({
+    editor
+  });
+};

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useContext } from "react";
 
 import { map } from "lodash";
 
@@ -11,10 +10,12 @@ const MainMenu = styled.div`
   background: transparent;
 `;
 
-const MainMenuBar = ({ items = [], view }) => (
-  <MainMenu key="MainMenu">
-    {map(items, item => item.renderTools(view))}
-  </MainMenu>
-);
+const MainMenuBar = ({ items = [], view: { view } }) => {
+  return (
+    <MainMenu key="MainMenu">
+      {map(items, item => item.renderTools(view))}
+    </MainMenu>
+  );
+};
 
 export default MainMenuBar;

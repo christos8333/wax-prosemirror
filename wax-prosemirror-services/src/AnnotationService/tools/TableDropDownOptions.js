@@ -28,6 +28,7 @@ export default class TableDropDownOptions extends Tools {
   }
 
   renderTool(view) {
+    if (!view) return null;
     return this._isEnabled ? (
       <TableDropDown key={uuid()} item={this.toJSON()} {...view} />
     ) : null;

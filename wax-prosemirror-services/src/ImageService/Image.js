@@ -21,7 +21,8 @@ export default class Image extends Tools {
     };
   }
 
-  renderTool({ view }) {
+  renderTool(view) {
+    if (!view) return null;
     const upload = fileUpload(
       view,
       this.config.get("fileUpload"),

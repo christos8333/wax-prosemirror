@@ -44,6 +44,7 @@ export default class Tools {
   }
 
   renderTool(view) {
+    if (!view) return null;
     return this._isEnabled ? (
       <Button key={uuid()} item={this.toJSON()} {...view} />
     ) : null;

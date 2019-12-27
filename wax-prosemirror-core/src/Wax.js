@@ -43,7 +43,6 @@ class Wax extends Component {
     super(props);
     this.application = Application.create(props);
     const schema = this.application.getSchema();
-    console.log(schema);
     this.application.bootServices();
 
     const { value, onChange } = this.props;
@@ -95,28 +94,27 @@ class Wax extends Component {
     if (layout) {
       Layout.setLayout(layout);
     }
+
     const WaxRender = Layout.layoutComponent;
 
     return (
       <LayoutWrapper className={`${className}`}>
-        <WaxView
-          autoFocus={autoFocus}
-          readonly={readonly}
-          options={this.WaxOptions}
-          placeholder={placeholder}
-          fileUpload={fileUpload}
-          onBlur={onBlur || (value => true)}
-          onChange={this.onChange || (value => true)}
-          debug={debug}
-          TrackChange={TrackChange}
-          user={user}
-        >
-          {({ view, editor }) => (
-            <WaxProvider view={view} app={this.application}>
-              <WaxRender editor={editor} />
-            </WaxProvider>
-          )}
-        </WaxView>
+        <WaxProvider app={this.application}>
+          <WaxView
+            autoFocus={autoFocus}
+            readonly={readonly}
+            options={this.WaxOptions}
+            placeholder={placeholder}
+            fileUpload={fileUpload}
+            onBlur={onBlur || (value => true)}
+            onChange={this.onChange || (value => true)}
+            debug={debug}
+            TrackChange={TrackChange}
+            user={user}
+          >
+            {({ editor }) => <WaxRender editor={editor} />}
+          </WaxView>
+        </WaxProvider>
       </LayoutWrapper>
     );
   }

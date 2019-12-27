@@ -15,20 +15,22 @@ const ButtonStyled = styled.button`
   }
 `;
 
-const Button = ({ view = {}, item }) => (
-  <ButtonStyled
-    type="button"
-    isActive={item.active && item.active(view.state)}
-    title={item.title}
-    disabled={item.enable && !item.enable(view.state)}
-    onMouseDown={e => {
-      e.preventDefault();
-      item.run(view.state, view.dispatch);
-    }}
-    select={item.select && item.select(view.state)}
-  >
-    {item.content}
-  </ButtonStyled>
-);
+const Button = ({ view = {}, item }) => {
+  return (
+    <ButtonStyled
+      type="button"
+      isActive={item.active && item.active(view.state)}
+      title={item.title}
+      disabled={item.enable && !item.enable(view.state)}
+      onMouseDown={e => {
+        e.preventDefault();
+        item.run(view.state, view.dispatch);
+      }}
+      select={item.select && item.select(view.state)}
+    >
+      {item.content}
+    </ButtonStyled>
+  );
+};
 
 export default Button;

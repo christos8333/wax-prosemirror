@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { injectable } from "inversify";
 import ToolGroup from "../lib/ToolGroup";
 
 import MenuWrapper from "./MenuWrapper";
+
 @injectable()
 export default class Menu {
   toolGroups = [];
@@ -24,6 +25,14 @@ export default class Menu {
   }
 
   render() {
-    return view => <MenuWrapper items={this.toolGroups} view={view} />;
+    return ({ view }) => {
+      if (!view) return null;
+
+      const Bar = useMemo(
+        () => <MenuWrapper items={this.toolGroups} view={{ view }} />,
+        [view]
+      );
+      return <>{Bar}</>;
+    };
   }
 }

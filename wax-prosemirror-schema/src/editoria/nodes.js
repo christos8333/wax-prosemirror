@@ -333,10 +333,6 @@ const nodes = {
     toDOM() {
       return blockquoteDOM;
     }
-  },
-  ...tableNodes({
-    tableGroup: "block",
-    cellContent: "block+"
-  })
+  }
 };
 export default nodes;

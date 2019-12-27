@@ -11,7 +11,7 @@ import {
   TextStyleService,
   InlineAnnotationsService,
   LinkService,
-  OverlayService
+  OverlayService,
   ListsService,
   ListToolGroupService,
   TablesService,

@@ -2,9 +2,7 @@ import ListsServices from "./index";
 import Service from "wax-prosemirror-core/src/services/Service";
 
 class ListsService extends Service {
-  register() {
-    this.config.pushToArray("services", ListsServices);
-  }
+  dependencies = ListsServices;
 }
 
 export default ListsService;

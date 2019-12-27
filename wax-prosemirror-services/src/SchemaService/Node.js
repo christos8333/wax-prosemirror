@@ -6,6 +6,7 @@ export default class Node {
   name = "";
   importer = {};
 
+  isolating = false;
   inline = false;
   group = "";
   content = "";
@@ -59,6 +60,7 @@ export default class Node {
       inline: this.inline,
       group: this.group,
       content: this.content,
+      isolating: this.isolating,
       draggable: this.draggable,
       attrs: this._attrs,
       parseDOM: this._parseRules.map(rule => rule.combineRules()),

@@ -11,13 +11,13 @@ class StrongService extends Service {
 
   register() {
     this.container.bind("Strong").to(Strong);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
         strong: strongMark
-      })
-      .whenTargetNamed("mark");
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

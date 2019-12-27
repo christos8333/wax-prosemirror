@@ -1,7 +1,4 @@
 export { default as MenuService } from "./src/MenuService/MenuService";
-export { default as RedoUndoService } from "./src/RedoUndoService/RedoUndoService";
-export { default as AnnotationService } from "./src/AnnotationService/AnnotationService";
-export { default as PlaceholderService } from "./src/PlaceholderService/PlaceholderService";
 export { default as LinkService } from "./src/LinkService/LinkService";
 
 export { default as TextStyleService } from "./src/TextStyleService/TextStyleService";

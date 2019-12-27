@@ -6,12 +6,14 @@ class SuperscriptService extends Service {
   boot() {}
 
   register() {
-    this.container
-      .bind("schema")
-      .toConstantValue({ superscript: superscriptMark })
-      .whenTargetNamed("mark");
-
     this.container.bind("Superscript").to(Superscript);
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
+        superscript: superscriptMark
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

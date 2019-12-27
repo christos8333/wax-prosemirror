@@ -8,11 +8,11 @@ class InsertTableService extends Service {
   register() {
     this.container.bind("Table").to(Table);
 
-    const createNode = this.container.get("CreateNode");
     const { table, table_row, table_cell, table_header } = tableNodes({
       tableGroup: "block",
       cellContent: "block+"
     });
+    const createNode = this.container.get("CreateNode");
 
     createNode({
       table

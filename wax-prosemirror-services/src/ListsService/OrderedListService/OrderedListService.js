@@ -7,10 +7,13 @@ class OrderedListService extends Service {
 
   register() {
     this.container.bind("OrderedList").to(OrderedList);
-    this.container
-      .bind("schema")
-      .toConstantValue({ orderedlist: orderedListNode })
-      .whenTargetNamed("node");
+    const createNode = this.container.get("CreateNode");
+    createNode(
+      {
+        orderedlist: orderedListNode
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

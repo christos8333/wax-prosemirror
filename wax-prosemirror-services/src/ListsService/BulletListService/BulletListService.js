@@ -7,11 +7,13 @@ class BulletListService extends Service {
 
   register() {
     this.container.bind("BulletList").to(BulletList);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({ bulletlist: bulletListNode })
-      .whenTargetNamed("node");
+    const createNode = this.container.get("CreateNode");
+    createNode(
+      {
+        bulletlist: bulletListNode
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

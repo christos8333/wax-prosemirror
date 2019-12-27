@@ -5,13 +5,13 @@ import SmallCaps from "./SmallCaps";
 class SmallCapsService extends Service {
   register() {
     this.container.bind("SmallCaps").to(SmallCaps);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
         smallcaps: smallcapsMark
-      })
-      .whenTargetNamed("mark");
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

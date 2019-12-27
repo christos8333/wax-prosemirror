@@ -10,7 +10,7 @@ export default {
   MenuService: [
     {
       templateArea: "topBar",
-      toolGroups: ["Annotation", { name: "RedoUndo", exclude: ["Redo"] }]
+      toolGroups: ["Base", "Annotations", "Lists", "Images", "Tables"]
     },
     {
       templateArea: "leftSideBar",

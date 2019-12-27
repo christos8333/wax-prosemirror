@@ -1,4 +1,4 @@
-import { tableNodes, columnResizing, tableEditing } from "prosemirror-tables";
+import { tableNodes } from "prosemirror-tables";
 import { parseFormatList, parseTracks, blockLevelToDOM } from "./helpers";
 const pDOM = ["p", 0],
   brDOM = ["br"],
@@ -53,36 +53,6 @@ const nodes = {
       }
       let { src, alt, title } = node.attrs;
       return ["img", { src, alt, title }];
-    }
-  },
-  paragraph: {
-    group: "block",
-    content: "inline*",
-    attrs: {
-      class: { default: "paragraph" },
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "p[data-track]",
-        getAttrs(dom) {
-          return {
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      },
-      {
-        tag: "p.paragraph",
-        getAttrs(dom) {
-          return {
-            class: dom.getAttribute("class")
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = blockLevelToDOM(node);
-      return ["p", attrs, 0];
     }
   },
   author: {
@@ -354,83 +324,6 @@ const nodes = {
       }
       return [`h${node.attrs.level}`, attrs, 0];
     }
-  },
-  ordered_list: {
-    group: "block",
-    content: "list_item+",
-    attrs: {
-      order: { default: 1 },
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "ol",
-        getAttrs(dom) {
-          return {
-            order: dom.hasAttribute("start") ? +dom.getAttribute("start") : 1,
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      if (node.attrs.order !== 1) {
-        attrs.start = node.attrs.order;
-      }
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      return ["ol", attrs, 0];
-    }
-  },
-  bullet_list: {
-    group: "block",
-    content: "list_item+",
-    attrs: {
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "ul",
-        getAttrs(dom) {
-          return {
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      return ["ul", attrs, 0];
-    }
-  },
-  list_item: {
-    content: "block+",
-    attrs: {
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "li",
-        getAttrs(dom) {
-          return {
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      return ["li", attrs, 0];
-    },
-    defining: true
   },
   blockquote: {
     content: "block+",

@@ -19,11 +19,11 @@ class Annotations extends ToolGroup {
     @inject("Blockquote") blockquote
   ) {
     super();
-    code.hideOnToolbar = true;
-    strong.hideOnToolbar = true;
-    blockquote.hideOnToolbar = true;
-    subscript.hideOnToolbar = true;
-    superscript.hideOnToolbar = true;
+    // code.hideOnToolbar = true;
+    // strong.hideOnToolbar = true;
+    // blockquote.hideOnToolbar = true;
+    // subscript.hideOnToolbar = true;
+    // superscript.hideOnToolbar = true;
     this.tools = [
       code,
       emphasis,

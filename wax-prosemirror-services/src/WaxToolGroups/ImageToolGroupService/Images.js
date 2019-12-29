@@ -8,14 +8,6 @@ class Images extends ToolGroup {
     super();
     this.tools = [image];
   }
-
-  renderTools(view) {
-    const tools = [];
-    this.tools.forEach(tool => {
-      tools.push(tool.renderTool(view));
-    });
-    return tools;
-  }
 }
 
 export default Images;

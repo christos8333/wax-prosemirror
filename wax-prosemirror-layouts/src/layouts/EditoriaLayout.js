@@ -52,6 +52,11 @@ const MainMenuInner = styled.div`
   top: 0;
   background: transparent;
   z-index: 9999;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const SideMenuContainer = styled.div`

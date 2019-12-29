@@ -11,14 +11,6 @@ class Tables extends ToolGroup {
     super();
     this.tools = [table, tableDropDownOptions];
   }
-
-  renderTools(view) {
-    const tools = [];
-    this.tools.forEach(tool => {
-      tools.push(tool.renderTool(view));
-    });
-    return tools;
-  }
 }
 
 export default Tables;

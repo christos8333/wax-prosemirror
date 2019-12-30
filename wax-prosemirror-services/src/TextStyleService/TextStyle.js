@@ -1,9 +1,17 @@
+import React from "react";
 import { injectable, inject } from "inversify";
 import ToolGroup from "../lib/ToolGroup";
-
 @injectable()
 export default class Annotation extends ToolGroup {
   tools = [];
+  title = () => {
+    return (
+      <span>
+        Annotations
+        <hr />
+      </span>
+    );
+  };
   constructor(
     @inject("Author") author,
     @inject("EpigraphPoetry") epigraphPoetry,
@@ -27,13 +35,5 @@ export default class Annotation extends ToolGroup {
       subtitle,
       title
     ];
-  }
-
-  renderTools(view) {
-    const tools = [];
-    this.tools.forEach(tool => {
-      tools.push(tool.renderTool(view));
-    });
-    return tools;
   }
 }

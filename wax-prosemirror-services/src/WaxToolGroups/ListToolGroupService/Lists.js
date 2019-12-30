@@ -13,14 +13,6 @@ class Lists extends ToolGroup {
     super();
     this.tools = [orderedlist, bulletlist, joinup, lift];
   }
-
-  renderTools(view) {
-    const tools = [];
-    this.tools.forEach(tool => {
-      tools.push(tool.renderTool(view));
-    });
-    return tools;
-  }
 }
 
 export default Lists;

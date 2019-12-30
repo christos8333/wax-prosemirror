@@ -8,14 +8,6 @@ class Base extends ToolGroup {
     super();
     this.tools = [undo, redo];
   }
-
-  renderTools(view) {
-    const tools = [];
-    this.tools.forEach(tool => {
-      tools.push(tool.renderTool(view));
-    });
-    return tools;
-  }
 }
 
 export default Base;

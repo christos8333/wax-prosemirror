@@ -8,6 +8,7 @@ export default class Tools {
   title = "title";
   content = "content";
   _isEnabled = true;
+  hideOnToolbar = false;
   config = {};
   pmplugins = {};
 

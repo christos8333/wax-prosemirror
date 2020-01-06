@@ -4,13 +4,13 @@ import StrikeThrough from "./StrikeThrough";
 class StrikeThroughService extends Service {
   register() {
     this.container.bind("StrikeThrough").to(StrikeThrough);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
         strikethrough: strikethroughMark
-      })
-      .whenTargetNamed("mark");
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

@@ -10,12 +10,14 @@ class CodeService extends Service {
   }
 
   register() {
-    this.container
-      .bind("schema")
-      .toConstantValue({ code: codeMark })
-      .whenTargetNamed("mark");
-
     this.container.bind("Code").to(Code);
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
+        code: codeMark
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

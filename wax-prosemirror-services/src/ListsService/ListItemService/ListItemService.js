@@ -5,10 +5,13 @@ class ListItemService extends Service {
   boot() {}
 
   register() {
-    this.container
-      .bind("schema")
-      .toConstantValue({ list_item: listItemNode })
-      .whenTargetNamed("node");
+    const createNode = this.container.get("CreateNode");
+    createNode(
+      {
+        list_item: listItemNode
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

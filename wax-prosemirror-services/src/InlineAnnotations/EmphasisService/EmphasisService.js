@@ -11,13 +11,13 @@ class EmphasisService extends Service {
 
   register() {
     this.container.bind("Emphasis").to(Emphasis);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
         em: emphasisMark
-      })
-      .whenTargetNamed("mark");
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

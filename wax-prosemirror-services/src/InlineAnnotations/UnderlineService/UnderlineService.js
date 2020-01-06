@@ -11,13 +11,13 @@ class UnderlineService extends Service {
 
   register() {
     this.container.bind("Underline").to(Underline);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
         underline: underlineMark
-      })
-      .whenTargetNamed("mark");
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

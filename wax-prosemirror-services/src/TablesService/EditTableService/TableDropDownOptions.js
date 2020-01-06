@@ -27,10 +27,10 @@ export default class TableDropDownOptions extends Tools {
     return addColumnBefore(state);
   }
 
-  renderTool(view) {
+  renderTool({ view }) {
     if (!view) return null;
     return this._isEnabled ? (
-      <TableDropDown key={uuid()} item={this.toJSON()} {...view} />
+      <TableDropDown key={uuid()} item={this.toJSON()} view={view} />
     ) : null;
   }
 }

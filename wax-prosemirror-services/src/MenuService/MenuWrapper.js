@@ -10,7 +10,7 @@ const MainMenu = styled.div`
   background: transparent;
 `;
 
-const MainMenuBar = ({ items = [], view: { view } }) => {
+const MainMenuBar = ({ items = [], view }) => {
   return (
     <MainMenu key="MainMenu">
       {map(items, item => item.renderTools(view))}

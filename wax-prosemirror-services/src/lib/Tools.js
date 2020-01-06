@@ -44,10 +44,10 @@ export default class Tools {
     };
   }
 
-  renderTool(view) {
+  renderTool({ view }) {
     if (!view) return null;
     return this._isEnabled ? (
-      <Button key={uuid()} item={this.toJSON()} {...view} />
+      <Button key={uuid()} item={this.toJSON()} view={view} />
     ) : null;
   }
 

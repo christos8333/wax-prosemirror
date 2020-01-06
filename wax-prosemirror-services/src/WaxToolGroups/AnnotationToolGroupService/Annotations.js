@@ -1,8 +1,6 @@
 import { injectable, inject } from "inversify";
 import ToolGroup from "../../lib/ToolGroup";
-import React, { useState } from "react";
-import { isFunction } from "lodash";
-import { NONAME } from "dns";
+
 @injectable()
 class Annotations extends ToolGroup {
   tools = [];
@@ -19,11 +17,11 @@ class Annotations extends ToolGroup {
     @inject("Blockquote") blockquote
   ) {
     super();
-    // code.hideOnToolbar = true;
-    // strong.hideOnToolbar = true;
-    // blockquote.hideOnToolbar = true;
-    // subscript.hideOnToolbar = true;
-    // superscript.hideOnToolbar = true;
+    code.hideOnToolbar = true;
+    strong.hideOnToolbar = true;
+    blockquote.hideOnToolbar = true;
+    subscript.hideOnToolbar = true;
+    superscript.hideOnToolbar = true;
     this.tools = [
       code,
       emphasis,

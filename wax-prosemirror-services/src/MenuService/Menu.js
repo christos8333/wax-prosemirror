@@ -25,11 +25,11 @@ export default class Menu {
   }
 
   render() {
-    return ({ view }) => {
-      if (!view) return null;
+    return view => {
+      //if (!view) return null;
 
       const Bar = useMemo(
-        () => <MenuWrapper items={this.toolGroups} view={{ view }} />,
+        () => <MenuWrapper items={this.toolGroups} view={view} />,
         [view]
       );
       return <>{Bar}</>;

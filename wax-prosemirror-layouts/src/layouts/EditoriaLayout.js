@@ -88,27 +88,26 @@ const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
 const BottomBar = componentPlugin("bottomBar");
-const EditorOverlays = componentPlugin("editorOverlays");
+const WaxOverlays = componentPlugin("waxOverlays");
 
 const EditoriaLayout = ({ editor }) => {
-  console.log("dsaasdsd");
   return (
     <ThemeProvider theme={cokoTheme}>
       <LayoutWrapper>
         <MainMenuContainer>
           <MainMenuInner>
-            <TopBar id="topBar" />
+            <TopBar />
           </MainMenuInner>
         </MainMenuContainer>
         <WaxSurfaceContainer>
           <SideMenuContainer>
             <SideMenuInner>
-              <LeftSideBar id="leftSideBar" />
+              <LeftSideBar />
             </SideMenuInner>
           </SideMenuContainer>
           <WaxSurfaceScroll className="wax-surface-scroll">
             {editor}
-            <EditorOverlays />
+            <WaxOverlays />
           </WaxSurfaceScroll>
           <RightSideBar />
         </WaxSurfaceContainer>

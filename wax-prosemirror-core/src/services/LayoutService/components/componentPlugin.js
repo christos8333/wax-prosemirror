@@ -25,7 +25,7 @@ const ComponentPlugin = renderArea => props => {
 
   return components
     ? components.map((Component, key) => {
-        return <Component view={view} key={`${renderArea}-${key}`} />;
+        return <Component {...view} key={`${renderArea}-${key}`} />;
       })
     : null;
 };

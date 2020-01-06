@@ -12,8 +12,6 @@ export default class LinkService extends Service {
   name = "LinkPlugin";
 
   boot() {
-    // this.app.PmPlugins.add(PLUGIN_KEY, LinkPlugin(PLUGIN_KEY));
-
     const createOverlay = this.container.get("CreateOverlay");
     createOverlay(LinkComponent);
   }

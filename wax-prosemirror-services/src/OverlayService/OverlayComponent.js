@@ -1,5 +1,10 @@
-import React, { useMemo } from "react";
+import React from "react";
 
-export default () => {
-  return <div style={{ width: "100px", height: "100px" }}>Overlay Area</div>;
+export default Component => () => {
+  return (
+    <div style={{ width: "100px", height: "100px" }}>
+      Overlay Area
+      <Component />
+    </div>
+  );
 };

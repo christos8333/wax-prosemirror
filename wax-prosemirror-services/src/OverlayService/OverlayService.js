@@ -8,12 +8,11 @@ export default class OverlayService extends Service {
   boot() {}
 
   register() {
-    const Components = [];
     this.container.bind("CreateOverlay").toFactory(context => {
       return Component => {
-        const PmPlugins = context.container.get("PmPlugins");
-        Components.push(Component);
-        //PmPlugins.add(PLUGIN_KEY, OverlayPlugin(Components));
+        const layout = context.container.get("Layout");
+        debugger;
+        layout.addComponent("waxOverlays", OverlayComponent(Component));
       };
     });
   }

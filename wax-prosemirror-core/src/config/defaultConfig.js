@@ -4,6 +4,7 @@ import {
   MenuService,
   RulesService,
   ShortCutsService,
+  AnnotationToolGroupService,
   /*TODO MOVE FROM DEFAULT CONFIG*/
   ImageService,
   PlaceholderService,
@@ -27,6 +28,7 @@ export default {
     new ShortCutsService(),
     new LayoutService(),
     new MenuService(),
+    new AnnotationToolGroupService(),
     new ListToolGroupService(),
     new TextStyleService(),
     new PlaceholderService(),

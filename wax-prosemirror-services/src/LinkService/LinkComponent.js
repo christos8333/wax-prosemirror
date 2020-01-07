@@ -10,7 +10,6 @@ class LinkComponent extends PureComponent {
   // }
 
   render() {
-    console.log("paoooooooooo", this.props);
     return (
       <div>
         <input

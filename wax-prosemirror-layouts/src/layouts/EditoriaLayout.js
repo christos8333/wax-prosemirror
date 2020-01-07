@@ -105,7 +105,7 @@ const EditoriaLayout = ({ editor }) => {
               <LeftSideBar />
             </SideMenuInner>
           </SideMenuContainer>
-          <WaxSurfaceScroll className="wax-surface-scroll">
+          <WaxSurfaceScroll className="wax-surface-scroll test">
             {editor}
             <WaxOverlays />
           </WaxSurfaceScroll>

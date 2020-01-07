@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import { injectable } from "inversify";
 import ToolGroup from "../lib/ToolGroup";
 
 import MenuWrapper from "./MenuWrapper";
+import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 
 @injectable()
 export default class Menu {
@@ -25,11 +26,10 @@ export default class Menu {
   }
 
   render() {
-    return view => {
-      //if (!view) return null;
-
+    return () => {
+      const { view } = useContext(WaxContext);
       const Bar = useMemo(
-        () => <MenuWrapper items={this.toolGroups} view={view} />,
+        () => <MenuWrapper items={this.toolGroups} view={view || {}} />,
         [view]
       );
       return <>{Bar}</>;

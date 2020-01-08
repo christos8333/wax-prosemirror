@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
+import { isEmpty } from "lodash";
 import { injectable, inject } from "inversify";
 import { Button } from "wax-prosemirror-components";
 
@@ -44,8 +45,8 @@ export default class Tools {
     };
   }
 
-  renderTool({ view }) {
-    if (!view) return null;
+  renderTool(view) {
+    if (isEmpty(view)) return null;
     return this._isEnabled ? (
       <Button key={uuid()} item={this.toJSON()} view={view} />
     ) : null;

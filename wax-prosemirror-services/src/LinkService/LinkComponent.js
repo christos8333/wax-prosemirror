@@ -9,12 +9,26 @@ class LinkComponent extends PureComponent {
   //   return nextProps;
   // }
 
+  componentDidMount() {
+    // this.props.setPosition({
+    //   left: "500px",
+    //   top: "100px",
+    //   position: "absolute"
+    // });
+  }
+
   render() {
+    console.log("render link Component");
     return (
       <div>
         <input
           type="text"
           onChange={() => {
+            // this.props.setPosition({
+            //   left: "500px",
+            //   top: "100px",
+            //   position: "absolute"
+            // });
             //this.setState({ count: this.state.count + 1 });
           }}
         />

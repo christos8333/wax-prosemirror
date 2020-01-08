@@ -7,9 +7,12 @@ export default class OverlayService extends Service {
 
   register() {
     this.container.bind("CreateOverlay").toFactory(context => {
-      return Component => {
+      return (Component, options) => {
         const layout = context.container.get("Layout");
-        layout.addComponent("waxOverlays", OverlayComponent(Component));
+        layout.addComponent(
+          "waxOverlays",
+          OverlayComponent(Component, options)
+        );
       };
     });
   }

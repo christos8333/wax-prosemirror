@@ -11,7 +11,7 @@ export default props => {
     app: props.app,
     view: props.view,
     updateView: view => {
-      setContext({ ...context, view: view });
+      setContext({ ...context, view });
     }
   });
 

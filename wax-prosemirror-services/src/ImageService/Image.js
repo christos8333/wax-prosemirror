@@ -1,8 +1,9 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import Tools from "../lib/Tools";
+import { isEmpty } from "lodash";
 import { injectable } from "inversify";
 import { icons, ImageUpload } from "wax-prosemirror-components";
+import Tools from "../lib/Tools";
 import { canInsert } from "../lib/Utils";
 import fileUpload from "./fileUpload";
 
@@ -22,7 +23,7 @@ export default class Image extends Tools {
   }
 
   renderTool(view) {
-    if (!view) return null;
+    if (isEmpty(view)) return null;
     const upload = fileUpload(
       view,
       this.config.get("fileUpload"),

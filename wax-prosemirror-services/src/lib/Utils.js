@@ -30,6 +30,29 @@ const canInsert = type => state => {
   return false;
 };
 
+const getMarkPosition = ($start, mark) => {
+  let startIndex = $start.index(),
+    endIndex = $start.indexAfter();
+  while (
+    startIndex > 0 &&
+    mark.isInSet($start.parent.child(startIndex - 1).marks)
+  )
+    startIndex--;
+  while (
+    endIndex < $start.parent.childCount &&
+    mark.isInSet($start.parent.child(endIndex).marks)
+  )
+    endIndex++;
+  let startPos = $start.start(),
+    endPos = startPos;
+  for (let i = 0; i < endIndex; i++) {
+    let size = $start.parent.child(i).nodeSize;
+    if (i < startIndex) startPos += size;
+    endPos += size;
+  }
+  return { from: startPos, to: endPos };
+};
+
 const promptForURL = () => {
   let url = window && window.prompt("Enter the URL", "https://");
 
@@ -58,4 +81,11 @@ const createTable = (state, dispatch) => {
   dispatch(state.tr.replaceSelectionWith(table));
 };
 
-export { markActive, blockActive, canInsert, promptForURL, createTable };
+export {
+  markActive,
+  blockActive,
+  canInsert,
+  promptForURL,
+  createTable,
+  getMarkPosition
+};

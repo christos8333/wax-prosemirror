@@ -1,4 +1,3 @@
-export { default as Author } from "./Author";
 export { default as EpigraphPoetry } from "./EpigraphPoetry";
 export { default as EpigraphProse } from "./EpigraphProse";
 export { default as Heading1 } from "./Heading1";

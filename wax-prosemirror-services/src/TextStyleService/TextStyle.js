@@ -13,7 +13,6 @@ export default class Annotation extends ToolGroup {
     );
   };
   constructor(
-    @inject("Author") author,
     @inject("EpigraphPoetry") epigraphPoetry,
     @inject("EpigraphProse") epigraphProse,
     @inject("Heading1") heading1,
@@ -25,7 +24,6 @@ export default class Annotation extends ToolGroup {
   ) {
     super();
     this.tools = [
-      author,
       epigraphPoetry,
       epigraphProse,
       heading1,

@@ -14,7 +14,7 @@ export default {
     },
     {
       templateArea: "leftSideBar",
-      toolGroups: ["TextStyle"]
+      toolGroups: ["Display"]
     }
   ],
 

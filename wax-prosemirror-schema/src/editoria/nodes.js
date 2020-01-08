@@ -55,31 +55,6 @@ const nodes = {
       return ["img", { src, alt, title }];
     }
   },
-  author: {
-    content: "inline*",
-    group: "block",
-    priority: 0,
-    defining: true,
-    attrs: {
-      class: { default: "author" },
-      track: { default: [] }
-    },
-    parseDOM: [
-      {
-        tag: "p.author",
-        getAttrs(dom) {
-          return {
-            class: dom.getAttribute("class"),
-            track: parseTracks(dom.dataset.track)
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = blockLevelToDOM(node);
-      return ["p", attrs, 0];
-    }
-  },
   epigraphProse: {
     content: "inline*",
     group: "block",

@@ -14,14 +14,10 @@ export default class SchemaService extends Service {
 
     this.container.bind("CreateNode").toFactory(context => {
       return (schema, options = { toWaxSchema: false }) => {
+        const schemaInstance = context.container.get("Schema");
         if (options.toWaxSchema) {
-          context.container
-            .bind("schema")
-            .toConstantValue(schema)
-            .whenTargetNamed("node");
+          schemaInstance.addNode(schema);
         } else {
-          const schemaInstance = context.container.get("Schema");
-
           schemaInstance.addProsemirrorSchema(schema, "nodes");
         }
       };
@@ -29,13 +25,10 @@ export default class SchemaService extends Service {
 
     this.container.bind("CreateMark").toFactory(context => {
       return (schema, options = { toWaxSchema: false }) => {
+        const schemaInstance = context.container.get("Schema");
         if (options.toWaxSchema) {
-          context.container
-            .bind("schema")
-            .toConstantValue(schema)
-            .whenTargetNamed("mark");
+          schemaInstance.addMark(schema);
         } else {
-          const schemaInstance = context.container.get("Schema");
           schemaInstance.addProsemirrorSchema(schema, "marks");
         }
       };

@@ -1,5 +1,22 @@
 import { emDash, ellipsis } from "prosemirror-inputrules";
 import { columnResizing, tableEditing } from "prosemirror-tables";
+import {
+  ImageService,
+  PlaceholderService,
+  TextStyleService,
+  InlineAnnotationsService,
+  LinkService,
+  ListsService,
+  ListToolGroupService,
+  TablesService,
+  TableToolGroupService,
+  BaseService,
+  BaseToolGroupService,
+  DisplayBlockLevelService,
+  DisplayToolGroupService,
+  ImageToolGroupService
+} from "wax-prosemirror-services";
+
 import invisibles, {
   space,
   hardBreak,
@@ -27,5 +44,25 @@ export default {
     tableEditing(),
     // TrackChangePlugin({ options: {} }),
     invisibles([hardBreak()])
+  ],
+  services: [
+    new ListToolGroupService(),
+    new TextStyleService(),
+    new PlaceholderService(),
+    new ImageService(),
+    new InlineAnnotationsService(),
+    // new OverlayService()
+    new LinkService(),
+    new ListsService(),
+    new TableToolGroupService(),
+    new TablesService(),
+    new BaseService(),
+    new BaseToolGroupService(),
+    //new ImageToolGroupService(),
+    new DisplayBlockLevelService(),
+    new DisplayToolGroupService(),
+    // new TextBlockLevelService(),
+    // new TextToolGroupService()
+    new ImageToolGroupService()
   ]
 };

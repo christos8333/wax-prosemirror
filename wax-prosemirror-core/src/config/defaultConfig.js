@@ -34,7 +34,9 @@ export default {
     new MenuService(),
     new AnnotationToolGroupService(),
     new ListToolGroupService(),
-    new TextStyleService(),
+    new DisplayBlockLevelService(),
+    new DisplayToolGroupService(),
+    // new TextStyleService(),
     new PlaceholderService(),
     new ImageService(),
     new InlineAnnotationsService(),
@@ -45,9 +47,7 @@ export default {
     new TablesService(),
     new BaseService(),
     new BaseToolGroupService(),
-    new ImageToolGroupService(),
-    new DisplayBlockLevelService(),
-    new DisplayToolGroupService()
+    new ImageToolGroupService()
     // new TextBlockLevelService(),
     // new TextToolGroupService()
   ]

@@ -1,15 +1,15 @@
-const title = {
+const subtitle = {
   content: "inline*",
   group: "block",
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "title" },
+    class: { default: "cst" },
     track: { default: [] }
   },
   parseDOM: [
     {
-      tag: "p.title",
+      tag: "p.cst",
       getAttrs(dom) {
         return {
           class: dom.getAttribute("class"),
@@ -24,4 +24,4 @@ const title = {
   }
 };
 
-export default title;
+export default subtitle;

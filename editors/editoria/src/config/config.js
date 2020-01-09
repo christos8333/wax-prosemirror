@@ -1,9 +1,9 @@
 import { emDash, ellipsis } from "prosemirror-inputrules";
 import { columnResizing, tableEditing } from "prosemirror-tables";
 import {
+  AnnotationToolGroupService,
   ImageService,
   PlaceholderService,
-  TextStyleService,
   InlineAnnotationsService,
   LinkService,
   ListsService,
@@ -47,9 +47,9 @@ export default {
   ],
   services: [
     new ListToolGroupService(),
-    new TextStyleService(),
     new PlaceholderService(),
     new ImageService(),
+    new AnnotationToolGroupService(),
     new InlineAnnotationsService(),
     // new OverlayService()
     new LinkService(),

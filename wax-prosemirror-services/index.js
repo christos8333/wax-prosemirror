@@ -1,9 +1,5 @@
 export { default as MenuService } from "./src/MenuService/MenuService";
 export { default as LinkService } from "./src/LinkService/LinkService";
-
-export {
-  default as TextStyleService
-} from "./src/TextStyleService/TextStyleService";
 export {
   default as PlaceholderService
 } from "./src/PlaceholderService/PlaceholderService";

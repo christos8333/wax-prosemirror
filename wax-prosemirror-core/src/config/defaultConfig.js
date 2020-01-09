@@ -3,8 +3,7 @@ import {
   SchemaService,
   MenuService,
   RulesService,
-  ShortCutsService,
-  AnnotationToolGroupService
+  ShortCutsService
 } from "wax-prosemirror-services";
 
 export default {
@@ -13,7 +12,6 @@ export default {
     new RulesService(),
     new ShortCutsService(),
     new LayoutService(),
-    new MenuService(),
-    new AnnotationToolGroupService()
+    new MenuService()
   ]
 };

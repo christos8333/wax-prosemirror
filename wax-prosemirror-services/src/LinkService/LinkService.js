@@ -17,13 +17,13 @@ export default class LinkService extends Service {
 
   register() {
     this.container.bind("Link").to(LinkTool);
-
-    this.container
-      .bind("schema")
-      .toConstantValue({
+    const createMark = this.container.get("CreateMark");
+    createMark(
+      {
         link: linkMark
-      })
-      .whenTargetNamed("mark");
+      },
+      { toWaxSchema: true }
+    );
   }
 
   dependencies = [new OverlayService()];

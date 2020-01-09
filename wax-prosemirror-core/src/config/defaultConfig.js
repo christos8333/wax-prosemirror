@@ -4,25 +4,7 @@ import {
   MenuService,
   RulesService,
   ShortCutsService,
-  AnnotationToolGroupService,
-  /*TODO MOVE FROM DEFAULT CONFIG*/
-  ImageService,
-  PlaceholderService,
-  TextStyleService,
-  InlineAnnotationsService,
-  LinkService,
-  OverlayService,
-  ListsService,
-  ListToolGroupService,
-  TablesService,
-  TableToolGroupService,
-  BaseService,
-  BaseToolGroupService,
-  ImageToolGroupService,
-  TextBlockLevelService,
-  TextToolGroupService,
-  DisplayBlockLevelService,
-  DisplayToolGroupService
+  AnnotationToolGroupService
 } from "wax-prosemirror-services";
 
 export default {
@@ -32,23 +14,6 @@ export default {
     new ShortCutsService(),
     new LayoutService(),
     new MenuService(),
-    new AnnotationToolGroupService(),
-    new ListToolGroupService(),
-    new DisplayBlockLevelService(),
-    new DisplayToolGroupService(),
-    // new TextStyleService(),
-    new PlaceholderService(),
-    new ImageService(),
-    new InlineAnnotationsService(),
-    // new OverlayService()
-    new LinkService(),
-    new ListsService(),
-    new TableToolGroupService(),
-    new TablesService(),
-    new BaseService(),
-    new BaseToolGroupService(),
-    new ImageToolGroupService()
-    // new TextBlockLevelService(),
-    // new TextToolGroupService()
+    new AnnotationToolGroupService()
   ]
 };

@@ -12,54 +12,38 @@ export default class Schema {
   prosemirrorSchema = { nodes: {}, marks: {} };
   schema = null;
 
-  constructor(
-    @multiInject("schema")
-    @named("mark")
-    marks,
-    @multiInject("schema")
-    @named("node")
-    nodes
-  ) {
-    this.setNodes(nodes);
-    this.setMarks(marks);
+  addNode(schemaConfig) {
+    const name = Object.keys(schemaConfig)[0];
+    const config = schemaConfig[name];
+
+    const node = new Node(name);
+    let nd = {};
+
+    if ((nd = this.has(node))) {
+      nd.fromJSON(config);
+      return nd;
+    } else {
+      node.fromJSON(config);
+      this.addSchema(node);
+
+      return { [name]: node };
+    }
   }
 
-  setNodes(nodes) {
-    return nodes.map(schemaConfig => {
-      const name = Object.keys(schemaConfig)[0];
-      const config = schemaConfig[name];
+  addMark(schemaConfig) {
+    const name = Object.keys(schemaConfig)[0];
+    const config = schemaConfig[name];
 
-      const node = new Node(name);
-      let nd = {};
-
-      if ((nd = this.has(node))) {
-        nd.fromJSON(config);
-        return nd;
-      } else {
-        node.fromJSON(config);
-        this.addSchema(node);
-
-        return { [name]: node };
-      }
-    });
-  }
-
-  setMarks(marks) {
-    return marks.map(schemaConfig => {
-      const name = Object.keys(schemaConfig)[0];
-      const config = schemaConfig[name];
-
-      const mark = new Mark(name);
-      let mr = {};
-      if ((mr = this.has(mark))) {
-        mr.fromJSON(config);
-        return mr;
-      } else {
-        mark.fromJSON(config);
-        this.addSchema(mark);
-        return { [name]: mark };
-      }
-    });
+    const mark = new Mark(name);
+    let mr = {};
+    if ((mr = this.has(mark))) {
+      mr.fromJSON(config);
+      return mr;
+    } else {
+      mark.fromJSON(config);
+      this.addSchema(mark);
+      return { [name]: mark };
+    }
   }
 
   has(instance) {

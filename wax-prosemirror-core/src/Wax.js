@@ -44,7 +44,6 @@ class Wax extends Component {
     this.application = Application.create(props);
     const schema = this.application.getSchema();
     this.application.bootServices();
-
     const { value, onChange } = this.props;
 
     const WaxOnchange = onChange ? onChange : value => true;

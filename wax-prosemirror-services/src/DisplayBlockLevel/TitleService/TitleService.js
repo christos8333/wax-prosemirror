@@ -1,4 +1,5 @@
 import Service from "wax-prosemirror-core/src/services/Service";
+import { titleNode } from "wax-prosemirror-schema";
 import Title from "./Title";
 
 class TitleService extends Service {
@@ -6,6 +7,13 @@ class TitleService extends Service {
 
   register() {
     this.container.bind("Title").to(Title);
+    const createNode = this.container.get("CreateNode");
+    createNode(
+      {
+        title: titleNode
+      },
+      { toWaxSchema: true }
+    );
   }
 }
 

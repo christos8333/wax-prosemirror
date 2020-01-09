@@ -13,9 +13,9 @@ class Display extends ToolGroup {
       </span>
     );
   };
-  constructor(@inject("Author") author) {
+  constructor(@inject("Author") author, @inject("Title") title) {
     super();
-    this.tools = [author];
+    this.tools = [title, author];
   }
 }
 

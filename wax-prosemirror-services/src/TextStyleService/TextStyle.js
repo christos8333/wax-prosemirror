@@ -19,8 +19,7 @@ export default class Annotation extends ToolGroup {
     @inject("Heading2") heading2,
     @inject("Heading3") heading3,
     @inject("Plain") plain,
-    @inject("Subtitle") subtitle,
-    @inject("Title") title
+    @inject("Subtitle") subtitle
   ) {
     super();
     this.tools = [
@@ -30,8 +29,7 @@ export default class Annotation extends ToolGroup {
       heading2,
       heading3,
       plain,
-      subtitle,
-      title
+      subtitle
     ];
   }
 }

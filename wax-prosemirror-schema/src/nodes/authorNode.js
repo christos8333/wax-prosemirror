@@ -1,4 +1,4 @@
-import { parseFormatList, parseTracks, blockLevelToDOM } from "./helpers";
+import { parseTracks, blockLevelToDOM } from "./helpers";
 const author = {
   content: "inline*",
   group: "block",

@@ -1,40 +1,32 @@
-import React, { Component, PureComponent } from "react";
+import React, { useRef, useEffect } from "react";
+import styled from "styled-components";
+// import { Button } from "wax-prosemirror-components";
 
-class LinkComponent extends PureComponent {
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps, this.props);
-  //   if (nextProps == this.props) {
-  //     debugger;
-  //   }
-  //   return nextProps;
-  // }
+const LinkWrapper = styled.div`
+  padding: 20px;
+  border-radius: 3px;
+  border: 1px solid #000;
+`;
 
-  componentDidMount() {
-    // this.props.setPosition({
-    //   left: "500px",
-    //   top: "100px",
-    //   position: "absolute"
-    // });
-  }
+const Button = styled.button``;
 
-  render() {
-    console.log("render link Component");
-    return (
-      <div>
-        <input
-          type="text"
-          onChange={() => {
-            // this.props.setPosition({
-            //   left: "500px",
-            //   top: "100px",
-            //   position: "absolute"
-            // });
-            //this.setState({ count: this.state.count + 1 });
-          }}
-        />
-      </div>
-    );
-  }
-}
+const LinkComponent = ({ mark, setPosition, position }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const width = ref.current ? ref.current.offsetWidth : 0;
+    const left = Math.abs(position.left - width / 2);
+
+    setPosition({ ...position, left });
+  }, [ref.current]);
+
+  return mark ? (
+    <LinkWrapper ref={ref}>
+      <input type="text" onChange={() => {}} value={mark.attrs.href} />
+      <Button primary>Change</Button>
+      <Button>Cancel</Button>
+    </LinkWrapper>
+  ) : null;
+};
 
 export default LinkComponent;

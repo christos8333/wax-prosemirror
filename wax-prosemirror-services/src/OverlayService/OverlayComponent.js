@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useMemo } from "react";
 import usePosition from "./usePosition";
+import { Overlay } from "wax-prosemirror-components";
 
 export default (Component, markType) => () => {
-  const [position, setPosition] = usePosition(markType);
-
+  const [position, setPosition, mark] = usePosition(markType);
+  const component = useMemo(
+    () => (
+      <Component setPosition={setPosition} mark={mark} position={position} />
+    ),
+    [JSON.stringify(mark), position]
+  );
   const visible = position.left ? true : false;
 
-  return (
-    <div style={position}>
-      {visible && <Component setPosition={setPosition} />}
-    </div>
-  );
+  return <Overlay position={position}>{visible && component}</Overlay>;
 };

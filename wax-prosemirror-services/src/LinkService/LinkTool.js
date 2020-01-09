@@ -16,10 +16,10 @@ export default class LinkTool extends Tools {
         return true;
       }
 
-      const href = promptForURL();
-      if (!href) return false;
-
-      toggleMark(state.config.schema.marks.link, { href })(state, dispatch);
+      toggleMark(state.config.schema.marks.link, { href: "#" })(
+        state,
+        dispatch
+      );
     };
   }
 

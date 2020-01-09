@@ -3,25 +3,30 @@ import { isObject } from "lodash";
 import { markActive, getMarkPosition } from "../lib/Utils";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 
+const defaultOverlay = {
+  left: null,
+  top: null,
+  from: null,
+  to: null,
+  mark: null
+};
+
 export default options => {
   let { view } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
     position: "absolute",
-    left: null,
-    top: null,
-    from: null,
-    to: null
+    ...defaultOverlay
   });
 
+  let mark = {};
+
   const updatePosition = useCallback((followCursor = true) => {
-    if (!view) return { left: null, top: null, to: null, from: null };
+    if (!view) return defaultOverlay;
 
-    const mark = markActive(view.state.schema.marks[options.markType])(
-      view.state
-    );
+    mark = markActive(view.state.schema.marks[options.markType])(view.state);
 
-    if (!isObject(mark)) return { left: null, top: null, to: null, from: null };
+    if (!isObject(mark)) return defaultOverlay;
 
     const { from, to } = isObject(mark)
       ? followCursor
@@ -33,14 +38,15 @@ export default options => {
 
     const box = view.dom.offsetParent.getBoundingClientRect();
 
-    let left = start.left - box.left + "px";
-    let top = start.top - box.top + 20 + "px";
+    let left = start.left - box.left;
+    let top = start.top - box.top + 20;
 
     return {
       left,
       top,
       from,
-      to
+      to,
+      mark
     };
   });
 
@@ -51,5 +57,5 @@ export default options => {
     });
   }, [JSON.stringify(updatePosition(options.followCursor))]);
 
-  return [position, setPosition];
+  return [position, setPosition, mark];
 };

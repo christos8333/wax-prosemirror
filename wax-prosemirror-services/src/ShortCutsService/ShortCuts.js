@@ -15,15 +15,14 @@ import {
 class ShortCuts {
   keys = {};
   constructor(plugins, schema) {
+    this.insertBreak = this.insertBreak.bind(this);
+    this.insertRule = this.insertRule.bind(this);
     this.PmPlugins = plugins;
     this.schema = schema;
     this.keys = this.getKeys();
-    this.insertBreak = this.insertBreak.bind(this);
-    this.insertRule = this.insertRule.bind(this);
   }
 
   insertBreak(state, dispatch) {
-    console.log(this.schema);
     const br = this.schema.nodes.hard_break.create();
     dispatch(state.tr.replaceSelectionWith(br).scrollIntoView());
     return true;

@@ -8,6 +8,6 @@ export default [
   new AuthorService(),
   // new EpigraphPoetryService(),
   // new HeadingService(),
-  // new SubTitleService(),
+  new SubTitleService(),
   new TitleService()
 ];

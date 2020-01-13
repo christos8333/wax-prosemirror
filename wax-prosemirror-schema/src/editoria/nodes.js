@@ -22,39 +22,6 @@ const nodes = {
       return brDOM;
     }
   },
-  image: {
-    inline: true,
-    attrs: {
-      src: {},
-      alt: { default: null },
-      title: { default: null },
-      track: { default: [] }
-    },
-    group: "inline",
-    draggable: true,
-    parseDOM: [
-      {
-        tag: "img[src]",
-        getAttrs(dom) {
-          return {
-            src: dom.getAttribute("src"),
-            title: dom.getAttribute("title"),
-            track: parseTracks(dom.dataset.track),
-            alt: dom.getAttribute("alt")
-          };
-        }
-      }
-    ],
-    toDOM(node) {
-      const attrs = {};
-      let temp = "";
-      if (node.attrs.track.length) {
-        attrs["data-track"] = JSON.stringify(node.attrs.track);
-      }
-      let { src, alt, title } = node.attrs;
-      return ["img", { src, alt, title }];
-    }
-  },
   heading: {
     attrs: {
       level: { default: 1 },

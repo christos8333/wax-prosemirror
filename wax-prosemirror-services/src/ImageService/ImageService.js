@@ -8,11 +8,11 @@ export default class ImageService extends Service {
   register() {
     this.container.bind("Image").to(Image);
     const createNode = this.container.get("CreateNode");
-    // createNode(
-    //   {
-    //     image: image
-    //   },
-    //   { toWaxSchema: true }
-    // );
+    createNode(
+      {
+        image: imageNode
+      },
+      { toWaxSchema: true }
+    );
   }
 }

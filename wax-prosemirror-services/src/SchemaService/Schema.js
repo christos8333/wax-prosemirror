@@ -3,7 +3,7 @@ import { injectable, multiInject, named, inject } from "inversify";
 
 import Node from "./Node";
 import Mark from "./Mark";
-import { EditoriaSchema } from "wax-prosemirror-schema";
+import { EditoriaSchema, DefaultSchema } from "wax-prosemirror-schema";
 
 @injectable()
 export default class Schema {
@@ -83,7 +83,7 @@ export default class Schema {
   getSchema() {
     /* this is temporally until all of the packages moved to schemas */
     if (this.schema) return this.schema;
-    const nodes = EditoriaSchema.nodes;
+    const nodes = DefaultSchema.nodes;
     const marks = EditoriaSchema.marks;
 
     for (let index in this._nodes) {

@@ -1,3 +1,4 @@
+import { blockLevelToDOM } from "./nodes/helpers";
 const pDOM = ["p", 0],
   brDOM = ["br"];
 const DefaultSchema = {
@@ -19,13 +20,26 @@ const DefaultSchema = {
         return brDOM;
       }
     },
-
     paragraph: {
-      content: "inline*",
       group: "block",
-      parseDOM: [{ tag: "p" }],
-      toDOM() {
-        return pDOM;
+      content: "inline*",
+      attrs: {
+        class: { default: "paragraph" },
+        track: { default: [] }
+      },
+      parseDOM: [
+        {
+          tag: "p.paragraph",
+          getAttrs(dom) {
+            return {
+              class: dom.getAttribute("class")
+            };
+          }
+        }
+      ],
+      toDOM(node) {
+        const attrs = blockLevelToDOM(node);
+        return ["p", attrs, 0];
       }
     }
   },

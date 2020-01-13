@@ -16,10 +16,24 @@ class Display extends ToolGroup {
   constructor(
     @inject("Author") author,
     @inject("Title") title,
-    @inject("SubTitle") subtitle
+    @inject("SubTitle") subtitle,
+    @inject("EpigraphProse") epigraphprose,
+    @inject("EpigraphPoetry") epigraphpoetry,
+    @inject("Heading1") heading1,
+    @inject("Heading2") heading2,
+    @inject("Heading3") heading3
   ) {
     super();
-    this.tools = [title, author, subtitle];
+    this.tools = [
+      title,
+      author,
+      subtitle,
+      epigraphprose,
+      epigraphpoetry,
+      heading1,
+      heading2,
+      heading3
+    ];
   }
 }
 

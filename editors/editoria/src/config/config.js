@@ -17,7 +17,8 @@ import {
   ImageToolGroupService,
   TextBlockLevelService,
   TextToolGroupService,
-  TrackChangeService
+  TrackChangeService,
+  NoteService
 } from "wax-prosemirror-services";
 
 import invisibles, {
@@ -65,6 +66,7 @@ export default {
     new ImageToolGroupService(),
     new TextBlockLevelService(),
     new TextToolGroupService(),
-    new TrackChangeService()
+    new TrackChangeService(),
+    new NoteService()
   ]
 };

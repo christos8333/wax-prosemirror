@@ -47,7 +47,31 @@ export default {
         const attrs = blockLevelToDOM(node);
         return ["p", attrs, 0];
       }
+    },
+    footnote: {
+      group: "inline",
+      content: "inline*",
+      inline: true,
+      // This makes the view treat the node as a leaf, even though it
+      // technically has content
+      atom: true,
+      toDOM: () => ["footnote"],
+      parseDOM: [{ tag: "footnote" }]
     }
+    // footnote: {
+    //   group: "inline",
+    //   content: "block+",
+    //   inline: true,
+    //   atom: true,
+    //   toDOM: dom => {
+    //     return ["footnote"];
+    //   },
+    //   parseDOM: [
+    //     {
+    //       tag: "footnote"
+    //     }
+    //   ]
+    // },
   },
   marks: {}
 };

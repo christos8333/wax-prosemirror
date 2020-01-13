@@ -12,7 +12,7 @@ const defaultOverlay = {
 };
 
 export default options => {
-  let { view } = useContext(WaxContext);
+  const { view } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
     position: "absolute",

@@ -12,7 +12,7 @@ const paragraphCont = {
       tag: "p.paragraph-cont",
       getAttrs(dom) {
         return {
-          class: dom.getAttribute("class"),
+          class: hook.dom.getAttribute("class"),
           track: parseTracks(dom.dataset.track)
         };
       }

@@ -13,7 +13,7 @@ const author = {
       tag: "p.author",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: dom.getAttribute("class"),
+          class: hook.dom.getAttribute("class"),
           track: parseTracks(hook.dom.dataset.track)
         });
         next();

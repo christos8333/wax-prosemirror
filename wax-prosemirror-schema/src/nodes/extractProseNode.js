@@ -12,7 +12,7 @@ const extractProse = {
       tag: "p.extract-prose",
       getAttrs(dom) {
         return {
-          class: dom.getAttribute("class"),
+          class: hook.dom.getAttribute("class"),
           track: parseTracks(dom.dataset.track)
         };
       }

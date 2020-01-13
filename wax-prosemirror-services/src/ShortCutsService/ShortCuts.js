@@ -23,6 +23,7 @@ class ShortCuts {
   }
 
   insertBreak(state, dispatch) {
+    console.log(this.schema);
     const br = this.schema.nodes.hard_break.create();
     dispatch(state.tr.replaceSelectionWith(br).scrollIntoView());
     return true;

@@ -13,10 +13,10 @@ const image = {
       tag: "img[src]",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          src: dom.getAttribute("src"),
-          title: dom.getAttribute("title"),
+          src: hook.dom.getAttribute("src"),
+          title: hook.dom.getAttribute("title"),
           // track: parseTracks(hook.dom.dataset.track),
-          alt: dom.getAttribute("alt")
+          alt: hook.dom.getAttribute("alt")
         });
         next();
       }

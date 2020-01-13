@@ -32,3 +32,4 @@ export { default as orderedListNode } from "./src/nodes/orderedListNode";
 export { default as bulletListNode } from "./src/nodes/bulletListNode";
 export { default as listItemNode } from "./src/nodes/listItemNode";
 export { default as subTitleNode } from "./src/nodes/subTitleNode";
+export { default as imageNode } from "./src/nodes/imageNode";

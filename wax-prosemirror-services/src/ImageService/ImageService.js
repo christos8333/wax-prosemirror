@@ -1,4 +1,5 @@
 import Image from "./Image";
+import { imageNode } from "wax-prosemirror-schema";
 import Service from "wax-prosemirror-core/src/services/Service";
 
 export default class ImageService extends Service {
@@ -6,5 +7,12 @@ export default class ImageService extends Service {
 
   register() {
     this.container.bind("Image").to(Image);
+    const createNode = this.container.get("CreateNode");
+    // createNode(
+    //   {
+    //     image: image
+    //   },
+    //   { toWaxSchema: true }
+    // );
   }
 }

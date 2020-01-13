@@ -90,6 +90,8 @@ export default class Schema {
       nodes[index] = this._nodes[index].toJSON();
     }
 
+    console.log(this._nodes, "nodes");
+
     for (let index in this._marks) {
       marks[index] = this._marks[index].toJSON();
     }

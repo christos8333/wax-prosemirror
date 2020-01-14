@@ -51,18 +51,16 @@ export default {
     new ImageService(),
     new AnnotationToolGroupService(),
     new InlineAnnotationsService(),
-    // new OverlayService()
     new LinkService(),
     new ListsService(),
     new TableToolGroupService(),
     new TablesService(),
     new BaseService(),
     new BaseToolGroupService(),
-    //new ImageToolGroupService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
+    new ImageToolGroupService()
     // new TextBlockLevelService(),
     // new TextToolGroupService()
-    new ImageToolGroupService()
   ]
 };

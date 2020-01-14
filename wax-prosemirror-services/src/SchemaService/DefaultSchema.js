@@ -1,3 +1,13 @@
+const blockLevelToDOM = node => {
+  const attrs = node.attrs.track.length
+    ? {
+        class: node.attrs.class,
+        "data-track": JSON.stringify(node.attrs.track)
+      }
+    : { class: node.attrs.class };
+  return attrs;
+};
+
 export default {
   nodes: {
     doc: {

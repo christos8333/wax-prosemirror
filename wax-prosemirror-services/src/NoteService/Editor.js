@@ -31,13 +31,13 @@ export default ({ node, view, pos }) => {
         }),
         // This is the magic part
         dispatchTransaction: tr => {
-          console.log("in disaptch");
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
 
           if (!tr.getMeta("fromOutside")) {
             let outerTr = view.state.tr,
               offsetMap = StepMap.offset(pos + 1);
+            console.log(transactions, 1111111);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
               for (let j = 0; j < steps.length; j++)
@@ -66,7 +66,8 @@ export default ({ node, view, pos }) => {
     context.updateView({ [pos]: noteView });
   }, []);
 
-  if (context[pos]) {
+  if (context.view[pos]) {
+    console.log(1);
     let state = context.view[pos].state;
     let start = node.content.findDiffStart(state.doc.content);
     console.log(start, node);

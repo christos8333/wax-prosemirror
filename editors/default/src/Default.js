@@ -1,20 +1,9 @@
-import React, { Component } from "react";
-import { Wax, CreateSchema } from "wax-prosemirror-core";
-import { DefaultSchema } from "wax-prosemirror-schema";
+import React from "react";
+import { Wax } from "wax-prosemirror-core";
+import { DefaultLayout } from "wax-prosemirror-layouts";
 
-const plugins = [];
-const keys = {};
-
-const options = {
-  schema: new CreateSchema(DefaultSchema)
-};
-
-class Default extends Component {
-  render() {
-    return (
-      <Wax options={options} autoFocus placeholder="Type Something..." debug />
-    );
-  }
-}
+const Default = () => (
+  <Wax autoFocus placeholder="Type Something..." layout={DefaultLayout} debug />
+);
 
 export default Default;

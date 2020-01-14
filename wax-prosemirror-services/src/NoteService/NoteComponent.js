@@ -4,15 +4,17 @@ import { isEqual } from "lodash";
 import NoteEditor from "./NoteEditor";
 
 export default () => {
-  const { view } = useContext(WaxContext);
+  const {
+    view: { main }
+  } = useContext(WaxContext);
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    setNotes(updateNotes(view));
-  }, [JSON.stringify(updateNotes(view))]);
+    setNotes(updateNotes(main));
+  }, [JSON.stringify(updateNotes(main))]);
 
   const noteComponent = useMemo(
-    () => <NoteEditor notes={notes} view={view} />,
+    () => <NoteEditor notes={notes} view={main} />,
     [notes]
   );
 

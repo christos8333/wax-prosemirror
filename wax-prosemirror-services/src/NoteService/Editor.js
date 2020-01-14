@@ -1,20 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { EditorView } from "prosemirror-view";
 import { EditorState } from "prosemirror-state";
 import { StepMap } from "prosemirror-transform";
 import { keymap } from "prosemirror-keymap";
 import { undo, redo } from "prosemirror-history";
+import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+
 import { markActive } from "../lib/Utils";
 
-let noteView = null;
 export default ({ node, view, pos }) => {
   const editorRef = useRef();
+  const context = useContext(WaxContext);
+
   useEffect(() => {
-    console.log("test", node);
-    noteView = new EditorView(
+    const noteView = new EditorView(
       { mount: editorRef.current },
       {
-        // You can use any node as an editor document
         state: EditorState.create({
           doc: node,
           plugins: [
@@ -42,7 +43,7 @@ export default ({ node, view, pos }) => {
               for (let j = 0; j < steps.length; j++)
                 outerTr.step(steps[j].map(offsetMap));
             }
-            console.log(noteView.docView.node);
+
             // outerTr.setNodeMarkup(pos, view.state.schema.nodes.footnote, {
             //   title: noteView.docView.node.textContent
             // });
@@ -62,10 +63,11 @@ export default ({ node, view, pos }) => {
         }
       }
     );
+    context.updateView({ [pos]: noteView });
   }, []);
 
-  if (noteView) {
-    let state = noteView.state;
+  if (context[pos]) {
+    let state = context.view[pos].state;
     let start = node.content.findDiffStart(state.doc.content);
     console.log(start, node);
     if (start != null) {
@@ -75,8 +77,7 @@ export default ({ node, view, pos }) => {
         endA += overlap;
         endB += overlap;
       }
-      console.log(endA, endB);
-      noteView.dispatch(
+      context.view[pos].dispatch(
         state.tr
           .replace(start, endB, node.slice(start, endA))
           .setMeta("fromOutside", true)

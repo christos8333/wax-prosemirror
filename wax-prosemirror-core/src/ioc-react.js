@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 
 export const WaxContext = React.createContext({
-  view: null,
+  view: {},
   app: null,
   updateView: null
 });
@@ -9,9 +9,10 @@ export const WaxContext = React.createContext({
 export default props => {
   const [context, setContext] = useState({
     app: props.app,
-    view: props.view,
+    view: props.view || {},
     updateView: view => {
-      setContext({ ...context, view });
+      console.log(view, context);
+      setContext({ ...context, view: Object.assign(context.view, view) });
     }
   });
 
@@ -28,8 +29,7 @@ export default props => {
 
 export const useInjection = identifier => {
   const {
-    app: { container },
-    view
+    app: { container }
   } = useContext(WaxContext);
 
   if (!container) {
@@ -37,6 +37,6 @@ export const useInjection = identifier => {
   }
 
   return container.isBound(identifier)
-    ? { view, instance: container.get(identifier) }
+    ? { instance: container.get(identifier) }
     : null;
 };

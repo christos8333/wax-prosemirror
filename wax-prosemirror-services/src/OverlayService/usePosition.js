@@ -12,7 +12,9 @@ const defaultOverlay = {
 };
 
 export default options => {
-  const { view } = useContext(WaxContext);
+  const {
+    view: { main }
+  } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
     position: "absolute",
@@ -22,21 +24,21 @@ export default options => {
   let mark = {};
 
   const updatePosition = useCallback((followCursor = true) => {
-    if (!view) return defaultOverlay;
+    if (!main) return defaultOverlay;
 
-    mark = markActive(view.state.schema.marks[options.markType])(view.state);
+    mark = markActive(main.state.schema.marks[options.markType])(main.state);
 
     if (!isObject(mark)) return defaultOverlay;
 
     const { from, to } = isObject(mark)
       ? followCursor
-        ? view.state.selection
-        : getMarkPosition(view.state.selection.$anchor, mark)
-      : view.state.selection;
+        ? main.state.selection
+        : getMarkPosition(main.state.selection.$anchor, mark)
+      : main.state.selection;
 
-    const start = view.coordsAtPos(from);
+    const start = main.coordsAtPos(from);
 
-    const box = view.dom.offsetParent.getBoundingClientRect();
+    const box = main.dom.offsetParent.getBoundingClientRect();
 
     let left = start.left - box.left;
     let top = start.top - box.top + 20;

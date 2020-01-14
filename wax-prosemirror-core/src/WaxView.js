@@ -35,7 +35,7 @@ export default props => {
 
           const state = view.state.apply(tr);
           view.updateState(state);
-          context.updateView(view);
+          context.updateView({ main: view });
 
           props.onChange(state.doc.content);
         },
@@ -53,7 +53,7 @@ export default props => {
         // }
       }
     );
-    context.updateView(view);
+    context.updateView({ main: view });
 
     if (debug) applyDevTools(view);
     if (autoFocus) view.focus();

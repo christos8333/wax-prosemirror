@@ -27,9 +27,11 @@ export default class Menu {
 
   render() {
     return () => {
-      const { view } = useContext(WaxContext);
+      const {
+        view: { main }
+      } = useContext(WaxContext);
       const Bar = useMemo(() => (
-        <MenuWrapper items={this.toolGroups} view={view || {}} />
+        <MenuWrapper items={this.toolGroups} view={main || {}} />
       ));
       return <>{Bar}</>;
     };

@@ -13,26 +13,22 @@ class Annotations extends ToolGroup {
     @inject("Strong") strong,
     @inject("Subscript") subscript,
     @inject("Superscript") superscript,
-    @inject("Underline") underline,
-    @inject("Blockquote") blockquote
+    @inject("Underline") underline
   ) {
     super();
-    code.hideOnToolbar = true;
-    strong.hideOnToolbar = true;
-    blockquote.hideOnToolbar = true;
+    smallcaps.hideOnToolbar = true;
     subscript.hideOnToolbar = true;
     superscript.hideOnToolbar = true;
     this.tools = [
-      code,
-      emphasis,
-      link,
-      smallcaps,
-      strikethrough,
       strong,
-      subscript,
-      superscript,
+      emphasis,
+      code,
+      link,
+      strikethrough,
       underline,
-      blockquote
+      smallcaps,
+      subscript,
+      superscript
     ];
   }
 }

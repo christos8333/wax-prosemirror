@@ -8,9 +8,6 @@ class AnnotationToolGroupService extends Service {
 
   register() {
     this.container.bind("Annotations").to(Annotations);
-    Object.entries(Tools).forEach(([key, value]) => {
-      this.container.bind(key).to(value);
-    });
   }
 }
 

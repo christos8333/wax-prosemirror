@@ -13,6 +13,9 @@ export {
 
 export { default as OverlayService } from "./src/OverlayService/OverlayService";
 export { default as Tool } from "./src/lib/Tools";
+export {
+  default as TrackChangeService
+} from "./src/TrackChangeService/TrackChangeService";
 
 /*
 All Elements services

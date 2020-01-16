@@ -13,6 +13,11 @@ export { default as smallcapsMark } from "./src/marks/smallcapsMark";
 export { default as sourceMark } from "./src/marks/sourceMark";
 
 /*
+LIST OF TRACK CHANGES MARKS
+*/
+export { default as trackChangesMarks } from "./src/marks/trackChangesMarks";
+
+/*
 LIST OF SUPPORTED NODES
 */
 export { default as authorNode } from "./src/nodes/authorNode";
@@ -30,3 +35,7 @@ export { default as subTitleNode } from "./src/nodes/subTitleNode";
 export { default as imageNode } from "./src/nodes/imageNode";
 export { default as headingNode } from "./src/nodes/headingNode";
 export { default as blockQuoteNode } from "./src/nodes/blockQuoteNode";
+
+/*
+LIST OF TRACK CHANGES NODES
+*/

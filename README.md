@@ -20,7 +20,38 @@ Wax depends on the following libraries.
 *  Inversify.io as service containers
 
 ## Introduction
+### Editor Props
 
+```javascript
+autoFocus // sets cursor in the begging of the document
+onChange // when the editor's surface is updated (perform an action ex. save)
+value // the actual HTML content of the editor
+fileUpload // used for uploading images (should return a promise with the actual file path)
+placeholder // a placeholder used for empty documents
+config // adds on the editor anything from new services, tools, Pmpplugins etc. Check editoria config (link)
+readonly // editor in in read-only mode
+onBlur // on focus lost
+layout // used to create your own Layout using React components
+```
+
+
+**Current Tools and Toolgroups:**
+
+
+1.  *Base Tool group*: `undo`, `redo`, `save`
+
+2.  *Inline Annotations Tool group*: `strong`, `italic`, `link`, `strikethrough`, `underline`, `subscript`, `superscript`, `small caps`
+
+3.  *Lists Tool group*: `numbered list`, `bullet list`
+
+4.  *Image Tool group*: `image`
+
+5. *Table Tool group*: `create table`, edit table dropdown that includes: `insert/delete row`, `insert/delete column` ,`merge cells`, `split cell`, `delete table`, `Toggle header column`, `Toggle header row`
+
+6. *Display Tool group*: `Title`, `Author`, `Subtitle`, `Epigraph Prose`, `Epigraph Poetry`, `Heading 1`, `Heading 2`, `Heading 3` 
+
+7. *Text Tool group*: `Paragraph`, `Paragraph Continued`, `Extract Prose`, `Extract Poetry`, `Source Note`, `Block Quote` 
+  
 <h2> wax-prosemirror-core </h2>
 
 The role of wax-core is
@@ -42,7 +73,8 @@ The role of wax-core is
 A big part of wax-core is the application layer(link), which is responsible for the application’s lifecycle by registering and booting services, merging configs, using the schema 
 and gathering all prosemirror plugins.
 For more information about Default Services and services in general visit (link)
-Holds some default prosemirror plugins that are necessary like the dropCursor, gapCursor, history and some optional  as the placeholder.
+  
+Also holds some default prosemirror plugins that are necessary like the dropCursor, gapCursor, history and some optional  as the placeholder.
 
 
 <h2> wax-prosemirror-schema </h2>
@@ -56,13 +88,13 @@ React components to support  various features of the editor from buttons to over
 
 
 <h2> wax-prosemirror-themes </h2>
-**TO DO**
+ Holds the different themes of the editor. Check the option in the CokoTheme (link)
 
 <h2> wax-prosemirror-layouts </h2>
 Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example see EditoriaLayout -link-)
 
 <h2> wax-prosemirror-utilities </h2>
- **TO DO HELPERS**
+ Various helpers methods for prosemirror...
  
   <h2> Editors </h2>
  
@@ -89,7 +121,7 @@ All service providers extend the [Service](https://gitlab.coko.foundation/wax/wa
 
 Let’s take a look  at a simple service like the StrongService. Within any of your service provider methods, you always have access to the config and schema properties and also you have access to the service container using [inversify.io](http://inversify.io/).
 
-```
+```javascript
 import { toggleMark } from "prosemirror-commands";
 import Service from "wax-prosemirror-core/src/services/Service";
 import { strongMark } from "wax-prosemirror-schema";
@@ -118,7 +150,7 @@ export default StrongService;
 This service provider defines a register method, it registers a class and in this case is the strong tool. For more information on how to use service container check inversify.io documentation. 
 
 A slightly more complicated example could be the ShortCutsService register method.
-```
+```javascript
 register() {
     const PmPlugins = this.app.PmPlugins;
     this.container
@@ -143,7 +175,7 @@ In the StrongService when the boot method is called all other services will have
 
 Another example could be the MenuSerivce  (link)
 
-```
+```javascript
 boot() {
     const { menus } = this.container.get("MenuCollection");
     const layout = this.container.get("Layout");
@@ -160,7 +192,7 @@ In Menu’s boot method we get Layout and we add components to the already defin
 
 1. Registering Services from within a Service. 
 
-```
+```javascript
 class InlineAnnotationsService extends Service {
   dependencies = [
   new CodeService(),
@@ -193,7 +225,7 @@ If you only use Service A the user attribute still exists in the schema for that
 So if we want to add the user attribute only through service B , we have “toWaxSchema” option .
 
 Service A register method.
-```
+```javascript
   CreateNode({
         paragraph: {
           group: "block",
@@ -222,7 +254,7 @@ Service A register method.
 
 Service B register method.
 
-```
+```javascript
      CreateNode({
         paragraph: {
           group: "block",
@@ -258,7 +290,7 @@ This service enables us to set a layout for the editor. Internally Wax calls the
 
 A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following 
 
-```
+```javascript
 const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
@@ -304,7 +336,7 @@ So we define a “leftSideBar” area. Area is like a “tag” for the editor s
 
 An example of using areas in editoria config.
 
-```
+```javascript
 MenuService: [
     {
       templateArea: "topBar",
@@ -342,7 +374,5 @@ Run a local version of the editor
 2) `yarn with node > 11`
   
 3) `yarn editoria` Will bring up a demo of the Editoria Ediitor
-
-4) `yarn default` Will bring up a basic version will only an editing surface accepting paragragraphs
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`

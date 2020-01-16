@@ -15,7 +15,7 @@ import trackedTransaction from "./track-changes/trackedTransaction";
 import { WaxContext } from "./ioc-react";
 
 export default props => {
-  const { readonly, onBlur, options, debug, autoFocus, WaxRender } = props;
+  const { readonly, onBlur, options, debug, autoFocus } = props;
   const editorRef = useRef();
 
   const context = useContext(WaxContext);

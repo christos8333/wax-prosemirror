@@ -76,7 +76,6 @@ class Wax extends Component {
   render() {
     const {
       autoFocus,
-      children,
       className,
       debug,
       fileUpload,
@@ -90,10 +89,7 @@ class Wax extends Component {
     } = this.props;
 
     const Layout = this.application.container.get("Layout");
-    if (layout) {
-      Layout.setLayout(layout);
-    }
-
+    if (layout) Layout.setLayout(layout);
     const WaxRender = Layout.layoutComponent;
 
     return (

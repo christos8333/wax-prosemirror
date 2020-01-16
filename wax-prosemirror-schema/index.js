@@ -1,5 +1,3 @@
-export { default as EditoriaSchema } from "./src/editoria/EditoriaSchema";
-
 /*
 LIST OF SUPPORTED MARKS
 */

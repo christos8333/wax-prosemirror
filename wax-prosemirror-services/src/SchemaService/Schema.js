@@ -1,7 +1,6 @@
 import { Schema as PmPschema } from "prosemirror-model";
 import { injectable } from "inversify";
 import DefaultSchema from "./DefaultSchema";
-import { EditoriaSchema } from "wax-prosemirror-schema";
 
 import Node from "./Node";
 import Mark from "./Mark";
@@ -85,7 +84,7 @@ export default class Schema {
     /* this is temporally until all of the packages moved to schemas */
     if (this.schema) return this.schema;
     const nodes = DefaultSchema.nodes;
-    const marks = EditoriaSchema.marks;
+    const marks = [];
 
     for (let index in this._nodes) {
       nodes[index] = this._nodes[index].toJSON();

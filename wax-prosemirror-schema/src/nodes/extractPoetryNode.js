@@ -22,7 +22,7 @@ const extractPoetry = {
   ],
   toDOM(hook, next) {
     const attrs = blockLevelToDOM(hook.node);
-    hook.value[("p", attrs, 0)];
+    hook.value = ["p", attrs, 0];
     next();
   }
 };

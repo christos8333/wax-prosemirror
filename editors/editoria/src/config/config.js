@@ -14,7 +14,9 @@ import {
   BaseToolGroupService,
   DisplayBlockLevelService,
   DisplayToolGroupService,
-  ImageToolGroupService
+  ImageToolGroupService,
+  TextBlockLevelService,
+  TextToolGroupService
 } from "wax-prosemirror-services";
 
 import invisibles, {
@@ -31,7 +33,7 @@ export default {
     },
     {
       templateArea: "leftSideBar",
-      toolGroups: ["Display"]
+      toolGroups: ["Display", "Text"]
     }
   ],
 
@@ -59,8 +61,8 @@ export default {
     new BaseToolGroupService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
-    new ImageToolGroupService()
-    // new TextBlockLevelService(),
-    // new TextToolGroupService()
+    new ImageToolGroupService(),
+    new TextBlockLevelService(),
+    new TextToolGroupService()
   ]
 };

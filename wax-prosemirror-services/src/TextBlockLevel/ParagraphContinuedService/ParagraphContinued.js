@@ -9,13 +9,13 @@ class ParagraphContinued extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.paragraph)(state, dispatch);
+      setBlockType(state.config.schema.nodes.paragraphCont)(state, dispatch);
     };
   }
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.paragraph)(state);
+      return setBlockType(state.config.schema.nodes.paragraphCont)(state);
     };
   }
 }

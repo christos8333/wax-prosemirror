@@ -1,7 +1,7 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 import Paragraph from "./Paragraph";
 
-class PsragraphService extends Service {
+class ParagraphService extends Service {
   boot() {}
 
   register() {

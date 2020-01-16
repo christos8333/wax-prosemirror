@@ -17,7 +17,6 @@ export { default as sourceMark } from "./src/marks/sourceMark";
 /*
 LIST OF SUPPORTED NODES
 */
-export { default as paragraphNode } from "./src/nodes/paragraphNode";
 export { default as authorNode } from "./src/nodes/authorNode";
 export { default as epigraphPoetryNode } from "./src/nodes/epigraphPoetryNode";
 export { default as epigraphProseNode } from "./src/nodes/epigraphProseNode";
@@ -32,3 +31,4 @@ export { default as listItemNode } from "./src/nodes/listItemNode";
 export { default as subTitleNode } from "./src/nodes/subTitleNode";
 export { default as imageNode } from "./src/nodes/imageNode";
 export { default as headingNode } from "./src/nodes/headingNode";
+export { default as blockQuoteNode } from "./src/nodes/blockQuoteNode";

@@ -1,18 +1,13 @@
 import React from "react";
 import { injectable, inject } from "inversify";
+import { LeftMenuTitle } from "wax-prosemirror-components";
 import ToolGroup from "../../lib/ToolGroup";
 
 @injectable()
 class Display extends ToolGroup {
   tools = [];
-  title = () => {
-    return (
-      <span>
-        Display
-        <hr />
-      </span>
-    );
-  };
+  title = <LeftMenuTitle title="Display" />;
+
   constructor(
     @inject("Author") author,
     @inject("Title") title,

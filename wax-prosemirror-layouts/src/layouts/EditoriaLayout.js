@@ -61,7 +61,7 @@ const MainMenuInner = styled.div`
 
 const SideMenuContainer = styled.div`
   display: flex;
-  width: 12%;
+  width: 14%;
   height: 98%;
 `;
 

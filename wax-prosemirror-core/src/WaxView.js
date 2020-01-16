@@ -5,13 +5,12 @@ import React, {
   useContext,
   Component
 } from "react";
-import ReactDOM from "react-dom";
-import applyDevTools from "prosemirror-dev-tools";
 
+import applyDevTools from "prosemirror-dev-tools";
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
-
 import "prosemirror-view/style/prosemirror.css";
+
 import trackedTransaction from "./track-changes/trackedTransaction";
 import { WaxContext } from "./ioc-react";
 
@@ -54,7 +53,7 @@ export default props => {
     if (autoFocus) view.focus();
   }, []);
 
-  const editor = <div ref={editorRef}></div>;
+  const editor = <div ref={editorRef} />;
   return props.children({
     editor
   });

@@ -1,13 +1,3 @@
-const blockLevelToDOM = node => {
-  const attrs = node.attrs.track.length
-    ? {
-        class: node.attrs.class,
-        "data-track": JSON.stringify(node.attrs.track)
-      }
-    : { class: node.attrs.class };
-  return attrs;
-};
-
 export default {
   nodes: {
     doc: {
@@ -29,8 +19,7 @@ export default {
       group: "block",
       content: "inline*",
       attrs: {
-        class: { default: "paragraph" },
-        track: { default: [] }
+        class: { default: "paragraph" }
       },
       parseDOM: [
         {
@@ -43,7 +32,7 @@ export default {
         }
       ],
       toDOM(node) {
-        const attrs = blockLevelToDOM(node);
+        const attrs = { class: node.attrs.class };
         return ["p", attrs, 0];
       }
     }

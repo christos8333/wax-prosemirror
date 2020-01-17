@@ -1,25 +1,27 @@
+import { parseTracks } from "../helpers";
 const author = {
   content: "inline*",
   group: "block",
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "author" }
+    track: { default: [] }
   },
   parseDOM: [
     {
       tag: "p.author",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: hook.dom.getAttribute("class")
+          track: parseTracks(hook.dom.dataset.track)
         });
         next();
       }
     }
   ],
   toDOM(hook, next) {
-    const attrs = { class: hook.node.attrs.class };
-    hook.value = ["p", attrs, 0];
+    Object.assign(hook.value[1], {
+      "data-track": JSON.stringify(hook.node.attrs.track)
+    });
     next();
   }
 };

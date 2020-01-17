@@ -39,3 +39,4 @@ export { default as blockQuoteNode } from "./src/nodes/blockQuoteNode";
 /*
 LIST OF TRACK CHANGES NODES
 */
+export { default as trackChangesNodes } from "./src/nodes/trackChangesNodes";

@@ -81,10 +81,8 @@ export default class Schema {
   }
 
   getSchema() {
-    /* this is temporally until all of the packages moved to schemas */
-    if (this.schema) return this.schema;
     const nodes = DefaultSchema.nodes;
-    const marks = [];
+    const marks = {};
 
     for (let index in this._nodes) {
       nodes[index] = this._nodes[index].toJSON();

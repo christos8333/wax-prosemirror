@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "prosemirror-state": "^1.2.2",
-    "prosemirror-view": "^1.13.1"
+    "prosemirror-view": "^1.13.1",
+    "wax-prosemirror-layouts": "^0.0.3",
+    "wax-prosemirror-core": "^0.0.3",
+    "wax-prosemirror-components": "^0.0.3"
   }
 }

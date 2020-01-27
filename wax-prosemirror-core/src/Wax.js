@@ -1,15 +1,15 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
+import WaxProvider from "./ioc-react";
+import Application from "./Application";
+
 import debounce from "lodash/debounce";
 import styled from "styled-components";
 
 import { DOMParser, DOMSerializer } from "prosemirror-model";
 
 import WaxView from "./WaxView";
-import defaultPlugins from "./config/defaultPlugins";
-import placeholder from "./config/plugins/placeholder";
-
-import CreateShortCuts from "./config/classes/CreateShortCuts";
-import CreateRules from "./config/classes/CreateRules";
+import defaultPlugins from "./plugins/defaultPlugins";
+import placeholder from "./plugins/placeholder";
 
 const parser = schema => {
   const parser = DOMParser.fromSchema(schema);
@@ -38,25 +38,21 @@ const LayoutWrapper = styled.div`
 `;
 
 class Wax extends Component {
-  componentWillMount() {
-    const { value, onChange, options } = this.props;
-    const { schema, plugins, keys, rules } = options;
+  application = {};
+  constructor(props) {
+    super(props);
+    this.application = Application.create(props);
+    const schema = this.application.getSchema();
+    this.application.bootServices();
+    const { value, onChange } = this.props;
+
     const WaxOnchange = onChange ? onChange : value => true;
-
-    const WaxShortCuts = keys
-      ? keys
-      : new CreateShortCuts({ schema: schema, shortCuts: {} });
-
-    const WaxRules = new CreateRules({ schema: schema, rules: rules });
 
     const editorContent = value ? value : "";
 
-    if (plugins) defaultPlugins.push(...plugins);
-
     const finalPlugins = defaultPlugins.concat([
       placeholder({ content: this.props.placeholder }),
-      WaxShortCuts,
-      WaxRules
+      ...this.application.getPlugins()
     ]);
 
     this.WaxOptions = {
@@ -80,42 +76,40 @@ class Wax extends Component {
   render() {
     const {
       autoFocus,
-      children,
-      placeholder,
-      renderLayout,
-      fileUpload,
-      readonly,
       className,
-      value,
-      onBlur,
-      layout,
-      theme,
       debug,
+      fileUpload,
+      layout,
+      onBlur,
+      placeholder,
+      readonly,
       TrackChange,
+      value,
       user
     } = this.props;
 
-    const defaultRender = ({ editor, state, dispatch, fileUpload }) => (
-      <Fragment>{editor}</Fragment>
-    );
+    const Layout = this.application.container.get("Layout");
+    if (layout) Layout.setLayout(layout);
+    const WaxRender = Layout.layoutComponent;
 
-    const WaxRender = children ? children : defaultRender;
     return (
       <LayoutWrapper className={`${className}`}>
-        <WaxView
-          autoFocus={autoFocus}
-          readonly={readonly}
-          options={this.WaxOptions}
-          placeholder={placeholder}
-          fileUpload={fileUpload}
-          onBlur={onBlur || (value => true)}
-          onChange={this.onChange || (value => true)}
-          debug={debug}
-          TrackChange={TrackChange}
-          user={user}
-        >
-          {WaxRender}
-        </WaxView>
+        <WaxProvider app={this.application}>
+          <WaxView
+            autoFocus={autoFocus}
+            readonly={readonly}
+            options={this.WaxOptions}
+            placeholder={placeholder}
+            fileUpload={fileUpload}
+            onBlur={onBlur || (value => true)}
+            onChange={this.onChange || (value => true)}
+            debug={debug}
+            TrackChange={TrackChange}
+            user={user}
+          >
+            {({ editor }) => <WaxRender editor={editor} />}
+          </WaxView>
+        </WaxProvider>
       </LayoutWrapper>
     );
   }

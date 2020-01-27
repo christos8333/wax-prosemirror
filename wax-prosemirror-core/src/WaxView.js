@@ -1,116 +1,66 @@
-import React, { Component } from "react";
-import applyDevTools from "prosemirror-dev-tools";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+  Component
+} from "react";
 
+import applyDevTools from "prosemirror-dev-tools";
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
-
-import placeholderPlugin from "./config/plugins/placeholderPlugin";
 import "prosemirror-view/style/prosemirror.css";
-import trackedTransaction from "./config/track-changes/trackedTransaction";
 
-class WaxView extends Component {
-  constructor(props) {
-    super(props);
-    const { readonly, onBlur } = this.props;
+import trackedTransaction from "./track-changes/trackedTransaction";
+import { WaxContext } from "./ioc-react";
+import FootnoteView from "./FootnoteView";
 
-    this.editorRef = React.createRef();
+export default props => {
+  const { readonly, onBlur, options, debug, autoFocus } = props;
+  const editorRef = useRef();
 
-    // Create view of Editor
-    this.view = new EditorView(null, {
-      editable: () => !readonly,
-      state: EditorState.create(props.options),
-      dispatchTransaction: this.dispatchTransaction,
-      fileUpload: this.uploadImage,
-      handleDOMEvents: {
-        blur: onBlur
-          ? view => {
-              onBlur(view.state.doc.content);
-            }
-          : null
-      }
-    });
-  }
+  const context = useContext(WaxContext);
 
-  componentDidMount() {
-    const { autoFocus, debug } = this.props;
-    this.editorRef.current.appendChild(this.view.dom);
+  useEffect(() => {
+    const view = new EditorView(
+      { mount: editorRef.current },
+      {
+        editable: () => !readonly,
+        state: EditorState.create(options),
+        dispatchTransaction: transaction => {
+          const { TrackChange } = props;
+          const tr = TrackChange
+            ? trackedTransaction(transaction, view.state, this)
+            : transaction;
 
-    if (debug) applyDevTools(this.view);
-    if (autoFocus) this.view.focus();
-  }
+          const state = view.state.apply(tr);
+          view.updateState(state);
+          context.updateView({ main: view });
 
-  uploadImage = file => {
-    const { state } = this.view;
-    const { findPlaceholder } = this;
-    const { fileUpload } = this.props;
-
-    // A fresh object to act as the ID for this upload
-    const id = {};
-
-    // Replace the selection with a placeholder
-    const { tr } = state;
-    if (!tr.selection.empty) tr.deleteSelection();
-
-    tr.setMeta(placeholderPlugin, {
-      add: { id, pos: tr.selection.from }
-    });
-
-    this.view.dispatch(tr);
-
-    fileUpload(file).then(
-      url => {
-        const pos = findPlaceholder(this.view.state, id);
-        // If the content around the placeholder has been deleted, drop
-        // the image
-        if (pos == null) {
-          return;
+          props.onChange(state.doc.content);
+        },
+        handleDOMEvents: {
+          blur: onBlur
+            ? view => {
+                onBlur(view.state.doc.content);
+              }
+            : null
         }
-        // Otherwise, insert it at the placeholder's position, and remove
-        // the placeholder
-        this.view.dispatch(
-          state.tr
-            .replaceWith(
-              pos,
-              pos,
-              this.view.state.schema.nodes.image.create({
-                src: url
-              })
-            )
-            .setMeta(placeholderPlugin, { remove: { id } })
-        );
-      },
-      () => {
-        // On failure, just clean up the placeholder
-        this.view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
+        // nodeViews: {
+        //   footnote(node, view, getPos) {
+        //     return new FootnoteView(node, view, getPos);
+        //   }
+        // }
       }
     );
-  };
+    context.updateView({ main: view });
 
-  findPlaceholder = (state, id) => {
-    const decos = placeholderPlugin.getState(state);
-    const found = decos.find(null, null, spec => spec.id === id);
-    return found.length ? found[0].from : null;
-  };
+    if (debug) applyDevTools(view);
+    if (autoFocus) view.focus();
+  }, []);
 
-  dispatchTransaction = transaction => {
-    const { TrackChange } = this.props;
-    const tr = TrackChange
-      ? trackedTransaction(transaction, this.view.state, this)
-      : transaction;
-    const state = this.view.state.apply(tr);
-    this.view.updateState(state);
-    this.props.onChange(state.doc.content);
-    this.forceUpdate();
-  };
-
-  render() {
-    const editor = <span ref={this.editorRef} />;
-    return this.props.children({
-      view: this.view,
-      fileUpload: this.uploadImage,
-      editor
-    });
-  }
-}
-
-export default WaxView;
+  const editor = <div ref={editorRef} />;
+  return props.children({
+    editor
+  });
+};

@@ -13,7 +13,11 @@ const DropdownStyled = styled(Dropdown)`
     border: none;
   }
   .Dropdown-arrow {
+    right: 25px;
     top: 21px;
+  }
+  .Dropdown-menu {
+    width: 120%;
   }
 `;
 

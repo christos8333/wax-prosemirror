@@ -13,7 +13,7 @@ const UploadImage = styled.div`
     display: none;
   }
 `;
-const ImageUpload = ({ item, view: { state }, handle, fileUpload }) => (
+const ImageUpload = ({ item, fileUpload }) => (
   <UploadImage>
     <label
       className="custom-file-upload"

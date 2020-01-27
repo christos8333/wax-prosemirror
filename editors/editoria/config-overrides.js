@@ -12,7 +12,11 @@ module.exports = function override(config, env) {
                 [require("@babel/preset-env"), { modules: false }],
                 require("@babel/preset-react")
               ],
-              plugins: [require("@babel/plugin-proposal-class-properties")]
+              plugins: [
+                ["@babel/plugin-proposal-decorators", { legacy: true }],
+                "babel-plugin-parameter-decorator",
+                ["@babel/plugin-proposal-class-properties", { loose: true }]
+              ]
             }
           },
           {

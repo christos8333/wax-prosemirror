@@ -2,7 +2,52 @@ import styled, { css } from "styled-components";
 
 /* All styles regarding ProseMirror surface and elements */
 
-export default css`{
+export default css`
+  .ProseMirror footnote {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .ProseMirror footnote::after {
+    content: counter(footnote);
+    vertical-align: super;
+    font-size: 75%;
+    counter-increment: footnote;
+  }
+
+  .ProseMirror-hideselection .footnote-tooltip *::selection {
+    background-color: transparent;
+  }
+
+  .ProseMirror-hideselection .footnote-tooltip *::-moz-selection {
+    background-color: transparent;
+  }
+
+  .ProseMirror .footnote-tooltip {
+    cursor: auto;
+    position: absolute;
+    left: -30px;
+    top: calc(100% + 10px);
+    background: silver;
+    padding: 3px;
+    border-radius: 2px;
+    width: 500px;
+  }
+
+  .ProseMirror .footnote-tooltip::before {
+    border: 5px solid silver;
+    border-top-width: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: -5px;
+    left: 27px;
+    content: " ";
+    height: 0;
+    width: 0;
+  }
+
   .ProseMirror {
     -moz-box-shadow: 0 0 3px #ccc;
     -webkit-box-shadow: 0 0 3px #ccc;

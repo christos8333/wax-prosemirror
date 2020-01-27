@@ -18,9 +18,30 @@ Wax depends on the following libraries.
 
 * Inversify.io as service containers
 
+## Get up and running
+
+Run a local version of the editor
+
+1.  `git@gitlab.coko.foundation:wax/wax-prosemirror.git`
+
+2.  `yarn with node > 11`
+
+3.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
+
+Scripts: `yarn` , `yarn clean`, `yarn reset`
+
+
 ## Introduction
 
-### Editor Props
+### Editor Mount and Props 
+
+Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. As we are prioritizing on the configuration of the editor and having most features working up to 
+a good extend with minimal work done on UI , expect features to not cover all uses cases/or not work 100% as expected.
+
+Check editoria [editor](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/package.json)
+and editoria's [configuration file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax.
+
+All available editor properties
 
 ```javascript
 autoFocus; // sets cursor in the begging of the document
@@ -28,7 +49,8 @@ onChange; // when the editor's surface is updated (perform an action ex. save)
 value; // the actual HTML content of the editor
 fileUpload; // used for uploading images (should return a promise with the actual file path)
 placeholder; // a placeholder used for empty documents
-config; // adds on the editor anything from new services, tools, Pmpplugins etc. Check editoria config (link)
+config; // adds on the editor anything from new services, tools, Pmpplugins etc. Check [editoria config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js)
+TrackChange; // Enable track changes
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
@@ -56,7 +78,7 @@ The role of wax-core is
 
 * Mount a prosemirror instance
 
-* Initiate default services (link)
+* Initiate default services ([link](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js))
 
   1.  LayoutService
 
@@ -68,26 +90,25 @@ The role of wax-core is
 
   5.  ShortCutsService
 
-A big part of wax-core is the application layer(link), which is responsible for the application’s lifecycle by registering and booting services, merging configs, using the schema
+A big part of wax-core is the [application layer](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/Application.js), which is responsible for the application’s lifecycle by registering and booting services, merging configs, using the schema
 and gathering all prosemirror plugins.
-For more information about Default Services and services in general visit (link)
 
 Also holds some default prosemirror plugins that are necessary like the dropCursor, gapCursor, history and some optional as the placeholder.
 
 <h2> wax-prosemirror-schema </h2>
 
 Holds all the nodes and marks currently supported by Wax. You can either have a node/mark in “Wax node/mark structure” or a default prosemirror node/mark.
-For more information on how a Wax node/mark is different check the SchemaService(link)
+For more information on how a Wax node/mark is different check the [SchemaService](#schemaservice)
 
 <h2> wax-prosemirror-components </h2>
 
 React components to support various features of the editor from buttons to overlays to comment discussions etc. right now really basic (link)
 
 <h2> wax-prosemirror-themes </h2>
- Holds the different themes of the editor. Check the option in the CokoTheme (link)
+ Holds the different themes of the editor. Check the options in the [CokoTheme](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-themes/src/coko-theme)
 
 <h2> wax-prosemirror-layouts </h2>
-Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example see EditoriaLayout -link-)
+Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example check [EditoriaLayout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js))
 
 <h2> wax-prosemirror-utilities </h2>
  Various helpers methods for prosemirror...
@@ -101,7 +122,7 @@ Holds different layouts of the editor. Through the layout service you can config
 
 But, what do we mean by "bootstrapped"? In general, we mean registering things, including registering service container bindings and event listeners. Service providers are the central place to configure your application.
 
-If you open [editoria's config file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/wax-plugins/editors/editoria/src/config/config.js),
+If you open [editoria's config file](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/editors/editoria/src/config/config.js),
 you will see the config file where you can configure the extra services (apart from those Wax will load on init) of your editor.
 These are all of the service provider classes that will be loaded for your application.
 
@@ -109,7 +130,7 @@ In the following overview we will see how to write our own service providers and
 
 <h3>Writing Service Providers</h2>
 
-All service providers extend the [Service](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/wax-plugins/wax-prosemirror-core/src/services/Service.js) class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container.
+All service providers extend the [Service](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-core/src/services/Service.js) class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container.
 
 <h3>The Register Method</h3>
 
@@ -356,14 +377,3 @@ Lastly Layout has a core method which is called ComponentPlugin. Is used in orde
 
 Is used for adding menus to the editor. **TO DO How to create a group/tool and add it to the menu.**
 
-## Get up and running
-
-Run a local version of the editor
-
-1.  `git@gitlab.coko.foundation:wax/wax-prosemirror.git`
-
-2.  `yarn with node > 11`
-
-3.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
-
-Scripts: `yarn` , `yarn clean`, `yarn reset`

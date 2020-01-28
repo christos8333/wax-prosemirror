@@ -1,27 +1,24 @@
-import { parseTracks, blockLevelToDOM } from "./helpers";
 const epigraphPoetry = {
   content: "inline*",
   group: "block",
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "epigraph-poetry" },
-    track: { default: [] }
+    class: { default: "epigraph-poetry" }
   },
   parseDOM: [
     {
       tag: "p.epigraph-poetry",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: hook.dom.getAttribute("class"),
-          track: parseTracks(hook.dom.dataset.track)
+          class: hook.dom.getAttribute("class")
         });
         next();
       }
     }
   ],
   toDOM(hook, next) {
-    const attrs = blockLevelToDOM(hook.node);
+    const attrs = { class: hook.node.attrs.class };
     hook.value = ["p", attrs, 0];
     next();
   }

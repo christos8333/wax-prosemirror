@@ -10,14 +10,6 @@ This application is being developed by the [Coko Foundation](https://coko.founda
 
 Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-Wax depends on the following libraries.
-
-* React for the view(ui)
-
-* Styled-components for theming and styling.
-
-* Inversify.io as service containers
-
 ## Get up and running
 
 Run a local version of the editor
@@ -32,15 +24,24 @@ Scripts: `yarn` , `yarn clean`, `yarn reset`
 
 
 ## Introduction
+Wax depends on the following libraries.
 
-### Editor Mount and Props 
+* React for the view(ui)
 
+* Styled-components for theming and styling.
+
+* Inversify.io as service containers
+
+
+### Assemble your own Editor
+ 
 Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. As we are prioritizing on the configuration of the editor and having most features working up to 
 a good extend with minimal work done on UI , expect features to not cover all uses cases/or not work 100% as expected.
 
 Check editoria [editor](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/package.json)
-and editoria's [configuration file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax.
+and editoria's [configuration file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).
 
+### Editor Properties
 All available editor properties
 
 ```javascript
@@ -72,6 +73,8 @@ layout; // used to create your own Layout using React components
 
 7.  _Text Tool group_: `Paragraph`, `Paragraph Continued`, `Extract Prose`, `Extract Poetry`, `Source Note`, `Block Quote`
 
+8.  _Notes Tool group_: `notes` (currently under development)
+
 <h2> wax-prosemirror-core </h2>
 
 The role of wax-core is
@@ -102,7 +105,7 @@ For more information on how a Wax node/mark is different check the [SchemaServic
 
 <h2> wax-prosemirror-components </h2>
 
-React components to support various features of the editor from buttons to overlays to comment discussions etc. right now really basic (link)
+React components to support various features of the editor from buttons to overlays to comment discussions etc. Right now is really basic as the focus is not yet on UI.
 
 <h2> wax-prosemirror-themes </h2>
  Holds the different themes of the editor. Check the options in the [CokoTheme](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-themes/src/coko-theme)
@@ -111,7 +114,7 @@ React components to support various features of the editor from buttons to overl
 Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example check [EditoriaLayout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js))
 
 <h2> wax-prosemirror-utilities </h2>
- Various helpers methods for prosemirror...
+ Various helpers methods needed throughout Wax to support the funcionality needed.
 
   <h2> Editors </h2>
 
@@ -367,13 +370,17 @@ Lastly Layout has a core method which is called ComponentPlugin. Is used in orde
 
 ### ShortCuts Service
 
-**TO DO**
+Another Core Service of Wax for registering shortcuts within a service. Check as an example , how it is used on Strong [Service](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations/StrongService/StrongService.js).
 
 ### Rules Service
 
-**TO DO**
+Core Service of Wax for registering prosemirror rules. Check editoria [config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js) or it can be used 
+from within any service similar to Short Cuts as an `addRule` method is available.
 
 ### Menu Service
 
 Is used for adding menus to the editor. **TO DO How to create a group/tool and add it to the menu.**
+
+## Other Stuff
+1. How to create overlays
 

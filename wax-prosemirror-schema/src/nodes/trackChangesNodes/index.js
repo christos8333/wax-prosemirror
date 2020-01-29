@@ -22,10 +22,10 @@ export default {
   paragraphCont: paragraphContTrackNode,
   extractProse: extractProseTrackNode,
   extractPoetry: extractPoetryTrackNode,
-  sourceNote: sourceNoteTrackNode
-  // heading: headingTrackNode,
+  orderedlist: orderedListTrackNode,
+  sourceNote: sourceNoteTrackNode,
+  heading: headingTrackNode
   // bulletlist: bulletListTrackNode,
-  // orderedlist: orderedListTrackNode,
   // list_item: listItemTrackNode,
   // image: imageTrackNode
 };

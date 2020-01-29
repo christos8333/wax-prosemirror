@@ -1,8 +1,6 @@
-import { parseTracks } from "./helpers";
 const heading = {
   attrs: {
-    level: { default: 1 },
-    track: { default: [] }
+    level: { default: 1 }
   },
   content: "inline*",
   group: "block",
@@ -10,40 +8,19 @@ const heading = {
   parseDOM: [
     {
       tag: "h1",
-      attrs: { level: 1 },
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          track: parseTracks(hook.dom.dataset.track)
-        });
-        next();
-      }
+      attrs: { level: 1 }
     },
     {
       tag: "h2",
-      attrs: { level: 2 },
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          track: parseTracks(hook.dom.dataset.track)
-        });
-        next();
-      }
+      attrs: { level: 2 }
     },
     {
       tag: "h3",
-      attrs: { level: 3 },
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          track: parseTracks(hook.dom.dataset.track)
-        });
-        next();
-      }
+      attrs: { level: 3 }
     }
   ],
   toDOM(hook, next) {
     const attrs = {};
-    if (hook.node.attrs.track.length) {
-      attrs["data-track"] = JSON.stringify(hook.node.attrs.track);
-    }
     hook.value = [`h${hook.node.attrs.level}`, attrs, 0];
     next();
   }

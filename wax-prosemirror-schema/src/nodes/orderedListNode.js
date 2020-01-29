@@ -1,9 +1,10 @@
+import { parseTracks } from "./helpers";
+
 const orderedlist = {
   group: "block",
   content: "list_item+",
   attrs: {
-    order: { default: 1 },
-    track: { default: [] }
+    order: { default: 1 }
   },
   parseDOM: [
     {
@@ -12,8 +13,7 @@ const orderedlist = {
         Object.assign(hook, {
           order: hook.dom.hasAttribute("start")
             ? +hook.dom.getAttribute("start")
-            : 1,
-          track: parseTracks(hook.dom.dataset.track)
+            : 1
         });
         next();
       }
@@ -23,9 +23,6 @@ const orderedlist = {
     const attrs = {};
     if (hook.node.attrs.order !== 1) {
       attrs.start = hook.node.attrs.order;
-    }
-    if (hook.node.attrs.track.length) {
-      attrs["data-track"] = JSON.stringify(hook.node.attrs.track);
     }
     hook.value = ["ol", attrs, 0];
     next();

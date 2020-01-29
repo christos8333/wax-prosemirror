@@ -15,7 +15,6 @@ class BlockQuote extends Tools {
 
   get enable() {
     return state => {
-      console.log(state);
       return wrapIn(state.config.schema.nodes.blockquote)(state);
     };
   }

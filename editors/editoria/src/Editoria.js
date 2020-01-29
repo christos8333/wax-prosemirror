@@ -51,6 +51,9 @@ const Editoria = () => (
       value="<h1> <span style='font-style:italic;'>test</span>hello <code> this is the code</code></p>"
       layout={EditoriaLayout}
       user={user}
+      onChange={content => {
+        console.log(content);
+      }}
     />
     <div id="editors" />
   </Fragment>

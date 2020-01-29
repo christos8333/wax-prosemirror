@@ -5,14 +5,15 @@ import Application from "./Application";
 import debounce from "lodash/debounce";
 import styled from "styled-components";
 
-import { DOMParser, DOMSerializer } from "prosemirror-model";
+import WaxDOMSerializer from "./WaxDOMSerializer";
+import WaxDOMParser from "./WaxDOMParser";
 
 import WaxView from "./WaxView";
 import defaultPlugins from "./plugins/defaultPlugins";
 import placeholder from "./plugins/placeholder";
 
 const parser = schema => {
-  const parser = DOMParser.fromSchema(schema);
+  const parser = WaxDOMParser.fromSchema(schema);
 
   return content => {
     const container = document.createElement("article");
@@ -22,8 +23,7 @@ const parser = schema => {
 };
 
 const serializer = schema => {
-  const serializer = DOMSerializer.fromSchema(schema);
-
+  const serializer = WaxDOMSerializer.fromSchema(schema);
   return content => {
     const container = document.createElement("article");
     container.appendChild(serializer.serializeFragment(content));

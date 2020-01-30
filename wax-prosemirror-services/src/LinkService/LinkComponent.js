@@ -12,13 +12,16 @@ const Button = styled.button``;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
   const ref = useRef(null);
+  console.log(mark);
+  useEffect(
+    () => {
+      const width = ref.current ? ref.current.offsetWidth : 0;
+      const left = Math.abs(position.left - width / 2);
 
-  useEffect(() => {
-    const width = ref.current ? ref.current.offsetWidth : 0;
-    const left = Math.abs(position.left - width / 2);
-
-    setPosition({ ...position, left });
-  }, [ref.current]);
+      setPosition({ ...position, left });
+    },
+    [ref.current]
+  );
 
   return mark ? (
     <LinkWrapper ref={ref}>

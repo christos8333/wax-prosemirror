@@ -44,6 +44,20 @@ export default options => {
     return markFound;
   };
 
+  // Sets Default position at the end of the annotation.
+  const calculatePosition = (main, mark) => {
+    const { from, to } = mark;
+    const WaxSurface = main.dom.offsetParent.getBoundingClientRect();
+    const start = main.coordsAtPos(from);
+    const end = main.coordsAtPos(to);
+    let left = end.left - WaxSurface.left;
+    const top = end.top - WaxSurface.top + 20;
+    return {
+      top,
+      left
+    };
+  };
+
   const updatePosition = useCallback((followCursor = true) => {
     if (!main) return defaultOverlay;
 
@@ -51,20 +65,13 @@ export default options => {
     const PMmark = main.state.schema.marks[options.markType];
     mark = findMark(main.state, PMmark);
 
-    console.log("mark", mark);
-
     if (!isObject(mark)) return defaultOverlay;
 
     const { from, to } = mark
       ? followCursor ? main.state.selection : { from, to }
       : main.state.selection;
 
-    const start = main.coordsAtPos(from);
-
-    const box = main.dom.offsetParent.getBoundingClientRect();
-
-    let left = start.left - box.left;
-    let top = start.top - box.top + 20;
+    const { left, top } = calculatePosition(main, mark);
 
     return {
       left,

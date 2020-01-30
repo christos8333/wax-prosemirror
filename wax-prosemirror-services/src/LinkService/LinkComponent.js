@@ -6,13 +6,15 @@ const LinkWrapper = styled.div`
   padding: 20px;
   border-radius: 3px;
   border: 1px solid #000;
+  background: grey;
+  z-index: 9999;
 `;
 
 const Button = styled.button``;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
   const ref = useRef(null);
-  console.log(mark);
+
   useEffect(
     () => {
       const width = ref.current ? ref.current.offsetWidth : 0;

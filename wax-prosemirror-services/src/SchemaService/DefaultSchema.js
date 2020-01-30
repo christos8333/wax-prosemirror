@@ -1,12 +1,4 @@
-const blockLevelToDOM = node => {
-  const attrs = node.attrs.track.length
-    ? {
-        class: node.attrs.class,
-        "data-track": JSON.stringify(node.attrs.track)
-      }
-    : { class: node.attrs.class };
-  return attrs;
-};
+import { SchemaHelpers } from "wax-prosemirror-utilities";
 
 export default {
   nodes: {
@@ -38,13 +30,13 @@ export default {
           getAttrs(dom) {
             return {
               class: dom.getAttribute("class"),
-              track: parseTracks(dom.dataset.track)
+              track: SchemaHelpers.parseTracks(dom.dataset.track)
             };
           }
         }
       ],
       toDOM(node) {
-        const attrs = blockLevelToDOM(node);
+        const attrs = SchemaHelpers.blockLevelToDOM(node);
         return ["p", attrs, 0];
       }
     },

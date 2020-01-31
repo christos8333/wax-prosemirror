@@ -16,10 +16,7 @@ export default class LinkTool extends Tools {
         return true;
       }
 
-      toggleMark(state.config.schema.marks.link, { href: "ld#" })(
-        state,
-        dispatch
-      );
+      toggleMark(state.config.schema.marks.link, { href: "" })(state, dispatch);
     };
   }
 

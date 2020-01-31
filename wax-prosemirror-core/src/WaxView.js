@@ -13,7 +13,6 @@ import "prosemirror-view/style/prosemirror.css";
 
 import trackedTransaction from "./track-changes/trackedTransaction";
 import { WaxContext } from "./ioc-react";
-import FootnoteView from "./FootnoteView";
 
 export default props => {
   const { readonly, onBlur, options, debug, autoFocus } = props;
@@ -46,11 +45,6 @@ export default props => {
               }
             : null
         }
-        // nodeViews: {
-        //   footnote(node, view, getPos) {
-        //     return new FootnoteView(node, view, getPos);
-        //   }
-        // }
       }
     );
     context.updateView({ main: view });

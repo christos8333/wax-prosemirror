@@ -4,13 +4,9 @@ import ToolGroup from "../../lib/ToolGroup";
 @injectable()
 class Base extends ToolGroup {
   tools = [];
-  constructor(
-    @inject("Undo") undo,
-    @inject("Redo") redo,
-    @inject("Note") note
-  ) {
+  constructor(@inject("Undo") undo, @inject("Redo") redo) {
     super();
-    this.tools = [undo, redo, note];
+    this.tools = [undo, redo];
   }
 }
 

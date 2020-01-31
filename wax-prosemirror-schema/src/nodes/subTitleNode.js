@@ -1,27 +1,24 @@
-import { parseTracks, blockLevelToDOM } from "./helpers";
 const subtitle = {
   content: "inline*",
   group: "block",
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "cst" },
-    track: { default: [] }
+    class: { default: "cst" }
   },
   parseDOM: [
     {
       tag: "p.cst",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: dom.getAttribute("class"),
-          track: parseTracks(hook.dom.dataset.track)
+          class: dom.getAttribute("class")
         });
         next();
       }
     }
   ],
   toDOM(hook, next) {
-    const attrs = blockLevelToDOM(node);
+    const attrs = { class: hook.node.attrs.class };
     hook.value = ["p", attrs, 0];
     next();
   }

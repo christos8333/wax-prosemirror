@@ -1,27 +1,24 @@
-import { parseTracks, blockLevelToDOM } from "./helpers";
 const extractPoetry = {
   content: "inline*",
   group: "block",
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "extract-poetry" },
-    track: { default: [] }
+    class: { default: "extract-poetry" }
   },
   parseDOM: [
     {
       tag: "p.extract-poetry",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: hook.dom.getAttribute("class"),
-          track: parseTracks(hook.dom.dataset.track)
+          class: hook.dom.getAttribute("class")
         });
         next();
       }
     }
   ],
   toDOM(hook, next) {
-    const attrs = blockLevelToDOM(hook.node);
+    const attrs = { class: hook.node.attrs.class };
     hook.value = ["p", attrs, 0];
     next();
   }

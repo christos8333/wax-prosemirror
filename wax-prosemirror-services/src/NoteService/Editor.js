@@ -37,7 +37,6 @@ export default ({ node, view, pos }) => {
           if (!tr.getMeta("fromOutside")) {
             let outerTr = view.state.tr,
               offsetMap = StepMap.offset(pos + 1);
-            console.log(transactions, 1111111);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
               for (let j = 0; j < steps.length; j++)
@@ -67,10 +66,8 @@ export default ({ node, view, pos }) => {
   }, []);
 
   if (context.view[pos]) {
-    console.log(1);
     let state = context.view[pos].state;
     let start = node.content.findDiffStart(state.doc.content);
-    console.log(start, node);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
       let overlap = start - Math.min(endA, endB);
@@ -90,6 +87,6 @@ export default ({ node, view, pos }) => {
     <div
       style={{ height: "100px", border: "1px solid black" }}
       ref={editorRef}
-    ></div>
+    />
   );
 };

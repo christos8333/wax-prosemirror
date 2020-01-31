@@ -19,6 +19,7 @@ export default class Application {
   registerServices() {
     let count = 0;
     while (count < this.config.get("services").length) {
+      const allServices = this.config.get("services");
       const service = this.config.get("services")[count];
       /*
         set App to every service
@@ -27,7 +28,8 @@ export default class Application {
       service.setApp(this);
 
       if (service.dependencies) {
-        this.config.pushToArray("services", service.dependencies);
+        let servicePos = count;
+        allServices.splice(servicePos + 1, 0, ...service.dependencies);
       }
 
       if (service.register) {

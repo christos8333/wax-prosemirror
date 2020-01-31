@@ -17,8 +17,9 @@ import {
   ImageToolGroupService,
   TextBlockLevelService,
   TextToolGroupService,
-  TrackChangeService,
-  NoteService
+  NoteService,
+  NoteToolGroupService,
+  TrackChangeService
 } from "wax-prosemirror-services";
 
 import invisibles, {
@@ -31,7 +32,7 @@ export default {
   MenuService: [
     {
       templateArea: "topBar",
-      toolGroups: ["Base", "Annotations", "Lists", "Images", "Tables"]
+      toolGroups: ["Base", "Annotations", "Notes", "Lists", "Images", "Tables"]
     },
     {
       templateArea: "leftSideBar",
@@ -66,7 +67,8 @@ export default {
     new ImageToolGroupService(),
     new TextBlockLevelService(),
     new TextToolGroupService(),
-    new TrackChangeService(),
-    new NoteService()
+    new NoteService(),
+    new NoteToolGroupService(),
+    new TrackChangeService()
   ]
 };

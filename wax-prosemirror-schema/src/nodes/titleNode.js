@@ -5,23 +5,21 @@ const title = {
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "title" },
-    track: { default: [] }
+    class: { default: "title" }
   },
   parseDOM: [
     {
       tag: "p.title",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: dom.getAttribute("class"),
-          track: parseTracks(hook.dom.dataset.track)
+          class: dom.getAttribute("class")
         });
         next();
       }
     }
   ],
   toDOM(hook, next) {
-    const attrs = blockLevelToDOM(hook.node);
+    const attrs = { class: hook.node.attrs.class };
     hook.value = ["p", attrs, 0];
     next();
   }

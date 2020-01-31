@@ -1,4 +1,3 @@
-import paragraphTrackNode from "./paragraphTrackNode";
 import authorTrackNode from "./authorTrackNode";
 import titleTrackNode from "./titleTrackNode";
 import subTitleTrackNode from "./subTitleTrackNode";
@@ -15,18 +14,18 @@ import listItemTrackNode from "./listItemTrackNode";
 import imageTrackNode from "./imageTrackNode";
 
 export default {
-  // paragraph: paragraphTrackNode,
-  author: authorTrackNode
-  // title: titleTrackNode,
-  //subtitle: subTitleTrackNode,
-  //epigraphProse: epigraphProseTrackNode,
-  //epigraphPoetry: epigraphPoetryTrackNode,
-  // paragraphCont: paragraphContTrackNode,
-  // extractProse: extractProseTrackNode,
-  // extractPoetry: extractPoetryTrackNode,
-  // sourceNote: sourceNoteTrackNode,
+  author: authorTrackNode,
+  title: titleTrackNode,
+  subtitle: subTitleTrackNode,
+  epigraphProse: epigraphProseTrackNode,
+  epigraphPoetry: epigraphPoetryTrackNode,
+  paragraphCont: paragraphContTrackNode,
+  extractProse: extractProseTrackNode,
+  extractPoetry: extractPoetryTrackNode,
+  orderedlist: orderedListTrackNode,
+  sourceNote: sourceNoteTrackNode,
+  heading: headingTrackNode
   // bulletlist: bulletListTrackNode,
-  // orderedlist: orderedListTrackNode,
   // list_item: listItemTrackNode,
   // image: imageTrackNode
 };

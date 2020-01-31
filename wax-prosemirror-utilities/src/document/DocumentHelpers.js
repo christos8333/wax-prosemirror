@@ -20,4 +20,4 @@ const findMark = (state, PMmark) => {
   return markFound;
 };
 
-export { findMark };
+export default { findMark };

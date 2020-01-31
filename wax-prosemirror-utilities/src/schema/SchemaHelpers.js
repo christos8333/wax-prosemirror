@@ -47,4 +47,4 @@ const blockLevelToDOM = node => {
   return attrs;
 };
 
-export { parseFormatList, parseTracks, blockLevelToDOM };
+export default { parseFormatList, parseTracks, blockLevelToDOM };

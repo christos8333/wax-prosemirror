@@ -306,7 +306,7 @@ CreateNode(
 
 If the above 2 services are registed SchemaService will merge those 2 nodes into a single prosemirror one having both attributes.
 
-LayoutService
+###LayoutService
 
 This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. (link editoria layout).
 
@@ -382,5 +382,5 @@ from within any service similar to Short Cuts as an `addRule` method is availabl
 Is used for adding menus to the editor. **TO DO How to create a group/tool and add it to the menu.**
 
 ## Other Stuff
-1. How to create overlays
+1. How to create overlays. See as an example the [link overlay](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
 

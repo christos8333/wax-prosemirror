@@ -5,19 +5,25 @@ export default class ParseRule {
   tag = null;
   style = null;
   exporter = null;
+  defaultMiddleware = (hook, next) => {
+    hook = {};
+    next();
+  };
 
   constructor({ getAttrs, tag, style }) {
     this.tag = tag;
     this.style = style;
-    if (getAttrs) {
-      this.exporter = new Middleware();
-    }
+    // if (getAttrs) {
+    this.exporter = new Middleware();
+    // }
     this.addStack(getAttrs);
   }
 
   addStack(getAttrs) {
     if (getAttrs) {
       this.exporter.use(getAttrs);
+    } else {
+      this.exporter.use(this.defaultMiddleware);
     }
   }
 

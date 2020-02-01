@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "prosemirror-schema-list": "^1.0.0",
-    "prosemirror-tables": "^0.9.5"
+    "prosemirror-schema-list": "^1.1.2",
+    "prosemirror-tables": "^1.0.0"
   }
 }

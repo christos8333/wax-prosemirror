@@ -1,4 +1,4 @@
-import { parseTracks } from "./helpers";
+import { SchemaHelpers } from "wax-prosemirror-utilities";
 
 const list_item = {
   content: "block+",
@@ -10,7 +10,7 @@ const list_item = {
       tag: "li",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          track: parseTracks(hook.dom.dataset.track)
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
         });
         next();
       }

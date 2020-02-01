@@ -38,7 +38,7 @@
   },
   "resolutions": {
     "styled-components": "4.2.0",
-    "prosemirror-model": "1.8.0"
+    "prosemirror-model": "1.9.1"
   },
   "workspaces": [
     "wax-prosemirror-core",

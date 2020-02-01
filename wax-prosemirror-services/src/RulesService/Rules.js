@@ -33,16 +33,16 @@ class Rules {
       // 1. ordered list
       wrappingInputRule(
         /^(\d+)\.\s$/,
-        this.schema.nodes.ordered_list,
+        this.schema.nodes.orderedlist,
         match => ({ order: +match[1] }),
         (match, node) => node.childCount + node.attrs.order === +match[1]
       ),
 
       // * bullet list
-      wrappingInputRule(/^\s*([-+*])\s$/, this.schema.nodes.bullet_list),
+      wrappingInputRule(/^\s*([-+*])\s$/, this.schema.nodes.bulletlist),
 
       // ``` code block
-      textblockTypeInputRule(/^```$/, this.schema.nodes.code_block),
+      // textblockTypeInputRule(/^```$/, this.schema.nodes.code_block),
 
       // # heading
       textblockTypeInputRule(

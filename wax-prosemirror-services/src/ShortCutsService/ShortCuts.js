@@ -4,6 +4,13 @@ import { undoInputRule } from "prosemirror-inputrules";
 import { undo, redo } from "prosemirror-history";
 
 import {
+  wrapInList,
+  splitListItem,
+  liftListItem,
+  sinkListItem
+} from "prosemirror-schema-list";
+
+import {
   baseKeymap,
   setBlockType,
   chainCommands,
@@ -40,7 +47,7 @@ class ShortCuts {
   }
 
   addShortCut(shortcut) {
-    this.keys = Object.assign(this.keys, shortcut);
+    Object.assign(this.keys, shortcut);
     this.createShortCuts();
   }
 
@@ -65,8 +72,13 @@ class ShortCuts {
       Escape: selectParentNode,
       "Mod-Enter": chainCommands(exitCode, this.insertBreak),
       "Shift-Enter": chainCommands(exitCode, this.insertBreak),
-      "Ctrl-Enter": chainCommands(exitCode, this.insertBreak), // mac-only?
-      "Mod-_": this.insertRule
+      "Ctrl-Enter": chainCommands(exitCode, this.insertBreak),
+      "Mod-_": this.insertRule,
+      "Mod-[": liftListItem(this.schema.nodes.list_item),
+      "Mod-]": sinkListItem(this.schema.nodes.list_item),
+      Enter: splitListItem(this.schema.nodes.list_item),
+      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bullet_list),
+      "Shift-Ctrl-9": wrapInList(this.schema.nodes.ordered_list)
     };
   }
 

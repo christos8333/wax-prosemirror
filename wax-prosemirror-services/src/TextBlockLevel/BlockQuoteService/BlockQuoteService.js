@@ -8,12 +8,9 @@ class BlockQuoteService extends Service {
   register() {
     this.container.bind("BlockQuote").to(BlockQuote);
     const createNode = this.container.get("CreateNode");
-    createNode(
-      {
-        blockquote: blockQuoteNode
-      },
-      { toWaxSchema: true }
-    );
+    createNode({
+      blockquote: blockQuoteNode
+    });
   }
 }
 

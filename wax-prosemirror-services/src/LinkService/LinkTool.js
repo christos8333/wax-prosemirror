@@ -15,8 +15,16 @@ export default class LinkTool extends Tools {
         toggleMark(state.config.schema.marks.link)(state, dispatch);
         return true;
       }
-
-      toggleMark(state.config.schema.marks.link, { href: "" })(state, dispatch);
+      const { selection: { $from, $to } } = state;
+      dispatch(
+        state.tr
+          .setMeta("addToHistory", false)
+          .addMark(
+            $from.pos,
+            $to.pos,
+            state.schema.marks.link.create({ href: "" })
+          )
+      );
     };
   }
 

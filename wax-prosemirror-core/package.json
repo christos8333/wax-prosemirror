@@ -27,7 +27,6 @@
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "reflect-metadata": "^0.1.13",
-    "wax-prosemirror-services": "^0.0.3",
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {

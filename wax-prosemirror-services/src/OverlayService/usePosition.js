@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import { isObject } from "lodash";
-import { markActive, getMarkPosition } from "../lib/Utils";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 

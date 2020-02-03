@@ -1,5 +1,5 @@
 import Tools from "../../lib/Tools";
-import { createTable, canInsert } from "../../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 
@@ -10,13 +10,13 @@ export default class Table extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      return createTable(state, dispatch);
+      return Commands.createTable(state, dispatch);
     };
   }
 
   get enable() {
     return state => {
-      return canInsert(state.config.schema.nodes.table)(state);
+      return Commands.canInsert(state.config.schema.nodes.table)(state);
     };
   }
 }

@@ -2,7 +2,7 @@ import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 import { wrapInList } from "prosemirror-schema-list";
-import { blockActive } from "../../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 export default class BulletList extends Tools {
@@ -23,7 +23,7 @@ export default class BulletList extends Tools {
 
   get active() {
     return state => {
-      return blockActive(state.config.schema.nodes.bulletlist)(state);
+      return Commands.blockActive(state.config.schema.nodes.bulletlist)(state);
     };
   }
 }

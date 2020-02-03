@@ -30,29 +30,6 @@ const canInsert = type => state => {
   return false;
 };
 
-const getMarkPosition = ($start, mark) => {
-  let startIndex = $start.index(),
-    endIndex = $start.indexAfter();
-  while (
-    startIndex > 0 &&
-    mark.isInSet($start.parent.child(startIndex - 1).marks)
-  )
-    startIndex--;
-  while (
-    endIndex < $start.parent.childCount &&
-    mark.isInSet($start.parent.child(endIndex).marks)
-  )
-    endIndex++;
-  let startPos = $start.start(),
-    endPos = startPos;
-  for (let i = 0; i < endIndex; i++) {
-    let size = $start.parent.child(i).nodeSize;
-    if (i < startIndex) startPos += size;
-    endPos += size;
-  }
-  return { from: startPos, to: endPos };
-};
-
 const createTable = (state, dispatch) => {
   let rowCount = window && window.prompt("How many rows?", 2);
   let colCount = window && window.prompt("How many columns?", 2);
@@ -71,4 +48,13 @@ const createTable = (state, dispatch) => {
   dispatch(state.tr.replaceSelectionWith(table));
 };
 
-export { markActive, blockActive, canInsert, createTable, getMarkPosition };
+const createLink = (state, dispatch) => {
+  const { selection: { $from, $to } } = state;
+  dispatch(
+    state.tr
+      .setMeta("addToHistory", false)
+      .addMark($from.pos, $to.pos, state.schema.marks.link.create({ href: "" }))
+  );
+};
+
+export default { markActive, blockActive, canInsert, createTable, createLink };

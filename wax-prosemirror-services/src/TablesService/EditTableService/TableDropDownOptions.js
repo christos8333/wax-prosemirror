@@ -4,7 +4,7 @@ import { injectable } from "inversify";
 import { isEmpty } from "lodash";
 import { TableDropDown } from "wax-prosemirror-components";
 import { addColumnBefore } from "prosemirror-tables";
-import { canInsert } from "../../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 import Tools from "../../lib/Tools";
 
 @injectable()
@@ -20,7 +20,7 @@ export default class TableDropDownOptions extends Tools {
 
   get enable() {
     return state => {
-      return canInsert(state.config.schema.nodes.table)(state);
+      return Commands.canInsert(state.config.schema.nodes.table)(state);
     };
   }
 

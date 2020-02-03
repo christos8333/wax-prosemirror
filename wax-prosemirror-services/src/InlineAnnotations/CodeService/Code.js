@@ -1,5 +1,5 @@
 import { toggleMark } from "prosemirror-commands";
-import { markActive } from "../../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
@@ -17,7 +17,7 @@ export default class Code extends Tools {
 
   get active() {
     return state => {
-      return markActive(state.config.schema.marks.code)(state);
+      return Commands.markActive(state.config.schema.marks.code)(state);
     };
   }
 }

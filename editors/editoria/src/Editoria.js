@@ -48,7 +48,6 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      TrackChange
       value={
         '<p class="paragraph">this is some text <a href="www.sss.ff" >some</a> more</p>'
       }

@@ -49,7 +49,8 @@ const trackedTransaction = (tr, state, currentUser) => {
       return;
     }
 
-    if (step instanceof ReplaceStep) {
+    //if (step instanceof ReplaceStep) {
+    if (step.jsonID === "replace") {
       const newStep = approved
         ? step
         : step.slice.size && !cellDeleteTr

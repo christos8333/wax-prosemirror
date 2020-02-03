@@ -5,8 +5,7 @@ import { StepMap } from "prosemirror-transform";
 import { keymap } from "prosemirror-keymap";
 import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
-
-import { markActive } from "../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 
 export default ({ node, view, pos }) => {
   const editorRef = useRef();
@@ -23,9 +22,9 @@ export default ({ node, view, pos }) => {
               "Mod-z": () => undo(view.state, view.dispatch),
               "Mod-y": () => redo(view.state, view.dispatch),
               "Mod-u": () =>
-                markActive(noteView.state.config.schema.marks.underline)(
-                  noteView.state
-                )
+                Commands.markActive(
+                  noteView.state.config.schema.marks.underline
+                )(noteView.state)
             })
           ]
         }),

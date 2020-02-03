@@ -10,6 +10,8 @@ This application is being developed by the [Coko Foundation](https://coko.founda
 
 Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
+- **If you have a general query about Wax**, or want to discuss anything with us, come and [chat to us in our Mattermost channel](https://mattermost.coko.foundation/coko/channels/town-square).
+
 ## Get up and running
 
 Run a local version of the editor
@@ -109,7 +111,7 @@ For more information on how a Wax node/mark is different check the [SchemaServic
 React components to support various features of the editor from buttons to overlays to comment discussions etc. Right now is really basic as the focus is not yet on UI.
 
 <h2> wax-prosemirror-themes </h2>
- Holds the different themes of the editor. Check the options in the [CokoTheme](https://github.com/christos8333/wax-prosemirror/tree/master/wax-prosemirror-themes/src/coko-theme)
+ Holds the different themes of the editor. Check the options in the [CokoTheme](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-themes/src/coko-theme)
 
 <h2> wax-prosemirror-layouts </h2>
 Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example check [EditoriaLayout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js))
@@ -126,7 +128,7 @@ Editors are private pakages inside the monorepo, for development/demo purposes.
 
 But, what do we mean by "bootstrapped"? In general, we mean registering things, including registering service container bindings and event listeners. Service providers are the central place to configure your application.
 
-If you open [editoria's config file](https://github.com/christos8333/wax-prosemirror/tree/master/editors/editoria/src/config/config.js),
+If you open [editoria's config file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js),
 you will see the config file where you can configure the extra services (apart from those Wax will load on init) of your editor.
 These are all of the service provider classes that will be loaded for your application.
 
@@ -134,7 +136,7 @@ In the following overview we will see how to write our own service providers and
 
 <h3>Writing Service Providers</h2>
 
-All service providers extend the [Service](https://github.com/christos8333/wax-prosemirror/tree/master/wax-prosemirror-core/src/services/Service.js) class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container.
+All service providers extend the [Service](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-core/src/services/Service.js) class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container.
 
 <h3>The Register Method</h3>
 
@@ -384,5 +386,5 @@ Is used for adding menus to the editor. **TO DO How to create a group/tool and a
 
 ## Other Stuff
 
-1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/tree/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
-2.  How to create toolgroups Check as an example Inline Annotations ([here](https://github.com/christos8333/wax-prosemirror/tree/master/wax-prosemirror-services/src/InlineAnnotations) and [here](https://github.com/christos8333/wax-prosemirror/tree/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService))
+1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
+2.  How to create toolgroups Check as an example Inline Annotations ([here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService))

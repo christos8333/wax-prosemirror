@@ -30,7 +30,8 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       const width = ref.current ? ref.current.offsetWidth : 0;
       const left = Math.abs(position.left - width / 2);
 
-      setPosition({ ...position, left });
+      //TODO Overwrite default position in order to position LinkOverlay
+      // setPosition({ ...position, left });
       setLinkText();
       removeMarkIfEmptyHref();
     },

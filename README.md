@@ -81,7 +81,7 @@ The role of wax-core is
 
 * Mount a prosemirror instance
 
-* Initiate default services ([link](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js))
+* Initiate default [services](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js) 
 
   1.  LayoutService
 
@@ -226,7 +226,7 @@ class InlineAnnotationsService extends Service {
 ```
 
 2.  Within any of your service provider methods, you always have access to the app, config properties .
-3.  Dependant functionality between services. An example of the dependency between two services is linkService(link) and OverLayService (links) where OverLayService registers a function
+3.  Dependant functionality between services. An example of the dependency between two services are [linkService](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService/LinkService.js) and [OverLayService](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/OverlayService/OverlayService.js) where OverLayService registers a function
     that adds a component to the overlay area and LinkService calls OverLay and adds it’s component. ShortCut Service could be another example where each of the services like Strong, paragraph etc can call it to add a shortcut.
 
 ## Core Services
@@ -306,7 +306,7 @@ CreateNode(
 
 If the above 2 services are registed SchemaService will merge those 2 nodes into a single prosemirror one having both attributes.
 
-###LayoutService
+### LayoutService
 
 This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. (link editoria layout).
 
@@ -382,5 +382,5 @@ from within any service similar to Short Cuts as an `addRule` method is availabl
 Is used for adding menus to the editor. **TO DO How to create a group/tool and add it to the menu.**
 
 ## Other Stuff
-1. How to create overlays. See as an example the [link overlay](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
-
+1. How to create overlays. Check as an example the [link overlay](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
+2. How to create toolgroups Check as an example Inline Annotations ([here](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-services/src/InlineAnnotations) and [here](https://gitlab.coko.foundation/wax/wax-prosemirror/tree/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService))

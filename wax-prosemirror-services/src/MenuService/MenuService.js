@@ -3,7 +3,7 @@ import Menu from "./Menu";
 import MenuCollection from "./MenuCollection";
 import Service from "wax-prosemirror-core/src/services/Service";
 
-export default class MenuService extends Service {
+class MenuService extends Service {
   name = "MenuService";
   boot() {
     const { menus } = this.container.get("MenuCollection");
@@ -45,7 +45,9 @@ export default class MenuService extends Service {
             tools.push(tl);
           } catch (error) {
             throw Error(
-              `Could not load Service ${tool.name}. Please configure service through config`
+              `Could not load Service ${
+                tool.name
+              }. Please configure service through config`
             );
           }
         });
@@ -54,3 +56,4 @@ export default class MenuService extends Service {
     });
   }
 }
+export default MenuService;

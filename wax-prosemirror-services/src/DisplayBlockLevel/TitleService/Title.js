@@ -1,7 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
 import { setBlockType } from "prosemirror-commands";
-import { blockActive } from "../../lib/Utils";
 
 @injectable()
 export default class Title extends Tools {

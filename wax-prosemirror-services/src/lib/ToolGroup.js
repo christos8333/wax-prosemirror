@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { injectable } from "inversify";
 import { isFunction } from "lodash";
+
 @injectable()
 export default class ToolGroup {
   _config = {};

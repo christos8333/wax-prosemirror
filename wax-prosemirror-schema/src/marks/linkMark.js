@@ -9,14 +9,15 @@ const link = {
   parseDOM: [
     {
       tag: "a[href]",
-      getAttrs: dom => {
-        const href = dom.getAttribute("href");
+      getAttrs(hook, next) {
+        const href = hook.dom.getAttribute("href");
         const target = href && href.indexOf("#") === 0 ? "" : "blank";
-        return {
-          href: dom.getAttribute("href"),
-          title: dom.getAttribute("title"),
+        Object.assign(hook, {
+          href: hook.dom.getAttribute("href"),
+          title: hook.dom.getAttribute("title"),
           target
-        };
+        });
+        next();
       }
     }
   ],

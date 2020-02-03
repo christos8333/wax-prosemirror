@@ -4,7 +4,7 @@ import { isEmpty } from "lodash";
 import { injectable } from "inversify";
 import { icons, ImageUpload } from "wax-prosemirror-components";
 import Tools from "../lib/Tools";
-import { canInsert } from "../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 import fileUpload from "./fileUpload";
 
 @injectable()
@@ -18,7 +18,7 @@ export default class Image extends Tools {
 
   get enable() {
     return state => {
-      return canInsert(state.config.schema.nodes.image)(state);
+      return Commands.canInsert(state.config.schema.nodes.image)(state);
     };
   }
 

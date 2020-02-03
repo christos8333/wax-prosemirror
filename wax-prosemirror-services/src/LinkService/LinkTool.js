@@ -1,5 +1,5 @@
 import { toggleMark } from "prosemirror-commands";
-import { markActive, promptForURL } from "../lib/Utils";
+import { Commands } from "wax-prosemirror-utilities";
 import Tools from "../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
@@ -11,12 +11,11 @@ export default class LinkTool extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      if (markActive(state.config.schema.marks.link)(state)) {
+      if (Commands.markActive(state.config.schema.marks.link)(state)) {
         toggleMark(state.config.schema.marks.link)(state, dispatch);
         return true;
       }
-
-      toggleMark(state.config.schema.marks.link, { href: "" })(state, dispatch);
+      Commands.createLink(state, dispatch);
     };
   }
 
@@ -26,7 +25,7 @@ export default class LinkTool extends Tools {
 
   get active() {
     return state => {
-      return markActive(state.config.schema.marks.link)(state);
+      return Commands.markActive(state.config.schema.marks.link)(state);
     };
   }
 }

@@ -1,5 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
+import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 // import { Button } from "wax-prosemirror-components";
 
 const LinkWrapper = styled.div`
@@ -13,7 +15,15 @@ const LinkWrapper = styled.div`
 const Button = styled.button``;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
-  const ref = useRef(null);
+  const href = mark ? mark.attrs.href : null,
+    linkMark = mark ? mark : null,
+    { view: { main } } = useContext(WaxContext),
+    { state, dispatch } = main,
+    ref = useRef(null),
+    linkInput = useRef(null),
+    [addButtonText, setButtonText] = useState("Create"),
+    [lastLinkMark, setLLastLinkMark] = useState(linkMark),
+    [linkHref, setLinkHref] = useState(href);
 
   useEffect(
     () => {
@@ -21,15 +31,84 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       const left = Math.abs(position.left - width / 2);
 
       setPosition({ ...position, left });
+      setLinkText();
+      removeMarkIfEmptyHref();
     },
-    [ref.current]
+    [ref.current, href]
   );
+
+  const addLink = () => {
+    const href = linkHref;
+    dispatch(
+      state.tr
+        .removeMark(mark.from, mark.to, state.schema.marks.link)
+        .addMark(mark.from, mark.to, state.schema.marks.link.create({ href }))
+    );
+    main.focus();
+  };
+
+  const removeLink = () => {
+    dispatch(state.tr.removeMark(mark.from, mark.to, state.schema.marks.link));
+    main.focus();
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === "Enter" || event.which === 13) {
+      addLink();
+    }
+  };
+
+  const updateLink = () => {
+    const { current: { value } } = linkInput;
+    setLinkHref(value);
+  };
+
+  const setLinkText = () => {
+    if (mark && mark.attrs.href !== "") {
+      setButtonText("Update");
+      setLinkHref(mark.attrs.href);
+    } else {
+      setButtonText("Create");
+      setLinkHref("");
+      if (linkInput.current) linkInput.current.focus();
+    }
+  };
+
+  const removeMarkIfEmptyHref = () => {
+    const { selection: { $from, $to } } = state;
+    const PMLinkMark = state.schema.marks["link"];
+    const actualMark = DocumentHelpers.findMark(state, PMLinkMark);
+    setLLastLinkMark(actualMark);
+
+    if (
+      lastLinkMark.attrs.href === "" &&
+      ($from.pos < lastLinkMark.from || $to.pos > lastLinkMark.to)
+    ) {
+      dispatch(
+        state.tr
+          .setMeta("addToHistory", false)
+          .removeMark(
+            lastLinkMark.from,
+            lastLinkMark.to,
+            state.schema.marks.link
+          )
+      );
+    }
+  };
 
   return mark ? (
     <LinkWrapper ref={ref}>
-      <input type="text" onChange={() => {}} value={mark.attrs.href} />
-      <Button primary>Change</Button>
-      <Button>Cancel</Button>
+      <input
+        type="text"
+        ref={linkInput}
+        onChange={updateLink}
+        onKeyPress={handleKeyDown}
+        value={linkHref}
+      />
+      <Button primary onClick={addLink}>
+        {addButtonText}
+      </Button>
+      <Button onClick={removeLink}>Remove</Button>
     </LinkWrapper>
   ) : null;
 };

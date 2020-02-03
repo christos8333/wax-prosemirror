@@ -13,7 +13,7 @@ import markDeletion from "./markDeletion";
 import markInsertion from "./markInsertion";
 import markWrapping from "./markWrapping";
 
-const trackedTransaction = (tr, state, editor) => {
+const trackedTransaction = (tr, state, currentUser) => {
   if (
     !tr.steps.length ||
     (tr.meta &&
@@ -25,7 +25,7 @@ const trackedTransaction = (tr, state, editor) => {
   ) {
     return tr;
   }
-  const user = editor.props.user.userId,
+  const user = currentUser.userId,
     approved = false,
     // !editor.view.state.doc.firstChild.attrs.tracked &&
     // editor.docInfo.access_rights !== "write-tracked",
@@ -34,7 +34,7 @@ const trackedTransaction = (tr, state, editor) => {
     exactDate = Date.now(),
     date10 = Math.floor(exactDate / 600000) * 10, // 10 minute interval
     date1 = Math.floor(exactDate / 60000), // 1 minute interval
-    username = editor.props.user.username,
+    username = currentUser.username,
     // We only insert content if this is not directly a tr for cell deletion. This is because tables delete rows by deleting the
     // contents of each cell and replacing it with an empty paragraph.
     cellDeleteTr =
@@ -48,7 +48,9 @@ const trackedTransaction = (tr, state, editor) => {
     if (!step) {
       return;
     }
-    if (step instanceof ReplaceStep) {
+
+    //if (step instanceof ReplaceStep) {
+    if (step.jsonID === "replace") {
       const newStep = approved
         ? step
         : step.slice.size && !cellDeleteTr
@@ -66,6 +68,7 @@ const trackedTransaction = (tr, state, editor) => {
         if (trTemp.maybeStep(newStep).failed) {
           return;
         }
+
         const mappedNewStepTo = newStep.getMap().map(newStep.to);
         markInsertion(
           trTemp,

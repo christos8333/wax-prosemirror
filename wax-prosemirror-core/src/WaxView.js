@@ -15,7 +15,7 @@ import trackedTransaction from "./track-changes/trackedTransaction";
 import { WaxContext } from "./ioc-react";
 
 export default props => {
-  const { readonly, onBlur, options, debug, autoFocus } = props;
+  const { readonly, onBlur, options, debug, autoFocus, user } = props;
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -29,7 +29,7 @@ export default props => {
         dispatchTransaction: transaction => {
           const { TrackChange } = props;
           const tr = TrackChange
-            ? trackedTransaction(transaction, view.state, this)
+            ? trackedTransaction(transaction, view.state, user)
             : transaction;
 
           const state = view.state.apply(tr);

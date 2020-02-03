@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { injectable } from "inversify";
-import { isFunction } from "lodash";
+import { ToolGroupComponent } from "wax-prosemirror-components";
 
 @injectable()
 export default class ToolGroup {
@@ -42,43 +42,15 @@ export default class ToolGroup {
   }
 
   renderTools(view) {
-    const [more, showHide] = useState(false);
-    const tools = [];
-    const rest = [];
-    this._tools.forEach(tool => {
-      if (tool.hideOnToolbar) {
-        rest.push(tool.renderTool(view));
-      } else {
-        tools.push(tool.renderTool(view));
-      }
-    });
-
-    const Title = isFunction(this.title) ? this.title : () => this.title;
-
+    const { name } = this.constructor;
     return (
-      <div key={`groupName-${this.constructor.name}`}>
-        <Title />
-        {tools}
-        {rest.length && !more ? (
-          <button onClick={() => showHide(!more)}>...</button>
-        ) : null}
-        {more && (
-          <div>
-            <button onClick={() => showHide(!more)}>...</button>
-            <div
-              style={{
-                display: "flex",
-                width: "0",
-                top: "40px",
-                position: "relative",
-                right: "100%"
-              }}
-            >
-              {rest}
-            </div>
-          </div>
-        )}
-      </div>
+      <ToolGroupComponent
+        key={`groupName-${name}`}
+        view={view}
+        tools={this._tools}
+        title={this.title}
+        name={name}
+      />
     );
   }
 }

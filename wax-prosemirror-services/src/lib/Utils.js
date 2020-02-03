@@ -53,16 +53,6 @@ const getMarkPosition = ($start, mark) => {
   return { from: startPos, to: endPos };
 };
 
-const promptForURL = () => {
-  let url = window && window.prompt("Enter the URL", "https://");
-
-  if (url && !/^https?:\/\//i.test(url)) {
-    url = "http://" + url;
-  }
-
-  return url;
-};
-
 const createTable = (state, dispatch) => {
   let rowCount = window && window.prompt("How many rows?", 2);
   let colCount = window && window.prompt("How many columns?", 2);
@@ -81,11 +71,4 @@ const createTable = (state, dispatch) => {
   dispatch(state.tr.replaceSelectionWith(table));
 };
 
-export {
-  markActive,
-  blockActive,
-  canInsert,
-  promptForURL,
-  createTable,
-  getMarkPosition
-};
+export { markActive, blockActive, canInsert, createTable, getMarkPosition };

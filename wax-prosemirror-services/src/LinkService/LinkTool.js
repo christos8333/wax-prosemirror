@@ -1,5 +1,5 @@
 import { toggleMark } from "prosemirror-commands";
-import { markActive, promptForURL } from "../lib/Utils";
+import { markActive } from "../lib/Utils";
 import Tools from "../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";

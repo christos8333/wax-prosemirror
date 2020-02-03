@@ -52,7 +52,6 @@ value; // the actual HTML content of the editor
 fileUpload; // used for uploading images (should return a promise with the actual file path)
 placeholder; // a placeholder used for empty documents
 config; // adds on the editor anything from new services, tools, Pmpplugins etc. Check [editoria config](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js)
-TrackChange; // Enable track changes
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
@@ -381,8 +380,7 @@ from within any service similar to Short Cuts as an `addRule` method is availabl
 
 ### Menu Service
 
-Is used for adding menus to the editor. **TO DO How to create a group/tool and add it to the menu.**
-
+Is used for adding menus to the editor.
 ## Other Stuff
 
 1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.

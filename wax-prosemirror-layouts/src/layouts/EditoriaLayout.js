@@ -29,7 +29,7 @@ const WaxSurfaceScroll = styled.div`
   top: 0;
   box-sizing: border-box;
   margin-left: 14%;
-  padding: 2px;
+  padding: 0 2px 2px 2px;
   height: 100%;
   ${EditorElements};
 `;
@@ -64,7 +64,6 @@ const SideMenuContainer = styled.div`
   display: flex;
   width: 14%;
   height: 98%;
-  border-right: 2px solid #ecedf1;
 `;
 
 const SideMenuInner = styled.div`

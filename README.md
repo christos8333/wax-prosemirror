@@ -22,8 +22,8 @@ Run a local version of the editor
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 
-
 ## Introduction
+
 Wax depends on the following libraries.
 
 * React for the view(ui)
@@ -32,16 +32,16 @@ Wax depends on the following libraries.
 
 * Inversify.io as service containers
 
-
 ### Assemble your own Editor
- 
-Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. As we are prioritizing on the configuration of the editor and having most features working up to 
+
+Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. As we are prioritizing on the configuration of the editor and having most features working up to
 a good extend with minimal work done on UI , expect features to not cover all uses cases/or not work 100% as expected.
 
 Check editoria [editor](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/package.json)
 and editoria's [configuration file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).
 
 ### Editor Properties
+
 All available editor properties
 
 ```javascript
@@ -118,7 +118,7 @@ Holds different layouts of the editor. Through the layout service you can config
 
   <h2> Editors </h2>
 
- Editors are private pakages inside the monorepo, for development/demo purposes.
+Editors are private pakages inside the monorepo, for development/demo purposes.
 
  <h2> wax-prosemirror-services</h2>
  Service providers are the central place of Wax bootstrapping. Your own services, as well as all of Wax's core services are bootstrapped via application provider and are initiated before everything else.
@@ -374,7 +374,7 @@ Another Core Service of Wax for registering shortcuts within a service. Check as
 
 ### Rules Service
 
-Core Service of Wax for registering prosemirror rules. Check editoria [config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js) or it can be used 
+Core Service of Wax for registering prosemirror rules. Check editoria [config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js) or it can be used
 from within any service similar to Short Cuts as an `addRule` method is available.
 
 ### Menu Service
@@ -382,5 +382,5 @@ from within any service similar to Short Cuts as an `addRule` method is availabl
 Is used for adding menus to the editor. **TO DO How to create a group/tool and add it to the menu.**
 
 ## Other Stuff
-1. How to create overlays
 
+1.  How to create overlays

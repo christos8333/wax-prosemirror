@@ -1,3 +1,7 @@
+/*
+Taken from https://github.com/fiduswriter/fiduswriter as an example till I write
+the track changes funcionality
+*/
 import { Selection, TextSelection } from "prosemirror-state";
 import { Slice } from "prosemirror-model";
 import {

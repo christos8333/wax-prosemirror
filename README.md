@@ -10,7 +10,6 @@ This application is being developed by the [Coko Foundation](https://coko.founda
 
 Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-- **If you have a general query about Wax**, or want to discuss anything with us, come and [chat to us in our Mattermost channel](https://mattermost.coko.foundation/coko/channels/town-square).
 
 ## Get up and running
 

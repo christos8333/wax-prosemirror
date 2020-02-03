@@ -4,6 +4,7 @@ import styled from "styled-components";
 const UploadImage = styled.div`
   color: #777;
   display: inline-flex;
+  padding: 0px 10px;
   .custom-file-upload {
     cursor: pointer;
   }

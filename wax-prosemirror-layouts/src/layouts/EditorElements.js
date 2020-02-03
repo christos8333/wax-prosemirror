@@ -16,42 +16,10 @@ export default css`
     counter-increment: footnote;
   }
 
-  .ProseMirror-hideselection .footnote-tooltip *::selection {
-    background-color: transparent;
-  }
-
-  .ProseMirror-hideselection .footnote-tooltip *::-moz-selection {
-    background-color: transparent;
-  }
-
-  .ProseMirror .footnote-tooltip {
-    cursor: auto;
-    position: absolute;
-    left: -30px;
-    top: calc(100% + 10px);
-    background: silver;
-    padding: 3px;
-    border-radius: 2px;
-    width: 500px;
-  }
-
-  .ProseMirror .footnote-tooltip::before {
-    border: 5px solid silver;
-    border-top-width: 0;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    position: absolute;
-    top: -5px;
-    left: 27px;
-    content: " ";
-    height: 0;
-    width: 0;
-  }
-
   .ProseMirror {
-    -moz-box-shadow: 0 0 3px #ccc;
-    -webkit-box-shadow: 0 0 3px #ccc;
-    box-shadow: 0 0 3px #ccc;
+    -moz-box-shadow: 0 0 8px #ecedf1;
+    -webkit-box-shadow: 0 0 8px #ecedf1;
+    box-shadow: 0 0 8px #ecedf1;
     width: 65%;
     min-height: 90%;
     padding: 40px;

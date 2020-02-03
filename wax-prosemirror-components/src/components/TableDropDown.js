@@ -18,6 +18,12 @@ const DropdownStyled = styled(Dropdown)`
   }
   .Dropdown-menu {
     width: 120%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .Dropdown-option {
+      width: 100%;
+    }
   }
 `;
 

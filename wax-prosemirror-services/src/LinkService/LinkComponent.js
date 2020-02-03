@@ -2,17 +2,21 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
-// import { Button } from "wax-prosemirror-components";
 
 const LinkWrapper = styled.div`
   padding: 20px;
   border-radius: 3px;
   border: 1px solid #000;
-  background: grey;
+  background: #ecedf1;
   z-index: 9999;
+  -webkit-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.75);
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  cursor: pointer;
+`;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
   const href = mark ? mark.attrs.href : null,
@@ -30,7 +34,8 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       const width = ref.current ? ref.current.offsetWidth : 0;
       const left = Math.abs(position.left - width / 2);
 
-      setPosition({ ...position, left });
+      //TODO Overwrite default position in order to position LinkOverlay
+      // setPosition({ ...position, left });
       setLinkText();
       removeMarkIfEmptyHref();
     },

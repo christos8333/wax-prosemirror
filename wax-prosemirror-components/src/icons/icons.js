@@ -20,10 +20,11 @@ import {
   faRedo,
   faOutdent,
   faAngleUp,
-  faAsterisk,
+  faStickyNote,
   faVial,
-  faWheelchair
-} from "@fortawesome/fontawesome-free-solid";
+  faWheelchair,
+  faEllipsisH
+} from "@fortawesome/free-solid-svg-icons";
 
 export default {
   em: <FontAwesomeIcon icon={faItalic} />,
@@ -44,12 +45,13 @@ export default {
   bullet_list: <FontAwesomeIcon icon={faListUl} />,
   image: <FontAwesomeIcon icon={faImage} />,
   table: <FontAwesomeIcon icon={faTable} />,
-  footnote: <FontAwesomeIcon icon={faAsterisk} />,
+  footnote: <FontAwesomeIcon icon={faStickyNote} />,
   undo: <FontAwesomeIcon icon={faUndo} />,
   redo: <FontAwesomeIcon icon={faRedo} />,
   lift: <FontAwesomeIcon icon={faOutdent} />,
   join_up: <FontAwesomeIcon icon={faAngleUp} />,
   source: <FontAwesomeIcon icon={faVial} />,
+  ellipses: <FontAwesomeIcon icon={faEllipsisH} />,
   small_caps: (
     <span className="small-caps">
       <svg

@@ -29,7 +29,7 @@ const WaxSurfaceScroll = styled.div`
   top: 0;
   box-sizing: border-box;
   margin-left: 14%;
-  padding: 2px;
+  padding: 0 2px 2px 2px;
   height: 100%;
   ${EditorElements};
 `;
@@ -40,6 +40,7 @@ const MainMenuContainer = styled.div`
   line-height: 32px;
   position: relative;
   user-select: none;
+  border-bottom: 2px solid #ecedf1;
 `;
 const MainMenuInner = styled.div`
   display: flex;
@@ -80,6 +81,9 @@ const SideMenuInner = styled.div`
       font-family: ${props => props.theme.fontInterface};
       margin-left: 5%;
       width: 90%;
+    }
+    [data-name="Display"] {
+      border-right: none;
     }
   }
 `;

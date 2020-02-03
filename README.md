@@ -16,7 +16,7 @@ Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](h
 
 Run a local version of the editor
 
-1.  `git@gitlab.coko.foundation:wax/wax-prosemirror.git`
+1.  `git@github.com:christos8333/wax-prosemirror.git`
 
 2.  `yarn with node > 11`
 
@@ -36,8 +36,7 @@ Wax depends on the following libraries.
 
 ### Assemble your own Editor
 
-Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. As we are prioritizing on the configuration of the editor and having most features working up to
-a good extend with minimal work done on UI , expect features to not cover all uses cases/or not work 100% as expected.
+Currently Wax is under heavy development. Master holds a as possible as stable version of the editor.
 
 Check editoria [editor](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/package.json)
 and editoria's [configuration file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).

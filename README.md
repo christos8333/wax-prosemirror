@@ -55,6 +55,7 @@ TrackChange; // Enable track changes
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
+debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 ```
 
 **Current Tools and Toolgroups:**

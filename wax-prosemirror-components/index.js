@@ -8,3 +8,6 @@ export { default as LeftMenuTitle } from "./src/components/LeftMenuTitle";
 export {
   default as ToolGroupComponent
 } from "./src/components/ToolGroupComponent";
+export {
+  default as NoteEditorContainer
+} from "./src/components/notes/NoteEditorContainer";

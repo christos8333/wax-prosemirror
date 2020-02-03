@@ -6,6 +6,7 @@ import { keymap } from "prosemirror-keymap";
 import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { Commands } from "wax-prosemirror-utilities";
+import { NoteEditorContainer } from "wax-prosemirror-components";
 
 export default ({ node, view, pos }) => {
   const editorRef = useRef();
@@ -84,7 +85,12 @@ export default ({ node, view, pos }) => {
 
   return (
     <div
-      style={{ height: "100px", border: "1px solid black" }}
+      style={{
+        height: "50px",
+        width: "61%",
+        "margin-left": "14%",
+        border: "1px solid black"
+      }}
       ref={editorRef}
     />
   );

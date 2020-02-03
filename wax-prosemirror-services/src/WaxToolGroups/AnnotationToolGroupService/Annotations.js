@@ -8,17 +8,17 @@ class Annotations extends ToolGroup {
     @inject("Code") code,
     @inject("Emphasis") emphasis,
     @inject("Link") link,
-    @inject("SmallCaps") smallcaps,
     @inject("StrikeThrough") strikethrough,
     @inject("Strong") strong,
     @inject("Subscript") subscript,
     @inject("Superscript") superscript,
-    @inject("Underline") underline
+    @inject("Underline") underline,
+    @inject("SmallCaps") smallcaps
   ) {
     super();
-    smallcaps.hideOnToolbar = true;
     subscript.hideOnToolbar = true;
     superscript.hideOnToolbar = true;
+    smallcaps.hideOnToolbar = true;
     this.tools = [
       strong,
       emphasis,
@@ -26,9 +26,9 @@ class Annotations extends ToolGroup {
       link,
       strikethrough,
       underline,
-      smallcaps,
       subscript,
-      superscript
+      superscript,
+      smallcaps
     ];
   }
 }

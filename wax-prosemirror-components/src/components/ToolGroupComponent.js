@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import { isFunction } from "lodash";
 import styled from "styled-components";
+import icons from "../icons/icons";
+
+const ToolGroupStyled = styled.div`
+  border-right: 1px solid #ecedf1;
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const MoreButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
 
 const InnerStyled = styled.div`
   display: flex;
@@ -23,19 +37,23 @@ const ToolGroupComponent = ({ view, tools, name, title }) => {
   });
 
   return (
-    <div>
+    <ToolGroupStyled data-name={name}>
       <DisplayTitle />
       {toolsShown}
       {rest.length && !more ? (
-        <button onClick={() => showHide(!more)}>...</button>
+        <MoreButton title="show more tools" onClick={() => showHide(!more)}>
+          {icons.ellipses}
+        </MoreButton>
       ) : null}
       {more && (
         <div>
-          <button onClick={() => showHide(!more)}>...</button>
+          <MoreButton title="hide" onClick={() => showHide(!more)}>
+            {icons.ellipses}
+          </MoreButton>
           <InnerStyled>{rest}</InnerStyled>
         </div>
       )}
-    </div>
+    </ToolGroupStyled>
   );
 };
 

@@ -40,6 +40,7 @@ const MainMenuContainer = styled.div`
   line-height: 32px;
   position: relative;
   user-select: none;
+  border-bottom: 2px solid #ecedf1;
 `;
 const MainMenuInner = styled.div`
   display: flex;
@@ -63,6 +64,7 @@ const SideMenuContainer = styled.div`
   display: flex;
   width: 14%;
   height: 98%;
+  border-right: 2px solid #ecedf1;
 `;
 
 const SideMenuInner = styled.div`
@@ -80,6 +82,9 @@ const SideMenuInner = styled.div`
       font-family: ${props => props.theme.fontInterface};
       margin-left: 5%;
       width: 90%;
+    }
+    [data-name="Display"] {
+      border-right: none;
     }
   }
 `;

@@ -2,7 +2,7 @@
   <h1>Wax Editor</h1>
 </div>
 
-| [![MIT license](https://img.shields.io/badge/license-MIT-e51879.svg)](https://gitlab.coko.foundation/wax/wax-prosemirror/raw/master/LICENSE) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) |
+| [![MIT license](https://img.shields.io/badge/license-MIT-e51879.svg)](https://gitlab.coko.foundation/wax/wax-prosemirror/raw/master/LICENSE) |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 
@@ -192,7 +192,7 @@ So, what if we need to register a view component within our service provider? Th
 
 In the StrongService when the boot method is called all other services will have been registered, so we get the ShortCuts Service and execute a method for registering a new ShortCut.
 
-Another example could be the MenuSerivce (link)
+Another example could be the [MenuSerivce](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
 
 ```javascript
 boot() {
@@ -308,7 +308,7 @@ If the above 2 services are registed SchemaService will merge those 2 nodes into
 
 ### LayoutService
 
-This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. (link editoria layout).
+This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js).
 
 A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
 

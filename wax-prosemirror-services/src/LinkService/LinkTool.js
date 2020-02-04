@@ -15,6 +15,7 @@ export default class LinkTool extends Tools {
         toggleMark(state.config.schema.marks.link)(state, dispatch);
         return true;
       }
+      //TODO disable creating multiblock links
       Commands.createLink(state, dispatch);
     };
   }

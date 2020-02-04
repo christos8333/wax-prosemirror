@@ -1,9 +1,15 @@
-import { tableNodes } from "prosemirror-tables";
+import { tableNodes, goToNextCell } from "prosemirror-tables";
 import Service from "wax-prosemirror-core/src/services/Service";
 import Table from "./Table";
 
 class InsertTableService extends Service {
-  boot() {}
+  boot() {
+    const shortCuts = this.container.get("ShortCuts");
+    shortCuts.addShortCut({
+      Tab: goToNextCell(1),
+      "Shift-Tab": goToNextCell(-1)
+    });
+  }
 
   register() {
     this.container.bind("Table").to(Table);

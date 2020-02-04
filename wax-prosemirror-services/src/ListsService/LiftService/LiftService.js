@@ -1,8 +1,15 @@
+import { liftListItem, sinkListItem } from "prosemirror-schema-list";
 import Service from "wax-prosemirror-core/src/services/Service";
 import Lift from "./Lift";
 
 class LiftService extends Service {
-  boot() {}
+  boot() {
+    const shortCuts = this.container.get("ShortCuts");
+    // shortCuts.addShortCut({
+    //   "Mod-[": liftListItem(this.schema.nodes.list_item),
+    //   "Mod-]": sinkListItem(this.schema.nodes.list_item)
+    // });
+  }
 
   register() {
     this.container.bind("Lift").to(Lift);

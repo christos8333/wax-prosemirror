@@ -51,24 +51,24 @@ export default {
     invisibles([hardBreak()])
   ],
   services: [
-    new ListToolGroupService(),
     new PlaceholderService(),
     new ImageService(),
-    new AnnotationToolGroupService(),
+    new ListsService(),
     new InlineAnnotationsService(),
     new LinkService(),
-    new ListsService(),
-    new TableToolGroupService(),
     new TablesService(),
+    new TextBlockLevelService(),
     new BaseService(),
     new BaseToolGroupService(),
     new DisplayBlockLevelService(),
+    new NoteService(),
+    new TableToolGroupService(),
     new DisplayToolGroupService(),
     new ImageToolGroupService(),
-    new TextBlockLevelService(),
     new TextToolGroupService(),
-    new NoteService(),
+    new AnnotationToolGroupService(),
     new NoteToolGroupService(),
+    new ListToolGroupService(),
     new TrackChangeService()
   ]
 };

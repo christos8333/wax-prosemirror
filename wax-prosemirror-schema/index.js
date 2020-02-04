@@ -35,7 +35,7 @@ export { default as subTitleNode } from "./src/nodes/subTitleNode";
 export { default as imageNode } from "./src/nodes/imageNode";
 export { default as headingNode } from "./src/nodes/headingNode";
 export { default as blockQuoteNode } from "./src/nodes/blockQuoteNode";
-
+export { default as footNoteNode } from "./src/nodes/footNoteNode";
 /*
 LIST OF TRACK CHANGES NODES
 */

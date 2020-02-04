@@ -75,13 +75,9 @@ class ShortCuts {
       "Mod-[": liftListItem(this.schema.nodes.list_item),
       "Mod-]": sinkListItem(this.schema.nodes.list_item),
       Enter: splitListItem(this.schema.nodes.list_item),
-      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist)
+      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist),
       "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
     };
-  }
-
-  extendKeys() {
-    const keys = this.getKeys();
   }
 }
 

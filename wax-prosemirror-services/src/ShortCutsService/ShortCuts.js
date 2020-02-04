@@ -76,7 +76,7 @@ class ShortCuts {
       "Mod-]": sinkListItem(this.schema.nodes.list_item),
       Enter: splitListItem(this.schema.nodes.list_item),
       "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist)
-      // "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
+      "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
     };
   }
 

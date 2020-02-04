@@ -1,6 +1,7 @@
 import Note from "./Note";
 import Service from "wax-prosemirror-core/src/services/Service";
 import NoteComponent from "./NoteComponent";
+import { footNoteNode } from "wax-prosemirror-schema";
 
 class NoteService extends Service {
   name = "NoteService";
@@ -11,7 +12,12 @@ class NoteService extends Service {
   }
 
   register() {
+    const createNode = this.container.get("CreateNode");
     this.container.bind("Note").to(Note);
+
+    createNode({
+      footnote: footNoteNode
+    });
   }
 }
 

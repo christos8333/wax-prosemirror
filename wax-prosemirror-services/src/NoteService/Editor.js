@@ -83,15 +83,5 @@ export default ({ node, view, pos }) => {
     }
   }
 
-  return (
-    <div
-      style={{
-        height: "50px",
-        width: "61%",
-        "margin-left": "14%",
-        border: "1px solid black"
-      }}
-      ref={editorRef}
-    />
-  );
+  return <NoteEditorContainer ref={editorRef} />;
 };

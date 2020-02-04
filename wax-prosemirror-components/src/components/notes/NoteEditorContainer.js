@@ -2,15 +2,14 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 
 const NoteEditorContainerStyled = styled.div`
-  height: 100px;
-  ${"" /* width: 65%;*/} ${"" /* margin-left: 17%;*/}
+  height: 50px;
+  width: 61%;
+  margin-left: 14%;
   border: 1px solid black;
 `;
 
-const NoteEditorContainer = ({ ref }) => {
-  console.log(ref);
-  const editorRef = useRef();
-  return <NoteEditorContainerStyled ref={editorRef} />;
-};
+const NoteEditorContainer = React.forwardRef((props, ref) => (
+  <NoteEditorContainerStyled ref={ref} {...props} />
+));
 
 export default NoteEditorContainer;

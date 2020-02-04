@@ -20,7 +20,6 @@ import {
 
 @injectable()
 class ShortCuts {
-  keys = {};
   constructor(plugins, schema) {
     this.insertBreak = this.insertBreak.bind(this);
     this.insertRule = this.insertRule.bind(this);
@@ -52,15 +51,14 @@ class ShortCuts {
   }
 
   createKeyBindings() {
-    const keys = this.keys;
     Object.keys(baseKeymap).forEach(key => {
-      if (keys[key]) {
-        keys[key] = chainCommands(keys[key], baseKeymap[key]);
+      if (this.keys[key]) {
+        this.keys[key] = chainCommands(this.keys[key], baseKeymap[key]);
       } else {
-        keys[key] = baseKeymap[key];
+        this.keys[key] = baseKeymap[key];
       }
     });
-    return keys;
+    return this.keys;
   }
 
   getKeys() {
@@ -77,8 +75,8 @@ class ShortCuts {
       "Mod-[": liftListItem(this.schema.nodes.list_item),
       "Mod-]": sinkListItem(this.schema.nodes.list_item),
       Enter: splitListItem(this.schema.nodes.list_item),
-      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist),
-      "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
+      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist)
+      // "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
     };
   }
 

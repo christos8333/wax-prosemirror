@@ -1,9 +1,15 @@
+import { wrapInList } from "prosemirror-schema-list";
 import { orderedListNode } from "wax-prosemirror-schema";
 import Service from "wax-prosemirror-core/src/services/Service";
 import OrderedList from "./OrderedList";
 
 class OrderedListService extends Service {
-  boot() {}
+  boot() {
+    const shortCuts = this.container.get("ShortCuts");
+    // shortCuts.addShortCut({
+    //   "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
+    // });
+  }
 
   register() {
     this.container.bind("OrderedList").to(OrderedList);

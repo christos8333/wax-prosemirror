@@ -9,6 +9,7 @@ import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
 
 export default ({ node, view, pos }) => {
+  console.log(pos);
   const editorRef = useRef();
   const context = useContext(WaxContext);
 
@@ -62,6 +63,7 @@ export default ({ node, view, pos }) => {
         }
       }
     );
+    noteView.focus();
     context.updateView({ [pos]: noteView });
   }, []);
 

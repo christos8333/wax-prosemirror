@@ -46,7 +46,6 @@ export default props => {
       }
     );
     context.updateView({ main: view });
-    console.log("test");
     if (debug) applyDevTools(view);
     if (autoFocus) view.focus();
   }, []);

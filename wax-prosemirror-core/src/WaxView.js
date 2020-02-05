@@ -11,7 +11,7 @@ import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 import "prosemirror-view/style/prosemirror.css";
 
-import trackedTransaction from "./track-changes/trackedTransaction";
+import { trackedTransaction } from "wax-prosemirror-services";
 import { WaxContext } from "./ioc-react";
 
 export default props => {

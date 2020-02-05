@@ -1,7 +1,9 @@
 /*
-Taken from https://github.com/fiduswriter/fiduswriter as an example till I write
-the track changes funcionality
+This belongs to https://github.com/fiduswriter/fiduswriter
+check: https://github.com/fiduswriter/fiduswriter/blob/develop/fiduswriter/document/static/js/modules/editor/track/amend_transaction.js
+License included in folder.
 */
+
 import { Selection, TextSelection } from "prosemirror-state";
 import { Slice } from "prosemirror-model";
 import {

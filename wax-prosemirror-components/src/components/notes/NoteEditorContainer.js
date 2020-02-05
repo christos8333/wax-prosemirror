@@ -6,14 +6,16 @@ import NoteNumber from "./NoteNumber";
 const NoteEditorContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
-  height: 50px;
+  min-height: 40px;
   width: 61%;
   margin-left: 14%;
 `;
 
 const NoteStyled = styled.div`
   display: flex;
+  flex-direction: column;
   width: 96%;
+  min-height: 40px;
   height: 100%;
   border: 1px solid black;
 `;

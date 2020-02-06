@@ -44,12 +44,8 @@ export default {
 
   ShortCutsService: {},
 
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    // TrackChangePlugin({ options: {} }),
-    invisibles([hardBreak()])
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+
   services: [
     new PlaceholderService(),
     new ImageService(),

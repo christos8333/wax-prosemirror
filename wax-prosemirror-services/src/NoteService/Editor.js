@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useContext } from "react";
 import { EditorView } from "prosemirror-view";
 import { EditorState } from "prosemirror-state";
 import { StepMap } from "prosemirror-transform";
+import { baseKeymap } from "prosemirror-commands";
 import { keymap } from "prosemirror-keymap";
 import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
@@ -18,16 +19,7 @@ export default ({ node, view, pos }) => {
       {
         state: EditorState.create({
           doc: node,
-          plugins: [
-            keymap({
-              "Mod-z": () => undo(view.state, view.dispatch),
-              "Mod-y": () => redo(view.state, view.dispatch),
-              "Mod-u": () =>
-                Commands.markActive(
-                  noteView.state.config.schema.marks.underline
-                )(noteView.state)
-            })
-          ]
+          plugins: [keymap(createKeyBindings())]
         }),
         // This is the magic part
         dispatchTransaction: tr => {
@@ -43,13 +35,7 @@ export default ({ node, view, pos }) => {
                 outerTr.step(steps[j].map(offsetMap));
             }
 
-            // outerTr.setNodeMarkup(pos, view.state.schema.nodes.footnote, {
-            //   title: noteView.docView.node.textContent
-            // });
-
-            if (outerTr.docChanged) {
-              view.dispatch(outerTr);
-            }
+            if (outerTr.docChanged) view.dispatch(outerTr);
           }
         },
         handleDOMEvents: {
@@ -65,6 +51,25 @@ export default ({ node, view, pos }) => {
     // noteView.focus();
     context.updateView({ [pos]: noteView });
   }, []);
+
+  const createKeyBindings = () => {
+    const keys = getKeys();
+    Object.keys(baseKeymap).forEach(key => {
+      keys[key] = baseKeymap[key];
+    });
+    return keys;
+  };
+
+  const getKeys = () => {
+    return {
+      "Mod-z": () => undo(view.state, view.dispatch),
+      "Mod-y": () => redo(view.state, view.dispatch),
+      "Mod-u": () =>
+        Commands.markActive(noteView.state.config.schema.marks.underline)(
+          noteView.state
+        )
+    };
+  };
 
   if (context.view[pos]) {
     let state = context.view[pos].state;

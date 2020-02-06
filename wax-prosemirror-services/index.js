@@ -17,6 +17,9 @@ export {
   default as TrackChangeService
 } from "./src/TrackChangeService/TrackChangeService";
 
+export {
+  default as trackedTransaction
+} from "./src/TrackChangeService/track-changes/trackedTransaction";
 /*
 All Elements services
 */

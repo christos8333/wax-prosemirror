@@ -5,10 +5,8 @@ import { linkMark } from "wax-prosemirror-schema";
 import LinkTool from "./LinkTool";
 import { OverlayService } from "../..";
 
-const PLUGIN_KEY = "LinkPlugin";
-
 export default class LinkService extends Service {
-  name = "LinkPlugin";
+  name = "LinkService";
 
   boot() {
     const createOverlay = this.container.get("CreateOverlay");

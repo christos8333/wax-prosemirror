@@ -8,16 +8,15 @@ cd editors
 yarn create react-app $1
 cd $1
 npm install react-app-rewired --save-dev
-cp ../default/config-overrides.js ./
-cp ../default/package.json ./
-cp ../default/src/Default.js ./src/
-cp ../default/src/index.js ./src/
+cp ../editoria/config-overrides.js ./
+cp ../editoria/package.json ./
+cp ../editoria/src/* ./src/
 rm -rf src/App.css
 rm -rf src/App.js
 rm -rf src/index.css
 rm -rf src/App.test.js
 rm -rf src/logo.svg
-sed -i "s/default/$1/" package.json
+sed -i "s/editoria/$1/" package.json
 cd ../../
 sed -i '/"build": "lerna run build --concurrency=1 --stream",/a "'$1'": "cd editors/'$1' && yarn start",' package.json
 yarn $1

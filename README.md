@@ -35,7 +35,7 @@ Wax depends on the following libraries.
 
 ### Assemble your own Editor
 
-Currently Wax is under heavy development. Master holds a as possible as stable version of the editor.
+Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. For latest versions see [here](#latest-version). Documentation follows, but it is rather limited for now. It lists all the basic parts , Wax include and a brief explanation on how to configure Wax for your own project. More detailed examples will follow.
 
 Check editoria [editor](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/package.json)
 and editoria's [configuration file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).
@@ -190,9 +190,7 @@ In the above example we bind ShortCuts to a factory method which injects PmPlugi
 
 So, what if we need to register a view component within our service provider? This should be done within the boot method. This method is called after all other service providers have been registered, meaning you have access to all other services that have been registered.
 
-In the StrongService when the boot method is called all other services will have been registered, so we get the ShortCuts Service and execute a method for registering a new ShortCut.
-
-Another example could be the [MenuSerivce](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
+A good example could be the [MenuSerivce](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
 
 ```javascript
 boot() {
@@ -385,8 +383,8 @@ Is used for adding menus to the editor.
 1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
 2.  How to create toolgroups Check as an example Inline Annotations [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
 3. How to create modals inside the editor (under development)
-4.
-## Latest version
+
+## Latest versions
 
  - wax-prosemirror-components@0.0.4
  - wax-prosemirror-core@0.0.4

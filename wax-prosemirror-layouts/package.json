@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-layouts",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Wax prosemirror layouts",
   "license": "MIT",
   "main": "index.js",

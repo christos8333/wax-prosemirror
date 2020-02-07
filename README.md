@@ -111,7 +111,7 @@ React components to support various features of the editor from buttons to overl
  Holds the different themes of the editor. Check the options in the [CokoTheme](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-themes/src/coko-theme)
 
 <h2> wax-prosemirror-layouts </h2>
-Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example check [EditoriaLayout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js))
+Holds different layouts of the editor. Through the layout service you can configure the areas of different components. As an example check [EditoriaLayout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js)
 
 <h2> wax-prosemirror-utilities </h2>
  Various helpers methods needed throughout Wax to support the funcionality needed.
@@ -383,7 +383,7 @@ Is used for adding menus to the editor.
 ## Other Stuff
 
 1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
-2.  How to create toolgroups Check as an example Inline Annotations [here]https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
+2.  How to create toolgroups Check as an example Inline Annotations [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
 3. How to create modals inside the editor (under development)
 4.
 ## Latest version

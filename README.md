@@ -17,7 +17,7 @@ Run a local version of the editor
 
 1.  `git@github.com:christos8333/wax-prosemirror.git`
 
-2.  `yarn with node > 11`
+2.  `yarn with node >= 11 (11.14.0 is tested on)`
 
 3.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
 
@@ -308,7 +308,7 @@ If the above 2 services are registed SchemaService will merge those 2 nodes into
 
 ### LayoutService
 
-This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js).
+This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js.
 
 A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
 
@@ -383,4 +383,17 @@ Is used for adding menus to the editor.
 ## Other Stuff
 
 1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
-2.  How to create toolgroups Check as an example Inline Annotations ([here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService))
+2.  How to create toolgroups Check as an example Inline Annotations [here]https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
+3. How to create modals inside the editor (under development)
+4.
+## Latest version
+
+ - wax-prosemirror-components@0.0.4
+ - wax-prosemirror-core@0.0.4
+ - wax-prosemirror-layouts@0.0.4
+ - wax-prosemirror-plugins@0.0.4
+ - wax-prosemirror-schema@0.0.4
+ - wax-prosemirror-services@0.0.4
+ - wax-prosemirror-themes@0.0.4
+ - wax-prosemirror-utilities@0.0.4
+

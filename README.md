@@ -383,6 +383,7 @@ Is used for adding menus to the editor.
 1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
 2.  How to create toolgroups Check as an example Inline Annotations [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
 3. How to create modals inside the editor (under development)
+4. Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by `[pmplugins.get("imagePlaceHolder")]` (https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
 
 ## Latest versions
 

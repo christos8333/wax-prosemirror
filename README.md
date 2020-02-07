@@ -35,7 +35,7 @@ Wax depends on the following libraries.
 
 ### Assemble your own Editor
 
-Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. For latest versions see [here](#latest-version). Documentation follows, but it is rather limited for now. It lists all the basic parts , Wax include and a brief explanation on how to configure Wax for your own project. More detailed examples will follow.
+Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. For latest versions see [here](#latest-versions). Documentation follows, but it is rather limited for now. It lists all the basic parts , Wax include and a brief explanation on how to configure Wax for your own project. More detailed examples will follow.
 
 Check editoria [editor](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/package.json)
 and editoria's [configuration file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).

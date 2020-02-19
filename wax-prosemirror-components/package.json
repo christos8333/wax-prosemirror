@@ -17,6 +17,7 @@
     "react-dom": "^16.8.6",
     "react-dropdown": "^1.6.2",
     "styled-components": "^4.2.0",
+    "react-panelgroup": "^1.0.10",
     "uuid": "^3.3.2"
   }
 }

@@ -5,6 +5,8 @@ import { componentPlugin, Service } from "wax-prosemirror-core";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 
+import PanelGroup from "react-panelgroup";
+console.log(PanelGroup);
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -103,19 +105,21 @@ const EditoriaLayout = ({ editor }) => {
             <TopBar />
           </MainMenuInner>
         </MainMenuContainer>
-        <WaxSurfaceContainer>
-          <SideMenuContainer>
-            <SideMenuInner>
-              <LeftSideBar />
-            </SideMenuInner>
-          </SideMenuContainer>
-          <WaxSurfaceScroll className="wax-surface-scroll">
-            {editor}
-            <WaxOverlays />
-          </WaxSurfaceScroll>
-          <RightSideBar />
-        </WaxSurfaceContainer>
-        <BottomBar />
+        <PanelGroup direction="column">
+          <WaxSurfaceContainer>
+            <SideMenuContainer>
+              <SideMenuInner>
+                <LeftSideBar />
+              </SideMenuInner>
+            </SideMenuContainer>
+            <WaxSurfaceScroll className="wax-surface-scroll">
+              {editor}
+              <WaxOverlays />
+            </WaxSurfaceScroll>
+            <RightSideBar />
+          </WaxSurfaceContainer>
+          <BottomBar />
+        </PanelGroup>
         <InfoArea />
       </LayoutWrapper>
     </ThemeProvider>

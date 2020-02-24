@@ -6,11 +6,22 @@ import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 
 import PanelGroup from "react-panelgroup";
-console.log(PanelGroup);
+
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+`;
+
+const LeftMenuSurfaceContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  .divider {
+    border-top: 1px dotted black;
+  }
 `;
 
 const WaxSurfaceContainer = styled.div`
@@ -30,7 +41,6 @@ const WaxSurfaceScroll = styled.div`
   right: 0;
   top: 0;
   box-sizing: border-box;
-  margin-left: 14%;
   padding: 0 2px 2px 2px;
   height: 100%;
   ${EditorElements};
@@ -93,7 +103,7 @@ const SideMenuInner = styled.div`
 const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
-const BottomBar = componentPlugin("bottomBar");
+const NotesArea = componentPlugin("notesArea");
 const WaxOverlays = componentPlugin("waxOverlays");
 
 const EditoriaLayout = ({ editor }) => {
@@ -105,22 +115,25 @@ const EditoriaLayout = ({ editor }) => {
             <TopBar />
           </MainMenuInner>
         </MainMenuContainer>
-        <PanelGroup direction="column">
-          <WaxSurfaceContainer>
-            <SideMenuContainer>
-              <SideMenuInner>
-                <LeftSideBar />
-              </SideMenuInner>
-            </SideMenuContainer>
-            <WaxSurfaceScroll className="wax-surface-scroll">
-              {editor}
-              <WaxOverlays />
-            </WaxSurfaceScroll>
-            <RightSideBar />
-          </WaxSurfaceContainer>
-          <BottomBar />
-        </PanelGroup>
-        <InfoArea />
+
+        <LeftMenuSurfaceContainer>
+          <SideMenuContainer>
+            <SideMenuInner>
+              <LeftSideBar />
+            </SideMenuInner>
+          </SideMenuContainer>
+          <PanelGroup direction="column">
+            <WaxSurfaceContainer>
+              <WaxSurfaceScroll className="wax-surface-scroll">
+                {editor}
+                <WaxOverlays />
+              </WaxSurfaceScroll>
+              <RightSideBar />
+            </WaxSurfaceContainer>
+            <NotesArea />
+          </PanelGroup>
+          <InfoArea />
+        </LeftMenuSurfaceContainer>
       </LayoutWrapper>
     </ThemeProvider>
   );

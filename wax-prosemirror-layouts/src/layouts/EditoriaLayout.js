@@ -22,6 +22,9 @@ const LeftMenuSurfaceContainer = styled.div`
   .divider {
     border-top: 1px dotted black;
   }
+  .panelWrapper:nth-child(3) {
+    height: 150px;
+  }
 `;
 
 const WaxSurfaceContainer = styled.div`
@@ -100,6 +103,12 @@ const SideMenuInner = styled.div`
   }
 `;
 
+const NotesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
 const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
@@ -122,7 +131,14 @@ const EditoriaLayout = ({ editor }) => {
               <LeftSideBar />
             </SideMenuInner>
           </SideMenuContainer>
-          <PanelGroup direction="column">
+
+          <PanelGroup
+            direction="column"
+            panelWidths={[
+              { size: 600, resize: "stretch" },
+              { size: 50, resize: "stretch" }
+            ]}
+          >
             <WaxSurfaceContainer>
               <WaxSurfaceScroll className="wax-surface-scroll">
                 {editor}
@@ -130,8 +146,11 @@ const EditoriaLayout = ({ editor }) => {
               </WaxSurfaceScroll>
               <RightSideBar />
             </WaxSurfaceContainer>
-            <NotesArea />
+            <NotesContainer>
+              <NotesArea />
+            </NotesContainer>
           </PanelGroup>
+
           <InfoArea />
         </LeftMenuSurfaceContainer>
       </LayoutWrapper>

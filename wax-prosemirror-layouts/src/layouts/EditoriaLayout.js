@@ -22,9 +22,6 @@ const LeftMenuSurfaceContainer = styled.div`
   .divider {
     border-top: 1px dotted black;
   }
-  .panelWrapper:nth-child(3) {
-    height: 150px;
-  }
 `;
 
 const WaxSurfaceContainer = styled.div`

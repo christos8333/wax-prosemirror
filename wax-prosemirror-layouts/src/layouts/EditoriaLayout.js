@@ -1,4 +1,4 @@
-import React, { useMemo, Component } from "react";
+import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { InfoArea } from "wax-prosemirror-components";
 import { componentPlugin, Service } from "wax-prosemirror-core";
@@ -112,6 +112,14 @@ const TopBar = componentPlugin("topBar");
 const NotesArea = componentPlugin("notesArea");
 const WaxOverlays = componentPlugin("waxOverlays");
 
+var surfaceHeight = 750;
+var notesHeight = 50;
+
+const onResizeEnd = arr => {
+  surfaceHeight = arr[0].size;
+  notesHeight = arr[1].size;
+};
+
 const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
@@ -132,9 +140,10 @@ const EditoriaLayout = ({ editor }) => {
           <PanelGroup
             direction="column"
             panelWidths={[
-              { size: 600, resize: "stretch" },
-              { size: 50, resize: "stretch" }
+              { size: surfaceHeight, resize: "dynamic" },
+              { size: notesHeight, resize: "stretch" }
             ]}
+            onResizeEnd={onResizeEnd}
           >
             <WaxSurfaceContainer>
               <WaxSurfaceScroll className="wax-surface-scroll">

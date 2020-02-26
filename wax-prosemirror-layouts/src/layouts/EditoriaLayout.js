@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { InfoArea } from "wax-prosemirror-components";
 import { componentPlugin, Service } from "wax-prosemirror-core";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
-
+import { DocumentHelpers } from "wax-prosemirror-utilities";
+import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import PanelGroup from "react-panelgroup";
 
 const LayoutWrapper = styled.div`
@@ -148,7 +149,37 @@ const onResizeEnd = arr => {
   notesHeight = arr[1].size;
 };
 
+const hasNotes = main => {
+  const notes = DocumentHelpers.findBlockNodes(
+    main.state.doc,
+    main.state.schema.nodes.footnote,
+    true
+  );
+  return notes;
+};
+
+const withNotes = () => {
+  return (
+    <NotesAreaContainer>
+      <NotesContainer>
+        <NotesArea />
+      </NotesContainer>
+      <CommentsContainer>
+        <CommentsArea />
+      </CommentsContainer>
+    </NotesAreaContainer>
+  );
+};
+
 const EditoriaLayout = ({ editor }) => {
+  const { view: { main } } = useContext(WaxContext);
+  let AreasWithNotes = null;
+
+  if (main) {
+    const notes = hasNotes(main);
+    if (notes.length) AreasWithNotes = withNotes(editor);
+  }
+
   return (
     <ThemeProvider theme={cokoTheme}>
       <LayoutWrapper>
@@ -184,17 +215,8 @@ const EditoriaLayout = ({ editor }) => {
               </WaxSurfaceScroll>
               <RightSideBar />
             </WaxSurfaceContainer>
-            <NotesAreaContainer>
-              <NotesContainer>
-                <NotesArea />
-              </NotesContainer>
-
-              <CommentsContainer>
-                <CommentsArea />
-              </CommentsContainer>
-            </NotesAreaContainer>
+            {AreasWithNotes}
           </PanelGroup>
-
           <InfoArea />
         </LeftMenuSurfaceContainer>
       </LayoutWrapper>

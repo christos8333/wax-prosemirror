@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { InfoArea } from "wax-prosemirror-components";
 import { componentPlugin, Service } from "wax-prosemirror-core";
@@ -33,11 +33,21 @@ const WaxSurfaceContainer = styled.div`
   height: 100%;
 `;
 
+const EditorContainer = styled.div`
+  -moz-box-shadow: 0 0 8px #ecedf1;
+  -webkit-box-shadow: 0 0 8px #ecedf1;
+  box-shadow: 0 0 8px #ecedf1;
+  width: 65%;
+  min-height: 90%;
+  padding: 40px;
+`;
+
 const WaxSurfaceScroll = styled.div`
   bottom: 0;
   left: 0;
   overflow: auto;
   position: absolute;
+  display: flex;
   right: 0;
   top: 0;
   box-sizing: border-box;
@@ -100,20 +110,38 @@ const SideMenuInner = styled.div`
   }
 `;
 
+const NotesAreaContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+`;
+
 const NotesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  padding: 10px 67px 10px 5px;
+  height: 100%;
+  width: 65%;
+`;
+
+const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 35%;
+  height: 100%;
 `;
 
 const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
 const NotesArea = componentPlugin("notesArea");
+const CommentsArea = componentPlugin("commentsArea");
 const WaxOverlays = componentPlugin("waxOverlays");
 
-var surfaceHeight = 750;
-var notesHeight = 50;
+let surfaceHeight = 700;
+let notesHeight = 50;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;
@@ -147,14 +175,24 @@ const EditoriaLayout = ({ editor }) => {
           >
             <WaxSurfaceContainer>
               <WaxSurfaceScroll className="wax-surface-scroll">
-                {editor}
+                <EditorContainer>{editor}</EditorContainer>
+                <CommentsContainer>
+                  <CommentsArea />
+                </CommentsContainer>
+
                 <WaxOverlays />
               </WaxSurfaceScroll>
               <RightSideBar />
             </WaxSurfaceContainer>
-            <NotesContainer>
-              <NotesArea />
-            </NotesContainer>
+            <NotesAreaContainer>
+              <NotesContainer>
+                <NotesArea />
+              </NotesContainer>
+
+              <CommentsContainer>
+                <CommentsArea />
+              </CommentsContainer>
+            </NotesAreaContainer>
           </PanelGroup>
 
           <InfoArea />

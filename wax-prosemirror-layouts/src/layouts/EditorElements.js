@@ -17,12 +17,6 @@ export default css`
   }
 
   .ProseMirror {
-    -moz-box-shadow: 0 0 8px #ecedf1;
-    -webkit-box-shadow: 0 0 8px #ecedf1;
-    box-shadow: 0 0 8px #ecedf1;
-    width: 65%;
-    min-height: 90%;
-    padding: 40px;
     font-family: ${props => props.theme.fontReading};
     &:focus {
       outline: none;

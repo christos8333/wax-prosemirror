@@ -19,7 +19,7 @@ export default () => {
 
   const noteComponent = useMemo(
     () => <NoteEditor notes={notes} view={main} />,
-    [notes.length]
+    [notes]
   );
   return <div>{noteComponent}</div>;
 };

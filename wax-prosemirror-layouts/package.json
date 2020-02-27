@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@pubsweet/ui-toolkit": "^2.2.13"
+    "@pubsweet/ui-toolkit": "^2.2.13",
+    "react-panelgroup": "^1.0.10"
   }
 }

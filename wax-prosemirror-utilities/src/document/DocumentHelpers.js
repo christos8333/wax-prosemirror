@@ -34,18 +34,30 @@ export const flatten = (node, descend = true) => {
   return result;
 };
 
+const findBlockNodes = (node, descend) => {
+  return findChildren(node, child => child.isBlock, descend);
+};
+
+const findChildrenByType = (node, nodeType, descend) => {
+  return findChildren(node, child => child.type === nodeType, descend);
+};
+
 const findChildren = (node, predicate, descend) => {
   if (!node) {
     throw new Error('Invalid "node" parameter');
   } else if (!predicate) {
     throw new Error('Invalid "predicate" parameter');
   }
-  return flatten(node, descend).filter(child => {
-    return child.node.type.name === "footnote" ? child.node : false;
-  });
+  return flatten(node, descend).filter(child => predicate(child.node));
 };
 
-const findBlockNodes = (node, descend) => {
-  return findChildren(node, child => child.isBlock, descend);
+const findInlineNodes = (node, descend) => {
+  return findChildren(node, child => child.isInline, descend);
 };
-export default { findMark, findBlockNodes };
+
+export default {
+  findMark,
+  findBlockNodes,
+  findChildrenByType,
+  findInlineNodes
+};

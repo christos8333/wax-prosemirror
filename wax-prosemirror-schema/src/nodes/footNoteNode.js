@@ -2,7 +2,7 @@ const footnote = {
   group: "inline",
   content: "paragraph+",
   inline: true,
-  atom: true,
+  // atom: true,
   toDOM: () => ["footnote"],
   parseDOM: [{ tag: "footnote" }]
 };

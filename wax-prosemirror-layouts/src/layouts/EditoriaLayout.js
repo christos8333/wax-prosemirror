@@ -150,7 +150,7 @@ const onResizeEnd = arr => {
 };
 
 const hasNotes = main => {
-  const notes = DocumentHelpers.findBlockNodes(
+  const notes = DocumentHelpers.findChildrenByType(
     main.state.doc,
     main.state.schema.nodes.footnote,
     true
@@ -177,7 +177,7 @@ const EditoriaLayout = ({ editor }) => {
 
   if (main) {
     const notes = hasNotes(main);
-    if (notes.length) AreasWithNotes = withNotes(editor);
+    if (notes.length) AreasWithNotes = withNotes();
   }
 
   return (

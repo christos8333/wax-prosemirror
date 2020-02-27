@@ -14,7 +14,7 @@ Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](h
 
 Run a local version of the editor
 
-1.  `git@github.com:christos8333/wax-prosemirror.git`
+1.  `git clone git@gitlab.coko.foundation:wax/wax-prosemirror.git`
 
 2.  `yarn with node >= 11 (11.14.0 is tested on)`
 

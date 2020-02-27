@@ -17,7 +17,7 @@ Run a local version of the editor
 
 1.  `git@github.com:christos8333/wax-prosemirror.git`
 
-2.  `yarn with node > 11`
+2.  `yarn with node >= 11 (11.14.0 is tested on)`
 
 3.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
 
@@ -35,7 +35,7 @@ Wax depends on the following libraries.
 
 ### Assemble your own Editor
 
-Currently Wax is under heavy development. Master holds a as possible as stable version of the editor.
+Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. For latest versions see [here](#latest-versions). Documentation follows, but it is rather limited for now. It lists all the basic parts , and includes a brief explanation on how to configure Wax for your own project. More detailed examples will follow.
 
 Check editoria [editor](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/package.json)
 and editoria's [configuration file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).
@@ -111,7 +111,7 @@ React components to support various features of the editor from buttons to overl
  Holds the different themes of the editor. Check the options in the [CokoTheme](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-themes/src/coko-theme)
 
 <h2> wax-prosemirror-layouts </h2>
-Holds different layouts of the editor. Through the layout service you can configure the areas of different components (as an example check [EditoriaLayout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js))
+Holds different layouts of the editor. Through the layout service you can configure the areas of different components. As an example check [EditoriaLayout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js)
 
 <h2> wax-prosemirror-utilities </h2>
  Various helpers methods needed throughout Wax to support the funcionality needed.
@@ -190,9 +190,7 @@ In the above example we bind ShortCuts to a factory method which injects PmPlugi
 
 So, what if we need to register a view component within our service provider? This should be done within the boot method. This method is called after all other service providers have been registered, meaning you have access to all other services that have been registered.
 
-In the StrongService when the boot method is called all other services will have been registered, so we get the ShortCuts Service and execute a method for registering a new ShortCut.
-
-Another example could be the [MenuSerivce](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
+A good example could be the [MenuSerivce](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
 
 ```javascript
 boot() {
@@ -308,7 +306,7 @@ If the above 2 services are registed SchemaService will merge those 2 nodes into
 
 ### LayoutService
 
-This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js).
+This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js.
 
 A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
 
@@ -383,4 +381,18 @@ Is used for adding menus to the editor.
 ## Other Stuff
 
 1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
-2.  How to create toolgroups Check as an example Inline Annotations ([here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService))
+2.  How to create toolgroups Check as an example Inline Annotations [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
+3. How to create modals inside the editor (under development)
+4. Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by `[pmplugins.get("imagePlaceHolder")]` (https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
+
+## Latest versions
+
+ - wax-prosemirror-components@0.0.4
+ - wax-prosemirror-core@0.0.4
+ - wax-prosemirror-layouts@0.0.4
+ - wax-prosemirror-plugins@0.0.4
+ - wax-prosemirror-schema@0.0.4
+ - wax-prosemirror-services@0.0.4
+ - wax-prosemirror-themes@0.0.4
+ - wax-prosemirror-utilities@0.0.4
+

@@ -9,7 +9,7 @@ export default class Note extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      const footnote = state.config.schema.nodes.footnote.create();
+      const footnote = state.config.schema.nodes.footnote.create(null, "");
       dispatch(state.tr.replaceSelectionWith(footnote));
     };
   }

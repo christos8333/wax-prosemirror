@@ -48,7 +48,7 @@ export default ({ node, view, pos }) => {
         }
       }
     );
-    // noteView.focus();
+    noteView.focus();
     context.updateView({ [pos]: noteView });
   }, []);
 

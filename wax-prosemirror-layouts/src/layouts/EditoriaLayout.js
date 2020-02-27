@@ -120,6 +120,7 @@ const NotesAreaContainer = styled.div`
 `;
 
 const NotesContainer = styled.div`
+  counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
   padding: 10px 67px 10px 5px;

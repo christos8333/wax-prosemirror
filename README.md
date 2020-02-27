@@ -3,19 +3,18 @@
 </div>
 
 | [![MIT license](https://img.shields.io/badge/license-MIT-e51879.svg)](https://gitlab.coko.foundation/wax/wax-prosemirror/wax-prosemirror/raw/master/LICENSE) |
-| :---------------------------------------------------------------------------------------------------------------------------------------: |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 
 This application is being developed by the [Coko Foundation](https://coko.foundation/), for the [University of California Press](http://www.ucpress.edu/) as part of the [Editoria](https://gitlab.coko.foundation/editoria/editoria/) application.
 
 Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-
 ## Get up and running
 
 Run a local version of the editor
 
-1.  `git@github.com:christos8333/wax-prosemirror.git`
+1.  `git clone git@gitlab.coko.foundation:wax/wax-prosemirror.git`
 
 2.  `yarn with node >= 11 (11.14.0 is tested on)`
 
@@ -378,21 +377,21 @@ from within any service similar to Short Cuts as an `addRule` method is availabl
 ### Menu Service
 
 Is used for adding menus to the editor.
+
 ## Other Stuff
 
 1.  How to create overlays. Check as an example the [link overlay](https://gitlab.coko.foundation/wax/wax-prosemirror/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
 2.  How to create toolgroups Check as an example Inline Annotations [here](https://gitlab.coko.foundation/wax/wax-prosemirror/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://gitlab.coko.foundation/wax/wax-prosemirror/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
-3. How to create modals inside the editor (under development)
-4. Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by [`pmplugins.get("imagePlaceHolder")`](https://gitlab.coko.foundation/wax/wax-prosemirror/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
+3.  How to create modals inside the editor (under development)
+4.  Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by [`pmplugins.get("imagePlaceHolder")`](https://gitlab.coko.foundation/wax/wax-prosemirror/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
 
 ## Latest versions
 
- - wax-prosemirror-components@0.0.4
- - wax-prosemirror-core@0.0.4
- - wax-prosemirror-layouts@0.0.4
- - wax-prosemirror-plugins@0.0.4
- - wax-prosemirror-schema@0.0.4
- - wax-prosemirror-services@0.0.4
- - wax-prosemirror-themes@0.0.4
- - wax-prosemirror-utilities@0.0.4
-
+* wax-prosemirror-components@0.0.4
+* wax-prosemirror-core@0.0.4
+* wax-prosemirror-layouts@0.0.4
+* wax-prosemirror-plugins@0.0.4
+* wax-prosemirror-schema@0.0.4
+* wax-prosemirror-services@0.0.4
+* wax-prosemirror-themes@0.0.4
+* wax-prosemirror-utilities@0.0.4

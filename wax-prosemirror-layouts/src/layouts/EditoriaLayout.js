@@ -1,14 +1,28 @@
-import React, { useMemo, Component } from "react";
+import React, { useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { InfoArea } from "wax-prosemirror-components";
 import { componentPlugin, Service } from "wax-prosemirror-core";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
+import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import PanelGroup from "react-panelgroup";
 
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+`;
+
+const LeftMenuSurfaceContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  .divider {
+    border-top: 1px dotted black;
+  }
 `;
 
 const WaxSurfaceContainer = styled.div`
@@ -20,15 +34,24 @@ const WaxSurfaceContainer = styled.div`
   height: 100%;
 `;
 
+const EditorContainer = styled.div`
+  -moz-box-shadow: 0 0 8px #ecedf1;
+  -webkit-box-shadow: 0 0 8px #ecedf1;
+  box-shadow: 0 0 8px #ecedf1;
+  width: 65%;
+  min-height: 90%;
+  padding: 40px;
+`;
+
 const WaxSurfaceScroll = styled.div`
   bottom: 0;
   left: 0;
   overflow: auto;
   position: absolute;
+  display: flex;
   right: 0;
   top: 0;
   box-sizing: border-box;
-  margin-left: 14%;
   padding: 0 2px 2px 2px;
   height: 100%;
   ${EditorElements};
@@ -88,13 +111,76 @@ const SideMenuInner = styled.div`
   }
 `;
 
+const NotesAreaContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+`;
+
+const NotesContainer = styled.div`
+  counter-reset: footnote-view;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 67px 10px 5px;
+  height: 100%;
+  width: 65%;
+`;
+
+const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 35%;
+  height: 100%;
+`;
+
 const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
-const BottomBar = componentPlugin("bottomBar");
+const NotesArea = componentPlugin("notesArea");
+const CommentsArea = componentPlugin("commentsArea");
 const WaxOverlays = componentPlugin("waxOverlays");
 
+let surfaceHeight = 700;
+let notesHeight = 50;
+
+const onResizeEnd = arr => {
+  surfaceHeight = arr[0].size;
+  notesHeight = arr[1].size;
+};
+
+const hasNotes = main => {
+  const notes = DocumentHelpers.findChildrenByType(
+    main.state.doc,
+    main.state.schema.nodes.footnote,
+    true
+  );
+  return notes;
+};
+
+const withNotes = () => {
+  return (
+    <NotesAreaContainer>
+      <NotesContainer>
+        <NotesArea />
+      </NotesContainer>
+      <CommentsContainer>
+        <CommentsArea />
+      </CommentsContainer>
+    </NotesAreaContainer>
+  );
+};
+
 const EditoriaLayout = ({ editor }) => {
+  const { view: { main } } = useContext(WaxContext);
+  let AreasWithNotes = null;
+
+  if (main) {
+    const notes = hasNotes(main);
+    if (notes.length) AreasWithNotes = withNotes();
+  }
+
   return (
     <ThemeProvider theme={cokoTheme}>
       <LayoutWrapper>
@@ -103,20 +189,37 @@ const EditoriaLayout = ({ editor }) => {
             <TopBar />
           </MainMenuInner>
         </MainMenuContainer>
-        <WaxSurfaceContainer>
+
+        <LeftMenuSurfaceContainer>
           <SideMenuContainer>
             <SideMenuInner>
               <LeftSideBar />
             </SideMenuInner>
           </SideMenuContainer>
-          <WaxSurfaceScroll className="wax-surface-scroll">
-            {editor}
-            <WaxOverlays />
-          </WaxSurfaceScroll>
-          <RightSideBar />
-        </WaxSurfaceContainer>
-        <BottomBar />
-        <InfoArea />
+
+          <PanelGroup
+            direction="column"
+            panelWidths={[
+              { size: surfaceHeight, resize: "dynamic" },
+              { size: notesHeight, resize: "stretch" }
+            ]}
+            onResizeEnd={onResizeEnd}
+          >
+            <WaxSurfaceContainer>
+              <WaxSurfaceScroll className="wax-surface-scroll">
+                <EditorContainer>{editor}</EditorContainer>
+                <CommentsContainer>
+                  <CommentsArea />
+                </CommentsContainer>
+
+                <WaxOverlays />
+              </WaxSurfaceScroll>
+              <RightSideBar />
+            </WaxSurfaceContainer>
+            {AreasWithNotes}
+          </PanelGroup>
+          <InfoArea />
+        </LeftMenuSurfaceContainer>
       </LayoutWrapper>
     </ThemeProvider>
   );

@@ -8,7 +8,7 @@ class NoteService extends Service {
 
   boot() {
     const layout = this.container.get("Layout");
-    layout.addComponent("bottomBar", NoteComponent);
+    layout.addComponent("notesArea", NoteComponent);
   }
 
   register() {

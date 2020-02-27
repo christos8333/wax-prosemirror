@@ -3,10 +3,20 @@ import styled, { css } from "styled-components";
 /* All styles regarding ProseMirror surface and elements */
 
 export default css`
+  .ProseMirror {
+    counter-reset: footnote;
+    font-family: ${props => props.theme.fontReading};
+    &:focus {
+      outline: none;
+    }
+  }
   .ProseMirror footnote {
     display: inline-block;
     position: relative;
     cursor: pointer;
+    p {
+      display: none;
+    }
   }
 
   .ProseMirror footnote::after {
@@ -14,19 +24,6 @@ export default css`
     vertical-align: super;
     font-size: 75%;
     counter-increment: footnote;
-  }
-
-  .ProseMirror {
-    -moz-box-shadow: 0 0 8px #ecedf1;
-    -webkit-box-shadow: 0 0 8px #ecedf1;
-    box-shadow: 0 0 8px #ecedf1;
-    width: 65%;
-    min-height: 90%;
-    padding: 40px;
-    font-family: ${props => props.theme.fontReading};
-    &:focus {
-      outline: none;
-    }
   }
   hr {
     padding: 2px 10px;

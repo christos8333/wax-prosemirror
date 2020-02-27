@@ -23,7 +23,7 @@ export default () => {
 };
 const updateNotes = view => {
   if (view) {
-    return DocumentHelpers.findBlockNodes(
+    return DocumentHelpers.findChildrenByType(
       view.state.doc,
       view.state.schema.nodes.footnote,
       true

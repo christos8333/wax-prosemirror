@@ -7,8 +7,7 @@ const NoteEditorContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 40px;
-  width: 61%;
-  margin-left: 14%;
+  width: 100%;
 `;
 
 const NoteStyled = styled.div`

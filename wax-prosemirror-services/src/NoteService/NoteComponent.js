@@ -7,8 +7,6 @@ import NoteEditor from "./NoteEditor";
 export default () => {
   const { view: { main } } = useContext(WaxContext);
   const [notes, setNotes] = useState([]);
-  //TODO Set notes to watch if actual content has changed
-  const [notesContent, setNotesContent] = useState([]);
   useEffect(
     () => {
       setNotes(updateNotes(main));
@@ -25,13 +23,6 @@ export default () => {
 };
 const updateNotes = view => {
   if (view) {
-    console.log(
-      DocumentHelpers.findChildrenByType(
-        view.state.doc,
-        view.state.schema.nodes.footnote,
-        true
-      )
-    );
     return DocumentHelpers.findChildrenByType(
       view.state.doc,
       view.state.schema.nodes.footnote,

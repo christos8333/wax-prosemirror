@@ -123,9 +123,9 @@ const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
-  padding: 10px 67px 10px 5px;
+  padding: 0px 11px 10px 5px;
   height: 100%;
-  width: 65%;
+  width: 70%;
 `;
 
 const CommentsContainer = styled.div`

@@ -30,7 +30,7 @@ export default props => {
         editable: () => !readonly,
         state: EditorState.create(options),
         dispatchTransaction,
-        leDOMEvents: {
+        handleDOMEvents: {
           blur: onBlur
             ? view => {
                 onBlur(view.state.doc.content);

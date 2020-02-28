@@ -11,9 +11,12 @@ export default css`
     }
   }
   .ProseMirror footnote {
+    font-size: 0;
     display: inline-block;
     position: relative;
     cursor: pointer;
+    width: 10px;
+    height: 10px;
     p {
       display: none;
     }
@@ -21,8 +24,9 @@ export default css`
 
   .ProseMirror footnote::after {
     content: counter(footnote);
-    vertical-align: super;
-    font-size: 75%;
+    position: relative;
+    bottom: 5px;
+    font-size: 16px;
     counter-increment: footnote;
   }
   hr {

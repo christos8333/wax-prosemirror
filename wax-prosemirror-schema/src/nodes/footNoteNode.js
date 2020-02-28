@@ -1,6 +1,6 @@
 const footnote = {
   group: "inline",
-  content: "paragraph+",
+  content: "inline*",
   inline: true,
   atom: true,
   toDOM: () => ["footnote", 0],

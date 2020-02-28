@@ -13,10 +13,14 @@ const NoteEditorContainerStyled = styled.div`
 const NoteStyled = styled.div`
   display: flex;
   flex-direction: column;
-  width: 96%;
-  min-height: 40px;
+  width: 100%;
+  min-height: 20px;
+  margin-top: 10px;
   height: 100%;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const NoteEditorContainer = React.forwardRef((props, ref) => (

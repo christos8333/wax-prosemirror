@@ -15,8 +15,11 @@ export default css`
     display: inline-block;
     position: relative;
     cursor: pointer;
-    width: 10px;
-    height: 10px;
+    background: black;
+    color: white;
+    text-align: center;
+    width: 17px;
+    height: 17px;
     p {
       display: none;
     }
@@ -25,7 +28,7 @@ export default css`
   .ProseMirror footnote::after {
     content: counter(footnote);
     position: relative;
-    bottom: 5px;
+    bottom: 2px;
     font-size: 16px;
     counter-increment: footnote;
   }

@@ -36,7 +36,9 @@ export {
   default as DisplayBlockLevelService
 } from "./src/DisplayBlockLevel/DisplayBlockLevelService";
 export { default as NoteService } from "./src/NoteService/NoteService";
-
+export {
+  default as CommentsService
+} from "./src/CommentsService/CommentsService";
 /*
 ToolGroups
 */

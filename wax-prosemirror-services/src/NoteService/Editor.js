@@ -8,9 +8,10 @@ import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 import { filter } from "lodash";
 
-export default ({ node, view, allNotes }) => {
+export default ({ node, view }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
@@ -27,6 +28,12 @@ export default ({ node, view, allNotes }) => {
         dispatchTransaction: tr => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
+
+          const allNotes = DocumentHelpers.findChildrenByType(
+            view.state.doc,
+            view.state.schema.nodes.footnote,
+            true
+          );
 
           const noteFound = filter(allNotes, {
             node: { attrs: { id: noteId } }

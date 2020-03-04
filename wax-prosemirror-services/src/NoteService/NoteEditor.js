@@ -5,12 +5,7 @@ export default ({ notes, view }) => {
   return (
     <div>
       {notes.map(note => (
-        <Editor
-          key={note.node.attrs.id}
-          node={note.node}
-          allNotes={notes}
-          view={view}
-        />
+        <Editor key={note.node.attrs.id} node={note.node} view={view} />
       ))}
     </div>
   );

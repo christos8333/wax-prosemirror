@@ -6,9 +6,9 @@ export default ({ notes, view }) => {
     <div>
       {notes.map(note => (
         <Editor
-          key={`editor-${note.pos}`}
+          key={note.node.attrs.id}
           node={note.node}
-          pos={note.pos}
+          allNotes={notes}
           view={view}
         />
       ))}

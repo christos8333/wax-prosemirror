@@ -8,10 +8,12 @@ import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
+import { filter } from "lodash";
 
-export default ({ node, view, pos }) => {
+export default ({ node, view, allNotes }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
+  const noteId = node.attrs.id;
 
   useEffect(() => {
     const noteView = new EditorView(
@@ -26,9 +28,13 @@ export default ({ node, view, pos }) => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
 
+          const noteFound = filter(allNotes, {
+            node: { attrs: { id: noteId } }
+          });
+
           if (!tr.getMeta("fromOutside")) {
             let outerTr = view.state.tr,
-              offsetMap = StepMap.offset(pos + 1);
+              offsetMap = StepMap.offset(noteFound[0].pos + 1);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
               for (let j = 0; j < steps.length; j++)
@@ -48,8 +54,10 @@ export default ({ node, view, pos }) => {
         }
       }
     );
-    // noteView.focus();
-    context.updateView({ [pos]: noteView });
+
+    //Set Each note into Wax's Context
+    context.updateView({ [noteId]: noteView });
+    if (context.view[noteId]) context.view[noteId].focus();
   }, []);
 
   const createKeyBindings = () => {
@@ -71,8 +79,8 @@ export default ({ node, view, pos }) => {
     };
   };
 
-  if (context.view[pos]) {
-    let state = context.view[pos].state;
+  if (context.view[noteId]) {
+    let state = context.view[noteId].state;
     let start = node.content.findDiffStart(state.doc.content);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -81,7 +89,7 @@ export default ({ node, view, pos }) => {
         endA += overlap;
         endB += overlap;
       }
-      context.view[pos].dispatch(
+      context.view[noteId].dispatch(
         state.tr
           .replace(start, endB, node.slice(start, endA))
           .setMeta("fromOutside", true)

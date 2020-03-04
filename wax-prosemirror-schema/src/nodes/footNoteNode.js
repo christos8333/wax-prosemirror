@@ -3,8 +3,22 @@ const footnote = {
   content: "inline*",
   inline: true,
   atom: true,
-  toDOM: () => ["footnote", 0],
-  parseDOM: [{ tag: "footnote" }]
+  attrs: {
+    id: { default: "" }
+  },
+  toDOM: node => {
+    return ["footnote", node.attrs, 0];
+  },
+  parseDOM: [
+    {
+      tag: "footnote",
+      getAttrs(dom) {
+        return {
+          id: dom.getAttribute("id")
+        };
+      }
+    }
+  ]
 };
 
 export default footnote;

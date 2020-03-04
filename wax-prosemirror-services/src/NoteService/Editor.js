@@ -9,10 +9,12 @@ import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
+import { filter } from "lodash";
 
 export default ({ node, view, pos }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
+  const noteId = node.attrs.id;
 
   useEffect(() => {
     const noteView = new EditorView(
@@ -26,19 +28,20 @@ export default ({ node, view, pos }) => {
         dispatchTransaction: tr => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
+
           const allNotes = DocumentHelpers.findChildrenByType(
             view.state.doc,
             view.state.schema.nodes.footnote,
             true
           );
-          let noteFound = "";
-          allNotes.forEach(thenote => {
-            if (thenote.node.attrs.id === node.attrs.id) noteFound = thenote;
+
+          const noteFound = filter(allNotes, {
+            node: { attrs: { id: noteId } }
           });
+
           if (!tr.getMeta("fromOutside")) {
-            console.log("foutses", node, noteFound.pos);
             let outerTr = view.state.tr,
-              offsetMap = StepMap.offset(noteFound.pos + 1);
+              offsetMap = StepMap.offset(noteFound[0].pos + 1);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
               for (let j = 0; j < steps.length; j++)
@@ -59,8 +62,9 @@ export default ({ node, view, pos }) => {
       }
     );
 
-    // if (context.view[2]) context.view[2].focus();
-    context.updateView({ [node.attrs.id]: noteView });
+    //Set Each note into Wax's Context
+    context.updateView({ [noteId]: noteView });
+    if (context.view[noteId]) context.view[noteId].focus();
   }, []);
 
   const createKeyBindings = () => {
@@ -82,8 +86,8 @@ export default ({ node, view, pos }) => {
     };
   };
 
-  if (context.view[node.attrs.id]) {
-    let state = context.view[node.attrs.id].state;
+  if (context.view[noteId]) {
+    let state = context.view[noteId].state;
     let start = node.content.findDiffStart(state.doc.content);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -92,7 +96,7 @@ export default ({ node, view, pos }) => {
         endA += overlap;
         endB += overlap;
       }
-      context.view[node.attrs.id].dispatch(
+      context.view[noteId].dispatch(
         state.tr
           .replace(start, endB, node.slice(start, endA))
           .setMeta("fromOutside", true)

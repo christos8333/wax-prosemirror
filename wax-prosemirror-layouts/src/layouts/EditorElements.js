@@ -13,22 +13,18 @@ export default css`
   .ProseMirror footnote {
     font-size: 0;
     display: inline-block;
-    position: relative;
-    cursor: pointer;
-    background: black;
-    color: white;
     text-align: center;
     width: 17px;
     height: 17px;
-    p {
-      display: none;
-    }
+    background: black;
+    color: white;
   }
 
   .ProseMirror footnote::after {
     content: counter(footnote);
     position: relative;
     bottom: 2px;
+    cursor: pointer;
     font-size: 16px;
     counter-increment: footnote;
   }

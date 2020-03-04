@@ -8,7 +8,7 @@ export default ({ notes, view }) => {
         <Editor
           key={note.node.attrs.id}
           node={note.node}
-          pos={note.pos}
+          allNotes={notes}
           view={view}
         />
       ))}

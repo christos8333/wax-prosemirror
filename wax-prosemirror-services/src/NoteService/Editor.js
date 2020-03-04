@@ -11,7 +11,7 @@ import { NoteEditorContainer } from "wax-prosemirror-components";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import { filter } from "lodash";
 
-export default ({ node, view, pos }) => {
+export default ({ node, view, allNotes }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
@@ -28,12 +28,6 @@ export default ({ node, view, pos }) => {
         dispatchTransaction: tr => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
-
-          const allNotes = DocumentHelpers.findChildrenByType(
-            view.state.doc,
-            view.state.schema.nodes.footnote,
-            true
-          );
 
           const noteFound = filter(allNotes, {
             node: { attrs: { id: noteId } }

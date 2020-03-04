@@ -23,6 +23,13 @@ export default () => {
 };
 const updateNotes = view => {
   if (view) {
+    console.log(
+      DocumentHelpers.findChildrenByType(
+        view.state.doc,
+        view.state.schema.nodes.footnote,
+        true
+      )
+    );
     return DocumentHelpers.findChildrenByType(
       view.state.doc,
       view.state.schema.nodes.footnote,

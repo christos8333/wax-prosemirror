@@ -8,6 +8,7 @@ import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 export default ({ node, view, pos }) => {
   const editorRef = useRef();
@@ -25,10 +26,19 @@ export default ({ node, view, pos }) => {
         dispatchTransaction: tr => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
-
+          const allNotes = DocumentHelpers.findChildrenByType(
+            view.state.doc,
+            view.state.schema.nodes.footnote,
+            true
+          );
+          let noteFound = "";
+          allNotes.forEach(thenote => {
+            if (thenote.node.attrs.id === node.attrs.id) noteFound = thenote;
+          });
           if (!tr.getMeta("fromOutside")) {
+            console.log("foutses", node, noteFound.pos);
             let outerTr = view.state.tr,
-              offsetMap = StepMap.offset(pos + 1);
+              offsetMap = StepMap.offset(noteFound.pos + 1);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
               for (let j = 0; j < steps.length; j++)
@@ -48,8 +58,9 @@ export default ({ node, view, pos }) => {
         }
       }
     );
-    // noteView.focus();
-    context.updateView({ [pos]: noteView });
+
+    // if (context.view[2]) context.view[2].focus();
+    context.updateView({ [node.attrs.id]: noteView });
   }, []);
 
   const createKeyBindings = () => {
@@ -71,8 +82,8 @@ export default ({ node, view, pos }) => {
     };
   };
 
-  if (context.view[pos]) {
-    let state = context.view[pos].state;
+  if (context.view[node.attrs.id]) {
+    let state = context.view[node.attrs.id].state;
     let start = node.content.findDiffStart(state.doc.content);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -81,7 +92,7 @@ export default ({ node, view, pos }) => {
         endA += overlap;
         endB += overlap;
       }
-      context.view[pos].dispatch(
+      context.view[node.attrs.id].dispatch(
         state.tr
           .replace(start, endB, node.slice(start, endA))
           .setMeta("fromOutside", true)

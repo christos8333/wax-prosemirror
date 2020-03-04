@@ -47,7 +47,7 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value="this is some  text"
+      value=""
       layout={EditoriaLayout}
       user={user}
     />

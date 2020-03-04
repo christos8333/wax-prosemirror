@@ -8,7 +8,6 @@ import { undo, redo } from "prosemirror-history";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
 import { filter } from "lodash";
 
 export default ({ node, view, allNotes }) => {

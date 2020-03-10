@@ -8,7 +8,7 @@ export default class CommentsService extends Service {
   boot() {
     const createOverlay = this.container.get("CreateOverlay");
     createOverlay(CommentBubbleComponent, {
-      // markType: "link", // TODO ONLY WITH SELECTION NO MARK TYPE
+      markType: "selection",
       followCursor: false
     });
   }
@@ -17,5 +17,5 @@ export default class CommentsService extends Service {
     const createMark = this.container.get("CreateMark");
   }
 
-  dependencies = [new OverlayService()];
+  // dependencies = [new OverlayService()];
 }

@@ -35,15 +35,21 @@ export default options => {
     };
   };
 
-  const updatePosition = useCallback((followCursor = true) => {
-    if (!main) return defaultOverlay;
+  const displayOnSelection = main => {
+    const { from, to } = main.state.selection;
+    if (from === to) {
+      return defaultOverlay;
+    } else {
+      console.log("have selection > 1");
+    }
+  };
 
-    //TODO also acount for the case you don't look for a mark but you need the selection to be > 1
-    const PMmark = main.state.schema.marks[options.markType];
+  const displayOnMark = (main, options) => {
+    const { markType, followCursor } = options;
+    const PMmark = main.state.schema.marks[markType];
     mark = DocumentHelpers.findMark(main.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
-
     const { from, to } = mark
       ? followCursor ? main.state.selection : { from, to }
       : main.state.selection;
@@ -57,6 +63,16 @@ export default options => {
       to,
       mark
     };
+  };
+
+  const updatePosition = useCallback((followCursor = true) => {
+    if (!main) return defaultOverlay;
+    const { markType } = options;
+
+    const mark =
+      markType === "selection"
+        ? displayOnSelection(main)
+        : displayOnMark(main, options);
   });
 
   useEffect(

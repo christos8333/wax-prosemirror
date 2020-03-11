@@ -21,6 +21,19 @@ export default options => {
 
   let mark = {};
 
+  //TODO probably is best each component to calculate it's own position and not have a default
+  const calculatePositionTemp = (main, from, to) => {
+    const WaxSurface = main.dom.offsetParent.firstChild.getBoundingClientRect();
+    const start = main.coordsAtPos(from);
+    const end = main.coordsAtPos(to);
+    let left = WaxSurface.width;
+    const top = end.top - WaxSurface.top;
+    return {
+      top,
+      left
+    };
+  };
+
   // Sets Default position at the end of the annotation.
   const calculatePosition = (main, from, to) => {
     const WaxSurface = main.dom.offsetParent.getBoundingClientRect();
@@ -39,7 +52,7 @@ export default options => {
     const { from, to } = selection;
     if (from === to) return defaultOverlay;
 
-    const { left, top } = calculatePosition(main, from, to);
+    const { left, top } = calculatePositionTemp(main, from, to);
     return {
       left,
       top,

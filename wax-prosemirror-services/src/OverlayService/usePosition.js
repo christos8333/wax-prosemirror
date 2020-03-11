@@ -22,8 +22,7 @@ export default options => {
   let mark = {};
 
   // Sets Default position at the end of the annotation.
-  const calculatePosition = (main, selection) => {
-    const { from, to } = selection;
+  const calculatePosition = (main, from, to) => {
     const WaxSurface = main.dom.offsetParent.getBoundingClientRect();
     const start = main.coordsAtPos(from);
     const end = main.coordsAtPos(to);
@@ -40,7 +39,7 @@ export default options => {
     const { from, to } = selection;
     if (from === to) return defaultOverlay;
 
-    const { left, top } = calculatePosition(main, selection);
+    const { left, top } = calculatePosition(main, from, to);
     return {
       left,
       top,
@@ -56,11 +55,9 @@ export default options => {
     mark = DocumentHelpers.findMark(main.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
-    const { from, to } = mark
-      ? followCursor ? main.state.selection : { from, to }
-      : main.state.selection;
+    const { from, to } = followCursor ? main.state.selection : mark;
 
-    const { left, top } = calculatePosition(main, mark);
+    const { left, top } = calculatePosition(main, from, to);
 
     return {
       left,

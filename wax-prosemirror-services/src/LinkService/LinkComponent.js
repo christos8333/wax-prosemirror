@@ -33,7 +33,6 @@ const LinkComponent = ({ mark, setPosition, position }) => {
     () => {
       const width = ref.current ? ref.current.offsetWidth : 0;
       const left = Math.abs(position.left - width / 2);
-
       setLinkText();
       removeMarkIfEmptyHref();
     },

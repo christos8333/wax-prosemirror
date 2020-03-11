@@ -35,7 +35,7 @@ export default options => {
     };
   };
 
-  const displayOnSelection = main => {
+  const displayOnSelection = (main, options) => {
     const { selection } = main.state;
     const { from, to } = selection;
     if (from === to) return defaultOverlay;
@@ -73,9 +73,9 @@ export default options => {
 
   const updatePosition = useCallback((followCursor = true) => {
     if (!main) return defaultOverlay;
-    const { markType } = options;
+    const { markType, selection } = options;
 
-    if (markType === "selection") return displayOnSelection(main);
+    if (selection) return displayOnSelection(main, options);
 
     return displayOnMark(main, options);
   });

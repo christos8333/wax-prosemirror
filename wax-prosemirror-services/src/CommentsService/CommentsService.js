@@ -8,8 +8,9 @@ export default class CommentsService extends Service {
   boot() {
     const createOverlay = this.container.get("CreateOverlay");
     createOverlay(CommentBubbleComponent, {
-      markType: "selection",
-      followCursor: false
+      markType: "",
+      followCursor: false,
+      selection: true
     });
   }
 

@@ -22,8 +22,8 @@ export default options => {
   let mark = {};
 
   // Sets Default position at the end of the annotation.
-  const calculatePosition = (main, mark) => {
-    const { from, to } = mark;
+  const calculatePosition = (main, selection) => {
+    const { from, to } = selection;
     const WaxSurface = main.dom.offsetParent.getBoundingClientRect();
     const start = main.coordsAtPos(from);
     const end = main.coordsAtPos(to);
@@ -36,12 +36,18 @@ export default options => {
   };
 
   const displayOnSelection = main => {
-    const { from, to } = main.state.selection;
-    if (from === to) {
-      return defaultOverlay;
-    } else {
-      console.log("have selection > 1");
-    }
+    const { selection } = main.state;
+    const { from, to } = selection;
+    if (from === to) return defaultOverlay;
+
+    const { left, top } = calculatePosition(main, selection);
+    return {
+      left,
+      top,
+      from,
+      to,
+      selection
+    };
   };
 
   const displayOnMark = (main, options) => {
@@ -69,10 +75,9 @@ export default options => {
     if (!main) return defaultOverlay;
     const { markType } = options;
 
-    const mark =
-      markType === "selection"
-        ? displayOnSelection(main)
-        : displayOnMark(main, options);
+    if (markType === "selection") return displayOnSelection(main);
+
+    return displayOnMark(main, options);
   });
 
   useEffect(

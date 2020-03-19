@@ -17,7 +17,21 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
     [position.left]
   );
 
-  return <div ref={ref}>bubble</div>;
+  const createComment = event => {
+    event.preventDefault();
+    console.log("create");
+  };
+
+  return (
+    <button
+      ref={ref}
+      onClick={event => {
+        createComment(event);
+      }}
+    >
+      create
+    </button>
+  );
 };
 
 export default CommentBubbleComponent;

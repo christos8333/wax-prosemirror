@@ -1,4 +1,5 @@
 import Service from "wax-prosemirror-core/src/services/Service";
+import { commentMark } from "wax-prosemirror-schema";
 import CommentBubbleComponent from "./CommentBubbleComponent";
 import { OverlayService } from "../..";
 
@@ -17,6 +18,4 @@ export default class CommentsService extends Service {
   register() {
     const createMark = this.container.get("CreateMark");
   }
-
-  // dependencies = [new OverlayService()];
 }

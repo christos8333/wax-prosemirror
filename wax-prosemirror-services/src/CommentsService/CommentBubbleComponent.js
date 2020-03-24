@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
+import { Commands } from "wax-prosemirror-utilities";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const CommentBubbleComponent = ({ setPosition, position }) => {
-  const { view: { main } } = useContext(WaxContext);
+  const { view: { main }, app } = useContext(WaxContext);
+  const user = app.config.get("user");
   const { state, dispatch } = main;
   const ref = useRef(null);
 
@@ -19,7 +20,9 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
 
   const createComment = event => {
     event.preventDefault();
-    console.log("create");
+    const { state, dispatch } = main;
+    console.log(main);
+    Commands.createComment(state, dispatch, user);
   };
 
   return (

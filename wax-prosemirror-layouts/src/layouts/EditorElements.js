@@ -196,4 +196,9 @@ export default css`
   li [data-track]::before {
     left: -5px;
   }
+
+  span.comment {
+    border-bottom: 2px solid #ffab20;
+    border-radius: 3px 3px 0 0;
+  }
 `;

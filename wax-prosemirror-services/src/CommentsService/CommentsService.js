@@ -17,5 +17,8 @@ export default class CommentsService extends Service {
 
   register() {
     const createMark = this.container.get("CreateMark");
+    createMark({
+      comment: commentMark
+    });
   }
 }

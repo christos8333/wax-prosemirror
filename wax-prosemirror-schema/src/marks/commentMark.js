@@ -1,18 +1,16 @@
-//TODO Parse conversation
 const comment = {
   attrs: {
-    id: {},
+    userId: {},
     conversation: {}
   },
   inclusive: false,
   excludes: "",
-  group: "annotation",
   parseDOM: [
     {
-      tag: "span.comment[data-id]",
+      tag: "span.comment[data-userId]",
       getAttrs(dom) {
         return {
-          id: parseInt(dom.dataset.id)
+          userId: parseInt(dom.dataset.userId)
         };
       }
     }
@@ -22,7 +20,7 @@ const comment = {
       "span",
       {
         class: "comment",
-        "data-id": node.attrs.id
+        "data-userId": node.attrs.userId
       }
     ];
   }

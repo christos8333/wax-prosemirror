@@ -57,4 +57,25 @@ const createLink = (state, dispatch) => {
   );
 };
 
-export default { markActive, blockActive, canInsert, createTable, createLink };
+const createComment = (state, dispatch, user) => {
+  const { selection: { $from, $to } } = state;
+  dispatch(
+    state.tr.setMeta("addToHistory", false).addMark(
+      $from.pos,
+      $to.pos,
+      state.schema.marks.comment.create({
+        userId: user.userId,
+        conversation: {}
+      })
+    )
+  );
+};
+
+export default {
+  markActive,
+  blockActive,
+  canInsert,
+  createTable,
+  createLink,
+  createComment
+};

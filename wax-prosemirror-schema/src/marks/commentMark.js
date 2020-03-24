@@ -1,16 +1,17 @@
 const comment = {
   attrs: {
-    userId: {},
+    user: {},
     conversation: {}
   },
   inclusive: false,
   excludes: "",
   parseDOM: [
     {
-      tag: "span.comment[data-userId]",
+      tag: "span.comment[data-user]",
       getAttrs(dom) {
         return {
-          userId: parseInt(dom.dataset.userId)
+          user: JSON.parse(dom.dataset.user),
+          conversation: JSON.parse(dom.dataset.conversation)
         };
       }
     }
@@ -20,7 +21,8 @@ const comment = {
       "span",
       {
         class: "comment",
-        "data-userId": node.attrs.userId
+        "data-user": JSON.stringify(node.attrs.user),
+        "data-conversation": JSON.stringify(node.attrs.conversation)
       }
     ];
   }

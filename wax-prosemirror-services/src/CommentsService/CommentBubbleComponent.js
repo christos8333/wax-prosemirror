@@ -20,8 +20,6 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
 
   const createComment = event => {
     event.preventDefault();
-    const { state, dispatch } = main;
-    console.log(main);
     Commands.createComment(state, dispatch, user);
   };
 

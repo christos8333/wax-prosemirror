@@ -11,3 +11,13 @@ export {
 export {
   default as NoteEditorContainer
 } from "./src/components/notes/NoteEditorContainer";
+
+export { default as LinkComponent } from "./src/components/link/LinkComponent";
+
+export {
+  default as CommentBubbleComponent
+} from "./src/components/comments/CommentBubbleComponent";
+
+export {
+  default as CommentComponent
+} from "./src/components/comments/CommentComponent";

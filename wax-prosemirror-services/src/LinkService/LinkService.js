@@ -1,6 +1,6 @@
 import Service from "wax-prosemirror-core/src/services/Service";
 
-import LinkComponent from "./LinkComponent";
+import { LinkComponent } from "wax-prosemirror-components";
 import { linkMark } from "wax-prosemirror-schema";
 import LinkTool from "./LinkTool";
 import { OverlayService } from "../..";

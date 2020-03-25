@@ -18,7 +18,7 @@ export default class CommentsService extends Service {
       selection: true
     });
 
-    // layout.addComponent("commentsArea", CommentComponent);
+    layout.addComponent("commentsArea", CommentComponent);
   }
 
   register() {

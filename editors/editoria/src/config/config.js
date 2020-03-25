@@ -33,14 +33,7 @@ export default {
   MenuService: [
     {
       templateArea: "topBar",
-      toolGroups: [
-        "Base",
-        { name: "Annotations", exclude: ["Strong"] },
-        "Notes",
-        "Lists",
-        "Images",
-        "Tables"
-      ]
+      toolGroups: ["Base", "Annotations", "Notes", "Lists", "Images", "Tables"]
     },
     {
       templateArea: "leftSideBar",

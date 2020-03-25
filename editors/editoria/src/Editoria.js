@@ -51,7 +51,6 @@ const Editoria = () => (
       layout={EditoriaLayout}
       user={user}
     />
-    <div id="editors" />
   </Fragment>
 );
 

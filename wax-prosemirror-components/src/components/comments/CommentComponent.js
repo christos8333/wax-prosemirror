@@ -8,14 +8,7 @@ import React, {
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
-
-const CommentComponentStyled = styled.div`
-  width: 100px;
-  height: 100px;
-  background: black;
-  display: flex;
-  flex-direction: row;
-`;
+import CommentsBoxList from "./CommentsBoxList";
 
 export default () => {
   const { view: { main } } = useContext(WaxContext);
@@ -29,7 +22,7 @@ export default () => {
   );
 
   const CommentComponent = useMemo(
-    () => <CommentComponentStyled view={main} />,
+    () => <CommentsBoxList comments={comments} view={main} />,
     [comments]
   );
   return <Fragment>{CommentComponent}</Fragment>;

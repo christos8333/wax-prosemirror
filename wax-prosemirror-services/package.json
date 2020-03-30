@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-services",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Wax prosemirror services",
   "license": "MIT",
   "main": "index.js",
@@ -12,8 +12,8 @@
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "styled-components": "^4.2.0",
-    "wax-prosemirror-components": "^0.0.4",
-    "wax-prosemirror-core": "^0.0.4",
-    "wax-prosemirror-layouts": "^0.0.4"
+    "wax-prosemirror-components": "^0.0.5",
+    "wax-prosemirror-core": "^0.0.5",
+    "wax-prosemirror-layouts": "^0.0.5"
   }
 }

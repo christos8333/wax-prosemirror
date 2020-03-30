@@ -27,9 +27,7 @@ export default props => {
 };
 
 export const useInjection = identifier => {
-  const {
-    app: { container }
-  } = useContext(WaxContext);
+  const { app: { container } } = useContext(WaxContext);
 
   if (!container) {
     throw new Error();

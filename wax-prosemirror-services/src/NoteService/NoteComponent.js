@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  Fragment
+} from "react";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import { isEqual } from "lodash";
@@ -19,7 +25,7 @@ export default () => {
     () => <NoteEditor notes={notes} view={main} />,
     [notes]
   );
-  return <div>{noteComponent}</div>;
+  return <Fragment>{noteComponent}</Fragment>;
 };
 const updateNotes = view => {
   if (view) {

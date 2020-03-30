@@ -55,9 +55,14 @@ const findInlineNodes = (node, descend) => {
   return findChildren(node, child => child.isInline, descend);
 };
 
+const findChildrenByMark = (node, markType, descend) => {
+  return findChildren(node, child => markType.isInSet(child.marks), descend);
+};
+
 export default {
   findMark,
   findBlockNodes,
   findChildrenByType,
-  findInlineNodes
+  findInlineNodes,
+  findChildrenByMark
 };

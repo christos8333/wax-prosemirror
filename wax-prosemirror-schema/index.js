@@ -11,7 +11,7 @@ export { default as strikethroughMark } from "./src/marks/strikethroughMark";
 export { default as underlineMark } from "./src/marks/underlineMark";
 export { default as smallcapsMark } from "./src/marks/smallcapsMark";
 export { default as sourceMark } from "./src/marks/sourceMark";
-
+export { default as commentMark } from "./src/marks/commentMark";
 /*
 LIST OF TRACK CHANGES MARKS
 */

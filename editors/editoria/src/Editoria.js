@@ -47,11 +47,10 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value=""
+      value={"this is some content"}
       layout={EditoriaLayout}
       user={user}
     />
-    <div id="editors" />
   </Fragment>
 );
 

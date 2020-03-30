@@ -21,9 +21,21 @@ export default options => {
 
   let mark = {};
 
+  //TODO probably is best each component to calculate it's own position and not have a default
+  const calculatePositionTemp = (main, from, to) => {
+    const WaxSurface = main.dom.offsetParent.firstChild.getBoundingClientRect();
+    const start = main.coordsAtPos(from);
+    const end = main.coordsAtPos(to);
+    let left = WaxSurface.width;
+    const top = end.top - WaxSurface.top;
+    return {
+      top,
+      left
+    };
+  };
+
   // Sets Default position at the end of the annotation.
-  const calculatePosition = (main, mark) => {
-    const { from, to } = mark;
+  const calculatePosition = (main, from, to) => {
     const WaxSurface = main.dom.offsetParent.getBoundingClientRect();
     const start = main.coordsAtPos(from);
     const end = main.coordsAtPos(to);
@@ -35,20 +47,30 @@ export default options => {
     };
   };
 
-  const updatePosition = useCallback((followCursor = true) => {
-    if (!main) return defaultOverlay;
+  const displayOnSelection = (main, options) => {
+    const { selection } = main.state;
+    const { from, to } = selection;
+    if (from === to) return defaultOverlay;
 
-    //TODO also acount for the case you don't look for a mark but you need the selection to be > 1
-    const PMmark = main.state.schema.marks[options.markType];
+    const { left, top } = calculatePositionTemp(main, from, to);
+    return {
+      left,
+      top,
+      from,
+      to,
+      selection
+    };
+  };
+
+  const displayOnMark = (main, options) => {
+    const { markType, followCursor } = options;
+    const PMmark = main.state.schema.marks[markType];
     mark = DocumentHelpers.findMark(main.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
+    const { from, to } = followCursor ? main.state.selection : mark;
 
-    const { from, to } = mark
-      ? followCursor ? main.state.selection : { from, to }
-      : main.state.selection;
-
-    const { left, top } = calculatePosition(main, mark);
+    const { left, top } = calculatePosition(main, from, to);
 
     return {
       left,
@@ -57,6 +79,15 @@ export default options => {
       to,
       mark
     };
+  };
+
+  const updatePosition = useCallback((followCursor = true) => {
+    if (!main) return defaultOverlay;
+    const { markType, selection } = options;
+
+    if (selection) return displayOnSelection(main, options);
+
+    return displayOnMark(main, options);
   });
 
   useEffect(

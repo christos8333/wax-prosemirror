@@ -19,7 +19,8 @@ import {
   TextToolGroupService,
   NoteService,
   NoteToolGroupService,
-  TrackChangeService
+  TrackChangeService,
+  CommentsService
 } from "wax-prosemirror-services";
 
 import invisibles, {
@@ -65,6 +66,7 @@ export default {
     new AnnotationToolGroupService(),
     new NoteToolGroupService(),
     new ListToolGroupService(),
-    new TrackChangeService()
+    new TrackChangeService(),
+    new CommentsService()
   ]
 };

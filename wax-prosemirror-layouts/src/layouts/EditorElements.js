@@ -13,16 +13,12 @@ export default css`
   .ProseMirror footnote {
     font-size: 0;
     display: inline-block;
-    position: relative;
-    cursor: pointer;
-    background: black;
-    color: white;
     text-align: center;
     width: 17px;
     height: 17px;
-    p {
-      display: none;
-    }
+    background: black;
+    color: white;
+    cursor: pointer;
   }
 
   .ProseMirror footnote::after {
@@ -199,5 +195,10 @@ export default css`
   li[data-track]::before,
   li [data-track]::before {
     left: -5px;
+  }
+
+  span.comment {
+    border-bottom: 2px solid #ffab20;
+    border-radius: 3px 3px 0 0;
   }
 `;

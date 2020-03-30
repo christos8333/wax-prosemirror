@@ -13,6 +13,51 @@ const LayoutWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow: hidden;
+  .divider {
+    &:before {
+      content: "Notes";
+      position: relative;
+      bottom: 14px;
+      background: white;
+      color: #a3a3a3;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+    }
+    &:after {
+      color: #a3a3a3;
+      content: ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . "
+        ". . . . . . . . . . . . . . . . . . . . ";
+      float: left;
+      font-weight: 400;
+      white-space: nowrap;
+      width: 0;
+      position: relative;
+      bottom: 14px;
+    }
+  }
 `;
 
 const LeftMenuSurfaceContainer = styled.div`
@@ -20,9 +65,6 @@ const LeftMenuSurfaceContainer = styled.div`
   flex-direction: row;
   height: 100%;
   width: 100%;
-  .divider {
-    border-top: 1px dotted black;
-  }
 `;
 
 const WaxSurfaceContainer = styled.div`
@@ -32,15 +74,19 @@ const WaxSurfaceContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 `;
 
 const EditorContainer = styled.div`
-  -moz-box-shadow: 0 0 8px #ecedf1;
-  -webkit-box-shadow: 0 0 8px #ecedf1;
-  box-shadow: 0 0 8px #ecedf1;
   width: 65%;
-  min-height: 90%;
-  padding: 40px;
+  height: 100%;
+  .ProseMirror {
+    -moz-box-shadow: 0 0 8px #ecedf1;
+    -webkit-box-shadow: 0 0 8px #ecedf1;
+    box-shadow: 0 0 8px #ecedf1;
+    min-height: 90%;
+    padding: 40px;
+  }
 `;
 
 const WaxSurfaceScroll = styled.div`
@@ -123,14 +169,14 @@ const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
-  padding: 0px 11px 10px 5px;
+  padding: 0 0 10px 5px;
   height: 100%;
-  width: 70%;
+  width: 65%;
 `;
 
 const CommentsContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 35%;
   height: 100%;
 `;

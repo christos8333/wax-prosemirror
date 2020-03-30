@@ -57,6 +57,8 @@ export default ({ node, view }) => {
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
+            //Set everytime the active view into context
+            context.updateActiveView(context.view[noteId]);
           }
         }
       }
@@ -64,7 +66,11 @@ export default ({ node, view }) => {
 
     //Set Each note into Wax's Context
     context.updateView({ [noteId]: noteView });
-    if (context.view[noteId]) context.view[noteId].focus();
+    if (context.view[noteId]) {
+      context.view[noteId].focus();
+      //Set everytime the active view into context
+      context.updateActiveView(context.view[noteId]);
+    }
   }, []);
 
   const createKeyBindings = () => {

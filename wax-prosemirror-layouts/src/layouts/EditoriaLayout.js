@@ -171,7 +171,7 @@ const NotesContainer = styled.div`
 
 const CommentsContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 35%;
   height: 100%;
 `;

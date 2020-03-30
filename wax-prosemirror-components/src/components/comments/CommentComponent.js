@@ -30,7 +30,11 @@ export default () => {
 
 const updateComments = view => {
   if (view) {
-    // TODO find comments
+    return DocumentHelpers.findChildrenByMark(
+      view.state.doc,
+      view.state.schema.marks.comment,
+      true
+    );
   }
   return [];
 };

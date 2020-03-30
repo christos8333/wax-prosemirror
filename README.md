@@ -73,7 +73,8 @@ debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 
 7.  _Text Tool group_: `Paragraph`, `Paragraph Continued`, `Extract Prose`, `Extract Poetry`, `Source Note`, `Block Quote`
 
-8.  _Notes Tool group_: `notes` (currently under development)
+8.  _Notes Tool group_: `notes` 
+9.  _Comments Tool group_: `comments` ((currently under development))
 
 <h2> wax-prosemirror-core </h2>
 
@@ -388,11 +389,11 @@ Is used for adding menus to the editor.
 5.  Exclude certain tool from toolgroups. `toolGroups: [{name: "Base", exclude: ['Undo']}, "Annotations", "Notes", "Lists", "Images", "Tables"]`
 ## Latest versions
 
-* wax-prosemirror-components@0.0.4
-* wax-prosemirror-core@0.0.4
-* wax-prosemirror-layouts@0.0.4
-* wax-prosemirror-plugins@0.0.4
-* wax-prosemirror-schema@0.0.4
-* wax-prosemirror-services@0.0.4
-* wax-prosemirror-themes@0.0.4
-* wax-prosemirror-utilities@0.0.4
+* wax-prosemirror-components@0.0.5
+* wax-prosemirror-core@0.0.5
+* wax-prosemirror-layouts@0.0.5
+* wax-prosemirror-plugins@0.0.5
+* wax-prosemirror-schema@0.0.5
+* wax-prosemirror-services@0.0.5
+* wax-prosemirror-themes@0.0.5
+* wax-prosemirror-utilities@0.0.5

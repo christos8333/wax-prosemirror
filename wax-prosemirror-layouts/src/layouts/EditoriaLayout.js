@@ -13,13 +13,7 @@ const LayoutWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-`;
-
-const LeftMenuSurfaceContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
+  overflow: hidden;
   .divider {
     &:before {
       content: "Notes";
@@ -66,6 +60,13 @@ const LeftMenuSurfaceContainer = styled.div`
   }
 `;
 
+const LeftMenuSurfaceContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+`;
+
 const WaxSurfaceContainer = styled.div`
   flex: 1;
   position: relative;
@@ -73,15 +74,19 @@ const WaxSurfaceContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
 `;
 
 const EditorContainer = styled.div`
-  -moz-box-shadow: 0 0 8px #ecedf1;
-  -webkit-box-shadow: 0 0 8px #ecedf1;
-  box-shadow: 0 0 8px #ecedf1;
   width: 65%;
-  min-height: 90%;
-  padding: 40px;
+  height: 100%;
+  .ProseMirror {
+    -moz-box-shadow: 0 0 8px #ecedf1;
+    -webkit-box-shadow: 0 0 8px #ecedf1;
+    box-shadow: 0 0 8px #ecedf1;
+    min-height: 90%;
+    padding: 40px;
+  }
 `;
 
 const WaxSurfaceScroll = styled.div`
@@ -164,9 +169,9 @@ const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
-  padding: 0px 11px 10px 5px;
+  padding: 0 0 10px 5px;
   height: 100%;
-  width: 70%;
+  width: 65%;
 `;
 
 const CommentsContainer = styled.div`

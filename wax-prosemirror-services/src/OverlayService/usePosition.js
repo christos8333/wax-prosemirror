@@ -28,7 +28,6 @@ export default options => {
     const end = activeView.coordsAtPos(to);
     let left = WaxSurface.width + WaxSurface.x;
     let top = end.top;
-    if (top === 0) top = WaxSurface.top;
     return {
       top,
       left

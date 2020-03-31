@@ -26,8 +26,8 @@ export default options => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to);
-    let left = WaxSurface.width + WaxSurface.x;
-    let top = end.top;
+    const left = WaxSurface.width + WaxSurface.x;
+    const top = end.top;
     return {
       top,
       left
@@ -36,11 +36,11 @@ export default options => {
 
   // Sets Default position at the end of the annotation.
   const calculatePosition = (activeView, from, to) => {
-    const WaxSurface = activeView.dom.offsetParent.getBoundingClientRect();
+    const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to);
-    let left = end.left;
-    const top = end.top + WaxSurface.top - 25;
+    const left = end.left;
+    const top = end.top + 20;
     return {
       top,
       left

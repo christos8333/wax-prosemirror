@@ -257,15 +257,14 @@ const EditoriaLayout = ({ editor }) => {
                 <CommentsContainer>
                   <CommentsArea />
                 </CommentsContainer>
-
-                <WaxOverlays />
               </WaxSurfaceScroll>
               <RightSideBar />
             </WaxSurfaceContainer>
             {AreasWithNotes}
           </PanelGroup>
-          <InfoArea />
         </LeftMenuSurfaceContainer>
+        <InfoArea />
+        <WaxOverlays />
       </LayoutWrapper>
     </ThemeProvider>
   );

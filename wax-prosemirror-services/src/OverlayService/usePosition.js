@@ -26,8 +26,9 @@ export default options => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to);
-    let left = WaxSurface.width;
-    const top = end.top - WaxSurface.top;
+    let left = WaxSurface.width + WaxSurface.x;
+    let top = end.top;
+    if (top === 0) top = WaxSurface.top;
     return {
       top,
       left

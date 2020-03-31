@@ -4,12 +4,12 @@ import { Commands } from "wax-prosemirror-utilities";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 
 const CommentBubbleComponent = ({ setPosition, position }) => {
-  const { view: { main } } = useContext(WaxContext);
-  const { state, dispatch } = main;
-
+  const { view: { main }, activeView } = useContext(WaxContext);
+  const { state, dispatch } = activeView;
+  console.log("position", position);
   useEffect(
     () => {
-      const WaxSurface = main.dom.offsetParent.firstChild.getBoundingClientRect();
+      const WaxSurface = activeView.dom.offsetParent.firstChild.getBoundingClientRect();
       const left = WaxSurface.width;
       setPosition({ ...position, left });
     },

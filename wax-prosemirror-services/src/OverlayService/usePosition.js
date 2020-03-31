@@ -12,7 +12,7 @@ const defaultOverlay = {
 };
 
 export default options => {
-  const { view: { main } } = useContext(WaxContext);
+  const { view: { main }, activeView } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
     position: "absolute",
@@ -22,10 +22,10 @@ export default options => {
   let mark = {};
 
   //TODO probably is best each component to calculate it's own position and not have a default
-  const calculatePositionTemp = (main, from, to) => {
-    const WaxSurface = main.dom.offsetParent.firstChild.getBoundingClientRect();
-    const start = main.coordsAtPos(from);
-    const end = main.coordsAtPos(to);
+  const calculatePositionTemp = (activeView, from, to) => {
+    const WaxSurface = activeView.dom.offsetParent.firstChild.getBoundingClientRect();
+    const start = activeView.coordsAtPos(from);
+    const end = activeView.coordsAtPos(to);
     let left = WaxSurface.width;
     const top = end.top - WaxSurface.top;
     return {
@@ -35,10 +35,10 @@ export default options => {
   };
 
   // Sets Default position at the end of the annotation.
-  const calculatePosition = (main, from, to) => {
-    const WaxSurface = main.dom.offsetParent.getBoundingClientRect();
-    const start = main.coordsAtPos(from);
-    const end = main.coordsAtPos(to);
+  const calculatePosition = (activeView, from, to) => {
+    const WaxSurface = activeView.dom.offsetParent.getBoundingClientRect();
+    const start = activeView.coordsAtPos(from);
+    const end = activeView.coordsAtPos(to);
     let left = end.left - WaxSurface.left;
     const top = end.top - WaxSurface.top + 20;
     return {
@@ -47,12 +47,13 @@ export default options => {
     };
   };
 
-  const displayOnSelection = (main, options) => {
-    const { selection } = main.state;
+  const displayOnSelection = (activeView, options) => {
+    const { selection } = activeView.state;
     const { from, to } = selection;
+    console.log(from, to);
     if (from === to) return defaultOverlay;
-
-    const { left, top } = calculatePositionTemp(main, from, to);
+    const { left, top } = calculatePositionTemp(activeView, from, to);
+    // console.log("here?", left, top, from, to, selection);
     return {
       left,
       top,
@@ -62,15 +63,15 @@ export default options => {
     };
   };
 
-  const displayOnMark = (main, options) => {
+  const displayOnMark = (activeView, options) => {
     const { markType, followCursor } = options;
-    const PMmark = main.state.schema.marks[markType];
-    mark = DocumentHelpers.findMark(main.state, PMmark);
+    const PMmark = activeView.state.schema.marks[markType];
+    mark = DocumentHelpers.findMark(activeView.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
-    const { from, to } = followCursor ? main.state.selection : mark;
+    const { from, to } = followCursor ? activeView.state.selection : mark;
 
-    const { left, top } = calculatePosition(main, from, to);
+    const { left, top } = calculatePosition(activeView, from, to);
 
     return {
       left,
@@ -82,12 +83,13 @@ export default options => {
   };
 
   const updatePosition = useCallback((followCursor = true) => {
-    if (!main) return defaultOverlay;
+    if (Object.keys(activeView).length === 0) return defaultOverlay;
+
     const { markType, selection } = options;
 
-    if (selection) return displayOnSelection(main, options);
+    if (selection) return displayOnSelection(activeView, options);
 
-    return displayOnMark(main, options);
+    return displayOnMark(activeView, options);
   });
 
   useEffect(

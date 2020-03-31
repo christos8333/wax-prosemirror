@@ -45,8 +45,6 @@ export default props => {
   }, []);
 
   const dispatchTransaction = transaction => {
-    //Set everytime the active view into context
-    context.updateActiveView(view);
     const { TrackChange } = props;
     const tr = TrackChange
       ? trackedTransaction(transaction, view.state, user)

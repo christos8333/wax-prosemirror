@@ -48,6 +48,8 @@ export default ({ node, view }) => {
                 outerTr.step(steps[j].map(offsetMap));
             }
 
+            //Set everytime the active view into context
+            context.updateActiveView(context.view[noteId]);
             if (outerTr.docChanged) view.dispatch(outerTr);
           }
         },
@@ -57,8 +59,6 @@ export default ({ node, view }) => {
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
-            //Set everytime the active view into context
-            context.updateActiveView(context.view[noteId]);
           }
         }
       }

@@ -4,8 +4,7 @@ import { Commands } from "wax-prosemirror-utilities";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 
 const CommentBubbleComponent = ({ setPosition, position }) => {
-  const { view: { main }, app } = useContext(WaxContext);
-  const user = app.config.get("user");
+  const { view: { main } } = useContext(WaxContext);
   const { state, dispatch } = main;
 
   useEffect(
@@ -19,7 +18,7 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
 
   const createComment = event => {
     event.preventDefault();
-    Commands.createComment(state, dispatch, user);
+    Commands.createComment(state, dispatch);
   };
 
   return (

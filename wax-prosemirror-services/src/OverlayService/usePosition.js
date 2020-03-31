@@ -40,8 +40,8 @@ export default options => {
     const WaxSurface = activeView.dom.offsetParent.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to);
-    let left = end.left - WaxSurface.left;
-    const top = end.top - WaxSurface.top + 20;
+    let left = end.left;
+    const top = end.top + WaxSurface.top - 25;
     return {
       top,
       left

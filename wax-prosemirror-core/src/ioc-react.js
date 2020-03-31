@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 
 export const WaxContext = React.createContext({
   view: {},
+  activeView: {},
   app: null,
   updateView: null,
   updateActiveView: null
@@ -13,7 +14,11 @@ export default props => {
     view: props.view || {},
     activeView: props.activeView || {},
     updateView: view => {
-      setContext({ ...context, view: Object.assign(context.view, view) });
+      setContext({
+        ...context,
+        view: Object.assign(context.view, view),
+        activeView: view
+      });
     },
     updateActiveView: view => {
       setContext({ ...context, activeView: view });

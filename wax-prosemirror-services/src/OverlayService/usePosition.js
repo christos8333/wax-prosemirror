@@ -23,7 +23,7 @@ export default options => {
 
   //TODO probably is best each component to calculate it's own position and not have a default
   const calculatePositionTemp = (activeView, from, to) => {
-    const WaxSurface = activeView.dom.offsetParent.firstChild.getBoundingClientRect();
+    const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to);
     let left = WaxSurface.width;
@@ -50,10 +50,8 @@ export default options => {
   const displayOnSelection = (activeView, options) => {
     const { selection } = activeView.state;
     const { from, to } = selection;
-    console.log(from, to);
     if (from === to) return defaultOverlay;
     const { left, top } = calculatePositionTemp(activeView, from, to);
-    // console.log("here?", left, top, from, to, selection);
     return {
       left,
       top,

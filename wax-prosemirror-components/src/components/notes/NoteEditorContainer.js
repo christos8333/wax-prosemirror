@@ -12,7 +12,7 @@ const NoteEditorContainerStyled = styled.div`
 
 const NoteStyled = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   min-height: 20px;
   margin-top: 10px;
@@ -20,6 +20,10 @@ const NoteStyled = styled.div`
   border-bottom: 1px solid black;
   &:focus {
     outline: none;
+  }
+  span.comment {
+    border-bottom: 2px solid #ffab20;
+    border-radius: 3px 3px 0 0;
   }
 `;
 

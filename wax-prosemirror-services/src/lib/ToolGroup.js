@@ -18,15 +18,15 @@ export default class ToolGroup {
     if (include.length > 0) {
       this._tools.map(tool => {
         if (include.includes(tool.constructor.name)) {
-          tool.enableTool();
+          tool.displayTool();
         } else {
-          tool.disableTool();
+          tool.notDisplayTool();
         }
       });
     } else {
       this._tools.map(tool => {
         if (exclude.includes(tool.constructor.name)) {
-          tool.disableTool();
+          tool.notDisplayTool();
         }
       });
     }

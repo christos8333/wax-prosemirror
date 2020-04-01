@@ -53,11 +53,11 @@ export default class Tools {
     ) : null;
   }
 
-  disableTool() {
+  notDisplayTool() {
     this._isDisplayed = false;
   }
 
-  enableTool() {
+  displayTool() {
     this._isDisplayed = true;
   }
 }

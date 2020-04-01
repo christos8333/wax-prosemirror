@@ -21,7 +21,11 @@ export default options => {
 
   let mark = {};
 
-  // Sets Default position at the end of the annotation.
+  /* Sets Default position at the end of the annotation. You
+  can overwrite the default position in your component.
+  Check: wax-prosemirror-components/src/components/comments/CommentBubbleComponent.js
+  for reposition the create new comment component.
+ */
   const calculatePosition = (activeView, from, to) => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);

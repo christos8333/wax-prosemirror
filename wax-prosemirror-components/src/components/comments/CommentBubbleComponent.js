@@ -11,9 +11,11 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
       const WaxSurface = activeView.dom.getBoundingClientRect();
       const { selection } = activeView.state;
       const { from, to } = selection;
+      const start = activeView.coordsAtPos(from);
       const end = activeView.coordsAtPos(to);
+      const difference = end.top - start.top;
       const left = WaxSurface.width + WaxSurface.x;
-      const top = end.top;
+      const top = end.top - difference / 2 - 5;
       setPosition({ ...position, left, top });
     },
     [position.left]

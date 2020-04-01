@@ -4,6 +4,7 @@ const OverlayContainer = styled.div`
   position: ${props => props.position.position};
   left: ${props => `${props.position.left}px`};
   top: ${props => `${props.position.top}px`};
+  z-index: 999;
 `;
 
 const Overlay = props => (

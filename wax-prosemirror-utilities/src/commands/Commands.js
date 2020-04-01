@@ -57,15 +57,14 @@ const createLink = (state, dispatch) => {
   );
 };
 
-const createComment = (state, dispatch, user) => {
+const createComment = (state, dispatch) => {
   const { selection: { $from, $to } } = state;
   dispatch(
     state.tr.addMark(
       $from.pos,
       $to.pos,
       state.schema.marks.comment.create({
-        user: user,
-        conversation: {}
+        conversation: []
       })
     )
   );

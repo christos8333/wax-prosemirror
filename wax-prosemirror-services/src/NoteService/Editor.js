@@ -49,6 +49,12 @@ export default ({ node, view }) => {
             }
 
             if (outerTr.docChanged) view.dispatch(outerTr);
+
+            //Set everytime the active view into context
+            context.updateActiveView({
+              activeView: context.view[noteId],
+              activeViewId: noteId
+            });
           }
         },
         handleDOMEvents: {
@@ -64,7 +70,15 @@ export default ({ node, view }) => {
 
     //Set Each note into Wax's Context
     context.updateView({ [noteId]: noteView });
-    if (context.view[noteId]) context.view[noteId].focus();
+    if (context.view[noteId]) {
+      context.view[noteId].focus();
+
+      //Set everytime the active view into context
+      context.updateActiveView({
+        activeView: context.view[noteId],
+        activeViewId: noteId
+      });
+    }
   }, []);
 
   const createKeyBindings = () => {

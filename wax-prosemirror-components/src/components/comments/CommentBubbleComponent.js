@@ -6,7 +6,6 @@ import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 const CommentBubbleComponent = ({ setPosition, position }) => {
   const { view: { main }, activeView } = useContext(WaxContext);
   const { state, dispatch } = activeView;
-
   useLayoutEffect(
     () => {
       const WaxSurface = activeView.dom.getBoundingClientRect();

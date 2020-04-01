@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useState, useContext, useLayoutEffect, useCallback } from "react";
 import { isObject } from "lodash";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
@@ -77,7 +77,7 @@ export default options => {
     return displayOnMark(activeView, options);
   });
 
-  useEffect(
+  useLayoutEffect(
     () => {
       setPosition({
         position: "absolute",

@@ -52,7 +52,12 @@ export default props => {
 
     const state = view.state.apply(tr);
     view.updateState(state);
-    context.updateView({ main: view });
+
+    context.updateView({
+      main: view,
+      activeViewId: context.activeViewId,
+      activeView: view
+    });
 
     props.onChange(state.doc.content);
   };

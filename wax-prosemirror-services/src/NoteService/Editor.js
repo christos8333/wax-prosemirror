@@ -48,9 +48,13 @@ export default ({ node, view }) => {
                 outerTr.step(steps[j].map(offsetMap));
             }
 
-            //Set everytime the active view into context
-            context.updateActiveView(context.view[noteId]);
             if (outerTr.docChanged) view.dispatch(outerTr);
+
+            //Set everytime the active view into context
+            context.updateActiveView({
+              activeView: context.view[noteId],
+              activeViewId: noteId
+            });
           }
         },
         handleDOMEvents: {
@@ -68,8 +72,12 @@ export default ({ node, view }) => {
     context.updateView({ [noteId]: noteView });
     if (context.view[noteId]) {
       context.view[noteId].focus();
+
       //Set everytime the active view into context
-      context.updateActiveView(context.view[noteId]);
+      context.updateActiveView({
+        activeView: context.view[noteId],
+        activeViewId: noteId
+      });
     }
   }, []);
 

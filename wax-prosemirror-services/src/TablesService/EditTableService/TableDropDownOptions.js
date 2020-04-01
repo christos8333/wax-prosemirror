@@ -30,7 +30,7 @@ export default class TableDropDownOptions extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    return this._isEnabled ? (
+    return this._isDisplayed ? (
       <TableDropDown key={uuid()} item={this.toJSON()} view={view} />
     ) : null;
   }

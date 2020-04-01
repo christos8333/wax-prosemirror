@@ -29,7 +29,7 @@ export default class Image extends Tools {
       this.config.get("fileUpload"),
       this.pmplugins.get("imagePlaceHolder")
     );
-    return this._isEnabled ? (
+    return this._isDisplayed ? (
       <ImageUpload key={uuid()} item={this.toJSON()} fileUpload={upload} />
     ) : null;
   }

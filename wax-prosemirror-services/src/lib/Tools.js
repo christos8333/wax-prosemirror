@@ -8,7 +8,7 @@ import { Button } from "wax-prosemirror-components";
 export default class Tools {
   title = "title";
   content = "content";
-  _isEnabled = true;
+  _isDisplayed = true;
   hideOnToolbar = false;
   config = {};
   pmplugins = {};
@@ -48,16 +48,16 @@ export default class Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
 
-    return this._isEnabled ? (
+    return this._isDisplayed ? (
       <Button key={uuid()} item={this.toJSON()} view={view} />
     ) : null;
   }
 
   disableTool() {
-    this._isEnabled = false;
+    this._isDisplayed = false;
   }
 
   enableTool() {
-    this._isEnabled = true;
+    this._isDisplayed = true;
   }
 }

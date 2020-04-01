@@ -59,6 +59,11 @@ export default ({ node, view }) => {
         },
         handleDOMEvents: {
           mousedown: () => {
+            context.updateActiveView({
+              activeView: context.view[noteId],
+              activeViewId: noteId
+            });
+
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.

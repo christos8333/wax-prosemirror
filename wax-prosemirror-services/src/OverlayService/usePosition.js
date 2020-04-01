@@ -21,19 +21,6 @@ export default options => {
 
   let mark = {};
 
-  //TODO probably is best each component to calculate it's own position and not have a default
-  const calculatePositionTemp = (activeView, from, to) => {
-    const WaxSurface = activeView.dom.getBoundingClientRect();
-    const start = activeView.coordsAtPos(from);
-    const end = activeView.coordsAtPos(to);
-    const left = WaxSurface.width + WaxSurface.x;
-    const top = end.top;
-    return {
-      top,
-      left
-    };
-  };
-
   // Sets Default position at the end of the annotation.
   const calculatePosition = (activeView, from, to) => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
@@ -51,7 +38,7 @@ export default options => {
     const { selection } = activeView.state;
     const { from, to } = selection;
     if (from === to) return defaultOverlay;
-    const { left, top } = calculatePositionTemp(activeView, from, to);
+    const { left, top } = calculatePosition(activeView, from, to);
     return {
       left,
       top,

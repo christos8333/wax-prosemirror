@@ -7,6 +7,7 @@ import { icons } from "wax-prosemirror-components";
 export default class Undo extends Tools {
   title = "Undo last change";
   content = icons.undo;
+  onlyOnMain = true;
 
   get run() {
     return undo;

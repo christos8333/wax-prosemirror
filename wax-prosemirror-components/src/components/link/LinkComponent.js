@@ -21,8 +21,8 @@ const Button = styled.button`
 const LinkComponent = ({ mark, setPosition, position }) => {
   const href = mark ? mark.attrs.href : null,
     linkMark = mark ? mark : null,
-    { view: { main } } = useContext(WaxContext),
-    { state, dispatch } = main,
+    { view: { main }, activeView } = useContext(WaxContext),
+    { state, dispatch } = activeView,
     ref = useRef(null),
     linkInput = useRef(null),
     [addButtonText, setButtonText] = useState("Create"),
@@ -46,12 +46,12 @@ const LinkComponent = ({ mark, setPosition, position }) => {
         .removeMark(mark.from, mark.to, state.schema.marks.link)
         .addMark(mark.from, mark.to, state.schema.marks.link.create({ href }))
     );
-    main.focus();
+    activeView.focus();
   };
 
   const removeLink = () => {
     dispatch(state.tr.removeMark(mark.from, mark.to, state.schema.marks.link));
-    main.focus();
+    activeView.focus();
   };
 
   const handleKeyDown = event => {

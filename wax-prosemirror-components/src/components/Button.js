@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ButtonStyles } from "wax-prosemirror-themes";
+import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 
 const ButtonStyled = styled.button`
   ${ButtonStyles};
@@ -16,6 +17,11 @@ const ButtonStyled = styled.button`
 `;
 
 const Button = ({ view = {}, item }) => {
+  if (item.onlyOnMain) {
+    const { view: { main } } = useContext(WaxContext);
+    view = main;
+  }
+
   return (
     <ButtonStyled
       type="button"

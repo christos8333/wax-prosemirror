@@ -1,5 +1,6 @@
 const comment = {
   attrs: {
+    viewId: { default: "" },
     conversation: []
   },
   inclusive: false,
@@ -9,6 +10,7 @@ const comment = {
       tag: "span.comment[data-conversation]",
       getAttrs(dom) {
         return {
+          viewId: dom.dataset.viewId,
           conversation: JSON.parse(dom.dataset.conversation)
         };
       }
@@ -19,6 +21,7 @@ const comment = {
       "span",
       {
         class: "comment",
+        "data-viewId": node.attrs.viewId,
         "data-conversation": JSON.stringify(node.attrs.conversation)
       }
     ];

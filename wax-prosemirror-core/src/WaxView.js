@@ -39,7 +39,11 @@ export default props => {
         }
       }
     );
-    context.updateView({ main: view });
+    context.updateView({
+      main: view,
+      activeViewId: "main",
+      activeView: view
+    });
     if (debug) applyDevTools(view);
     if (autoFocus) view.focus();
   }, []);
@@ -55,7 +59,7 @@ export default props => {
 
     context.updateView({
       main: view,
-      activeViewId: context.activeViewId,
+      activeViewId: "main",
       activeView: view
     });
 

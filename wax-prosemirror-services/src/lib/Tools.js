@@ -10,6 +10,7 @@ export default class Tools {
   content = "content";
   _isDisplayed = true;
   hideOnToolbar = false;
+  onlyOnMain = false;
   config = {};
   pmplugins = {};
 
@@ -41,7 +42,8 @@ export default class Tools {
       active: this.active,
       run: this.run,
       enable: this.enable,
-      select: this.select
+      select: this.select,
+      onlyOnMain: this.onlyOnMain
     };
   }
 

@@ -26,5 +26,9 @@ export default class Note extends Tools {
     };
   }
 
-  get enable() {}
+  get enable() {
+    return state => {
+      // TODO disable on notes editor
+    };
+  }
 }

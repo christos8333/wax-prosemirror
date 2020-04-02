@@ -7,6 +7,7 @@ import { icons } from "wax-prosemirror-components";
 export default class Redo extends Tools {
   title = "Redo last undone change";
   content = icons.redo;
+  onlyOnMain = true;
 
   get run() {
     return redo;

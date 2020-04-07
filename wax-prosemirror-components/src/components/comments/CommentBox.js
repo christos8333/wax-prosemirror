@@ -8,12 +8,10 @@ const CommentBoxStyled = styled.div`
   flex-direction: column;
   margin-top: 10px;
   background: black;
+  position: absolute;
+  top: ${props => (props.top ? `${props.top}px` : 0)};
 `;
 
-export default ({ mark, view }) => {
-  useEffect(() => {
-    console.log(document.getElementById(mark.attrs.id));
-  }, []);
-
-  return <CommentBoxStyled />;
+export default ({ mark, view, top }) => {
+  return <CommentBoxStyled top={top} />;
 };

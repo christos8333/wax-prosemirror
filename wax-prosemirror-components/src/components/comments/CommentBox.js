@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 
-// export default ({ node, view }) => {
-//   useEffect(() => {}, []);
-// };
-
 const CommentBoxStyled = styled.div`
   height: 50px;
   width: 50px;
@@ -14,5 +10,10 @@ const CommentBoxStyled = styled.div`
   background: black;
 `;
 
-const CommentBox = () => <CommentBoxStyled />;
-export default CommentBox;
+export default ({ mark, view }) => {
+  useEffect(() => {
+    console.log(document.getElementById(mark.attrs.id));
+  }, []);
+
+  return <CommentBoxStyled />;
+};

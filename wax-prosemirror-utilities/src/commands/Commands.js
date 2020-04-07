@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 const markActive = type => state => {
   const { from, $from, to, empty } = state.selection;
 
@@ -64,6 +66,7 @@ const createComment = (state, dispatch, activeViewId) => {
       $from.pos,
       $to.pos,
       state.schema.marks.comment.create({
+        id: uuid(),
         viewId: activeViewId,
         conversation: []
       })

@@ -1,53 +1,44 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import { each } from "lodash";
 import CommentBox from "./CommentBox";
 
 //TODO find from marks actual comment mark
 export default ({ comments, view }) => {
-  let commentEl = null;
-  let commentElTop = 0;
-  let top = 0;
+  const [position, setPosition] = useState();
 
-  if (comments.length > 0) {
-    const WaxSurface = view.dom.getBoundingClientRect();
+  const setTops = useCallback(() => {
+    let commentEl = null;
+    let commentElTop = 0;
+    const allCommentsTop = {};
+
     each(comments, (entry, pos) => {
-      commentElTop = 0;
-      commentEl = document.getElementById(entry.node.marks[0].attrs.id);
+      const WaxSurface = view.dom.getBoundingClientRect();
+      const id = entry.node.marks[0].attrs.id;
+      commentEl = document.getElementById(id);
       commentElTop = commentEl.getBoundingClientRect().top - WaxSurface.top;
-      entry.node.marks[0].top = commentElTop;
+      allCommentsTop[id] = commentElTop;
     });
-  }
 
-  const setTops = () => {
-    if (comments.length > 0) {
-      each(comments, (entry, pos) => {
-        const WaxSurface = view.dom.getBoundingClientRect();
-        commentElTop = 0;
-        commentEl = document.getElementById(entry.node.marks[0].attrs.id);
-        commentElTop = commentEl.getBoundingClientRect().top - WaxSurface.top;
-        entry.node.marks[0].top = commentElTop;
-        return commentElTop;
-      });
-    }
-  };
+    return allCommentsTop;
+  });
 
   useEffect(
     () => {
-      console.log("change");
+      setPosition(setTops());
     },
-    [setTops]
+    [JSON.stringify(setTops())]
   );
+
   return (
     <Fragment>
       {comments.map(comment => {
-        if (comment) top = comment.node.marks[0].top;
-        console.log(comment.node.marks[0].attrs.id);
+        const id = comment.node.marks[0].attrs.id;
         return (
           <CommentBox
-            key={comment.node.marks[0].top}
+            key={comment.node.marks[0].attrs.id}
             mark={comment.node.marks[0]}
             view={view}
-            top={top}
+            top={position[id]}
           />
         );
       })}

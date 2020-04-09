@@ -47,9 +47,7 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value={
-        '<p class="paragraph">this is <span class="comment" id="1b87a19d-891c-4329-9482-b8ab8523c129" data-viewid="main" data-conversation="[]">some</span> content</p>'
-      }
+      value={""}
       layout={EditoriaLayout}
       // onChange={source => console.log(source)}
       user={user}

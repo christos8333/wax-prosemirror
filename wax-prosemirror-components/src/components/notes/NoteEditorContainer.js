@@ -16,7 +16,7 @@ const NoteStyled = styled.div`
   width: 100%;
   min-height: 20px;
   margin-top: 10px;
-  height: 100%;
+  height: 59%;
   border-bottom: 1px solid black;
   &:focus {
     outline: none;

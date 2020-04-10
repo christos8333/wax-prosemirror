@@ -26,14 +26,21 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
     Commands.createComment(state, dispatch, activeViewId);
   };
 
+  const isSelectionComment = () => {
+    //TODO if selection is contained in comment do not show button
+    return false;
+  };
+
   return (
-    <button
-      onClick={event => {
-        createComment(event);
-      }}
-    >
-      create
-    </button>
+    !isSelectionComment() && (
+      <button
+        onClick={event => {
+          createComment(event);
+        }}
+      >
+        create
+      </button>
+    )
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { Commands } from "wax-prosemirror-utilities";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const CommentBubbleComponent = ({ setPosition, position }) => {
   const { activeView, activeViewId } = useContext(WaxContext);
@@ -27,7 +28,18 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
   };
 
   const isSelectionComment = () => {
-    //TODO if selection is contained in comment do not show button
+    const commentMark = activeView.state.schema.marks["comment"];
+    const mark = DocumentHelpers.findMark(state, commentMark, true);
+    const { selection: { $from, $to }, doc } = state;
+
+    if (
+      mark.length === 1 &&
+      mark[0].from <= $from.pos &&
+      mark[0].to >= $to.pos
+    ) {
+      return true;
+    }
+    //TODO Check when we have multiple comment marks in the selection
     return false;
   };
 

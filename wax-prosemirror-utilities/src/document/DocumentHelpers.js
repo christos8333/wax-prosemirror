@@ -1,9 +1,10 @@
-const findMark = (state, PMmark) => {
+const findMark = (state, PMmark, toArr = false) => {
   const { selection: { $from, $to }, doc } = state;
 
   const fromMark = $from.marks().find(mark => mark.type === PMmark);
   const toMark = $to.marks().find(mark => mark.type === PMmark);
   let markFound;
+  const marksFound = [];
   doc.nodesBetween($from.pos, $to.pos, (node, from) => {
     if (node.marks) {
       const actualMark = node.marks.find(mark => mark.type === PMmark);
@@ -14,9 +15,11 @@ const findMark = (state, PMmark) => {
           attrs: actualMark.attrs,
           contained: !fromMark || !toMark || fromMark === toMark
         };
+        marksFound.push(markFound);
       }
     }
   });
+  if (toArr) return marksFound;
   return markFound;
 };
 

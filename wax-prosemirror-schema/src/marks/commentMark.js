@@ -4,6 +4,7 @@ const comment = {
     viewId: { default: "" },
     conversation: []
   },
+  inclusive: false,
   // excludes: "",
   parseDOM: [
     {

@@ -27,7 +27,7 @@ const CommentBoxStyled = styled.div`
   }};
 `;
 
-export default ({ mark, view, top }) => {
+export default ({ mark, view, top, dataComment }) => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,13 @@ export default ({ mark, view, top }) => {
   return (
     <Fragment>
       <Transition in={animate} timeout={1000}>
-        {state => <CommentBoxStyled top={top} state={state} />}
+        {state => (
+          <CommentBoxStyled
+            top={top}
+            state={state}
+            data-comment={dataComment}
+          />
+        )}
       </Transition>
     </Fragment>
   );

@@ -32,14 +32,8 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
     const mark = DocumentHelpers.findMark(state, commentMark, true);
     const { selection: { $from, $to }, doc } = state;
 
-    if (
-      mark.length === 1 &&
-      mark[0].from <= $from.pos &&
-      mark[0].to >= $to.pos
-    ) {
-      return true;
-    }
-    //TODO Check when we have multiple comment marks in the selection
+    //TODO Overlapping comments . for now don't allow
+    if (mark.length >= 1) return true;
     return false;
   };
 

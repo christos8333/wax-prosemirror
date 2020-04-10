@@ -4,8 +4,7 @@ const comment = {
     viewId: { default: "" },
     conversation: []
   },
-  inclusive: false,
-  excludes: "",
+  // excludes: "",
   parseDOM: [
     {
       tag: "span.comment[data-conversation]",

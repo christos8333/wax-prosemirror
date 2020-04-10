@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 const markActive = type => state => {
   const { from, $from, to, empty } = state.selection;
 
@@ -57,13 +59,15 @@ const createLink = (state, dispatch) => {
   );
 };
 
-const createComment = (state, dispatch) => {
+const createComment = (state, dispatch, activeViewId) => {
   const { selection: { $from, $to } } = state;
   dispatch(
     state.tr.addMark(
       $from.pos,
       $to.pos,
       state.schema.marks.comment.create({
+        id: uuid(),
+        viewId: activeViewId,
         conversation: []
       })
     )

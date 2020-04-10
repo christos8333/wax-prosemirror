@@ -1,14 +1,18 @@
 const comment = {
   attrs: {
+    id: { default: "" },
+    viewId: { default: "" },
     conversation: []
   },
   inclusive: false,
-  excludes: "",
+  // excludes: "",
   parseDOM: [
     {
       tag: "span.comment[data-conversation]",
       getAttrs(dom) {
         return {
+          id: dom.id,
+          viewId: dom.dataset.viewid,
           conversation: JSON.parse(dom.dataset.conversation)
         };
       }
@@ -19,6 +23,8 @@ const comment = {
       "span",
       {
         class: "comment",
+        id: node.attrs.id,
+        "data-viewId": node.attrs.viewId,
         "data-conversation": JSON.stringify(node.attrs.conversation)
       }
     ];

@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Editor from "./Editor";
 
 export default ({ notes, view }) => {
   return (
-    <div>
+    <Fragment>
       {notes.map(note => (
         <Editor key={note.node.attrs.id} node={note.node} view={view} />
       ))}
-    </div>
+    </Fragment>
   );
 };

@@ -2,9 +2,10 @@ import React, { useLayoutEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { Commands } from "wax-prosemirror-utilities";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const CommentBubbleComponent = ({ setPosition, position }) => {
-  const { view: { main }, activeView } = useContext(WaxContext);
+  const { activeView, activeViewId } = useContext(WaxContext);
   const { state, dispatch } = activeView;
   useLayoutEffect(
     () => {
@@ -23,17 +24,29 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
 
   const createComment = event => {
     event.preventDefault();
-    Commands.createComment(state, dispatch);
+    Commands.createComment(state, dispatch, activeViewId);
+  };
+
+  const isSelectionComment = () => {
+    const commentMark = activeView.state.schema.marks["comment"];
+    const mark = DocumentHelpers.findMark(state, commentMark, true);
+    const { selection: { $from, $to }, doc } = state;
+
+    //TODO Overlapping comments . for now don't allow
+    if (mark.length >= 1) return true;
+    return false;
   };
 
   return (
-    <button
-      onClick={event => {
-        createComment(event);
-      }}
-    >
-      create
-    </button>
+    !isSelectionComment() && (
+      <button
+        onClick={event => {
+          createComment(event);
+        }}
+      >
+        create
+      </button>
+    )
   );
 };
 

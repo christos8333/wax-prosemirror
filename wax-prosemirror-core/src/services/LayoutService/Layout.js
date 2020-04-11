@@ -6,12 +6,12 @@ import LayoutFactory from "./components/LayoutFactory";
 export default class Layout {
   components = [];
   layoutComponent = LayoutFactory(DefaultLayout);
-  addComponent(renderArea, component) {
+  addComponent(renderArea, component, componentProps) {
     if (!this.components[renderArea]) {
       this.createArea(renderArea);
     }
     const size = this.components[renderArea].size;
-    this.components[renderArea].set(size + 1, component);
+    this.components[renderArea].set(size + 1, { component, componentProps });
     return this;
   }
 

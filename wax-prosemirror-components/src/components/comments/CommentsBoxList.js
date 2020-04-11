@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect, useCallback } from "react";
 import { each } from "lodash";
 import CommentBox from "./CommentBox";
 
-//TODO find from marks actual comment mark
 export default ({ comments, view }) => {
   const [position, setPosition] = useState();
 
@@ -17,7 +16,7 @@ export default ({ comments, view }) => {
 
     each(comments, (entry, pos) => {
       const WaxSurface = view.dom.getBoundingClientRect();
-      const id = entry.node.marks[0].attrs.id;
+      const id = entry.attrs.id;
       let isActive = false;
       // if (entry.id === active) isActive = true
       commentEl = document.getElementById(id);
@@ -89,11 +88,11 @@ export default ({ comments, view }) => {
   return (
     <Fragment>
       {comments.map(comment => {
-        const id = comment.node.marks[0].attrs.id;
+        const id = comment.attrs.id;
         return (
           <CommentBox
-            key={comment.node.marks[0].attrs.id}
-            mark={comment.node.marks[0]}
+            key={comment.attrs.id}
+            mark={comment}
             view={view}
             top={position[id]}
             dataComment={`comment-${id}`}

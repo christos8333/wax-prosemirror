@@ -4,7 +4,12 @@ import { Commands } from "wax-prosemirror-utilities";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
-const CommentBubbleComponent = ({ setPosition, position }) => {
+const CommentBubbleComponent = ({
+  setPosition,
+  position,
+  showComment,
+  group
+}) => {
   const { activeView, activeViewId } = useContext(WaxContext);
   const { state, dispatch } = activeView;
   useLayoutEffect(
@@ -24,7 +29,7 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
 
   const createComment = event => {
     event.preventDefault();
-    Commands.createComment(state, dispatch, activeViewId);
+    Commands.createComment(state, dispatch, group);
   };
 
   const isSelectionComment = () => {
@@ -38,7 +43,8 @@ const CommentBubbleComponent = ({ setPosition, position }) => {
   };
 
   return (
-    !isSelectionComment() && (
+    !isSelectionComment() &&
+    showComment(activeViewId) && (
       <button
         onClick={event => {
           createComment(event);

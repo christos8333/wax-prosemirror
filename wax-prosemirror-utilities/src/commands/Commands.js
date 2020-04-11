@@ -59,7 +59,7 @@ const createLink = (state, dispatch) => {
   );
 };
 
-const createComment = (state, dispatch, activeViewId) => {
+const createComment = (state, dispatch, group) => {
   const { selection: { $from, $to } } = state;
   dispatch(
     state.tr.addMark(
@@ -67,7 +67,7 @@ const createComment = (state, dispatch, activeViewId) => {
       $to.pos,
       state.schema.marks.comment.create({
         id: uuid(),
-        viewId: activeViewId,
+        group,
         conversation: []
       })
     )

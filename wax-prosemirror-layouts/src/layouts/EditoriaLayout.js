@@ -212,7 +212,7 @@ const withNotes = () => {
         <NotesArea />
       </NotesContainer>
       <CommentsContainer>
-        <CommentsArea />
+        <CommentsArea area="notes" />
       </CommentsContainer>
     </NotesAreaContainer>
   );
@@ -255,7 +255,7 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll className="wax-surface-scroll">
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <CommentsArea />
+                  <CommentsArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
               <RightSideBar />

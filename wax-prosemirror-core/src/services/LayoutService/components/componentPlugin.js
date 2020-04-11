@@ -18,14 +18,20 @@ class UpdateView extends Component {
   }
 }
 
-const ComponentPlugin = renderArea => props => {
+const ComponentPlugin = renderArea => layoutProps => {
   const { instance } = useInjection("Layout");
 
   const components = instance.render(renderArea);
 
   return components
-    ? components.map((Component, key) => {
-        return <Component key={`${renderArea}-${key}`} />;
+    ? components.map(({ component: Component, componentProps }, key) => {
+        return (
+          <Component
+            key={`${renderArea}-${key}`}
+            {...layoutProps}
+            {...componentProps}
+          />
+        );
       })
     : null;
 };

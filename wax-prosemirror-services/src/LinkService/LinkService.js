@@ -10,11 +10,15 @@ export default class LinkService extends Service {
 
   boot() {
     const createOverlay = this.container.get("CreateOverlay");
-    createOverlay(LinkComponent, {
-      markType: "link",
-      followCursor: false,
-      selection: false
-    });
+    createOverlay(
+      LinkComponent,
+      {},
+      {
+        markType: "link",
+        followCursor: false,
+        selection: false
+      }
+    );
   }
 
   register() {

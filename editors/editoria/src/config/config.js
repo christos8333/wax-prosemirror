@@ -42,7 +42,6 @@ export default {
   ],
 
   RulesService: [emDash, ellipsis],
-  CommentsService: { groups: ["main", "notes"] },
   ShortCutsService: {},
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],

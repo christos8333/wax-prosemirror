@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect, useCallback } from "react";
 import { each } from "lodash";
 import CommentBox from "./CommentBox";
 
-export default ({ comments, view }) => {
+export default ({ comments, view, area }) => {
   const [position, setPosition] = useState();
 
   const setTops = useCallback(() => {
@@ -14,14 +14,16 @@ export default ({ comments, view }) => {
     let top = 0;
     const allCommentsTop = {};
 
-    each(comments, (entry, pos) => {
+    each(comments, (comment, pos) => {
       const WaxSurface = view.dom.getBoundingClientRect();
-      const id = entry.attrs.id;
+      const { attrs: { id } } = comment;
       let isActive = false;
-      // if (entry.id === active) isActive = true
+      // if (comment.id === active) isActive = true
       commentEl = document.getElementById(id);
       //annotation top
+      console.log(commentEl.getBoundingClientRect().top, commentEl.offsetTop);
       annotationTop = commentEl.getBoundingClientRect().top - WaxSurface.top;
+
       // get height of this comment box
       const boxEl = document.querySelector(`div[data-comment="comment-${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight);
@@ -41,12 +43,12 @@ export default ({ comments, view }) => {
         }
       }
       // store where the box ends to be aware of overlaps in the next box
-      entry.endHeight = top + boxHeight + 2;
+      comment.endHeight = top + boxHeight + 2;
       result[pos] = top;
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
-        entry.endHeight = annotationTop + boxHeight + 2;
+        comment.endHeight = annotationTop + boxHeight + 2;
         result[pos] = annotationTop;
 
         let b = true;
@@ -88,10 +90,10 @@ export default ({ comments, view }) => {
   return (
     <Fragment>
       {comments.map(comment => {
-        const id = comment.attrs.id;
+        const { attrs: { id } } = comment;
         return (
           <CommentBox
-            key={comment.attrs.id}
+            key={id}
             mark={comment}
             view={view}
             top={position[id]}

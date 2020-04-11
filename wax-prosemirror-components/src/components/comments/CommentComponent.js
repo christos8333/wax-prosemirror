@@ -12,24 +12,30 @@ import { DocumentHelpers } from "wax-prosemirror-utilities";
 import CommentsBoxList from "./CommentsBoxList";
 
 export default ({ area }) => {
-  const { view: { main } } = useContext(WaxContext);
+  const { view: { main }, activeView } = useContext(WaxContext);
   const [comments, setComments] = useState([]);
   useEffect(
     () => {
-      setComments(updateComments(main, area));
+      setComments(updateComments(main));
     },
 
-    [JSON.stringify(updateComments(main, area))]
+    [JSON.stringify(updateComments(main))]
   );
 
   const CommentComponent = useMemo(
-    () => <CommentsBoxList comments={comments[area] || []} view={main} />,
+    () => (
+      <CommentsBoxList
+        comments={comments[area] || []}
+        area={area}
+        view={main}
+      />
+    ),
     [comments[area] || []]
   );
   return <Fragment>{CommentComponent}</Fragment>;
 };
 
-const updateComments = (view, area) => {
+const updateComments = view => {
   if (view) {
     const nodes = DocumentHelpers.findChildrenByMark(
       view.state.doc,

@@ -19,10 +19,21 @@ export default ({ comments, view, area }) => {
       const { attrs: { id } } = comment;
       let isActive = false;
       // if (comment.id === active) isActive = true
-      commentEl = document.getElementById(id);
+
       //annotation top
-      console.log(commentEl.getBoundingClientRect().top, commentEl.offsetTop);
-      annotationTop = commentEl.getBoundingClientRect().top - WaxSurface.top;
+      if (area === "main") {
+        commentEl = document.querySelector(`span[data-id="${id}"]`);
+        annotationTop = commentEl.getBoundingClientRect().top - WaxSurface.top;
+      } else {
+        const panelWrapper = document.getElementsByClassName("panelWrapper");
+        const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
+          .height;
+        commentEl = document
+          .querySelector("#notes-container")
+          .querySelector(`span[data-id="${id}"]`);
+        annotationTop =
+          commentEl.getBoundingClientRect().top - panelWrapperHeight - 50;
+      }
 
       // get height of this comment box
       const boxEl = document.querySelector(`div[data-comment="comment-${id}"]`);

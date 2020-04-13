@@ -23,7 +23,7 @@ const comment = {
       "span",
       {
         class: "comment",
-        id: node.attrs.id,
+        "data-id": node.attrs.id,
         "data-group": node.attrs.group,
         "data-conversation": JSON.stringify(node.attrs.conversation)
       }

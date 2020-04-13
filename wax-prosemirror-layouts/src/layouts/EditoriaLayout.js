@@ -210,7 +210,7 @@ const hasNotes = main => {
 const withNotes = () => {
   return (
     <NotesAreaContainer>
-      <NotesContainer>
+      <NotesContainer id="notes-container">
         <NotesArea />
       </NotesContainer>
       <CommentsContainer>

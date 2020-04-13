@@ -163,6 +163,7 @@ const NotesAreaContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  position: absolute;
 `;
 
 const NotesContainer = styled.div`
@@ -172,6 +173,7 @@ const NotesContainer = styled.div`
   padding: 0 0 10px 5px;
   height: 100%;
   width: 65%;
+  position: relative;
 `;
 
 const CommentsContainer = styled.div`
@@ -208,11 +210,11 @@ const hasNotes = main => {
 const withNotes = () => {
   return (
     <NotesAreaContainer>
-      <NotesContainer>
+      <NotesContainer id="notes-container">
         <NotesArea />
       </NotesContainer>
       <CommentsContainer>
-        <CommentsArea />
+        <CommentsArea area="notes" />
       </CommentsContainer>
     </NotesAreaContainer>
   );
@@ -255,7 +257,7 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll className="wax-surface-scroll">
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <CommentsArea />
+                  <CommentsArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
               <RightSideBar />

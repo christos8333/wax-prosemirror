@@ -6,8 +6,9 @@ import NoteNumber from "./NoteNumber";
 const NoteEditorContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 40px;
+  min-height: 28px;
   width: 100%;
+  position: relative;
 `;
 
 const NoteStyled = styled.div`
@@ -16,7 +17,7 @@ const NoteStyled = styled.div`
   width: 100%;
   min-height: 20px;
   margin-top: 10px;
-  height: 59%;
+  height: 100%;
   border-bottom: 1px solid black;
   &:focus {
     outline: none;

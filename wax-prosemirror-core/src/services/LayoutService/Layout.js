@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { DefaultLayout } from "wax-prosemirror-layouts";
+import DefaultLayout from "wax-prosemirror-layouts/src/layouts/DefaultLayout";
 import LayoutFactory from "./components/LayoutFactory";
 
 @injectable()

@@ -19,7 +19,7 @@ export default props => {
       setContext({
         ...context,
         view: Object.assign(context.view, view),
-        activeView: view.activeView || view,
+        activeView: view.main || view,
         activeViewId: view.activeViewId
       });
     },

@@ -210,7 +210,7 @@ const WaxOverlays = componentPlugin("waxOverlays");
 const withNotes = () => {
   return (
     <NotesAreaContainer>
-      <NotesContainer>
+      <NotesContainer id="notes-container">
         <NotesArea />
       </NotesContainer>
       <CommentsContainer>

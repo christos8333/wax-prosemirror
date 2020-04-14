@@ -9,6 +9,7 @@ const NoteEditorContainerStyled = styled.div`
   min-height: 28px;
   width: 100%;
   position: relative;
+  margin-bottom: 5px;
 `;
 
 const NoteStyled = styled.div`

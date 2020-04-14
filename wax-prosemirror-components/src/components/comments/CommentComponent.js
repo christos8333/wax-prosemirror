@@ -36,7 +36,9 @@ export default ({ area }) => {
       //annotation top
       if (area === "main") {
         commentEl = document.querySelector(`span[data-id="${id}"]`);
-        annotationTop = commentEl.getBoundingClientRect().top - WaxSurface.top;
+        if (commentEl)
+          annotationTop =
+            commentEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
         const panelWrapper = document.getElementsByClassName("panelWrapper");
         const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
@@ -44,8 +46,9 @@ export default ({ area }) => {
         commentEl = document
           .querySelector("#notes-container")
           .querySelector(`span[data-id="${id}"]`);
-        annotationTop =
-          commentEl.getBoundingClientRect().top - panelWrapperHeight - 50;
+        if (commentEl)
+          annotationTop =
+            commentEl.getBoundingClientRect().top - panelWrapperHeight - 50;
       }
 
       // get height of this comment box
@@ -148,7 +151,6 @@ const updateComments = view => {
         groupedComments[comment[0].attrs.group].push(comment[0]);
       }
     });
-
     return groupedComments;
   }
   return [];

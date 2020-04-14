@@ -183,13 +183,6 @@ const CommentsContainer = styled.div`
   height: 100%;
 `;
 
-const LeftSideBar = componentPlugin("leftSideBar");
-const RightSideBar = componentPlugin("rightSideBar");
-const TopBar = componentPlugin("topBar");
-const NotesArea = componentPlugin("notesArea");
-const CommentsArea = componentPlugin("commentsArea");
-const WaxOverlays = componentPlugin("waxOverlays");
-
 let surfaceHeight = 700;
 let notesHeight = 50;
 
@@ -221,6 +214,13 @@ const withNotes = () => {
 };
 
 const EditoriaLayout = ({ editor }) => {
+  const LeftSideBar = componentPlugin("leftSideBar");
+  const RightSideBar = componentPlugin("rightSideBar");
+  const TopBar = componentPlugin("topBar");
+  const NotesArea = componentPlugin("notesArea");
+  const CommentsArea = componentPlugin("commentsArea");
+  const WaxOverlays = componentPlugin("waxOverlays");
+
   const { view: { main } } = useContext(WaxContext);
   let AreasWithNotes = null;
 

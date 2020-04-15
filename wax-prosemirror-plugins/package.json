@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-plugins",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Wax prosemirror plugins",
   "license": "MIT",
   "main": "index.js",
@@ -9,8 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "wax-prosemirror-components": "^0.0.5",
-    "wax-prosemirror-core": "^0.0.5",
-    "wax-prosemirror-layouts": "^0.0.5"
+    "wax-prosemirror-components": "^0.0.6",
+    "wax-prosemirror-core": "^0.0.6",
+    "wax-prosemirror-layouts": "^0.0.6"
   }
 }

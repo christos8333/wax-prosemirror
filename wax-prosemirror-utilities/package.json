@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-utilities",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Wax prosemirror utilities",
   "license": "MIT",
   "main": "index.js",

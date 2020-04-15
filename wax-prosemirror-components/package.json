@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-components",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Wax prosemirror UI components",
   "license": "MIT",
   "main": "index.js",
@@ -16,8 +16,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-dropdown": "^1.6.2",
+    "react-transition-group": "^4.3.0",
     "styled-components": "^4.2.0",
-    "uuid": "^3.3.2",
-    "react-transition-group": "^4.3.0"
+    "uuid": "^3.3.2"
   }
 }

@@ -200,6 +200,13 @@ const hasNotes = main => {
   return notes;
 };
 
+const LeftSideBar = componentPlugin("leftSideBar");
+const RightSideBar = componentPlugin("rightSideBar");
+const TopBar = componentPlugin("topBar");
+const NotesArea = componentPlugin("notesArea");
+const CommentsArea = componentPlugin("commentsArea");
+const WaxOverlays = componentPlugin("waxOverlays");
+
 const withNotes = () => {
   return (
     <NotesAreaContainer>
@@ -214,13 +221,6 @@ const withNotes = () => {
 };
 
 const EditoriaLayout = ({ editor }) => {
-  const LeftSideBar = componentPlugin("leftSideBar");
-  const RightSideBar = componentPlugin("rightSideBar");
-  const TopBar = componentPlugin("topBar");
-  const NotesArea = componentPlugin("notesArea");
-  const CommentsArea = componentPlugin("commentsArea");
-  const WaxOverlays = componentPlugin("waxOverlays");
-
   const { view: { main } } = useContext(WaxContext);
   let AreasWithNotes = null;
 

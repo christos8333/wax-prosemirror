@@ -1,7 +1,7 @@
 import { SchemaHelpers } from "wax-prosemirror-utilities";
 
 const list_item = {
-  content: "block+",
+  content: "paragraph block*",
   attrs: {
     track: { default: [] }
   },

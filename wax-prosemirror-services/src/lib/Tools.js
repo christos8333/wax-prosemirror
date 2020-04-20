@@ -10,7 +10,6 @@ export default class Tools {
   content = "content";
   _isDisplayed = true;
   _isHiddenInToolGroup = false;
-  hideOnToolbar = false;
   onlyOnMain = false;
   config = {};
   pmplugins = {};
@@ -76,7 +75,7 @@ export default class Tools {
     this._isHiddenInToolGroup = true;
   }
 
-  ishiddeInToolGroup() {
+  isIntoMoreSection() {
     return this._isHiddenInToolGroup;
   }
 }

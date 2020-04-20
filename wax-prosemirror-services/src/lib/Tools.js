@@ -55,11 +55,15 @@ export default class Tools {
     ) : null;
   }
 
-  notDisplayTool() {
+  displayTool() {
+    this._isDisplayed = true;
+  }
+
+  hideTool() {
     this._isDisplayed = false;
   }
 
-  displayTool() {
-    this._isDisplayed = true;
+  isDisplayed() {
+    return this._isDisplayed;
   }
 }

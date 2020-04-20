@@ -20,13 +20,13 @@ export default class ToolGroup {
         if (include.includes(tool.constructor.name)) {
           tool.displayTool();
         } else {
-          tool.notDisplayTool();
+          tool.hideTool();
         }
       });
     } else {
       this._tools.map(tool => {
         if (exclude.includes(tool.constructor.name)) {
-          tool.notDisplayTool();
+          tool.hideTool();
         }
       });
     }

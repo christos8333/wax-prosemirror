@@ -39,12 +39,19 @@ const LinkComponent = ({ mark, setPosition, position }) => {
     [ref.current, href]
   );
 
-  const addLink = () => {
+  const addLinkHref = () => {
     const href = linkHref;
+    const linkMark = state.schema.marks.link;
+    const { tr } = state;
     dispatch(
-      state.tr
-        .removeMark(mark.from, mark.to, state.schema.marks.link)
-        .addMark(mark.from, mark.to, state.schema.marks.link.create({ href }))
+      tr.addMark(
+        mark.from,
+        mark.to,
+        linkMark.create({
+          ...((mark && mark.attrs) || {}),
+          href
+        })
+      )
     );
     activeView.focus();
   };
@@ -56,11 +63,11 @@ const LinkComponent = ({ mark, setPosition, position }) => {
 
   const handleKeyDown = event => {
     if (event.key === "Enter" || event.which === 13) {
-      addLink();
+      addLinkHref();
     }
   };
 
-  const updateLink = () => {
+  const updateLinkHref = () => {
     const { current: { value } } = linkInput;
     setLinkHref(value);
   };
@@ -103,11 +110,11 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       <input
         type="text"
         ref={linkInput}
-        onChange={updateLink}
+        onChange={updateLinkHref}
         onKeyPress={handleKeyDown}
         value={linkHref}
       />
-      <Button primary onClick={addLink}>
+      <Button primary onClick={addLinkHref}>
         {addButtonText}
       </Button>
       <Button onClick={removeLink}>Remove</Button>

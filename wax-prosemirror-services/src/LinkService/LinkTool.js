@@ -22,10 +22,7 @@ export default class LinkTool extends Tools {
 
   get enable() {
     return state => {
-      const { selection } = state;
-      const onSameNode = isEqual(selection.$from.path, selection.$to.path);
-      if (onSameNode && !selection.empty) return true;
-      return false;
+      return Commands.isOnSameTextBlock(state);
     };
   }
 

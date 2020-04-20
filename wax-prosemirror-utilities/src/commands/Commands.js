@@ -59,6 +59,14 @@ const createLink = (state, dispatch) => {
   );
 };
 
+const isOnSameTextBlock = state => {
+  const { selection: { $from, $to, from, to } } = state;
+  if (from !== to && $from.parent === $to.parent && $from.parent.isTextblock) {
+    return true;
+  }
+  return false;
+};
+
 const createComment = (state, dispatch, group) => {
   const { selection: { $from, $to } } = state;
   dispatch(
@@ -75,10 +83,11 @@ const createComment = (state, dispatch, group) => {
 };
 
 export default {
-  markActive,
   blockActive,
   canInsert,
-  createTable,
+  createComment,
   createLink,
-  createComment
+  createTable,
+  markActive,
+  isOnSameTextBlock
 };

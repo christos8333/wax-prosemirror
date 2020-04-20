@@ -15,12 +15,21 @@ export default class Menu {
     this.config = config;
     this.toolGroups = createTools(this.config.toolGroups);
     this.excludeIncludeTools();
+    this.addToolIntoMore();
   }
 
   excludeIncludeTools() {
     this.toolGroups.forEach(toolGroup => {
       if (toolGroup instanceof ToolGroup) {
         toolGroup.excludeIncludeTools();
+      }
+    });
+  }
+
+  addToolIntoMore() {
+    this.toolGroups.forEach(toolGroup => {
+      if (toolGroup instanceof ToolGroup) {
+        toolGroup.addToolIntoMore();
       }
     });
   }

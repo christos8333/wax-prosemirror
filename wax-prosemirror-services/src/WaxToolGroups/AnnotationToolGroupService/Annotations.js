@@ -16,9 +16,6 @@ class Annotations extends ToolGroup {
     @inject("SmallCaps") smallcaps
   ) {
     super();
-    subscript.hideOnToolbar = true;
-    superscript.hideOnToolbar = true;
-    smallcaps.hideOnToolbar = true;
     this.tools = [
       strong,
       emphasis,

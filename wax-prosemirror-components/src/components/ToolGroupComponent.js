@@ -31,7 +31,7 @@ const ToolGroupComponent = ({ view, tools, name, title }) => {
     DisplayTitle = isFunction(title) ? title : () => title;
 
   tools.forEach(tool => {
-    tool.hideOnToolbar && tool.isDisplayed()
+    tool.ishiddeInToolGroup() && tool.isDisplayed()
       ? rest.push(tool.renderTool(view))
       : toolsShown.push(tool.renderTool(view));
   });

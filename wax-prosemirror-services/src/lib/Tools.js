@@ -9,6 +9,7 @@ export default class Tools {
   title = "title";
   content = "content";
   _isDisplayed = true;
+  _isHiddenInToolGroup = false;
   hideOnToolbar = false;
   onlyOnMain = false;
   config = {};
@@ -65,5 +66,17 @@ export default class Tools {
 
   isDisplayed() {
     return this._isDisplayed;
+  }
+
+  displayInToolGroup() {
+    this._isHiddenInToolGroup = false;
+  }
+
+  hideInToolGroup() {
+    this._isHiddenInToolGroup = true;
+  }
+
+  ishiddeInToolGroup() {
+    return this._isHiddenInToolGroup;
   }
 }

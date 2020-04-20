@@ -32,13 +32,21 @@ export default class ToolGroup {
     }
   }
 
+  addToolIntoMore() {
+    const { more = [] } = this._config;
+    if (more.length > 0) {
+      this._tools.map(tool => {
+        if (more.includes(tool.constructor.name)) {
+          tool.hideInToolGroup();
+        } else {
+          tool.displayInToolGroup();
+        }
+      });
+    }
+  }
+
   set tools(tools) {
     this._tools = tools;
-    for (var i in this._tools) {
-      if (this._tools[i].hideOnToolbar) {
-        this._tools.push(this._tools.splice(i, 1)[0]);
-      }
-    }
   }
 
   renderTools(view) {

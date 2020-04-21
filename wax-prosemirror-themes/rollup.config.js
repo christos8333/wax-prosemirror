@@ -14,10 +14,7 @@ export default {
       format: "cjs",
       sourcemap: true,
       globals: {
-        "@fortawesome/react-fontawesome": "reactFontawesome",
-        "react-dropdown": "reactDropdown",
-        "prop-types": "propTypes",
-        "prosemirror-tables": "prosemirrorTables"
+        "@emotion/unitless": "unitLess"
       }
     }
   ],
@@ -49,11 +46,5 @@ export default {
     commonjs(),
     terser()
   ],
-  external: [
-    "@fortawesome/react-fontawesome",
-    "react-dropdown",
-    "uuid",
-    "prop-types",
-    "prosemirror-tables"
-  ]
+  external: ["@emotion/unitless"]
 };

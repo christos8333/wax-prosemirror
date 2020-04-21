@@ -12,13 +12,7 @@ export default {
     {
       file: "dist/index.js",
       format: "cjs",
-      sourcemap: true,
-      globals: {
-        "@fortawesome/react-fontawesome": "reactFontawesome",
-        "react-dropdown": "reactDropdown",
-        "prop-types": "propTypes",
-        "prosemirror-tables": "prosemirrorTables"
-      }
+      sourcemap: true
     }
   ],
   plugins: [
@@ -34,7 +28,6 @@ export default {
     resolve(),
     babel({
       presets: [
-        "react-app",
         [require("@babel/preset-env"), { modules: false }],
         require("@babel/preset-react")
       ],
@@ -49,11 +42,5 @@ export default {
     commonjs(),
     terser()
   ],
-  external: [
-    "@fortawesome/react-fontawesome",
-    "react-dropdown",
-    "uuid",
-    "prop-types",
-    "prosemirror-tables"
-  ]
+  external: ["uuid"]
 };

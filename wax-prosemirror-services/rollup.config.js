@@ -3,7 +3,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
-import url from "@rollup/plugin-url";
 import { terser } from "rollup-plugin-terser";
 
 export default {
@@ -12,13 +11,7 @@ export default {
     {
       file: "dist/index.js",
       format: "cjs",
-      sourcemap: true,
-      globals: {
-        "@fortawesome/react-fontawesome": "reactFontawesome",
-        "react-dropdown": "reactDropdown",
-        "prop-types": "propTypes",
-        "prosemirror-tables": "prosemirrorTables"
-      }
+      sourcemap: true
     }
   ],
   plugins: [
@@ -30,11 +23,9 @@ export default {
     external({
       includeDependencies: true
     }),
-    url(),
     resolve(),
     babel({
       presets: [
-        "react-app",
         [require("@babel/preset-env"), { modules: false }],
         require("@babel/preset-react")
       ],
@@ -49,11 +40,5 @@ export default {
     commonjs(),
     terser()
   ],
-  external: [
-    "@fortawesome/react-fontawesome",
-    "react-dropdown",
-    "uuid",
-    "prop-types",
-    "prosemirror-tables"
-  ]
+  external: ["uuid", "react", "react-dom", "wax-prosemirror-schema", "lodash"]
 };

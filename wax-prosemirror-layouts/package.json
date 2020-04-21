@@ -10,7 +10,9 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "@pubsweet/ui-toolkit": "^2.2.13",
-    "react-panelgroup": "^1.0.10"
+    "react-panelgroup": "^1.0.10",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.2.0"
   }
 }

@@ -12,10 +12,7 @@ export default {
     {
       file: "dist/index.js",
       format: "cjs",
-      sourcemap: true,
-      globals: {
-        "@emotion/unitless": "unitLess"
-      }
+      sourcemap: true
     }
   ],
   plugins: [
@@ -31,7 +28,6 @@ export default {
     resolve(),
     babel({
       presets: [
-        "react-app",
         [require("@babel/preset-env"), { modules: false }],
         require("@babel/preset-react")
       ],
@@ -46,5 +42,5 @@ export default {
     commonjs(),
     terser()
   ],
-  external: ["@emotion/unitless"]
+  external: ["styled-components"]
 };

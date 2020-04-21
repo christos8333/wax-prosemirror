@@ -1,5 +1,4 @@
 import { injectable } from "inversify";
-import { isEqual } from "lodash";
 import { toggleMark } from "prosemirror-commands";
 import { Commands } from "wax-prosemirror-utilities";
 import Tools from "../lib/Tools";

@@ -4,7 +4,6 @@ import {
   CommentComponent,
   CommentBubbleComponent
 } from "wax-prosemirror-components";
-import { OverlayService } from "../..";
 
 export default class CommentsService extends Service {
   name = "CommentsService";

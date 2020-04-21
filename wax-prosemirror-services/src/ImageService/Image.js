@@ -1,5 +1,5 @@
 import React from "react";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { isEmpty } from "lodash";
 import { injectable } from "inversify";
 import { icons, ImageUpload } from "wax-prosemirror-components";
@@ -30,7 +30,7 @@ export default class Image extends Tools {
       this.pmplugins.get("imagePlaceHolder")
     );
     return this._isDisplayed ? (
-      <ImageUpload key={uuid()} item={this.toJSON()} fileUpload={upload} />
+      <ImageUpload key={uuidv4()} item={this.toJSON()} fileUpload={upload} />
     ) : null;
   }
 }

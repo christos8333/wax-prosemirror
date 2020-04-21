@@ -2,7 +2,7 @@ import Tools from "../lib/Tools";
 import { injectable } from "inversify";
 import { icons } from "wax-prosemirror-components";
 import { Fragment } from "prosemirror-model";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 @injectable()
 export default class Note extends Tools {
@@ -19,7 +19,7 @@ export default class Note extends Tools {
           $to.parentOffset
         );
       const footnote = state.config.schema.nodes.footnote.create(
-        { id: uuid() },
+        { id: uuidv4() },
         content
       );
       dispatch(state.tr.replaceSelectionWith(footnote));

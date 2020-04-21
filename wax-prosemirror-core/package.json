@@ -6,7 +6,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
     "deepmerge": "^4.2.2",

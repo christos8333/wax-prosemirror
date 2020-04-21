@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 const markActive = type => state => {
   const { from, $from, to, empty } = state.selection;
@@ -74,7 +74,7 @@ const createComment = (state, dispatch, group) => {
       $from.pos,
       $to.pos,
       state.schema.marks.comment.create({
-        id: uuid(),
+        id: uuidv4(),
         group,
         conversation: []
       })

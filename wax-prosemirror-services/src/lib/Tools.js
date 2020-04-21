@@ -1,5 +1,5 @@
 import React from "react";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { isEmpty } from "lodash";
 import { injectable, inject } from "inversify";
 import { Button } from "wax-prosemirror-components";
@@ -51,7 +51,7 @@ export default class Tools {
     if (isEmpty(view)) return null;
 
     return this._isDisplayed ? (
-      <Button key={uuid()} item={this.toJSON()} view={view} />
+      <Button key={uuidv4()} item={this.toJSON()} view={view} />
     ) : null;
   }
 

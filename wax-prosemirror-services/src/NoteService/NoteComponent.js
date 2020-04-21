@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
-import { isEqual } from "lodash";
 import NoteEditor from "./NoteEditor";
 
 export default () => {

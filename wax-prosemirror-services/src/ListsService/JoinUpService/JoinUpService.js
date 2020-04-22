@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import JoinUp from "./JoinUp";
 
 class JoinUpService extends Service {

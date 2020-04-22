@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { strikethroughMark } from "wax-prosemirror-schema";
 import StrikeThrough from "./StrikeThrough";
 class StrikeThroughService extends Service {

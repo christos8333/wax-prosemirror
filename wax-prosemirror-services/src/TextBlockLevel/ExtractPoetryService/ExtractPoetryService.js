@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { extractPoetryNode } from "wax-prosemirror-schema";
 import ExtractPoetry from "./ExtractPoetry";
 

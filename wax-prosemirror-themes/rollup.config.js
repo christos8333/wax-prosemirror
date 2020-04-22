@@ -17,12 +17,6 @@ export default {
       includeDependencies: true
     }),
     babel({
-      presets: ["react-app"],
-      plugins: [
-        ["@babel/plugin-proposal-decorators", { legacy: true }],
-        "babel-plugin-parameter-decorator",
-        ["@babel/plugin-proposal-class-properties", { loose: true }]
-      ],
       exclude: "node_modules/**",
       runtimeHelpers: true
     }),

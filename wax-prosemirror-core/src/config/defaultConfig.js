@@ -1,9 +1,9 @@
-import LayoutService from "../services/LayoutService/LayoutService";
 import {
   SchemaService,
   MenuService,
   RulesService,
-  ShortCutsService
+  ShortCutsService,
+  LayoutService
 } from "wax-prosemirror-services";
 
 export default {

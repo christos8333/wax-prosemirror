@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { toggleMark } from "prosemirror-commands";
 import { strongMark } from "wax-prosemirror-schema";
 import Strong from "./Strong";

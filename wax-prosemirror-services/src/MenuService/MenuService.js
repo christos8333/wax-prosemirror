@@ -1,5 +1,5 @@
 import { isPlainObject, isFunction } from "lodash";
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import Menu from "./Menu";
 import MenuCollection from "./MenuCollection";
 

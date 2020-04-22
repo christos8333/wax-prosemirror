@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import Annotations from "./Annotations";
 
 class AnnotationToolGroupService extends Service {

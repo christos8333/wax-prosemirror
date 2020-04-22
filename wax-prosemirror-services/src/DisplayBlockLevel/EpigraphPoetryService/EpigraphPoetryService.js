@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { epigraphPoetryNode } from "wax-prosemirror-schema";
 import EpigraphPoetry from "./EpigraphPoetry";
 

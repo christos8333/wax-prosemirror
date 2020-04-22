@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import placeholderPlugin from "./pmPlugins/placeholderPlugin";
 const PLUGIN_KEY = "imagePlaceHolder";
 

@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import TextServices from "./index";
 
 class TextBlockLevelService extends Service {

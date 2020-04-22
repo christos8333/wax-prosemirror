@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import { LinkComponent } from "wax-prosemirror-components";
 import { linkMark } from "wax-prosemirror-schema";
 import LinkTool from "./LinkTool";

@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { tableNodes, goToNextCell } from "prosemirror-tables";
 import Table from "./Table";
 

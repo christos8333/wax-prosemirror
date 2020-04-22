@@ -1,4 +1,4 @@
-import Service from "wax-prosemirror-core/src/services/Service";
+import { Service } from "wax-prosemirror-core";
 import { subscriptMark } from "wax-prosemirror-schema";
 import Subscript from "./Subscript";
 

@@ -1,4 +1,4 @@
-import Service from "wax-prosemirror-core/src/services/Service";
+import { Service } from "wax-prosemirror-core";
 import { trackChangesMarks, trackChangesNodes } from "wax-prosemirror-schema";
 
 class TrackChangeService extends Service {

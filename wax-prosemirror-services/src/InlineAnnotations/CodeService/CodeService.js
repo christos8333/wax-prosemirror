@@ -1,5 +1,5 @@
+import { Service } from "wax-prosemirror-core";
 import { toggleMark } from "prosemirror-commands";
-import Service from "wax-prosemirror-core/src/services/Service";
 import { codeMark } from "wax-prosemirror-schema";
 import Code from "./Code";
 

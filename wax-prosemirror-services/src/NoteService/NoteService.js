@@ -1,8 +1,8 @@
-import Note from "./Note";
-import Service from "wax-prosemirror-core/src/services/Service";
-import NoteComponent from "./NoteComponent";
+import { Service } from "wax-prosemirror-core";
 import { footNoteNode } from "wax-prosemirror-schema";
 import { CommentBubbleComponent } from "wax-prosemirror-components";
+import Note from "./Note";
+import NoteComponent from "./NoteComponent";
 
 class NoteService extends Service {
   name = "NoteService";

@@ -1,5 +1,5 @@
+import { Service } from "wax-prosemirror-core";
 import Display from "./Display";
-import Service from "wax-prosemirror-core/src/services/Service";
 
 class DisplayToolGroupService extends Service {
   name = "DisplayToolGroupService";

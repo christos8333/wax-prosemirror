@@ -1,4 +1,4 @@
-import Service from "wax-prosemirror-core/src/services/Service";
+import { Service } from "wax-prosemirror-core";
 import TableDropDownOptions from "./TableDropDownOptions";
 
 class EditTableService extends Service {

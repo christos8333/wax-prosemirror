@@ -1,4 +1,4 @@
-import Service from "wax-prosemirror-core/src/services/Service";
+import { Service } from "wax-prosemirror-core";
 import Rules from "./Rules";
 
 export default class RulesService extends Service {
@@ -17,9 +17,7 @@ export default class RulesService extends Service {
     this.container
       .bind("Rules")
       .toDynamicValue(() => {
-        const {
-          schema: { schema }
-        } = this.app;
+        const { schema: { schema } } = this.app;
 
         return new Rules(PmPlugins, schema);
       })

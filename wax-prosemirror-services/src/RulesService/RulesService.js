@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import Rules from "./Rules";
 
 export default class RulesService extends Service {

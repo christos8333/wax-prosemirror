@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { superscriptMark } from "wax-prosemirror-schema";
 import Superscript from "./Superscript";
 

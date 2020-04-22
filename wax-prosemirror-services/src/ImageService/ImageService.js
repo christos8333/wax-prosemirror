@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import Image from "./Image";
 import { imageNode } from "wax-prosemirror-schema";
 

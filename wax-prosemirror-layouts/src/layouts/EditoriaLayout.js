@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { InfoArea } from "wax-prosemirror-components";
-import { componentPlugin, Service } from "wax-prosemirror-core";
+import { componentPlugin } from "wax-prosemirror-services";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 import { DocumentHelpers } from "wax-prosemirror-utilities";

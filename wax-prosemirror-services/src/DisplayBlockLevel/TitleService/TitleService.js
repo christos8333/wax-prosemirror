@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { titleNode } from "wax-prosemirror-schema";
 import Title from "./Title";
 

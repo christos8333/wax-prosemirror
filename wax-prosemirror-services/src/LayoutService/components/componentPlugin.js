@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { useInjection } from "../../../ioc-react";
+import { useInjection } from "wax-prosemirror-core";
+
 class UpdateView extends Component {
   constructor(props) {
     super(props);

@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { smallcapsMark } from "wax-prosemirror-schema";
 import SmallCaps from "./SmallCaps";
 

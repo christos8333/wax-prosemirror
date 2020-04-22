@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import Lists from "./Lists";
 
 class ListToolGroupService extends Service {

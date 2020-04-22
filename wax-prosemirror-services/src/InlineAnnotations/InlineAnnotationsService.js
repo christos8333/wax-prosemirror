@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import InlineServices from "./index";
 
 class InlineAnnotationsService extends Service {

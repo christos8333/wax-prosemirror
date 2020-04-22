@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { blockQuoteNode } from "wax-prosemirror-schema";
 import BlockQuote from "./BlockQuote";
 

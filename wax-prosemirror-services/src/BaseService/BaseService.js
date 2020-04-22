@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../Service";
 import BaseServices from "./index";
 
 class BaseService extends Service {

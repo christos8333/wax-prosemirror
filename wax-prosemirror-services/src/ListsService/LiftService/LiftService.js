@@ -1,4 +1,4 @@
-import { Service } from "wax-prosemirror-core";
+import Service from "../../Service";
 import { liftListItem, sinkListItem } from "prosemirror-schema-list";
 import Lift from "./Lift";
 

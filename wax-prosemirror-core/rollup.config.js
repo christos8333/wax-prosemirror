@@ -20,8 +20,7 @@ export default {
       presets: ["react-app"],
       plugins: [
         ["@babel/plugin-proposal-decorators", { legacy: true }],
-        "babel-plugin-parameter-decorator",
-        ["@babel/plugin-proposal-class-properties", { loose: true }]
+        "babel-plugin-parameter-decorator"
       ],
       exclude: "node_modules/**",
       runtimeHelpers: true

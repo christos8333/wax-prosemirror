@@ -4,7 +4,7 @@ import external from "rollup-plugin-peer-deps-external";
 import { terser } from "rollup-plugin-terser";
 
 export default {
-  input: "./index.js",
+  input: "index.js",
   output: [
     {
       file: "dist/index.js",
@@ -20,8 +20,7 @@ export default {
       presets: ["react-app"],
       plugins: [
         ["@babel/plugin-proposal-decorators", { legacy: true }],
-        "babel-plugin-parameter-decorator",
-        ["@babel/plugin-proposal-class-properties", { loose: true }]
+        "babel-plugin-parameter-decorator"
       ],
       exclude: "node_modules/**",
       runtimeHelpers: true
@@ -35,6 +34,7 @@ export default {
     "react-dom",
     "wax-prosemirror-schema",
     "lodash",
-    "prosemirror-tables"
+    "prosemirror-tables",
+    "prosemirror-schema-list"
   ]
 };

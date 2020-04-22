@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-layouts",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Wax prosemirror layouts",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,9 +10,9 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "react-panelgroup": "^1.0.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-panelgroup": "^1.0.10",
     "styled-components": "^4.2.0"
   }
 }

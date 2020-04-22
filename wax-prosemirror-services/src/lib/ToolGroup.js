@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { injectable } from "inversify";
 import { ToolGroupComponent } from "wax-prosemirror-components";
+import { v4 as uuidv4 } from "uuid";
 
 @injectable()
 export default class ToolGroup {
@@ -53,7 +54,7 @@ export default class ToolGroup {
     const { name } = this.constructor;
     return (
       <ToolGroupComponent
-        key={`groupName-${name}`}
+        key={uuidv4()}
         view={view}
         tools={this._tools}
         title={this.title}

@@ -16,7 +16,7 @@
     "wax-prosemirror-themes": "^0.0.6"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "lerna run build && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },

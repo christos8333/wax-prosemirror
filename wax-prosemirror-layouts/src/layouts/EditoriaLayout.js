@@ -5,7 +5,7 @@ import { componentPlugin, Service } from "wax-prosemirror-core";
 import EditorElements from "./EditorElements";
 import { cokoTheme } from "wax-prosemirror-themes";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 import PanelGroup from "react-panelgroup";
 
 const LayoutWrapper = styled.div`

@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { Commands } from "wax-prosemirror-utilities";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const CommentBubbleComponent = ({

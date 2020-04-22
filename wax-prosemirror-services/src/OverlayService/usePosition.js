@@ -1,6 +1,6 @@
 import { useState, useContext, useLayoutEffect, useCallback } from "react";
 import { isObject } from "lodash";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const defaultOverlay = {

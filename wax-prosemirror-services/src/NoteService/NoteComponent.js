@@ -5,7 +5,7 @@ import React, {
   useMemo,
   Fragment
 } from "react";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import NoteEditor from "./NoteEditor";
 

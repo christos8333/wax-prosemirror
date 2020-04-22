@@ -2,7 +2,6 @@ import babel from "rollup-plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import resolve from "@rollup/plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
 
 export default {
@@ -23,7 +22,6 @@ export default {
     external({
       includeDependencies: true
     }),
-    resolve(),
     babel({
       presets: [
         [require("@babel/preset-env"), { modules: false }],
@@ -40,5 +38,12 @@ export default {
     commonjs(),
     terser()
   ],
-  external: ["uuid", "react", "react-dom", "wax-prosemirror-schema", "lodash"]
+  external: [
+    "uuid",
+    "react",
+    "react-dom",
+    "wax-prosemirror-schema",
+    "lodash",
+    "prosemirror-tables"
+  ]
 };

@@ -1,6 +1,6 @@
+import { Service } from "wax-prosemirror-core";
 import { wrapInList } from "prosemirror-schema-list";
 import { bulletListNode } from "wax-prosemirror-schema";
-import Service from "wax-prosemirror-core/src/services/Service";
 import BulletList from "./BulletList";
 
 class BulletListService extends Service {

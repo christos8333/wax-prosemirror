@@ -1,5 +1,5 @@
+import { Service } from "wax-prosemirror-core";
 import Base from "./Base";
-import Service from "wax-prosemirror-core/src/services/Service";
 
 class BaseToolGroupService extends Service {
   name = "BaseToolGroupService";

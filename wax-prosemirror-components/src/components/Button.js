@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ButtonStyles } from "wax-prosemirror-themes";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 
 const ButtonStyled = styled.button`
   ${ButtonStyles};

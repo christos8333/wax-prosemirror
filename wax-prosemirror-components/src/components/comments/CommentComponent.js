@@ -7,7 +7,7 @@ import React, {
   useCallback
 } from "react";
 import styled from "styled-components";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import CommentsBoxList from "./CommentsBoxList";
 import { each } from "lodash";

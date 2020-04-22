@@ -5,7 +5,7 @@ import { StepMap } from "prosemirror-transform";
 import { baseKeymap } from "prosemirror-commands";
 import { keymap } from "prosemirror-keymap";
 import { undo, redo } from "prosemirror-history";
-import { WaxContext } from "wax-prosemirror-core/src/ioc-react";
+import { WaxContext } from "wax-prosemirror-core";
 import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
 import { DocumentHelpers } from "wax-prosemirror-utilities";

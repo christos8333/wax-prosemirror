@@ -1,4 +1,4 @@
-import Service from "wax-prosemirror-core/src/services/Service";
+import { Service } from "wax-prosemirror-core";
 import ModalPlugin from "./pmPlugins/ModalPlugin";
 import ModalComponent from "./ModalComponent";
 const PLUGIN_KEY = "overlay";

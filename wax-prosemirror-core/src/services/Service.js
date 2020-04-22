@@ -1,4 +1,4 @@
-export default class Service {
+class Service {
   app = {};
   setApp(app) {
     this.app = app;
@@ -16,3 +16,5 @@ export default class Service {
     return this.app.getSchema();
   }
 }
+
+export default Service;

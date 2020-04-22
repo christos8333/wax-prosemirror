@@ -1,6 +1,6 @@
+import { Service } from "wax-prosemirror-core";
 import Image from "./Image";
 import { imageNode } from "wax-prosemirror-schema";
-import Service from "wax-prosemirror-core/src/services/Service";
 
 export default class ImageService extends Service {
   name = "ImageService";

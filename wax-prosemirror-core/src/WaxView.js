@@ -39,11 +39,12 @@ export default props => {
         }
       }
     );
-    context.updateView({
-      main: view,
-      activeViewId: "main",
-      activeView: view
-    });
+    context.updateView(
+      {
+        main: view
+      },
+      "main"
+    );
     if (debug) applyDevTools(view);
     if (autoFocus) view.focus();
   }, []);
@@ -57,11 +58,12 @@ export default props => {
     const state = view.state.apply(tr);
     view.updateState(state);
 
-    context.updateView({
-      main: view,
-      activeViewId: "main",
-      activeView: view
-    });
+    context.updateView(
+      {
+        main: view
+      },
+      "main"
+    );
 
     props.onChange(state.doc.content);
   };

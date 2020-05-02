@@ -51,18 +51,12 @@ export default ({ node, view }) => {
             if (outerTr.docChanged) view.dispatch(outerTr);
 
             //Set everytime the active view into context
-            context.updateActiveView({
-              activeView: context.view[noteId],
-              activeViewId: noteId
-            });
+            context.updateView({}, noteId);
           }
         },
         handleDOMEvents: {
           mousedown: () => {
-            context.updateActiveView({
-              activeView: context.view[noteId],
-              activeViewId: noteId
-            });
+            context.updateView({}, noteId);
 
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
@@ -74,15 +68,14 @@ export default ({ node, view }) => {
     );
 
     //Set Each note into Wax's Context
-    context.updateView({ [noteId]: noteView });
+    context.updateView(
+      {
+        [noteId]: noteView
+      },
+      noteId
+    );
     if (context.view[noteId]) {
       context.view[noteId].focus();
-
-      //Set everytime the active view into context
-      context.updateActiveView({
-        activeView: context.view[noteId],
-        activeViewId: noteId
-      });
     }
   }, []);
 

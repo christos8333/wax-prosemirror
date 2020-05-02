@@ -16,19 +16,15 @@
     "wax-prosemirror-themes": "^0.0.7"
   },
   "scripts": {
-    "start": "lerna run build && react-app-rewired start",
+    "start": "react-app-rewired start",
+    "build": "lerna run build && react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",

@@ -21,8 +21,8 @@ export default {
       exclude: "node_modules/**",
       runtimeHelpers: true
     }),
-    commonjs(),
-    terser()
+    commonjs()
+    // terser()
   ],
   external: [
     "@fortawesome/react-fontawesome",

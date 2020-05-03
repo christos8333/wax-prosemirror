@@ -15,19 +15,14 @@ export default props => {
     view: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
-    updateView: view => {
+    updateView: (newView, activeViewId) => {
+      const view = Object.assign(context.view, newView);
+      const activeView = view[activeViewId || context.activeViewId];
       setContext({
         ...context,
-        view: Object.assign(context.view, view),
-        activeView: view.main || view,
-        activeViewId: view.activeViewId
-      });
-    },
-    updateActiveView: view => {
-      setContext({
-        ...context,
-        activeView: view.activeView,
-        activeViewId: view.activeViewId
+        view,
+        activeView: activeView,
+        activeViewId: activeViewId || context.activeViewId
       });
     }
   });

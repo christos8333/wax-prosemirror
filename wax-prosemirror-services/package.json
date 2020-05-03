@@ -4,7 +4,7 @@
   "version": "0.0.7",
   "description": "Wax prosemirror services",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "BABEL_ENV=production rollup -c"

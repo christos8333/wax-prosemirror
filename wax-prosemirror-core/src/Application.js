@@ -1,6 +1,6 @@
 import { Container } from "inversify";
 import "reflect-metadata";
-//import deepmerge from "deepmerge";
+import deepmerge from "deepmerge";
 import Config from "./config/Config";
 import defaultConfig from "./config/defaultConfig";
 import PmPlugins from "./PmPlugins";
@@ -18,9 +18,9 @@ export default class Application {
 
   registerServices() {
     let count = 0;
-    while (count < this.config.get("services").length) {
-      const allServices = this.config.get("services");
-      const service = this.config.get("services")[count];
+    while (count < this.config.get("config.services").length) {
+      const allServices = this.config.get("config.services");
+      const service = this.config.get("config.services")[count];
       /*
         set App to every service
         so services can have access to containers and config
@@ -40,16 +40,13 @@ export default class Application {
     }
   }
 
-  setConfig(config) {
+  setConfig() {
     this.config = this.container.get("Config");
-    Object.keys(config).forEach(conf => {
-      this.config = this.config.pushToArray(conf, config[conf]);
-    });
   }
 
   bootServices() {
-    const services = this.config.get("services");
-    services.forEach(plugin => {
+    const services = this.config.get("config.services");
+    services.forEach((plugin) => {
       if (plugin.boot) {
         plugin.boot();
       }
@@ -66,37 +63,38 @@ export default class Application {
   }
 
   static create(config) {
+    /* Merge Core Config with User Config */
+    const appConfig = deepmerge({ config: defaultConfig }, config, {
+      customMerge: (key) => {
+        if (key === "services") {
+          return (coreService, configService) => {
+            return coreService.concat(configService);
+          };
+        }
+      },
+    });
+
     /*
     Create Container
     */
     const container = new Container();
-    const configPlugins = config.config.PmPlugins;
     /*
+    
     Set base bindings for the App to work
     */
-    container
-      .bind("PmPlugins")
-      .to(PmPlugins)
-      .inSingletonScope();
+    container.bind("PmPlugins").to(PmPlugins).inSingletonScope();
 
     container.bind("Wax").toFactory(() => new Application(container));
 
-    defaultConfig.services = defaultConfig.services.concat(
-      config.config.services
-    );
-
-    container.bind("config").toConstantValue(defaultConfig);
-    container
-      .bind("Config")
-      .to(Config)
-      .inSingletonScope();
+    container.bind("config").toConstantValue(appConfig);
+    container.bind("Config").to(Config).inSingletonScope();
 
     /*
     Start the App
     */
     const app = container.get("Wax");
-    app.setConfig(config);
-    configPlugins.forEach(configPlugin => {
+    app.setConfig();
+    appConfig.config.PmPlugins.forEach((configPlugin) => {
       app.PmPlugins.add(configPlugin.key, configPlugin);
     });
     app.registerServices();

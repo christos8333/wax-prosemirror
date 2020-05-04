@@ -3,7 +3,6 @@ import { Decoration, DecorationSet } from "prosemirror-view";
 
 const placeHolderText = new PluginKey("placeHolderText");
 
-
 export default props => {
   return new Plugin({
     key: placeHolderText,

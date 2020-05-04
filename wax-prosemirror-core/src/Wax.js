@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import WaxProvider from "./ioc-react";
 import Application from "./Application";
 
@@ -10,7 +10,7 @@ import WaxDOMParser from "./WaxDOMParser";
 
 import WaxView from "./WaxView";
 import defaultPlugins from "./plugins/defaultPlugins";
-import placeholder from "./plugins/placeholder";
+import Placeholder from "./plugins/placeholder";
 
 const parser = schema => {
   const parser = WaxDOMParser.fromSchema(schema);
@@ -31,88 +31,100 @@ const serializer = schema => {
   };
 };
 
+const createApplication = props => {
+  const application = Application.create(props);
+  application.getSchema();
+  application.bootServices();
+  return application;
+};
+
+const createPlaceholder = placeholder => {
+  return Placeholder({ content: placeholder });
+};
+
 const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 99%;
 `;
 
-class Wax extends Component {
-  application = {};
-  constructor(props) {
-    super(props);
-    this.application = Application.create(props);
-    const schema = this.application.getSchema();
-    this.application.bootServices();
-    const { value, onChange } = this.props;
+const Wax = props => {
+  let finalPlugins;
+  let schema;
+  const [application, setApplication] = useState();
 
-    const WaxOnchange = onChange ? onChange : value => true;
+  useEffect(() => {
+    setApplication(createApplication(props));
+  }, []);
 
-    const editorContent = value ? value : "";
+  const {
+    autoFocus,
+    className,
+    debug,
+    fileUpload,
+    layout,
+    onBlur,
+    placeholder,
+    readonly,
+    TrackChange,
+    value,
+    user,
+    onChange
+  } = props;
 
-    const finalPlugins = defaultPlugins.concat([
-      placeholder({ content: this.props.placeholder }),
-      ...this.application.getPlugins()
-    ]);
+  if (!application) return null;
 
-    this.WaxOptions = {
-      schema,
-      plugins: finalPlugins
-    };
+  schema = application.getSchema();
 
-    const parse = parser(schema);
-    const serialize = serializer(schema);
-    this.WaxOptions.doc = parse(editorContent);
+  const WaxOnchange = onChange ? onChange : value => true;
 
-    this.onChange = debounce(
-      value => {
-        WaxOnchange(serialize(value));
-      },
-      1000,
-      { maxWait: 5000 }
-    );
-  }
+  const editorContent = value ? value : "";
 
-  render() {
-    const {
-      autoFocus,
-      className,
-      debug,
-      fileUpload,
-      layout,
-      onBlur,
-      placeholder,
-      readonly,
-      TrackChange,
-      value,
-      user
-    } = this.props;
+  finalPlugins = defaultPlugins.concat([
+    createPlaceholder(placeholder),
+    ...application.getPlugins()
+  ]);
 
-    const Layout = this.application.container.get("Layout");
-    if (layout) Layout.setLayout(layout);
-    const WaxRender = Layout.layoutComponent;
+  const WaxOptions = {
+    schema,
+    plugins: finalPlugins
+  };
 
-    return (
-      <LayoutWrapper className={`${className}`}>
-        <WaxProvider app={this.application}>
-          <WaxView
-            autoFocus={autoFocus}
-            readonly={readonly}
-            options={this.WaxOptions}
-            placeholder={placeholder}
-            fileUpload={fileUpload}
-            onBlur={onBlur || (value => true)}
-            onChange={this.onChange || (value => true)}
-            debug={debug}
-            TrackChange={TrackChange}
-            user={user}
-          >
-            {({ editor }) => <WaxRender editor={editor} />}
-          </WaxView>
-        </WaxProvider>
-      </LayoutWrapper>
-    );
-  }
-}
+  const parse = parser(schema);
+  const serialize = serializer(schema);
+  WaxOptions.doc = parse(editorContent);
 
+  const finalOnChange = debounce(
+    value => {
+      WaxOnchange(serialize(value));
+    },
+    1000,
+    { maxWait: 5000 }
+  );
+
+  const Layout = application.container.get("Layout");
+  if (layout) Layout.setLayout(layout);
+  const WaxRender = Layout.layoutComponent;
+
+  return (
+    <LayoutWrapper className={`${className}`}>
+      <WaxProvider app={application}>
+        <WaxView
+          autoFocus={autoFocus}
+          readonly={readonly}
+          options={WaxOptions}
+          placeholder={placeholder}
+          fileUpload={fileUpload}
+          onBlur={onBlur || (value => true)}
+          onChange={finalOnChange || (value => true)}
+          debug={debug}
+          TrackChange={TrackChange}
+          user={user}
+        >
+          {({ editor }) => <WaxRender editor={editor} />}
+        </WaxView>
+      </WaxProvider>
+    </LayoutWrapper>
+  );
+};
 export default Wax;

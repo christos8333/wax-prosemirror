@@ -18,7 +18,9 @@ Run a local version of the editor
 
 2.  `yarn with node >= 11 (11.14.0 is tested on)`
 
-3.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
+3.  `yarn build`
+
+4.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 
@@ -387,13 +389,19 @@ Is used for adding menus to the editor.
 3.  How to create modals inside the editor (under development)
 4.  Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by [`pmplugins.get("imagePlaceHolder")`](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
 5.  Exclude certain tool from toolgroups. `toolGroups: [{name: "Base", exclude: ['Undo']}, "Annotations", "Notes", "Lists", "Images", "Tables"]`
+6. Adding certain tools into more section `toolGroups: [
+        "Base",
+        {
+          name: "Annotations",
+          more: ["Superscript", "Subscript", "SmallCaps"]
+        } ]`
 ## Latest versions
 
-* wax-prosemirror-components@0.0.5
-* wax-prosemirror-core@0.0.5
-* wax-prosemirror-layouts@0.0.5
-* wax-prosemirror-plugins@0.0.5
-* wax-prosemirror-schema@0.0.5
-* wax-prosemirror-services@0.0.5
-* wax-prosemirror-themes@0.0.5
-* wax-prosemirror-utilities@0.0.5
+* wax-prosemirror-components@0.0.8
+* wax-prosemirror-core@0.0.8
+* wax-prosemirror-layouts@0.0.8
+* wax-prosemirror-plugins@0.0.8
+* wax-prosemirror-schema@0.0.8
+* wax-prosemirror-services@0.0.8
+* wax-prosemirror-themes@0.0.8
+* wax-prosemirror-utilities@0.0.8

@@ -31,6 +31,13 @@ const serializer = schema => {
   };
 };
 
+const createApplication = props => {
+  const application = Application.create(props);
+  application.getSchema();
+  application.bootServices();
+  return application;
+};
+
 const createPlaceholder = placeholder => {
   return Placeholder({ content: placeholder });
 };
@@ -47,7 +54,7 @@ const Wax = props => {
   const [application, setApplication] = useState();
 
   useEffect(() => {
-    setApplication(Application.create(props));
+    setApplication(createApplication(props));
   }, []);
 
   const {
@@ -68,7 +75,6 @@ const Wax = props => {
   if (!application) return null;
 
   schema = application.getSchema();
-  application.bootServices();
 
   const WaxOnchange = onChange ? onChange : value => true;
 

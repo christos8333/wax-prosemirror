@@ -19,7 +19,7 @@
     "clean:packages": "lerna clean --yes",
     "clean:root": "rm -rf node_modules",
     "reset": "yarn clean && yarn",
-    "build": "lerna run build --concurrency=1 --stream",
+    "build": "lerna run build",
     "editoria": "cd editors/editoria && yarn start"
   },
   "dependencies": {},

@@ -20,7 +20,6 @@ export default ({ area }) => {
 
   const setTops = useCallback(() => {
     const result = [];
-    const boxes = [];
     let commentEl = null;
     let annotationTop = 0;
     let boxHeight = 0;
@@ -58,9 +57,6 @@ export default ({ area }) => {
       // get height of this comment box
       const boxEl = document.querySelector(`div[data-comment="comment-${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight);
-
-      // keep the elements to add the tops to at the end
-      boxes.push(boxEl);
 
       // where the box should move to
       top = annotationTop;

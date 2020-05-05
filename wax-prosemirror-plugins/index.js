@@ -2,4 +2,4 @@ export {
   default as TrackChangePlugin
 } from "./src/trackChanges/TrackChangePlugin";
 
-export { default as ActiveCommnet } from "./src/comments/ActiveComment";
+export { default as ActiveComment } from "./src/comments/ActiveComment";

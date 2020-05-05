@@ -4,11 +4,15 @@ import {
   CommentComponent,
   CommentBubbleComponent
 } from "wax-prosemirror-components";
+import { ActiveComment } from "wax-prosemirror-plugins";
+
+const PLUGIN_KEY = "activeComment";
 
 export default class CommentsService extends Service {
   name = "CommentsService";
 
   boot() {
+    this.app.PmPlugins.add(PLUGIN_KEY, ActiveComment(PLUGIN_KEY));
     const createOverlay = this.container.get("CreateOverlay");
     const layout = this.container.get("Layout");
     createOverlay(

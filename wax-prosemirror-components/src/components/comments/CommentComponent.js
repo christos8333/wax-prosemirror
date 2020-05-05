@@ -13,7 +13,8 @@ import CommentsBoxList from "./CommentsBoxList";
 import { each } from "lodash";
 
 export default ({ area }) => {
-  const { view: { main } } = useContext(WaxContext);
+  const { view: { main }, app } = useContext(WaxContext);
+  const activeCommentPlugin = app.PmPlugins.get("activeComment");
   const [comments, setComments] = useState([]);
   const [position, setPosition] = useState();
 
@@ -29,8 +30,10 @@ export default ({ area }) => {
     each(comments[area], (comment, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
       const { attrs: { id } } = comment;
+      const activeComment = activeCommentPlugin.getState(main.state).comment;
       let isActive = false;
-      // if (comment.id === active) isActive = true
+      if (activeComment && comment.attrs.id === activeComment.attrs.id)
+        isActive = true;
 
       //annotation top
       if (area === "main") {
@@ -81,7 +84,7 @@ export default ({ area }) => {
         let i = pos;
 
         // first one active, none above
-        if (i === 0) b = false;
+        if (pos === 0) b = false;
 
         while (b) {
           const boxAbove = comments[area][i - 1];
@@ -100,8 +103,9 @@ export default ({ area }) => {
         }
       }
 
-      allCommentsTop[id] = top;
+      allCommentsTop[id] = result[pos];
     });
+    console.log(allCommentsTop);
     return allCommentsTop;
   });
 

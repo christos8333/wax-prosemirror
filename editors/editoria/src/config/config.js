@@ -23,8 +23,6 @@ import {
   CommentsService
 } from "wax-prosemirror-services";
 
-import { ActiveCommnet } from "wax-prosemirror-plugins";
-
 import invisibles, {
   space,
   hardBreak,
@@ -56,12 +54,7 @@ export default {
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
 
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    invisibles([hardBreak()]),
-    ActiveCommnet()
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
     new PlaceholderService(),

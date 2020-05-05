@@ -15,14 +15,13 @@ export default ({ node, view }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
-
   useEffect(() => {
     const noteView = new EditorView(
       { mount: editorRef.current },
       {
         state: EditorState.create({
           doc: node,
-          plugins: [keymap(createKeyBindings())]
+          plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()]
         }),
         // This is the magic part
         dispatchTransaction: tr => {

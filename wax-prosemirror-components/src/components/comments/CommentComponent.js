@@ -13,7 +13,8 @@ import CommentsBoxList from "./CommentsBoxList";
 import { each } from "lodash";
 
 export default ({ area }) => {
-  const { view: { main } } = useContext(WaxContext);
+  const { view: { main }, app, activeView } = useContext(WaxContext);
+  const activeCommentPlugin = app.PmPlugins.get("activeComment");
   const [comments, setComments] = useState([]);
   const [position, setPosition] = useState();
 
@@ -24,13 +25,17 @@ export default ({ area }) => {
     let annotationTop = 0;
     let boxHeight = 0;
     let top = 0;
-    const allCommentsTop = {};
+    const allCommentsTop = [];
 
     each(comments[area], (comment, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
       const { attrs: { id } } = comment;
+      const activeComment = activeCommentPlugin.getState(activeView.state)
+        .comment;
+
       let isActive = false;
-      // if (comment.id === active) isActive = true
+      if (activeComment && comment.attrs.id === activeComment.attrs.id)
+        isActive = true;
 
       //annotation top
       if (area === "main") {
@@ -71,17 +76,18 @@ export default ({ area }) => {
       // store where the box ends to be aware of overlaps in the next box
       comment.endHeight = top + boxHeight + 2;
       result[pos] = top;
+      allCommentsTop.push({ [id]: result[pos] });
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
         comment.endHeight = annotationTop + boxHeight + 2;
         result[pos] = annotationTop;
-
+        allCommentsTop[pos][id] = result[pos];
         let b = true;
         let i = pos;
 
         // first one active, none above
-        if (i === 0) b = false;
+        if (pos === 0) b = false;
 
         while (b) {
           const boxAbove = comments[area][i - 1];
@@ -89,9 +95,13 @@ export default ({ area }) => {
           const currentTop = result[i];
 
           const doesOverlap = boxAboveEnds > currentTop;
+
           if (doesOverlap) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
+
+            allCommentsTop[i - 1][comments[area][i - 1].attrs.id] =
+              result[i - 1];
           }
 
           if (!doesOverlap) b = false;
@@ -99,9 +109,8 @@ export default ({ area }) => {
           i -= 1;
         }
       }
-
-      allCommentsTop[id] = top;
     });
+
     return allCommentsTop;
   });
 

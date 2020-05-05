@@ -25,7 +25,7 @@ export default ({ area }) => {
     let annotationTop = 0;
     let boxHeight = 0;
     let top = 0;
-    const allCommentsTop = {};
+    const allCommentsTop = [];
 
     each(comments[area], (comment, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
@@ -76,12 +76,13 @@ export default ({ area }) => {
       // store where the box ends to be aware of overlaps in the next box
       comment.endHeight = top + boxHeight + 2;
       result[pos] = top;
+      allCommentsTop.push({ [id]: result[pos] });
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
         comment.endHeight = annotationTop + boxHeight + 2;
         result[pos] = annotationTop;
-
+        allCommentsTop[pos][id] = result[pos];
         let b = true;
         let i = pos;
 
@@ -94,9 +95,13 @@ export default ({ area }) => {
           const currentTop = result[i];
 
           const doesOverlap = boxAboveEnds > currentTop;
+
           if (doesOverlap) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
+
+            allCommentsTop[i - 1][comments[area][i - 1].attrs.id] =
+              result[i - 1];
           }
 
           if (!doesOverlap) b = false;
@@ -104,10 +109,8 @@ export default ({ area }) => {
           i -= 1;
         }
       }
-
-      allCommentsTop[id] = result[pos];
     });
-    console.log(allCommentsTop);
+
     return allCommentsTop;
   });
 

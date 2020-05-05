@@ -1,6 +1,6 @@
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
-import { Commands, DocumentHelpers } from "wax-prosemirror-utilities";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const activeComment = new PluginKey("activeComment");
 

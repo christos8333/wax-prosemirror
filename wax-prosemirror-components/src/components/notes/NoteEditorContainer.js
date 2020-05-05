@@ -26,6 +26,10 @@ const NoteStyled = styled.div`
   span.comment {
     border-bottom: 2px solid #ffab20;
     border-radius: 3px 3px 0 0;
+
+    .active-comment {
+      background-color: #ffab20;
+    }
   }
 `;
 

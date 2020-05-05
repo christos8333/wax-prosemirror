@@ -13,7 +13,7 @@ import CommentsBoxList from "./CommentsBoxList";
 import { each } from "lodash";
 
 export default ({ area }) => {
-  const { view: { main }, app } = useContext(WaxContext);
+  const { view: { main }, app, activeView } = useContext(WaxContext);
   const activeCommentPlugin = app.PmPlugins.get("activeComment");
   const [comments, setComments] = useState([]);
   const [position, setPosition] = useState();
@@ -30,7 +30,9 @@ export default ({ area }) => {
     each(comments[area], (comment, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
       const { attrs: { id } } = comment;
-      const activeComment = activeCommentPlugin.getState(main.state).comment;
+      const activeComment = activeCommentPlugin.getState(activeView.state)
+        .comment;
+
       let isActive = false;
       if (activeComment && comment.attrs.id === activeComment.attrs.id)
         isActive = true;

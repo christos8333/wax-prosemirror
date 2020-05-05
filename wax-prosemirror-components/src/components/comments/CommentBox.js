@@ -30,9 +30,9 @@ const CommentBoxStyled = styled.div`
 
 export default ({ mark, view, top, dataComment }) => {
   const [animate, setAnimate] = useState(false);
-  const { view: { main }, app } = useContext(WaxContext);
+  const { view: { main }, app, activeView } = useContext(WaxContext);
   const activeCommentPlugin = app.PmPlugins.get("activeComment");
-  const activeComment = activeCommentPlugin.getState(main.state).comment;
+  const activeComment = activeCommentPlugin.getState(activeView.state).comment;
   let active = false;
   if (activeComment && mark.attrs.id === activeComment.attrs.id) active = true;
   useEffect(() => {

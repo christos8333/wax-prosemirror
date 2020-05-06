@@ -11,7 +11,7 @@ const comment = {
       tag: "span.comment[data-conversation]",
       getAttrs(dom) {
         return {
-          id: dom.id,
+          id: dom.dataset.id,
           group: dom.dataset.group,
           conversation: JSON.parse(dom.dataset.conversation)
         };

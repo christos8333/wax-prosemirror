@@ -83,7 +83,7 @@ export default ({ area }) => {
         let i = pos;
 
         // first one active, none above
-        if (pos === 0) b = false;
+        if (i === 0) b = false;
 
         while (b) {
           const boxAbove = comments[area][i - 1];
@@ -140,7 +140,6 @@ const updateComments = view => {
       view.state.schema.marks.comment,
       true
     );
-
     const allComments = nodes.map(node => {
       return node.node.marks.filter(comment => {
         return comment.type.name === "comment";

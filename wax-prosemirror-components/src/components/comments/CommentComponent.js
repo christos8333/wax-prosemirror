@@ -11,6 +11,7 @@ import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import CommentsBoxList from "./CommentsBoxList";
 import { each } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);
@@ -83,7 +84,7 @@ export default ({ area }) => {
         let i = pos;
 
         // first one active, none above
-        if (pos === 0) b = false;
+        if (i === 0) b = false;
 
         while (b) {
           const boxAbove = comments[area][i - 1];
@@ -140,15 +141,35 @@ const updateComments = view => {
       view.state.schema.marks.comment,
       true
     );
-
     const allComments = nodes.map(node => {
       return node.node.marks.filter(comment => {
+        if (comment.type.name === "comment") {
+          comment.pos = node.pos;
+          comment.length = node.node.nodeSize;
+        }
         return comment.type.name === "comment";
       });
     });
 
     const groupedComments = {};
     allComments.forEach(comment => {
+      //TEMP SOLUTION //TODO PROPERLY FIX IN PM PASTE
+      if (comment[0].attrs.id === "") {
+        const commentMark = view.state.schema.marks.comment;
+        const { tr } = view.state;
+        view.dispatch(
+          tr.setMeta("addToHistory", false).addMark(
+            comment[0].pos,
+            comment[0].pos + comment[0].length,
+            commentMark.create({
+              ...((comment[0] && comment[0].attrs) || {}),
+              id: uuidv4()
+            })
+          )
+        );
+      }
+      // until here
+
       if (!groupedComments[comment[0].attrs.group]) {
         groupedComments[comment[0].attrs.group] = [comment[0]];
       } else {

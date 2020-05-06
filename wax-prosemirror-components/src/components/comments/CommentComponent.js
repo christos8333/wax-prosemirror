@@ -11,7 +11,6 @@ import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import CommentsBoxList from "./CommentsBoxList";
 import { each } from "lodash";
-import { v4 as uuidv4 } from "uuid";
 
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);

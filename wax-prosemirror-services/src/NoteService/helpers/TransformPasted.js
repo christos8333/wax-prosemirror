@@ -9,12 +9,6 @@ const transformPasted = (slice, view) => {
     true
   );
 
-  const notes = DocumentHelpers.findChildrenByType(
-    content,
-    view.state.schema.nodes.footnote,
-    true
-  );
-
   const allComments = commentNodes.map(node => {
     return node.node.marks.filter(comment => {
       return comment.type.name === "comment";
@@ -24,10 +18,6 @@ const transformPasted = (slice, view) => {
   //TODO check to alter attr with transform
   allComments.forEach(comment => {
     comment[0].attrs.id = uuidv4();
-  });
-
-  notes.forEach(note => {
-    note.node.attrs.id = uuidv4();
   });
 
   return slice;

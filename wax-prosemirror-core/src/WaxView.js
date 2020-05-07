@@ -7,7 +7,7 @@ import { EditorView } from "prosemirror-view";
 import "prosemirror-view/style/prosemirror.css";
 
 import { trackedTransaction } from "wax-prosemirror-services";
-import { WaxContext } from "./ioc-react";
+import { WaxContext } from "./WaxContext";
 import transformPasted from "./helpers/TransformPasted";
 
 export default props => {

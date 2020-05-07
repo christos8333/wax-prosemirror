@@ -10,6 +10,7 @@ import { Commands } from "wax-prosemirror-utilities";
 import { NoteEditorContainer } from "wax-prosemirror-components";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import { filter } from "lodash";
+import transformPasted from "./helpers/TransformPasted";
 
 export default ({ node, view }) => {
   const editorRef = useRef();
@@ -62,6 +63,9 @@ export default ({ node, view }) => {
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
           }
+        },
+        transformPasted: slice => {
+          return transformPasted(slice, noteView);
         }
       }
     );

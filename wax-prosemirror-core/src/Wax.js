@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import WaxProvider from "./ioc-react";
+import WaxProvider from "./WaxContext";
 import Application from "./Application";
 
 import debounce from "lodash/debounce";

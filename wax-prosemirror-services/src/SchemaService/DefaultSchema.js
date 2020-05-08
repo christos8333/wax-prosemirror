@@ -21,6 +21,7 @@ export default {
       group: "block",
       content: "inline*",
       attrs: {
+        id: { default: "" },
         class: { default: "paragraph" },
         track: { default: [] }
       },
@@ -29,6 +30,7 @@ export default {
           tag: "p.paragraph",
           getAttrs(dom) {
             return {
+              id: hook.dom.dataset.id,
               class: dom.getAttribute("class"),
               track: SchemaHelpers.parseTracks(dom.dataset.track)
             };

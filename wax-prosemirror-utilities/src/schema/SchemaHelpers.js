@@ -40,6 +40,7 @@ const parseTracks = str => {
 const blockLevelToDOM = node => {
   const attrs = node.attrs.track.length
     ? {
+        "data-id": node.attrs.id,
         class: node.attrs.class,
         "data-track": JSON.stringify(node.attrs.track)
       }

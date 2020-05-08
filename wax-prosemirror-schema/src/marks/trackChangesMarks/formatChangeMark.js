@@ -1,20 +1,11 @@
 const format_change = {
   attrs: {
-    user: {
-      default: 0
-    },
-    username: {
-      default: ""
-    },
-    date: {
-      default: 0
-    },
-    before: {
-      default: []
-    },
-    after: {
-      default: []
-    }
+    id: { default: "" },
+    user: { default: 0 },
+    username: { default: "" },
+    date: { default: 0 },
+    before: { default: [] },
+    after: { default: [] }
   },
   inclusive: false,
   group: "track",
@@ -23,6 +14,7 @@ const format_change = {
       tag: "span.format-change",
       getAttrs(dom) {
         return {
+          id: dom.dataset.id,
           user: parseInt(dom.dataset.user),
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
@@ -36,6 +28,7 @@ const format_change = {
     return [
       "span",
       {
+        "data-id": node.attrs.id,
         class: `format-change user-${node.attrs.user}`,
         "data-user": node.attrs.user,
         "data-username": node.attrs.username,

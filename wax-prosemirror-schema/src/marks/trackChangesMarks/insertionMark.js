@@ -1,17 +1,10 @@
 const insertion = {
   attrs: {
-    user: {
-      default: 0
-    },
-    username: {
-      default: ""
-    },
-    date: {
-      default: 0
-    },
-    approved: {
-      default: true
-    }
+    id: { default: "" },
+    user: { default: 0 },
+    username: { default: "" },
+    date: { default: 0 },
+    approved: { default: true }
   },
   inclusive: false,
   group: "track",
@@ -20,6 +13,7 @@ const insertion = {
       tag: "span.insertion",
       getAttrs(dom) {
         return {
+          id: dom.dataset.id,
           user: parseInt(dom.dataset.user),
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
@@ -32,6 +26,7 @@ const insertion = {
       tag: "span.approved-insertion",
       getAttrs(dom) {
         return {
+          "data-id": node.attrs.id,
           user: parseInt(dom.dataset.user),
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),

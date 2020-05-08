@@ -6,6 +6,7 @@ const extractPoetry = {
   priority: 0,
   defining: true,
   attrs: {
+    id: { default: "" },
     track: { default: [] }
   },
   parseDOM: [
@@ -13,6 +14,7 @@ const extractPoetry = {
       tag: "p.extract-poetry",
       getAttrs(hook, next) {
         Object.assign(hook, {
+          id: hook.dom.dataset.id,
           track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
         });
         next();
@@ -22,6 +24,7 @@ const extractPoetry = {
   toDOM(hook, next) {
     if (hook.node.attrs.track.length) {
       Object.assign(hook.value[1], {
+        "data-id": hook.node.attrs.id,
         "data-track": JSON.stringify(hook.node.attrs.track)
       });
     }

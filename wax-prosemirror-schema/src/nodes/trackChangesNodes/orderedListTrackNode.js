@@ -4,6 +4,7 @@ const orderedlist = {
   group: "block",
   content: "list_item+",
   attrs: {
+    id: { default: "" },
     track: { default: [] }
   },
   parseDOM: [
@@ -11,6 +12,7 @@ const orderedlist = {
       tag: "ol",
       getAttrs(hook, next) {
         Object.assign(hook, {
+          id: hook.dom.dataset.id,
           track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
         });
         next();
@@ -20,6 +22,7 @@ const orderedlist = {
   toDOM(hook, next) {
     if (hook.node.attrs.track.length) {
       Object.assign(hook.value[1], {
+        "data-id": hook.node.attrs.id,
         "data-track": JSON.stringify(hook.node.attrs.track)
       });
     }

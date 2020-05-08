@@ -49,6 +49,7 @@ const Editoria = () => (
       fileUpload={file => renderImage(file)}
       value={"this is some content"}
       layout={EditoriaLayout}
+      TrackChange
       // onChange={source => console.log(source)}
       user={user}
     />

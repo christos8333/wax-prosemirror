@@ -2,6 +2,7 @@ import { SchemaHelpers } from "wax-prosemirror-utilities";
 
 const heading = {
   attrs: {
+    id: { default: "" },
     track: { default: [] }
   },
   content: "inline*",
@@ -12,6 +13,7 @@ const heading = {
       tag: "h1",
       getAttrs(hook, next) {
         Object.assign(hook, {
+          id: hook.dom.dataset.id,
           track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
         });
         next();
@@ -21,6 +23,7 @@ const heading = {
       tag: "h2",
       getAttrs(hook, next) {
         Object.assign(hook, {
+          "data-id": hook.node.attrs.id,
           track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
         });
         next();

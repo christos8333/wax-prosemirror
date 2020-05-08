@@ -43,6 +43,7 @@ const insertion = {
         class: node.attrs.approved
           ? "approved-insertion"
           : `insertion user-${node.attrs.user}`,
+        "data-id": node.attrs.id,
         "data-user": node.attrs.user,
         "data-username": node.attrs.username,
         "data-date": node.attrs.date

@@ -18,6 +18,4 @@ export {
   default as CommentBubbleComponent
 } from "./src/components/comments/CommentBubbleComponent";
 
-export {
-  default as CommentComponent
-} from "./src/components/comments/CommentComponent";
+export { default as RightArea } from "./src/components/rightArea/RightArea";

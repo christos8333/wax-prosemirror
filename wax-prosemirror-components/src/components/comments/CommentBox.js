@@ -11,7 +11,7 @@ const CommentBoxStyled = styled.div`
   margin-top: 10px;
   background: black;
   position: absolute;
-  transition: ${({ state }) => "top 1s, opacity 1.5s"};
+  transition: ${({ state }) => "top 1s, opacity 1.5s, left 1s"};
   top: ${props => (props.top ? `${props.top}px` : 0)};
   left: ${props => (props.active ? `${63}%` : `${65}%`)};
   opacity: ${({ state }) => {

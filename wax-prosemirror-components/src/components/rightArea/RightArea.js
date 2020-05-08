@@ -9,52 +9,51 @@ import React, {
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
-import CommentsBoxList from "./CommentsBoxList";
+import CommentsBoxList from "./../comments/CommentsBoxList";
 import { each } from "lodash";
 
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);
   const activeCommentPlugin = app.PmPlugins.get("activeComment");
-  const [comments, setComments] = useState([]);
+  const [marks, setMarks] = useState([]);
   const [position, setPosition] = useState();
 
   const setTops = useCallback(() => {
     const result = [];
-    let commentEl = null;
+    let markEl = null;
     let annotationTop = 0;
     let boxHeight = 0;
     let top = 0;
     const allCommentsTop = [];
 
-    each(comments[area], (comment, pos) => {
+    each(marks[area], (mark, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
-      const { attrs: { id } } = comment;
+      const { attrs: { id } } = mark;
       const activeComment = activeCommentPlugin.getState(activeView.state)
         .comment;
 
       let isActive = false;
-      if (activeComment && comment.attrs.id === activeComment.attrs.id)
+      if (activeComment && mark.attrs.id === activeComment.attrs.id)
         isActive = true;
 
       //annotation top
       if (area === "main") {
-        commentEl = document.querySelector(`span[data-id="${id}"]`);
-        if (commentEl)
-          annotationTop =
-            commentEl.getBoundingClientRect().top - WaxSurface.top;
+        markEl = document.querySelector(`span[data-id="${id}"]`);
+        if (markEl)
+          annotationTop = markEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
         const panelWrapper = document.getElementsByClassName("panelWrapper");
         const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
           .height;
-        commentEl = document
+        markEl = document
           .querySelector("#notes-container")
           .querySelector(`span[data-id="${id}"]`);
-        if (commentEl)
+        if (markEl)
           annotationTop =
-            commentEl.getBoundingClientRect().top - panelWrapperHeight - 50;
+            markEl.getBoundingClientRect().top - panelWrapperHeight - 50;
       }
 
-      // get height of this comment box
+      // get height of this mark box
       const boxEl = document.querySelector(`div[data-comment="comment-${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight);
 
@@ -63,20 +62,20 @@ export default ({ area }) => {
 
       // if the above comment box has already taken up the height, move down
       if (pos > 0) {
-        const previousBox = comments[area][pos - 1];
+        const previousBox = marks[area][pos - 1];
         const previousEndHeight = previousBox.endHeight;
         if (annotationTop < previousEndHeight) {
           top = previousEndHeight + 2;
         }
       }
       // store where the box ends to be aware of overlaps in the next box
-      comment.endHeight = top + boxHeight + 2;
+      mark.endHeight = top + boxHeight + 2;
       result[pos] = top;
       allCommentsTop.push({ [id]: result[pos] });
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
-        comment.endHeight = annotationTop + boxHeight + 2;
+        mark.endHeight = annotationTop + boxHeight + 2;
         result[pos] = annotationTop;
         allCommentsTop[pos][id] = result[pos];
         let b = true;
@@ -86,7 +85,7 @@ export default ({ area }) => {
         if (i === 0) b = false;
 
         while (b) {
-          const boxAbove = comments[area][i - 1];
+          const boxAbove = marks[area][i - 1];
           const boxAboveEnds = boxAbove.endHeight;
           const currentTop = result[i];
 
@@ -96,8 +95,7 @@ export default ({ area }) => {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
 
-            allCommentsTop[i - 1][comments[area][i - 1].attrs.id] =
-              result[i - 1];
+            allCommentsTop[i - 1][marks[area][i - 1].attrs.id] = result[i - 1];
           }
 
           if (!doesOverlap) b = false;
@@ -112,49 +110,49 @@ export default ({ area }) => {
 
   useEffect(
     () => {
-      setComments(updateComments(main));
+      setMarks(updateMarks(main));
       setPosition(setTops());
     },
 
-    [JSON.stringify(updateComments(main)), JSON.stringify(setTops())]
+    [JSON.stringify(updateMarks(main)), JSON.stringify(setTops())]
   );
 
-  const CommentComponent = useMemo(
+  const CommentTrackComponent = useMemo(
     () => (
       <CommentsBoxList
-        comments={comments[area] || []}
+        comments={marks[area] || []}
         area={area}
         view={main}
         position={position}
       />
     ),
-    [comments[area] || [], position]
+    [marks[area] || [], position]
   );
-  return <Fragment>{CommentComponent}</Fragment>;
+  return <Fragment>{CommentTrackComponent}</Fragment>;
 };
 
-const updateComments = view => {
+const updateMarks = view => {
   if (view) {
-    const nodes = DocumentHelpers.findChildrenByMark(
+    const commentNodes = DocumentHelpers.findChildrenByMark(
       view.state.doc,
       view.state.schema.marks.comment,
       true
     );
-    const allComments = nodes.map(node => {
+    const allComments = commentNodes.map(node => {
       return node.node.marks.filter(comment => {
         return comment.type.name === "comment";
       });
     });
 
-    const groupedComments = {};
+    const groupedNodes = {};
     allComments.forEach(comment => {
-      if (!groupedComments[comment[0].attrs.group]) {
-        groupedComments[comment[0].attrs.group] = [comment[0]];
+      if (!groupedNodes[comment[0].attrs.group]) {
+        groupedNodes[comment[0].attrs.group] = [comment[0]];
       } else {
-        groupedComments[comment[0].attrs.group].push(comment[0]);
+        groupedNodes[comment[0].attrs.group].push(comment[0]);
       }
     });
-    return groupedComments;
+    return groupedNodes;
   }
   return [];
 };

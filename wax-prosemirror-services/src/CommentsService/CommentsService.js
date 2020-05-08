@@ -1,9 +1,6 @@
 import Service from "../Service";
 import { commentMark } from "wax-prosemirror-schema";
-import {
-  CommentComponent,
-  CommentBubbleComponent
-} from "wax-prosemirror-components";
+import { RightArea, CommentBubbleComponent } from "wax-prosemirror-components";
 import { ActiveComment } from "wax-prosemirror-plugins";
 
 const PLUGIN_KEY = "activeComment";
@@ -27,7 +24,7 @@ export default class CommentsService extends Service {
         selection: true
       }
     );
-    layout.addComponent("commentsArea", CommentComponent);
+    layout.addComponent("rightArea", RightArea);
   }
 
   register() {

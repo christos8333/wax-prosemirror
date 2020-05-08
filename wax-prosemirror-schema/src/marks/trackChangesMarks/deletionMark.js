@@ -24,8 +24,8 @@ const deletion = {
     return [
       "span",
       {
-        "data-id": node.attrs.id,
         class: `deletion user-${node.attrs.user}`,
+        "data-id": node.attrs.id,
         "data-user": node.attrs.user,
         "data-username": node.attrs.username,
         "data-date": node.attrs.date

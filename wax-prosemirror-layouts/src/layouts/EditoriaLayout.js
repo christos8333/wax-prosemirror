@@ -204,7 +204,7 @@ const LeftSideBar = componentPlugin("leftSideBar");
 const RightSideBar = componentPlugin("rightSideBar");
 const TopBar = componentPlugin("topBar");
 const NotesArea = componentPlugin("notesArea");
-const CommentsArea = componentPlugin("commentsArea");
+const RightArea = componentPlugin("rightArea");
 const WaxOverlays = componentPlugin("waxOverlays");
 
 const withNotes = () => {
@@ -214,7 +214,7 @@ const withNotes = () => {
         <NotesArea />
       </NotesContainer>
       <CommentsContainer>
-        <CommentsArea area="notes" />
+        <RightArea area="notes" />
       </CommentsContainer>
     </NotesAreaContainer>
   );
@@ -257,7 +257,7 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll className="wax-surface-scroll">
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <CommentsArea area="main" />
+                  <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
               <RightSideBar />

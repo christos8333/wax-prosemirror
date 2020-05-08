@@ -28,8 +28,8 @@ const format_change = {
     return [
       "span",
       {
-        "data-id": node.attrs.id,
         class: `format-change user-${node.attrs.user}`,
+        "data-id": node.attrs.id,
         "data-user": node.attrs.user,
         "data-username": node.attrs.username,
         "data-date": node.attrs.date,

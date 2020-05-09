@@ -32,7 +32,6 @@ const trackedTransaction = (tr, state, user) => {
     return tr;
   }
 
-  const approved = false;
   const newTr = state.tr,
     map = new Mapping(),
     date = Math.floor(Date.now() / 60000), // 1 minute interval
@@ -50,12 +49,15 @@ const trackedTransaction = (tr, state, user) => {
       return;
     }
     if (step instanceof ReplaceStep) {
-      const newStep = new ReplaceStep(
-        step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
-        step.to,
-        step.slice,
-        step.structure
-      );
+      const newStep =
+        step.slice.size && !cellDeleteTr
+          ? new ReplaceStep(
+              step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
+              step.to,
+              step.slice,
+              step.structure
+            )
+          : false;
       // We didn't apply the original step in its original place. We adjust the map accordingly.
       map.appendMap(step.invert(doc).getMap());
       if (newStep) {

@@ -20,7 +20,18 @@ import markInsertion from "./markInsertion";
 import markWrapping from "./markWrapping";
 
 const trackedTransaction = (tr, state, user) => {
-  console.log("user", user);
+  if (
+    !tr.steps.length ||
+    (tr.meta &&
+      !Object.keys(tr.meta).every(metadata =>
+        ["inputType", "uiEvent", "paste"].includes(metadata)
+      )) ||
+    // don't replace history TRs
+    ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
+  ) {
+    return tr;
+  }
+
   const approved = false;
   const newTr = state.tr,
     map = new Mapping(),

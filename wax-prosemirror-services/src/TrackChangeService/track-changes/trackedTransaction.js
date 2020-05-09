@@ -19,28 +19,13 @@ import markDeletion from "./markDeletion";
 import markInsertion from "./markInsertion";
 import markWrapping from "./markWrapping";
 
-const trackedTransaction = (tr, state, currentUser) => {
-  if (
-    !tr.steps.length ||
-    (tr.meta &&
-      !Object.keys(tr.meta).every(metadata =>
-        ["inputType", "uiEvent", "paste"].includes(metadata)
-      )) ||
-    // don't replace history TRs
-    ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
-  ) {
-    return tr;
-  }
-  const user = currentUser.userId,
-    approved = false,
-    // !editor.view.state.doc.firstChild.attrs.tracked &&
-    // editor.docInfo.access_rights !== "write-tracked",
-    newTr = state.tr,
+const trackedTransaction = (tr, state, user) => {
+  console.log("user", user);
+  const approved = false;
+  const newTr = state.tr,
     map = new Mapping(),
-    exactDate = Date.now(),
-    date10 = Math.floor(exactDate / 600000) * 10, // 10 minute interval
-    date1 = Math.floor(exactDate / 60000), // 1 minute interval
-    username = currentUser.username,
+    date10 = Math.floor(Date.now() / 600000) * 10, // 10 minute interval
+    date1 = Math.floor(Date.now() / 60000), // 1 minute interval
     // We only insert content if this is not directly a tr for cell deletion. This is because tables delete rows by deleting the
     // contents of each cell and replacing it with an empty paragraph.
     cellDeleteTr =
@@ -54,19 +39,13 @@ const trackedTransaction = (tr, state, currentUser) => {
     if (!step) {
       return;
     }
-
-    //if (step instanceof ReplaceStep) {
-    if (step.jsonID === "replace") {
-      const newStep = approved
-        ? step
-        : step.slice.size && !cellDeleteTr
-          ? new ReplaceStep(
-              step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
-              step.to,
-              step.slice,
-              step.structure
-            )
-          : false;
+    if (step instanceof ReplaceStep) {
+      const newStep = new ReplaceStep(
+        step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
+        step.to,
+        step.slice,
+        step.structure
+      );
       // We didn't apply the original step in its original place. We adjust the map accordingly.
       map.appendMap(step.invert(doc).getMap());
       if (newStep) {
@@ -74,17 +53,14 @@ const trackedTransaction = (tr, state, currentUser) => {
         if (trTemp.maybeStep(newStep).failed) {
           return;
         }
-
         const mappedNewStepTo = newStep.getMap().map(newStep.to);
         markInsertion(
           trTemp,
           newStep.from,
           mappedNewStepTo,
           user,
-          username,
           date1,
-          date10,
-          approved
+          date10
         );
         // We condense it down to a single replace step.
         const condensedStep = new ReplaceStep(
@@ -94,38 +70,29 @@ const trackedTransaction = (tr, state, currentUser) => {
         );
 
         newTr.step(condensedStep);
-        map.appendMap(condensedStep.getMap());
+        const mirrorIndex = map.maps.length - 1;
+        map.appendMap(condensedStep.getMap(), mirrorIndex);
         if (!newTr.selection.eq(trTemp.selection)) {
           newTr.setSelection(trTemp.selection);
         }
       }
-      if (!approved && step.from !== step.to) {
+      if (step.from !== step.to) {
         map.appendMap(
-          markDeletion(newTr, step.from, step.to, user, username, date1, date10)
+          markDeletion(newTr, step.from, step.to, user, date1, date10)
         );
       }
-    } else if (approved) {
-      newTr.step(step);
     } else if (step instanceof ReplaceAroundStep) {
       if (step.from === step.gapFrom && step.to === step.gapTo) {
         // wrapped in something
         newTr.step(step);
         const from = step.getMap().map(step.from, -1);
         const to = step.getMap().map(step.gapFrom);
-        markInsertion(newTr, from, to, user, username, date1, date10, false);
+        markInsertion(newTr, from, to, user, date1, date10, false);
       } else if (!step.slice.size) {
         // unwrapped from something
         map.appendMap(step.invert(doc).getMap());
         map.appendMap(
-          markDeletion(
-            newTr,
-            step.from,
-            step.gapFrom,
-            user,
-            username,
-            date1,
-            date10
-          )
+          markDeletion(newTr, step.from, step.gapFrom, user, date1, date10)
         );
       } else if (
         step.slice.size === 2 &&
@@ -142,7 +109,6 @@ const trackedTransaction = (tr, state, currentUser) => {
             oldNode,
             step.slice.content.firstChild,
             user,
-            username,
             date1
           );
         }
@@ -168,7 +134,6 @@ const trackedTransaction = (tr, state, currentUser) => {
               range.from,
               range.to,
               user,
-              username,
               date1,
               date10,
               false
@@ -190,7 +155,10 @@ const trackedTransaction = (tr, state, currentUser) => {
             step.mark
           );
         }
-        if (!node.marks.find(mark => mark.type === step.mark.type)) {
+        if (
+          ["em", "strong", "underline"].includes(step.mark.type.name) &&
+          !node.marks.find(mark => mark.type === step.mark.type)
+        ) {
           const formatChangeMark = node.marks.find(
             mark => mark.type.name === "format_change"
           );
@@ -214,8 +182,8 @@ const trackedTransaction = (tr, state, currentUser) => {
               Math.max(step.from, pos),
               Math.min(step.to, pos + node.nodeSize),
               state.schema.marks.format_change.create({
-                user,
-                username,
+                user: user.userId,
+                username: user.username,
                 date: date10,
                 before,
                 after
@@ -244,7 +212,11 @@ const trackedTransaction = (tr, state, currentUser) => {
             step.mark
           );
         }
-        if (node.marks.find(mark => mark.type === step.mark.type)) {
+
+        if (
+          ["em", "strong", "underline"].includes(step.mark.type.name) &&
+          node.marks.find(mark => mark.type === step.mark.type)
+        ) {
           const formatChangeMark = node.marks.find(
             mark => mark.type.name === "format_change"
           );
@@ -270,8 +242,8 @@ const trackedTransaction = (tr, state, currentUser) => {
               Math.max(step.from, pos),
               Math.min(step.to, pos + node.nodeSize),
               state.schema.marks.format_change.create({
-                user,
-                username,
+                user: user.userId,
+                username: user.username,
                 date: date10,
                 before,
                 after
@@ -289,7 +261,7 @@ const trackedTransaction = (tr, state, currentUser) => {
     }
   });
 
-  // copy the input type meta data from the original transaction.
+  // We copy the input type meta data from the original transaction.
   if (tr.getMeta("inputType")) {
     newTr.setMeta(tr.getMeta("inputType"));
   }
@@ -314,14 +286,8 @@ const trackedTransaction = (tr, state, currentUser) => {
   }
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
-    if (
-      tr.selection instanceof TextSelection &&
-      tr.selection.from < state.selection.from
-    ) {
-      const caretPos = map.map(tr.selection.from, -1);
-      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-    }
   }
+
   return newTr;
 };
 

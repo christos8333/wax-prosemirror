@@ -35,8 +35,7 @@ const trackedTransaction = (tr, state, user) => {
   const approved = false;
   const newTr = state.tr,
     map = new Mapping(),
-    date10 = Math.floor(Date.now() / 600000) * 10, // 10 minute interval
-    date1 = Math.floor(Date.now() / 60000), // 1 minute interval
+    date = Math.floor(Date.now() / 60000), // 1 minute interval
     // We only insert content if this is not directly a tr for cell deletion. This is because tables delete rows by deleting the
     // contents of each cell and replacing it with an empty paragraph.
     cellDeleteTr =
@@ -65,14 +64,7 @@ const trackedTransaction = (tr, state, user) => {
           return;
         }
         const mappedNewStepTo = newStep.getMap().map(newStep.to);
-        markInsertion(
-          trTemp,
-          newStep.from,
-          mappedNewStepTo,
-          user,
-          date1,
-          date10
-        );
+        markInsertion(trTemp, newStep.from, mappedNewStepTo, user, date);
         // We condense it down to a single replace step.
         const condensedStep = new ReplaceStep(
           newStep.from,
@@ -88,9 +80,7 @@ const trackedTransaction = (tr, state, user) => {
         }
       }
       if (step.from !== step.to) {
-        map.appendMap(
-          markDeletion(newTr, step.from, step.to, user, date1, date10)
-        );
+        map.appendMap(markDeletion(newTr, step.from, step.to, user, date));
       }
     } else if (step instanceof ReplaceAroundStep) {
       if (step.from === step.gapFrom && step.to === step.gapTo) {
@@ -98,13 +88,11 @@ const trackedTransaction = (tr, state, user) => {
         newTr.step(step);
         const from = step.getMap().map(step.from, -1);
         const to = step.getMap().map(step.gapFrom);
-        markInsertion(newTr, from, to, user, date1, date10, false);
+        markInsertion(newTr, from, to, user, date);
       } else if (!step.slice.size) {
         // unwrapped from something
         map.appendMap(step.invert(doc).getMap());
-        map.appendMap(
-          markDeletion(newTr, step.from, step.gapFrom, user, date1, date10)
-        );
+        map.appendMap(markDeletion(newTr, step.from, step.gapFrom, user, date));
       } else if (
         step.slice.size === 2 &&
         step.gapFrom - step.from === 1 &&
@@ -120,7 +108,7 @@ const trackedTransaction = (tr, state, user) => {
             oldNode,
             step.slice.content.firstChild,
             user,
-            date1
+            date
           );
         }
       } else {
@@ -140,15 +128,7 @@ const trackedTransaction = (tr, state, user) => {
             if (pos < range.from) {
               return true;
             }
-            markInsertion(
-              newTr,
-              range.from,
-              range.to,
-              user,
-              date1,
-              date10,
-              false
-            );
+            markInsertion(newTr, range.from, range.to, user, date);
           })
         );
       }
@@ -195,7 +175,7 @@ const trackedTransaction = (tr, state, user) => {
               state.schema.marks.format_change.create({
                 user: user.userId,
                 username: user.username,
-                date: date10,
+                date,
                 before,
                 after
               })
@@ -255,7 +235,7 @@ const trackedTransaction = (tr, state, user) => {
               state.schema.marks.format_change.create({
                 user: user.userId,
                 username: user.username,
-                date: date10,
+                date,
                 before,
                 after
               })

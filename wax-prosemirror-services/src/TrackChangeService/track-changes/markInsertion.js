@@ -1,10 +1,10 @@
-const markInsertion = (tr, from, to, user, date1, date10, approved) => {
+const markInsertion = (tr, from, to, user, date) => {
   tr.removeMark(from, to, tr.doc.type.schema.marks.deletion);
   tr.removeMark(from, to, tr.doc.type.schema.marks.insertion);
   const insertionMark = tr.doc.type.schema.marks.insertion.create({
     user: user.userId,
     username: user.username,
-    date: date10
+    date
   });
   tr.addMark(from, to, insertionMark);
   // Add insertion mark also to block nodes (figures, text blocks) but not table cells/rows and lists.
@@ -27,7 +27,7 @@ const markInsertion = (tr, from, to, user, date1, date10, approved) => {
         type: "insertion",
         user: user.userId,
         username: user.username,
-        date: date1
+        date
       });
 
       tr.setNodeMarkup(

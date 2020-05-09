@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
+const markWrapping = (tr, pos, oldNode, newNode, user, date) => {
   let track = oldNode.attrs.track.slice(),
     blockTrack = track.find(track => track.type === "block_change");
 
@@ -12,9 +12,9 @@ const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
     ) {
       blockTrack = {
         type: "block_change",
-        user,
-        username,
-        date: date1,
+        user: user.id,
+        username: user.username,
+        date,
         before: blockTrack.before
       };
       track.push(blockTrack);
@@ -22,27 +22,20 @@ const markWrapping = (tr, pos, oldNode, newNode, user, username, date1) => {
   } else {
     blockTrack = {
       type: "block_change",
-      user,
-      username,
-      date: date1,
+      user: user.id,
+      username: user.username,
+      date,
       before: { type: oldNode.type.name, attrs: oldNode.attrs }
     };
-
-    // if (blockTrack.before.attrs.id) {
-    //   delete blockTrack.before.attrs.id;
-    // }
-
+    if (blockTrack.before.attrs.id) {
+      delete blockTrack.before.attrs.id;
+    }
     if (blockTrack.before.attrs.track) {
       delete blockTrack.before.attrs.track;
     }
-
     track.push(blockTrack);
   }
-  tr.setNodeMarkup(
-    pos,
-    null,
-    Object.assign({}, newNode.attrs, { id: uuidv4(), track })
-  );
+  tr.setNodeMarkup(pos, null, Object.assign({}, newNode.attrs, { track }));
 };
 
 export default markWrapping;

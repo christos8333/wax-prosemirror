@@ -5,8 +5,8 @@
   "dependencies": {
     "@guardian/prosemirror-invisibles": "^1.2.0",
     "prosemirror-tables": "^1.1.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "styled-components": "^4.2.0",
     "wax-prosemirror-components": "^0.0.8",
     "wax-prosemirror-core": "^0.0.8",

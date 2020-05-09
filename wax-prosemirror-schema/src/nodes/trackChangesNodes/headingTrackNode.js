@@ -3,7 +3,8 @@ import { SchemaHelpers } from "wax-prosemirror-utilities";
 const heading = {
   attrs: {
     id: { default: "" },
-    track: { default: [] }
+    track: { default: [] },
+    group: { default: "" }
   },
   content: "inline*",
   group: "block",
@@ -14,7 +15,8 @@ const heading = {
       getAttrs(hook, next) {
         Object.assign(hook, {
           id: hook.dom.dataset.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
+          group: hook.dom.dataset.group
         });
         next();
       }
@@ -23,8 +25,9 @@ const heading = {
       tag: "h2",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          "data-id": hook.node.attrs.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
+          id: hook.dom.dataset.id,
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
+          group: hook.dom.dataset.group
         });
         next();
       }
@@ -33,7 +36,9 @@ const heading = {
       tag: "h3",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
+          id: hook.dom.dataset.id,
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
+          group: hook.dom.dataset.group
         });
         next();
       }
@@ -42,7 +47,9 @@ const heading = {
   toDOM(hook, next) {
     if (hook.node.attrs.track.length) {
       Object.assign(hook.value[1], {
-        "data-track": JSON.stringify(hook.node.attrs.track)
+        "data-id": hook.node.attrs.id,
+        "data-track": JSON.stringify(hook.node.attrs.track),
+        "data-group": hook.node.attrs.group
       });
     }
     next();

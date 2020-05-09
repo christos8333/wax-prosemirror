@@ -4,7 +4,8 @@ const insertion = {
     user: { default: 0 },
     username: { default: "" },
     date: { default: 0 },
-    approved: { default: true }
+    approved: { default: true },
+    group: { default: "" }
   },
   inclusive: false,
   group: "track",
@@ -18,7 +19,8 @@ const insertion = {
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
           inline: true,
-          approved: false
+          approved: false,
+          group: dom.dataset.group
         };
       }
     },
@@ -31,7 +33,8 @@ const insertion = {
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
           inline: true,
-          approved: true
+          approved: true,
+          group: dom.dataset.group
         };
       }
     }
@@ -46,7 +49,8 @@ const insertion = {
         "data-id": node.attrs.id,
         "data-user": node.attrs.user,
         "data-username": node.attrs.username,
-        "data-date": node.attrs.date
+        "data-date": node.attrs.date,
+        "data-group": node.attrs.group
       }
     ];
   }

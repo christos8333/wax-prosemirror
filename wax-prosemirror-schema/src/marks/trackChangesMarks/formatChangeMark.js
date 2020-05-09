@@ -5,7 +5,8 @@ const format_change = {
     username: { default: "" },
     date: { default: 0 },
     before: { default: [] },
-    after: { default: [] }
+    after: { default: [] },
+    group: { default: "" }
   },
   inclusive: false,
   group: "track",
@@ -19,7 +20,8 @@ const format_change = {
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
           before: parseFormatList(dom.dataset.before),
-          after: parseFormatList(dom.dataset.after)
+          after: parseFormatList(dom.dataset.after),
+          group: dom.dataset.group
         };
       }
     }
@@ -34,7 +36,8 @@ const format_change = {
         "data-username": node.attrs.username,
         "data-date": node.attrs.date,
         "data-before": JSON.stringify(node.attrs.before),
-        "data-after": JSON.stringify(node.attrs.after)
+        "data-after": JSON.stringify(node.attrs.after),
+        "data-group": node.attrs.group
       }
     ];
   }

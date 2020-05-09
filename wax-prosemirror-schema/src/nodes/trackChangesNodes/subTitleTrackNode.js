@@ -7,7 +7,8 @@ const subtitle = {
   defining: true,
   attrs: {
     id: { default: "" },
-    track: { default: [] }
+    track: { default: [] },
+    group: { default: "" }
   },
   parseDOM: [
     {
@@ -15,7 +16,8 @@ const subtitle = {
       getAttrs(hook, next) {
         Object.assign(hook, {
           id: hook.dom.dataset.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
+          group: hook.dom.dataset.group
         });
         next();
       }
@@ -25,7 +27,8 @@ const subtitle = {
     if (hook.node.attrs.track.length) {
       Object.assign(hook.value[1], {
         "data-id": hook.node.attrs.id,
-        "data-track": JSON.stringify(hook.node.attrs.track)
+        "data-track": JSON.stringify(hook.node.attrs.track),
+        "data-group": hook.node.attrs.group
       });
     }
     next();

@@ -42,7 +42,8 @@ const blockLevelToDOM = node => {
     ? {
         "data-id": node.attrs.id,
         class: node.attrs.class,
-        "data-track": JSON.stringify(node.attrs.track)
+        "data-track": JSON.stringify(node.attrs.track),
+        "data-group": node.attrs.group
       }
     : { class: node.attrs.class };
   return attrs;

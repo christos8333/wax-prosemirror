@@ -1,17 +1,11 @@
 const insertion = {
   attrs: {
-    user: {
-      default: 0
-    },
-    username: {
-      default: ""
-    },
-    date: {
-      default: 0
-    },
-    approved: {
-      default: true
-    }
+    id: { default: "" },
+    user: { default: 0 },
+    username: { default: "" },
+    date: { default: 0 },
+    approved: { default: true },
+    group: { default: "" }
   },
   inclusive: false,
   group: "track",
@@ -20,11 +14,13 @@ const insertion = {
       tag: "span.insertion",
       getAttrs(dom) {
         return {
+          id: dom.dataset.id,
           user: parseInt(dom.dataset.user),
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
           inline: true,
-          approved: false
+          approved: false,
+          group: dom.dataset.group
         };
       }
     },
@@ -32,11 +28,13 @@ const insertion = {
       tag: "span.approved-insertion",
       getAttrs(dom) {
         return {
+          "data-id": node.attrs.id,
           user: parseInt(dom.dataset.user),
           username: dom.dataset.username,
           date: parseInt(dom.dataset.date),
           inline: true,
-          approved: true
+          approved: true,
+          group: dom.dataset.group
         };
       }
     }
@@ -48,9 +46,11 @@ const insertion = {
         class: node.attrs.approved
           ? "approved-insertion"
           : `insertion user-${node.attrs.user}`,
+        "data-id": node.attrs.id,
         "data-user": node.attrs.user,
         "data-username": node.attrs.username,
-        "data-date": node.attrs.date
+        "data-date": node.attrs.date,
+        "data-group": node.attrs.group
       }
     ];
   }

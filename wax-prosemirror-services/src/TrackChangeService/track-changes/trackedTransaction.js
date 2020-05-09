@@ -298,6 +298,13 @@ const trackedTransaction = (tr, state, user) => {
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
   }
+  if (
+    tr.selection instanceof TextSelection &&
+    tr.selection.from < state.selection.from
+  ) {
+    const caretPos = map.map(tr.selection.from, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+  }
 
   return newTr;
 };

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@guardian/prosemirror-invisibles": "^1.2.0",
-    "prosemirror-tables": "^0.9.5",
+    "prosemirror-tables": "^1.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.2.0",
@@ -23,12 +23,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "babel-loader": "8.0.6",

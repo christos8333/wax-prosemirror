@@ -64,25 +64,30 @@ const trackedTransaction = (tr, state, user) => {
     newTr.setMeta(tr.getMeta("uiEvent"));
   }
 
-  // if (tr.selectionSet) {
-  if (
-    tr.selection instanceof TextSelection &&
-    (tr.selection.from < state.selection.from ||
-      tr.getMeta("inputType") === "deleteContentBackward")
-  ) {
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-  } else {
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-    // newTr.setSelection(tr.selection.map(newTr.doc, map));
+  if (tr.selectionSet) {
+    if (
+      tr.selection instanceof TextSelection &&
+      (tr.selection.from < state.selection.from ||
+        tr.getMeta("inputType") === "deleteContentBackward")
+    ) {
+      const caretPos = map.map(tr.selection.from, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    } else {
+      newTr.setSelection(tr.selection.map(newTr.doc, map));
+    }
   }
-  // }
   if (tr.storedMarksSet) {
     newTr.setStoredMarks(tr.storedMarks);
   }
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
+  }
+  if (
+    tr.selection instanceof TextSelection &&
+    tr.selection.from < state.selection.from
+  ) {
+    const caretPos = map.map(tr.selection.from, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   }
 
   return newTr;

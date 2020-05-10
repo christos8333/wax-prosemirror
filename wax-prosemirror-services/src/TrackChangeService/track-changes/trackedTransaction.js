@@ -25,7 +25,6 @@ const trackedTransaction = (tr, state, user) => {
       !Object.keys(tr.meta).every(metadata =>
         ["inputType", "uiEvent", "paste"].includes(metadata)
       )) ||
-    // don't replace history TRs
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {
     return tr;
@@ -42,24 +41,22 @@ const trackedTransaction = (tr, state, user) => {
       return;
     }
 
-    if (step instanceof ReplaceStep) {
-      replaceStep(state, tr, step, newTr, map, doc, user, date);
-    }
-
-    if (step instanceof ReplaceAroundStep) {
-      replaceAroundStep(state, tr, step, newTr, map, doc, user, date);
-    }
-
-    if (step instanceof AddMarkStep) {
-      addMarkStep(state, tr, step, newTr, map, doc, user, date);
-    }
-
-    if (step instanceof RemoveMarkStep) {
-      removeMarkStep(state, tr, step, newTr, map, doc, user, date);
+    switch (step.constructor) {
+      case ReplaceStep:
+        replaceStep(state, tr, step, newTr, map, doc, user, date);
+        break;
+      case ReplaceAroundStep:
+        replaceAroundStep(state, tr, step, newTr, map, doc, user, date);
+        break;
+      case AddMarkStep:
+        addMarkStep(state, tr, step, newTr, map, doc, user, date);
+        break;
+      case RemoveMarkStep:
+        removeMarkStep(state, tr, step, newTr, map, doc, user, date);
+        break;
     }
   });
 
-  // We copy the input type meta data from the original transaction.
   if (tr.getMeta("inputType")) {
     newTr.setMeta(tr.getMeta("inputType"));
   }

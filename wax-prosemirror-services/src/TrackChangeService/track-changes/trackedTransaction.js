@@ -48,16 +48,17 @@ const trackedTransaction = (tr, state, user) => {
     if (!step) {
       return;
     }
+
     if (step instanceof ReplaceStep) {
-      const newStep =
-        step.slice.size && !cellDeleteTr
-          ? new ReplaceStep(
-              step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
-              step.to,
-              step.slice,
-              step.structure
-            )
-          : false;
+      const newStep = !cellDeleteTr
+        ? new ReplaceStep(
+            step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
+            step.to,
+            step.slice,
+            step.structure
+          )
+        : false;
+
       // We didn't apply the original step in its original place. We adjust the map accordingly.
       map.appendMap(step.invert(doc).getMap());
       if (newStep) {
@@ -65,6 +66,7 @@ const trackedTransaction = (tr, state, user) => {
         if (trTemp.maybeStep(newStep).failed) {
           return;
         }
+
         const mappedNewStepTo = newStep.getMap().map(newStep.to);
         markInsertion(trTemp, newStep.from, mappedNewStepTo, user, date);
         // We condense it down to a single replace step.
@@ -84,7 +86,9 @@ const trackedTransaction = (tr, state, user) => {
       if (step.from !== step.to) {
         map.appendMap(markDeletion(newTr, step.from, step.to, user, date));
       }
-    } else if (step instanceof ReplaceAroundStep) {
+    }
+
+    if (step instanceof ReplaceAroundStep) {
       if (step.from === step.gapFrom && step.to === step.gapTo) {
         // wrapped in something
         newTr.step(step);
@@ -134,7 +138,9 @@ const trackedTransaction = (tr, state, user) => {
           })
         );
       }
-    } else if (step instanceof AddMarkStep) {
+    }
+
+    if (step instanceof AddMarkStep) {
       doc.nodesBetween(step.from, step.to, (node, pos) => {
         if (!node.isInline) {
           return true;
@@ -191,7 +197,9 @@ const trackedTransaction = (tr, state, user) => {
           }
         }
       });
-    } else if (step instanceof RemoveMarkStep) {
+    }
+
+    if (step instanceof RemoveMarkStep) {
       doc.nodesBetween(step.from, step.to, (node, pos) => {
         if (!node.isInline) {
           return true;
@@ -262,30 +270,25 @@ const trackedTransaction = (tr, state, user) => {
     newTr.setMeta(tr.getMeta("uiEvent"));
   }
 
-  if (tr.selectionSet) {
-    if (
-      tr.selection instanceof TextSelection &&
-      (tr.selection.from < state.selection.from ||
-        tr.getMeta("inputType") === "deleteContentBackward")
-    ) {
-      const caretPos = map.map(tr.selection.from, -1);
-      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-    } else {
-      newTr.setSelection(tr.selection.map(newTr.doc, map));
-    }
+  // if (tr.selectionSet) {
+  if (
+    tr.selection instanceof TextSelection &&
+    (tr.selection.from < state.selection.from ||
+      tr.getMeta("inputType") === "deleteContentBackward")
+  ) {
+    const caretPos = map.map(tr.selection.from, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+  } else {
+    const caretPos = map.map(tr.selection.from, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    // newTr.setSelection(tr.selection.map(newTr.doc, map));
   }
+  // }
   if (tr.storedMarksSet) {
     newTr.setStoredMarks(tr.storedMarks);
   }
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
-  }
-  if (
-    tr.selection instanceof TextSelection &&
-    tr.selection.from < state.selection.from
-  ) {
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   }
 
   return newTr;

@@ -5,7 +5,6 @@ License included in folder.
 */
 
 import { Selection, TextSelection } from "prosemirror-state";
-import { Slice } from "prosemirror-model";
 import {
   ReplaceStep,
   ReplaceAroundStep,
@@ -13,11 +12,11 @@ import {
   RemoveMarkStep,
   Mapping
 } from "prosemirror-transform";
-import { CellSelection } from "prosemirror-tables";
 
-import markDeletion from "./markDeletion";
-import markInsertion from "./markInsertion";
-import markWrapping from "./markWrapping";
+import replaceStep from "./helpers/replaceStep";
+import replaceAroundStep from "./helpers/replaceAroundStep";
+import addMarkStep from "./helpers/addMarkStep";
+import removeMarkStep from "./helpers/removeMarkStep";
 
 const trackedTransaction = (tr, state, user) => {
   if (
@@ -32,15 +31,9 @@ const trackedTransaction = (tr, state, user) => {
     return tr;
   }
 
-  const newTr = state.tr,
-    map = new Mapping(),
-    date = Math.floor(Date.now() / 60000), // 1 minute interval
-    // We only insert content if this is not directly a tr for cell deletion. This is because tables delete rows by deleting the
-    // contents of each cell and replacing it with an empty paragraph.
-    cellDeleteTr =
-      ["deleteContentBackward", "deleteContentForward"].includes(
-        tr.getMeta("inputType")
-      ) && state.selection instanceof CellSelection;
+  const newTr = state.tr;
+  const map = new Mapping();
+  const date = Math.floor(Date.now() / 60000);
 
   tr.steps.forEach(originalStep => {
     const step = originalStep.map(map),
@@ -50,215 +43,19 @@ const trackedTransaction = (tr, state, user) => {
     }
 
     if (step instanceof ReplaceStep) {
-      const newStep = !cellDeleteTr
-        ? new ReplaceStep(
-            step.to, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
-            step.to,
-            step.slice,
-            step.structure
-          )
-        : false;
-
-      // We didn't apply the original step in its original place. We adjust the map accordingly.
-      map.appendMap(step.invert(doc).getMap());
-      if (newStep) {
-        const trTemp = state.apply(newTr).tr;
-        if (trTemp.maybeStep(newStep).failed) {
-          return;
-        }
-
-        const mappedNewStepTo = newStep.getMap().map(newStep.to);
-        markInsertion(trTemp, newStep.from, mappedNewStepTo, user, date);
-        // We condense it down to a single replace step.
-        const condensedStep = new ReplaceStep(
-          newStep.from,
-          newStep.to,
-          trTemp.doc.slice(newStep.from, mappedNewStepTo)
-        );
-
-        newTr.step(condensedStep);
-        const mirrorIndex = map.maps.length - 1;
-        map.appendMap(condensedStep.getMap(), mirrorIndex);
-        if (!newTr.selection.eq(trTemp.selection)) {
-          newTr.setSelection(trTemp.selection);
-        }
-      }
-      if (step.from !== step.to) {
-        map.appendMap(markDeletion(newTr, step.from, step.to, user, date));
-      }
+      replaceStep(state, tr, step, newTr, map, doc, user, date);
     }
 
     if (step instanceof ReplaceAroundStep) {
-      if (step.from === step.gapFrom && step.to === step.gapTo) {
-        // wrapped in something
-        newTr.step(step);
-        const from = step.getMap().map(step.from, -1);
-        const to = step.getMap().map(step.gapFrom);
-        markInsertion(newTr, from, to, user, date);
-      } else if (!step.slice.size) {
-        // unwrapped from something
-        map.appendMap(step.invert(doc).getMap());
-        map.appendMap(markDeletion(newTr, step.from, step.gapFrom, user, date));
-      } else if (
-        step.slice.size === 2 &&
-        step.gapFrom - step.from === 1 &&
-        step.to - step.gapTo === 1
-      ) {
-        // Replaced one wrapping with another
-        newTr.step(step);
-        const oldNode = doc.nodeAt(step.from);
-        if (oldNode.attrs.track) {
-          markWrapping(
-            newTr,
-            step.from,
-            oldNode,
-            step.slice.content.firstChild,
-            user,
-            date
-          );
-        }
-      } else {
-        newTr.step(step);
-        const ranges = [
-          {
-            from: step.getMap().map(step.from, -1),
-            to: step.getMap().map(step.gapFrom)
-          },
-          {
-            from: step.getMap().map(step.gapTo, -1),
-            to: step.getMap().map(step.to)
-          }
-        ];
-        ranges.forEach(range =>
-          doc.nodesBetween(range.from, range.to, (node, pos) => {
-            if (pos < range.from) {
-              return true;
-            }
-            markInsertion(newTr, range.from, range.to, user, date);
-          })
-        );
-      }
+      replaceAroundStep(state, tr, step, newTr, map, doc, user, date);
     }
 
     if (step instanceof AddMarkStep) {
-      doc.nodesBetween(step.from, step.to, (node, pos) => {
-        if (!node.isInline) {
-          return true;
-        }
-        if (node.marks.find(mark => mark.type.name === "deletion")) {
-          return false;
-        } else {
-          newTr.addMark(
-            Math.max(step.from, pos),
-            Math.min(step.to, pos + node.nodeSize),
-            step.mark
-          );
-        }
-        if (
-          ["em", "strong", "underline"].includes(step.mark.type.name) &&
-          !node.marks.find(mark => mark.type === step.mark.type)
-        ) {
-          const formatChangeMark = node.marks.find(
-            mark => mark.type.name === "format_change"
-          );
-          let after, before;
-          if (formatChangeMark) {
-            if (formatChangeMark.attrs.before.includes(step.mark.type.name)) {
-              before = formatChangeMark.attrs.before.filter(
-                markName => markName !== step.mark.type.name
-              );
-              after = formatChangeMark.attrs.after;
-            } else {
-              before = formatChangeMark.attrs.before;
-              after = formatChangeMark.attrs.after.concat(step.mark.type.name);
-            }
-          } else {
-            before = [];
-            after = [step.mark.type.name];
-          }
-          if (after.length || before.length) {
-            newTr.addMark(
-              Math.max(step.from, pos),
-              Math.min(step.to, pos + node.nodeSize),
-              state.schema.marks.format_change.create({
-                user: user.userId,
-                username: user.username,
-                date,
-                before,
-                after
-              })
-            );
-          } else if (formatChangeMark) {
-            newTr.removeMark(
-              Math.max(step.from, pos),
-              Math.min(step.to, pos + node.nodeSize),
-              formatChangeMark
-            );
-          }
-        }
-      });
+      addMarkStep(state, tr, step, newTr, map, doc, user, date);
     }
 
     if (step instanceof RemoveMarkStep) {
-      doc.nodesBetween(step.from, step.to, (node, pos) => {
-        if (!node.isInline) {
-          return true;
-        }
-        if (node.marks.find(mark => mark.type.name === "deletion")) {
-          return false;
-        } else {
-          newTr.removeMark(
-            Math.max(step.from, pos),
-            Math.min(step.to, pos + node.nodeSize),
-            step.mark
-          );
-        }
-
-        if (
-          ["em", "strong", "underline"].includes(step.mark.type.name) &&
-          node.marks.find(mark => mark.type === step.mark.type)
-        ) {
-          const formatChangeMark = node.marks.find(
-            mark => mark.type.name === "format_change"
-          );
-          let after, before;
-          if (formatChangeMark) {
-            if (formatChangeMark.attrs.after.includes(step.mark.type.name)) {
-              after = formatChangeMark.attrs.after.filter(
-                markName => markName !== step.mark.type.name
-              );
-              before = formatChangeMark.attrs.before;
-            } else {
-              after = formatChangeMark.attrs.after;
-              before = formatChangeMark.attrs.before.concat(
-                step.mark.type.name
-              );
-            }
-          } else {
-            after = [];
-            before = [step.mark.type.name];
-          }
-          if (after.length || before.length) {
-            newTr.addMark(
-              Math.max(step.from, pos),
-              Math.min(step.to, pos + node.nodeSize),
-              state.schema.marks.format_change.create({
-                user: user.userId,
-                username: user.username,
-                date,
-                before,
-                after
-              })
-            );
-          } else if (formatChangeMark) {
-            newTr.removeMark(
-              Math.max(step.from, pos),
-              Math.min(step.to, pos + node.nodeSize),
-              formatChangeMark
-            );
-          }
-        }
-      });
+      removeMarkStep(state, tr, step, newTr, map, doc, user, date);
     }
   });
 

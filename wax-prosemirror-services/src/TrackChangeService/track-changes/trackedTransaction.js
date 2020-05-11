@@ -13,6 +13,8 @@ import {
   Mapping
 } from "prosemirror-transform";
 
+import { DocumentHelpers } from "wax-prosemirror-utilities";
+
 import replaceStep from "./helpers/replaceStep";
 import replaceAroundStep from "./helpers/replaceAroundStep";
 import addMarkStep from "./helpers/addMarkStep";
@@ -65,6 +67,13 @@ const trackedTransaction = (tr, state, user) => {
   }
 
   if (tr.selectionSet) {
+    const deletionMarkSchema = state.schema.marks.deletion;
+    const deletionMark = DocumentHelpers.findMark(
+      state,
+      deletionMarkSchema,
+      false
+    );
+
     if (
       tr.selection instanceof TextSelection &&
       (tr.selection.from < state.selection.from ||
@@ -72,7 +81,11 @@ const trackedTransaction = (tr, state, user) => {
     ) {
       const caretPos = map.map(tr.selection.from, -1);
       newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    } else if (tr.selection.from > state.selection.from && deletionMark) {
+      const caretPos = map.map(deletionMark.to + 1, 1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
     } else {
+      console.log("not");
       newTr.setSelection(tr.selection.map(newTr.doc, map));
     }
   }

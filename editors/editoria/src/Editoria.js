@@ -48,7 +48,7 @@ const Editoria = () => (
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
       value={
-        '<p class="paragraph">this is <span class="deletion user-1234" data-id="" data-user="1234" data-username="demo" data-date="26486384" data-group="">some</span> content</p><p class="paragraph">second paragraph</p>'
+        '<p class="paragraph">this is <span class="deletion user-1234" data-id="" data-user="1234" data-username="demo" data-date="26486384" data-group="">some</span> content</p><ul> <li> <p> some li text</p></li><li> <p> some li second text</p></li><li> <p> some li third text</p></li></ul><p class="paragraph">second paragraph</p>'
       }
       layout={EditoriaLayout}
       TrackChange

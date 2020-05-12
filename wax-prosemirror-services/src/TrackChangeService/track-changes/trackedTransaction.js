@@ -45,15 +45,12 @@ const trackedTransaction = (tr, state, user) => {
 
     switch (step.constructor) {
       case ReplaceStep:
-        console.log("ReplaceStep");
         replaceStep(state, tr, step, newTr, map, doc, user, date);
         break;
       case ReplaceAroundStep:
-        console.log("ReplaceAroundStep");
         replaceAroundStep(state, tr, step, newTr, map, doc, user, date);
         break;
       case AddMarkStep:
-        console.log("AddMarkStep");
         addMarkStep(state, tr, step, newTr, map, doc, user, date);
         break;
       case RemoveMarkStep:

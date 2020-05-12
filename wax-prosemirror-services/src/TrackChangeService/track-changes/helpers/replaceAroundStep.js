@@ -32,25 +32,26 @@ const replaceAroundStep = (state, tr, step, newTr, map, doc, user, date) => {
       );
     }
   } else {
-    newTr.step(step);
-    const ranges = [
-      {
-        from: step.getMap().map(step.from, -1),
-        to: step.getMap().map(step.gapFrom)
-      },
-      {
-        from: step.getMap().map(step.gapTo, -1),
-        to: step.getMap().map(step.to)
-      }
-    ];
-    ranges.forEach(range =>
-      doc.nodesBetween(range.from, range.to, (node, pos) => {
-        if (pos < range.from) {
-          return true;
-        }
-        markInsertion(newTr, range.from, range.to, user, date);
-      })
-    );
+    console.log("to fix");
+    // newTr.step(step);
+    // const ranges = [
+    //   {
+    //     from: step.getMap().map(step.from, -1),
+    //     to: step.getMap().map(step.gapFrom)
+    //   },
+    //   {
+    //     from: step.getMap().map(step.gapTo, -1),
+    //     to: step.getMap().map(step.to)
+    //   }
+    // ];
+    // ranges.forEach(range =>
+    //   doc.nodesBetween(range.from, range.to, (node, pos) => {
+    //     if (pos < range.from) {
+    //       return true;
+    //     }
+    //     markInsertion(newTr, range.from, range.to, user, date);
+    //   })
+    // );
   }
 };
 

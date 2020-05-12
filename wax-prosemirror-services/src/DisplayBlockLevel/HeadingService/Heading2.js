@@ -1,6 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 export default class Heading2 extends Tools {
@@ -9,7 +9,7 @@ export default class Heading2 extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.heading, { level: 2 })(
+      Commands.setBlockType(state.config.schema.nodes.heading, { level: 2 })(
         state,
         dispatch
       );
@@ -18,9 +18,8 @@ export default class Heading2 extends Tools {
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.heading, {
-        level: 2,
-        track: []
+      return Commands.setBlockType(state.config.schema.nodes.heading, {
+        level: 2
       })(state);
     };
   }

@@ -1,6 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 class ParagraphContinued extends Tools {
@@ -9,13 +9,18 @@ class ParagraphContinued extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.paragraphCont)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.paragraphCont)(
+        state,
+        dispatch
+      );
     };
   }
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.paragraphCont)(state);
+      return Commands.setBlockType(state.config.schema.nodes.paragraphCont)(
+        state
+      );
     };
   }
 }

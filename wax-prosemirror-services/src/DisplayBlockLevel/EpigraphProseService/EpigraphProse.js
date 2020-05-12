@@ -1,6 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 export default class EpigraphProse extends Tools {
@@ -9,13 +9,18 @@ export default class EpigraphProse extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.epigraphProse)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.epigraphProse)(
+        state,
+        dispatch
+      );
     };
   }
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.epigraphProse)(state);
+      return Commands.setBlockType(state.config.schema.nodes.epigraphProse)(
+        state
+      );
     };
   }
 }

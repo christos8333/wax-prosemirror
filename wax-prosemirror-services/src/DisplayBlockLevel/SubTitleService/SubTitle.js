@@ -1,6 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 export default class SubTitle extends Tools {
@@ -9,13 +9,16 @@ export default class SubTitle extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.subtitle)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.subtitle)(
+        state,
+        dispatch
+      );
     };
   }
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.subtitle)(state);
+      return Commands.setBlockType(state.config.schema.nodes.subtitle)(state);
     };
   }
 }

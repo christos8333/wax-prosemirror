@@ -28,6 +28,7 @@ const replaceStep = (state, tr, step, newTr, map, doc, user, date) => {
         step.structure
       )
     : false;
+
   // We didn't apply the original step in its original place. We adjust the map accordingly.
   map.appendMap(step.invert(doc).getMap());
   if (newStep) {

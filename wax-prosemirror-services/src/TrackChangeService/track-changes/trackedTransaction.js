@@ -45,12 +45,15 @@ const trackedTransaction = (tr, state, user) => {
 
     switch (step.constructor) {
       case ReplaceStep:
+        console.log("ReplaceStep");
         replaceStep(state, tr, step, newTr, map, doc, user, date);
         break;
       case ReplaceAroundStep:
+        console.log("ReplaceAroundStep");
         replaceAroundStep(state, tr, step, newTr, map, doc, user, date);
         break;
       case AddMarkStep:
+        console.log("AddMarkStep");
         addMarkStep(state, tr, step, newTr, map, doc, user, date);
         break;
       case RemoveMarkStep:
@@ -85,8 +88,18 @@ const trackedTransaction = (tr, state, user) => {
       const caretPos = map.map(deletionMark.to + 1, 1);
       newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
     } else {
-      console.log("not");
       newTr.setSelection(tr.selection.map(newTr.doc, map));
+    }
+  } else {
+    if (
+      state.selection.from - tr.selection.from > 1 &&
+      tr.selection.$head.depth > 1
+    ) {
+      const caretPos = map.map(tr.selection.from - 2, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    } else {
+      const caretPos = map.map(tr.selection.from, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
     }
   }
   if (tr.storedMarksSet) {
@@ -94,13 +107,6 @@ const trackedTransaction = (tr, state, user) => {
   }
   if (tr.scrolledIntoView) {
     newTr.scrollIntoView();
-  }
-  if (
-    tr.selection instanceof TextSelection &&
-    tr.selection.from < state.selection.from
-  ) {
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   }
 
   return newTr;

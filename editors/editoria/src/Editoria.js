@@ -52,7 +52,6 @@ const Editoria = () => (
       TrackChange
       // onChange={source => console.log(source)}
       user={user}
-      debug
     />
   </Fragment>
 );

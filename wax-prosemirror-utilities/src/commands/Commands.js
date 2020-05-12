@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from "uuid";
 
 const setBlockType = (nodeType, attrs = {}) => {
   return (state, dispatch) => {
+    const { tr } = state;
     const { from, to } = state.selection;
-    const tr = state.tr;
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (!node.isTextblock || node.hasMarkup(nodeType, attrs)) return;
       let applicable = false;

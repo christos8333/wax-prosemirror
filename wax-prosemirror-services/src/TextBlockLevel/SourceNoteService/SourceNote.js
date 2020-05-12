@@ -9,10 +9,9 @@ class SourceNote extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.sourceNote)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.sourceNote, {
+        class: "source-note"
+      })(state, dispatch);
     };
   }
 

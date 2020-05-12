@@ -9,10 +9,9 @@ class ExtractProse extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.extractProse)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.extractProse, {
+        class: "extract-prose"
+      })(state, dispatch);
     };
   }
 

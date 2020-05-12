@@ -9,10 +9,9 @@ export default class SubTitle extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.subtitle)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.subtitle, {
+        class: "cst"
+      })(state, dispatch);
     };
   }
 

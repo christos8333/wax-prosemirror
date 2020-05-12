@@ -9,10 +9,9 @@ class ParagraphContinued extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.paragraphCont)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.paragraphCont, {
+        class: "paragraph-cont"
+      })(state, dispatch);
     };
   }
 

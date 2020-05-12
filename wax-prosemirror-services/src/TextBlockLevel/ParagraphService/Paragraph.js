@@ -9,10 +9,9 @@ export default class Paragraph extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.paragraph)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.paragraph, {
+        class: "paragraph"
+      })(state, dispatch);
     };
   }
 

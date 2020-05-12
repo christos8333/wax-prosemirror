@@ -9,10 +9,9 @@ export default class EpigraphPoetry extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.epigraphPoetry)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.epigraphPoetry, {
+        class: "epigraph-poetry"
+      })(state, dispatch);
     };
   }
 

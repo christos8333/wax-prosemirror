@@ -9,10 +9,9 @@ class ExtractPoetry extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.extractPoetry)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.extractPoetry, {
+        class: "extract-poetry"
+      })(state, dispatch);
     };
   }
 

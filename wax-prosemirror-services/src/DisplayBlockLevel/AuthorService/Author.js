@@ -9,7 +9,9 @@ export default class Author extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.author)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.author, {
+        class: "author"
+      })(state, dispatch);
     };
   }
 

@@ -9,10 +9,9 @@ export default class EpigraphProse extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.epigraphProse)(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.epigraphProse, {
+        class: "epigraph-prose"
+      })(state, dispatch);
     };
   }
 

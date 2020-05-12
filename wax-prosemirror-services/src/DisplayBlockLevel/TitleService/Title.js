@@ -9,7 +9,9 @@ export default class Title extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.title)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.title, {
+        class: "title"
+      })(state, dispatch);
     };
   }
 

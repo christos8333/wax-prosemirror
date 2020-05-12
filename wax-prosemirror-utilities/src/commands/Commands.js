@@ -16,8 +16,8 @@ const setBlockType = (nodeType, attrs = {}) => {
       }
       if (applicable) {
         tr.setBlockType(
-          pos,
-          pos + node.nodeSize,
+          from,
+          to,
           nodeType,
           Object.assign({}, node.attrs, attrs)
         );

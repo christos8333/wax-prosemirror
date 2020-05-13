@@ -133,6 +133,7 @@ export default ({ area }) => {
 
 const updateMarks = view => {
   if (view) {
+    const allBlockNodes = DocumentHelpers.findBlockNodes(view.state.doc);
     const allInlineNodes = DocumentHelpers.findInlineNodes(view.state.doc);
     const finalMarks = [];
 

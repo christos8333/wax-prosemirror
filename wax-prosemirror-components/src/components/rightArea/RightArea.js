@@ -133,23 +133,31 @@ export default ({ area }) => {
 
 const updateMarks = view => {
   if (view) {
-    const commentNodes = DocumentHelpers.findChildrenByMark(
-      view.state.doc,
-      view.state.schema.marks.comment,
-      true
-    );
-    const allComments = commentNodes.map(node => {
-      return node.node.marks.filter(comment => {
-        return comment.type.name === "comment";
-      });
+    const allInlineNodes = DocumentHelpers.findInlineNodes(view.state.doc);
+    const finalMarks = [];
+
+    allInlineNodes.map(node => {
+      if (node.node.marks.length > 0) {
+        node.node.marks.filter(mark => {
+          if (
+            mark.type.name === "comment" ||
+            mark.type.name === "insertion" ||
+            mark.type.name === "deletion" ||
+            mark.type.name === "format_change"
+          );
+          {
+            finalMarks.push(mark);
+          }
+        });
+      }
     });
 
     const groupedNodes = {};
-    allComments.forEach(comment => {
-      if (!groupedNodes[comment[0].attrs.group]) {
-        groupedNodes[comment[0].attrs.group] = [comment[0]];
+    finalMarks.forEach(mark => {
+      if (!groupedNodes[mark.attrs.group]) {
+        groupedNodes[mark.attrs.group] = [mark];
       } else {
-        groupedNodes[comment[0].attrs.group].push(comment[0]);
+        groupedNodes[mark.attrs.group].push(mark);
       }
     });
     return groupedNodes;

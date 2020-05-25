@@ -10,7 +10,7 @@ import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import CommentsBoxList from "./../comments/CommentsBoxList";
-import { each } from "lodash";
+import { each, uniqBy } from "lodash";
 
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);
@@ -145,8 +145,7 @@ const updateMarks = view => {
             mark.type.name === "insertion" ||
             mark.type.name === "deletion" ||
             mark.type.name === "format_change"
-          );
-          {
+          ) {
             finalMarks.push(mark);
           }
         });
@@ -154,7 +153,7 @@ const updateMarks = view => {
     });
 
     const groupedNodes = {};
-    finalMarks.forEach(mark => {
+    uniqBy(finalMarks, "attrs.id").forEach(mark => {
       if (!groupedNodes[mark.attrs.group]) {
         groupedNodes[mark.attrs.group] = [mark];
       } else {

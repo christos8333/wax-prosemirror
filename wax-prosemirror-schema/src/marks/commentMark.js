@@ -26,7 +26,7 @@ const comment = {
       {
         class: hook.node.attrs.class,
         "data-id": hook.node.attrs.id,
-        "data-track": JSON.stringify(hook.node.attrs.track),
+        "data-conversation": JSON.stringify(hook.node.attrs.conversation),
         "data-group": hook.node.attrs.group
       }
     ];

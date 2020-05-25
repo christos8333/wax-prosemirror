@@ -1,3 +1,5 @@
+import { SchemaHelpers } from "wax-prosemirror-utilities";
+
 const format_change = {
   attrs: {
     class: { default: "format-change" },
@@ -21,8 +23,8 @@ const format_change = {
           user: parseInt(hook.dom.dataset.user),
           username: hook.dom.dataset.username,
           date: parseInt(hook.dom.dataset.date),
-          before: parseFormatList(hook.dom.dataset.before),
-          after: parseFormatList(hook.dom.dataset.after),
+          before: SchemaHelpers.parseFormatList(hook.dom.dataset.before),
+          after: SchemaHelpers.parseFormatList(hook.dom.dataset.after),
           group: hook.dom.dataset.group
         });
         next();

@@ -1,5 +1,6 @@
 const insertion = {
   attrs: {
+    class: { default: "insertion" },
     id: { default: "" },
     user: { default: 0 },
     username: { default: "" },
@@ -11,30 +12,32 @@ const insertion = {
   parseDOM: [
     {
       tag: "span.insertion",
-      getAttrs(dom) {
-        return {
-          id: dom.dataset.id,
-          user: parseInt(dom.dataset.user),
-          username: dom.dataset.username,
-          date: parseInt(dom.dataset.date),
-          inline: true,
-          group: dom.dataset.group
-        };
+      getAttrs(hook, next) {
+        Object.assign(hook, {
+          class: hook.dom.getAttribute("class"),
+          id: hook.dom.dataset.id,
+          user: parseInt(hook.dom.dataset.user),
+          username: hook.dom.dataset.username,
+          date: parseInt(hook.dom.dataset.date),
+          group: hook.dom.dataset.group
+        });
+        next();
       }
     }
   ],
-  toDOM(node) {
-    return [
+  toDOM(hook, next) {
+    hook.value = [
       "span",
       {
-        class: `insertion user-${node.attrs.user}`,
-        "data-id": node.attrs.id,
-        "data-user": node.attrs.user,
-        "data-username": node.attrs.username,
-        "data-date": node.attrs.date,
-        "data-group": node.attrs.group
+        class: hook.node.attrs.class,
+        "data-id": hook.node.attrs.id,
+        "data-user": hook.node.attrs.user,
+        "data-username": hook.node.attrs.username,
+        "data-date": hook.node.attrs.date,
+        "data-group": hook.node.attrs.group
       }
     ];
+    next();
   }
 };
 

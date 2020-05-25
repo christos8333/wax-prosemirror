@@ -28,8 +28,7 @@ const comment = {
         "data-id": hook.node.attrs.id,
         "data-track": JSON.stringify(hook.node.attrs.track),
         "data-group": hook.node.attrs.group
-      },
-      0
+      }
     ];
     next();
   }

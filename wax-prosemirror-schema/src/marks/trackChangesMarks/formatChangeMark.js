@@ -1,5 +1,6 @@
 const format_change = {
   attrs: {
+    class: { default: "format-change" },
     id: { default: "" },
     user: { default: 0 },
     username: { default: "" },
@@ -13,33 +14,36 @@ const format_change = {
   parseDOM: [
     {
       tag: "span.format-change",
-      getAttrs(dom) {
-        return {
-          id: dom.dataset.id,
-          user: parseInt(dom.dataset.user),
-          username: dom.dataset.username,
-          date: parseInt(dom.dataset.date),
-          before: parseFormatList(dom.dataset.before),
-          after: parseFormatList(dom.dataset.after),
-          group: dom.dataset.group
-        };
+      getAttrs(hook, next) {
+        Object.assign(hook, {
+          class: hook.dom.getAttribute("class"),
+          id: hook.dom.dataset.id,
+          user: parseInt(hook.dom.dataset.user),
+          username: hook.dom.dataset.username,
+          date: parseInt(hook.dom.dataset.date),
+          before: parseFormatList(hook.dom.dataset.before),
+          after: parseFormatList(hook.dom.dataset.after),
+          group: hook.dom.dataset.group
+        });
+        next();
       }
     }
   ],
-  toDOM(node) {
-    return [
+  toDOM(hook, next) {
+    hook.value = [
       "span",
       {
-        class: `format-change user-${node.attrs.user}`,
-        "data-id": node.attrs.id,
-        "data-user": node.attrs.user,
-        "data-username": node.attrs.username,
-        "data-date": node.attrs.date,
-        "data-before": JSON.stringify(node.attrs.before),
-        "data-after": JSON.stringify(node.attrs.after),
-        "data-group": node.attrs.group
+        class: hook.node.attrs.class,
+        "data-id": hook.node.attrs.id,
+        "data-user": hook.node.attrs.user,
+        "data-username": hook.node.attrs.username,
+        "data-date": hook.node.attrs.date,
+        "data-before": JSON.stringify(hook.node.attrs.before),
+        "data-after": JSON.stringify(hook.node.attrs.after),
+        "data-group": hook.node.attrs.group
       }
     ];
+    next();
   }
 };
 

@@ -15,8 +15,30 @@ import {
   setBlockType,
   chainCommands,
   exitCode,
-  selectParentNode
+  selectParentNode,
+  joinBackward,
+  selectNodeBackward,
+  deleteSelection
 } from "prosemirror-commands";
+
+const backSpace = chainCommands(
+  deleteSelection,
+  joinBackward,
+  selectNodeBackward
+);
+
+const backSpaceShortCut = (state, dispatch, view) =>
+  backSpace(
+    state,
+    tr => dispatch(tr.setMeta("inputType", "deleteContentBackward")),
+    view
+  );
+
+const undoShortCut = (state, dispatch, view) =>
+  undo(state, tr => dispatch(tr.setMeta("inputType", "historyUndo")), view);
+
+const redoShortCut = (state, dispatch, view) =>
+  redo(state, tr => dispatch(tr.setMeta("inputType", "historyRedo")), view);
 
 @injectable()
 class ShortCuts {
@@ -63,10 +85,10 @@ class ShortCuts {
 
   getKeys() {
     return {
-      "Mod-z": undo,
-      "Shift-Mod-z": redo,
-      Backspace: undoInputRule,
-      "Mod-y": redo,
+      "Mod-z": undoShortCut,
+      "Shift-Mod-z": redoShortCut,
+      Backspace: backSpaceShortCut,
+      "Mod-y": redoShortCut,
       Escape: selectParentNode,
       "Mod-Enter": chainCommands(exitCode, this.insertBreak),
       "Shift-Enter": chainCommands(exitCode, this.insertBreak),

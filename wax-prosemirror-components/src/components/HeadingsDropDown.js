@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
@@ -21,10 +21,9 @@ const HeadingsDropDown = ({ dispatch, state, item }) => (
   <DropdownStyled
     options={dropDownOptions}
     onChange={option => {
-      setBlockType(state.config.schema.nodes.heading, { level: option.value })(
-        state,
-        dispatch
-      );
+      Commands.setBlockType(state.config.schema.nodes.heading, {
+        level: option.value
+      })(state, dispatch);
     }}
     placeholder="Choose heading"
     select={item.select && item.select(state)}

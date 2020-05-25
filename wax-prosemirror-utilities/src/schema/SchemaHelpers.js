@@ -11,7 +11,7 @@ const parseFormatList = str => {
   if (!Array.isArray(formatList)) {
     return [];
   }
-  return formatList.filter(format => typeof format === "string"); // ensure there are only strings in list
+  return formatList.filter(format => typeof format === "string");
 };
 
 const parseTracks = str => {
@@ -38,14 +38,15 @@ const parseTracks = str => {
 };
 
 const blockLevelToDOM = node => {
-  const attrs = node.attrs.track.length
-    ? {
-        "data-id": node.attrs.id,
-        class: node.attrs.class,
-        "data-track": JSON.stringify(node.attrs.track),
-        "data-group": node.attrs.group
-      }
-    : { class: node.attrs.class };
+  const attrs =
+    node.attrs.track && node.attrs.track.length
+      ? {
+          "data-id": node.attrs.id,
+          class: node.attrs.class,
+          "data-track": JSON.stringify(node.attrs.track),
+          "data-group": node.attrs.group
+        }
+      : { class: node.attrs.class };
   return attrs;
 };
 

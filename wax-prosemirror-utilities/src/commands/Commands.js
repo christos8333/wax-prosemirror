@@ -1,5 +1,34 @@
 import { v4 as uuidv4 } from "uuid";
 
+const setBlockType = (nodeType, attrs = {}) => {
+  return (state, dispatch) => {
+    const { tr } = state;
+    const { from, to } = state.selection;
+    state.doc.nodesBetween(from, to, (node, pos) => {
+      if (!node.isTextblock || node.hasMarkup(nodeType, attrs)) return;
+      let applicable = false;
+      if (node.type == nodeType) {
+        applicable = true;
+      } else {
+        const $pos = state.doc.resolve(pos),
+          index = $pos.index();
+        applicable = $pos.parent.canReplaceWith(index, index + 1, nodeType);
+      }
+      if (applicable) {
+        tr.setBlockType(
+          from,
+          to,
+          nodeType,
+          Object.assign({}, node.attrs, attrs)
+        );
+      }
+    });
+    if (!tr.steps.length) return false;
+    if (dispatch) dispatch(tr.scrollIntoView());
+    return true;
+  };
+};
+
 const markActive = type => state => {
   const { from, $from, to, empty } = state.selection;
 
@@ -83,6 +112,7 @@ const createComment = (state, dispatch, group) => {
 };
 
 export default {
+  setBlockType,
   blockActive,
   canInsert,
   createComment,

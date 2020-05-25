@@ -2,11 +2,11 @@ import { Selection, TextSelection } from "prosemirror-state";
 import { Slice } from "prosemirror-model";
 import { ReplaceStep, Mapping } from "prosemirror-transform";
 
-const markDeletion = (tr, from, to, user, username, date1, date10) => {
+const markDeletion = (tr, from, to, user, date) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
-    user,
-    username,
-    date: date10
+    user: user.userId,
+    username: user.username,
+    date
   });
   let firstTableCellChild = false;
   const deletionMap = new Mapping();
@@ -24,9 +24,7 @@ const markDeletion = (tr, from, to, user, username, date1, date10) => {
       node.isInline &&
       node.marks.find(
         mark =>
-          mark.type.name === "insertion" &&
-          mark.attrs.user === user &&
-          !mark.attrs.approved
+          mark.type.name === "insertion" && mark.attrs.user === user.userId
       )
     ) {
       const removeStep = new ReplaceStep(
@@ -53,7 +51,8 @@ const markDeletion = (tr, from, to, user, username, date1, date10) => {
     ) {
       if (
         node.attrs.track.find(
-          trackAttr => trackAttr.type === "insertion" && trackAttr.user === user
+          trackAttr =>
+            trackAttr.type === "insertion" && trackAttr.user === user.userId
         )
       ) {
         let removeStep;
@@ -81,7 +80,12 @@ const markDeletion = (tr, from, to, user, username, date1, date10) => {
         }
       } else {
         const track = node.attrs.track.slice();
-        track.push({ type: "deletion", user, username, date: date1 });
+        track.push({
+          type: "deletion",
+          user: user.userId,
+          username: user.username,
+          date
+        });
         tr.setNodeMarkup(
           deletionMap.map(pos),
           null,

@@ -10,7 +10,10 @@ export default class Undo extends Tools {
   onlyOnMain = true;
 
   get run() {
-    return undo;
+    return (state, dispatch) => {
+      const { tr } = state;
+      undo(state, tr => dispatch(tr.setMeta("inputType", "historyUndo")));
+    };
   }
 
   get enable() {

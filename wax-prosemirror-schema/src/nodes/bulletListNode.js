@@ -1,3 +1,5 @@
+import { SchemaHelpers } from "wax-prosemirror-utilities";
+
 const bulletlist = {
   group: "block",
   content: "list_item+",
@@ -9,7 +11,7 @@ const bulletlist = {
       tag: "ul",
       getAttrs(hook, next) {
         Object.assign(hook, {
-          track: parseTracks(hook.dom.dataset.track)
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
         });
         next();
       }

@@ -10,7 +10,10 @@ export default class Redo extends Tools {
   onlyOnMain = true;
 
   get run() {
-    return redo;
+    return (state, dispatch) => {
+      const { tr } = state;
+      redo(state, tr => dispatch(tr.setMeta("inputType", "historyRedo")));
+    };
   }
 
   get enable() {

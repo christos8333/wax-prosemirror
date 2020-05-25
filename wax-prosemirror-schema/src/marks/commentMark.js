@@ -1,33 +1,36 @@
 const comment = {
   attrs: {
+    class: { default: "comment" },
     id: { default: "" },
     group: { default: "" },
     conversation: []
   },
   inclusive: false,
-  // excludes: "",
   parseDOM: [
     {
-      tag: "span.comment[data-conversation]",
-      getAttrs(dom) {
-        return {
-          id: dom.dataset.id,
-          group: dom.dataset.group,
-          conversation: JSON.parse(dom.dataset.conversation)
-        };
+      tag: "span.comment",
+      getAttrs(hook, next) {
+        Object.assign(hook, {
+          class: hook.dom.getAttribute("class"),
+          id: hook.dom.dataset.id,
+          group: hook.dom.dataset.group,
+          conversation: hook.dom.dataset.conversation
+        });
+        next();
       }
     }
   ],
-  toDOM(node) {
-    return [
+  toDOM(hook, next) {
+    hook.value = [
       "span",
       {
-        class: "comment",
-        "data-id": node.attrs.id,
-        "data-group": node.attrs.group,
-        "data-conversation": JSON.stringify(node.attrs.conversation)
+        class: hook.node.attrs.class,
+        "data-id": hook.node.attrs.id,
+        "data-conversation": JSON.stringify(hook.node.attrs.conversation),
+        "data-group": hook.node.attrs.group
       }
     ];
+    next();
   }
 };
 

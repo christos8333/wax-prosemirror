@@ -9,9 +9,12 @@ class TrackChangeService extends Service {
     const createNode = this.container.get("CreateNode");
 
     Object.keys(trackChangesMarks).forEach(mark => {
-      createMark({
-        [mark]: trackChangesMarks[mark]
-      });
+      createMark(
+        {
+          [mark]: trackChangesMarks[mark]
+        },
+        { toWaxSchema: true }
+      );
     });
 
     Object.keys(trackChangesNodes).forEach(node => {

@@ -31,9 +31,10 @@ const serializer = schema => {
   };
 };
 
+let schema;
 const createApplication = props => {
   const application = Application.create(props);
-  application.getSchema();
+  schema = application.getSchema();
   application.bootServices();
   return application;
 };
@@ -50,7 +51,6 @@ const LayoutWrapper = styled.div`
 
 const Wax = props => {
   let finalPlugins;
-  let schema;
   const [application, setApplication] = useState();
 
   useEffect(() => {
@@ -73,8 +73,6 @@ const Wax = props => {
   } = props;
 
   if (!application) return null;
-
-  schema = application.getSchema();
 
   const WaxOnchange = onChange ? onChange : value => true;
 

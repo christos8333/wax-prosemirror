@@ -1,6 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 class SourceNote extends Tools {
@@ -9,13 +9,15 @@ class SourceNote extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.sourceNote)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.sourceNote, {
+        class: "source-note"
+      })(state, dispatch);
     };
   }
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.sourceNote)(state);
+      return Commands.setBlockType(state.config.schema.nodes.sourceNote)(state);
     };
   }
 }

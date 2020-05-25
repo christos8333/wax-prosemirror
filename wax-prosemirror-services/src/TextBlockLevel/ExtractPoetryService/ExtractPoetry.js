@@ -1,6 +1,6 @@
 import Tools from "../../lib/Tools";
 import { injectable } from "inversify";
-import { setBlockType } from "prosemirror-commands";
+import { Commands } from "wax-prosemirror-utilities";
 
 @injectable()
 class ExtractPoetry extends Tools {
@@ -9,13 +9,17 @@ class ExtractPoetry extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      setBlockType(state.config.schema.nodes.extractPoetry)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.extractPoetry, {
+        class: "extract-poetry"
+      })(state, dispatch);
     };
   }
 
   get enable() {
     return state => {
-      return setBlockType(state.config.schema.nodes.extractPoetry)(state);
+      return Commands.setBlockType(state.config.schema.nodes.extractPoetry)(
+        state
+      );
     };
   }
 }

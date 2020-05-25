@@ -47,9 +47,9 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value={"this is some content"}
+      value={`<ul><li><p class="paragraph">this</p></li><li><p class="paragraph">that</p></li></ul><p class="paragraph">and a paragraph</p><p>more</p>`}
       layout={EditoriaLayout}
-      // TrackChange
+      TrackChange
       // onChange={source => console.log(source)}
       user={user}
     />

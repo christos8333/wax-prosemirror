@@ -59,6 +59,7 @@ export default {
   // Always load first CommentsService and LinkService,
   //as it matters on how PM treats nodes and marks
   services: [
+    new TrackChangeService(),
     new CommentsService(),
     new LinkService(),
     new PlaceholderService(),
@@ -77,7 +78,6 @@ export default {
     new TextToolGroupService(),
     new AnnotationToolGroupService(),
     new NoteToolGroupService(),
-    new ListToolGroupService(),
-    new TrackChangeService()
+    new ListToolGroupService()
   ]
 };

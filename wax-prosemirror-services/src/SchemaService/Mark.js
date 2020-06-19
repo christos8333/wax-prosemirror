@@ -10,6 +10,7 @@ export default class Mark {
   group = "";
   content = "";
   draggable = false;
+  inclusive = true;
   _attrs = {};
   _parseRules = [];
 
@@ -60,6 +61,7 @@ export default class Mark {
       group: this.group,
       content: this.content,
       draggable: this.draggable,
+      inclusive: this.inclusive,
       attrs: this._attrs,
       parseDOM: this._parseRules.map(rule => rule.combineRules()),
       toDOM: node => {

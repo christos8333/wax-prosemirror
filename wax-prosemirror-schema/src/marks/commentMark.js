@@ -6,6 +6,7 @@ const comment = {
     conversation: []
   },
   inclusive: false,
+  excludes: "",
   parseDOM: [
     {
       tag: "span.comment",

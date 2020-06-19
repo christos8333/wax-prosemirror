@@ -1,3 +1,4 @@
+import { forEach } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
@@ -15,15 +16,26 @@ const transformPasted = (slice, view) => {
     true
   );
 
-  const allComments = commentNodes.map(node => {
-    return node.node.marks.filter(comment => {
-      return comment.type.name === "comment";
+  const allComments = [];
+
+  commentNodes.map(node => {
+    node.node.marks.map(comment => {
+      if (comment.type.name === "comment") {
+        allComments.push(comment);
+      }
     });
   });
 
-  //TODO check to alter attr with transform
-  allComments.forEach(comment => {
-    comment[0].attrs.id = uuidv4();
+  let groupedCommentsById = allComments.reduce((obj, mark) => {
+    obj[mark.attrs.id] = [...(obj[mark.attrs.id] || []), mark];
+    return obj;
+  }, {});
+
+  forEach(Object.keys(groupedCommentsById), key => {
+    let id = uuidv4();
+    forEach(groupedCommentsById[key], comment => {
+      comment.attrs.id = id;
+    });
   });
 
   notes.forEach(note => {

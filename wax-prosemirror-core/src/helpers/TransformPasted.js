@@ -1,3 +1,4 @@
+import { forEach } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
@@ -30,10 +31,12 @@ const transformPasted = (slice, view) => {
     return obj;
   }, {});
 
-  //TODO check to alter attr with transform
-  // allComments.forEach(comment => {
-  //   comment[0].attrs.id = uuidv4();
-  // });
+  forEach(Object.keys(groupedCommentsById), key => {
+    let id = uuidv4();
+    forEach(groupedCommentsById[key], comment => {
+      comment.attrs.id = id;
+    });
+  });
 
   notes.forEach(note => {
     note.node.attrs.id = uuidv4();

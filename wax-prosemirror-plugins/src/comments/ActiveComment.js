@@ -9,10 +9,14 @@ const getComment = state => {
   const commentMark = state.schema.marks["comment"];
   const commentOnSelection = DocumentHelpers.findMark(state, commentMark);
   if (commentOnSelection) {
-    const allInlineNodes = DocumentHelpers.findInlineNodes(state.doc);
+    const commentNodes = DocumentHelpers.findChildrenByMark(
+      state.doc,
+      commentMark,
+      true
+    );
     const allCommentsWithSameId = [];
 
-    allInlineNodes.map(node => {
+    commentNodes.map(node => {
       node.node.marks.filter(mark => {
         if (
           mark.type.name === "comment" &&

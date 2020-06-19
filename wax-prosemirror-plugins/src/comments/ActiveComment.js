@@ -6,6 +6,8 @@ import { DocumentHelpers } from "wax-prosemirror-utilities";
 const activeComment = new PluginKey("activeComment");
 
 const getComment = state => {
+  if (state.selection.from !== state.selection.to) return;
+
   const commentMark = state.schema.marks["comment"];
   const commentOnSelection = DocumentHelpers.findMark(state, commentMark);
   if (commentOnSelection) {

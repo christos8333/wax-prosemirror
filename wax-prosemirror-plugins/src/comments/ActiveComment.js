@@ -1,4 +1,4 @@
-import { minBy, maxBy } from "lodash";
+import { minBy, maxBy, last } from "lodash";
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
@@ -10,33 +10,33 @@ const getComment = state => {
 
   const commentMark = state.schema.marks["comment"];
   const commentOnSelection = DocumentHelpers.findMark(state, commentMark);
+
   if (commentOnSelection) {
     const commentNodes = DocumentHelpers.findChildrenByMark(
       state.doc,
       commentMark,
       true
     );
-    const allCommentsWithSameId = [];
 
+    const allCommentsWithSameId = [];
     commentNodes.map(node => {
       node.node.marks.filter(mark => {
         if (
           mark.type.name === "comment" &&
           commentOnSelection.attrs.id === mark.attrs.id
         ) {
-          mark.from = node.pos;
-          mark.to = node.pos + node.node.text.length;
-          allCommentsWithSameId.push(mark);
+          allCommentsWithSameId.push(node);
         }
       });
     });
+
     if (allCommentsWithSameId.length > 1) {
-      const minPos = minBy(allCommentsWithSameId, "from");
-      const maxPos = maxBy(allCommentsWithSameId, "to");
+      const minPos = minBy(allCommentsWithSameId, "pos");
+      const maxPos = maxBy(allCommentsWithSameId, "pos");
 
       return {
-        from: minPos.from,
-        to: maxPos.to,
+        from: minPos.pos,
+        to: maxPos.pos + last(allCommentsWithSameId).node.nodeSize,
         attrs: commentOnSelection.attrs,
         contained: commentOnSelection.contained
       };

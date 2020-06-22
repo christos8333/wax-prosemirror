@@ -20,7 +20,6 @@ const author = {
   toDOM(hook, next) {
     const attrs = { class: hook.node.attrs.class };
     hook.value = ["p", attrs, 0];
-    console.log(hook);
     next();
   }
 };

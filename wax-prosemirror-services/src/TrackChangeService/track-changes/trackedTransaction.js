@@ -20,7 +20,7 @@ import replaceAroundStep from "./helpers/replaceAroundStep";
 import addMarkStep from "./helpers/addMarkStep";
 import removeMarkStep from "./helpers/removeMarkStep";
 
-const trackedTransaction = (tr, state, user) => {
+const trackedTransaction = (tr, state, user, group) => {
   if (
     !tr.steps.length ||
     (tr.meta &&
@@ -45,16 +45,16 @@ const trackedTransaction = (tr, state, user) => {
 
     switch (step.constructor) {
       case ReplaceStep:
-        replaceStep(state, tr, step, newTr, map, doc, user, date);
+        replaceStep(state, tr, step, newTr, map, doc, user, date, group);
         break;
       case ReplaceAroundStep:
-        replaceAroundStep(state, tr, step, newTr, map, doc, user, date);
+        replaceAroundStep(state, tr, step, newTr, map, doc, user, date, group);
         break;
       case AddMarkStep:
-        addMarkStep(state, tr, step, newTr, map, doc, user, date);
+        addMarkStep(state, tr, step, newTr, map, doc, user, date, group);
         break;
       case RemoveMarkStep:
-        removeMarkStep(state, tr, step, newTr, map, doc, user, date);
+        removeMarkStep(state, tr, step, newTr, map, doc, user, date, group);
         break;
     }
   });

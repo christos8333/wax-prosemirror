@@ -2,17 +2,29 @@ import markDeletion from "./markDeletion";
 import markInsertion from "./markInsertion";
 import markWrapping from "./markWrapping";
 
-const replaceAroundStep = (state, tr, step, newTr, map, doc, user, date) => {
+const replaceAroundStep = (
+  state,
+  tr,
+  step,
+  newTr,
+  map,
+  doc,
+  user,
+  date,
+  group
+) => {
   if (step.from === step.gapFrom && step.to === step.gapTo) {
     // wrapped in something
     newTr.step(step);
     const from = step.getMap().map(step.from, -1);
     const to = step.getMap().map(step.gapFrom);
-    markInsertion(newTr, from, to, user, date);
+    markInsertion(newTr, from, to, user, date, group);
   } else if (!step.slice.size) {
     // unwrapped from something
     map.appendMap(step.invert(doc).getMap());
-    map.appendMap(markDeletion(newTr, step.from, step.gapFrom, user, date));
+    map.appendMap(
+      markDeletion(newTr, step.from, step.gapFrom, user, date, group)
+    );
   } else if (
     step.slice.size === 2 &&
     step.gapFrom - step.from === 1 &&
@@ -28,7 +40,8 @@ const replaceAroundStep = (state, tr, step, newTr, map, doc, user, date) => {
         oldNode,
         step.slice.content.firstChild,
         user,
-        date
+        date,
+        group
       );
     }
   } else {

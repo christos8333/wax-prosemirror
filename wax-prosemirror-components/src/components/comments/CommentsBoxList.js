@@ -5,7 +5,7 @@ export default ({ comments, view, position }) => {
   return (
     <Fragment>
       {comments.map((comment, index) => {
-        const { attrs: { id } } = comment;
+        const id = comment.attrs ? comment.attrs.id : comment.node.attrs.id;
         const top = position[index] ? position[index][id] : 0;
         return (
           <CommentBox
@@ -13,7 +13,7 @@ export default ({ comments, view, position }) => {
             mark={comment}
             view={view}
             top={top}
-            dataComment={`comment-${id}`}
+            dataBox={id}
           />
         );
       })}

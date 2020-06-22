@@ -28,13 +28,15 @@ const CommentBoxStyled = styled.div`
   }};
 `;
 
-export default ({ mark, view, top, dataComment }) => {
+export default ({ mark, view, top, dataBox }) => {
   const [animate, setAnimate] = useState(false);
   const { view: { main }, app, activeView } = useContext(WaxContext);
   const activeCommentPlugin = app.PmPlugins.get("activeComment");
   const activeComment = activeCommentPlugin.getState(activeView.state).comment;
   let active = false;
-  if (activeComment && mark.attrs.id === activeComment.attrs.id) active = true;
+  const id = mark.attrs ? mark.attrs.id : mark.node.attrs.id;
+
+  if (activeComment && id === activeComment.attrs.id) active = true;
   useEffect(() => {
     setAnimate(true);
   }, []);
@@ -46,7 +48,7 @@ export default ({ mark, view, top, dataComment }) => {
           <CommentBoxStyled
             top={top}
             state={state}
-            data-comment={dataComment}
+            data-box={dataBox}
             active={active}
           />
         )}

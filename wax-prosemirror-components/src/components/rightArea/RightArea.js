@@ -28,17 +28,17 @@ export default ({ area }) => {
 
     each(marks[area], (mark, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
-      const { attrs: { id } } = mark;
+      const id = mark.attrs ? mark.attrs.id : mark.node.attrs.id;
+
       const activeComment = activeCommentPlugin.getState(activeView.state)
         .comment;
 
       let isActive = false;
-      if (activeComment && mark.attrs.id === activeComment.attrs.id)
-        isActive = true;
+      if (activeComment && id === activeComment.attrs.id) isActive = true;
 
       //annotation top
       if (area === "main") {
-        markEl = document.querySelector(`span[data-id="${id}"]`);
+        markEl = document.querySelector(`[data-id="${id}"]`);
         if (markEl)
           annotationTop = markEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
@@ -47,14 +47,14 @@ export default ({ area }) => {
           .height;
         markEl = document
           .querySelector("#notes-container")
-          .querySelector(`span[data-id="${id}"]`);
+          .querySelector(`[data-id="${id}"]`);
         if (markEl)
           annotationTop =
             markEl.getBoundingClientRect().top - panelWrapperHeight - 50;
       }
 
       // get height of this mark box
-      const boxEl = document.querySelector(`div[data-comment="comment-${id}"]`);
+      const boxEl = document.querySelector(`div[data-box="${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight);
 
       // where the box should move to
@@ -95,7 +95,11 @@ export default ({ area }) => {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
 
-            allCommentsTop[i - 1][marks[area][i - 1].attrs.id] = result[i - 1];
+            const temp = marks[area][i - 1].attrs
+              ? marks[area][i - 1].attrs.id
+              : marks[area][i - 1].node.attrs.id;
+
+            allCommentsTop[i - 1][temp] = result[i - 1];
           }
 
           if (!doesOverlap) b = false;

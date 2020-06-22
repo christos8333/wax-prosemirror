@@ -10,7 +10,7 @@ import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 import CommentsBoxList from "./../comments/CommentsBoxList";
-import { each, uniqBy } from "lodash";
+import { each, uniqBy, sortBy } from "lodash";
 
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);
@@ -147,6 +147,7 @@ const updateMarks = view => {
             mark.type.name === "deletion" ||
             mark.type.name === "format_change"
           ) {
+            mark.pos = node.pos;
             finalMarks.push(mark);
           }
         });
@@ -159,15 +160,22 @@ const updateMarks = view => {
       }
     });
 
-    const groupedNodes = {};
-    uniqBy(finalMarks, "attrs.id").forEach(mark => {
-      if (!groupedNodes[mark.attrs.group]) {
-        groupedNodes[mark.attrs.group] = [mark];
+    const nodesAndMarks = [...uniqBy(finalMarks, "attrs.id"), ...finalNodes];
+
+    const groupedMarkNodes = {};
+
+    sortBy(nodesAndMarks, ["pos"]).forEach(markNode => {
+      const markNodeAttrs = markNode.attrs
+        ? markNode.attrs
+        : markNode.node.attrs;
+
+      if (!groupedMarkNodes[markNodeAttrs.group]) {
+        groupedMarkNodes[markNodeAttrs.group] = [markNode];
       } else {
-        groupedNodes[mark.attrs.group].push(mark);
+        groupedMarkNodes[markNodeAttrs.group].push(markNode);
       }
     });
-    return groupedNodes;
+    return groupedMarkNodes;
   }
   return [];
 };

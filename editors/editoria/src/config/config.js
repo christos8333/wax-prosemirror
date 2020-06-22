@@ -56,26 +56,26 @@ export default {
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
-  // Always load first TrackChangeService,
+  // Always load first CommentsService and LinkService,
   //as it matters on how PM treats nodes and marks
   services: [
+    new DisplayBlockLevelService(),
+    new DisplayToolGroupService(),
+    new TextBlockLevelService(),
+    new TextToolGroupService(),
+    new ListsService(),
     new TrackChangeService(),
     new CommentsService(),
     new LinkService(),
     new PlaceholderService(),
     new ImageService(),
-    new ListsService(),
     new InlineAnnotationsService(),
     new TablesService(),
-    new TextBlockLevelService(),
     new BaseService(),
     new BaseToolGroupService(),
-    new DisplayBlockLevelService(),
     new NoteService(),
     new TableToolGroupService(),
-    new DisplayToolGroupService(),
     new ImageToolGroupService(),
-    new TextToolGroupService(),
     new AnnotationToolGroupService(),
     new NoteToolGroupService(),
     new ListToolGroupService()

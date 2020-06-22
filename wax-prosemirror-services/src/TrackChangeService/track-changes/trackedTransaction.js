@@ -34,7 +34,7 @@ const trackedTransaction = (tr, state, user, group) => {
 
   const newTr = state.tr;
   const map = new Mapping();
-  const date = Math.floor(Date.now() / 60000);
+  const date = Math.floor(Date.now() / 300000);
 
   tr.steps.forEach(originalStep => {
     const step = originalStep.map(map),

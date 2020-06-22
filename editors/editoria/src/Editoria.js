@@ -47,7 +47,8 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value={`<p class="paragraph"><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">and a </span><span class="insertion" data-id="" data-user="1234" data-username="demo" data-date="26541557" data-group=""><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">sdasdssd</span></span><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">paragraph</span></p><p class="paragraph">more</p>`}
+      value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the second paragraph</p><p class="author">This is an author</p>`}
+      // value={`<p class="paragraph"><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">and a </span><span class="insertion" data-id="" data-user="1234" data-username="demo" data-date="26541557" data-group=""><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">sdasdssd</span></span><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">paragraph</span></p><p class="paragraph">more</p>`}
       layout={EditoriaLayout}
       TrackChange
       // onChange={source => console.log(source)}

@@ -25,6 +25,7 @@ const author = {
   ],
   toDOM(hook, next) {
     if (hook.node.attrs.track.length) {
+      console.log(hook);
       Object.assign(hook.value[1], {
         "data-id": hook.node.attrs.id,
         "data-track": JSON.stringify(hook.node.attrs.track),

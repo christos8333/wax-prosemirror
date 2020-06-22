@@ -14,7 +14,10 @@ const addMarkStep = (state, tr, step, newTr, map, doc, user, date, group) => {
         step.mark
       );
     }
-    if (!node.marks.find(mark => mark.type === step.mark.type)) {
+    if (
+      !["comment"].includes(step.mark.type.name) &&
+      !node.marks.find(mark => mark.type === step.mark.type)
+    ) {
       const formatChangeMark = node.marks.find(
         mark => mark.type.name === "format_change"
       );

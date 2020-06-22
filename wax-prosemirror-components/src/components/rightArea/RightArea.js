@@ -152,6 +152,7 @@ const updateMarks = view => {
         });
       }
     });
+
     allBlockNodes.map(node => {
       if (node.node.attrs.track && node.node.attrs.track.length > 0) {
         finalNodes.push(node);

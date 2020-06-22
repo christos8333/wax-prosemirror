@@ -136,6 +136,7 @@ const updateMarks = view => {
     const allBlockNodes = DocumentHelpers.findBlockNodes(view.state.doc);
     const allInlineNodes = DocumentHelpers.findInlineNodes(view.state.doc);
     const finalMarks = [];
+    const finalNodes = [];
 
     allInlineNodes.map(node => {
       if (node.node.marks.length > 0) {
@@ -149,6 +150,11 @@ const updateMarks = view => {
             finalMarks.push(mark);
           }
         });
+      }
+    });
+    allBlockNodes.map(node => {
+      if (node.node.attrs.track && node.node.attrs.track.length > 0) {
+        finalNodes.push(node);
       }
     });
 

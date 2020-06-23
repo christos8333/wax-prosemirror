@@ -12,7 +12,7 @@ const markWrapping = (tr, pos, oldNode, newNode, user, date, group) => {
     ) {
       blockTrack = {
         type: "block_change",
-        user: user.id,
+        user: user.userId,
         username: user.username,
         date,
         before: blockTrack.before
@@ -22,7 +22,7 @@ const markWrapping = (tr, pos, oldNode, newNode, user, date, group) => {
   } else {
     blockTrack = {
       type: "block_change",
-      user: user.id,
+      user: user.userId,
       username: user.username,
       date,
       before: { type: oldNode.type.name, attrs: oldNode.attrs }

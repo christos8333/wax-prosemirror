@@ -5,12 +5,10 @@ import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
 
 const TrackChangeBoxStyled = styled.div`
-  height: 50px;
-  width: 50px;
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  background: blue;
+  border: 1px solid blue;
   position: absolute;
   transition: ${({ state }) => "top 1s, opacity 1.5s, left 1s"};
   top: ${props => (props.top ? `${props.top}px` : 0)};
@@ -30,9 +28,18 @@ const TrackChangeBoxStyled = styled.div`
 `;
 
 export default ({ trackChange, view, top, dataBox }) => {
-  console.log(trackChange instanceof Mark);
+  console.log(trackChange);
   const [animate, setAnimate] = useState(false);
   const { view: { main }, app, activeView } = useContext(WaxContext);
+  let action;
+  if (trackChange instanceof Mark) {
+    if ((trackChange.type.name = "format_change")) {
+      const { attrs: { username, before, after } } = trackChange;
+      action = `User ${username} added ${after[0]}`;
+    }
+  } else {
+    action = `User demo changed paragraph to heading 1`;
+  }
   // const { attrs: { id } } = comment;
 
   // const activeCommentPlugin = app.PmPlugins.get("activeComment");
@@ -53,7 +60,11 @@ export default ({ trackChange, view, top, dataBox }) => {
             data-box={dataBox}
             active={active}
           >
-            <span>hohohohho</span>
+            <div>
+              {action}
+              <button>Accept</button>
+              <button>Reject</button>
+            </div>
           </TrackChangeBoxStyled>
         )}
       </Transition>

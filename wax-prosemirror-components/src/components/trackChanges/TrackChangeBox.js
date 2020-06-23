@@ -9,7 +9,7 @@ const CommentBoxStyled = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  background: #ffab20;
+  background: blue;
   position: absolute;
   transition: ${({ state }) => "top 1s, opacity 1.5s, left 1s"};
   top: ${props => (props.top ? `${props.top}px` : 0)};
@@ -31,12 +31,12 @@ const CommentBoxStyled = styled.div`
 export default ({ comment, view, top, dataBox }) => {
   const [animate, setAnimate] = useState(false);
   const { view: { main }, app, activeView } = useContext(WaxContext);
-  const { attrs: { id } } = comment;
+  // const { attrs: { id } } = comment;
 
-  const activeCommentPlugin = app.PmPlugins.get("activeComment");
-  const activeComment = activeCommentPlugin.getState(activeView.state).comment;
+  // const activeCommentPlugin = app.PmPlugins.get("activeComment");
+  // const activeComment = activeCommentPlugin.getState(activeView.state).comment;
   let active = false;
-  if (activeComment && id === activeComment.attrs.id) active = true;
+  // if (activeComment && id === activeComment.attrs.id) active = true;
   useEffect(() => {
     setAnimate(true);
   }, []);

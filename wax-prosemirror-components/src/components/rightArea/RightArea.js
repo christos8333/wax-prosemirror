@@ -9,7 +9,7 @@ import React, {
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
-import CommentsBoxList from "./../comments/CommentsBoxList";
+import BoxList from "./BoxList";
 import { each, uniqBy, sortBy } from "lodash";
 
 export default ({ area }) => {
@@ -123,8 +123,8 @@ export default ({ area }) => {
 
   const CommentTrackComponent = useMemo(
     () => (
-      <CommentsBoxList
-        comments={marks[area] || []}
+      <BoxList
+        commentsTracks={marks[area] || []}
         area={area}
         view={main}
         position={position}

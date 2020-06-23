@@ -1,3 +1,4 @@
+import { Mark } from "prosemirror-model";
 import React, {
   useContext,
   useState,
@@ -15,20 +16,21 @@ import { each, uniqBy, sortBy } from "lodash";
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);
   const activeCommentPlugin = app.PmPlugins.get("activeComment");
-  const [marks, setMarks] = useState([]);
+  const [marksNodes, setMarksNodes] = useState([]);
   const [position, setPosition] = useState();
 
   const setTops = useCallback(() => {
     const result = [];
-    let markEl = null;
+    let markNodeEl = null;
     let annotationTop = 0;
     let boxHeight = 0;
     let top = 0;
     const allCommentsTop = [];
 
-    each(marks[area], (mark, pos) => {
+    each(marksNodes[area], (markNode, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
-      const id = mark.attrs ? mark.attrs.id : mark.node.attrs.id;
+      const id =
+        markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
 
       const activeComment = activeCommentPlugin.getState(activeView.state)
         .comment;
@@ -38,22 +40,23 @@ export default ({ area }) => {
 
       //annotation top
       if (area === "main") {
-        markEl = document.querySelector(`[data-id="${id}"]`);
-        if (markEl)
-          annotationTop = markEl.getBoundingClientRect().top - WaxSurface.top;
+        markNodeEl = document.querySelector(`[data-id="${id}"]`);
+        if (markNodeEl)
+          annotationTop =
+            markNodeEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
         const panelWrapper = document.getElementsByClassName("panelWrapper");
         const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
           .height;
-        markEl = document
+        markNodeEl = document
           .querySelector("#notes-container")
           .querySelector(`[data-id="${id}"]`);
-        if (markEl)
+        if (markNodeEl)
           annotationTop =
-            markEl.getBoundingClientRect().top - panelWrapperHeight - 50;
+            markNodeEl.getBoundingClientRect().top - panelWrapperHeight - 50;
       }
 
-      // get height of this mark box
+      // get height of this markNode box
       const boxEl = document.querySelector(`div[data-box="${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight);
 
@@ -62,20 +65,20 @@ export default ({ area }) => {
 
       // if the above comment box has already taken up the height, move down
       if (pos > 0) {
-        const previousBox = marks[area][pos - 1];
+        const previousBox = marksNodes[area][pos - 1];
         const previousEndHeight = previousBox.endHeight;
         if (annotationTop < previousEndHeight) {
           top = previousEndHeight + 2;
         }
       }
       // store where the box ends to be aware of overlaps in the next box
-      mark.endHeight = top + boxHeight + 2;
+      markNode.endHeight = top + boxHeight + 2;
       result[pos] = top;
       allCommentsTop.push({ [id]: result[pos] });
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
-        mark.endHeight = annotationTop + boxHeight + 2;
+        markNode.endHeight = annotationTop + boxHeight + 2;
         result[pos] = annotationTop;
         allCommentsTop[pos][id] = result[pos];
         let b = true;
@@ -85,7 +88,7 @@ export default ({ area }) => {
         if (i === 0) b = false;
 
         while (b) {
-          const boxAbove = marks[area][i - 1];
+          const boxAbove = marksNodes[area][i - 1];
           const boxAboveEnds = boxAbove.endHeight;
           const currentTop = result[i];
 
@@ -95,11 +98,12 @@ export default ({ area }) => {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
 
-            const temp = marks[area][i - 1].attrs
-              ? marks[area][i - 1].attrs.id
-              : marks[area][i - 1].node.attrs.id;
+            const previousMarkNode =
+              marksNodes[area][i - 1] instanceof Mark
+                ? marksNodes[area][i - 1].attrs.id
+                : marksNodes[area][i - 1].node.attrs.id;
 
-            allCommentsTop[i - 1][temp] = result[i - 1];
+            allCommentsTop[i - 1][previousMarkNode] = result[i - 1];
           }
 
           if (!doesOverlap) b = false;
@@ -114,7 +118,7 @@ export default ({ area }) => {
 
   useEffect(
     () => {
-      setMarks(updateMarks(main));
+      setMarksNodes(updateMarks(main));
       setPosition(setTops());
     },
 
@@ -124,13 +128,13 @@ export default ({ area }) => {
   const CommentTrackComponent = useMemo(
     () => (
       <BoxList
-        commentsTracks={marks[area] || []}
+        commentsTracks={marksNodes[area] || []}
         area={area}
         view={main}
         position={position}
       />
     ),
-    [marks[area] || [], position]
+    [marksNodes[area] || [], position]
   );
   return <Fragment>{CommentTrackComponent}</Fragment>;
 };

@@ -1,9 +1,10 @@
+import { Mark } from "prosemirror-model";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Transition } from "react-transition-group";
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
 
-const CommentBoxStyled = styled.div`
+const TrackChangeBoxStyled = styled.div`
   height: 50px;
   width: 50px;
   display: flex;
@@ -28,7 +29,8 @@ const CommentBoxStyled = styled.div`
   }};
 `;
 
-export default ({ comment, view, top, dataBox }) => {
+export default ({ trackChange, view, top, dataBox }) => {
+  console.log(trackChange instanceof Mark);
   const [animate, setAnimate] = useState(false);
   const { view: { main }, app, activeView } = useContext(WaxContext);
   // const { attrs: { id } } = comment;
@@ -45,12 +47,14 @@ export default ({ comment, view, top, dataBox }) => {
     <Fragment>
       <Transition in={animate} timeout={1000}>
         {state => (
-          <CommentBoxStyled
+          <TrackChangeBoxStyled
             top={top}
             state={state}
             data-box={dataBox}
             active={active}
-          />
+          >
+            <span>hohohohho</span>
+          </TrackChangeBoxStyled>
         )}
       </Transition>
     </Fragment>

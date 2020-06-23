@@ -1,3 +1,4 @@
+import { Mark } from "prosemirror-model";
 import React, { Fragment } from "react";
 import CommentBox from "../comments/CommentBox";
 import TrackChangeBox from "../trackChanges/TrackChangeBox";
@@ -6,9 +7,10 @@ export default ({ commentsTracks, view, position }) => {
   return (
     <Fragment>
       {commentsTracks.map((commentTrack, index) => {
-        const id = commentTrack.attrs
-          ? commentTrack.attrs.id
-          : commentTrack.node.attrs.id;
+        const id =
+          commentTrack instanceof Mark
+            ? commentTrack.attrs.id
+            : commentTrack.node.attrs.id;
 
         const top = position[index] ? position[index][id] : 0;
 
@@ -26,7 +28,7 @@ export default ({ commentsTracks, view, position }) => {
           return (
             <TrackChangeBox
               key={id}
-              comment={commentTrack}
+              trackChange={commentTrack}
               view={view}
               top={top}
               dataBox={id}

@@ -32,6 +32,7 @@ export default props => {
         editable: () => !readonly,
         state: EditorState.create(options),
         dispatchTransaction,
+        user,
         handleDOMEvents: {
           blur: onBlur
             ? view => {

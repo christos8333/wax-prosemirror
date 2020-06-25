@@ -45,7 +45,7 @@ const CommentBubbleComponent = ({
     !isSelectionComment() &&
     showComment(activeViewId) && (
       <button
-        onClick={event => {
+        onMouseDown={event => {
           createComment(event);
         }}
       >

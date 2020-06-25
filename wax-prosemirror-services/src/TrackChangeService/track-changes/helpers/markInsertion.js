@@ -1,11 +1,13 @@
-const markInsertion = (tr, from, to, user, date) => {
+const markInsertion = (tr, from, to, user, date, group) => {
   tr.removeMark(from, to, tr.doc.type.schema.marks.deletion);
   tr.removeMark(from, to, tr.doc.type.schema.marks.insertion);
+
   const insertionMark = tr.doc.type.schema.marks.insertion.create({
     user: user.userId,
-    username: user.username,
-    date
+    username: user.username
+    // date
   });
+
   tr.addMark(from, to, insertionMark);
   // Add insertion mark also to block nodes (figures, text blocks) but not table cells/rows and lists.
   tr.doc.nodesBetween(from, to, (node, pos) => {
@@ -27,13 +29,14 @@ const markInsertion = (tr, from, to, user, date) => {
         type: "insertion",
         user: user.userId,
         username: user.username,
-        date
+        date,
+        group
       });
 
       tr.setNodeMarkup(
         pos,
         null,
-        Object.assign({}, node.attrs, { track }),
+        Object.assign({}, node.attrs, { track, group }),
         node.marks
       );
     }

@@ -32,6 +32,7 @@ export default props => {
         editable: () => !readonly,
         state: EditorState.create(options),
         dispatchTransaction,
+        user,
         handleDOMEvents: {
           blur: onBlur
             ? view => {
@@ -56,8 +57,9 @@ export default props => {
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
+    const group = "main";
     const tr = TrackChange
-      ? trackedTransaction(transaction, view.state, user)
+      ? trackedTransaction(transaction, view.state, user, group)
       : transaction;
 
     const state = view.state.apply(tr);

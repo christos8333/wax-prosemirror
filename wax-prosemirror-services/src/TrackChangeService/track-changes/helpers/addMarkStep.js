@@ -1,4 +1,6 @@
-const addMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
+import { v4 as uuidv4 } from "uuid";
+
+const addMarkStep = (state, tr, step, newTr, map, doc, user, date, group) => {
   doc.nodesBetween(step.from, step.to, (node, pos) => {
     if (!node.isInline) {
       return true;
@@ -13,7 +15,7 @@ const addMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
       );
     }
     if (
-      ["em", "strong", "underline"].includes(step.mark.type.name) &&
+      !["comment"].includes(step.mark.type.name) &&
       !node.marks.find(mark => mark.type === step.mark.type)
     ) {
       const formatChangeMark = node.marks.find(
@@ -43,7 +45,9 @@ const addMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
             username: user.username,
             date,
             before,
-            after
+            after,
+            group,
+            id: uuidv4()
           })
         );
       } else if (formatChangeMark) {

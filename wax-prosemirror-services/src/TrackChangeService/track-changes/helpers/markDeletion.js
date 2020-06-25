@@ -2,11 +2,11 @@ import { Selection, TextSelection } from "prosemirror-state";
 import { Slice } from "prosemirror-model";
 import { ReplaceStep, Mapping } from "prosemirror-transform";
 
-const markDeletion = (tr, from, to, user, date) => {
+const markDeletion = (tr, from, to, user, date, group) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
     user: user.userId,
-    username: user.username,
-    date
+    username: user.username
+    // date
   });
   let firstTableCellChild = false;
   const deletionMap = new Mapping();
@@ -83,8 +83,8 @@ const markDeletion = (tr, from, to, user, date) => {
         track.push({
           type: "deletion",
           user: user.userId,
-          username: user.username,
-          date
+          username: user.username
+          // date
         });
         tr.setNodeMarkup(
           deletionMap.map(pos),

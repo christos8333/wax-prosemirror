@@ -5,7 +5,7 @@ import { DocumentHelpers } from "wax-prosemirror-utilities";
 import markDeletion from "./markDeletion";
 import markInsertion from "./markInsertion";
 
-const replaceStep = (state, tr, step, newTr, map, doc, user, date) => {
+const replaceStep = (state, tr, step, newTr, map, doc, user, date, group) => {
   const cellDeleteTr =
     ["deleteContentBackward", "deleteContentForward"].includes(
       tr.getMeta("inputType")
@@ -38,7 +38,7 @@ const replaceStep = (state, tr, step, newTr, map, doc, user, date) => {
     }
     const mappedNewStepTo = newStep.getMap().map(newStep.to);
 
-    markInsertion(trTemp, newStep.from, mappedNewStepTo, user, date);
+    markInsertion(trTemp, newStep.from, mappedNewStepTo, user, date, group);
     // We condense it down to a single replace step.
     const condensedStep = new ReplaceStep(
       newStep.from,
@@ -54,7 +54,7 @@ const replaceStep = (state, tr, step, newTr, map, doc, user, date) => {
     }
   }
   if (step.from !== step.to) {
-    map.appendMap(markDeletion(newTr, step.from, step.to, user, date));
+    map.appendMap(markDeletion(newTr, step.from, step.to, user, date, group));
   }
 };
 

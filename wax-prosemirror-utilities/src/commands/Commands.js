@@ -1,4 +1,6 @@
+import { Selection, TextSelection } from "prosemirror-state";
 import { v4 as uuidv4 } from "uuid";
+import { toggleMark } from "prosemirror-commands";
 
 const setBlockType = (nodeType, attrs = {}) => {
   return (state, dispatch) => {
@@ -97,18 +99,11 @@ const isOnSameTextBlock = state => {
 };
 
 const createComment = (state, dispatch, group) => {
-  const { selection: { $from, $to } } = state;
-  dispatch(
-    state.tr.addMark(
-      $from.pos,
-      $to.pos,
-      state.schema.marks.comment.create({
-        id: uuidv4(),
-        group,
-        conversation: []
-      })
-    )
-  );
+  toggleMark(state.config.schema.marks.comment, {
+    id: uuidv4(),
+    group,
+    conversation: []
+  })(state, dispatch);
 };
 
 export default {

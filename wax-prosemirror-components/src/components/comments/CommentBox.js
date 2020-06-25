@@ -94,7 +94,7 @@ export default ({ comment, view, top, dataBox }) => {
                 ref={commentInput}
                 placeholder="add a new comment"
                 onKeyPress={handleKeyDown}
-                autoFocus
+                // autoFocus
               />
               <button onClick={saveComment}>Post</button>
               <button>Cancel</button>

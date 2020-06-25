@@ -37,6 +37,7 @@ export default ({ comment, view, top, dataBox }) => {
   const { view: { main: { props: { user } } }, app, activeView } = useContext(
       WaxContext
     ),
+    { state, dispatch } = activeView,
     commentInput = useRef(null),
     [animate, setAnimate] = useState(false),
     [commentAnnotation, setCommentAnnotation] = useState(comment),
@@ -59,7 +60,22 @@ export default ({ comment, view, top, dataBox }) => {
 
   const saveComment = () => {
     const { current: { value } } = commentInput;
-    console.log(commentAnnotation, currentUser, value);
+    const { tr, doc } = state;
+    const commentMark = state.schema.marks.comment;
+
+    const obj = { [user.username]: value };
+    commentAnnotation.attrs.conversation.push(obj);
+
+    dispatch(
+      tr.addMark(
+        commentAnnotation.pos,
+        commentAnnotation.pos + commentAnnotation.node.nodeSize,
+        commentMark.create({
+          ...((commentAnnotation && commentAnnotation.attrs) || {}),
+          conversation: commentAnnotation.attrs.conversation
+        })
+      )
+    );
   };
 
   return (

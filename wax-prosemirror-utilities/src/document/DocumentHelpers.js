@@ -62,10 +62,15 @@ const findChildrenByMark = (node, markType, descend) => {
   return findChildren(node, child => markType.isInSet(child.marks), descend);
 };
 
+export const findChildrenByAttr = (node, predicate, descend) => {
+  return findChildren(node, child => !!predicate(child.attrs), descend);
+};
+
 export default {
   findMark,
   findBlockNodes,
   findChildrenByType,
   findInlineNodes,
-  findChildrenByMark
+  findChildrenByMark,
+  findChildrenByAttr
 };

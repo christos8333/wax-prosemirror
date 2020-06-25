@@ -15,7 +15,7 @@ const comment = {
           class: hook.dom.getAttribute("class"),
           id: hook.dom.dataset.id,
           group: hook.dom.dataset.group,
-          conversation: hook.dom.dataset.conversation
+          conversation: JSON.parse(hook.dom.dataset.conversation)
         });
         next();
       }

@@ -23,6 +23,8 @@ import {
   CommentsService
 } from "wax-prosemirror-services";
 
+import { WaxSelectionPlugin } from "wax-prosemirror-plugins";
+
 import invisibles, {
   space,
   hardBreak,
@@ -54,7 +56,12 @@ export default {
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
 
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [
+    columnResizing(),
+    tableEditing(),
+    invisibles([hardBreak()]),
+    WaxSelectionPlugin
+  ],
 
   // Always load first CommentsService and LinkService,
   //as it matters on how PM treats nodes and marks

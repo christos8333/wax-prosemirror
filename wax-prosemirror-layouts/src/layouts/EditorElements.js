@@ -10,6 +10,12 @@ export default css`
       outline: none;
     }
   }
+
+  .ProseMirror .wax-selection-marker {
+    background: #0a78ff;
+    color: white;
+  }
+
   .ProseMirror footnote {
     font-size: 0;
     display: inline-block;

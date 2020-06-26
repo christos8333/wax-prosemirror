@@ -34,6 +34,7 @@ export default css`
     font-size: 16px;
     counter-increment: footnote;
   }
+
   hr {
     padding: 2px 10px;
     border: none;

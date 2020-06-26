@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
+import { DocumentHelpers } from "wax-prosemirror-utilities";
 
 const SinlgeCommentRow = styled.div`
   padding: 4px;
@@ -36,11 +37,12 @@ export default ({ comment, activeView, user }) => {
 
     const obj = { [user.username]: value };
     commentAnnotation.attrs.conversation.push(obj);
+    const actualComment = DocumentHelpers.findMark(state, commentMark);
 
     dispatch(
       tr.addMark(
-        commentAnnotation.pos,
-        commentAnnotation.pos + commentAnnotation.node.nodeSize,
+        actualComment.from,
+        actualComment.to,
         commentMark.create({
           ...((commentAnnotation && commentAnnotation.attrs) || {}),
           conversation: commentAnnotation.attrs.conversation

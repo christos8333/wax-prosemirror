@@ -396,11 +396,12 @@ Is used for adding menus to the editor.
         } ]`
 ## Latest versions
 
-* wax-prosemirror-components@0.0.8
-* wax-prosemirror-core@0.0.8
-* wax-prosemirror-layouts@0.0.8
-* wax-prosemirror-plugins@0.0.8
-* wax-prosemirror-schema@0.0.8
-* wax-prosemirror-services@0.0.8
-* wax-prosemirror-themes@0.0.8
-* wax-prosemirror-utilities@0.0.8
+* wax-prosemirror-components@0.0.9
+* wax-prosemirror-core@0.0.9
+* wax-prosemirror-layouts@0.0.9
+* wax-prosemirror-plugins@0.0.9
+* wax-prosemirror-schema@0.0.9
+* wax-prosemirror-services@0.0.9
+* wax-prosemirror-themes@0.0.9
+* wax-prosemirror-utilities@0.0.9
+ 

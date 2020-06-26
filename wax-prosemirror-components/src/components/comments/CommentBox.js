@@ -9,6 +9,7 @@ import React, {
 import { Transition } from "react-transition-group";
 import styled from "styled-components";
 import { WaxContext } from "wax-prosemirror-core";
+import Comment from "./Comment";
 
 const CommentBoxStyled = styled.div`
   display: flex;
@@ -37,11 +38,7 @@ export default ({ comment, view, top, dataBox }) => {
   const { view: { main: { props: { user } } }, app, activeView } = useContext(
       WaxContext
     ),
-    { state, dispatch } = activeView,
-    commentInput = useRef(null),
     [animate, setAnimate] = useState(false),
-    [commentAnnotation, setCommentAnnotation] = useState(comment),
-    [currentUser, setCurrentuser] = useState(user),
     { attrs: { id } } = comment,
     activeCommentPlugin = app.PmPlugins.get("activeComment"),
     activeComment = activeCommentPlugin.getState(activeView.state).comment;
@@ -51,32 +48,6 @@ export default ({ comment, view, top, dataBox }) => {
   useEffect(() => {
     setAnimate(true);
   }, []);
-
-  const handleKeyDown = event => {
-    if (event.key === "Enter" || event.which === 13) {
-      saveComment();
-    }
-  };
-
-  const saveComment = () => {
-    const { current: { value } } = commentInput;
-    const { tr, doc } = state;
-    const commentMark = state.schema.marks.comment;
-
-    const obj = { [user.username]: value };
-    commentAnnotation.attrs.conversation.push(obj);
-
-    dispatch(
-      tr.addMark(
-        commentAnnotation.pos,
-        commentAnnotation.pos + commentAnnotation.node.nodeSize,
-        commentMark.create({
-          ...((commentAnnotation && commentAnnotation.attrs) || {}),
-          conversation: commentAnnotation.attrs.conversation
-        })
-      )
-    );
-  };
 
   return (
     <Fragment>
@@ -88,17 +59,12 @@ export default ({ comment, view, top, dataBox }) => {
             data-box={dataBox}
             active={active}
           >
-            <div>
-              <input
-                type="text"
-                ref={commentInput}
-                placeholder="add a new comment"
-                onKeyPress={handleKeyDown}
-                autoFocus
-              />
-              <button onClick={saveComment}>Post</button>
-              <button>Cancel</button>
-            </div>
+            <Comment
+              comment={comment}
+              active={active}
+              activeView={activeView}
+              user={user}
+            />
           </CommentBoxStyled>
         )}
       </Transition>

@@ -156,7 +156,6 @@ const updateMarks = view => {
             mark.type.name === "format_change"
           ) {
             mark.pos = node.pos;
-            mark.node = node.node;
             finalMarks.push(mark);
           }
         });

@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-themes",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Wax prosemirror themes",
   "license": "MIT",
   "main": "dist/index.js",
@@ -11,8 +11,7 @@
   },
   "dependencies": {
     "@pubsweet/ui-toolkit": "^2.2.13",
-    "cokourier-prime-sans":
-      "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git",
+    "cokourier-prime-sans": "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git",
     "typeface-fira-sans-condensed": "^0.0.54",
     "typeface-vollkorn": "^0.0.54"
   }

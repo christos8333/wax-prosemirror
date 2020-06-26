@@ -19,7 +19,6 @@ const Button = styled.button`
 `;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
-  console.log(mark);
   const href = mark ? mark.attrs.href : null,
     linkMark = mark ? mark : null,
     { view: { main }, activeView } = useContext(WaxContext),

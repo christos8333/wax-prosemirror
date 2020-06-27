@@ -46,7 +46,7 @@ export default class Application {
 
   bootServices() {
     const services = this.config.get("config.services");
-    services.forEach((plugin) => {
+    services.forEach(plugin => {
       if (plugin.boot) {
         plugin.boot();
       }
@@ -62,16 +62,23 @@ export default class Application {
     return this.schema.getSchema();
   }
 
+  resetApp() {
+    this.container = {};
+    this.config = {};
+    this.PmPlugins = {};
+    this.schema = {};
+  }
+
   static create(config) {
     /* Merge Core Config with User Config */
     const appConfig = deepmerge({ config: defaultConfig }, config, {
-      customMerge: (key) => {
+      customMerge: key => {
         if (key === "services") {
           return (coreService, configService) => {
             return coreService.concat(configService);
           };
         }
-      },
+      }
     });
 
     /*
@@ -79,22 +86,28 @@ export default class Application {
     */
     const container = new Container();
     /*
-    
+
     Set base bindings for the App to work
     */
-    container.bind("PmPlugins").to(PmPlugins).inSingletonScope();
+    container
+      .bind("PmPlugins")
+      .to(PmPlugins)
+      .inSingletonScope();
 
     container.bind("Wax").toFactory(() => new Application(container));
 
     container.bind("config").toConstantValue(appConfig);
-    container.bind("Config").to(Config).inSingletonScope();
+    container
+      .bind("Config")
+      .to(Config)
+      .inSingletonScope();
 
     /*
     Start the App
     */
     const app = container.get("Wax");
     app.setConfig();
-    appConfig.config.PmPlugins.forEach((configPlugin) => {
+    appConfig.config.PmPlugins.forEach(configPlugin => {
       app.PmPlugins.add(configPlugin.key, configPlugin);
     });
     app.registerServices();

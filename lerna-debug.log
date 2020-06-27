@@ -1,21 +1,67 @@
-0 silly input [ 'clean' ]
-1 silly flags { _: [ 'run' ],
+0 silly input [ 'build' ]
+1 silly flags {
+1 silly flags   _: [ 'run' ],
 1 silly flags   'reject-cycles': false,
 1 silly flags   rejectCycles: false,
-1 silly flags   parallel: true,
-1 silly flags   script: 'clean',
-1 silly flags   args: [] }
-2 verbose rootPath /home/chris/workspace/wax-prosemirror
+1 silly flags   script: 'build',
+1 silly flags   args: []
+1 silly flags }
+2 verbose rootPath /home/chris/workspace/prose
 3 info version 2.11.0
-4 silly existsSync /home/chris/workspace/wax-prosemirror/VERSION
-5 error EPACKAGES Errored while collecting packages and package graph
-6 error JSONError: Unexpected token } in JSON at position 646 while parsing near '...own": "^1.6.2",    },  "devDependencie...' in wax-prosemirror-components/package.json
-6 error     at module.exports (/home/chris/workspace/wax-prosemirror/node_modules/parse-json/index.js:26:19)
-6 error     at parse (/home/chris/workspace/wax-prosemirror/node_modules/load-json-file/index.js:8:29)
-6 error     at Function.module.exports.sync.fp [as sync] (/home/chris/workspace/wax-prosemirror/node_modules/load-json-file/index.js:11:29)
-6 error     at Function.module.exports.sync (/home/chris/workspace/wax-prosemirror/node_modules/lerna/node_modules/read-pkg/index.js:40:25)
-6 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/lib/PackageUtilities.js:138:47
-6 error     at Array.forEach (<anonymous>)
-6 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/lib/PackageUtilities.js:132:86
-6 error     at Array.forEach (<anonymous>)
-6 error     at Function.getPackages (/home/chris/workspace/wax-prosemirror/node_modules/lerna/lib/PackageUtilities.js:131:22)
+4 silly existsSync /home/chris/workspace/prose/VERSION
+5 silly initialize attempt
+6 silly initialize success
+7 silly execute attempt
+8 silly runScriptInDir build [] wax-prosemirror-core
+9 silly getExecOpts { cwd: '/home/chris/workspace/prose/wax-prosemirror-core' }
+10 silly runScriptInDir build [] wax-prosemirror-schema
+11 silly getExecOpts { cwd: '/home/chris/workspace/prose/wax-prosemirror-schema' }
+12 silly runScriptInDir build [] wax-prosemirror-components
+13 silly getExecOpts { cwd: '/home/chris/workspace/prose/wax-prosemirror-components' }
+14 silly runScriptInDir build [] wax-prosemirror-themes
+15 silly getExecOpts { cwd: '/home/chris/workspace/prose/wax-prosemirror-themes' }
+16 silly runScriptInDir build [] wax-prosemirror-utilities
+17 silly getExecOpts { cwd: '/home/chris/workspace/prose/wax-prosemirror-utilities' }
+18 error build Errored while running script in 'wax-prosemirror-core'
+19 error execute callback with error
+20 error Error: Command failed: yarn run build
+20 error loaded rollup.config.js with warnings
+20 error (!) Unused external imports
+20 error terser imported from external module 'rollup-plugin-terser' but never used
+20 error
+20 error ./index.js → dist/index.js...
+20 error [!] (plugin babel) SyntaxError: /home/chris/workspace/prose/wax-prosemirror-core/src/Wax.js: Unexpected token, expected ";" (63:7)
+20 error
+20 error   61 |         application.resetApp()
+20 error   62 |       }
+20 error > 63 |   }, []);
+20 error      |        ^
+20 error   64 |
+20 error   65 |   const {
+20 error   66 |     autoFocus,
+20 error src/Wax.js (63:7)
+20 error SyntaxError: /home/chris/workspace/prose/wax-prosemirror-core/src/Wax.js: Unexpected token, expected ";" (63:7)
+20 error
+20 error   61 |         application.resetApp()
+20 error   62 |       }
+20 error > 63 |   }, []);
+20 error      |        ^
+20 error   64 |
+20 error   65 |   const {
+20 error   66 |     autoFocus,
+20 error     at Object._raise (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/location.js:241:45)
+20 error     at Object.raiseWithData (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/location.js:236:17)
+20 error     at Object.raise (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/location.js:220:17)
+20 error     at Object.unexpected (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/util.js:149:16)
+20 error     at Object.semicolon (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/util.js:122:40)
+20 error     at Object.parseReturnStatement (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/statement.js:573:12)
+20 error     at Object.parseStatementContent (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/statement.js:195:21)
+20 error     at Object.parseStatement (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/statement.js:149:17)
+20 error     at Object.parseStatement (/home/chris/workspace/prose/node_modules/@babel/parser/src/plugins/flow.js:1740:28)
+20 error     at Object.parseBlockOrModuleBlockBody (/home/chris/workspace/prose/node_modules/@babel/parser/src/parser/statement.js:863:25)
+20 error
+20 error error Command failed with exit code 1.
+20 error $ BABEL_ENV=production rollup -c
+20 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+20 error
+20 error     at /home/chris/workspace/prose/node_modules/lerna/node_modules/execa/index.js:236:11

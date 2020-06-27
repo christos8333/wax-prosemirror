@@ -54,7 +54,9 @@ const Wax = props => {
   const [application, setApplication] = useState();
 
   useEffect(() => {
-    setApplication(createApplication(props));
+    const newApplication = createApplication(props);
+    setApplication(newApplication);
+    return () => newApplication.resetApp();
   }, []);
 
   const {

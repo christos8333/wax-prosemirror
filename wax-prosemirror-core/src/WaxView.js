@@ -53,6 +53,8 @@ export default props => {
     );
     if (debug) applyDevTools(view);
     if (autoFocus) view.focus();
+
+    return () => view.destroy();
   }, []);
 
   const dispatchTransaction = transaction => {

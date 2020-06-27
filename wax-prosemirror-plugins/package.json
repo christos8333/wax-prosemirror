@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-plugins",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Wax prosemirror plugins",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,8 +10,8 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "wax-prosemirror-components": "^0.0.9",
-    "wax-prosemirror-core": "^0.0.9",
-    "wax-prosemirror-layouts": "^0.0.9"
+    "wax-prosemirror-components": "^0.0.10",
+    "wax-prosemirror-core": "^0.0.10",
+    "wax-prosemirror-layouts": "^0.0.10"
   }
 }

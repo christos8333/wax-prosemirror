@@ -4,14 +4,15 @@
   "version": "0.0.10",
   "description": "Wax prosemirror themes",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
     "@pubsweet/ui-toolkit": "^2.2.13",
-    "cokourier-prime-sans": "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git",
+    "cokourier-prime-sans":
+      "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git",
     "typeface-fira-sans-condensed": "^0.0.54",
     "typeface-vollkorn": "^0.0.54"
   }

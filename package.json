@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "author": "Collaborative Knowledge Foundation",
-  "description":
-    "Monorepo for wax-prosemirror, its components and its integrations",
+  "description": "Monorepo for wax-prosemirror, its components and its integrations",
   "repository": {
     "type": "git",
     "url": "git@gitlab.coko.foundation:wax/wax-prosemirror.git"
@@ -13,14 +12,14 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap --no-ci --hoist",
-    "clean":
-      "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
+    "clean": "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rm -rf node_modules",
     "reset": "yarn clean && yarn",
     "build": "lerna run build",
-    "editoria": "cd editors/editoria && yarn start"
+    "editoria": "cd editors/editoria && yarn start",
+    "storybook": "coko-storybook"
   },
   "dependencies": {},
   "devDependencies": {
@@ -28,18 +27,21 @@
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@coko/lint": "^0.0.2",
+    "@coko/storybook": "^0.1.1",
+    "@rollup/plugin-commonjs": "^11.0.2",
     "babel-plugin-parameter-decorator": "1.0.12",
     "css-loader": "^0.28.11",
     "lerna": "^2.6.0",
+    "react": "^16.13.1",
     "react-app-rewired": "^2.1.2",
-    "style-loader": "^0.23.1",
-    "stylelint": "^8.2.0",
-    "svg-inline-loader": "^0.8.0",
     "rollup": "^2.2.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-terser": "^5.3.0",
-    "@rollup/plugin-commonjs": "^11.0.2"
+    "style-loader": "^0.23.1",
+    "stylelint": "^8.2.0",
+    "svg-inline-loader": "^0.8.0"
   },
   "resolutions": {
     "styled-components": "4.2.0",

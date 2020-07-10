@@ -33,7 +33,6 @@ const trackedTransaction = (tr, state, user) => {
   }
 
   const group = tr.getMeta("outsideView") ? tr.getMeta("outsideView") : "main";
-  console.log(group);
   const newTr = state.tr;
   const map = new Mapping();
   const date = Math.floor(Date.now() / 300000);

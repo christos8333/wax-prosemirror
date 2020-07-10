@@ -59,8 +59,6 @@ export default props => {
   }, []);
 
   const dispatchTransaction = transaction => {
-    const { TrackChange } = props;
-
     /*when a transaction comes from a view other than
     main don't keep updating the view ,as this this
     the central point of each transaction
@@ -73,7 +71,8 @@ export default props => {
         "main"
       );
     }
-    const tr = TrackChange
+
+    const tr = { props: { TrackChange } }
       ? trackedTransaction(transaction, view.state, user)
       : transaction;
 

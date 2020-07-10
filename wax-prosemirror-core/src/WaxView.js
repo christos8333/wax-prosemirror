@@ -59,11 +59,6 @@ export default props => {
   }, []);
 
   const dispatchTransaction = transaction => {
-    /*when a transaction comes from a view other than
-    main don't keep updating the view ,as this this
-    the central point of each transaction
-    */
-
     const { TrackChange } = props;
     const tr = TrackChange
       ? trackedTransaction(transaction, view.state, user)
@@ -72,6 +67,10 @@ export default props => {
     const state = view.state.apply(tr);
     view.updateState(state);
 
+    /*when a transaction comes from a view other than
+    main don't keep updating the view ,as this this
+    the central point of each transaction
+    */
     if (!transaction.getMeta("outsideView")) {
       context.updateView(
         {

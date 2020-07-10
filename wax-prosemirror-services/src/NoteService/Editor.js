@@ -42,7 +42,7 @@ export default ({ node, view }) => {
           //Set everytime the active view into context
           setTimeout(() => {
             context.updateView({}, noteId);
-          }, 200);
+          }, 20);
 
           if (!tr.getMeta("fromOutside")) {
             let outerTr = view.state.tr,

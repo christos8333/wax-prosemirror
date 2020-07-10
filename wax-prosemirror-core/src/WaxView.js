@@ -63,6 +63,15 @@ export default props => {
     main don't keep updating the view ,as this this
     the central point of each transaction
     */
+
+    const { TrackChange } = props;
+    const tr = TrackChange
+      ? trackedTransaction(transaction, view.state, user)
+      : transaction;
+
+    const state = view.state.apply(tr);
+    view.updateState(state);
+
     if (!transaction.getMeta("outsideView")) {
       context.updateView(
         {
@@ -71,13 +80,6 @@ export default props => {
         "main"
       );
     }
-    const { TrackChange } = props;
-    const tr = TrackChange
-      ? trackedTransaction(transaction, view.state, user)
-      : transaction;
-
-    const state = view.state.apply(tr);
-    view.updateState(state);
 
     props.onChange(state.doc.content);
   };

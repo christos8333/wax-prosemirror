@@ -45,6 +45,7 @@ export default props => {
         }
       }
     );
+
     context.updateView(
       {
         main: view

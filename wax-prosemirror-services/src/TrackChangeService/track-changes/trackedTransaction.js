@@ -25,7 +25,7 @@ const trackedTransaction = (tr, state, user, group) => {
     !tr.steps.length ||
     (tr.meta &&
       !Object.keys(tr.meta).every(metadata =>
-        ["inputType", "uiEvent", "paste"].includes(metadata)
+        ["inputType", "uiEvent", "paste", "fromOutsideView"].includes(metadata)
       )) ||
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {

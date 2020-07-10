@@ -52,7 +52,7 @@ export default ({ node, view }) => {
               for (let j = 0; j < steps.length; j++)
                 outerTr.step(steps[j].map(offsetMap));
             }
-            //
+
             if (outerTr.docChanged)
               view.dispatch(outerTr.setMeta("outsideView", "notes"));
           }

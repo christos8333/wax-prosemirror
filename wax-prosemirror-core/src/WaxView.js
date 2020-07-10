@@ -71,8 +71,8 @@ export default props => {
         "main"
       );
     }
-
-    const tr = { props: { TrackChange } }
+    const { TrackChange } = props;
+    const tr = TrackChange
       ? trackedTransaction(transaction, view.state, user)
       : transaction;
 

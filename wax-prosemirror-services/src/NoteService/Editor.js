@@ -54,7 +54,7 @@ export default ({ node, view }) => {
             }
             //
             if (outerTr.docChanged)
-              view.dispatch(outerTr.setMeta("fromOutsideView", true));
+              view.dispatch(outerTr.setMeta("outsideView", "notes"));
           }
         },
         handleDOMEvents: {

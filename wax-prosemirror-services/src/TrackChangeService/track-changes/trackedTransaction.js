@@ -20,18 +20,20 @@ import replaceAroundStep from "./helpers/replaceAroundStep";
 import addMarkStep from "./helpers/addMarkStep";
 import removeMarkStep from "./helpers/removeMarkStep";
 
-const trackedTransaction = (tr, state, user, group) => {
+const trackedTransaction = (tr, state, user) => {
   if (
     !tr.steps.length ||
     (tr.meta &&
       !Object.keys(tr.meta).every(metadata =>
-        ["inputType", "uiEvent", "paste", "fromOutsideView"].includes(metadata)
+        ["inputType", "uiEvent", "paste", "outsideView"].includes(metadata)
       )) ||
     ["historyUndo", "historyRedo"].includes(tr.getMeta("inputType"))
   ) {
     return tr;
   }
 
+  const group = tr.getMeta("outsideView") ? tr.getMeta("outsideView") : "main";
+  console.log(group);
   const newTr = state.tr;
   const map = new Mapping();
   const date = Math.floor(Date.now() / 300000);

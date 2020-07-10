@@ -10,8 +10,8 @@ const findMark = (state, PMmark, toArr = false) => {
       const actualMark = node.marks.find(mark => mark.type === PMmark);
       if (actualMark) {
         markFound = {
-          from: $from.pos,
-          to: $to.pos,
+          from,
+          to: from + node.nodeSize,
           attrs: actualMark.attrs,
           contained: !fromMark || !toMark || fromMark === toMark
         };

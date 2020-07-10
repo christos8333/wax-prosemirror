@@ -66,13 +66,14 @@ export default props => {
 
     const state = view.state.apply(tr);
     view.updateState(state);
-
-    context.updateView(
-      {
-        main: view
-      },
-      "main"
-    );
+    if (!tr.getMeta("fromOutsideView")) {
+      context.updateView(
+        {
+          main: view
+        },
+        "main"
+      );
+    }
 
     props.onChange(state.doc.content);
   };

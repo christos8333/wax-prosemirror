@@ -10,8 +10,8 @@ const findMark = (state, PMmark, toArr = false) => {
       const actualMark = node.marks.find(mark => mark.type === PMmark);
       if (actualMark) {
         markFound = {
-          from,
-          to: from + node.nodeSize,
+          from: $from.pos,
+          to: $to.pos,
           attrs: actualMark.attrs,
           contained: !fromMark || !toMark || fromMark === toMark
         };
@@ -20,6 +20,25 @@ const findMark = (state, PMmark, toArr = false) => {
     }
   });
   if (toArr) return marksFound;
+  return markFound;
+};
+
+const getSelectionMark = (state, PMmark) => {
+  const { selection: { $from, $to }, doc } = state;
+  let markFound;
+  doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+    if (node.marks) {
+      const actualMark = node.marks.find(mark => mark.type === PMmark);
+      if (actualMark) {
+        markFound = {
+          from: $from.pos,
+          to: $to.pos,
+          attrs: actualMark.attrs
+        };
+      }
+    }
+  });
+
   return markFound;
 };
 
@@ -72,5 +91,6 @@ export default {
   findChildrenByType,
   findInlineNodes,
   findChildrenByMark,
-  findChildrenByAttr
+  findChildrenByAttr,
+  getSelectionMark
 };

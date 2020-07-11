@@ -6,11 +6,12 @@ export default class Node {
   name = "";
   importer = {};
 
-  isolating = false;
+  atom = false;
   inline = false;
+  isolating = false;
+  draggable = false;
   group = "";
   content = "";
-  draggable = false;
   _attrs = {};
   _parseRules = [];
 
@@ -57,6 +58,7 @@ export default class Node {
     const importer = this.importer;
 
     return {
+      atom: this.atom,
       inline: this.inline,
       group: this.group,
       content: this.content,

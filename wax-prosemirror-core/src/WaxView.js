@@ -68,7 +68,7 @@ export default props => {
     view.updateState(state);
 
     /*when a transaction comes from a view other than
-    main don't keep updating the view ,as this this
+    main don't keep updating the view ,as this is
     the central point of each transaction
     */
     if (!transaction.getMeta("outsideView")) {

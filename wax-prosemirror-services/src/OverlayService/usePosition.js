@@ -55,7 +55,7 @@ export default options => {
   const displayOnMark = (activeView, options) => {
     const { markType, followCursor } = options;
     const PMmark = activeView.state.schema.marks[markType];
-    mark = DocumentHelpers.findMark(activeView.state, PMmark);
+    mark = DocumentHelpers.getSelectionMark(activeView.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
     const { from, to } = followCursor ? activeView.state.selection : mark;

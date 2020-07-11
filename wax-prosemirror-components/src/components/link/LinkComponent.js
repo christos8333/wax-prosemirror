@@ -43,6 +43,7 @@ const LinkComponent = ({ mark, setPosition, position }) => {
     const href = linkHref;
     const linkMark = state.schema.marks.link;
     const { tr } = state;
+
     dispatch(
       tr.addMark(
         mark.from,
@@ -86,7 +87,7 @@ const LinkComponent = ({ mark, setPosition, position }) => {
   const removeMarkIfEmptyHref = () => {
     const { selection: { $from, $to } } = state;
     const PMLinkMark = state.schema.marks["link"];
-    const actualMark = DocumentHelpers.findMark(state, PMLinkMark);
+    const actualMark = DocumentHelpers.getSelectionMark(state, PMLinkMark);
     setLLastLinkMark(actualMark);
 
     if (

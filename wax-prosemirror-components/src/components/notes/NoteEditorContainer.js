@@ -31,6 +31,26 @@ const NoteStyled = styled.div`
       background-color: #ffab20;
     }
   }
+
+  span.deletion {
+    text-decoration: line-through;
+    color: red;
+  }
+
+  span.insertion {
+    color: blue;
+  }
+
+  .selected-insertion,
+  .selected-deletion,
+  .selected-format-change,
+  .selected-block-change {
+    background-color: #fffacf;
+  }
+
+  .format-change {
+    border-bottom: 2px solid blue;
+  }
 `;
 
 const NoteEditorContainer = React.forwardRef((props, ref) => (

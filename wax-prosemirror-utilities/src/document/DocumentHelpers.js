@@ -23,6 +23,25 @@ const findMark = (state, PMmark, toArr = false) => {
   return markFound;
 };
 
+const getSelectionMark = (state, PMmark) => {
+  const { selection: { $from, $to }, doc } = state;
+  let markFound;
+  doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+    if (node.marks) {
+      const actualMark = node.marks.find(mark => mark.type === PMmark);
+      if (actualMark) {
+        markFound = {
+          from: $from.pos,
+          to: $to.pos,
+          attrs: actualMark.attrs
+        };
+      }
+    }
+  });
+
+  return markFound;
+};
+
 export const flatten = (node, descend = true) => {
   if (!node) {
     throw new Error('Invalid "node" parameter');
@@ -72,5 +91,6 @@ export default {
   findChildrenByType,
   findInlineNodes,
   findChildrenByMark,
-  findChildrenByAttr
+  findChildrenByAttr,
+  getSelectionMark
 };

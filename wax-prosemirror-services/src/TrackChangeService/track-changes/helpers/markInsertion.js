@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const markInsertion = (tr, from, to, user, date, group) => {
   tr.removeMark(from, to, tr.doc.type.schema.marks.deletion);
   tr.removeMark(from, to, tr.doc.type.schema.marks.insertion);
@@ -36,7 +38,7 @@ const markInsertion = (tr, from, to, user, date, group) => {
       tr.setNodeMarkup(
         pos,
         null,
-        Object.assign({}, node.attrs, { track, group }),
+        Object.assign({}, node.attrs, { track, group, id: uuidv4() }),
         node.marks
       );
     }

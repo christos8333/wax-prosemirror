@@ -1,3 +1,4 @@
+//TODO Write the node in WaxSchema
 const footnote = {
   group: "inline",
   content: "inline*",

@@ -39,6 +39,11 @@ export default ({ node, view }) => {
             node: { attrs: { id: noteId } }
           });
 
+          //Set everytime the active view into context
+          setTimeout(() => {
+            context.updateView({}, noteId);
+          }, 20);
+
           if (!tr.getMeta("fromOutside")) {
             let outerTr = view.state.tr,
               offsetMap = StepMap.offset(noteFound[0].pos + 1);
@@ -48,10 +53,8 @@ export default ({ node, view }) => {
                 outerTr.step(steps[j].map(offsetMap));
             }
 
-            if (outerTr.docChanged) view.dispatch(outerTr);
-
-            //Set everytime the active view into context
-            context.updateView({}, noteId);
+            if (outerTr.docChanged)
+              view.dispatch(outerTr.setMeta("outsideView", "notes"));
           }
         },
         handleDOMEvents: {

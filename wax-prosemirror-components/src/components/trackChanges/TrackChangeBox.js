@@ -28,7 +28,6 @@ const TrackChangeBoxStyled = styled.div`
 `;
 
 export default ({ trackChange, view, top, dataBox }) => {
-  console.log(trackChange);
   const [animate, setAnimate] = useState(false);
   const { view: { main }, app, activeView } = useContext(WaxContext);
   let action;

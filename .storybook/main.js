@@ -7,10 +7,6 @@ const webpackOverride = config => {
     'babel-plugin-parameter-decorator',
   )
 
-  // console.dir(config.module.rules[0], { depth: null })
-  const babelLoaderPlugins = config.module.rules[0].use[0].options.plugins
-  console.dir(babelLoaderPlugins)
-
   return config
 }
 

@@ -37,9 +37,11 @@ const addMarkStep = (state, tr, step, newTr, map, doc, user, date, group) => {
         after = [step.mark.type.name];
       }
       if (after.length || before.length) {
+        // Math.max(step.from, pos),
+        // Math.min(step.to, pos + node.nodeSize),
         newTr.addMark(
-          Math.max(step.from, pos),
-          Math.min(step.to, pos + node.nodeSize),
+          step.from,
+          step.to,
           state.schema.marks.format_change.create({
             user: user.userId,
             username: user.username,

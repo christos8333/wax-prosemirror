@@ -3,7 +3,7 @@ import deletionMark from "./deletionMark";
 import formatChangeMark from "./formatChangeMark";
 
 export default {
+  format_change: formatChangeMark,
   insertion: insertionMark,
-  deletion: deletionMark,
-  format_change: formatChangeMark
+  deletion: deletionMark
 };

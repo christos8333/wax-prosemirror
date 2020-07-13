@@ -42,10 +42,13 @@ const getSelectionMark = (state, PMmark) => {
   return markFound;
 };
 
+/* this is a workaround for now to find marks
+  that are pm will break them
+*/
 const findFragmentedMark = (state, PMmark) => {
   const { selection: { $from, $to }, doc } = state;
-  const fromPos = [$from.pos, $from.pos + 1];
-  const toPos = [$to.pos, $to.pos + 1];
+  const fromPos = [$from.pos - 1, $from.pos];
+  const toPos = [$to.pos - 1, $to.pos];
   let markFound;
 
   for (let i = 0; i < fromPos.length; i++) {

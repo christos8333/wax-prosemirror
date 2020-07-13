@@ -15,7 +15,7 @@ import { each, uniqBy, sortBy } from "lodash";
 
 export default ({ area }) => {
   const { view: { main }, app, activeView } = useContext(WaxContext);
-  const activeCommentPlugin = app.PmPlugins.get("activeComment");
+  const commentPlugin = app.PmPlugins.get("commentPlugin");
   const [marksNodes, setMarksNodes] = useState([]);
   const [position, setPosition] = useState();
 
@@ -32,8 +32,7 @@ export default ({ area }) => {
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
 
-      const activeComment = activeCommentPlugin.getState(activeView.state)
-        .comment;
+      const activeComment = commentPlugin.getState(activeView.state).comment;
 
       let isActive = false;
       if (activeComment && id === activeComment.attrs.id) isActive = true;

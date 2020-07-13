@@ -3,7 +3,7 @@ import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
-const activeComment = new PluginKey("activeComment");
+const commentPlugin = new PluginKey("commentPlugin");
 
 const getComment = state => {
   const commentMark = state.schema.marks["comment"];
@@ -52,7 +52,7 @@ const getComment = state => {
 
 export default props => {
   return new Plugin({
-    key: activeComment,
+    key: commentPlugin,
     state: {
       init: (_, state) => {
         return { comment: getComment(state) };
@@ -75,7 +75,7 @@ export default props => {
     },
     props: {
       decorations: state => {
-        const commentPluginState = state && activeComment.getState(state);
+        const commentPluginState = state && commentPlugin.getState(state);
         return commentPluginState.createDecoration;
       }
     }

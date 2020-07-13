@@ -39,12 +39,8 @@ export default ({ trackChange, view, top, dataBox }) => {
   } else {
     action = `User demo changed paragraph to heading 1`;
   }
-  // const { attrs: { id } } = comment;
 
-  // const activeCommentPlugin = app.PmPlugins.get("activeComment");
-  // const activeComment = activeCommentPlugin.getState(activeView.state).comment;
   let active = false;
-  // if (activeComment && id === activeComment.attrs.id) active = true;
   useEffect(() => {
     setAnimate(true);
   }, []);

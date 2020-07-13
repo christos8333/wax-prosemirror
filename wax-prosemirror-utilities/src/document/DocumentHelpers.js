@@ -42,6 +42,33 @@ const getSelectionMark = (state, PMmark) => {
   return markFound;
 };
 
+const findFragmentedMark = (state, PMmark) => {
+  const { selection: { $from, $to }, doc } = state;
+  const fromPos = [$from.pos, $from.pos + 1];
+  const toPos = [$to.pos, $to.pos + 1];
+  let markFound;
+
+  for (let i = 0; i < fromPos.length; i++) {
+    doc.nodesBetween(fromPos[i], toPos[i], (node, from) => {
+      if (node.marks) {
+        const actualMark = node.marks.find(mark => mark.type === PMmark);
+        if (actualMark) {
+          markFound = {
+            from,
+            to: from + node.nodeSize,
+            attrs: actualMark.attrs
+          };
+        }
+      }
+    });
+    if (markFound) {
+      return markFound;
+      break;
+    }
+  }
+  return markFound;
+};
+
 export const flatten = (node, descend = true) => {
   if (!node) {
     throw new Error('Invalid "node" parameter');
@@ -92,5 +119,6 @@ export default {
   findInlineNodes,
   findChildrenByMark,
   findChildrenByAttr,
-  getSelectionMark
+  getSelectionMark,
+  findFragmentedMark
 };

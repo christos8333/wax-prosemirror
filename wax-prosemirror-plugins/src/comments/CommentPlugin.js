@@ -7,7 +7,19 @@ const commentPlugin = new PluginKey("commentPlugin");
 
 const getComment = state => {
   const commentMark = state.schema.marks["comment"];
-  const commentOnSelection = DocumentHelpers.findMark(state, commentMark);
+  const commentOnSelection = DocumentHelpers.findFragmentedMark(
+    state,
+    commentMark
+  );
+
+  // Don't allow Active comment if selection is not collapsed
+  if (
+    state.selection.from !== state.selection.to &&
+    commentOnSelection &&
+    commentOnSelection.attrs.conversation.length
+  ) {
+    return;
+  }
 
   if (commentOnSelection) {
     const commentNodes = DocumentHelpers.findChildrenByMark(
@@ -40,12 +52,6 @@ const getComment = state => {
       };
     }
   }
-  if (
-    state.selection.from !== state.selection.to &&
-    commentOnSelection &&
-    commentOnSelection.attrs.conversation.length
-  )
-    return;
 
   return commentOnSelection;
 };

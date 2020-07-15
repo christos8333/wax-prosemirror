@@ -40,8 +40,8 @@ export default ({ comment, view, top, dataBox }) => {
     ),
     [animate, setAnimate] = useState(false),
     { attrs: { id } } = comment,
-    activeCommentPlugin = app.PmPlugins.get("activeComment"),
-    activeComment = activeCommentPlugin.getState(activeView.state).comment;
+    commentPlugin = app.PmPlugins.get("commentPlugin"),
+    activeComment = commentPlugin.getState(activeView.state).comment;
 
   let active = false;
   if (activeComment && id === activeComment.attrs.id) active = true;

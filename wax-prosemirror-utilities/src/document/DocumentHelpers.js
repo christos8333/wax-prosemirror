@@ -1,6 +1,5 @@
 const findMark = (state, PMmark, toArr = false) => {
   const { selection: { $from, $to }, doc } = state;
-
   const fromMark = $from.marks().find(mark => mark.type === PMmark);
   const toMark = $to.marks().find(mark => mark.type === PMmark);
   let markFound;
@@ -40,6 +39,57 @@ const getSelectionMark = (state, PMmark) => {
   });
 
   return markFound;
+};
+
+/* this is a workaround for now to find marks
+  that are pm will break them
+*/
+const findFragmentedMark = (state, PMmark) => {
+  const { selection: { $from, $to }, doc } = state;
+  const fromPos = [$from.pos - 1, $from.pos];
+  const toPos = [$to.pos - 1, $to.pos];
+  let markFound;
+
+  for (let i = 0; i < fromPos.length; i++) {
+    doc.nodesBetween(fromPos[i], toPos[i], (node, from) => {
+      if (node.marks) {
+        const actualMark = node.marks.find(mark => mark.type === PMmark);
+        if (actualMark) {
+          markFound = {
+            from,
+            to: from + node.nodeSize,
+            attrs: actualMark.attrs
+          };
+        }
+      }
+    });
+    if (markFound) {
+      return markFound;
+      break;
+    }
+  }
+  return markFound;
+};
+
+const findAllCommentsWithSameId = state => {
+  const commentMark = state.schema.marks["comment"];
+  const commentOnSelection = findFragmentedMark(state, commentMark);
+
+  const commentNodes = findChildrenByMark(state.doc, commentMark, true);
+
+  const allCommentsWithSameId = [];
+  commentNodes.map(node => {
+    node.node.marks.filter(mark => {
+      if (
+        mark.type.name === "comment" &&
+        commentOnSelection.attrs.id === mark.attrs.id
+      ) {
+        allCommentsWithSameId.push(node);
+      }
+    });
+  });
+  console.log(allCommentsWithSameId);
+  return allCommentsWithSameId;
 };
 
 export const flatten = (node, descend = true) => {
@@ -92,5 +142,7 @@ export default {
   findInlineNodes,
   findChildrenByMark,
   findChildrenByAttr,
-  getSelectionMark
+  getSelectionMark,
+  findFragmentedMark,
+  findAllCommentsWithSameId
 };

@@ -3,11 +3,23 @@ import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 import { DocumentHelpers } from "wax-prosemirror-utilities";
 
-const activeComment = new PluginKey("activeComment");
+const commentPlugin = new PluginKey("commentPlugin");
 
 const getComment = state => {
   const commentMark = state.schema.marks["comment"];
-  const commentOnSelection = DocumentHelpers.findMark(state, commentMark);
+  const commentOnSelection = DocumentHelpers.findFragmentedMark(
+    state,
+    commentMark
+  );
+
+  // Don't allow Active comment if selection is not collapsed
+  if (
+    state.selection.from !== state.selection.to &&
+    commentOnSelection &&
+    commentOnSelection.attrs.conversation.length
+  ) {
+    return;
+  }
 
   if (commentOnSelection) {
     const commentNodes = DocumentHelpers.findChildrenByMark(
@@ -40,19 +52,13 @@ const getComment = state => {
       };
     }
   }
-  if (
-    state.selection.from !== state.selection.to &&
-    commentOnSelection &&
-    commentOnSelection.attrs.conversation.length
-  )
-    return;
 
   return commentOnSelection;
 };
 
 export default props => {
   return new Plugin({
-    key: activeComment,
+    key: commentPlugin,
     state: {
       init: (_, state) => {
         return { comment: getComment(state) };
@@ -75,7 +81,7 @@ export default props => {
     },
     props: {
       decorations: state => {
-        const commentPluginState = state && activeComment.getState(state);
+        const commentPluginState = state && commentPlugin.getState(state);
         return commentPluginState.createDecoration;
       }
     }

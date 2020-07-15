@@ -37,18 +37,21 @@ export default ({ comment, activeView, user }) => {
 
     const obj = { [user.username]: value };
     commentAnnotation.attrs.conversation.push(obj);
-    const actualComment = DocumentHelpers.findMark(state, commentMark);
 
-    dispatch(
-      tr.addMark(
-        actualComment.from,
-        actualComment.to,
-        commentMark.create({
-          ...((commentAnnotation && commentAnnotation.attrs) || {}),
-          conversation: commentAnnotation.attrs.conversation
-        })
-      )
-    );
+    const allComments = DocumentHelpers.findAllCommentsWithSameId(state);
+    allComments.forEach(singleComment => {
+      dispatch(
+        tr.addMark(
+          singleComment.pos,
+          singleComment.pos + singleComment.nodeSize,
+          commentMark.create({
+            ...((commentAnnotation && commentAnnotation.attrs) || {}),
+            conversation: commentAnnotation.attrs.conversation
+          })
+        )
+      );
+    });
+
     setcommentInputValue("");
   };
 

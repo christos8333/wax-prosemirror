@@ -1,6 +1,5 @@
 const findMark = (state, PMmark, toArr = false) => {
   const { selection: { $from, $to }, doc } = state;
-
   const fromMark = $from.marks().find(mark => mark.type === PMmark);
   const toMark = $to.marks().find(mark => mark.type === PMmark);
   let markFound;
@@ -72,6 +71,27 @@ const findFragmentedMark = (state, PMmark) => {
   return markFound;
 };
 
+const findAllCommentsWithSameId = state => {
+  const commentMark = state.schema.marks["comment"];
+  const commentOnSelection = findFragmentedMark(state, commentMark);
+
+  const commentNodes = findChildrenByMark(state.doc, commentMark, true);
+
+  const allCommentsWithSameId = [];
+  commentNodes.map(node => {
+    node.node.marks.filter(mark => {
+      if (
+        mark.type.name === "comment" &&
+        commentOnSelection.attrs.id === mark.attrs.id
+      ) {
+        allCommentsWithSameId.push(node);
+      }
+    });
+  });
+  console.log(allCommentsWithSameId);
+  return allCommentsWithSameId;
+};
+
 export const flatten = (node, descend = true) => {
   if (!node) {
     throw new Error('Invalid "node" parameter');
@@ -123,5 +143,6 @@ export default {
   findChildrenByMark,
   findChildrenByAttr,
   getSelectionMark,
-  findFragmentedMark
+  findFragmentedMark,
+  findAllCommentsWithSameId
 };

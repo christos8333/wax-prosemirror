@@ -10,6 +10,8 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "prosemirror-utils": "^0.9.6"
+    "prosemirror-utils": "^0.9.6",
+    "prosemirror-commands": "^1.1.3",
+    "uuid": "^7.0.3"
   }
 }

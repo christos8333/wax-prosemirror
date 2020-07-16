@@ -28,7 +28,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "reflect-metadata": "^0.1.13",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "uuid": "^7.0.3",
+    "wax-prosemirror-services": "^0.0.10",
+    "wax-prosemirror-utilities": "^0.0.10"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

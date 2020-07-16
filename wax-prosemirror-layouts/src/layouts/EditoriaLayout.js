@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { InfoArea } from "wax-prosemirror-components";
-import { componentPlugin } from "wax-prosemirror-services";
-import EditorElements from "./EditorElements";
-import { cokoTheme } from "wax-prosemirror-themes";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
-import { WaxContext } from "wax-prosemirror-core";
-import PanelGroup from "react-panelgroup";
+import React, { useContext } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import PanelGroup from 'react-panelgroup';
+import { InfoArea } from 'wax-prosemirror-components';
+import { componentPlugin } from 'wax-prosemirror-services';
+import { cokoTheme } from 'wax-prosemirror-themes';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext } from 'wax-prosemirror-core';
+import EditorElements from './EditorElements';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const LayoutWrapper = styled.div`
   overflow: hidden;
   .divider {
     &:before {
-      content: "Notes";
+      content: 'Notes';
       position: relative;
       bottom: 14px;
       background: white;
@@ -26,30 +26,30 @@ const LayoutWrapper = styled.div`
     }
     &:after {
       color: #a3a3a3;
-      content: ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . "
-        ". . . . . . . . . . . . . . . . . . . . ";
+      content: '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . '
+        '. . . . . . . . . . . . . . . . . . . . ';
       float: left;
       font-weight: 400;
       white-space: nowrap;
@@ -151,7 +151,7 @@ const SideMenuInner = styled.div`
       margin-left: 5%;
       width: 90%;
     }
-    [data-name="Display"] {
+    [data-name='Display'] {
       border-right: none;
     }
   }
@@ -195,17 +195,17 @@ const hasNotes = main => {
   const notes = DocumentHelpers.findChildrenByType(
     main.state.doc,
     main.state.schema.nodes.footnote,
-    true
+    true,
   );
   return notes;
 };
 
-const LeftSideBar = componentPlugin("leftSideBar");
-const RightSideBar = componentPlugin("rightSideBar");
-const TopBar = componentPlugin("topBar");
-const NotesArea = componentPlugin("notesArea");
-const RightArea = componentPlugin("rightArea");
-const WaxOverlays = componentPlugin("waxOverlays");
+const LeftSideBar = componentPlugin('leftSideBar');
+const RightSideBar = componentPlugin('rightSideBar');
+const TopBar = componentPlugin('topBar');
+const NotesArea = componentPlugin('notesArea');
+const RightArea = componentPlugin('rightArea');
+const WaxOverlays = componentPlugin('waxOverlays');
 
 const withNotes = () => {
   return (
@@ -221,7 +221,9 @@ const withNotes = () => {
 };
 
 const EditoriaLayout = ({ editor }) => {
-  const { view: { main } } = useContext(WaxContext);
+  const {
+    view: { main },
+  } = useContext(WaxContext);
   let AreasWithNotes = null;
 
   if (main) {
@@ -248,8 +250,8 @@ const EditoriaLayout = ({ editor }) => {
           <PanelGroup
             direction="column"
             panelWidths={[
-              { size: surfaceHeight, resize: "dynamic" },
-              { size: notesHeight, resize: "stretch" }
+              { size: surfaceHeight, resize: 'dynamic' },
+              { size: notesHeight, resize: 'stretch' },
             ]}
             onResizeEnd={onResizeEnd}
           >

@@ -13,6 +13,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-panelgroup": "^1.0.10",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "wax-prosemirror-core": "^0.0.10",
+    "wax-prosemirror-components": "^0.0.10",
+    "wax-prosemirror-themes": "^0.0.10",
+    "wax-prosemirror-services": "^0.0.10",
+    "wax-prosemirror-utilities": "^0.0.10"
   }
 }

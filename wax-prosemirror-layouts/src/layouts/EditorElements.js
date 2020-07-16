@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import { css } from 'styled-components';
 
 /* All styles regarding ProseMirror surface and elements */
 
@@ -42,7 +42,7 @@ export default css`
   }
 
   hr:after {
-    content: "";
+    content: '';
     display: block;
     height: 1px;
     background-color: silver;
@@ -117,7 +117,7 @@ export default css`
   .selectedCell:after {
     z-index: 2;
     position: absolute;
-    content: "";
+    content: '';
     left: 0;
     right: 0;
     top: 0;
@@ -156,15 +156,15 @@ export default css`
   }
 
   .invisible--space:before {
-    content: "·";
+    content: '·';
   }
 
   .invisible--break:before {
-    content: "¬";
+    content: '¬';
   }
 
   .invisible--par:after {
-    content: "¶";
+    content: '¶';
   }
 
   span.deletion {
@@ -192,7 +192,7 @@ export default css`
   }
 
   [data-track]::before {
-    content: "";
+    content: '';
     position: absolute;
     border-left: 2px solid blue;
     left: -10px;

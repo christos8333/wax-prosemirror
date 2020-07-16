@@ -1,10 +1,10 @@
-import { set, get, isArrayLikeObject } from "lodash";
-import { injectable, inject } from "inversify";
+import { set, get, isArrayLikeObject } from 'lodash';
+import { injectable, inject } from 'inversify';
 
 @injectable()
 export default class Config {
   _config = {};
-  constructor(@inject("config") config) {
+  constructor(@inject('config') config) {
     this._config = config;
   }
 

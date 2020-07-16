@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 
 export const WaxContext = React.createContext({
   view: {},
@@ -6,7 +6,7 @@ export const WaxContext = React.createContext({
   activeViewId: null,
   app: null,
   updateView: null,
-  updateActiveView: null
+  updateActiveView: null,
 });
 
 export default props => {
@@ -22,15 +22,15 @@ export default props => {
         ...context,
         view,
         activeView: activeView,
-        activeViewId: activeViewId || context.activeViewId
+        activeViewId: activeViewId || context.activeViewId,
       });
-    }
+    },
   });
 
   return (
     <WaxContext.Provider
       value={{
-        ...context
+        ...context,
       }}
     >
       {props.children}
@@ -39,7 +39,9 @@ export default props => {
 };
 
 export const useInjection = identifier => {
-  const { app: { container } } = useContext(WaxContext);
+  const {
+    app: { container },
+  } = useContext(WaxContext);
 
   if (!container) {
     throw new Error();

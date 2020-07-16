@@ -1,21 +1,23 @@
-import { Mark } from "prosemirror-model";
+import { Mark } from 'prosemirror-model';
 import React, {
   useContext,
   useState,
   useEffect,
   useMemo,
-  Fragment,
-  useCallback
-} from "react";
-import styled from "styled-components";
-import { WaxContext } from "wax-prosemirror-core";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
-import BoxList from "./BoxList";
-import { each, uniqBy, sortBy } from "lodash";
+  useCallback,
+} from 'react';
+import { each, uniqBy, sortBy } from 'lodash';
+import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import BoxList from './BoxList';
 
 export default ({ area }) => {
-  const { view: { main }, app, activeView } = useContext(WaxContext);
-  const commentPlugin = app.PmPlugins.get("commentPlugin");
+  const {
+    view: { main },
+    app,
+    activeView,
+  } = useContext(WaxContext);
+  const commentPlugin = app.PmPlugins.get('commentPlugin');
   const [marksNodes, setMarksNodes] = useState([]);
   const [position, setPosition] = useState();
 
@@ -37,18 +39,18 @@ export default ({ area }) => {
       let isActive = false;
       if (activeComment && id === activeComment.attrs.id) isActive = true;
 
-      //annotation top
-      if (area === "main") {
+      // annotation top
+      if (area === 'main') {
         markNodeEl = document.querySelector(`[data-id="${id}"]`);
         if (markNodeEl)
           annotationTop =
             markNodeEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
-        const panelWrapper = document.getElementsByClassName("panelWrapper");
+        const panelWrapper = document.getElementsByClassName('panelWrapper');
         const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
           .height;
         markNodeEl = document
-          .querySelector("#notes-container")
+          .querySelector('#notes-container')
           .querySelector(`[data-id="${id}"]`);
         if (markNodeEl)
           annotationTop =
@@ -57,7 +59,7 @@ export default ({ area }) => {
 
       // get height of this markNode box
       const boxEl = document.querySelector(`div[data-box="${id}"]`);
-      if (boxEl) boxHeight = parseInt(boxEl.offsetHeight);
+      if (boxEl) boxHeight = parseInt(boxEl.offsetHeight, 10);
 
       // where the box should move to
       top = annotationTop;
@@ -115,14 +117,10 @@ export default ({ area }) => {
     return allCommentsTop;
   });
 
-  useEffect(
-    () => {
-      setMarksNodes(updateMarks(main));
-      setPosition(setTops());
-    },
-
-    [JSON.stringify(updateMarks(main)), JSON.stringify(setTops())]
-  );
+  useEffect(() => {
+    setMarksNodes(updateMarks(main));
+    setPosition(setTops());
+  }, [JSON.stringify(updateMarks(main)), JSON.stringify(setTops())]);
 
   const CommentTrackComponent = useMemo(
     () => (
@@ -133,9 +131,9 @@ export default ({ area }) => {
         position={position}
       />
     ),
-    [marksNodes[area] || [], position]
+    [marksNodes[area] || [], position],
   );
-  return <Fragment>{CommentTrackComponent}</Fragment>;
+  return <>{CommentTrackComponent}</>;
 };
 
 const updateMarks = view => {
@@ -149,10 +147,10 @@ const updateMarks = view => {
       if (node.node.marks.length > 0) {
         node.node.marks.filter(mark => {
           if (
-            mark.type.name === "comment" ||
-            mark.type.name === "insertion" ||
-            mark.type.name === "deletion" ||
-            mark.type.name === "format_change"
+            mark.type.name === 'comment' ||
+            mark.type.name === 'insertion' ||
+            mark.type.name === 'deletion' ||
+            mark.type.name === 'format_change'
           ) {
             mark.pos = node.pos;
             finalMarks.push(mark);
@@ -167,11 +165,11 @@ const updateMarks = view => {
       }
     });
 
-    const nodesAndMarks = [...uniqBy(finalMarks, "attrs.id"), ...finalNodes];
+    const nodesAndMarks = [...uniqBy(finalMarks, 'attrs.id'), ...finalNodes];
 
     const groupedMarkNodes = {};
 
-    sortBy(nodesAndMarks, ["pos"]).forEach(markNode => {
+    sortBy(nodesAndMarks, ['pos']).forEach(markNode => {
       const markNodeAttrs = markNode.attrs
         ? markNode.attrs
         : markNode.node.attrs;

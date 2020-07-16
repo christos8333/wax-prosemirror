@@ -20,6 +20,9 @@
     "react-dropdown": "^1.6.2",
     "react-transition-group": "^4.3.0",
     "styled-components": "^4.2.0",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "prosemirror-model": "^1.9.1",
+    "wax-prosemirror-core": "^0.0.10",
+    "wax-prosemirror-utilities": "^0.0.10"
   }
 }

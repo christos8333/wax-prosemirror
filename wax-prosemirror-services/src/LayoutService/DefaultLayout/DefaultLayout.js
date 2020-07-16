@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
+import React from 'react'
 
-const DefaultLayout = ({ editor }) => <Fragment>{editor}</Fragment>;
+const DefaultLayout = ({ editor }) => <>{editor}</>
 
-export default DefaultLayout;
+export default DefaultLayout

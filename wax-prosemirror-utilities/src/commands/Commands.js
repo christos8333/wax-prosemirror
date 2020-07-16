@@ -1,6 +1,5 @@
-import { Selection, TextSelection } from "prosemirror-state";
-import { v4 as uuidv4 } from "uuid";
-import { toggleMark } from "prosemirror-commands";
+import { v4 as uuidv4 } from 'uuid';
+import { toggleMark } from 'prosemirror-commands';
 
 const setBlockType = (nodeType, attrs = {}) => {
   return (state, dispatch) => {
@@ -9,11 +8,11 @@ const setBlockType = (nodeType, attrs = {}) => {
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (!node.isTextblock || node.hasMarkup(nodeType, attrs)) return;
       let applicable = false;
-      if (node.type == nodeType) {
+      if (node.type === nodeType) {
         applicable = true;
       } else {
-        const $pos = state.doc.resolve(pos),
-          index = $pos.index();
+        const $pos = state.doc.resolve(pos);
+        const index = $pos.index();
         applicable = $pos.parent.canReplaceWith(index, index + 1, nodeType);
       }
       if (applicable) {
@@ -21,7 +20,7 @@ const setBlockType = (nodeType, attrs = {}) => {
           from,
           to,
           nodeType,
-          Object.assign({}, node.attrs, attrs)
+          Object.assign({}, node.attrs, attrs),
         );
       }
     });
@@ -64,8 +63,8 @@ const canInsert = type => state => {
 };
 
 const createTable = (state, dispatch) => {
-  let rowCount = window && window.prompt("How many rows?", 2);
-  let colCount = window && window.prompt("How many columns?", 2);
+  let rowCount = window && window.prompt('How many rows?', 2);
+  let colCount = window && window.prompt('How many columns?', 2);
 
   const cells = [];
   while (colCount--) {
@@ -82,16 +81,24 @@ const createTable = (state, dispatch) => {
 };
 
 const createLink = (state, dispatch) => {
-  const { selection: { $from, $to } } = state;
+  const {
+    selection: { $from, $to },
+  } = state;
   dispatch(
     state.tr
-      .setMeta("addToHistory", false)
-      .addMark($from.pos, $to.pos, state.schema.marks.link.create({ href: "" }))
+      .setMeta('addToHistory', false)
+      .addMark(
+        $from.pos,
+        $to.pos,
+        state.schema.marks.link.create({ href: '' }),
+      ),
   );
 };
 
 const isOnSameTextBlock = state => {
-  const { selection: { $from, $to, from, to } } = state;
+  const {
+    selection: { $from, $to, from, to },
+  } = state;
   if (from !== to && $from.parent === $to.parent && $from.parent.isTextblock) {
     return true;
   }
@@ -102,7 +109,7 @@ const createComment = (state, dispatch, group) => {
   toggleMark(state.config.schema.marks.comment, {
     id: uuidv4(),
     group,
-    conversation: []
+    conversation: [],
   })(state, dispatch);
 };
 
@@ -114,5 +121,5 @@ export default {
   createLink,
   createTable,
   markActive,
-  isOnSameTextBlock
+  isOnSameTextBlock,
 };

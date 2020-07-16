@@ -1,5 +1,4 @@
-const { prettier } = require("@coko/lint");
-
+const { prettier } = require('@coko/lint');
 /**
  * You can edit the config here:
  *
@@ -7,5 +6,5 @@ const { prettier } = require("@coko/lint");
  * prettier.semi = true
  *
  */
-
+prettier.semi = true;
 module.exports = prettier;

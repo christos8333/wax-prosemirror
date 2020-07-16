@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { eslint } = require('@coko/lint')
-
+const { eslint } = require('@coko/lint');
 /**
  * You can edit the eslint config file here.
  *
@@ -22,6 +21,6 @@ eslint.rules = {
     2,
     { ignore: ['children', 'className', 'onClick', 'theme'] },
   ],
-}
+};
 
-module.exports = eslint
+module.exports = eslint;

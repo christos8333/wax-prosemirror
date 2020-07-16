@@ -1,25 +1,17 @@
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext } from 'react';
 
-import applyDevTools from "prosemirror-dev-tools";
-import { EditorState } from "prosemirror-state";
-import { EditorView } from "prosemirror-view";
+import applyDevTools from 'prosemirror-dev-tools';
+import { EditorState } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
 
-import "prosemirror-view/style/prosemirror.css";
+import 'prosemirror-view/style/prosemirror.css';
 
-import { trackedTransaction } from "wax-prosemirror-services";
-import { WaxContext } from "./WaxContext";
-import transformPasted from "./helpers/TransformPasted";
+import { trackedTransaction } from 'wax-prosemirror-services';
+import { WaxContext } from './WaxContext';
+import transformPasted from './helpers/TransformPasted';
 
 export default props => {
-  const {
-    readonly,
-    onBlur,
-    options,
-    debug,
-    autoFocus,
-    TrackChange,
-    user
-  } = props;
+  const { readonly, onBlur, options, debug, autoFocus, user } = props;
 
   const editorRef = useRef();
   let view;
@@ -38,19 +30,19 @@ export default props => {
             ? view => {
                 onBlur(view.state.doc.content);
               }
-            : null
+            : null,
         },
         transformPasted: slice => {
           return transformPasted(slice, view);
-        }
-      }
+        },
+      },
     );
 
     context.updateView(
       {
-        main: view
+        main: view,
       },
-      "main"
+      'main',
     );
     if (debug) applyDevTools(view);
     if (autoFocus) view.focus();
@@ -68,15 +60,15 @@ export default props => {
     view.updateState(state);
 
     /*when a transaction comes from a view other than
-    main don't keep updating the view ,as this is
-    the central point of each transaction
-    */
-    if (!transaction.getMeta("outsideView")) {
+      main don't keep updating the view ,as this is
+      the central point of each transaction
+      */
+    if (!transaction.getMeta('outsideView')) {
       context.updateView(
         {
-          main: view
+          main: view,
         },
-        "main"
+        'main',
       );
     }
 
@@ -85,6 +77,6 @@ export default props => {
 
   const editor = <div ref={editorRef} />;
   return props.children({
-    editor
+    editor,
   });
 };

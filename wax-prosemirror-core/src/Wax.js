@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import WaxProvider from "./WaxContext";
-import Application from "./Application";
+import React, { useEffect, useState } from 'react';
+import debounce from 'lodash/debounce';
+import styled from 'styled-components';
 
-import debounce from "lodash/debounce";
-import styled from "styled-components";
+import WaxProvider from './WaxContext';
+import Application from './Application';
 
-import WaxDOMSerializer from "./WaxDOMSerializer";
-import WaxDOMParser from "./WaxDOMParser";
+import WaxDOMSerializer from './WaxDOMSerializer';
+import WaxDOMParser from './WaxDOMParser';
 
-import WaxView from "./WaxView";
-import defaultPlugins from "./plugins/defaultPlugins";
-import Placeholder from "./plugins/placeholder";
+import WaxView from './WaxView';
+import defaultPlugins from './plugins/defaultPlugins';
+import Placeholder from './plugins/placeholder';
 
 const parser = schema => {
-  const parser = WaxDOMParser.fromSchema(schema);
+  const WaxParser = WaxDOMParser.fromSchema(schema);
 
   return content => {
-    const container = document.createElement("article");
+    const container = document.createElement('article');
     container.innerHTML = content;
-    return parser.parse(container);
+    return WaxParser.parse(container);
   };
 };
 
 const serializer = schema => {
-  const serializer = WaxDOMSerializer.fromSchema(schema);
+  const WaxSerializer = WaxDOMSerializer.fromSchema(schema);
   return content => {
-    const container = document.createElement("article");
-    container.appendChild(serializer.serializeFragment(content));
+    const container = document.createElement('article');
+    container.appendChild(WaxSerializer.serializeFragment(content));
     return container.innerHTML;
   };
 };
@@ -50,7 +50,7 @@ const LayoutWrapper = styled.div`
 `;
 
 const Wax = props => {
-  let finalPlugins;
+  let finalPlugins = [];
   const [application, setApplication] = useState();
 
   useEffect(() => {
@@ -71,23 +71,23 @@ const Wax = props => {
     TrackChange,
     value,
     user,
-    onChange
+    onChange,
   } = props;
 
   if (!application) return null;
 
   const WaxOnchange = onChange ? onChange : value => true;
 
-  const editorContent = value ? value : "";
+  const editorContent = value ? value : '';
 
   finalPlugins = defaultPlugins.concat([
     createPlaceholder(placeholder),
-    ...application.getPlugins()
+    ...application.getPlugins(),
   ]);
 
   const WaxOptions = {
     schema,
-    plugins: finalPlugins
+    plugins: finalPlugins,
   };
 
   const parse = parser(schema);
@@ -99,10 +99,10 @@ const Wax = props => {
       WaxOnchange(serialize(value));
     },
     1000,
-    { maxWait: 5000 }
+    { maxWait: 5000 },
   );
 
-  const Layout = application.container.get("Layout");
+  const Layout = application.container.get('Layout');
   if (layout) Layout.setLayout(layout);
   const WaxRender = Layout.layoutComponent;
 
@@ -115,8 +115,8 @@ const Wax = props => {
           options={WaxOptions}
           placeholder={placeholder}
           fileUpload={fileUpload}
-          onBlur={onBlur || (value => true)}
-          onChange={finalOnChange || (value => true)}
+          onBlur={onBlur || (v => true)}
+          onChange={finalOnChange || (v => true)}
           debug={debug}
           TrackChange={TrackChange}
           user={user}

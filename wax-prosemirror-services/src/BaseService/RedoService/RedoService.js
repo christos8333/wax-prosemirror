@@ -1,11 +1,11 @@
-import Service from "../../Service";
-import Redo from "./Redo";
+import Service from '../../Service';
+import Redo from './Redo';
 
 class RedoService extends Service {
-  boot() {}
+  // boot() {}
 
   register() {
-    this.container.bind("Redo").to(Redo);
+    this.container.bind('Redo').to(Redo);
   }
 }
 

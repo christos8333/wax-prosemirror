@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import React, { Fragment } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 
-import { EditoriaLayout } from "wax-prosemirror-layouts";
-import { Wax } from "wax-prosemirror-core";
+import { EditoriaLayout } from 'wax-prosemirror-layouts';
+import { Wax } from 'wax-prosemirror-core';
 
-import { config } from "./config";
+import { config } from './config';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
 
 const StyledWax = styled(Wax)`
   .wax-surface-scroll {
-    height: ${props => (props.debug ? "50vh" : "100%")};
+    height: ${props => (props.debug ? '50vh' : '100%')};
   }
 `;
 
@@ -35,8 +35,8 @@ const renderImage = file => {
 };
 
 const user = {
-  userId: "1234",
-  username: "demo"
+  userId: '1234',
+  username: 'demo',
 };
 
 const Editoria = () => (
@@ -47,8 +47,7 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the <span class="comment" data-id="ff7552b8-956c-4822-99b5-826715751c45" data-conversation="[{&quot;demo&quot;:&quot;dsdadsa&quot;}]" data-group="main">second</span> paragraph</p><p class="author">This is an author</p>`}
-      // value={`<p class="paragraph"><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">and a </span><span class="insertion" data-id="" data-user="1234" data-username="demo" data-date="26541557" data-group=""><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">sdasdssd</span></span><span class="comment" data-id="834ba3c5-1fcf-4a42-8e2f-1f975f229716" data-conversation="[]" data-group="main">paragraph</span></p><p class="paragraph">more</p>`}
+      value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the <span class="comment" data-id="203df89d-294b-4e35-b48c-408e135ee8fa" data-conversation="[{&quot;demo&quot;:&quot;comment&quot;}]" data-viewid="main" data-group="main">second</span> paragraph</p><p class="author">This is an author</p>`}
       layout={EditoriaLayout}
       TrackChange
       // onChange={source => console.log(source)}

@@ -1,15 +1,15 @@
-import { minBy, maxBy, last } from "lodash";
-import { Plugin, PluginKey } from "prosemirror-state";
-import { Decoration, DecorationSet } from "prosemirror-view";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
+import { minBy, maxBy, last } from 'lodash';
+import { Plugin, PluginKey } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
-const commentPlugin = new PluginKey("commentPlugin");
+const commentPlugin = new PluginKey('commentPlugin');
 
 const getComment = state => {
-  const commentMark = state.schema.marks["comment"];
+  const commentMark = state.schema.marks.comment;
   const commentOnSelection = DocumentHelpers.findFragmentedMark(
     state,
-    commentMark
+    commentMark,
   );
 
   // Don't allow Active comment if selection is not collapsed
@@ -25,14 +25,14 @@ const getComment = state => {
     const commentNodes = DocumentHelpers.findChildrenByMark(
       state.doc,
       commentMark,
-      true
+      true,
     );
 
     const allCommentsWithSameId = [];
     commentNodes.map(node => {
       node.node.marks.filter(mark => {
         if (
-          mark.type.name === "comment" &&
+          mark.type.name === 'comment' &&
           commentOnSelection.attrs.id === mark.attrs.id
         ) {
           allCommentsWithSameId.push(node);
@@ -41,18 +41,17 @@ const getComment = state => {
     });
 
     if (allCommentsWithSameId.length > 1) {
-      const minPos = minBy(allCommentsWithSameId, "pos");
-      const maxPos = maxBy(allCommentsWithSameId, "pos");
+      const minPos = minBy(allCommentsWithSameId, 'pos');
+      const maxPos = maxBy(allCommentsWithSameId, 'pos');
 
       return {
         from: minPos.pos,
         to: maxPos.pos + last(allCommentsWithSameId).node.nodeSize,
         attrs: commentOnSelection.attrs,
-        contained: commentOnSelection.contained
+        contained: commentOnSelection.contained,
       };
     }
   }
-
   return commentOnSelection;
 };
 
@@ -69,21 +68,22 @@ export default props => {
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [
             Decoration.inline(comment.from, comment.to, {
-              class: "active-comment"
-            })
+              class: 'active-comment',
+            }),
           ]);
         }
         return {
           comment,
-          createDecoration
+          createDecoration,
         };
-      }
+      },
     },
     props: {
       decorations: state => {
         const commentPluginState = state && commentPlugin.getState(state);
         return commentPluginState.createDecoration;
-      }
-    }
+      },
+      setCommentActive: state => {},
+    },
   });
 };

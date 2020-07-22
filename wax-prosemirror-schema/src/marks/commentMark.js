@@ -3,7 +3,7 @@ const comment = {
     class: { default: 'comment' },
     id: { default: '' },
     group: { default: '' },
-    activeViewId: { default: '' },
+    viewid: { default: '' },
     conversation: [],
   },
   inclusive: false,
@@ -16,7 +16,7 @@ const comment = {
           class: hook.dom.getAttribute('class'),
           id: hook.dom.dataset.id,
           group: hook.dom.dataset.group,
-          activeViewId: hook.dom.dataset.activeViewId,
+          viewid: hook.dom.dataset.viewid,
           conversation: JSON.parse(hook.dom.dataset.conversation),
         });
         next();
@@ -30,7 +30,7 @@ const comment = {
         class: hook.node.attrs.class,
         'data-id': hook.node.attrs.id,
         'data-conversation': JSON.stringify(hook.node.attrs.conversation),
-        'data-activeViewId': hook.node.attrs.activeViewId,
+        'data-viewid': hook.node.attrs.viewid,
         'data-group': hook.node.attrs.group,
       },
     ];

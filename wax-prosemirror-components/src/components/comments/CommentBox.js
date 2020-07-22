@@ -51,42 +51,36 @@ export default ({ comment, top, dataBox }) => {
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
   const setCommentActive = () => {
-    let commentPos = comment.pos + 1;
-    console.log(comment);
+    let commentPos = comment.pos;
+    const viewId = comment.attrs.viewid;
+
     if (comment.attrs.group !== 'main') {
-      // const allInlineNodes = DocumentHelpers.findInlineNodes(activeView.state.doc);
+      const allInlineNodes = DocumentHelpers.findInlineNodes(
+        view[viewId].state.doc,
+      );
 
       allInlineNodes.forEach(node => {
-        console.log(node);
+        if (node.node.marks.length > 0) {
+          node.node.marks.forEach(mark => {
+            if (
+              mark.type.name === 'comment' &&
+              mark.attrs.id === comment.attrs.id
+            ) {
+              commentPos = node.pos;
+            }
+          });
+        }
       });
     }
+    view[viewId].dispatch(
+      view[viewId].state.tr.setSelection(
+        new TextSelection(
+          view[viewId].state.tr.doc.resolve(commentPos + 1, commentPos + 1),
+        ),
+      ),
+    );
 
-    // activeView.dispatch(
-    //   activeView.state.tr.setSelection(
-    //     new TextSelection(
-    //       activeView.state.tr.doc.resolve(comment.pos + 1, comment.pos + 1),
-    //     ),
-    //   ),
-    // );
-    // let $pos = activeView.state.tr.doc.resolve(comment.pos);
-    // let parent = $pos.parent;
-    // let start = parent.childAfter($pos.parentOffset);
-    // if (!start.node) return null;
-    // let link = start.node.marks.find(mark => mark.type.name == 'comment');
-    // let startIndex = $pos.index();
-    // let startPos = $pos.start() + start.offset;
-    // while (startIndex > 0 && link.isInSet(parent.child(startIndex - 1).marks))
-    //   startPos -= parent.child(--startIndex).nodeSize;
-    // let endIndex = $pos.indexAfter(),
-    //   endPos = startPos + start.node.nodeSize;
-    // while (
-    //   endPos < parent.childCount &&
-    //   link.isInSet(parent.child(endIndex).marks)
-    // )
-    //   endPos += parent.child(endIndex++).nodeSize;
-    // // return { from: startPos, to: endPos };
-    // console.log('comment', $pos);
-    // activeView.focus();
+    view[viewId].focus();
   };
 
   let active = false;

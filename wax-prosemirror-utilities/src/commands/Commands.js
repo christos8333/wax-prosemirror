@@ -105,11 +105,12 @@ const isOnSameTextBlock = state => {
   return false;
 };
 
-const createComment = (state, dispatch, group) => {
+const createComment = (state, dispatch, group, viewid) => {
   toggleMark(state.config.schema.marks.comment, {
     id: uuidv4(),
     group,
     conversation: [],
+    viewid,
   })(state, dispatch);
 };
 

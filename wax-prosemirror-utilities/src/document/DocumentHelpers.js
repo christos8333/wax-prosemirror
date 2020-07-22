@@ -73,7 +73,6 @@ const findFragmentedMark = (state, PMmark) => {
       }
     });
     if (markFound) {
-      console.log(markFound);
       return markFound;
     }
   }

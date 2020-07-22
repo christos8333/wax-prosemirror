@@ -52,7 +52,6 @@ const getComment = state => {
       };
     }
   }
-  console.log(commentOnSelection);
   return commentOnSelection;
 };
 

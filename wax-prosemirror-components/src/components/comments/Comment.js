@@ -68,6 +68,9 @@ export default ({ comment, activeView, user }) => {
           placeholder="add a new comment"
           onChange={updateCommentInputValue}
           onKeyPress={handleKeyDown}
+          onClick={event => {
+            event.stopPropagation();
+          }}
           autoFocus
           value={commentInputValue}
         />

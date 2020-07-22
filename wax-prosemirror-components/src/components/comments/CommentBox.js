@@ -50,6 +50,12 @@ export default ({ comment, top, dataBox }) => {
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
+  let active = false;
+  if (activeComment && id === activeComment.attrs.id) active = true;
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
+
   const setCommentActive = () => {
     let commentPos = comment.pos;
     const viewId = comment.attrs.viewid;
@@ -82,12 +88,6 @@ export default ({ comment, top, dataBox }) => {
 
     view[viewId].focus();
   };
-
-  let active = false;
-  if (activeComment && id === activeComment.attrs.id) active = true;
-  useEffect(() => {
-    setAnimate(true);
-  }, []);
 
   return (
     <>

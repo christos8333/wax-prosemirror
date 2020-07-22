@@ -152,6 +152,7 @@ const updateMarks = view => {
             mark.type.name === 'deletion' ||
             mark.type.name === 'format_change'
           ) {
+            // THIS POSITION REFERS TO THE MAIN VIEW
             mark.pos = node.pos;
             finalMarks.push(mark);
           }

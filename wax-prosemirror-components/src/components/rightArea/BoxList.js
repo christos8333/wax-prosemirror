@@ -19,7 +19,6 @@ export default ({ commentsTracks, view, position }) => {
             <CommentBox
               key={id}
               comment={commentTrack}
-              view={view}
               top={top}
               dataBox={id}
             />

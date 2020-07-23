@@ -96,10 +96,11 @@ const findAllCommentsWithSameId = state => {
   return allCommentsWithSameId;
 };
 
+// TODO Also find fragmented marks
 const findMarkPosition = (activeView, initialPos, markType) => {
-  let $pos = activeView.state.tr.doc.resolve(initialPos);
-  let parent = $pos.parent;
-  let start = parent.childAfter($pos.parentOffset);
+  const $pos = activeView.state.tr.doc.resolve(initialPos);
+  const { parent } = $pos;
+  const start = parent.childAfter($pos.parentOffset);
   if (!start.node) return null;
   const actualMark = start.node.marks.find(mark => mark.type.name === markType);
   let startIndex = $pos.index();

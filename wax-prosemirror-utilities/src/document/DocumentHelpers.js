@@ -88,15 +88,29 @@ const findAllCommentsWithSameId = state => {
   const allCommentsWithSameId = [];
   commentNodes.map(node => {
     node.node.marks.filter(mark => {
-      if (
-        mark.type.name === 'comment' &&
-        commentOnSelection.attrs.id === mark.attrs.id
-      ) {
+      if (mark.type.name === 'comment' && commentOnSelection.attrs.id === mark.attrs.id) {
         allCommentsWithSameId.push(node);
       }
     });
   });
   return allCommentsWithSameId;
+};
+
+const findMarkPosition = (activeView, initialPos, markType) => {
+  let $pos = activeView.state.tr.doc.resolve(initialPos);
+  let parent = $pos.parent;
+  let start = parent.childAfter($pos.parentOffset);
+  if (!start.node) return null;
+  const actualMark = start.node.marks.find(mark => mark.type.name === markType);
+  let startIndex = $pos.index();
+  let startPos = $pos.start() + start.offset;
+  while (startIndex > 0 && actualMark.isInSet(parent.child(startIndex - 1).marks))
+    startPos -= parent.child(--startIndex).nodeSize;
+  let endIndex = $pos.indexAfter();
+  let endPos = startPos + start.node.nodeSize;
+  while (endPos < parent.childCount && actualMark.isInSet(parent.child(endIndex).marks))
+    endPos += parent.child(endIndex++).nodeSize;
+  return { from: startPos, to: endPos };
 };
 
 export const flatten = (node, descend = true) => {
@@ -152,4 +166,5 @@ export default {
   getSelectionMark,
   findFragmentedMark,
   findAllCommentsWithSameId,
+  findMarkPosition,
 };

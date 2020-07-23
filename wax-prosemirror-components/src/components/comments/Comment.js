@@ -64,18 +64,20 @@ export default ({ comment, activeView, user }) => {
       current: { value },
     } = commentInput;
     if (value !== '') {
-      saveComment();
+      // saveComment();
     }
 
-    // TODO Find actual from to of comment
+    // TODO Also find fragmented marks
     if (conversation.length === 0 && value === '') {
-      dispatch(state.tr.removeMark(1, 5, commentMark));
+      const commentPosition = DocumentHelpers.findMarkPosition(activeView, comment.pos, 'comment');
+      dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
     }
   };
 
   const resolveComment = () => {
-    // TODO Find actual from to of comment
-    dispatch(state.tr.removeMark(1, 5, commentMark));
+    // TODO Also find fragmented marks
+    const commentPosition = DocumentHelpers.findMarkPoistion(activeView, comment.pos, 'comment');
+    dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
   };
 
   const commentInputReply = () => {

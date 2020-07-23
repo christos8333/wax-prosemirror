@@ -18,6 +18,7 @@ export default ({ comment, activeView, user }) => {
   const {
     attrs: { conversation },
   } = comment;
+  const commentMark = state.schema.marks.comment;
 
   const handleKeyDown = event => {
     if (event.key === 'Enter' || event.which === 13) {
@@ -30,7 +31,6 @@ export default ({ comment, activeView, user }) => {
       current: { value },
     } = commentInput;
     const { tr, doc } = state;
-    const commentMark = state.schema.marks.comment;
 
     const obj = { [user.username]: value };
     commentAnnotation.attrs.conversation.push(obj);
@@ -59,6 +59,27 @@ export default ({ comment, activeView, user }) => {
     setcommentInputValue(value);
   };
 
+  const onBlur = () => {
+    const {
+      current: { value },
+    } = commentInput;
+    if (value !== '') {
+      // saveComment();
+    }
+
+    // TODO Also find fragmented marks
+    if (conversation.length === 0 && value === '') {
+      const commentPosition = DocumentHelpers.findMarkPosition(activeView, comment.pos, 'comment');
+      dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
+    }
+  };
+
+  const resolveComment = () => {
+    // TODO Also find fragmented marks
+    const commentPosition = DocumentHelpers.findMarkPoistion(activeView, comment.pos, 'comment');
+    dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
+  };
+
   const commentInputReply = () => {
     return (
       <>
@@ -68,6 +89,7 @@ export default ({ comment, activeView, user }) => {
           placeholder="add a new comment"
           onChange={updateCommentInputValue}
           onKeyPress={handleKeyDown}
+          onBlur={onBlur}
           onClick={event => {
             event.stopPropagation();
           }}
@@ -77,7 +99,9 @@ export default ({ comment, activeView, user }) => {
         <button type="button" onClick={saveComment}>
           Post
         </button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={resolveComment}>
+          Resolve
+        </button>
       </>
     );
   };
@@ -88,9 +112,7 @@ export default ({ comment, activeView, user }) => {
     <>
       {conversation.map((singleComment, index) => {
         return (
-          <SinlgeCommentRow key={uuidv4()}>{`${user.username} : ${
-            singleComment[user.username]
-          }`}</SinlgeCommentRow>
+          <SinlgeCommentRow key={uuidv4()}>{`${user.username} : ${singleComment[user.username]}`}</SinlgeCommentRow>
         );
       })}
       {commentInputReply()}

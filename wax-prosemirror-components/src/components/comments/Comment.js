@@ -22,7 +22,7 @@ export default ({ comment, activeView, user }) => {
 
   const handleKeyDown = event => {
     if (event.key === 'Enter' || event.which === 13) {
-      saveComment();
+      saveComment(event);
     }
   };
 
@@ -74,7 +74,7 @@ export default ({ comment, activeView, user }) => {
   };
 
   const resolveComment = event => {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     let maxPos = comment.pos;
     let minPos = comment.pos;
 

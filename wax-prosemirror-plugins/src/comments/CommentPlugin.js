@@ -7,10 +7,7 @@ const commentPlugin = new PluginKey('commentPlugin');
 
 const getComment = state => {
   const commentMark = state.schema.marks.comment;
-  const commentOnSelection = DocumentHelpers.findFragmentedMark(
-    state,
-    commentMark,
-  );
+  const commentOnSelection = DocumentHelpers.findFragmentedMark(state, commentMark);
 
   // Don't allow Active comment if selection is not collapsed
   if (
@@ -22,19 +19,12 @@ const getComment = state => {
   }
 
   if (commentOnSelection) {
-    const commentNodes = DocumentHelpers.findChildrenByMark(
-      state.doc,
-      commentMark,
-      true,
-    );
+    const commentNodes = DocumentHelpers.findChildrenByMark(state.doc, commentMark, true);
 
     const allCommentsWithSameId = [];
     commentNodes.map(node => {
       node.node.marks.filter(mark => {
-        if (
-          mark.type.name === 'comment' &&
-          commentOnSelection.attrs.id === mark.attrs.id
-        ) {
+        if (mark.type.name === 'comment' && commentOnSelection.attrs.id === mark.attrs.id) {
           allCommentsWithSameId.push(node);
         }
       });

@@ -34,7 +34,6 @@ export default ({ comment, activeView, user }) => {
 
     const obj = { [user.username]: value };
     commentAnnotation.attrs.conversation.push(obj);
-
     const allComments = DocumentHelpers.findAllCommentsWithSameId(state);
     allComments.forEach(singleComment => {
       dispatch(
@@ -67,7 +66,6 @@ export default ({ comment, activeView, user }) => {
       // saveComment();
     }
 
-    // TODO pass correct comment pos for notes
     if (conversation.length === 0 && value === '') {
       const commentPosition = DocumentHelpers.findMarkPosition(activeView, comment.pos, 'comment');
       dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
@@ -75,8 +73,7 @@ export default ({ comment, activeView, user }) => {
   };
 
   const resolveComment = () => {
-    // TODO pass correct comment pos for notes
-    const commentPosition = DocumentHelpers.findMarkPoistion(activeView, comment.pos, 'comment');
+    const commentPosition = DocumentHelpers.findMarkPosition(activeView, comment.pos, 'comment');
     dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
   };
 

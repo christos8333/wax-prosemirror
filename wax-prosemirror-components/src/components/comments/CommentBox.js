@@ -60,29 +60,9 @@ export default ({ comment, top, dataBox }) => {
     let commentPos = comment.pos;
     const viewId = comment.attrs.viewid;
 
-    if (comment.attrs.group !== 'main') {
-      const allInlineNodes = DocumentHelpers.findInlineNodes(
-        view[viewId].state.doc,
-      );
-
-      allInlineNodes.forEach(node => {
-        if (node.node.marks.length > 0) {
-          node.node.marks.forEach(mark => {
-            if (
-              mark.type.name === 'comment' &&
-              mark.attrs.id === comment.attrs.id
-            ) {
-              commentPos = node.pos;
-            }
-          });
-        }
-      });
-    }
     view[viewId].dispatch(
       view[viewId].state.tr.setSelection(
-        new TextSelection(
-          view[viewId].state.tr.doc.resolve(commentPos + 1, commentPos + 1),
-        ),
+        new TextSelection(view[viewId].state.tr.doc.resolve(commentPos + 1, commentPos + 1)),
       ),
     );
 
@@ -93,19 +73,8 @@ export default ({ comment, top, dataBox }) => {
     <>
       <Transition in={animate} timeout={1000}>
         {state => (
-          <CommentBoxStyled
-            top={top}
-            state={state}
-            data-box={dataBox}
-            active={active}
-            onClick={setCommentActive}
-          >
-            <Comment
-              comment={comment}
-              active={active}
-              activeView={activeView}
-              user={user}
-            />
+          <CommentBoxStyled top={top} state={state} data-box={dataBox} active={active} onClick={setCommentActive}>
+            <Comment comment={comment} active={active} activeView={activeView} user={user} />
           </CommentBoxStyled>
         )}
       </Transition>

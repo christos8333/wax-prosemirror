@@ -1,6 +1,6 @@
 import { Mark } from 'prosemirror-model';
 import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { each, uniqBy, sortBy, throttle } from 'lodash';
+import { each, uniqBy, sortBy } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import BoxList from './BoxList';

@@ -48,7 +48,7 @@ const getSelectionMark = (state, PMmark) => {
 };
 
 /* this is a workaround for now to find marks
-  that are pm will break them
+  that are pm will break them.
 */
 const findFragmentedMark = (state, PMmark) => {
   const {
@@ -79,21 +79,21 @@ const findFragmentedMark = (state, PMmark) => {
   return markFound;
 };
 
-const findAllCommentsWithSameId = state => {
-  const commentMark = state.schema.marks.comment;
-  const commentOnSelection = findFragmentedMark(state, commentMark);
+const findAllMarksWithSameId = (state, mark) => {
+  const type = mark.type.name;
+  const markType = state.schema.marks[type];
 
-  const commentNodes = findChildrenByMark(state.doc, commentMark, true);
+  const allNodes = findChildrenByMark(state.doc, markType, true);
 
-  const allCommentsWithSameId = [];
-  commentNodes.map(node => {
-    node.node.marks.filter(mark => {
-      if (mark.type.name === 'comment' && commentOnSelection.attrs.id === mark.attrs.id) {
-        allCommentsWithSameId.push(node);
+  const allMarksWithSameId = [];
+  allNodes.map(node => {
+    node.node.marks.filter(value => {
+      if (mark.type.name === type && mark.attrs.id === value.attrs.id) {
+        allMarksWithSameId.push(node);
       }
     });
   });
-  return allCommentsWithSameId;
+  return allMarksWithSameId;
 };
 
 // TODO Also find fragmented marks
@@ -166,6 +166,6 @@ export default {
   findChildrenByAttr,
   getSelectionMark,
   findFragmentedMark,
-  findAllCommentsWithSameId,
+  findAllMarksWithSameId,
   findMarkPosition,
 };

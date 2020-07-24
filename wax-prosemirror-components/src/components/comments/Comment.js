@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+import { last } from 'lodash';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const SinlgeCommentRow = styled.div`
@@ -15,6 +14,7 @@ export default ({ comment, activeView, user }) => {
   const [commentAnnotation, setCommentAnnotation] = useState(comment);
   const [commentInputValue, setcommentInputValue] = useState('');
   const { state, dispatch } = activeView;
+  const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(state, comment);
   const {
     attrs: { conversation },
   } = comment;
@@ -26,7 +26,9 @@ export default ({ comment, activeView, user }) => {
     }
   };
 
-  const saveComment = () => {
+  const saveComment = event => {
+    event.stopPropagation();
+
     const {
       current: { value },
     } = commentInput;
@@ -34,8 +36,8 @@ export default ({ comment, activeView, user }) => {
 
     const obj = { [user.username]: value };
     commentAnnotation.attrs.conversation.push(obj);
-    const allComments = DocumentHelpers.findAllCommentsWithSameId(state);
-    allComments.forEach(singleComment => {
+
+    allCommentsWithSameId.forEach(singleComment => {
       dispatch(
         tr.addMark(
           singleComment.pos,
@@ -67,14 +69,24 @@ export default ({ comment, activeView, user }) => {
     }
 
     if (conversation.length === 0 && value === '') {
-      const commentPosition = DocumentHelpers.findMarkPosition(activeView, comment.pos, 'comment');
-      dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
+      resolveComment();
     }
   };
 
-  const resolveComment = () => {
-    const commentPosition = DocumentHelpers.findMarkPosition(activeView, comment.pos, 'comment');
-    dispatch(state.tr.removeMark(commentPosition.from, commentPosition.to, commentMark));
+  const resolveComment = event => {
+    event.stopPropagation();
+    let maxPos = comment.pos;
+    let minPos = comment.pos;
+
+    allCommentsWithSameId.forEach(singleComment => {
+      const markPosition = DocumentHelpers.findMarkPosition(activeView, singleComment.pos, 'comment');
+      if (markPosition.from < minPos) minPos = markPosition.from;
+      if (markPosition.to > maxPos) maxPos = markPosition.to;
+    });
+
+    if (allCommentsWithSameId.length > 1) maxPos += last(allCommentsWithSameId).node.nodeSize;
+    dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
+    activeView.focus();
   };
 
   const commentInputReply = () => {
@@ -93,10 +105,10 @@ export default ({ comment, activeView, user }) => {
           autoFocus
           value={commentInputValue}
         />
-        <button type="button" onClick={saveComment}>
+        <button type="button" onClick={event => saveComment(event)}>
           Post
         </button>
-        <button type="button" onClick={resolveComment}>
+        <button type="button" onClick={event => resolveComment(event)}>
           Resolve
         </button>
       </>

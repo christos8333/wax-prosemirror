@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextSelection } from 'prosemirror-state';
+import { last } from 'lodash';
 
 import { Transition } from 'react-transition-group';
 import styled from 'styled-components';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import Comment from './Comment';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const CommentBoxStyled = styled.div`
   display: flex;
@@ -57,13 +58,19 @@ export default ({ comment, top, dataBox }) => {
   }, []);
 
   const setCommentActive = () => {
-    let commentPos = comment.pos;
     const viewId = comment.attrs.viewid;
+    let maxPos = comment.pos;
+    const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(view[viewId].state, comment);
+
+    allCommentsWithSameId.forEach(singleComment => {
+      const markPosition = DocumentHelpers.findMarkPosition(view[viewId], singleComment.pos, 'comment');
+      if (markPosition.to > maxPos) maxPos = markPosition.to;
+    });
+
+    if (!active && allCommentsWithSameId.length > 1) maxPos += last(allCommentsWithSameId).node.nodeSize;
 
     view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(
-        new TextSelection(view[viewId].state.tr.doc.resolve(commentPos + 1, commentPos + 1)),
-      ),
+      view[viewId].state.tr.setSelection(new TextSelection(view[viewId].state.tr.doc.resolve(maxPos, maxPos))),
     );
 
     view[viewId].focus();

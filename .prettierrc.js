@@ -6,6 +6,6 @@ const { prettier } = require('@coko/lint');
  * prettier.semi = true
  *
  */
-prettier.printWidth = 120;
+
 prettier.semi = true;
 module.exports = prettier;

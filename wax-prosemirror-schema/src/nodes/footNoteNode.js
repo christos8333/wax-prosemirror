@@ -1,25 +1,25 @@
 //TODO Write the node in WaxSchema
 const footnote = {
-  group: "inline",
-  content: "inline*",
+  group: 'inline',
+  content: 'inline*',
   inline: true,
-  atom: true,
+  // atom: true,
   attrs: {
-    id: { default: "" }
+    id: { default: '' },
   },
   toDOM: node => {
-    return ["footnote", node.attrs, 0];
+    return ['footnote', node.attrs, 0];
   },
   parseDOM: [
     {
-      tag: "footnote",
+      tag: 'footnote',
       getAttrs(dom) {
         return {
-          id: dom.getAttribute("id")
+          id: dom.getAttribute('id'),
         };
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 
 export default footnote;

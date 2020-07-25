@@ -1,10 +1,10 @@
-import { Plugin, PluginKey } from "prosemirror-state";
-import { Decoration, DecorationSet } from "prosemirror-view";
+import { Plugin, PluginKey } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { findSelectedChanges } from "./FindSelectedChanges";
-import { deactivateAllSelectedChanges } from "./helpers";
+import { findSelectedChanges } from './FindSelectedChanges';
+import { deactivateAllSelectedChanges } from './helpers';
 
-export const key = new PluginKey("track");
+export const key = new PluginKey('track');
 export const selectedInsertionSpec = {};
 export const selectedDeletionSpec = {};
 export const selectedChangeFormatSpec = {};
@@ -15,7 +15,7 @@ export default options => {
     key,
     state: {
       init(config, state) {
-        const userIds = ["33"];
+        const userIds = ['33'];
         state.doc.descendants(node => {
           if (node.attrs.track) {
             node.attrs.track.forEach(track => {
@@ -26,9 +26,7 @@ export default options => {
           } else {
             node.marks.forEach(mark => {
               if (
-                ["deletion", "insertion", "format_change"].includes(
-                  mark.type.name
-                ) &&
+                ['deletion', 'insertion', 'format_change'].includes(mark.type.name) &&
                 !userIds.includes(mark.attrs.user) &&
                 mark.attrs.user !== 0
               ) {
@@ -39,7 +37,7 @@ export default options => {
         });
 
         return {
-          decos: DecorationSet.empty
+          decos: DecorationSet.empty,
         };
       },
       apply(tr, prev, oldState, state) {
@@ -53,23 +51,19 @@ export default options => {
         let { decos } = this.getState(oldState);
 
         if (tr.selectionSet) {
-          const { insertion, deletion, formatChange } = findSelectedChanges(
-            state
-          );
+          const { insertion, deletion, formatChange } = findSelectedChanges(state);
           decos = DecorationSet.empty;
-          const decoType = tr.selection.node
-            ? Decoration.node
-            : Decoration.inline;
+          const decoType = tr.selection.node ? Decoration.node : Decoration.inline;
           if (insertion) {
             decos = decos.add(tr.doc, [
               decoType(
                 insertion.from,
                 insertion.to,
                 {
-                  class: "selected-insertion"
+                  class: 'selected-insertion',
                 },
-                selectedInsertionSpec
-              )
+                selectedInsertionSpec,
+              ),
             ]);
           }
           if (deletion) {
@@ -78,10 +72,10 @@ export default options => {
                 deletion.from,
                 deletion.to,
                 {
-                  class: "selected-deletion"
+                  class: 'selected-deletion',
                 },
-                selectedDeletionSpec
-              )
+                selectedDeletionSpec,
+              ),
             ]);
           }
           if (formatChange) {
@@ -90,19 +84,19 @@ export default options => {
                 formatChange.from,
                 formatChange.to,
                 {
-                  class: "selected-format-change"
+                  class: 'selected-format-change',
                 },
-                selectedChangeFormatSpec
-              )
+                selectedChangeFormatSpec,
+              ),
             ]);
           }
         } else {
           decos = decos.map(tr.mapping, tr.doc);
         }
         return {
-          decos
+          decos,
         };
-      }
+      },
     },
     props: {
       decorations(state) {
@@ -112,8 +106,8 @@ export default options => {
       handleDOMEvents: {
         focus: (view, _event) => {
           view.dispatch(deactivateAllSelectedChanges(view.state.tr));
-        }
-      }
-    }
+        },
+      },
+    },
   });
 };

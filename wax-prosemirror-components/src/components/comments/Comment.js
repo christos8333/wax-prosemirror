@@ -14,7 +14,10 @@ export default ({ comment, activeView, user }) => {
   const [commentAnnotation, setCommentAnnotation] = useState(comment);
   const [commentInputValue, setcommentInputValue] = useState('');
   const { state, dispatch } = activeView;
-  const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(state, comment);
+  const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
+    state,
+    comment,
+  );
   const {
     attrs: { conversation },
   } = comment;
@@ -34,7 +37,12 @@ export default ({ comment, activeView, user }) => {
     } = commentInput;
     const { tr, doc } = state;
 
-    const obj = { [user.username]: value };
+    const obj = {
+      content: value,
+      displayName: user.username,
+      timestamp: Math.floor(Date.now() / 300000),
+    };
+
     commentAnnotation.attrs.conversation.push(obj);
 
     allCommentsWithSameId.forEach(singleComment => {
@@ -79,12 +87,17 @@ export default ({ comment, activeView, user }) => {
     let minPos = comment.pos;
 
     allCommentsWithSameId.forEach(singleComment => {
-      const markPosition = DocumentHelpers.findMarkPosition(activeView, singleComment.pos, 'comment');
+      const markPosition = DocumentHelpers.findMarkPosition(
+        activeView,
+        singleComment.pos,
+        'comment',
+      );
       if (markPosition.from < minPos) minPos = markPosition.from;
       if (markPosition.to > maxPos) maxPos = markPosition.to;
     });
 
-    if (allCommentsWithSameId.length > 1) maxPos += last(allCommentsWithSameId).node.nodeSize;
+    if (allCommentsWithSameId.length > 1)
+      maxPos += last(allCommentsWithSameId).node.nodeSize;
     dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
   };
@@ -121,7 +134,9 @@ export default ({ comment, activeView, user }) => {
     <>
       {conversation.map((singleComment, index) => {
         return (
-          <SinlgeCommentRow key={uuidv4()}>{`${user.username} : ${singleComment[user.username]}`}</SinlgeCommentRow>
+          <SinlgeCommentRow key={uuidv4()}>
+            {`${singleComment.displayName} : ${singleComment.content}`}
+          </SinlgeCommentRow>
         );
       })}
       {commentInputReply()}

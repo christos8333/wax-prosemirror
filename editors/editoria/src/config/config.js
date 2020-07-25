@@ -1,5 +1,5 @@
-import { emDash, ellipsis } from "prosemirror-inputrules";
-import { columnResizing, tableEditing } from "prosemirror-tables";
+import { emDash, ellipsis } from 'prosemirror-inputrules';
+import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   AnnotationToolGroupService,
   ImageService,
@@ -20,37 +20,37 @@ import {
   NoteService,
   NoteToolGroupService,
   TrackChangeService,
-  CommentsService
-} from "wax-prosemirror-services";
+  CommentsService,
+} from 'wax-prosemirror-services';
 
-import { WaxSelectionPlugin } from "wax-prosemirror-plugins";
+import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 
 import invisibles, {
   space,
   hardBreak,
-  paragraph
-} from "@guardian/prosemirror-invisibles";
+  paragraph,
+} from '@guardian/prosemirror-invisibles';
 
 export default {
   MenuService: [
     {
-      templateArea: "topBar",
+      templateArea: 'topBar',
       toolGroups: [
-        "Base",
+        'Base',
         {
-          name: "Annotations",
-          more: ["Superscript", "Subscript", "SmallCaps"]
+          name: 'Annotations',
+          more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
-        "Notes",
-        "Lists",
-        "Images",
-        "Tables"
-      ]
+        'Notes',
+        'Lists',
+        'Images',
+        'Tables',
+      ],
     },
     {
-      templateArea: "leftSideBar",
-      toolGroups: ["Display", "Text"]
-    }
+      templateArea: 'leftSideBar',
+      toolGroups: ['Display', 'Text'],
+    },
   ],
 
   RulesService: [emDash, ellipsis],
@@ -60,7 +60,7 @@ export default {
     columnResizing(),
     tableEditing(),
     invisibles([hardBreak()]),
-    WaxSelectionPlugin
+    WaxSelectionPlugin,
   ],
 
   // Always load first CommentsService and LinkService,
@@ -85,6 +85,6 @@ export default {
     new ImageToolGroupService(),
     new AnnotationToolGroupService(),
     new NoteToolGroupService(),
-    new ListToolGroupService()
-  ]
+    new ListToolGroupService(),
+  ],
 };

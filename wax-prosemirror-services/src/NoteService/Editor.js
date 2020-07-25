@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useContext } from "react";
-import { EditorView } from "prosemirror-view";
-import { EditorState } from "prosemirror-state";
-import { StepMap } from "prosemirror-transform";
-import { baseKeymap } from "prosemirror-commands";
-import { keymap } from "prosemirror-keymap";
-import { undo, redo } from "prosemirror-history";
-import { WaxContext } from "wax-prosemirror-core";
-import { Commands } from "wax-prosemirror-utilities";
-import { NoteEditorContainer } from "wax-prosemirror-components";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
-import { filter } from "lodash";
-import transformPasted from "./helpers/TransformPasted";
+import React, { useEffect, useRef, useContext } from 'react';
+import { EditorView } from 'prosemirror-view';
+import { EditorState } from 'prosemirror-state';
+import { StepMap } from 'prosemirror-transform';
+import { baseKeymap } from 'prosemirror-commands';
+import { keymap } from 'prosemirror-keymap';
+import { undo, redo } from 'prosemirror-history';
+import { WaxContext } from 'wax-prosemirror-core';
+import { Commands } from 'wax-prosemirror-utilities';
+import { NoteEditorContainer } from 'wax-prosemirror-components';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { filter } from 'lodash';
+import transformPasted from './helpers/TransformPasted';
 
 export default ({ node, view }) => {
   const editorRef = useRef();
@@ -22,21 +22,17 @@ export default ({ node, view }) => {
       {
         state: EditorState.create({
           doc: node,
-          plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()]
+          plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
         }),
         // This is the magic part
         dispatchTransaction: tr => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
 
-          const allNotes = DocumentHelpers.findChildrenByType(
-            view.state.doc,
-            view.state.schema.nodes.footnote,
-            true
-          );
+          const allNotes = DocumentHelpers.findChildrenByType(view.state.doc, view.state.schema.nodes.footnote, true);
 
           const noteFound = filter(allNotes, {
-            node: { attrs: { id: noteId } }
+            node: { attrs: { id: noteId } },
           });
 
           //Set everytime the active view into context
@@ -44,17 +40,15 @@ export default ({ node, view }) => {
             context.updateView({}, noteId);
           }, 20);
 
-          if (!tr.getMeta("fromOutside")) {
+          if (!tr.getMeta('fromOutside')) {
             let outerTr = view.state.tr,
               offsetMap = StepMap.offset(noteFound[0].pos + 1);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
-              for (let j = 0; j < steps.length; j++)
-                outerTr.step(steps[j].map(offsetMap));
+              for (let j = 0; j < steps.length; j++) outerTr.step(steps[j].map(offsetMap));
             }
 
-            if (outerTr.docChanged)
-              view.dispatch(outerTr.setMeta("outsideView", "notes"));
+            if (outerTr.docChanged) view.dispatch(outerTr.setMeta('outsideView', 'notes'));
           }
         },
         handleDOMEvents: {
@@ -65,20 +59,20 @@ export default ({ node, view }) => {
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
-          }
+          },
         },
         transformPasted: slice => {
           return transformPasted(slice, noteView);
-        }
-      }
+        },
+      },
     );
 
     //Set Each note into Wax's Context
     context.updateView(
       {
-        [noteId]: noteView
+        [noteId]: noteView,
       },
-      noteId
+      noteId,
     );
     if (context.view[noteId]) {
       context.view[noteId].focus();
@@ -95,12 +89,9 @@ export default ({ node, view }) => {
 
   const getKeys = () => {
     return {
-      "Mod-z": () => undo(view.state, view.dispatch),
-      "Mod-y": () => redo(view.state, view.dispatch),
-      "Mod-u": () =>
-        Commands.markActive(noteView.state.config.schema.marks.underline)(
-          noteView.state
-        )
+      'Mod-z': () => undo(view.state, view.dispatch),
+      'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-u': () => Commands.markActive(noteView.state.config.schema.marks.underline)(noteView.state),
     };
   };
 
@@ -115,9 +106,7 @@ export default ({ node, view }) => {
         endB += overlap;
       }
       context.view[noteId].dispatch(
-        state.tr
-          .replace(start, endB, node.slice(start, endA))
-          .setMeta("fromOutside", true)
+        state.tr.replace(start, endB, node.slice(start, endA)).setMeta('fromOutside', true),
       );
     }
   }

@@ -96,7 +96,6 @@ const findAllMarksWithSameId = (state, mark) => {
   return allMarksWithSameId;
 };
 
-// TODO Also find fragmented marks
 const findMarkPosition = (activeView, initialPos, markType) => {
   const $pos = activeView.state.tr.doc.resolve(initialPos);
   const { parent } = $pos;

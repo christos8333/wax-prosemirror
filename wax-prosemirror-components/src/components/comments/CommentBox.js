@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextSelection } from 'prosemirror-state';
-import { last } from 'lodash';
+import { last, maxBy } from 'lodash';
 
 import { Transition } from 'react-transition-group';
 import styled from 'styled-components';
@@ -59,18 +59,19 @@ export default ({ comment, top, dataBox }) => {
 
   const setCommentActive = () => {
     const viewId = comment.attrs.viewid;
-    let maxPos = comment.pos;
+
+    if (active) {
+      view[viewId].focus();
+      return false;
+    }
+
     const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(view[viewId].state, comment);
 
-    allCommentsWithSameId.forEach(singleComment => {
-      const markPosition = DocumentHelpers.findMarkPosition(view[viewId], singleComment.pos, 'comment');
-      if (markPosition.to > maxPos) maxPos = markPosition.to;
-    });
-
-    if (!active && allCommentsWithSameId.length > 1) maxPos += last(allCommentsWithSameId).node.nodeSize;
+    const maxPos = maxBy(allCommentsWithSameId, 'pos');
+    maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
 
     view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(new TextSelection(view[viewId].state.tr.doc.resolve(maxPos, maxPos))),
+      view[viewId].state.tr.setSelection(new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos))),
     );
 
     view[viewId].focus();

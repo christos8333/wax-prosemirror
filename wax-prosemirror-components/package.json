@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-components",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Wax prosemirror UI components",
   "license": "MIT",
   "main": "dist/index.js",
@@ -15,14 +15,14 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "lodash": "^4.17.4",
     "prop-types": "^15.7.2",
+    "prosemirror-model": "^1.9.1",
+    "prosemirror-state": "^1.3.2",
     "react-dropdown": "^1.6.2",
     "react-transition-group": "^4.3.0",
     "styled-components": "^4.2.0",
     "uuid": "^7.0.3",
-    "prosemirror-model": "^1.9.1",
-    "prosemirror-state": "^1.3.2",
-    "wax-prosemirror-core": "^0.0.10",
-    "wax-prosemirror-utilities": "^0.0.10"
+    "wax-prosemirror-core": "^0.0.11",
+    "wax-prosemirror-utilities": "^0.0.11"
   },
   "peerDependencies": {
     "react": "^16.13.1",

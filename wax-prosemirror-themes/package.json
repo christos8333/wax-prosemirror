@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-themes",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Wax prosemirror themes",
   "license": "MIT",
   "main": "dist/index.js",

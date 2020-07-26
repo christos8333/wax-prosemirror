@@ -26,7 +26,8 @@ Run a local version of the editor
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 
-Check the current online demo of the [editor](https://christos8333.github.io/editor-demo/) 
+
+### Check the current online demo of the [editor](https://christos8333.github.io/editor-demo/) 
 
 ## Introduction
 
@@ -59,7 +60,6 @@ config; // adds on the editor anything from new services, tools, Pmpplugins etc.
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
-TrackChange; // enables track changes (under development)
 debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 ```
 

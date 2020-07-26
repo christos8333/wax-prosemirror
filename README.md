@@ -26,6 +26,8 @@ Run a local version of the editor
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 
+Check the current online demo of the [editor](https://christos8333.github.io/editor-demo/) 
+
 ## Introduction
 
 Wax depends on the following libraries.

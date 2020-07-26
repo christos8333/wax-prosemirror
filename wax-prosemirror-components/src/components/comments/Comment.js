@@ -7,9 +7,10 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 const SinlgeCommentRow = styled.div`
   padding: 4px;
   border-bottom: 1px solid #ffab20;
+  cursor: pointer;
 `;
 
-export default ({ comment, activeView, user }) => {
+export default ({ comment, activeView, user, active }) => {
   const commentInput = useRef(null);
   const [commentAnnotation, setCommentAnnotation] = useState(comment);
   const [commentInputValue, setcommentInputValue] = useState('');
@@ -117,11 +118,20 @@ export default ({ comment, activeView, user }) => {
           }}
           autoFocus
           value={commentInputValue}
+          disabled={!active}
         />
-        <button type="button" onClick={event => saveComment(event)}>
+        <button
+          disabled={!active}
+          type="button"
+          onClick={event => saveComment(event)}
+        >
           Post
         </button>
-        <button type="button" onClick={event => resolveComment(event)}>
+        <button
+          disabled={!active}
+          type="button"
+          onClick={event => resolveComment(event)}
+        >
           Resolve
         </button>
       </>

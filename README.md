@@ -3,7 +3,7 @@
 </div>
 
 | [![MIT license](https://img.shields.io/badge/license-MIT-e51879.svg)](https://gitlab.coko.foundation/wax/wax-prosemirror/raw/master/LICENSE) |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| :------------------------------------------------------------------------------------------------------------------------------------------: |
 
 
 This application is being developed by the [Coko Foundation](https://coko.foundation/), for the [University of California Press](http://www.ucpress.edu/) as part of the [Editoria](https://gitlab.coko.foundation/editoria/editoria/) application.
@@ -16,11 +16,13 @@ Run a local version of the editor
 
 1.  `git clone git@gitlab.coko.foundation:wax/wax-prosemirror.git`
 
-2.  `yarn with node >= 11 (11.14.0 is tested on)`
+2.  `yarn with node >= 12`
 
 3.  `yarn build`
 
 4.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
+
+5.  `yarn storybook` Will bring up storybook for components
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 
@@ -28,11 +30,11 @@ Scripts: `yarn` , `yarn clean`, `yarn reset`
 
 Wax depends on the following libraries.
 
-* React for the view(ui)
+- React for the view(ui)
 
-* Styled-components for theming and styling.
+- Styled-components for theming and styling.
 
-* Inversify.io as service containers
+- Inversify.io as service containers
 
 ### Assemble your own Editor
 
@@ -55,7 +57,7 @@ config; // adds on the editor anything from new services, tools, Pmpplugins etc.
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
-TrackChange // enables track changes (under development)
+TrackChange; // enables track changes (under development)
 debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 ```
 
@@ -82,9 +84,9 @@ debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 
 The role of wax-core is
 
-* Mount a prosemirror instance
+- Mount a prosemirror instance
 
-* Initiate default [services](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js)
+- Initiate default [services](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js)
 
   1.  LayoutService
 
@@ -143,25 +145,25 @@ All service providers extend the [Service](https://gitlab.coko.foundation/wax/wa
 Let’s take a look at a simple service like the StrongService. Within any of your service provider methods, you always have access to the config and schema properties and also you have access to the service container using [inversify.io](http://inversify.io/).
 
 ```javascript
-import { toggleMark } from "prosemirror-commands";
-import Service from "wax-prosemirror-core/src/services/Service";
-import { strongMark } from "wax-prosemirror-schema";
-import Strong from "./Strong";
+import { toggleMark } from 'prosemirror-commands';
+import Service from 'wax-prosemirror-core/src/services/Service';
+import { strongMark } from 'wax-prosemirror-schema';
+import Strong from './Strong';
 
 class StrongService extends Service {
   boot() {
-    const shortCuts = this.container.get("ShortCuts");
-    shortCuts.addShortCut({ "Mod-b": toggleMark(this.schema.marks.strong) });
+    const shortCuts = this.container.get('ShortCuts');
+    shortCuts.addShortCut({ 'Mod-b': toggleMark(this.schema.marks.strong) });
   }
 
   register() {
-    this.container.bind("Strong").to(Strong);
-    const createMark = this.container.get("CreateMark");
+    this.container.bind('Strong').to(Strong);
+    const createMark = this.container.get('CreateMark');
     createMark(
       {
-        strong: strongMark
+        strong: strongMark,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }
@@ -221,7 +223,7 @@ class InlineAnnotationsService extends Service {
     new SuperscriptService(),
     new StrikeThroughService(),
     new UnderlineService(),
-    new SmallCapsService()
+    new SmallCapsService(),
   ];
 }
 ```
@@ -247,29 +249,29 @@ Service A register method.
 CreateNode(
   {
     paragraph: {
-      group: "block",
-      content: "inline*",
+      group: 'block',
+      content: 'inline*',
       attrs: {
-        class: { default: "paragraph" }
+        class: { default: 'paragraph' },
       },
       parseDOM: {
-        tag: "p.paragraph",
+        tag: 'p.paragraph',
         getAttrs(hook, next) {
           Object.assign(hook, {
-            class: hook.dom.getAttribute("class")
+            class: hook.dom.getAttribute('class'),
           });
           next();
-        }
+        },
       },
       toDOM(hook, next) {
         const attrs = { class: hook.node.attrs.class };
 
-        hook.value = ["p", attrs, 0];
+        hook.value = ['p', attrs, 0];
         next();
-      }
-    }
+      },
+    },
   },
-  { toWaxSchema: true }
+  { toWaxSchema: true },
 );
 ```
 
@@ -279,29 +281,29 @@ Service B register method.
 CreateNode(
   {
     paragraph: {
-      group: "block",
-      content: "inline*",
+      group: 'block',
+      content: 'inline*',
       attrs: {
-        user: { default: [] }
+        user: { default: [] },
       },
       parseDOM: {
-        tag: "p.paragraph",
+        tag: 'p.paragraph',
         getAttrs(hook, next) {
           Object.assign(hook, {
-            user: parseUser(hook.dom.dataset.user)
+            user: parseUser(hook.dom.dataset.user),
           });
           next();
-        }
+        },
       },
       toDOM(hook, next) {
         Object.assign(hook.value[1], {
-          "data-user": JSON.stringify(hook.node.attrs.user)
+          'data-user': JSON.stringify(hook.node.attrs.user),
         });
         next();
-      }
-    }
+      },
+    },
   },
-  { toWaxSchema: true }
+  { toWaxSchema: true },
 );
 ```
 
@@ -314,11 +316,11 @@ This service enables us to set a layout for the editor. Internally Wax calls the
 A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
 
 ```javascript
-const LeftSideBar = componentPlugin("leftSideBar");
-const RightSideBar = componentPlugin("rightSideBar");
-const TopBar = componentPlugin("topBar");
-const BottomBar = componentPlugin("bottomBar");
-const WaxOverlays = componentPlugin("waxOverlays");
+const LeftSideBar = componentPlugin('leftSideBar');
+const RightSideBar = componentPlugin('rightSideBar');
+const TopBar = componentPlugin('topBar');
+const BottomBar = componentPlugin('bottomBar');
+const WaxOverlays = componentPlugin('waxOverlays');
 
 const EditoriaLayout = ({ editor }) => {
   return (
@@ -389,19 +391,15 @@ Is used for adding menus to the editor.
 3.  How to create modals inside the editor (under development)
 4.  Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by [`pmplugins.get("imagePlaceHolder")`](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
 5.  Exclude certain tool from toolgroups. `toolGroups: [{name: "Base", exclude: ['Undo']}, "Annotations", "Notes", "Lists", "Images", "Tables"]`
-6. Adding certain tools into more section `toolGroups: [
-        "Base",
-        {
-          name: "Annotations",
-          more: ["Superscript", "Subscript", "SmallCaps"]
-        } ]`
+6.  Adding certain tools into more section `toolGroups: [ "Base", { name: "Annotations", more: ["Superscript", "Subscript", "SmallCaps"] } ]`
+
 ## Latest versions
 
-* wax-prosemirror-components@0.0.9
-* wax-prosemirror-core@0.0.9
-* wax-prosemirror-layouts@0.0.9
-* wax-prosemirror-plugins@0.0.9
-* wax-prosemirror-schema@0.0.9
-* wax-prosemirror-services@0.0.9
-* wax-prosemirror-themes@0.0.9
-* wax-prosemirror-utilities@0.0.9
+- wax-prosemirror-components@0.0.11
+- wax-prosemirror-core@0.0.11
+- wax-prosemirror-layouts@0.0.11
+- wax-prosemirror-plugins@0.0.11
+- wax-prosemirror-schema@0.0.11
+- wax-prosemirror-services@0.0.11
+- wax-prosemirror-themes@0.0.11
+- wax-prosemirror-utilities@0.0.11

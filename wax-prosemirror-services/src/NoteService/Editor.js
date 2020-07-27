@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useContext } from 'react';
+import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
 import { EditorState } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
@@ -6,10 +7,8 @@ import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
-import { Commands } from 'wax-prosemirror-utilities';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { filter } from 'lodash';
 import transformPasted from './helpers/TransformPasted';
 
 export default ({ node, view }) => {
@@ -29,13 +28,17 @@ export default ({ node, view }) => {
           let { state, transactions } = noteView.state.applyTransaction(tr);
           noteView.updateState(state);
 
-          const allNotes = DocumentHelpers.findChildrenByType(view.state.doc, view.state.schema.nodes.footnote, true);
+          const allNotes = DocumentHelpers.findChildrenByType(
+            view.state.doc,
+            view.state.schema.nodes.footnote,
+            true,
+          );
 
           const noteFound = filter(allNotes, {
             node: { attrs: { id: noteId } },
           });
 
-          //Set everytime the active view into context
+          // TODO Remove timeout and use state to check if noteView has changed
           setTimeout(() => {
             context.updateView({}, noteId);
           }, 20);
@@ -45,10 +48,12 @@ export default ({ node, view }) => {
               offsetMap = StepMap.offset(noteFound[0].pos + 1);
             for (let i = 0; i < transactions.length; i++) {
               let steps = transactions[i].steps;
-              for (let j = 0; j < steps.length; j++) outerTr.step(steps[j].map(offsetMap));
+              for (let j = 0; j < steps.length; j++)
+                outerTr.step(steps[j].map(offsetMap));
             }
 
-            if (outerTr.docChanged) view.dispatch(outerTr.setMeta('outsideView', 'notes'));
+            if (outerTr.docChanged)
+              view.dispatch(outerTr.setMeta('outsideView', 'notes'));
           }
         },
         handleDOMEvents: {
@@ -91,7 +96,7 @@ export default ({ node, view }) => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
-      'Mod-u': () => Commands.markActive(noteView.state.config.schema.marks.underline)(noteView.state),
+      // 'Mod-u': () => Commands.markActive(noteView.state.config.schema.marks.underline)(noteView.state),
     };
   };
 
@@ -106,7 +111,9 @@ export default ({ node, view }) => {
         endB += overlap;
       }
       context.view[noteId].dispatch(
-        state.tr.replace(start, endB, node.slice(start, endA)).setMeta('fromOutside', true),
+        state.tr
+          .replace(start, endB, node.slice(start, endA))
+          .setMeta('fromOutside', true),
       );
     }
   }

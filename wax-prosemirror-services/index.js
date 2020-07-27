@@ -27,6 +27,7 @@ export { default as TextBlockLevelService } from './src/TextBlockLevel/TextBlock
 export { default as DisplayBlockLevelService } from './src/DisplayBlockLevel/DisplayBlockLevelService';
 export { default as NoteService } from './src/NoteService/NoteService';
 export { default as CommentsService } from './src/CommentsService/CommentsService';
+export { default as CodeBlockService } from './src/CodeBlockService/CodeBlockService';
 /*
 ToolGroups
 */
@@ -38,3 +39,4 @@ export { default as TableToolGroupService } from './src/WaxToolGroups/TableToolG
 export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayToolGroupService/DisplayToolGroupService';
 export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
 export { default as NoteToolGroupService } from './src/WaxToolGroups/NoteToolGroupService/NoteToolGroupService';
+export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBlockToolGroupService/CodeBlockToolGroupService';

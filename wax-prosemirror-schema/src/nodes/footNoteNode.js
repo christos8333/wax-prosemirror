@@ -3,7 +3,7 @@ const footnote = {
   group: 'inline',
   content: 'inline*',
   inline: true,
-  // atom: true,
+  atom: true,
   attrs: {
     id: { default: '' },
   },

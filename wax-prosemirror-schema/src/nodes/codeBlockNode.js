@@ -1,5 +1,5 @@
 const codeBlock = {
-  content: 'text*',
+  content: 'block+',
   group: 'block',
   code: true,
   defining: true,

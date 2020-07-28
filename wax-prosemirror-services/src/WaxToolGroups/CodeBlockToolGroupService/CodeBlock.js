@@ -4,7 +4,7 @@ import ToolGroup from '../../lib/ToolGroup';
 @injectable()
 class CodeBlock extends ToolGroup {
   tools = [];
-  constructor(@inject('CodeBlock') codeblock) {
+  constructor(@inject('CodeBlockTool') codeblock) {
     super();
     this.tools = [codeblock];
   }

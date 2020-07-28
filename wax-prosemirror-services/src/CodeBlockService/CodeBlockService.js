@@ -6,7 +6,7 @@ export default class CodeBlockService extends Service {
   boot() {}
 
   register() {
-    this.container.bind('CodeBlock').to(CodeBlockTool);
+    this.container.bind('CodeBlockTool').to(CodeBlockTool);
     const createNode = this.container.get('CreateNode');
 
     createNode({

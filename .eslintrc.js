@@ -26,6 +26,8 @@ eslint.rules = {
     },
   ],
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+  'class-methods-use-this': [1, { exceptMethods: ['run', 'enable'] }],
+
   'react/prop-types': [
     2,
     { ignore: ['children', 'className', 'onClick', 'theme'] },

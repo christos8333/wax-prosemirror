@@ -1,16 +1,16 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { Commands } from "wax-prosemirror-utilities";
+import { injectable } from 'inversify';
+import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
 @injectable()
-export default class Author extends Tools {
-  title = "Change to Author";
-  content = "Author";
+class Author extends Tools {
+  title = 'Change to Author';
+  content = 'Author';
 
   get run() {
     return (state, dispatch) => {
       Commands.setBlockType(state.config.schema.nodes.author, {
-        class: "author"
+        class: 'author',
       })(state, dispatch);
     };
   }
@@ -21,3 +21,5 @@ export default class Author extends Tools {
     };
   }
 }
+
+export default Author;

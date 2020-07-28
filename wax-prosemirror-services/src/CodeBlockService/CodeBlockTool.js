@@ -1,7 +1,7 @@
-import Tools from '../lib/Tools';
 import { injectable } from 'inversify';
 import { icons } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../lib/Tools';
 
 @injectable()
 class CodeBlockTool extends Tools {

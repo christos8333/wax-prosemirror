@@ -1,14 +1,14 @@
-import React, { useMemo, useContext } from "react";
-import { injectable } from "inversify";
-import { WaxContext } from "wax-prosemirror-core";
-import ToolGroup from "../lib/ToolGroup";
-import MenuWrapper from "./MenuWrapper";
+import React, { useMemo, useContext } from 'react';
+import { injectable } from 'inversify';
+import { WaxContext } from 'wax-prosemirror-core';
+import ToolGroup from '../lib/ToolGroup';
+import MenuWrapper from './MenuWrapper';
 
 @injectable()
-export default class Menu {
+class Menu {
   toolGroups = [];
   config = {};
-  name = "";
+  name = '';
   constructor(config, createTools) {
     this.name = config.name;
     this.config = config;
@@ -35,7 +35,10 @@ export default class Menu {
 
   render() {
     return () => {
-      const { view: { main }, activeView } = useContext(WaxContext);
+      const {
+        view: { main },
+        activeView,
+      } = useContext(WaxContext);
       const Bar = useMemo(() => (
         <MenuWrapper items={this.toolGroups} view={activeView || {}} />
       ));
@@ -43,3 +46,5 @@ export default class Menu {
     };
   }
 }
+
+export default Menu;

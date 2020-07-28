@@ -1,13 +1,13 @@
-import { isPlainObject, isFunction } from "lodash";
-import Service from "../Service";
-import Menu from "./Menu";
-import MenuCollection from "./MenuCollection";
+import { isPlainObject, isFunction } from 'lodash';
+import Service from '../Service';
+import Menu from './Menu';
+import MenuCollection from './MenuCollection';
 
 class MenuService extends Service {
-  name = "MenuService";
+  name = 'MenuService';
   boot() {
-    const { menus } = this.container.get("MenuCollection");
-    const layout = this.container.get("Layout");
+    const { menus } = this.container.get('MenuCollection');
+    const layout = this.container.get('Layout');
     menus.forEach(menu => {
       layout.addComponent(menu.config.templateArea, menu.render());
     });
@@ -16,19 +16,16 @@ class MenuService extends Service {
   register() {
     /* create Menu Factory */
     this.config.map(conf => {
-      this.container.bind("Menu").toFactory(context => {
-        return new Menu(conf, context.container.get("createTools"));
+      this.container.bind('Menu').toFactory(context => {
+        return new Menu(conf, context.container.get('createTools'));
       });
     });
 
     /*create MenuCollection of Menus */
-    this.container
-      .bind("MenuCollection")
-      .to(MenuCollection)
-      .inSingletonScope();
+    this.container.bind('MenuCollection').to(MenuCollection).inSingletonScope();
 
     /* create factory of tools */
-    this.container.bind("createTools").toFactory(context => {
+    this.container.bind('createTools').toFactory(context => {
       return configTools => {
         const tools = [];
         configTools.forEach(tool => {
@@ -45,9 +42,7 @@ class MenuService extends Service {
             tools.push(tl);
           } catch (error) {
             throw Error(
-              `Could not load Service ${
-                tool.name
-              }. Please configure service through config`
+              `Could not load Service ${tool.name}. Please configure service through config`,
             );
           }
         });

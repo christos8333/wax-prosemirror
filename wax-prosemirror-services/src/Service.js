@@ -1,5 +1,4 @@
 class Service {
-  app = {};
   setApp(app) {
     this.app = app;
   }

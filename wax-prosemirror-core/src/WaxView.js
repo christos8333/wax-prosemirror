@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext, useCallback } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -17,37 +17,46 @@ export default props => {
   let view;
   const context = useContext(WaxContext);
 
-  useEffect(() => {
-    view = new EditorView(
-      { mount: editorRef.current },
-      {
-        editable: () => !readonly,
-        state: EditorState.create(options),
-        dispatchTransaction,
-        user,
-        handleDOMEvents: {
-          blur: onBlur
-            ? view => {
-                onBlur(view.state.doc.content);
-              }
-            : null,
-        },
-        transformPasted: slice => {
-          return transformPasted(slice, view);
-        },
-      },
-    );
+  const setEditorRef = useCallback(node => {
+    if (editorRef.current) {
+      // this is where you do cleanup if you have to. the editorRef.current will
+      // still point to the old ref, the old node. so you have some time here to
+      // clean up the unmount if you need to.
+    }
 
-    context.updateView(
-      {
-        main: view,
-      },
-      'main',
-    );
-    if (debug) applyDevTools(view);
-    if (autoFocus) view.focus();
+    if (node) {
+      view = new EditorView(
+        { mount: node },
+        {
+          editable: () => !readonly,
+          state: EditorState.create(options),
+          dispatchTransaction,
+          user,
+          handleDOMEvents: {
+            blur: onBlur
+              ? view => {
+                  onBlur(view.state.doc.content);
+                }
+              : null,
+          },
+          transformPasted: slice => {
+            return transformPasted(slice, view);
+          },
+        },
+      );
 
-    return () => view.destroy();
+      context.updateView(
+        {
+          main: view,
+        },
+        'main',
+      );
+      if (debug) applyDevTools(view);
+      if (autoFocus) view.focus();
+
+      return () => view.destroy();
+    }
+    editorRef.current = node;
   }, []);
 
   const dispatchTransaction = transaction => {
@@ -59,7 +68,7 @@ export default props => {
     const state = view.state.apply(tr);
     view.updateState(state);
 
-    /*when a transaction comes from a view other than
+    /* when a transaction comes from a view other than
       main don't keep updating the view ,as this is
       the central point of each transaction
       */
@@ -75,7 +84,7 @@ export default props => {
     props.onChange(state.doc.content);
   };
 
-  const editor = <div ref={editorRef} />;
+  const editor = <div ref={setEditorRef} />;
   return props.children({
     editor,
   });

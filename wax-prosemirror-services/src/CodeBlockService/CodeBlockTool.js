@@ -1,20 +1,27 @@
 import Tools from '../lib/Tools';
 import { injectable } from 'inversify';
 import { icons } from 'wax-prosemirror-components';
-import { wrapIn } from 'prosemirror-commands';
+import { Commands } from 'wax-prosemirror-utilities';
 
 @injectable()
 class CodeBlockTool extends Tools {
   title = 'Insert Code Block';
-  content = icons.footnote;
+  content = icons.code_block;
 
   get run() {
     return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.codeblock)(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.code_block)(
+        state,
+        dispatch,
+      );
     };
   }
 
-  get enable() {}
+  get enable() {
+    return state => {
+      return Commands.setBlockType(state.config.schema.nodes.code_block)(state);
+    };
+  }
 }
 
 export default CodeBlockTool;

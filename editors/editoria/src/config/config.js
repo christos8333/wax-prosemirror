@@ -46,8 +46,8 @@ export default {
         'Notes',
         'Lists',
         'Images',
-        'Tables',
         'CodeBlock',
+        'Tables',
       ],
     },
     {

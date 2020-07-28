@@ -1,23 +1,25 @@
-import Service from "../Service";
-import Rules from "./Rules";
+import Service from '../Service';
+import Rules from './Rules';
 
 export default class RulesService extends Service {
-  name = "RulesService";
+  name = 'RulesService';
 
   boot() {
     const configRules = this.config;
-    const rules = this.container.get("Rules");
+    const rules = this.container.get('Rules');
     rules.addRule(configRules);
     rules.createRules();
   }
 
   register() {
-    const PmPlugins = this.app.PmPlugins;
+    const { PmPlugins } = this.app;
 
     this.container
-      .bind("Rules")
+      .bind('Rules')
       .toDynamicValue(() => {
-        const { schema: { schema } } = this.app;
+        const {
+          schema: { schema },
+        } = this.app;
 
         return new Rules(PmPlugins, schema);
       })

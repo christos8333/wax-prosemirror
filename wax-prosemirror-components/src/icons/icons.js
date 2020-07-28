@@ -1,5 +1,5 @@
-import React from 'react'
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import React from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import {
   faBold,
   faItalic,
@@ -22,9 +22,9 @@ import {
   faAngleUp,
   faStickyNote,
   faVial,
-  // faWheelchair,
+  faFileCode,
   faEllipsisH,
-} from '@fortawesome/free-solid-svg-icons'
+} from '@fortawesome/free-solid-svg-icons';
 
 export default {
   em: <FontAwesomeIcon icon={faItalic} />,
@@ -40,7 +40,7 @@ export default {
   paragraph: <FontAwesomeIcon icon={faParagraph} />,
   heading: <FontAwesomeIcon icon={faHeading} />,
   blockquote: <FontAwesomeIcon icon={faQuoteLeft} />,
-  code_block: <FontAwesomeIcon icon={faCode} />,
+  code_block: <FontAwesomeIcon icon={faFileCode} />,
   ordered_list: <FontAwesomeIcon icon={faListOl} />,
   bullet_list: <FontAwesomeIcon icon={faListUl} />,
   image: <FontAwesomeIcon icon={faImage} />,
@@ -71,4 +71,4 @@ export default {
       </svg>
     </span>
   ),
-}
+};

@@ -1,20 +1,20 @@
-import React from "react";
-import { v4 as uuidv4 } from "uuid";
-import { isEmpty } from "lodash";
-import { injectable, inject } from "inversify";
-import { Button } from "wax-prosemirror-components";
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { isEmpty } from 'lodash';
+import { injectable, inject } from 'inversify';
+import { Button } from 'wax-prosemirror-components';
 
 @injectable()
-export default class Tools {
-  title = "title";
-  content = "content";
+class Tools {
+  title = 'title';
+  content = 'content';
   _isDisplayed = true;
   _isHiddenInToolGroup = false;
   onlyOnMain = false;
   config = {};
   pmplugins = {};
 
-  constructor(@inject("Config") config, @inject("PmPlugins") pmplugins) {
+  constructor(@inject('Config') config, @inject('PmPlugins') pmplugins) {
     this.config = config;
     this.pmplugins = pmplugins;
   }
@@ -43,7 +43,7 @@ export default class Tools {
       run: this.run,
       enable: this.enable,
       select: this.select,
-      onlyOnMain: this.onlyOnMain
+      onlyOnMain: this.onlyOnMain,
     };
   }
 
@@ -79,3 +79,4 @@ export default class Tools {
     return this._isHiddenInToolGroup;
   }
 }
+export default Tools;

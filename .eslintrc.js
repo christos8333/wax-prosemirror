@@ -8,6 +8,15 @@ const { eslint } = require('@coko/lint');
  *
  */
 
+eslint.parser = 'babel-eslint';
+
+eslint.parserOptions = {
+  ecmaVersion: 6,
+  ecmaFeatures: {
+    experimentalObjectRestSpread: true,
+  },
+};
+
 eslint.rules = {
   'sort-keys': 'off',
   'import/no-extraneous-dependencies': [
@@ -17,10 +26,13 @@ eslint.rules = {
     },
   ],
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+  'class-methods-use-this': [1, { exceptMethods: ['run', 'enable'] }],
+
   'react/prop-types': [
     2,
     { ignore: ['children', 'className', 'onClick', 'theme'] },
   ],
+  'import/no-named-as-default': 0,
 };
 
 module.exports = eslint;

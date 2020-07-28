@@ -1,9 +1,9 @@
-import { injectable, multiInject } from "inversify";
+import { injectable, multiInject } from 'inversify';
 
 @injectable()
-export default class MenuCollection {
+class MenuCollection {
   menus = [];
-  constructor(@multiInject("Menu") menus) {
+  constructor(@multiInject('Menu') menus) {
     this.menus = menus;
   }
 
@@ -11,3 +11,5 @@ export default class MenuCollection {
     return this.menus.find(menu => menu.name === name);
   }
 }
+
+export default MenuCollection;

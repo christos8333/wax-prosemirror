@@ -3,7 +3,7 @@ const codeBlock = {
   group: 'block',
   code: true,
   defining: true,
-  marks: '',
+  marks: 'comment',
   attrs: { params: { default: '' } },
   parseDOM: [
     {

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { last } from 'lodash';
 import styled from 'styled-components';
@@ -23,6 +23,12 @@ export default ({ comment, activeView, user, active }) => {
     attrs: { conversation },
   } = comment;
   const commentMark = state.schema.marks.comment;
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (commentInput.current !== null) commentInput.current.focus();
+    }, 500);
+  }, [active]);
 
   const handleKeyDown = event => {
     if (event.key === 'Enter' || event.which === 13) {
@@ -116,7 +122,6 @@ export default ({ comment, activeView, user, active }) => {
           onClick={event => {
             event.stopPropagation();
           }}
-          autoFocus
           value={commentInputValue}
           disabled={!active}
         />

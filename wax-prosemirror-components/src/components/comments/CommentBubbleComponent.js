@@ -26,6 +26,7 @@ const CommentBubbleComponent = ({
   const createComment = event => {
     event.preventDefault();
     Commands.createComment(state, dispatch, group, activeViewId);
+    activeView.focus();
   };
 
   const isSelectionComment = () => {

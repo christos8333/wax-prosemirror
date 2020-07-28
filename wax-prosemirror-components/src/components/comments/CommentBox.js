@@ -65,13 +65,20 @@ export default ({ comment, top, dataBox }) => {
       return false;
     }
 
-    const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(view[viewId].state, comment);
+    const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
+      view[viewId].state,
+      comment,
+    );
 
     const maxPos = maxBy(allCommentsWithSameId, 'pos');
     maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
 
     view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos))),
+      view[viewId].state.tr.setSelection(
+        new TextSelection(
+          view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
+        ),
+      ),
     );
 
     view[viewId].focus();
@@ -81,8 +88,19 @@ export default ({ comment, top, dataBox }) => {
     <>
       <Transition in={animate} timeout={1000}>
         {state => (
-          <CommentBoxStyled top={top} state={state} data-box={dataBox} active={active} onClick={setCommentActive}>
-            <Comment comment={comment} active={active} activeView={activeView} user={user} />
+          <CommentBoxStyled
+            top={top}
+            state={state}
+            data-box={dataBox}
+            active={active}
+            onClick={setCommentActive}
+          >
+            <Comment
+              comment={comment}
+              active={active}
+              activeView={activeView}
+              user={user}
+            />
           </CommentBoxStyled>
         )}
       </Transition>

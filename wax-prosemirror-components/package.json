@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-components",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Wax prosemirror UI components",
   "license": "MIT",
   "main": "dist/index.js",
@@ -21,8 +21,8 @@
     "react-transition-group": "^4.3.0",
     "styled-components": "^4.2.0",
     "uuid": "^7.0.3",
-    "wax-prosemirror-core": "^0.0.11",
-    "wax-prosemirror-utilities": "^0.0.11"
+    "wax-prosemirror-core": "^0.0.12",
+    "wax-prosemirror-utilities": "^0.0.12"
   },
   "peerDependencies": {
     "react": "^16.13.1",

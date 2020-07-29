@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-core",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Wax prosemirror core",
   "license": "MIT",
   "main": "dist/index.js",
@@ -28,8 +28,8 @@
     "reflect-metadata": "^0.1.13",
     "styled-components": "^4.2.0",
     "uuid": "^7.0.3",
-    "wax-prosemirror-services": "^0.0.12",
-    "wax-prosemirror-utilities": "^0.0.12"
+    "wax-prosemirror-services": "^0.0.13",
+    "wax-prosemirror-utilities": "^0.0.13"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

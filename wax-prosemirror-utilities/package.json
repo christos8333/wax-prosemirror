@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-utilities",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Wax prosemirror utilities",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,8 +10,8 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "uuid": "^7.0.3",
     "prosemirror-commands": "^1.1.3",
-    "prosemirror-utils": "^0.9.6"
+    "prosemirror-utils": "^0.9.6",
+    "uuid": "^7.0.3"
   }
 }

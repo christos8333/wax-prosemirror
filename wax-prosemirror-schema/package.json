@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-schema",
   "author": "Collaborative Knowledge Foundation",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Wax prosemirror schema",
   "license": "MIT",
   "main": "dist/index.js",

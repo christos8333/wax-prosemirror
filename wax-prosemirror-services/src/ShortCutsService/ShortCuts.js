@@ -1,44 +1,42 @@
-import { injectable } from "inversify";
-import { keymap } from "prosemirror-keymap";
-import { undoInputRule } from "prosemirror-inputrules";
-import { undo, redo } from "prosemirror-history";
+import { injectable } from 'inversify';
+import { keymap } from 'prosemirror-keymap';
+import { undo, redo } from 'prosemirror-history';
 
 import {
   wrapInList,
   splitListItem,
   liftListItem,
-  sinkListItem
-} from "prosemirror-schema-list";
+  sinkListItem,
+} from 'prosemirror-schema-list';
 
 import {
   baseKeymap,
-  setBlockType,
   chainCommands,
   exitCode,
   selectParentNode,
   joinBackward,
   selectNodeBackward,
-  deleteSelection
-} from "prosemirror-commands";
+  deleteSelection,
+} from 'prosemirror-commands';
 
 const backSpace = chainCommands(
   deleteSelection,
   joinBackward,
-  selectNodeBackward
+  selectNodeBackward,
 );
 
 const backSpaceShortCut = (state, dispatch, view) =>
   backSpace(
     state,
-    tr => dispatch(tr.setMeta("inputType", "deleteContentBackward")),
-    view
+    tr => dispatch(tr.setMeta('inputType', 'deleteContentBackward')),
+    view,
   );
 
 const undoShortCut = (state, dispatch, view) =>
-  undo(state, tr => dispatch(tr.setMeta("inputType", "historyUndo")), view);
+  undo(state, tr => dispatch(tr.setMeta('inputType', 'historyUndo')), view);
 
 const redoShortCut = (state, dispatch, view) =>
-  redo(state, tr => dispatch(tr.setMeta("inputType", "historyRedo")), view);
+  redo(state, tr => dispatch(tr.setMeta('inputType', 'historyRedo')), view);
 
 @injectable()
 class ShortCuts {
@@ -64,7 +62,7 @@ class ShortCuts {
 
   createShortCuts() {
     const shortCuts = keymap(this.createKeyBindings());
-    this.PmPlugins.add("shortcuts", shortCuts);
+    this.PmPlugins.add('shortcuts', shortCuts);
   }
 
   addShortCut(shortcut) {
@@ -85,20 +83,20 @@ class ShortCuts {
 
   getKeys() {
     return {
-      "Mod-z": undoShortCut,
-      "Shift-Mod-z": redoShortCut,
+      'Mod-z': undoShortCut,
+      'Shift-Mod-z': redoShortCut,
       Backspace: backSpaceShortCut,
-      "Mod-y": redoShortCut,
+      'Mod-y': redoShortCut,
       Escape: selectParentNode,
-      "Mod-Enter": chainCommands(exitCode, this.insertBreak),
-      "Shift-Enter": chainCommands(exitCode, this.insertBreak),
-      "Ctrl-Enter": chainCommands(exitCode, this.insertBreak),
-      "Mod-_": this.insertRule,
-      "Mod-[": liftListItem(this.schema.nodes.list_item),
-      "Mod-]": sinkListItem(this.schema.nodes.list_item),
+      'Mod-Enter': chainCommands(exitCode, this.insertBreak),
+      'Shift-Enter': chainCommands(exitCode, this.insertBreak),
+      'Ctrl-Enter': chainCommands(exitCode, this.insertBreak),
+      'Mod-_': this.insertRule,
+      'Mod-[': liftListItem(this.schema.nodes.list_item),
+      'Mod-]': sinkListItem(this.schema.nodes.list_item),
       Enter: splitListItem(this.schema.nodes.list_item),
-      "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist),
-      "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
+      'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
+      'Shift-Ctrl-9': wrapInList(this.schema.nodes.orderedlist),
     };
   }
 }

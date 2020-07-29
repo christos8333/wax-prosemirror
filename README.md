@@ -6,9 +6,27 @@
 | :------------------------------------------------------------------------------------------------------------------------------------------: |
 
 
-This application is being developed by the [Coko Foundation](https://coko.foundation/), for the [University of California Press](http://www.ucpress.edu/) as part of the [Editoria](https://gitlab.coko.foundation/editoria/editoria/) application.
+This library is being developed by the [Coko Foundation](https://coko.foundation/).
+Wax Editor is build on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
+## Roadmap
+
+Wax-prosemirror is under active development. The current roadmap is as follows:
+
+### September 2020
+Alpha version, including comments and track changes. See the rest of this file for a full list of current functionality.
+
+### November 2020
+Beta version, including some new features:
+* Find and replace
+* Spellchecker
+* Special characters
+* Transform cases
+* Word counter
+* Custom tags
+
+### January 2020
+V1.0, freeze new feature development, focus on stability, testing and bug fixes
 
 ## Get up and running
 

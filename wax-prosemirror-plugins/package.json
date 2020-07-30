@@ -16,6 +16,8 @@
     "wax-prosemirror-components": "^0.0.13",
     "wax-prosemirror-core": "^0.0.13",
     "wax-prosemirror-layouts": "^0.0.13",
-    "wax-prosemirror-utilities": "^0.0.13"
+    "wax-prosemirror-utilities": "^0.0.13",
+    "highlight.js": "^10.1.1",
+    "prosemirror-highlightjs": "^0.2.0"
   }
 }

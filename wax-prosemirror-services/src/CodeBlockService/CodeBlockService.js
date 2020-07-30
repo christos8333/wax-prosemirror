@@ -1,5 +1,4 @@
-import hljs from 'highlight.js/lib/core';
-import { highlightPlugin } from 'prosemirror-highlightjs';
+import { highlightPlugin } from 'wax-prosemirror-plugins';
 import 'highlight.js/styles/github.css';
 
 import { codeBlockNode } from 'wax-prosemirror-schema';
@@ -8,7 +7,7 @@ import CodeBlockTool from './CodeBlockTool';
 
 export default class CodeBlockService extends Service {
   boot() {
-    this.app.PmPlugins.add('highlightPlugin', highlightPlugin(hljs));
+    this.app.PmPlugins.add('highlightPlugin', highlightPlugin());
   }
 
   register() {

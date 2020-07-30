@@ -6,7 +6,7 @@
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
 
 
-This application is being developed by the [Coko Foundation](https://coko.foundation/), for the [University of California Press](http://www.ucpress.edu/) as part of the [Editoria](https://gitlab.coko.foundation/editoria/editoria/) application.
+This library is being developed by the [Coko Foundation](https://coko.foundation/).
 
 Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 

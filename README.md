@@ -25,7 +25,7 @@ Beta version, including some new features:
 * Word counter
 * Custom tags
 
-### January 2020
+### January 2021
 V1.0, freeze new feature development, focus on stability, testing and bug fixes
 
 ## Get up and running

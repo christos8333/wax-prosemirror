@@ -1,17 +1,18 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { Commands } from "wax-prosemirror-utilities";
+import { injectable } from 'inversify';
+import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class Heading1 extends Tools {
-  title = "Change to heading level 1";
-  content = "Heading 1";
+class Heading1 extends Tools {
+  title = 'Change to heading level 1';
+  content = 'Heading 1';
 
   get run() {
     return (state, dispatch) => {
       Commands.setBlockType(state.config.schema.nodes.heading, { level: 1 })(
         state,
-        dispatch
+        dispatch,
       );
     };
   }
@@ -19,7 +20,7 @@ export default class Heading1 extends Tools {
   get enable() {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.heading, {
-        level: 1
+        level: 1,
       })(state);
     };
   }

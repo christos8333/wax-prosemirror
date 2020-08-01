@@ -1,18 +1,18 @@
-import Service from "../../Service";
-import { authorNode } from "wax-prosemirror-schema";
-import Author from "./Author";
+import { authorNode } from 'wax-prosemirror-schema';
+import Service from '../../Service';
+import Author from './Author';
 
 class AuthorService extends Service {
-  boot() {}
+  // boot() {}
 
   register() {
-    this.container.bind("Author").to(Author);
-    const createNode = this.container.get("CreateNode");
+    this.container.bind('Author').to(Author);
+    const createNode = this.container.get('CreateNode');
     createNode(
       {
-        author: authorNode
+        author: authorNode,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

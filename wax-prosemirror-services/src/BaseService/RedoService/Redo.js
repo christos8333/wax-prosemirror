@@ -1,18 +1,18 @@
-import { redo } from "prosemirror-history";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { redo } from 'prosemirror-history';
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
 
+export default
 @injectable()
-export default class Redo extends Tools {
-  title = "Redo last undone change";
+class Redo extends Tools {
+  title = 'Redo last undone change';
   content = icons.redo;
   onlyOnMain = true;
 
   get run() {
     return (state, dispatch) => {
-      const { tr } = state;
-      redo(state, tr => dispatch(tr.setMeta("inputType", "historyRedo")));
+      redo(state, tr => dispatch(tr.setMeta('inputType', 'historyRedo')));
     };
   }
 

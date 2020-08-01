@@ -26,13 +26,13 @@ eslint.rules = {
     },
   ],
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-  'class-methods-use-this': [1, { exceptMethods: ['run', 'enable'] }],
+  'class-methods-use-this': [1, { exceptMethods: ['run', 'enable', 'active'] }],
 
   'react/prop-types': [
     2,
     { ignore: ['children', 'className', 'onClick', 'theme'] },
   ],
-  'import/no-named-as-default': 0,
+  // 'import/no-named-as-default': 0,
 };
 
 module.exports = eslint;

@@ -1,7 +1,7 @@
-import Service from '../Service';
 import { commentMark } from 'wax-prosemirror-schema';
 import { RightArea, CommentBubbleComponent } from 'wax-prosemirror-components';
 import { CommentPlugin } from 'wax-prosemirror-plugins';
+import Service from '../Service';
 
 const PLUGIN_KEY = 'commentPlugin';
 

@@ -6,11 +6,12 @@ import Tools from '../../lib/Tools';
 export default
 @injectable()
 class EnableTrackChange extends Tools {
-  title = 'Select Options';
-  content = 'table';
+  title = 'Toggle Track Changes';
+  content = 'track changes';
 
   get run() {
-    return () => {
+    return state => {
+      console.log(this.config);
       return true;
     };
   }
@@ -27,6 +28,17 @@ class EnableTrackChange extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    return this._isDisplayed ? <button type="button"> Track </button> : null;
+    return this._isDisplayed ? (
+      <button
+        type="button"
+        onMouseDown={e => {
+          e.preventDefault();
+          this.run(view.state, view.dispatch);
+        }}
+      >
+        {' '}
+        Track{' '}
+      </button>
+    ) : null;
   }
 }

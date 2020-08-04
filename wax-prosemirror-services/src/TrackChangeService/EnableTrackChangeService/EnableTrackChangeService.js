@@ -2,10 +2,13 @@ import Service from '../../Service';
 import EnableTrackChange from './EnableTrackChange';
 
 class EnableTrackChangeService extends Service {
+  name = 'EnableTrackChangeService';
   boot() {}
 
   register() {
-    this.container.bind('EnableTrackChange').to(EnableTrackChange);
+    this.container.bind('EnableTrackChange').toFactory(() => {
+      return new EnableTrackChange(this.config);
+    });
   }
 }
 

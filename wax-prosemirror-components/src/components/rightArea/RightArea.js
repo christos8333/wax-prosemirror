@@ -1,5 +1,11 @@
 import { Mark } from 'prosemirror-model';
-import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 import { each, uniqBy, sortBy } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -24,11 +30,15 @@ export default ({ area }) => {
     let top = 0;
     const allCommentsTop = [];
 
-    const nodesMarksToIterrate = marksNodes[area] === 'main' ? sortBy(marksNodes[area], ['pos']) : marksNodes[area];
+    const nodesMarksToIterrate =
+      marksNodes[area] === 'main'
+        ? sortBy(marksNodes[area], ['pos'])
+        : marksNodes[area];
 
     each(nodesMarksToIterrate, (markNode, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
-      const id = markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
+      const id =
+        markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
 
       const activeComment = commentPlugin.getState(activeView.state).comment;
 
@@ -38,12 +48,19 @@ export default ({ area }) => {
       // annotation top
       if (area === 'main') {
         markNodeEl = document.querySelector(`[data-id="${id}"]`);
-        if (markNodeEl) annotationTop = markNodeEl.getBoundingClientRect().top - WaxSurface.top;
+        if (markNodeEl)
+          annotationTop =
+            markNodeEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
         const panelWrapper = document.getElementsByClassName('panelWrapper');
-        const panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
-        markNodeEl = document.querySelector('#notes-container').querySelector(`[data-id="${id}"]`);
-        if (markNodeEl) annotationTop = markNodeEl.getBoundingClientRect().top - panelWrapperHeight - 50;
+        const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
+          .height;
+        markNodeEl = document
+          .querySelector('#notes-container')
+          .querySelector(`[data-id="${id}"]`);
+        if (markNodeEl)
+          annotationTop =
+            markNodeEl.getBoundingClientRect().top - panelWrapperHeight - 50;
       }
 
       // get height of this markNode box
@@ -108,11 +125,20 @@ export default ({ area }) => {
 
   useEffect(() => {
     setMarksNodes(updateMarks(view));
-    setPosition(setTops());
+    setTimeout(() => {
+      setPosition(setTops());
+    });
   }, [JSON.stringify(updateMarks(view)), JSON.stringify(setTops())]);
 
   const CommentTrackComponent = useMemo(
-    () => <BoxList commentsTracks={marksNodes[area] || []} area={area} view={main} position={position} />,
+    () => (
+      <BoxList
+        commentsTracks={marksNodes[area] || []}
+        area={area}
+        view={main}
+        position={position}
+      />
+    ),
     [marksNodes[area] || [], position],
   );
   return <>{CommentTrackComponent}</>;
@@ -124,7 +150,9 @@ const updateMarks = view => {
     const allInlineNodes = [];
 
     Object.keys(view).forEach(eachView => {
-      allInlineNodes.push(...DocumentHelpers.findInlineNodes(view[eachView].state.doc));
+      allInlineNodes.push(
+        ...DocumentHelpers.findInlineNodes(view[eachView].state.doc),
+      );
     });
 
     const allBlockNodes = DocumentHelpers.findBlockNodes(view.main.state.doc);
@@ -158,7 +186,9 @@ const updateMarks = view => {
     const groupedMarkNodes = {};
 
     nodesAndMarks.forEach(markNode => {
-      const markNodeAttrs = markNode.attrs ? markNode.attrs : markNode.node.attrs;
+      const markNodeAttrs = markNode.attrs
+        ? markNode.attrs
+        : markNode.node.attrs;
 
       if (!groupedMarkNodes[markNodeAttrs.group]) {
         groupedMarkNodes[markNodeAttrs.group] = [markNode];

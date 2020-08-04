@@ -5,6 +5,7 @@ import { EditoriaLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
 
 import { config } from './config';
+import { demo } from './demo';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 
 const StyledWax = styled(Wax)`
   .wax-surface-scroll {
-    height: ${props => (props.debug ? '50vh' : '100%')};
+    /* height: ${props => (props.debug ? '50vh' : '100%')}; */
   }
 `;
 
@@ -47,8 +48,10 @@ const Editoria = () => (
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the second paragraph</p><p class="author">This is an author</p>`}
+      value={demo}
+      // value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the second paragraph</p><p class="author">This is an author</p>`}
       layout={EditoriaLayout}
+      // debug
       // onChange={source => console.log(source)}
       user={user}
     />

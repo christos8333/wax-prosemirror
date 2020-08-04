@@ -41,7 +41,6 @@ export default ({ comment, top, dataBox }) => {
     },
     app,
     activeView,
-    activeViewId,
   } = useContext(WaxContext);
 
   const [animate, setAnimate] = useState(false);

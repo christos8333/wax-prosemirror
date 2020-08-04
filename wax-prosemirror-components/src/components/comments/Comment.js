@@ -26,7 +26,8 @@ export default ({ comment, activeView, user, active }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (commentInput.current !== null) commentInput.current.focus();
+      if (commentInput.current !== null && conversation.length === 0)
+        commentInput.current.focus();
     }, 500);
   }, [active]);
 
@@ -84,6 +85,7 @@ export default ({ comment, activeView, user, active }) => {
     }
 
     if (conversation.length === 0 && value === '') {
+      console.log('here?');
       resolveComment();
     }
   };

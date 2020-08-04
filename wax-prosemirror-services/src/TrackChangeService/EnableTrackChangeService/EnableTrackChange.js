@@ -1,6 +1,8 @@
 import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
+import { TrackChangeEnable } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
 export default
@@ -11,7 +13,7 @@ class EnableTrackChange extends Tools {
 
   get run() {
     return state => {
-      console.log(this.config);
+      this.config.enabled = !this.config.enabled;
       return true;
     };
   }
@@ -22,23 +24,15 @@ class EnableTrackChange extends Tools {
     };
   }
 
-  select(state) {
-    return true;
-  }
-
   renderTool(view) {
     if (isEmpty(view)) return null;
     return this._isDisplayed ? (
-      <button
-        type="button"
-        onMouseDown={e => {
-          e.preventDefault();
-          this.run(view.state, view.dispatch);
-        }}
-      >
-        {' '}
-        Track{' '}
-      </button>
+      <TrackChangeEnable
+        key={uuidv4()}
+        view={view}
+        item={this.toJSON()}
+        enabled={this.config.enabled}
+      />
     ) : null;
   }
 }

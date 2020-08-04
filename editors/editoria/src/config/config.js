@@ -60,7 +60,7 @@ export default {
 
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
-  EnableTrackChangeService: { enabled: true },
+  EnableTrackChangeService: { enabled: false },
 
   PmPlugins: [
     columnResizing(),

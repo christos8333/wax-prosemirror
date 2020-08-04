@@ -100,8 +100,7 @@ const Wax = props => {
     1000,
     { maxWait: 5000 },
   );
-  const TrackChange = application.config.get('config.EnableTrackChangeService')
-    .enabled;
+  const TrackChange = application.config.get('config.EnableTrackChangeService');
 
   const Layout = application.container.get('Layout');
   if (layout) Layout.setLayout(layout);

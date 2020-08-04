@@ -6,7 +6,7 @@ class EnableTrackChangeService extends Service {
   boot() {}
 
   register() {
-    this.container.bind('EnableTrackChange').toFactory(() => {
+    this.container.bind('EnableTrackChange').toDynamicValue(() => {
       return new EnableTrackChange(this.config);
     });
   }

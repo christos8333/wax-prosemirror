@@ -23,6 +23,7 @@ import {
   CommentsService,
   CodeBlockService,
   CodeBlockToolGroupService,
+  TrackChangeToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -48,6 +49,7 @@ export default {
         'Images',
         'CodeBlock',
         'Tables',
+        'TrackChange',
       ],
     },
     {
@@ -92,5 +94,6 @@ export default {
     new ListToolGroupService(),
     new CodeBlockService(),
     new CodeBlockToolGroupService(),
+    new TrackChangeToolGroupService(),
   ],
 };

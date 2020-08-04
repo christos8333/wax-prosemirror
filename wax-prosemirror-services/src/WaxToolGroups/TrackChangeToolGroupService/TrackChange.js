@@ -4,9 +4,9 @@ import ToolGroup from '../../lib/ToolGroup';
 @injectable()
 class TrackChange extends ToolGroup {
   tools = [];
-  constructor() {
+  constructor(@inject('EnableTrackChange') enableTrackChange) {
     super();
-    this.tools = [];
+    this.tools = [enableTrackChange];
   }
 }
 

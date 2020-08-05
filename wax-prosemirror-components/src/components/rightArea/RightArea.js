@@ -21,6 +21,7 @@ export default ({ area }) => {
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const [marksNodes, setMarksNodes] = useState([]);
   const [position, setPosition] = useState();
+  const [isFirstRun, setFirstRun] = useState(true);
 
   const setTops = useCallback(() => {
     const result = [];
@@ -125,9 +126,14 @@ export default ({ area }) => {
 
   useEffect(() => {
     setMarksNodes(updateMarks(view));
-    setTimeout(() => {
+    if (isFirstRun) {
+      setTimeout(() => {
+        setPosition(setTops());
+        setFirstRun(false);
+      }, 400);
+    } else {
       setPosition(setTops());
-    });
+    }
   }, [JSON.stringify(updateMarks(view)), JSON.stringify(setTops())]);
 
   const CommentTrackComponent = useMemo(

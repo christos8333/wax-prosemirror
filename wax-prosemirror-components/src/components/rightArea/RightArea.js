@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -124,7 +125,7 @@ export default ({ area }) => {
     return allCommentsTop;
   });
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     setMarksNodes(updateMarks(view));
     if (isFirstRun) {
       setTimeout(() => {
@@ -134,7 +135,7 @@ export default ({ area }) => {
     } else {
       setPosition(setTops());
     }
-  }, [JSON.stringify(updateMarks(view)), JSON.stringify(setTops())]);
+  }, [updateMarks(view), setTops()]);
 
   const CommentTrackComponent = useMemo(
     () => (

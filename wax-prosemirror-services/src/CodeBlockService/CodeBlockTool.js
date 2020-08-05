@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { icons } from 'wax-prosemirror-components';
-import { Commands } from 'wax-prosemirror-utilities';
+import { setBlockType } from 'prosemirror-commands';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -10,16 +10,13 @@ class CodeBlockTool extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.code_block)(
-        state,
-        dispatch,
-      );
+      setBlockType(state.config.schema.nodes.code_block)(state, dispatch);
     };
   }
 
   get enable() {
     return state => {
-      return Commands.setBlockType(state.config.schema.nodes.code_block)(state);
+      return setBlockType(state.config.schema.nodes.code_block)(state);
     };
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 
@@ -32,77 +32,84 @@ const CommentBoxStyled = styled.div`
 `;
 
 export default ({ comment, top, dataBox }) => {
-  const {
-    view,
-    view: {
-      main: {
-        props: { user },
-      },
-    },
-    app,
-    activeView,
-  } = useContext(WaxContext);
-
+  console.log('rerender');
   const [animate, setAnimate] = useState(false);
   const {
     attrs: { id },
   } = comment;
-  const commentPlugin = app.PmPlugins.get('commentPlugin');
-  const activeComment = commentPlugin.getState(activeView.state).comment;
 
-  let active = false;
-  if (activeComment && id === activeComment.attrs.id) active = true;
   useEffect(() => {
     setAnimate(true);
   }, []);
 
-  const setCommentActive = () => {
-    const viewId = comment.attrs.viewid;
+  const MemorizedComponent = memo(() => {
+    const {
+      view,
+      view: {
+        main: {
+          props: { user },
+        },
+      },
+      app,
+      activeView,
+    } = useContext(WaxContext);
+    let active = false;
 
-    if (active) {
-      view[viewId].focus();
-      return false;
-    }
+    const commentPlugin = app.PmPlugins.get('commentPlugin');
+    const activeComment = commentPlugin.getState(activeView.state).comment;
 
-    const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-      view[viewId].state,
-      comment,
-    );
+    if (activeComment && id === activeComment.attrs.id) active = true;
 
-    const maxPos = maxBy(allCommentsWithSameId, 'pos');
-    maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
+    const setCommentActive = () => {
+      const viewId = comment.attrs.viewid;
 
-    view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(
-        new TextSelection(
-          view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
+      if (active) {
+        view[viewId].focus();
+        return false;
+      }
+
+      const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
+        view[viewId].state,
+        comment,
+      );
+
+      const maxPos = maxBy(allCommentsWithSameId, 'pos');
+      maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
+
+      view[viewId].dispatch(
+        view[viewId].state.tr.setSelection(
+          new TextSelection(
+            view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
+          ),
         ),
-      ),
-    );
+      );
 
-    view[viewId].focus();
-  };
+      view[viewId].focus();
+    };
 
-  return (
-    <>
-      <Transition in={animate} timeout={1000}>
-        {state => (
-          <CommentBoxStyled
-            top={top}
-            state={state}
-            data-box={dataBox}
-            active={active}
-            onClick={setCommentActive}
-          >
-            <Comment
-              comment={comment}
+    return (
+      <>
+        <Transition in={animate} timeout={1000}>
+          {state => (
+            <CommentBoxStyled
+              top={top}
+              state={state}
+              data-box={dataBox}
               active={active}
-              activeView={activeView}
-              user={user}
-            />
-          </CommentBoxStyled>
-        )}
-      </Transition>
-    </>
-  );
+              onClick={setCommentActive}
+            >
+              <Comment
+                comment={comment}
+                active={active}
+                activeView={activeView}
+                user={user}
+              />
+            </CommentBoxStyled>
+          )}
+        </Transition>
+      </>
+    );
+  });
+
+  return <MemorizedComponent />;
 };

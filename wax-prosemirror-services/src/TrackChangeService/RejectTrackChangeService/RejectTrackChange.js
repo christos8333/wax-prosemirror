@@ -1,4 +1,9 @@
-import { Mapping, RemoveMarkStep, ReplaceStep } from 'prosemirror-transform';
+import {
+  Mapping,
+  RemoveMarkStep,
+  ReplaceStep,
+  AddMarkStep,
+} from 'prosemirror-transform';
 import { Slice } from 'prosemirror-model';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
@@ -44,6 +49,39 @@ class RejectTrackChange extends Tools {
           );
           tr.step(deletionStep);
           map.appendMap(deletionStep.getMap());
+        } else if (
+          node.marks &&
+          node.marks.find(mark => mark.type.name === 'format_change')
+        ) {
+          const formatChangeMark = node.marks.find(
+            mark => mark.type.name === 'format_change',
+          );
+          formatChangeMark.attrs.before.forEach(oldMark => {
+            tr.step(
+              new AddMarkStep(
+                map.map(Math.max(pos, from)),
+                map.map(Math.min(pos + node.nodeSize, to)),
+                state.schema.marks[oldMark].create(),
+              ),
+            );
+          });
+          formatChangeMark.attrs.after.forEach(newMark => {
+            tr.step(
+              new RemoveMarkStep(
+                map.map(Math.max(pos, from)),
+                map.map(Math.min(pos + node.nodeSize, to)),
+                node.marks.find(mark => mark.type.name === newMark),
+              ),
+            );
+          });
+
+          tr.step(
+            new RemoveMarkStep(
+              map.map(Math.max(pos, from)),
+              map.map(Math.min(pos + node.nodeSize, to)),
+              formatChangeMark,
+            ),
+          );
         }
       });
       if (tr.steps.length) dispatch(tr);

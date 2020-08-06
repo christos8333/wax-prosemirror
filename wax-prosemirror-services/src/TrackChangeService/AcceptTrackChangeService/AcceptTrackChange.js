@@ -47,6 +47,20 @@ class AcceptTrackChange extends Tools {
               insertionMark,
             ),
           );
+        } else if (
+          node.marks &&
+          node.marks.find(mark => mark.type.name === 'format_change')
+        ) {
+          const formatChangeMark = node.marks.find(
+            mark => mark.type.name === 'format_change',
+          );
+          tr.step(
+            new RemoveMarkStep(
+              map.map(Math.max(pos, from)),
+              map.map(Math.min(pos + node.nodeSize, to)),
+              formatChangeMark,
+            ),
+          );
         }
       });
       if (tr.steps.length) dispatch(tr);

@@ -18,7 +18,7 @@ class AcceptTrackChange extends Tools {
         tr,
         selection: { from, to },
       } = state;
-
+      tr.setMeta('AcceptReject', true);
       const map = new Mapping();
 
       state.doc.nodesBetween(from, to, (node, pos) => {
@@ -49,8 +49,7 @@ class AcceptTrackChange extends Tools {
           );
         }
       });
-
-      dispatch(tr);
+      if (tr.steps.length) dispatch(tr);
     };
   }
 

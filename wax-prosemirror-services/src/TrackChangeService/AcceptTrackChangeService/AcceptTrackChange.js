@@ -1,3 +1,6 @@
+import { Mapping, RemoveMarkStep } from 'prosemirror-transform';
+import { minBy, maxBy } from 'lodash';
+
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
@@ -10,8 +13,11 @@ class AcceptTrackChange extends Tools {
   get run() {
     return (state, dispatch) => {
       const {
+        tr,
         selection: { from, to },
       } = state;
+
+      const map = new Mapping();
 
       state.doc.nodesBetween(from, to, (node, pos) => {
         if (
@@ -21,15 +27,16 @@ class AcceptTrackChange extends Tools {
           const insertionMark = node.marks.find(
             mark => mark.type.name === 'insertion',
           );
-          dispatch(
-            state.tr.removeMark(
-              insertionMark.pos,
-              insertionMark.pos + node.nodeSize,
-              state.schema.marks.insertion,
+          tr.step(
+            new RemoveMarkStep(
+              map.map(maxBy(pos, from)),
+              map.map(minBy(pos + node.nodeSize, to)),
+              insertionMark,
             ),
           );
         }
       });
+      dispatch(tr);
     };
   }
 

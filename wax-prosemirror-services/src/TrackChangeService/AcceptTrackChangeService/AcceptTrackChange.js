@@ -1,4 +1,6 @@
-import { Mapping, RemoveMarkStep } from 'prosemirror-transform';
+import { Mapping, RemoveMarkStep, ReplaceStep } from 'prosemirror-transform';
+import { Slice } from 'prosemirror-model';
+
 import { minBy, maxBy } from 'lodash';
 
 import { injectable } from 'inversify';
@@ -22,6 +24,17 @@ class AcceptTrackChange extends Tools {
       state.doc.nodesBetween(from, to, (node, pos) => {
         if (
           node.marks &&
+          node.marks.find(mark => mark.type.name === 'deletion')
+        ) {
+          const deletionStep = new ReplaceStep(
+            map.map(Math.max(pos, from)),
+            map.map(Math.min(pos + node.nodeSize, to)),
+            Slice.empty,
+          );
+          tr.step(deletionStep);
+          map.appendMap(deletionStep.getMap());
+        } else if (
+          node.marks &&
           node.marks.find(mark => mark.type.name === 'insertion')
         ) {
           const insertionMark = node.marks.find(
@@ -29,13 +42,14 @@ class AcceptTrackChange extends Tools {
           );
           tr.step(
             new RemoveMarkStep(
-              map.map(maxBy(pos, from)),
-              map.map(minBy(pos + node.nodeSize, to)),
+              map.map(Math.max(pos, from)),
+              map.map(Math.min(pos + node.nodeSize, to)),
               insertionMark,
             ),
           );
         }
       });
+
       dispatch(tr);
     };
   }

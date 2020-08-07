@@ -4,7 +4,7 @@ check: https://github.com/fiduswriter/fiduswriter/blob/develop/fiduswriter/docum
 License included in folder.
 */
 
-import { Selection, TextSelection } from 'prosemirror-state';
+import { TextSelection } from 'prosemirror-state';
 import {
   ReplaceStep,
   ReplaceAroundStep,
@@ -14,7 +14,6 @@ import {
 } from 'prosemirror-transform';
 
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-
 import replaceStep from './helpers/replaceStep';
 import replaceAroundStep from './helpers/replaceAroundStep';
 import addMarkStep from './helpers/addMarkStep';
@@ -40,8 +39,8 @@ const trackedTransaction = (tr, state, user) => {
   const date = Math.floor(Date.now() / 300000);
 
   tr.steps.forEach(originalStep => {
-    const step = originalStep.map(map),
-      doc = newTr.doc;
+    const step = originalStep.map(map);
+    const { doc } = newTr;
     if (!step) {
       return;
     }
@@ -59,6 +58,7 @@ const trackedTransaction = (tr, state, user) => {
       case RemoveMarkStep:
         removeMarkStep(state, tr, step, newTr, map, doc, user, date, group);
         break;
+      default:
     }
   });
 
@@ -90,20 +90,21 @@ const trackedTransaction = (tr, state, user) => {
     } else {
       newTr.setSelection(tr.selection.map(newTr.doc, map));
     }
-  } else {
-    if (
-      state.selection.from - tr.selection.from > 1 &&
-      tr.selection.$head.depth > 1
-    ) {
-      const caretPos = map.map(tr.selection.from - 2, -1);
-      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-    } else {
-      const caretPos = map.map(tr.selection.from, -1);
-      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-      // const slice = map.slice(newTr.selection.from, newTr.selection.to);
-      // map.appendMap(slice);
-    }
   }
+
+  if (
+    state.selection.from - tr.selection.from > 1 &&
+    tr.selection.$head.depth > 1
+  ) {
+    const caretPos = map.map(tr.selection.from - 2, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+  } else {
+    const caretPos = map.map(tr.selection.from, -1);
+    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    // const slice = map.slice(newTr.selection.from, newTr.selection.to);
+    // map.appendMap(slice);
+  }
+
   if (tr.storedMarksSet) {
     newTr.setStoredMarks(tr.storedMarks);
   }

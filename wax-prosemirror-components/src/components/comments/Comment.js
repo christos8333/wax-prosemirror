@@ -85,7 +85,6 @@ export default ({ comment, activeView, user, active }) => {
     }
 
     if (conversation.length === 0 && value === '') {
-      console.log('here?');
       resolveComment();
     }
   };

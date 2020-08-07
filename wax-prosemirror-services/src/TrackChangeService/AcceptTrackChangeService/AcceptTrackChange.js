@@ -1,9 +1,7 @@
 import { Mapping, RemoveMarkStep, ReplaceStep } from 'prosemirror-transform';
 import { Slice } from 'prosemirror-model';
-
-import { minBy, maxBy } from 'lodash';
-
 import { injectable } from 'inversify';
+import removeNode from '../track-changes/helpers/removeNode';
 import Tools from '../../lib/Tools';
 
 export default
@@ -18,10 +16,17 @@ class AcceptTrackChange extends Tools {
         tr,
         selection: { from, to },
       } = state;
+
       tr.setMeta('AcceptReject', true);
       const map = new Mapping();
 
       state.doc.nodesBetween(from, to, (node, pos) => {
+        if (
+          node.attrs.track &&
+          node.attrs.track.find(track => track.type === 'deletion')
+        ) {
+          removeNode(tr, node, pos, map, true);
+        }
         if (
           node.marks &&
           node.marks.find(mark => mark.type.name === 'deletion')

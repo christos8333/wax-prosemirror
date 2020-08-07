@@ -15,8 +15,9 @@ export default ({ node, view }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
+  let noteView;
   useEffect(() => {
-    const noteView = new EditorView(
+    noteView = new EditorView(
       { mount: editorRef.current },
       {
         state: EditorState.create({
@@ -24,38 +25,7 @@ export default ({ node, view }) => {
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
         }),
         // This is the magic part
-        dispatchTransaction: tr => {
-          let { state, transactions } = noteView.state.applyTransaction(tr);
-          noteView.updateState(state);
-
-          const allNotes = DocumentHelpers.findChildrenByType(
-            view.state.doc,
-            view.state.schema.nodes.footnote,
-            true,
-          );
-
-          const noteFound = filter(allNotes, {
-            node: { attrs: { id: noteId } },
-          });
-
-          // TODO Remove timeout and use state to check if noteView has changed
-          setTimeout(() => {
-            context.updateView({}, noteId);
-          }, 20);
-
-          if (!tr.getMeta('fromOutside')) {
-            let outerTr = view.state.tr,
-              offsetMap = StepMap.offset(noteFound[0].pos + 1);
-            for (let i = 0; i < transactions.length; i++) {
-              let steps = transactions[i].steps;
-              for (let j = 0; j < steps.length; j++)
-                outerTr.step(steps[j].map(offsetMap));
-            }
-
-            if (outerTr.docChanged)
-              view.dispatch(outerTr.setMeta('outsideView', 'notes'));
-          }
-        },
+        dispatchTransaction,
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, noteId);
@@ -83,6 +53,39 @@ export default ({ node, view }) => {
       context.view[noteId].focus();
     }
   }, []);
+
+  const dispatchTransaction = tr => {
+    const { state, transactions } = noteView.state.applyTransaction(tr);
+    noteView.updateState(state);
+
+    const allNotes = DocumentHelpers.findChildrenByType(
+      view.state.doc,
+      view.state.schema.nodes.footnote,
+      true,
+    );
+
+    const noteFound = filter(allNotes, {
+      node: { attrs: { id: noteId } },
+    });
+
+    // TODO Remove timeout and use state to check if noteView has changed
+    setTimeout(() => {
+      context.updateView({}, noteId);
+    }, 20);
+
+    if (!tr.getMeta('fromOutside')) {
+      let outerTr = view.state.tr,
+        offsetMap = StepMap.offset(noteFound[0].pos + 1);
+      for (let i = 0; i < transactions.length; i++) {
+        let steps = transactions[i].steps;
+        for (let j = 0; j < steps.length; j++)
+          outerTr.step(steps[j].map(offsetMap));
+      }
+
+      if (outerTr.docChanged)
+        view.dispatch(outerTr.setMeta('outsideView', 'notes'));
+    }
+  };
 
   const createKeyBindings = () => {
     const keys = getKeys();

@@ -88,6 +88,14 @@ class RejectTrackChange extends Tools {
     };
   }
 
+  select = state => {
+    const {
+      selection: { from, to },
+    } = state;
+    if (from === to) return false;
+    return true;
+  };
+
   get active() {
     return state => {};
   }

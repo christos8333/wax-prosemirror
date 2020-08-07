@@ -51,9 +51,7 @@ const markDeletion = (tr, from, to, user, date, group) => {
         )
       ) {
         let removeStep;
-        // user has created element. so (s)he is allowed to delete it again.
         if (node.isTextblock && to < pos + node.nodeSize) {
-          // The node is a textblock. So we need to merge into the last possible position inside the last text block.
           const selectionBefore = Selection.findFrom(tr.doc.resolve(pos), -1);
           if (selectionBefore instanceof TextSelection) {
             removeStep = new ReplaceStep(
@@ -73,22 +71,31 @@ const markDeletion = (tr, from, to, user, date, group) => {
         if (!tr.maybeStep(removeStep).failed) {
           deletionMap.appendMap(removeStep.getMap());
         }
-      } else {
-        if (node.content.size === 0) {
-          const track = node.attrs.track.slice();
-          track.push({
-            type: 'deletion',
-            user: user.userId,
-            username: user.username,
-            // date
-          });
-          tr.setNodeMarkup(
-            deletionMap.map(pos),
-            null,
-            Object.assign({}, node.attrs, { track }),
-            node.marks,
-          );
-        }
+      }
+
+      let counter = 3;
+      node.content.forEach((item, i) => {
+        item.marks.forEach(mark => {
+          if (mark.type.name === 'deletion') {
+            counter += item.nodeSize;
+          }
+        });
+      });
+
+      if (node.content.size === 0 || counter === node.nodeSize) {
+        const track = node.attrs.track.slice();
+        track.push({
+          type: 'deletion',
+          user: user.userId,
+          username: user.username,
+          // date
+        });
+        tr.setNodeMarkup(
+          deletionMap.map(pos),
+          null,
+          Object.assign(node.attrs.track, { track }),
+          node.marks,
+        );
       }
     }
   });

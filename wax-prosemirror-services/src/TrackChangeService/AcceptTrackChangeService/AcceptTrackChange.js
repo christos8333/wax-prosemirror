@@ -34,6 +34,19 @@ class AcceptTrackChange extends Tools {
           tr.step(deletionStep);
           map.appendMap(deletionStep.getMap());
         } else if (
+          node.attrs.track &&
+          node.attrs.track.find(track => track.type === 'insertion')
+        ) {
+          const track = node.attrs.track.filter(
+            track => track.type !== 'insertion',
+          );
+          tr.setNodeMarkup(
+            map.map(pos),
+            null,
+            Object.assign(node.attrs.track, { track }),
+            node.marks,
+          );
+        } else if (
           node.marks &&
           node.marks.find(mark => mark.type.name === 'insertion')
         ) {
@@ -60,6 +73,24 @@ class AcceptTrackChange extends Tools {
               map.map(Math.min(pos + node.nodeSize, to)),
               formatChangeMark,
             ),
+          );
+        } else if (
+          node.attrs.track &&
+          node.attrs.track.find(track => track.type === 'block_change')
+        ) {
+          const blockChangeTrack = node.attrs.track.find(
+            track => track.type === 'block_change',
+          );
+
+          const track = node.attrs.track.filter(
+            track => track !== blockChangeTrack,
+          );
+
+          tr.setNodeMarkup(
+            map.map(pos),
+            null,
+            Object.assign(node.attrs.track, { track }),
+            node.marks,
           );
         }
       });

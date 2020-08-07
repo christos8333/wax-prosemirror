@@ -73,7 +73,7 @@ const markDeletion = (tr, from, to, user, date, group) => {
         }
       }
 
-      let counter = 3;
+      let counter = 2;
       node.content.forEach((item, i) => {
         item.marks.forEach(mark => {
           if (mark.type.name === 'deletion') {

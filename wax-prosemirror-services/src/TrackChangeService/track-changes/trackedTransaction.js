@@ -14,9 +14,10 @@ import addMarkStep from './helpers/addMarkStep';
 import removeMarkStep from './helpers/removeMarkStep';
 
 const trackedTransaction = (tr, state, user) => {
+  // Don't track table operations
   if (!tr.selectionSet) {
     const $pos = state.selection.$anchor;
-    for (let { depth } = $pos; depth > 0; depth--) {
+    for (let { depth } = $pos; depth > 0; depth -= 1) {
       const node = $pos.node(depth);
       if (node.type.spec.tableRole === 'table') {
         return tr;

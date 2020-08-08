@@ -13,7 +13,7 @@ const removeNode = (tr, node, nodePos, map, accept) => {
   const start = selectionBefore.$anchor.pos;
   const end = newNodePos + 1;
 
-  const delStep = ReplaceStep(tr.doc, start, end);
+  const delStep = replaceStep(tr.doc, start, end);
 
   tr.step(delStep);
   const stepMap = delStep.getMap();

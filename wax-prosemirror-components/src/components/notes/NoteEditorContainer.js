@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import NoteNumber from "./NoteNumber";
+import NoteNumber from './NoteNumber';
 
 const NoteEditorContainerStyled = styled.div`
   display: flex;
@@ -23,6 +23,11 @@ const NoteStyled = styled.div`
   &:focus {
     outline: none;
   }
+
+  p {
+    margin: 0;
+  }
+
   span.comment {
     border-bottom: 2px solid #ffab20;
     border-radius: 3px 3px 0 0;

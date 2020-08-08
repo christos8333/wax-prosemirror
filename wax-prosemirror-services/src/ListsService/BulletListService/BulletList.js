@@ -1,12 +1,12 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
-import { wrapInList } from "prosemirror-schema-list";
-import { Commands } from "wax-prosemirror-utilities";
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
+import { wrapInList } from 'prosemirror-schema-list';
+import { Commands } from 'wax-prosemirror-utilities';
 
 @injectable()
 export default class BulletList extends Tools {
-  title = "Wrap in bullet list";
+  title = 'Wrap in bullet list';
   content = icons.bullet_list;
 
   get run() {
@@ -20,6 +20,11 @@ export default class BulletList extends Tools {
       return wrapInList(state.config.schema.nodes.bulletlist)(state);
     };
   }
+
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
 
   get active() {
     return state => {

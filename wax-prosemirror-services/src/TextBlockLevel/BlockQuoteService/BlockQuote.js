@@ -1,17 +1,22 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { wrapIn } from "prosemirror-commands";
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { wrapIn } from 'prosemirror-commands';
 
 @injectable()
 class BlockQuote extends Tools {
-  title = "Change to Block Quote";
-  content = "Block Quote";
+  title = 'Change to Block Quote';
+  content = 'Block Quote';
 
   get run() {
     return (state, dispatch) => {
       wrapIn(state.config.schema.nodes.blockquote)(state, dispatch);
     };
   }
+
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
 
   get enable() {
     return state => {

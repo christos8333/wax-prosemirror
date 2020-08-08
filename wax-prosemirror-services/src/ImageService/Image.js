@@ -17,6 +17,11 @@ class Image extends Tools {
     return () => true;
   }
 
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
+
   get enable() {
     return state => {
       return Commands.canInsert(state.config.schema.nodes.image)(state);
@@ -31,7 +36,12 @@ class Image extends Tools {
       this.pmplugins.get('imagePlaceHolder'),
     );
     return this._isDisplayed ? (
-      <ImageUpload key={uuidv4()} item={this.toJSON()} fileUpload={upload} />
+      <ImageUpload
+        key={uuidv4()}
+        item={this.toJSON()}
+        fileUpload={upload}
+        view={view}
+      />
     ) : null;
   }
 }

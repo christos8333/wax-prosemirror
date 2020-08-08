@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useEffect, useRef, useContext } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
@@ -10,6 +11,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import transformPasted from './helpers/TransformPasted';
+import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
 
 export default ({ node, view }) => {
   const editorRef = useRef();
@@ -54,7 +56,16 @@ export default ({ node, view }) => {
     }
   }, []);
 
-  const dispatchTransaction = tr => {
+  const dispatchTransaction = transaction => {
+    const { user } = view.props;
+    const TrackChange = context.app.config.get(
+      'config.EnableTrackChangeService',
+    );
+
+    const tr = TrackChange.enabled
+      ? trackedTransaction(transaction, noteView.state, user)
+      : transaction;
+
     const { state, transactions } = noteView.state.applyTransaction(tr);
     noteView.updateState(state);
 
@@ -74,8 +85,8 @@ export default ({ node, view }) => {
     }, 20);
 
     if (!tr.getMeta('fromOutside')) {
-      let outerTr = view.state.tr,
-        offsetMap = StepMap.offset(noteFound[0].pos + 1);
+      const outerTr = view.state.tr;
+      const offsetMap = StepMap.offset(noteFound[0].pos + 1);
       for (let i = 0; i < transactions.length; i++) {
         let steps = transactions[i].steps;
         for (let j = 0; j < steps.length; j++)

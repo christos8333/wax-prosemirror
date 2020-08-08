@@ -90,9 +90,7 @@ const trackedTransaction = (tr, state, user) => {
     } else {
       newTr.setSelection(tr.selection.map(newTr.doc, map));
     }
-  }
-
-  if (
+  } else if (
     state.selection.from - tr.selection.from > 1 &&
     tr.selection.$head.depth > 1
   ) {

@@ -67,12 +67,9 @@ const trackedTransaction = (tr, state, user) => {
     }
   });
 
-  if (tr.getMeta('inputType')) {
-    newTr.setMeta(tr.getMeta('inputType'));
-  }
-  if (tr.getMeta('uiEvent')) {
-    newTr.setMeta(tr.getMeta('uiEvent'));
-  }
+  if (tr.getMeta('inputType')) newTr.setMeta(tr.getMeta('inputType'));
+
+  if (tr.getMeta('uiEvent')) newTr.setMeta(tr.getMeta('uiEvent'));
 
   if (tr.selectionSet) {
     const deletionMarkSchema = state.schema.marks.deletion;
@@ -110,12 +107,9 @@ const trackedTransaction = (tr, state, user) => {
     map.appendMap(slice);
   }
 
-  if (tr.storedMarksSet) {
-    newTr.setStoredMarks(tr.storedMarks);
-  }
-  if (tr.scrolledIntoView) {
-    newTr.scrollIntoView();
-  }
+  if (tr.storedMarksSet) newTr.setStoredMarks(tr.storedMarks);
+
+  if (tr.scrolledIntoView) newTr.scrollIntoView();
 
   return newTr;
 };

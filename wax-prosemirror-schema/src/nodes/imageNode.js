@@ -4,34 +4,34 @@ const image = {
     src: {},
     alt: { default: null },
     title: { default: null },
-    track: { default: [] }
+    track: { default: [] },
   },
-  group: "inline",
+  group: 'inline',
   draggable: true,
   parseDOM: [
     {
-      tag: "img[src]",
+      tag: 'img[src]',
       getAttrs(hook, next) {
         Object.assign(hook, {
-          src: hook.dom.getAttribute("src"),
-          title: hook.dom.getAttribute("title"),
+          src: hook.dom.getAttribute('src'),
+          title: hook.dom.getAttribute('title'),
           // track: parseTracks(hook.dom.dataset.track),
-          alt: hook.dom.getAttribute("alt")
+          alt: hook.dom.getAttribute('alt'),
         });
         next();
-      }
-    }
+      },
+    },
   ],
   toDOM(hook, next) {
     const attrs = {};
-    let temp = "";
+    let temp = '';
     // if (hook.node.attrs.track.length) {
     //   // attrs["data-track"] = JSON.stringify(hook.node.attrs.track);
     // }
-    let { src, alt, title } = hook.node.attrs;
-    hook.value = ["img", { src, alt, title }];
+    const { src, alt, title } = hook.node.attrs;
+    hook.value = ['img', { src, alt, title }];
     next();
-  }
+  },
 };
 
 export default image;

@@ -1,8 +1,8 @@
 {
   "name": "wax-prosemirror-monorepo",
-  "version": "0.0.1",
+  "version": "0.0.13",
   "main": "index.js",
-  "author": "Collaborative Knowledge Foundation",
+  "author": "Christos Kokosias",
   "description": "Monorepo for wax-prosemirror, its components and its integrations",
   "repository": {
     "type": "git",

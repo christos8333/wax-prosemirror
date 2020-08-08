@@ -1,9 +1,3 @@
-/*
-This belongs to https://github.com/fiduswriter/fiduswriter
-check: https://github.com/fiduswriter/fiduswriter/blob/develop/fiduswriter/document/static/js/modules/editor/track/amend_transaction.js
-License included in folder.
-*/
-
 import { TextSelection } from 'prosemirror-state';
 import {
   ReplaceStep,

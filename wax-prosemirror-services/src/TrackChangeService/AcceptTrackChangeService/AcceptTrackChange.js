@@ -25,7 +25,7 @@ class AcceptTrackChange extends Tools {
           node.attrs.track &&
           node.attrs.track.find(track => track.type === 'deletion')
         ) {
-          removeNode(tr, node, pos, map, true);
+          removeNode(tr, node, pos, map);
         }
         if (
           node.marks &&
@@ -103,11 +103,11 @@ class AcceptTrackChange extends Tools {
     };
   }
 
-  select = state => {
+  select = (state, activeViewId) => {
     const {
       selection: { from, to },
     } = state;
-    if (from === to) return false;
+    if (from === to && activeViewId !== 'main') return false;
     return true;
   };
 

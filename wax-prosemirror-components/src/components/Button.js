@@ -17,10 +17,11 @@ const ButtonStyled = styled.button`
 `;
 
 const Button = ({ view = {}, item }) => {
+  const {
+    view: { main },
+    activeViewId,
+  } = useContext(WaxContext);
   if (item.onlyOnMain) {
-    const {
-      view: { main },
-    } = useContext(WaxContext);
     view = main;
   }
 
@@ -34,7 +35,7 @@ const Button = ({ view = {}, item }) => {
         e.preventDefault();
         item.run(view.state, view.dispatch);
       }}
-      select={item.select && item.select(view.state)}
+      select={item.select && item.select(view.state, activeViewId)}
     >
       {item.content}
     </ButtonStyled>

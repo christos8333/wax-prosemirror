@@ -6,6 +6,7 @@ import {
 } from 'prosemirror-transform';
 import { Slice } from 'prosemirror-model';
 import { injectable } from 'inversify';
+import removeNode from '../track-changes/helpers/removeNode';
 import Tools from '../../lib/Tools';
 
 export default
@@ -38,6 +39,11 @@ class RejectTrackChange extends Tools {
               deletionMark,
             ),
           );
+        } else if (
+          node.attrs.track &&
+          node.attrs.track.find(track => track.type === 'insertion')
+        ) {
+          removeNode(tr, node, pos, map);
         } else if (
           node.marks &&
           node.marks.find(mark => mark.type.name === 'insertion')
@@ -88,11 +94,11 @@ class RejectTrackChange extends Tools {
     };
   }
 
-  select = state => {
+  select = (state, activeViewId) => {
     const {
       selection: { from, to },
     } = state;
-    if (from === to) return false;
+    if (from === to && activeViewId !== 'main') return false;
     return true;
   };
 

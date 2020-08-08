@@ -14,6 +14,11 @@ export default class Table extends Tools {
     };
   }
 
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
+
   get enable() {
     return state => {
       return Commands.canInsert(state.config.schema.nodes.table)(state);

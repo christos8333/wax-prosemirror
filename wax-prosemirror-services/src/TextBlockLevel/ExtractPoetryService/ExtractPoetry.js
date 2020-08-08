@@ -1,24 +1,29 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { Commands } from "wax-prosemirror-utilities";
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { Commands } from 'wax-prosemirror-utilities';
 
 @injectable()
 class ExtractPoetry extends Tools {
-  title = "Change to Extract Poetry";
-  content = "Extract Poetry";
+  title = 'Change to Extract Poetry';
+  content = 'Extract Poetry';
 
   get run() {
     return (state, dispatch) => {
       Commands.setBlockType(state.config.schema.nodes.extractPoetry, {
-        class: "extract-poetry"
+        class: 'extract-poetry',
       })(state, dispatch);
     };
   }
 
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
+
   get enable() {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.extractPoetry)(
-        state
+        state,
       );
     };
   }

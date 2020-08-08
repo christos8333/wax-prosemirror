@@ -15,6 +15,11 @@ class EpigraphPoetry extends Tools {
     };
   }
 
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
+
   get enable() {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.epigraphPoetry)(

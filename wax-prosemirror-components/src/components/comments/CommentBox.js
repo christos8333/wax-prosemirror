@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useState, useEffect, useContext, memo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
@@ -27,12 +28,12 @@ const CommentBoxStyled = styled.div`
         return 0.6;
       case 'entered':
         return 1;
+      default:
     }
   }};
 `;
 
 export default ({ comment, top, dataBox }) => {
-  console.log('rerender');
   const [animate, setAnimate] = useState(false);
   const {
     attrs: { id },

@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+/* eslint react/prop-types: 0 */
+import React from 'react';
+import styled from 'styled-components';
 
 const UploadImage = styled.div`
   color: #777;

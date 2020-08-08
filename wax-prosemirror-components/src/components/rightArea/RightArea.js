@@ -1,11 +1,6 @@
+/* eslint react/prop-types: 0 */
 import { Mark } from 'prosemirror-model';
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';

@@ -1,8 +1,9 @@
-import { Mark } from "prosemirror-model";
-import React, { Fragment, useState, useEffect, useContext } from "react";
-import { Transition } from "react-transition-group";
-import styled from "styled-components";
-import { WaxContext } from "wax-prosemirror-core";
+/* eslint react/prop-types: 0 */
+import { Mark } from 'prosemirror-model';
+import React, { useState, useEffect, useContext } from 'react';
+import { Transition } from 'react-transition-group';
+import styled from 'styled-components';
+import { WaxContext } from 'wax-prosemirror-core';
 
 const TrackChangeBoxStyled = styled.div`
   display: flex;
@@ -10,30 +11,37 @@ const TrackChangeBoxStyled = styled.div`
   margin-top: 10px;
   border: 1px solid blue;
   position: absolute;
-  transition: ${({ state }) => "top 1s, opacity 1.5s, left 1s"};
+  transition: ${({ state }) => 'top 1s, opacity 1.5s, left 1s'};
   top: ${props => (props.top ? `${props.top}px` : 0)};
   left: ${props => (props.active ? `${63}%` : `${65}%`)};
   opacity: ${({ state }) => {
     switch (state) {
-      case "exited":
+      case 'exited':
         return 0.2;
-      case "exiting":
+      case 'exiting':
         return 0.4;
-      case "entering":
+      case 'entering':
         return 0.6;
-      case "entered":
+      case 'entered':
         return 1;
+      default:
     }
   }};
 `;
 
 export default ({ trackChange, view, top, dataBox }) => {
   const [animate, setAnimate] = useState(false);
-  const { view: { main }, app, activeView } = useContext(WaxContext);
+  const {
+    view: { main },
+    app,
+    activeView,
+  } = useContext(WaxContext);
   let action;
   if (trackChange instanceof Mark) {
-    if ((trackChange.type.name = "format_change")) {
-      const { attrs: { username, before, after } } = trackChange;
+    if ((trackChange.type.name = 'format_change')) {
+      const {
+        attrs: { username, before, after },
+      } = trackChange;
       action = `User ${username} added ${after[0]}`;
     }
   } else {
@@ -46,7 +54,7 @@ export default ({ trackChange, view, top, dataBox }) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Transition in={animate} timeout={1000}>
         {state => (
           <TrackChangeBoxStyled
@@ -63,6 +71,6 @@ export default ({ trackChange, view, top, dataBox }) => {
           </TrackChangeBoxStyled>
         )}
       </Transition>
-    </Fragment>
+    </>
   );
 };

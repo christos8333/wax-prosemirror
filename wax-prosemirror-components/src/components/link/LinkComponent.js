@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
-import styled from "styled-components";
-import { WaxContext } from "wax-prosemirror-core";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
+/* eslint react/prop-types: 0 */
+import React, { useRef, useEffect, useState, useContext } from 'react';
+import styled from 'styled-components';
+import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const LinkWrapper = styled.div`
   padding: 20px;
@@ -19,25 +20,23 @@ const Button = styled.button`
 `;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
-  const href = mark ? mark.attrs.href : null,
-    linkMark = mark ? mark : null,
-    { view: { main }, activeView } = useContext(WaxContext),
-    { state, dispatch } = activeView,
-    ref = useRef(null),
-    linkInput = useRef(null),
-    [addButtonText, setButtonText] = useState("Create"),
-    [lastLinkMark, setLLastLinkMark] = useState(linkMark),
-    [linkHref, setLinkHref] = useState(href);
+  const href = mark ? mark.attrs.href : null;
+  const linkMark = mark ? mark : null;
+  const {
+    view: { main },
+    activeView,
+  } = useContext(WaxContext);
+  const { state, dispatch } = activeView;
+  const ref = useRef(null);
+  const linkInput = useRef(null);
+  const [addButtonText, setButtonText] = useState('Create');
+  const [lastLinkMark, setLLastLinkMark] = useState(linkMark);
+  const [linkHref, setLinkHref] = useState(href);
 
-  useEffect(
-    () => {
-      const width = ref.current ? ref.current.offsetWidth : 0;
-      const left = Math.abs(position.left - width / 2);
-      setLinkText();
-      removeMarkIfEmptyHref();
-    },
-    [ref.current, href]
-  );
+  useEffect(() => {
+    setLinkText();
+    removeMarkIfEmptyHref();
+  }, [ref.current, href]);
 
   const addLinkHref = () => {
     const href = linkHref;
@@ -50,9 +49,9 @@ const LinkComponent = ({ mark, setPosition, position }) => {
         mark.to,
         linkMark.create({
           ...((mark && mark.attrs) || {}),
-          href
-        })
-      )
+          href,
+        }),
+      ),
     );
     activeView.focus();
   };
@@ -63,45 +62,49 @@ const LinkComponent = ({ mark, setPosition, position }) => {
   };
 
   const handleKeyDown = event => {
-    if (event.key === "Enter" || event.which === 13) {
+    if (event.key === 'Enter' || event.which === 13) {
       addLinkHref();
     }
   };
 
   const updateLinkHref = () => {
-    const { current: { value } } = linkInput;
+    const {
+      current: { value },
+    } = linkInput;
     setLinkHref(value);
   };
 
   const setLinkText = () => {
-    if (mark && mark.attrs.href !== "") {
-      setButtonText("Update");
+    if (mark && mark.attrs.href !== '') {
+      setButtonText('Update');
       setLinkHref(mark.attrs.href);
     } else {
-      setButtonText("Create");
-      setLinkHref("");
+      setButtonText('Create');
+      setLinkHref('');
       if (linkInput.current) linkInput.current.focus();
     }
   };
 
   const removeMarkIfEmptyHref = () => {
-    const { selection: { $from, $to } } = state;
-    const PMLinkMark = state.schema.marks["link"];
+    const {
+      selection: { $from, $to },
+    } = state;
+    const PMLinkMark = state.schema.marks['link'];
     const actualMark = DocumentHelpers.getSelectionMark(state, PMLinkMark);
     setLLastLinkMark(actualMark);
 
     if (
-      lastLinkMark.attrs.href === "" &&
+      lastLinkMark.attrs.href === '' &&
       ($from.pos < lastLinkMark.from || $to.pos > lastLinkMark.to)
     ) {
       dispatch(
         state.tr
-          .setMeta("addToHistory", false)
+          .setMeta('addToHistory', false)
           .removeMark(
             lastLinkMark.from,
             lastLinkMark.to,
-            state.schema.marks.link
-          )
+            state.schema.marks.link,
+          ),
       );
     }
   };

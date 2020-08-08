@@ -19,7 +19,7 @@ const UploadImage = styled.div`
 `;
 const ImageUpload = ({ item, fileUpload, view }) => {
   const { activeViewId } = useContext(WaxContext);
-  console.log(item);
+
   return (
     <UploadImage select={item.select && item.select(view.state, activeViewId)}>
       <label

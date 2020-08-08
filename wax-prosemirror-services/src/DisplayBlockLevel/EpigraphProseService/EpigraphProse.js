@@ -1,16 +1,17 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { Commands } from "wax-prosemirror-utilities";
+import { injectable } from 'inversify';
+import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class EpigraphProse extends Tools {
-  title = "Change to Epigraph Prose";
-  content = "Epigraph Prose";
+class EpigraphProse extends Tools {
+  title = 'Change to Epigraph Prose';
+  content = 'Epigraph Prose';
 
   get run() {
     return (state, dispatch) => {
       Commands.setBlockType(state.config.schema.nodes.epigraphProse, {
-        class: "epigraph-prose"
+        class: 'epigraph-prose',
       })(state, dispatch);
     };
   }
@@ -18,7 +19,7 @@ export default class EpigraphProse extends Tools {
   get enable() {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.epigraphProse)(
-        state
+        state,
       );
     };
   }

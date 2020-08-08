@@ -1,18 +1,18 @@
-import Service from "../Service";
-import Image from "./Image";
-import { imageNode } from "wax-prosemirror-schema";
+import { imageNode } from 'wax-prosemirror-schema';
+import Service from '../Service';
+import Image from './Image';
 
 export default class ImageService extends Service {
-  name = "ImageService";
+  name = 'ImageService';
 
   register() {
-    this.container.bind("Image").to(Image);
-    const createNode = this.container.get("CreateNode");
+    this.container.bind('Image').to(Image);
+    const createNode = this.container.get('CreateNode');
     createNode(
       {
-        image: imageNode
+        image: imageNode,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

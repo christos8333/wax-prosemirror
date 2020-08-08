@@ -40,3 +40,4 @@ export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayT
 export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
 export { default as NoteToolGroupService } from './src/WaxToolGroups/NoteToolGroupService/NoteToolGroupService';
 export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBlockToolGroupService/CodeBlockToolGroupService';
+export { default as TrackChangeToolGroupService } from './src/WaxToolGroups/TrackChangeToolGroupService/TrackChangeToolGroupService';

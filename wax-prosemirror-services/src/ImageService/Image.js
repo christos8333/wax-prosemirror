@@ -1,15 +1,16 @@
-import React from "react";
-import { v4 as uuidv4 } from "uuid";
-import { isEmpty } from "lodash";
-import { injectable } from "inversify";
-import { icons, ImageUpload } from "wax-prosemirror-components";
-import Tools from "../lib/Tools";
-import { Commands } from "wax-prosemirror-utilities";
-import fileUpload from "./fileUpload";
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { isEmpty } from 'lodash';
+import { injectable } from 'inversify';
+import { icons, ImageUpload } from 'wax-prosemirror-components';
+import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../lib/Tools';
+import fileUpload from './fileUpload';
 
+export default
 @injectable()
-export default class Image extends Tools {
-  title = "Insert image";
+class Image extends Tools {
+  title = 'Insert image';
   content = icons.image;
 
   get run() {
@@ -26,8 +27,8 @@ export default class Image extends Tools {
     if (isEmpty(view)) return null;
     const upload = fileUpload(
       view,
-      this.config.get("fileUpload"),
-      this.pmplugins.get("imagePlaceHolder")
+      this.config.get('fileUpload'),
+      this.pmplugins.get('imagePlaceHolder'),
     );
     return this._isDisplayed ? (
       <ImageUpload key={uuidv4()} item={this.toJSON()} fileUpload={upload} />

@@ -1,18 +1,18 @@
-import Service from "../../Service";
-import { epigraphPoetryNode } from "wax-prosemirror-schema";
-import EpigraphPoetry from "./EpigraphPoetry";
+import { epigraphPoetryNode } from 'wax-prosemirror-schema';
+import EpigraphPoetry from './EpigraphPoetry';
+import Service from '../../Service';
 
 class EpigraphPoetryService extends Service {
-  boot() {}
+  // boot() {}
 
   register() {
-    this.container.bind("EpigraphPoetry").to(EpigraphPoetry);
-    const createNode = this.container.get("CreateNode");
+    this.container.bind('EpigraphPoetry').to(EpigraphPoetry);
+    const createNode = this.container.get('CreateNode');
     createNode(
       {
-        epigraphPoetry: epigraphPoetryNode
+        epigraphPoetry: epigraphPoetryNode,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

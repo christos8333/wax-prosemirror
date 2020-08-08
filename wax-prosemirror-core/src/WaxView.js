@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useCallback } from 'react';
+import React, { useRef, useContext, useCallback } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -61,7 +61,8 @@ export default props => {
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
-    const tr = TrackChange
+
+    const tr = TrackChange.enabled
       ? trackedTransaction(transaction, view.state, user)
       : transaction;
 

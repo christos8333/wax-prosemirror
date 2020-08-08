@@ -4,6 +4,7 @@ import CommentBox from '../comments/CommentBox';
 import TrackChangeBox from '../trackChanges/TrackChangeBox';
 
 export default ({ commentsTracks, view, position }) => {
+  if (!position) return null;
   return (
     <>
       {commentsTracks.map((commentTrack, index) => {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { ButtonStyles } from 'wax-prosemirror-themes';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -16,30 +16,32 @@ const ButtonStyled = styled.button`
   }
 `;
 
-const Button = ({ view = {}, item }) => {
-  const {
-    view: { main },
-    activeViewId,
-  } = useContext(WaxContext);
+const TrackChangeEnable = ({ view = {}, item, enabled }) => {
   if (item.onlyOnMain) {
+    const {
+      view: { main },
+    } = useContext(WaxContext);
     view = main;
   }
+
+  const [isEnabled, setEnabled] = useState(enabled);
 
   return (
     <ButtonStyled
       type="button"
-      isActive={item.active && item.active(view.state)}
+      isActive={isEnabled}
       title={item.title}
       disabled={item.enable && !item.enable(view.state)}
       onMouseDown={e => {
         e.preventDefault();
+        setEnabled(!isEnabled);
         item.run(view.state, view.dispatch);
       }}
-      select={item.select && item.select(view.state, activeViewId)}
+      select={item.select && item.select(view.state)}
     >
       {item.content}
     </ButtonStyled>
   );
 };
 
-export default Button;
+export default TrackChangeEnable;

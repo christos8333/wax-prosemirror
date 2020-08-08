@@ -3,28 +3,27 @@ const removeMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
     if (!node.isInline) {
       return true;
     }
-    if (node.marks.find(mark => mark.type.name === "deletion")) {
+    if (node.marks.find(mark => mark.type.name === 'deletion')) {
       return false;
-    } else {
-      newTr.removeMark(
-        Math.max(step.from, pos),
-        Math.min(step.to, pos + node.nodeSize),
-        step.mark
-      );
     }
+    newTr.removeMark(
+      Math.max(step.from, pos),
+      Math.min(step.to, pos + node.nodeSize),
+      step.mark,
+    );
 
     if (
-      ["em", "strong", "underline"].includes(step.mark.type.name) &&
+      ['em', 'strong', 'underline'].includes(step.mark.type.name) &&
       node.marks.find(mark => mark.type === step.mark.type)
     ) {
       const formatChangeMark = node.marks.find(
-        mark => mark.type.name === "format_change"
+        mark => mark.type.name === 'format_change',
       );
       let after, before;
       if (formatChangeMark) {
         if (formatChangeMark.attrs.after.includes(step.mark.type.name)) {
           after = formatChangeMark.attrs.after.filter(
-            markName => markName !== step.mark.type.name
+            markName => markName !== step.mark.type.name,
           );
           before = formatChangeMark.attrs.before;
         } else {
@@ -44,14 +43,14 @@ const removeMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
             username: user.username,
             date,
             before,
-            after
-          })
+            after,
+          }),
         );
       } else if (formatChangeMark) {
         newTr.removeMark(
           Math.max(step.from, pos),
           Math.min(step.to, pos + node.nodeSize),
-          formatChangeMark
+          formatChangeMark,
         );
       }
     }

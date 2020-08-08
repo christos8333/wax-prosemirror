@@ -102,10 +102,13 @@ const trackedTransaction = (tr, state, user) => {
     const caretPos = map.map(tr.selection.from - 2, -1);
     newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   } else {
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-    // const slice = map.slice(newTr.selection.from, newTr.selection.to);
-    // map.appendMap(slice);
+    if (state.selection.from === state.selection.to) {
+      const caretPos = map.map(tr.selection.from, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    } else {
+      const slice = map.slice(newTr.selection.from, newTr.selection.to);
+      map.appendMap(slice);
+    }
   }
 
   if (tr.storedMarksSet) {

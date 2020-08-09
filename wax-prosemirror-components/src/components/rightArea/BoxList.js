@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import { Mark } from 'prosemirror-model';
 import React from 'react';
 import CommentBox from '../comments/CommentBox';

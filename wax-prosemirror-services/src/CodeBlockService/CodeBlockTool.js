@@ -14,6 +14,11 @@ class CodeBlockTool extends Tools {
     };
   }
 
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
+
   get enable() {
     return state => {
       return setBlockType(state.config.schema.nodes.code_block)(state);

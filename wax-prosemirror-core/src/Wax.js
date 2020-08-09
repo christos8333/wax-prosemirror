@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 import styled from 'styled-components';
@@ -77,7 +78,7 @@ const Wax = props => {
 
   const WaxOnchange = onChange ? onChange : value => true;
 
-  const editorContent = value ? value : '';
+  const editorContent = value || '';
 
   finalPlugins = defaultPlugins.concat([
     createPlaceholder(placeholder),

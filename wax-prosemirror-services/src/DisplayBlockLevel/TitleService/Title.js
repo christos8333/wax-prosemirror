@@ -1,19 +1,24 @@
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { Commands } from "wax-prosemirror-utilities";
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { Commands } from 'wax-prosemirror-utilities';
 
 @injectable()
 export default class Title extends Tools {
-  title = "Change to Title";
-  content = "Title";
+  title = 'Change to Title';
+  content = 'Title';
 
   get run() {
     return (state, dispatch) => {
       Commands.setBlockType(state.config.schema.nodes.title, {
-        class: "title"
+        class: 'title',
       })(state, dispatch);
     };
   }
+
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
 
   get enable() {
     return state => {

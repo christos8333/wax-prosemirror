@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { last } from 'lodash';
@@ -43,7 +44,7 @@ export default ({ comment, activeView, user, active }) => {
     const {
       current: { value },
     } = commentInput;
-    const { tr, doc } = state;
+    const { tr } = state;
 
     const obj = {
       content: value,

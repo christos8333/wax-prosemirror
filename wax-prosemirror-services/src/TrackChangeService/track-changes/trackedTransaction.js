@@ -1,9 +1,3 @@
-/*
-This belongs to https://github.com/fiduswriter/fiduswriter
-check: https://github.com/fiduswriter/fiduswriter/blob/develop/fiduswriter/document/static/js/modules/editor/track/amend_transaction.js
-License included in folder.
-*/
-
 import { TextSelection } from 'prosemirror-state';
 import {
   ReplaceStep,
@@ -20,6 +14,17 @@ import addMarkStep from './helpers/addMarkStep';
 import removeMarkStep from './helpers/removeMarkStep';
 
 const trackedTransaction = (tr, state, user) => {
+  // Don't track table operations
+  if (!tr.selectionSet) {
+    const $pos = state.selection.$anchor;
+    for (let { depth } = $pos; depth > 0; depth -= 1) {
+      const node = $pos.node(depth);
+      if (node.type.spec.tableRole === 'table') {
+        return tr;
+      }
+    }
+  }
+
   if (
     !tr.steps.length ||
     (tr.meta &&
@@ -62,12 +67,9 @@ const trackedTransaction = (tr, state, user) => {
     }
   });
 
-  if (tr.getMeta('inputType')) {
-    newTr.setMeta(tr.getMeta('inputType'));
-  }
-  if (tr.getMeta('uiEvent')) {
-    newTr.setMeta(tr.getMeta('uiEvent'));
-  }
+  if (tr.getMeta('inputType')) newTr.setMeta(tr.getMeta('inputType'));
+
+  if (tr.getMeta('uiEvent')) newTr.setMeta(tr.getMeta('uiEvent'));
 
   if (tr.selectionSet) {
     const deletionMarkSchema = state.schema.marks.deletion;
@@ -90,27 +92,24 @@ const trackedTransaction = (tr, state, user) => {
     } else {
       newTr.setSelection(tr.selection.map(newTr.doc, map));
     }
-  }
-
-  if (
+  } else if (
     state.selection.from - tr.selection.from > 1 &&
     tr.selection.$head.depth > 1
   ) {
     const caretPos = map.map(tr.selection.from - 2, -1);
     newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   } else {
-    const caretPos = map.map(tr.selection.from, -1);
-    newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
-    // const slice = map.slice(newTr.selection.from, newTr.selection.to);
-    // map.appendMap(slice);
+    if (state.selection.from === state.selection.to) {
+      const caretPos = map.map(tr.selection.from, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    }
+    const slice = map.slice(newTr.selection.from, newTr.selection.to);
+    map.appendMap(slice);
   }
 
-  if (tr.storedMarksSet) {
-    newTr.setStoredMarks(tr.storedMarks);
-  }
-  if (tr.scrolledIntoView) {
-    newTr.scrollIntoView();
-  }
+  if (tr.storedMarksSet) newTr.setStoredMarks(tr.storedMarks);
+
+  if (tr.scrolledIntoView) newTr.scrollIntoView();
 
   return newTr;
 };

@@ -170,6 +170,9 @@ export default css`
   span.deletion {
     text-decoration: line-through;
     color: red;
+    footnote {
+      background: red;
+    }
   }
 
   span.insertion {

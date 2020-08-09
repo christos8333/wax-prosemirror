@@ -1,30 +1,31 @@
-import { SchemaHelpers } from "wax-prosemirror-utilities";
+/* eslint-disable camelcase */
+import { SchemaHelpers } from 'wax-prosemirror-utilities';
 
 const list_item = {
-  content: "paragraph block*",
+  content: 'paragraph block*',
   attrs: {
-    track: { default: [] }
+    track: { default: [] },
   },
   parseDOM: [
     {
-      tag: "li",
+      tag: 'li',
       getAttrs(hook, next) {
         Object.assign(hook, {
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track)
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
         });
         next();
-      }
-    }
+      },
+    },
   ],
   toDOM(hook, next) {
     const attrs = {};
     if (hook.node.attrs.track.length) {
-      attrs["data-track"] = JSON.stringify(hook.node.attrs.track);
+      attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
     }
-    hook.value = ["li", attrs, 0];
+    hook.value = ['li', attrs, 0];
     next();
   },
-  defining: true
+  defining: true,
 };
 
 export default list_item;

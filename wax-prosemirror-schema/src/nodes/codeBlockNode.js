@@ -3,7 +3,7 @@ const codeBlock = {
   group: 'block',
   code: true,
   defining: true,
-  marks: 'comment',
+  marks: 'comment insertion deletion',
   attrs: { params: { default: '' } },
   parseDOM: [
     {

@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
+/* eslint react/prop-types: 0 */
+import React, { useLayoutEffect, useContext } from 'react';
 import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 
@@ -32,12 +32,8 @@ const CommentBubbleComponent = ({
   const isSelectionComment = () => {
     const commentMark = activeView.state.schema.marks.comment;
     const mark = DocumentHelpers.findMark(state, commentMark, true);
-    const {
-      selection: { $from, $to },
-      doc,
-    } = state;
 
-    //TODO Overlapping comments . for now don't allow
+    // TODO Overlapping comments . for now don't allow
     if (mark.length >= 1) return true;
     return false;
   };

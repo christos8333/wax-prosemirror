@@ -1,5 +1,6 @@
 /* eslint react/prop-types: 0 */
-import React from 'react';
+import React, { useContext } from 'react';
+import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 
 const UploadImage = styled.div`

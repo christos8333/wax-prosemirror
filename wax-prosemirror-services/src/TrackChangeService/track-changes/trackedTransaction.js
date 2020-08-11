@@ -24,6 +24,8 @@ const trackedTransaction = (tr, state, user) => {
       }
     }
   }
+  // images
+  if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) return tr;
 
   if (
     !tr.steps.length ||
@@ -82,7 +84,7 @@ const trackedTransaction = (tr, state, user) => {
     if (
       tr.selection instanceof TextSelection &&
       (tr.selection.from < state.selection.from ||
-        tr.getMeta('inputType') === 'deleteContentBackward')
+        tr.getMeta('inputType') === 'backwardsDelete')
     ) {
       const caretPos = map.map(tr.selection.from, -1);
       newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));

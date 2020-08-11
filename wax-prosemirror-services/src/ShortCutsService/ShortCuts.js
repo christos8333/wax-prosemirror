@@ -28,7 +28,7 @@ const backSpace = chainCommands(
 const backSpaceShortCut = (state, dispatch, view) =>
   backSpace(
     state,
-    tr => dispatch(tr.setMeta('inputType', 'deleteContentBackward')),
+    tr => dispatch(tr.setMeta('inputType', 'backwardsDelete')),
     view,
   );
 

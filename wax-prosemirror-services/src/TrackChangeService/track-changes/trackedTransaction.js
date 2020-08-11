@@ -25,7 +25,7 @@ const trackedTransaction = (tr, state, user) => {
     }
   }
   // images
-  if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) return tr;
+  // if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) return tr;
 
   if (
     !tr.steps.length ||
@@ -102,6 +102,7 @@ const trackedTransaction = (tr, state, user) => {
     newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   } else {
     if (state.selection.from === state.selection.to) {
+      console.log('to fix for lists');
       const caretPos = map.map(tr.selection.from, -1);
       newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
     }

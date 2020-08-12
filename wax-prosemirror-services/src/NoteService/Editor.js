@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';

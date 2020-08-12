@@ -19,7 +19,8 @@ const markDeletion = (tr, from, to, user, date, group) => {
       node.isInline &&
       node.marks.find(
         mark =>
-          mark.type.name === 'insertion' && mark.attrs.user === user.userId,
+          mark.type.name === 'insertion' &&
+          mark.attrs.user.toString() === user.userId.toString(),
       )
     ) {
       const removeStep = new ReplaceStep(

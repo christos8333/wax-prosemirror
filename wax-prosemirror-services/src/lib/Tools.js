@@ -13,10 +13,14 @@ class Tools {
   onlyOnMain = false;
   config = {};
   pmplugins = {};
-
+  name = name;
   constructor(@inject('Config') config, @inject('PmPlugins') pmplugins) {
     this.config = config;
     this.pmplugins = pmplugins;
+  }
+
+  static get id() {
+    return this.name;
   }
 
   get run() {
@@ -44,6 +48,7 @@ class Tools {
       enable: this.enable,
       select: this.select,
       onlyOnMain: this.onlyOnMain,
+      id: this.id,
     };
   }
 

@@ -27,7 +27,11 @@ const trackedTransaction = (tr, state, user) => {
   // images
   if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) {
     const $pos = state.selection.$anchor;
-    if ($pos.depth === 1) return tr;
+    let node;
+    if ($pos.depth === 1) {
+      node = $pos.node($pos.depth);
+      if (node.content.content[0].type.name === 'image') return tr;
+    }
   }
 
   if (

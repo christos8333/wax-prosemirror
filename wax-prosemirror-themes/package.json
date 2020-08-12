@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-themes",
   "author": "Christos Kokosias",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Wax prosemirror themes",
   "license": "MIT",
   "main": "dist/index.js",

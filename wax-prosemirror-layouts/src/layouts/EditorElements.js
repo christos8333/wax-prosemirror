@@ -16,6 +16,16 @@ export default css`
     color: white;
   }
 
+  div[contenteditable='false'] {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+  }
+
   .ProseMirror footnote {
     font-size: 0;
     display: inline-block;
@@ -177,6 +187,9 @@ export default css`
 
   span.insertion {
     color: blue;
+    footnote: {
+      background: blue;
+    }
   }
 
   .selected-insertion,

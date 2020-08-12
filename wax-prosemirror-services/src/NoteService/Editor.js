@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -81,7 +81,7 @@ export default ({ node, view }) => {
 
     // TODO Remove timeout and use state to check if noteView has changed
     setTimeout(() => {
-      context.updateView({}, noteId);
+      // context.updateView({}, noteId);
     }, 20);
 
     if (!tr.getMeta('fromOutside')) {

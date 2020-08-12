@@ -1,12 +1,14 @@
-import { lift } from "prosemirror-commands";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { lift } from 'prosemirror-commands';
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
 
+export default
 @injectable()
-export default class Lift extends Tools {
-  title = "Lift out of enclosing block";
+class Lift extends Tools {
+  title = 'Lift out of enclosing block';
   content = icons.lift;
+  name = 'Lift';
 
   get run() {
     return lift;

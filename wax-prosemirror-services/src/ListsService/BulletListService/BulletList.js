@@ -1,13 +1,15 @@
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { icons } from 'wax-prosemirror-components';
 import { wrapInList } from 'prosemirror-schema-list';
 import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class BulletList extends Tools {
+class BulletList extends Tools {
   title = 'Wrap in bullet list';
   content = icons.bullet_list;
+  name = 'BulletList';
 
   get run() {
     return (state, dispatch) => {

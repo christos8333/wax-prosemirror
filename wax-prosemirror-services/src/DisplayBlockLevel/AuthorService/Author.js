@@ -6,6 +6,7 @@ import Tools from '../../lib/Tools';
 class Author extends Tools {
   title = 'Change to Author';
   content = 'Author';
+  name = 'Author';
 
   get run() {
     return (state, dispatch) => {

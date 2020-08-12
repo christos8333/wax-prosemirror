@@ -6,6 +6,7 @@ import Tools from '../../lib/Tools';
 class EpigraphPoetry extends Tools {
   title = 'Change to Epigraph Poetry';
   content = 'Epigraph Poetry';
+  name = 'EpigraphPoetry';
 
   get run() {
     return (state, dispatch) => {

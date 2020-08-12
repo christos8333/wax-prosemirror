@@ -10,6 +10,7 @@ export default
 class EnableTrackChange extends Tools {
   title = 'Toggle Track Changes';
   content = 'track changes';
+  name = 'EnableTrackChange';
 
   get run() {
     return state => {

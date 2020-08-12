@@ -1,13 +1,15 @@
-import { toggleMark } from "prosemirror-commands";
-import { Commands } from "wax-prosemirror-utilities";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { toggleMark } from 'prosemirror-commands';
+import { Commands } from 'wax-prosemirror-utilities';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
+import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class Underline extends Tools {
-  title = "Toggle underline";
+class Underline extends Tools {
+  title = 'Toggle underline';
   content = icons.underline;
+  name = 'Underline';
 
   get run() {
     return (state, dispatch) => {

@@ -11,6 +11,7 @@ import Tools from '../../lib/Tools';
 export default class TableDropDownOptions extends Tools {
   title = 'Select Options';
   content = 'table';
+  name = 'TableDropDownOptions';
 
   get run() {
     return (state, dispatch, tableFn) => {

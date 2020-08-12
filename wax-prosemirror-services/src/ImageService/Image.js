@@ -12,6 +12,7 @@ export default
 class Image extends Tools {
   title = 'Insert image';
   content = icons.image;
+  name = 'Image';
 
   get run() {
     return () => true;

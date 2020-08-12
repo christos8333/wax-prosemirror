@@ -6,6 +6,7 @@ import { Commands } from 'wax-prosemirror-utilities';
 class SourceNote extends Tools {
   title = 'Change to Source Note';
   content = 'Source Note';
+  name = 'SourceNote';
 
   get run() {
     return (state, dispatch) => {

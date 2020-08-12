@@ -6,6 +6,7 @@ import { Commands } from 'wax-prosemirror-utilities';
 export default class SubTitle extends Tools {
   title = 'Change to Subtitle';
   content = 'Subtitle';
+  name = 'SubTitle';
 
   get run() {
     return (state, dispatch) => {

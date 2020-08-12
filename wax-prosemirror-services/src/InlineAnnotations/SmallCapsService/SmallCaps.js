@@ -1,13 +1,14 @@
-import { toggleMark } from "prosemirror-commands";
-import { Commands } from "wax-prosemirror-utilities";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { toggleMark } from 'prosemirror-commands';
+import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
 
 @injectable()
 export default class SmallCaps extends Tools {
-  title = "Toggle Small Caps";
+  title = 'Toggle Small Caps';
   content = icons.small_caps;
+  name = 'SmallCaps';
 
   get run() {
     return (state, dispatch) => {

@@ -8,6 +8,7 @@ export default
 class Table extends Tools {
   title = 'Insert table';
   content = icons.table;
+  name = 'Table';
 
   get run() {
     return (state, dispatch) => {

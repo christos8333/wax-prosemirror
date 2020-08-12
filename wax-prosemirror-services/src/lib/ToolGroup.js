@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { injectable } from "inversify";
-import { ToolGroupComponent } from "wax-prosemirror-components";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from 'react';
+import { injectable } from 'inversify';
+import { ToolGroupComponent } from 'wax-prosemirror-components';
+import { v4 as uuidv4 } from 'uuid';
 
 @injectable()
 export default class ToolGroup {
   _config = {};
-  title = "";
+  title = '';
   _tools = [];
   constructor() {}
   setGroupConfig(config) {
@@ -18,7 +18,7 @@ export default class ToolGroup {
 
     if (include.length > 0) {
       this._tools.map(tool => {
-        if (include.includes(tool.constructor.name)) {
+        if (include.includes(tool.name)) {
           tool.displayTool();
         } else {
           tool.hideTool();
@@ -26,7 +26,7 @@ export default class ToolGroup {
       });
     } else {
       this._tools.map(tool => {
-        if (exclude.includes(tool.constructor.name)) {
+        if (exclude.includes(tool.name)) {
           tool.hideTool();
         }
       });
@@ -37,7 +37,7 @@ export default class ToolGroup {
     const { more = [] } = this._config;
     if (more.length > 0) {
       this._tools.map(tool => {
-        if (more.includes(tool.constructor.name)) {
+        if (more.includes(tool.name)) {
           tool.hideInToolGroup();
         } else {
           tool.displayInToolGroup();

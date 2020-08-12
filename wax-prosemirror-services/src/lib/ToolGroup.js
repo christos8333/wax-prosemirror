@@ -18,7 +18,7 @@ export default class ToolGroup {
 
     if (include.length > 0) {
       this._tools.map(tool => {
-        if (include.includes(tool.constructor.name)) {
+        if (include.includes(tool.name)) {
           tool.displayTool();
         } else {
           tool.hideTool();
@@ -26,7 +26,7 @@ export default class ToolGroup {
       });
     } else {
       this._tools.map(tool => {
-        if (exclude.includes(tool.constructor.name)) {
+        if (exclude.includes(tool.name)) {
           tool.hideTool();
         }
       });
@@ -38,7 +38,6 @@ export default class ToolGroup {
     if (more.length > 0) {
       this._tools.map(tool => {
         if (more.includes(tool.name)) {
-          console.log(tool);
           tool.hideInToolGroup();
         } else {
           tool.displayInToolGroup();

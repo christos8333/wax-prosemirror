@@ -7,6 +7,7 @@ import Tools from '../lib/Tools';
 class CodeBlockTool extends Tools {
   title = 'Insert Code Block';
   content = icons.code_block;
+  name = 'CodeBlockTool';
 
   get run() {
     return (state, dispatch) => {

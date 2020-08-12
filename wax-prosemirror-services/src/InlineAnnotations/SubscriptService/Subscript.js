@@ -1,13 +1,15 @@
-import { toggleMark } from "prosemirror-commands";
-import { Commands } from "wax-prosemirror-utilities";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { toggleMark } from 'prosemirror-commands';
+import { Commands } from 'wax-prosemirror-utilities';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
+import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class Subscript extends Tools {
-  title = "Toggle subscript";
+class Subscript extends Tools {
+  title = 'Toggle subscript';
   content = icons.subscript;
+  name = 'Subscript';
 
   get run() {
     return (state, dispatch) => {

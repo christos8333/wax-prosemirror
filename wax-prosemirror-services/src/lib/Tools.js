@@ -13,7 +13,7 @@ class Tools {
   onlyOnMain = false;
   config = {};
   pmplugins = {};
-  name = name;
+  name = 'name';
   constructor(@inject('Config') config, @inject('PmPlugins') pmplugins) {
     this.config = config;
     this.pmplugins = pmplugins;

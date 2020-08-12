@@ -9,6 +9,7 @@ class Redo extends Tools {
   title = 'Redo last undone change';
   content = icons.redo;
   onlyOnMain = true;
+  name = 'Redo';
 
   get run() {
     return (state, dispatch) => {

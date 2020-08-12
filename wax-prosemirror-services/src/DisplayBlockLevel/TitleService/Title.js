@@ -6,6 +6,7 @@ import { Commands } from 'wax-prosemirror-utilities';
 export default class Title extends Tools {
   title = 'Change to Title';
   content = 'Title';
+  name = 'Title';
 
   get run() {
     return (state, dispatch) => {

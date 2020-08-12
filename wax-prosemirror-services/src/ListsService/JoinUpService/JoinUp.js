@@ -1,12 +1,14 @@
-import { joinUp } from "prosemirror-commands";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { joinUp } from 'prosemirror-commands';
+import Tools from '../../lib/Tools';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
 
+export default
 @injectable()
-export default class JoinUp extends Tools {
-  title = "Join with above block";
+class JoinUp extends Tools {
+  title = 'Join with above block';
   content = icons.join_up;
+  name = 'JoinUp';
 
   get run() {
     return joinUp;

@@ -9,6 +9,7 @@ export default
 class AcceptTrackChange extends Tools {
   title = 'Accept Changes';
   content = 'Accept';
+  name = 'AcceptTrackChange';
 
   get run() {
     return (state, dispatch) => {

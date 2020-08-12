@@ -8,6 +8,7 @@ import { Commands } from 'wax-prosemirror-utilities';
 export default class OrderedList extends Tools {
   title = 'Wrap in ordered list';
   content = icons.ordered_list;
+  name = 'OrderedList';
 
   get run() {
     return (state, dispatch) => {

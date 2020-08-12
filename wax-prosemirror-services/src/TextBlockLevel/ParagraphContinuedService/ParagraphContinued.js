@@ -1,11 +1,12 @@
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
 @injectable()
 class ParagraphContinued extends Tools {
   title = 'Change to Paragraph Continued';
   content = 'Paragraph Continued';
+  name = 'ParagraphContinued';
 
   get run() {
     return (state, dispatch) => {

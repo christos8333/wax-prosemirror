@@ -14,6 +14,7 @@ export default
 class RejectTrackChange extends Tools {
   title = 'Reject Changes';
   content = 'Reject';
+  name = 'RejectTrackChange';
 
   get run() {
     return (state, dispatch) => {

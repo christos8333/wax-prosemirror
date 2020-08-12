@@ -1,13 +1,15 @@
-import { toggleMark } from "prosemirror-commands";
-import { Commands } from "wax-prosemirror-utilities";
-import Tools from "../../lib/Tools";
-import { injectable } from "inversify";
-import { icons } from "wax-prosemirror-components";
+import { toggleMark } from 'prosemirror-commands';
+import { Commands } from 'wax-prosemirror-utilities';
+import { injectable } from 'inversify';
+import { icons } from 'wax-prosemirror-components';
+import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class StrikeThrough extends Tools {
-  title = "Toggle strikethrough";
+class StrikeThrough extends Tools {
+  title = 'Toggle strikethrough';
   content = icons.strikethrough;
+  name = 'StrikeThrough';
 
   get run() {
     return (state, dispatch) => {
@@ -18,7 +20,7 @@ export default class StrikeThrough extends Tools {
   get active() {
     return state => {
       return Commands.markActive(state.config.schema.marks.strikethrough)(
-        state
+        state,
       );
     };
   }

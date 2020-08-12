@@ -1,13 +1,14 @@
-import { injectable } from "inversify";
-import { toggleMark } from "prosemirror-commands";
-import { Commands } from "wax-prosemirror-utilities";
-import Tools from "../lib/Tools";
-import { icons } from "wax-prosemirror-components";
+import { injectable } from 'inversify';
+import { toggleMark } from 'prosemirror-commands';
+import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../lib/Tools';
+import { icons } from 'wax-prosemirror-components';
 
 @injectable()
 export default class LinkTool extends Tools {
-  title = "Add or remove link";
+  title = 'Add or remove link';
   content = icons.link;
+  name = 'LinkTool';
 
   get run() {
     return (state, dispatch) => {

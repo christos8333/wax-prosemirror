@@ -7,6 +7,7 @@ export default
 class Heading1 extends Tools {
   title = 'Change to heading level 1';
   content = 'Heading 1';
+  name = 'Heading1';
 
   get run() {
     return (state, dispatch) => {

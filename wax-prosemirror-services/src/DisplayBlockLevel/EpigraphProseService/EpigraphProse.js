@@ -7,6 +7,7 @@ export default
 class EpigraphProse extends Tools {
   title = 'Change to Epigraph Prose';
   content = 'Epigraph Prose';
+  name = 'EpigraphProse';
 
   get run() {
     return (state, dispatch) => {

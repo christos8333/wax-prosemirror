@@ -4,10 +4,12 @@ import { icons } from 'wax-prosemirror-components';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 
+export default
 @injectable()
-export default class Note extends Tools {
+class Note extends Tools {
   title = 'Insert Note';
   content = icons.footnote;
+  name = 'Note';
 
   get run() {
     return (state, dispatch) => {

@@ -6,6 +6,7 @@ import { wrapIn } from 'prosemirror-commands';
 class BlockQuote extends Tools {
   title = 'Change to Block Quote';
   content = 'Block Quote';
+  name = 'BlockQuote';
 
   get run() {
     return (state, dispatch) => {

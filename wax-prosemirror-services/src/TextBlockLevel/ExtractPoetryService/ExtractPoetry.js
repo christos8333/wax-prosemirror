@@ -1,11 +1,12 @@
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
 @injectable()
 class ExtractPoetry extends Tools {
   title = 'Change to Extract Poetry';
   content = 'Extract Poetry';
+  name = 'ExtractPoetry';
 
   get run() {
     return (state, dispatch) => {

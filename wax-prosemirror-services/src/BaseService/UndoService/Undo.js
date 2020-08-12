@@ -9,6 +9,7 @@ class Undo extends Tools {
   title = 'Undo last change';
   content = icons.undo;
   onlyOnMain = true;
+  name = 'Undo';
 
   get run() {
     return (state, dispatch) => {

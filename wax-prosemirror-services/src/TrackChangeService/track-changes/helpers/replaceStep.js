@@ -1,17 +1,10 @@
 import { ReplaceStep } from 'prosemirror-transform';
-import { CellSelection } from 'prosemirror-tables';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 import markDeletion from './markDeletion';
 import markInsertion from './markInsertion';
 
 const replaceStep = (state, tr, step, newTr, map, doc, user, date, group) => {
-  const cellDeleteTr =
-    ['backwardsDelete', 'deleteContentForward'].includes(
-      tr.getMeta('inputType'),
-    ) && state.selection instanceof CellSelection;
-
-  // if deletion mark move to the end of deletion
   const deletionMarkSchema = state.schema.marks.deletion;
   const deletionMark = DocumentHelpers.findMark(
     state,
@@ -20,14 +13,12 @@ const replaceStep = (state, tr, step, newTr, map, doc, user, date, group) => {
   );
   const positionTo = deletionMark ? deletionMark.to : step.to;
 
-  const newStep = !cellDeleteTr
-    ? new ReplaceStep(
-        positionTo, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
-        positionTo,
-        step.slice,
-        step.structure,
-      )
-    : false;
+  const newStep = new ReplaceStep(
+    positionTo, // We insert all the same steps, but with "from"/"to" both set to "to" in order not to delete content. Mapped as needed.
+    positionTo,
+    step.slice,
+    step.structure,
+  );
 
   // We didn't apply the original step in its original place. We adjust the map accordingly.
   map.appendMap(step.invert(doc).getMap());

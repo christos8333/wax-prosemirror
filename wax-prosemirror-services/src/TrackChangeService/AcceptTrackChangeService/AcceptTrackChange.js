@@ -25,14 +25,12 @@ class AcceptTrackChange extends Tools {
           node.attrs.track &&
           node.attrs.track.find(track => track.type === 'deletion')
         ) {
-          console.log('here?');
           removeNode(tr, node, pos, map);
         }
         if (
           node.marks &&
           node.marks.find(mark => mark.type.name === 'deletion')
         ) {
-          console.log('or here?', node);
           const deletionStep = new ReplaceStep(
             map.map(Math.max(pos, from)),
             map.map(Math.min(pos + node.nodeSize, to)),

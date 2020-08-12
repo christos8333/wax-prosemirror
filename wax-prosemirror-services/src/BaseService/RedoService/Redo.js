@@ -1,7 +1,7 @@
 import { redo } from 'prosemirror-history';
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { icons } from 'wax-prosemirror-components';
+import Tools from '../../lib/Tools';
 
 export default
 @injectable()
@@ -12,7 +12,7 @@ class Redo extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      redo(state, tr => dispatch(tr.setMeta('inputType', 'historyRedo')));
+      redo(state, tr => dispatch(tr.setMeta('inputType', 'Redo')));
     };
   }
 

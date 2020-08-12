@@ -25,17 +25,18 @@ const trackedTransaction = (tr, state, user) => {
     }
   }
   // images
-  if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) return tr;
+  if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) {
+    const $pos = state.selection.$anchor;
+    if ($pos.depth === 1) return tr;
+  }
 
   if (
     !tr.steps.length ||
     (tr.meta &&
-      !Object.keys(tr.meta).every(metadata =>
-        ['inputType', 'uiEvent', 'paste', 'outsideView'].includes(metadata),
+      !Object.keys(tr.meta).every(meta =>
+        ['inputType', 'uiEvent', 'paste'].includes(meta),
       )) ||
-    ['historyUndo', 'historyRedo', 'AcceptReject'].includes(
-      tr.getMeta('inputType'),
-    )
+    ['AcceptReject', 'Undo', 'Redo'].includes(tr.getMeta('inputType'))
   ) {
     return tr;
   }
@@ -48,9 +49,7 @@ const trackedTransaction = (tr, state, user) => {
   tr.steps.forEach(originalStep => {
     const step = originalStep.map(map);
     const { doc } = newTr;
-    if (!step) {
-      return;
-    }
+    if (!step) return;
 
     switch (step.constructor) {
       case ReplaceStep:
@@ -101,7 +100,22 @@ const trackedTransaction = (tr, state, user) => {
     const caretPos = map.map(tr.selection.from - 2, -1);
     newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
   } else {
-    if (state.selection.from === state.selection.to) {
+    if (
+      state.selection.from === state.selection.to &&
+      tr.selection.$head.depth > 1 &&
+      state.selection.from - tr.selection.from === 1
+    ) {
+      tr.steps.forEach(originalStep => {
+        const step = originalStep.map(map);
+        step.from += 1;
+        step.to += 1;
+        const { doc } = newTr;
+
+        replaceStep(state, tr, step, newTr, map, doc, user, date, group);
+      });
+      const caretPos = map.map(tr.selection.from - 1, -1);
+      newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
+    } else if (state.selection.from === state.selection.to) {
       const caretPos = map.map(tr.selection.from, -1);
       newTr.setSelection(new TextSelection(newTr.doc.resolve(caretPos)));
     }

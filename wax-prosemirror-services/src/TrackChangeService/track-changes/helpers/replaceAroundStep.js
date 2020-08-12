@@ -1,6 +1,6 @@
-import markDeletion from "./markDeletion";
-import markInsertion from "./markInsertion";
-import markWrapping from "./markWrapping";
+import markDeletion from './markDeletion';
+import markInsertion from './markInsertion';
+import markWrapping from './markWrapping';
 
 const replaceAroundStep = (
   state,
@@ -11,7 +11,7 @@ const replaceAroundStep = (
   doc,
   user,
   date,
-  group
+  group,
 ) => {
   if (step.from === step.gapFrom && step.to === step.gapTo) {
     // wrapped in something
@@ -23,7 +23,7 @@ const replaceAroundStep = (
     // unwrapped from something
     map.appendMap(step.invert(doc).getMap());
     map.appendMap(
-      markDeletion(newTr, step.from, step.gapFrom, user, date, group)
+      markDeletion(newTr, step.from, step.gapFrom, user, date, group),
     );
   } else if (
     step.slice.size === 2 &&
@@ -41,30 +41,30 @@ const replaceAroundStep = (
         step.slice.content.firstChild,
         user,
         date,
-        group
+        group,
       );
     }
   } else {
-    console.log("to fix");
-    // newTr.step(step);
-    // const ranges = [
-    //   {
-    //     from: step.getMap().map(step.from, -1),
-    //     to: step.getMap().map(step.gapFrom)
-    //   },
-    //   {
-    //     from: step.getMap().map(step.gapTo, -1),
-    //     to: step.getMap().map(step.to)
-    //   }
-    // ];
-    // ranges.forEach(range =>
-    //   doc.nodesBetween(range.from, range.to, (node, pos) => {
-    //     if (pos < range.from) {
-    //       return true;
-    //     }
-    //     markInsertion(newTr, range.from, range.to, user, date);
-    //   })
-    // );
+    console.log('to fix');
+    newTr.step(step);
+    const ranges = [
+      {
+        from: step.getMap().map(step.from, -1),
+        to: step.getMap().map(step.gapFrom),
+      },
+      {
+        from: step.getMap().map(step.gapTo, -1),
+        to: step.getMap().map(step.to),
+      },
+    ];
+    ranges.forEach(range =>
+      doc.nodesBetween(range.from, range.to, (node, pos) => {
+        if (pos < range.from) {
+          return true;
+        }
+        markInsertion(newTr, range.from, range.to, user, date);
+      }),
+    );
   }
 };
 

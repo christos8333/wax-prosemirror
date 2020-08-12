@@ -33,10 +33,10 @@ const backSpaceShortCut = (state, dispatch, view) =>
   );
 
 const undoShortCut = (state, dispatch, view) =>
-  undo(state, tr => dispatch(tr.setMeta('inputType', 'historyUndo')), view);
+  undo(state, tr => dispatch(tr.setMeta('inputType', 'Undo')), view);
 
 const redoShortCut = (state, dispatch, view) =>
-  redo(state, tr => dispatch(tr.setMeta('inputType', 'historyRedo')), view);
+  redo(state, tr => dispatch(tr.setMeta('inputType', 'Redo')), view);
 
 @injectable()
 class ShortCuts {

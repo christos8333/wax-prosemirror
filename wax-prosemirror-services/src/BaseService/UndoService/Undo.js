@@ -12,7 +12,7 @@ class Undo extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      undo(state, tr => dispatch(tr.setMeta('inputType', 'historyUndo')));
+      undo(state, tr => dispatch(tr.setMeta('inputType', 'Undo')));
     };
   }
 

@@ -102,7 +102,8 @@ const trackedTransaction = (tr, state, user) => {
   } else {
     if (
       state.selection.from === state.selection.to &&
-      tr.selection.$head.depth > 1
+      tr.selection.$head.depth > 1 &&
+      state.selection.from - tr.selection.from === 1
     ) {
       tr.steps.forEach(originalStep => {
         const step = originalStep.map(map);

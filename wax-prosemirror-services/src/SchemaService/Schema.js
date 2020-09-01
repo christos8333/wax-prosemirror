@@ -1,9 +1,9 @@
-import { Schema as PmPschema } from "prosemirror-model";
-import { injectable } from "inversify";
-import DefaultSchema from "./DefaultSchema";
+import { Schema as PmPschema } from 'prosemirror-model';
+import { injectable } from 'inversify';
+import DefaultSchema from './DefaultSchema';
 
-import Node from "./Node";
-import Mark from "./Mark";
+import Node from './Node';
+import Mark from './Mark';
 
 @injectable()
 export default class Schema {
@@ -60,7 +60,7 @@ export default class Schema {
       return this._nodes[instance.name]
         ? this._nodes[instance.name]
         : Object.assign(this._nodes, {
-            [instance.name]: instance
+            [instance.name]: instance,
           });
     }
 
@@ -68,7 +68,7 @@ export default class Schema {
       return this._marks[instance.name]
         ? this._marks[instance.name]
         : Object.assign(this._marks, {
-            [instance.name]: instance
+            [instance.name]: instance,
           });
     }
   }
@@ -76,7 +76,7 @@ export default class Schema {
   addProsemirrorSchema(nodes, type) {
     this.prosemirrorSchema[type] = Object.assign(
       this.prosemirrorSchema[type],
-      nodes
+      nodes,
     );
   }
 
@@ -94,7 +94,7 @@ export default class Schema {
 
     this.schema = new PmPschema({
       nodes: Object.assign(nodes, this.prosemirrorSchema.nodes),
-      marks: Object.assign(marks, this.prosemirrorSchema.marks)
+      marks: Object.assign(marks, this.prosemirrorSchema.marks),
     });
     return this.schema;
   }

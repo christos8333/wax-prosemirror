@@ -62,9 +62,10 @@ export default props => {
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
 
-    const tr = TrackChange.enabled
-      ? trackedTransaction(transaction, view.state, user)
-      : transaction;
+    const tr =
+      TrackChange && TrackChange.enabled
+        ? trackedTransaction(transaction, view.state, user)
+        : transaction;
 
     const state = view.state.apply(tr);
     view.updateState(state);

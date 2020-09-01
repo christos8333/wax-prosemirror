@@ -27,12 +27,7 @@ export default ({ area }) => {
     let top = 0;
     const allCommentsTop = [];
 
-    const nodesMarksToIterrate =
-      marksNodes[area] === 'main'
-        ? sortBy(marksNodes[area], ['pos'])
-        : marksNodes[area];
-
-    each(nodesMarksToIterrate, (markNode, pos) => {
+    each(marksNodes[area], (markNode, pos) => {
       const WaxSurface = main.dom.getBoundingClientRect();
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
@@ -186,7 +181,6 @@ const updateMarks = view => {
     const nodesAndMarks = [...uniqBy(finalMarks, 'attrs.id'), ...finalNodes];
 
     const groupedMarkNodes = {};
-
     nodesAndMarks.forEach(markNode => {
       const markNodeAttrs = markNode.attrs
         ? markNode.attrs
@@ -198,7 +192,11 @@ const updateMarks = view => {
         groupedMarkNodes[markNodeAttrs.group].push(markNode);
       }
     });
-    return groupedMarkNodes;
+
+    return {
+      main: sortBy(groupedMarkNodes.main, ['pos']),
+      notes: groupedMarkNodes.notes,
+    };
   }
   return [];
 };

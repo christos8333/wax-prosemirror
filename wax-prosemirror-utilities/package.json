@@ -13,5 +13,8 @@
     "prosemirror-commands": "1.1.4",
     "prosemirror-utils": "^0.9.6",
     "uuid": "^7.0.3"
+  },
+  "resolutions": {
+    "prosemirror-commands": "1.1.4"
   }
 }

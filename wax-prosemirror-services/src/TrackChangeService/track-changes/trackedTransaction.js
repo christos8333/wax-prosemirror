@@ -13,7 +13,7 @@ import replaceAroundStep from './helpers/replaceAroundStep';
 import addMarkStep from './helpers/addMarkStep';
 import removeMarkStep from './helpers/removeMarkStep';
 
-const trackedTransaction = (tr, state, user) => {
+const trackedTransaction = (tr, state, user, group = 'main') => {
   // Don't track table operations
   if (!tr.selectionSet) {
     const $pos = state.selection.$anchor;
@@ -45,7 +45,7 @@ const trackedTransaction = (tr, state, user) => {
     return tr;
   }
 
-  const group = tr.getMeta('outsideView') ? tr.getMeta('outsideView') : 'main';
+  // const group = tr.getMeta('outsideView') ? tr.getMeta('outsideView') : 'main';
   const newTr = state.tr;
   const map = new Mapping();
   const date = Math.floor(Date.now() / 300000);

@@ -22,7 +22,7 @@ eslint.rules = {
   'import/no-extraneous-dependencies': [
     'error',
     {
-      devDependencies: ['.storybook/**', 'stories/**'],
+      devDependencies: ['.storybook/**', 'stories/**', '.cz-config.js'],
     },
   ],
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],

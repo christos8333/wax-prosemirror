@@ -22,10 +22,7 @@ const Button = styled.button`
 const LinkComponent = ({ mark, setPosition, position }) => {
   const href = mark ? mark.attrs.href : null;
   const linkMark = mark ? mark : null;
-  const {
-    view: { main },
-    activeView,
-  } = useContext(WaxContext);
+  const { activeView } = useContext(WaxContext);
   const { state, dispatch } = activeView;
   const ref = useRef(null);
   const linkInput = useRef(null);
@@ -57,7 +54,8 @@ const LinkComponent = ({ mark, setPosition, position }) => {
   };
 
   const removeLink = () => {
-    dispatch(state.tr.removeMark(mark.from, mark.to, state.schema.marks.link));
+    const { tr } = state;
+    dispatch(tr.removeMark(mark.from, mark.to, state.schema.marks.link));
     activeView.focus();
   };
 
@@ -90,7 +88,7 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       selection: { $from, $to },
     } = state;
     const PMLinkMark = state.schema.marks['link'];
-    const actualMark = DocumentHelpers.getSelectionMark(state, PMLinkMark);
+    const actualMark = DocumentHelpers.findMark(state, PMLinkMark);
     setLLastLinkMark(actualMark);
 
     if (

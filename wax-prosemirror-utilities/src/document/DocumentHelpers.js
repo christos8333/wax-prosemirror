@@ -25,27 +25,27 @@ const findMark = (state, PMmark, toArr = false) => {
   return markFound;
 };
 
-const getSelectionMark = (state, PMmark) => {
-  const {
-    selection: { $from, $to },
-    doc,
-  } = state;
-  let markFound;
-  doc.nodesBetween($from.pos, $to.pos, (node, from) => {
-    if (node.marks) {
-      const actualMark = node.marks.find(mark => mark.type === PMmark);
-      if (actualMark) {
-        markFound = {
-          from: $from.pos,
-          to: $to.pos,
-          attrs: actualMark.attrs,
-        };
-      }
-    }
-  });
-
-  return markFound;
-};
+// const getSelectionMark = (state, PMmark) => {
+//   const {
+//     selection: { $from, $to },
+//     doc,
+//   } = state;
+//   let markFound;
+//   doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+//     if (node.marks) {
+//       const actualMark = node.marks.find(mark => mark.type === PMmark);
+//       if (actualMark) {
+//         markFound = {
+//           from,
+//           to: from + node.nodeSize,
+//           attrs: actualMark.attrs,
+//         };
+//       }
+//     }
+//   });
+//
+//   return markFound;
+// };
 
 /* this is a workaround for now to find marks
   that are pm will break them.
@@ -104,11 +104,17 @@ const findMarkPosition = (activeView, initialPos, markType) => {
   const actualMark = start.node.marks.find(mark => mark.type.name === markType);
   let startIndex = $pos.index();
   let startPos = $pos.start() + start.offset;
-  while (startIndex > 0 && actualMark.isInSet(parent.child(startIndex - 1).marks))
+  while (
+    startIndex > 0 &&
+    actualMark.isInSet(parent.child(startIndex - 1).marks)
+  )
     startPos -= parent.child(--startIndex).nodeSize;
   let endIndex = $pos.indexAfter();
   let endPos = startPos + start.node.nodeSize;
-  while (endPos < parent.childCount && actualMark.isInSet(parent.child(endIndex).marks))
+  while (
+    endPos < parent.childCount &&
+    actualMark.isInSet(parent.child(endIndex).marks)
+  )
     endPos += parent.child(endIndex++).nodeSize;
   return { from: startPos, to: endPos };
 };
@@ -163,7 +169,6 @@ export default {
   findInlineNodes,
   findChildrenByMark,
   findChildrenByAttr,
-  getSelectionMark,
   findFragmentedMark,
   findAllMarksWithSameId,
   findMarkPosition,

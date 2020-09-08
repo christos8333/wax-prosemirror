@@ -1,22 +1,25 @@
-import { useState, useContext, useLayoutEffect, useCallback } from "react";
-import { isObject } from "lodash";
-import { WaxContext } from "wax-prosemirror-core";
-import { DocumentHelpers } from "wax-prosemirror-utilities";
+import { useState, useContext, useLayoutEffect, useCallback } from 'react';
+import { isObject } from 'lodash';
+import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const defaultOverlay = {
   left: null,
   top: null,
   from: null,
   to: null,
-  mark: null
+  mark: null,
 };
 
 export default options => {
-  const { view: { main }, activeView } = useContext(WaxContext);
+  const {
+    view: { main },
+    activeView,
+  } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
-    position: "absolute",
-    ...defaultOverlay
+    position: 'absolute',
+    ...defaultOverlay,
   });
 
   let mark = {};
@@ -34,7 +37,7 @@ export default options => {
     const top = end.top + 20;
     return {
       top,
-      left
+      left,
     };
   };
 
@@ -48,14 +51,14 @@ export default options => {
       top,
       from,
       to,
-      selection
+      selection,
     };
   };
 
   const displayOnMark = (activeView, options) => {
     const { markType, followCursor } = options;
     const PMmark = activeView.state.schema.marks[markType];
-    mark = DocumentHelpers.getSelectionMark(activeView.state, PMmark);
+    mark = DocumentHelpers.findMark(activeView.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
     const { from, to } = followCursor ? activeView.state.selection : mark;
@@ -67,7 +70,7 @@ export default options => {
       top,
       from,
       to,
-      mark
+      mark,
     };
   };
 
@@ -81,15 +84,12 @@ export default options => {
     return displayOnMark(activeView, options);
   });
 
-  useLayoutEffect(
-    () => {
-      setPosition({
-        position: "absolute",
-        ...updatePosition(options.followCursor)
-      });
-    },
-    [JSON.stringify(updatePosition(options.followCursor))]
-  );
+  useLayoutEffect(() => {
+    setPosition({
+      position: 'absolute',
+      ...updatePosition(options.followCursor),
+    });
+  }, [JSON.stringify(updatePosition(options.followCursor))]);
 
   return [position, setPosition, mark];
 };

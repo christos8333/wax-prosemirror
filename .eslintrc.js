@@ -30,7 +30,7 @@ eslint.rules = {
 
   'react/prop-types': [
     2,
-    { ignore: ['children', 'className', 'onClick', 'theme'] },
+    { ignore: ['children', 'className', 'onClick', 'onMouseEnter', 'theme'] },
   ],
   // 'import/no-named-as-default': 0,
 };

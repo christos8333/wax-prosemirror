@@ -14,18 +14,22 @@ Wax Editor is build on top of the Prosemirror library. Check Prosemirror [websit
 Wax-prosemirror is under active development. The current roadmap is as follows:
 
 ### September 2020
+
 Alpha version, including comments and track changes. See the rest of this file for a full list of current functionality.
 
 ### November 2020
+
 Beta version, including some new features:
-* Find and replace
-* Spellchecker
-* Special characters
-* Transform cases
-* Word counter
-* Custom tags
+
+- Find and replace
+- Spellchecker
+- Special characters
+- Transform cases
+- Word counter
+- Custom tags
 
 ### January 2021
+
 V1.0, freeze new feature development, focus on stability, testing and bug fixes
 
 ## Get up and running

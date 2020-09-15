@@ -13,6 +13,7 @@ class Emphasis extends Tools {
 
   get run() {
     return (state, dispatch) => {
+      console.log('run');
       toggleMark(state.config.schema.marks.em)(state, dispatch);
     };
   }

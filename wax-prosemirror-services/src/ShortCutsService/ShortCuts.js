@@ -60,15 +60,6 @@ class ShortCuts {
   }
 
   pressEnter(state, dispatch) {
-    const commentMark = state.schema.marks.comment;
-    const commentOnSelection = DocumentHelpers.findFragmentedMark(
-      state,
-      commentMark,
-    );
-    if (commentOnSelection) {
-      state.schema.marks.comment.spec.inclusive = true;
-    }
-
     // LISTS
     if (splitListItem(this.schema.nodes.list_item)(state)) {
       splitListItem(this.schema.nodes.list_item)(state, dispatch);

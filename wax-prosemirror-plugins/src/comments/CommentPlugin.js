@@ -40,10 +40,18 @@ const getComment = state => {
       });
     });
 
-    if (allCommentsWithSameId.length > 1) {
-      const minPos = minBy(allCommentsWithSameId, 'pos');
-      const maxPos = maxBy(allCommentsWithSameId, 'pos');
+    const minPos = minBy(allCommentsWithSameId, 'pos');
+    const maxPos = maxBy(allCommentsWithSameId, 'pos');
 
+    if (
+      state.selection.from ===
+      maxPos.pos + last(allCommentsWithSameId).node.nodeSize
+    ) {
+      state.schema.marks.comment.spec.inclusive = false;
+    } else {
+      state.schema.marks.comment.spec.inclusive = true;
+    }
+    if (allCommentsWithSameId.length > 1) {
       return {
         from: minPos.pos,
         to: maxPos.pos + last(allCommentsWithSameId).node.nodeSize,

@@ -22,7 +22,7 @@ class Note extends Tools {
         );
       const footnote = state.config.schema.nodes.footnote.create(
         { id: uuidv4() },
-        content,
+        Fragment.empty,
       );
       dispatch(state.tr.replaceSelectionWith(footnote));
     };

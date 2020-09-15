@@ -1,4 +1,5 @@
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 import {
   key,
@@ -44,8 +45,11 @@ export function setSelectedChanges(state, type, pos) {
   if (!mark) {
     return;
   }
+
+  DocumentHelpers.findMarkPosition(state, pos, type);
+
   const selectedChange = node.isInline
-    ? getFromToMark(tr.doc, pos, mark)
+    ? DocumentHelpers.findMarkPosition(state, pos, type)
     : { from: pos, to: pos + node.nodeSize };
   let decos = DecorationSet.empty;
   let spec;
@@ -77,28 +81,4 @@ export function deactivateAllSelectedChanges(tr) {
     decos: DecorationSet.empty,
   };
   return tr.setMeta(key, pluginState).setMeta('track', true);
-}
-
-// From https://discuss.prosemirror.net/t/expanding-the-selection-to-the-active-mark/478/2 with some bugs fixed
-export function getFromToMark(doc, pos, mark) {
-  const $pos = doc.resolve(pos);
-  const { parent } = $pos;
-  const start = parent.childAfter($pos.parentOffset);
-  if (!start.node) {
-    return null;
-  }
-  let startIndex = $pos.index();
-  let startPos = $pos.start() + start.offset;
-  while (startIndex > 0 && mark.isInSet(parent.child(startIndex - 1).marks)) {
-    startPos -= parent.child(--startIndex).nodeSize;
-  }
-  let endIndex = $pos.index() + 1;
-  let endPos = $pos.start() + start.offset + start.node.nodeSize;
-  while (
-    endIndex < parent.childCount &&
-    mark.isInSet(parent.child(endIndex).marks)
-  ) {
-    endPos += parent.child(endIndex++).nodeSize;
-  }
-  return { from: startPos, to: endPos };
 }

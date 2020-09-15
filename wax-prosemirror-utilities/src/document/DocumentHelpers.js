@@ -96,6 +96,8 @@ const findAllMarksWithSameId = (state, mark) => {
   return allMarksWithSameId;
 };
 
+// From https://discuss.prosemirror.net/t/expanding-the-selection-to-the-active-mark/478/2
+
 const findMarkPosition = (state, initialPos, markType) => {
   const $pos = state.tr.doc.resolve(initialPos);
   const { parent } = $pos;

@@ -1,4 +1,4 @@
-import { getFromToMark } from './helpers';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const findSelectedChanges = state => {
   const { selection } = state;
@@ -87,19 +87,23 @@ const findSelectedChanges = state => {
   if (insertionMark) {
     selectedChanges.insertion = insertionSize
       ? { from: insertionPos, to: insertionPos + insertionSize }
-      : getFromToMark(state.doc, insertionPos, insertionMark);
+      : DocumentHelpers.findMarkPosition(state, insertionPos, 'insertion');
   }
 
   if (deletionMark) {
     selectedChanges.deletion = deletionSize
       ? { from: deletionPos, to: deletionPos + deletionSize }
-      : getFromToMark(state.doc, deletionPos, deletionMark);
+      : DocumentHelpers.findMarkPosition(state, deletionPos, 'deletion');
   }
 
   if (formatChangeMark) {
     selectedChanges.formatChange = formatChangeSize
       ? { from: formatChangePos, to: formatChangePos + formatChangeSize }
-      : getFromToMark(state.doc, formatChangePos, formatChangeMark);
+      : DocumentHelpers.findMarkPosition(
+          state,
+          formatChangePos,
+          'format_change',
+        );
   }
   return selectedChanges;
 };

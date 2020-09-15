@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { minBy, maxBy } from 'lodash';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 
@@ -10,6 +11,7 @@ import {
 } from 'prosemirror-schema-list';
 
 import {
+  toggleMark,
   baseKeymap,
   chainCommands,
   exitCode,
@@ -18,6 +20,8 @@ import {
   selectNodeBackward,
   deleteSelection,
 } from 'prosemirror-commands';
+
+import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const backSpace = chainCommands(
   deleteSelection,
@@ -42,6 +46,7 @@ const redoShortCut = (state, dispatch, view) =>
 class ShortCuts {
   constructor(plugins, schema) {
     this.insertBreak = this.insertBreak.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
     this.insertRule = this.insertRule.bind(this);
     this.PmPlugins = plugins;
     this.schema = schema;
@@ -52,6 +57,25 @@ class ShortCuts {
     const br = this.schema.nodes.hard_break.create();
     dispatch(state.tr.replaceSelectionWith(br).scrollIntoView());
     return true;
+  }
+
+  pressEnter(state, dispatch) {
+    const commentMark = state.schema.marks.comment;
+    const commentOnSelection = DocumentHelpers.findFragmentedMark(
+      state,
+      commentMark,
+    );
+    if (commentOnSelection) {
+      state.schema.marks.comment.spec.inclusive = true;
+    }
+
+    // LISTS
+    if (splitListItem(this.schema.nodes.list_item)(state)) {
+      splitListItem(this.schema.nodes.list_item)(state, dispatch);
+      return true;
+    }
+
+    return false;
   }
 
   insertRule(state, dispatch) {
@@ -94,7 +118,7 @@ class ShortCuts {
       'Mod-_': this.insertRule,
       'Mod-[': liftListItem(this.schema.nodes.list_item),
       'Mod-]': sinkListItem(this.schema.nodes.list_item),
-      Enter: splitListItem(this.schema.nodes.list_item),
+      Enter: this.pressEnter,
       'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
       'Shift-Ctrl-9': wrapInList(this.schema.nodes.orderedlist),
     };

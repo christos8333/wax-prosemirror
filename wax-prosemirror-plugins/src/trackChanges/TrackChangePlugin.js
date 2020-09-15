@@ -2,7 +2,8 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import findSelectedChanges from './FindSelectedChanges';
-import { deactivateAllSelectedChanges } from './helpers';
+
+// import { deactivateAllSelectedChanges } from './helpers';
 
 export const key = new PluginKey('track');
 export const selectedInsertionSpec = {};
@@ -111,7 +112,7 @@ export default options => {
       },
       handleDOMEvents: {
         focus: (view, _event) => {
-          view.dispatch(deactivateAllSelectedChanges(view.state.tr));
+          // view.dispatch(deactivateAllSelectedChanges(view.state.tr));
         },
       },
     },

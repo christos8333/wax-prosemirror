@@ -92,16 +92,22 @@ export default ({ comment, activeView, user, active }) => {
 
   const resolveComment = event => {
     if (event) event.stopPropagation();
+    let maxPos = comment.pos;
+    let minPos = comment.pos;
 
-    const actualComment = DocumentHelpers.findMarkPosition(
-      activeView.state,
-      allCommentsWithSameId[0].pos,
-      'comment',
-    );
+    allCommentsWithSameId.forEach(singleComment => {
+      const markPosition = DocumentHelpers.findMarkPosition(
+        state,
+        singleComment.pos,
+        'comment',
+      );
+      if (markPosition.from < minPos) minPos = markPosition.from;
+      if (markPosition.to > maxPos) maxPos = markPosition.to;
+    });
 
-    dispatch(
-      state.tr.removeMark(actualComment.from, actualComment.to, commentMark),
-    );
+    if (allCommentsWithSameId.length > 1)
+      maxPos += last(allCommentsWithSameId).node.nodeSize;
+    dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
   };
 

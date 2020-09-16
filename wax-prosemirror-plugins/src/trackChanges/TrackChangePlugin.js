@@ -25,12 +25,12 @@ export default options => {
         } = state;
 
         let { decos } = this.getState(oldState);
-
+        decos = DecorationSet.empty;
         if (tr.selectionSet) {
           const { insertion, deletion, formatChange } = findSelectedChanges(
             state,
           );
-          decos = DecorationSet.empty;
+
           const decoType = tr.selection.node
             ? Decoration.node
             : Decoration.inline;
@@ -40,13 +40,14 @@ export default options => {
               node.attrs.track &&
               node.attrs.track.find(track => track.type === 'block_change')
             ) {
-              const blockChangeTrack = node.attrs.track.find(
-                track => track.type === 'block_change',
-              );
-              console.log(state.selection, blockChangeTrack, node);
+              let nodeSize = pos;
+              node.descendants((childNode, childPos) => {
+                nodeSize += childNode.nodeSize;
+              });
+
               decos = decos.add(tr.doc, [
-                decoType(1, 100, {
-                  class: 'selected-block_change',
+                decoType(pos, nodeSize, {
+                  class: 'selected-block-change',
                 }),
               ]);
             }

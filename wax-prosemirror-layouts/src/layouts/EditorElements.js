@@ -196,7 +196,7 @@ export default css`
   .selected-deletion,
   .selected-format-change,
   .selected-block-change {
-    background-color: #fffacf;
+    background-color: #eefbfb;
   }
 
   .format-change {

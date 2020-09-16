@@ -1,9 +1,14 @@
 import { trackChangesMarks, trackChangesNodes } from 'wax-prosemirror-schema';
+import { TrackChangePlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
 import TrackChangeServices from './index';
 
+const PLUGIN_KEY = 'trackChngePlugin';
+
 class TrackChangeService extends Service {
-  boot() {}
+  boot() {
+    this.app.PmPlugins.add(PLUGIN_KEY, TrackChangePlugin(PLUGIN_KEY));
+  }
 
   register() {
     const createMark = this.container.get('CreateMark');

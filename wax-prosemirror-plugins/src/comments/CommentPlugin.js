@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { minBy, maxBy, last } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
@@ -7,7 +9,10 @@ const commentPlugin = new PluginKey('commentPlugin');
 
 const getComment = state => {
   const commentMark = state.schema.marks.comment;
-  const commentOnSelection = DocumentHelpers.findFragmentedMark(state, commentMark);
+  const commentOnSelection = DocumentHelpers.findFragmentedMark(
+    state,
+    commentMark,
+  );
 
   // Don't allow Active comment if selection is not collapsed
   if (
@@ -19,21 +24,36 @@ const getComment = state => {
   }
 
   if (commentOnSelection) {
-    const commentNodes = DocumentHelpers.findChildrenByMark(state.doc, commentMark, true);
+    const commentNodes = DocumentHelpers.findChildrenByMark(
+      state.doc,
+      commentMark,
+      true,
+    );
 
     const allCommentsWithSameId = [];
     commentNodes.map(node => {
       node.node.marks.filter(mark => {
-        if (mark.type.name === 'comment' && commentOnSelection.attrs.id === mark.attrs.id) {
+        if (
+          mark.type.name === 'comment' &&
+          commentOnSelection.attrs.id === mark.attrs.id
+        ) {
           allCommentsWithSameId.push(node);
         }
       });
     });
 
-    if (allCommentsWithSameId.length > 1) {
-      const minPos = minBy(allCommentsWithSameId, 'pos');
-      const maxPos = maxBy(allCommentsWithSameId, 'pos');
+    const minPos = minBy(allCommentsWithSameId, 'pos');
+    const maxPos = maxBy(allCommentsWithSameId, 'pos');
 
+    if (
+      state.selection.from ===
+      maxPos.pos + last(allCommentsWithSameId).node.nodeSize
+    ) {
+      state.schema.marks.comment.spec.inclusive = false;
+    } else {
+      state.schema.marks.comment.spec.inclusive = true;
+    }
+    if (allCommentsWithSameId.length > 1) {
       return {
         from: minPos.pos,
         to: maxPos.pos + last(allCommentsWithSameId).node.nodeSize,

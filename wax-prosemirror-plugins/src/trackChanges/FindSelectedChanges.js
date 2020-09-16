@@ -1,35 +1,42 @@
-import { getFromToMark } from './helpers';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const findSelectedChanges = state => {
-  const selection = state.selection,
-    selectedChanges = {
-      insertion: false,
-      deletion: false,
-      formatChange: false,
-    };
-  let insertionPos = false,
-    deletionPos = false,
-    formatChangePos = false,
-    insertionMark,
-    deletionMark,
-    formatChangeMark,
-    insertionSize,
-    deletionSize,
-    formatChangeSize;
+  const { selection } = state;
+  const selectedChanges = {
+    insertion: false,
+    deletion: false,
+    formatChange: false,
+  };
+
+  let insertionPos = false;
+  let deletionPos = false;
+  let formatChangePos = false;
+  let insertionMark;
+  let deletionMark;
+  let formatChangeMark;
+  let insertionSize;
+  let deletionSize;
+  let formatChangeSize;
 
   if (selection.empty) {
-    const resolvedPos = state.doc.resolve(selection.from),
-      marks = resolvedPos.marks();
+    const resolvedPos = state.doc.resolve(selection.from);
+    const marks = resolvedPos.marks();
+
     if (marks) {
-      insertionMark = marks.find(mark => mark.type.name === 'insertion' && !mark.attrs.approved);
+      insertionMark = marks.find(
+        mark => mark.type.name === 'insertion' && !mark.attrs.approved,
+      );
+
       if (insertionMark) {
         insertionPos = selection.from;
       }
       deletionMark = marks.find(mark => mark.type.name === 'deletion');
+
       if (deletionMark) {
         deletionPos = selection.from;
       }
       formatChangeMark = marks.find(mark => mark.type.name === 'format_change');
+
       if (formatChangeMark) {
         formatChangePos = selection.from;
       }
@@ -42,7 +49,9 @@ const findSelectedChanges = state => {
       if (!insertionMark) {
         insertionMark = node.attrs.track
           ? node.attrs.track.find(trackAttr => trackAttr.type === 'insertion')
-          : node.marks.find(mark => mark.type.name === 'insertion' && !mark.attrs.approved);
+          : node.marks.find(
+              mark => mark.type.name === 'insertion' && !mark.attrs.approved,
+            );
         if (insertionMark) {
           insertionPos = pos;
           if (!node.isInline) {
@@ -62,7 +71,9 @@ const findSelectedChanges = state => {
         }
       }
       if (!formatChangeMark) {
-        formatChangeMark = node.marks.find(mark => mark.type.name === 'format_change');
+        formatChangeMark = node.marks.find(
+          mark => mark.type.name === 'format_change',
+        );
         if (formatChangeMark) {
           formatChangePos = pos;
           if (!node.isInline) {
@@ -70,26 +81,31 @@ const findSelectedChanges = state => {
           }
         }
       }
+      return false;
     });
   }
   if (insertionMark) {
     selectedChanges.insertion = insertionSize
       ? { from: insertionPos, to: insertionPos + insertionSize }
-      : getFromToMark(state.doc, insertionPos, insertionMark);
+      : DocumentHelpers.findMarkPosition(state, insertionPos, 'insertion');
   }
 
   if (deletionMark) {
     selectedChanges.deletion = deletionSize
       ? { from: deletionPos, to: deletionPos + deletionSize }
-      : getFromToMark(state.doc, deletionPos, deletionMark);
+      : DocumentHelpers.findMarkPosition(state, deletionPos, 'deletion');
   }
 
   if (formatChangeMark) {
     selectedChanges.formatChange = formatChangeSize
       ? { from: formatChangePos, to: formatChangePos + formatChangeSize }
-      : getFromToMark(state.doc, formatChangePos, formatChangeMark);
+      : DocumentHelpers.findMarkPosition(
+          state,
+          formatChangePos,
+          'format_change',
+        );
   }
   return selectedChanges;
 };
 
-export { findSelectedChanges };
+export default findSelectedChanges;

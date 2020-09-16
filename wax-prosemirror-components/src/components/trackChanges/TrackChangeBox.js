@@ -14,6 +14,7 @@ const TrackChangeBoxStyled = styled.div`
   transition: ${({ state }) => 'top 1s, opacity 1.5s, left 1s'};
   top: ${props => (props.top ? `${props.top}px` : 0)};
   left: ${props => (props.active ? `${63}%` : `${65}%`)};
+  max-width: 450px;
   opacity: ${({ state }) => {
     switch (state) {
       case 'exited':

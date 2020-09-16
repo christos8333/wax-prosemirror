@@ -97,7 +97,7 @@ export default ({ comment, activeView, user, active }) => {
 
     allCommentsWithSameId.forEach(singleComment => {
       const markPosition = DocumentHelpers.findMarkPosition(
-        activeView,
+        state,
         singleComment.pos,
         'comment',
       );

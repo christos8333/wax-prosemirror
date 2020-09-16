@@ -20,6 +20,7 @@ const LayoutWrapper = styled.div`
       position: relative;
       bottom: 14px;
       background: white;
+      z-index: 999;
       color: #a3a3a3;
       font-weight: 600;
       letter-spacing: 0.15em;
@@ -105,7 +106,7 @@ const WaxSurfaceScroll = styled.div`
 
 const MainMenuContainer = styled.div`
   background: #fff;
-  height: 52px;
+  min-height: 52px;
   line-height: 32px;
   position: relative;
   user-select: none;
@@ -120,7 +121,8 @@ const MainMenuInner = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  background: transparent;
+  height: 100%;
+  background: #fff;
   z-index: 9999;
   div {
     display: flex;
@@ -183,7 +185,7 @@ const CommentsContainer = styled.div`
   height: 100%;
 `;
 
-let surfaceHeight = 700;
+let surfaceHeight = 500;
 let notesHeight = 50;
 
 const onResizeEnd = arr => {
@@ -250,7 +252,7 @@ const EditoriaLayout = ({ editor }) => {
           <PanelGroup
             direction="column"
             panelWidths={[
-              { size: surfaceHeight, resize: 'dynamic' },
+              { size: surfaceHeight, resize: 'stretch' },
               { size: notesHeight, resize: 'stretch' },
             ]}
             onResizeEnd={onResizeEnd}

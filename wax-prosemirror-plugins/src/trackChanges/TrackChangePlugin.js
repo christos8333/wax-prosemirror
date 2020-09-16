@@ -1,41 +1,15 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { findSelectedChanges } from './FindSelectedChanges';
-import { deactivateAllSelectedChanges } from './helpers';
+import findSelectedChanges from './FindSelectedChanges';
 
 export const key = new PluginKey('track');
-export const selectedInsertionSpec = {};
-export const selectedDeletionSpec = {};
-export const selectedChangeFormatSpec = {};
-export const selectedChangeBlockSpec = {};
 
 export default options => {
   return new Plugin({
     key,
     state: {
       init(config, state) {
-        const userIds = ['33'];
-        state.doc.descendants(node => {
-          if (node.attrs.track) {
-            node.attrs.track.forEach(track => {
-              if (!userIds.includes(track.user) && track.user !== 0) {
-                userIds.push(track.user);
-              }
-            });
-          } else {
-            node.marks.forEach(mark => {
-              if (
-                ['deletion', 'insertion', 'format_change'].includes(mark.type.name) &&
-                !userIds.includes(mark.attrs.user) &&
-                mark.attrs.user !== 0
-              ) {
-                userIds.push(mark.attrs.user);
-              }
-            });
-          }
-        });
-
         return {
           decos: DecorationSet.empty,
         };
@@ -43,51 +17,61 @@ export default options => {
       apply(tr, prev, oldState, state) {
         const meta = tr.getMeta(key);
         if (meta) {
-          // There has been an update, return values from meta instead
-          // of previous values
           return meta;
         }
 
-        let { decos } = this.getState(oldState);
+        const {
+          selection: { from, to },
+        } = state;
 
+        let { decos } = this.getState(oldState);
+        decos = DecorationSet.empty;
         if (tr.selectionSet) {
-          const { insertion, deletion, formatChange } = findSelectedChanges(state);
-          decos = DecorationSet.empty;
-          const decoType = tr.selection.node ? Decoration.node : Decoration.inline;
+          const { insertion, deletion, formatChange } = findSelectedChanges(
+            state,
+          );
+
+          const decoType = tr.selection.node
+            ? Decoration.node
+            : Decoration.inline;
+
+          state.doc.nodesBetween(from, to, (node, pos) => {
+            if (
+              node.attrs.track &&
+              node.attrs.track.find(track => track.type === 'block_change')
+            ) {
+              let nodeSize = pos;
+              node.descendants((childNode, childPos) => {
+                nodeSize += childNode.nodeSize;
+              });
+
+              decos = decos.add(tr.doc, [
+                decoType(pos, nodeSize, {
+                  class: 'selected-block-change',
+                }),
+              ]);
+            }
+          });
+
           if (insertion) {
             decos = decos.add(tr.doc, [
-              decoType(
-                insertion.from,
-                insertion.to,
-                {
-                  class: 'selected-insertion',
-                },
-                selectedInsertionSpec,
-              ),
+              decoType(insertion.from, insertion.to, {
+                class: 'selected-insertion',
+              }),
             ]);
           }
           if (deletion) {
             decos = decos.add(tr.doc, [
-              decoType(
-                deletion.from,
-                deletion.to,
-                {
-                  class: 'selected-deletion',
-                },
-                selectedDeletionSpec,
-              ),
+              decoType(deletion.from, deletion.to, {
+                class: 'selected-deletion',
+              }),
             ]);
           }
           if (formatChange) {
             decos = decos.add(tr.doc, [
-              decoType(
-                formatChange.from,
-                formatChange.to,
-                {
-                  class: 'selected-format-change',
-                },
-                selectedChangeFormatSpec,
-              ),
+              decoType(formatChange.from, formatChange.to, {
+                class: 'selected-format-change',
+              }),
             ]);
           }
         } else {
@@ -105,7 +89,7 @@ export default options => {
       },
       handleDOMEvents: {
         focus: (view, _event) => {
-          view.dispatch(deactivateAllSelectedChanges(view.state.tr));
+          // view.dispatch(deactivateAllSelectedChanges(view.state.tr));
         },
       },
     },

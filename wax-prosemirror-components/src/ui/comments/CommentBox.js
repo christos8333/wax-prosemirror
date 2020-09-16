@@ -47,7 +47,7 @@ const Resolve = styled.button`
 `;
 
 const StyledReply = styled(CommentReply)`
-  border-top: 1px solid gray;
+  border-top: ${props => !props.isNewComment && '1px solid gray'};
 `;
 
 const CommentBox = props => {
@@ -67,9 +67,11 @@ const CommentBox = props => {
     onClickBox(commentId);
   };
 
+  if (!active && (!commentData || commentData.length === 0)) return null;
+
   return (
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
-      {active && (
+      {active && commentData.length > 0 && (
         <Head>
           <Resolve onClick={() => onClickResolve(commentId)}>Resolve</Resolve>
         </Head>
@@ -77,7 +79,12 @@ const CommentBox = props => {
 
       <CommentItemList active={active} data={commentData} />
 
-      {active && <StyledReply onClickPost={onClickPost} />}
+      {active && (
+        <StyledReply
+          isNewComment={commentData.length === 0}
+          onClickPost={onClickPost}
+        />
+      )}
     </Wrapper>
   );
 };

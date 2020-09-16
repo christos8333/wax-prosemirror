@@ -30,6 +30,17 @@ export const Base = () => {
   );
 };
 
+export const Empty = () => (
+  <CommentBox
+    active
+    commentData={[]}
+    commentId="4"
+    onClickBox={id => console.log('set active', id)}
+    onClickPost={onClickPost}
+    onClickResolve={id => console.log('resolve id', id)}
+  />
+);
+
 export const NotActive = () => (
   <CommentBox
     commentData={commentData}

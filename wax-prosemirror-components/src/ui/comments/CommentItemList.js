@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { clone, uniqueId } from 'lodash'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { clone, uniqueId } from 'lodash';
 
 // import { th } from '../_helpers'
-import CommentItem from './CommentItem'
+import CommentItem from './CommentItem';
 
 const Wrapper = styled.div`
   padding: 8px 16px;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   > div:not(:last-of-type) {
     margin-bottom: 16px;
   }
-`
+`;
 
 const More = styled.span`
   background: gray;
@@ -21,26 +21,28 @@ const More = styled.span`
   /* cursor: default; */
   display: inline-block;
   padding: 4px 8px;
-`
+`;
 
 const CommentItemList = props => {
-  const { active, className, data } = props
-  const [items, setItems] = useState(data)
+  const { active, className, data } = props;
+  if (!data || data.length === 0) return null;
+
+  const [items, setItems] = useState(data);
 
   useEffect(() => {
     if (!active) {
-      const first = clone(data[0])
-      const threshold = 100 // after how many characters do you trunctate
+      const first = clone(data[0]);
+      const threshold = 100; // after how many characters do you trunctate
 
       if (first.content.length > threshold) {
-        first.content = `${first.content.substring(1, threshold)}...`
+        first.content = `${first.content.substring(1, threshold)}...`;
       }
 
-      setItems([first])
+      setItems([first]);
     } else {
-      setItems(data)
+      setItems(data);
     }
-  }, [active, data])
+  }, [active, data]);
 
   return (
     <Wrapper active={active} className={className}>
@@ -53,14 +55,14 @@ const CommentItemList = props => {
         />
       ))}
 
-      {!active && (
+      {!active && data.length > 1 && (
         <div>
           <More>{data.length - 1} more</More>
         </div>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
 CommentItemList.propTypes = {
   /** Whether this list belongs to the current active comment */
@@ -73,11 +75,11 @@ CommentItemList.propTypes = {
       timestamp: PropTypes.string.isRequired,
     }),
   ),
-}
+};
 
 CommentItemList.defaultProps = {
   active: false,
   data: [],
-}
+};
 
-export default CommentItemList
+export default CommentItemList;

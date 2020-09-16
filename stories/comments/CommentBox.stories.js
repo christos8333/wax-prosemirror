@@ -11,6 +11,8 @@ const commentData = range(5).map(() => ({
   timestamp: '3 days ago',
 }));
 
+const onClickPost = data => console.log(data);
+
 export const Base = () => {
   const [active, setActive] = useState(false);
 
@@ -21,6 +23,7 @@ export const Base = () => {
         commentData={commentData}
         commentId="4"
         onClickBox={id => setActive(true)}
+        onClickPost={onClickPost}
         onClickResolve={id => console.log('resolve id', id)}
       />
     </Demo>
@@ -42,6 +45,7 @@ export const Active = () => (
     commentData={commentData}
     commentId="4"
     onClickBox={id => console.log('set active', id)}
+    onClickPost={onClickPost}
     onClickResolve={id => console.log('resolve id', id)}
   />
 );

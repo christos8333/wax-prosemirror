@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 
 // import { th } from '../_helpers'
-import CommentItemList from './CommentItemList'
-import CommentReply from './CommentReply'
+import CommentItemList from './CommentItemList';
+import CommentReply from './CommentReply';
 
 const inactive = css`
   background: #e2e2e2;
@@ -16,7 +16,7 @@ const inactive = css`
     /* background: white; */
     box-shadow: 0 0 1px 2px gray;
   }
-`
+`;
 
 const Wrapper = styled.div`
   background: white;
@@ -28,13 +28,13 @@ const Wrapper = styled.div`
   /* padding: 8px 0; */
 
   ${props => !props.active && inactive}
-`
+`;
 
 const Head = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 8px 16px 0;
-`
+`;
 
 const Resolve = styled.button`
   align-self: flex-end;
@@ -44,11 +44,11 @@ const Resolve = styled.button`
   &:hover {
     background: blue;
   }
-`
+`;
 
 const StyledReply = styled(CommentReply)`
   border-top: 1px solid gray;
-`
+`;
 
 const CommentBox = props => {
   const {
@@ -57,14 +57,15 @@ const CommentBox = props => {
     commentId,
     commentData,
     onClickBox,
+    onClickPost,
     onClickResolve,
-  } = props
+  } = props;
 
   // send signal to make this comment active
   const onClickWrapper = () => {
-    if (active) return
-    onClickBox(commentId)
-  }
+    if (active) return;
+    onClickBox(commentId);
+  };
 
   return (
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
@@ -76,10 +77,10 @@ const CommentBox = props => {
 
       <CommentItemList active={active} data={commentData} />
 
-      {active && <StyledReply />}
+      {active && <StyledReply onClickPost={onClickPost} />}
     </Wrapper>
-  )
-}
+  );
+};
 
 CommentBox.propTypes = {
   /** Whether this is the current active comment */
@@ -100,13 +101,15 @@ CommentBox.propTypes = {
    *  Will only run if comment is not active already.
    */
   onClickBox: PropTypes.func.isRequired,
+  /** Function to run when "post" button is clicked to send reply */
+  onClickPost: PropTypes.func.isRequired,
   /** Function to run when "resolve" button is clicked */
   onClickResolve: PropTypes.func.isRequired,
-}
+};
 
 CommentBox.defaultProps = {
   active: false,
   commentData: [],
-}
+};
 
-export default CommentBox
+export default CommentBox;

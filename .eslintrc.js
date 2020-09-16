@@ -8,6 +8,10 @@ const { eslint } = require('@coko/lint');
  *
  */
 
+eslint.env = {
+  browser: true,
+};
+
 eslint.parser = 'babel-eslint';
 
 eslint.parserOptions = {

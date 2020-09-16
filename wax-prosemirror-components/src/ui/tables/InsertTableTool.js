@@ -1,6 +1,11 @@
+/**
+ * Adapted from https://github.com/chanzuckerberg/czi-prosemirror/blob/master/src/ui/TableGridSizeEditor.js
+ */
+
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-handler-names */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-find-dom-node */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-plusplus */
 /* eslint-disable prefer-template */
@@ -8,12 +13,8 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-// import cx from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
-
-// import clamp from './clamp';
 
 const clamp = (min, val, max) => {
   if (val < min) {
@@ -35,8 +36,7 @@ const isIntersected = (r1, r2, padding) => {
   );
 };
 
-const fromXY = (x, y, padding) => {
-  padding = padding || 0;
+const fromXY = (x, y, padding = 0) => {
   return {
     x: x - padding,
     y: y - padding,
@@ -70,23 +70,12 @@ const htmlElementToRect = el => {
   };
 };
 
-// import htmlElementToRect from './htmlElementToRect';
-// import { fromHTMlElement, fromXY, isIntersected } from './rects';
-
-// import './czi-table-grid-size-editor.css';
-
-// export type TableGridSizeEditorValue = {
-//   cols: number,
-//   rows: number,
-// };
-
 const GUTTER_SIZE = 5;
 const CELL_SIZE = 16;
 const MAX_SIZE = 20;
 
 class GridCell extends React.PureComponent {
   render() {
-    console.log('render!');
     const { x, y, selected } = this.props;
     const style = {
       left: x + 'px',
@@ -100,9 +89,6 @@ class GridCell extends React.PureComponent {
     };
 
     if (selected) style.background = 'skyblue';
-    // const className = cx('czi-table-grid-size-editor-cell', {
-    //   selected,
-    // });
     return <div style={style} />;
   }
 }
@@ -128,14 +114,14 @@ class TableGridSizeEditor extends React.PureComponent {
   //   close: (val: TableGridSizeEditorValue) => void,
   // };
 
-  // componentWillUnmount(): void {
-  //   if (this._entered) {
-  //     document.removeEventListener('mousemove', this._onMouseMove, true);
-  //   }
-  //   this._rafID && cancelAnimationFrame(this._rafID);
-  // }
+  componentWillUnmount() {
+    if (this._entered) {
+      document.removeEventListener('mousemove', this._onMouseMove, true);
+    }
+    this._rafID && cancelAnimationFrame(this._rafID);
+  }
 
-  _onRef = (ref: any): void => {
+  _onRef = ref => {
     this._ref = ref;
   };
 
@@ -251,14 +237,13 @@ class TableGridSizeEditor extends React.PureComponent {
     return (
       <div style={wrapperStyle} ref={this._onRef}>
         <div
-          // className="czi-table-grid-size-editor-body"
           onMouseDown={this._onMouseDown}
           onMouseEnter={this._onMouseEnter}
           style={bodyStyle}
         >
           {cells}
         </div>
-        <div className="czi-table-grid-size-editor-footer">
+        <div>
           {rows} X {cols}
         </div>
       </div>

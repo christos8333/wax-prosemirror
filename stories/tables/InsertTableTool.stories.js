@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // import { lorem } from 'faker'
 
-import TableTool from '../../wax-prosemirror-components/src/ui/tables/TableTool';
+import InsertTableTool from '../../wax-prosemirror-components/src/ui/tables/InsertTableTool';
 
 const Wrapper = styled.div`
   height: 450px;
@@ -10,11 +10,11 @@ const Wrapper = styled.div`
 
 export const Base = () => (
   <Wrapper>
-    <TableTool />
+    <InsertTableTool />
   </Wrapper>
 );
 
 export default {
-  component: TableTool,
+  component: InsertTableTool,
   title: 'Tables/Table Tool',
 };

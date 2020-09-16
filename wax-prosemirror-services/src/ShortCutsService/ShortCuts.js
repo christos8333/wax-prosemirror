@@ -11,7 +11,6 @@ import {
 } from 'prosemirror-schema-list';
 
 import {
-  toggleMark,
   baseKeymap,
   chainCommands,
   exitCode,
@@ -20,8 +19,6 @@ import {
   selectNodeBackward,
   deleteSelection,
 } from 'prosemirror-commands';
-
-import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const backSpace = chainCommands(
   deleteSelection,

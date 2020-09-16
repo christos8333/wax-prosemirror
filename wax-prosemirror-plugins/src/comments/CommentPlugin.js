@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { minBy, maxBy, last } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';

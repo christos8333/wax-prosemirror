@@ -16,29 +16,6 @@ export default options => {
     key,
     state: {
       init(config, state) {
-        const userIds = [];
-        state.doc.descendants(node => {
-          if (node.attrs.track) {
-            node.attrs.track.forEach(track => {
-              if (!userIds.includes(track.user) && track.user !== 0) {
-                userIds.push(track.user);
-              }
-            });
-          } else {
-            node.marks.forEach(mark => {
-              if (
-                ['deletion', 'insertion', 'format_change'].includes(
-                  mark.type.name,
-                ) &&
-                !userIds.includes(mark.attrs.user) &&
-                mark.attrs.user !== 0
-              ) {
-                userIds.push(mark.attrs.user);
-              }
-            });
-          }
-        });
-
         return {
           decos: DecorationSet.empty,
         };
@@ -46,10 +23,24 @@ export default options => {
       apply(tr, prev, oldState, state) {
         const meta = tr.getMeta(key);
         if (meta) {
-          // There has been an update, return values from meta instead
-          // of previous values
           return meta;
         }
+
+        const {
+          selection: { from, to },
+        } = state;
+
+        state.doc.nodesBetween(from, to, (node, pos) => {
+          if (
+            node.attrs.track &&
+            node.attrs.track.find(track => track.type === 'block_change')
+          ) {
+            const blockChangeTrack = node.attrs.track.find(
+              track => track.type === 'block_change',
+            );
+            console.log(blockChangeTrack);
+          }
+        });
 
         let { decos } = this.getState(oldState);
 

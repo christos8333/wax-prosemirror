@@ -3,13 +3,7 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import findSelectedChanges from './FindSelectedChanges';
 
-// import { deactivateAllSelectedChanges } from './helpers';
-
 export const key = new PluginKey('track');
-export const selectedInsertionSpec = {};
-export const selectedDeletionSpec = {};
-export const selectedChangeFormatSpec = {};
-export const selectedChangeBlockSpec = {};
 
 export default options => {
   return new Plugin({
@@ -30,18 +24,6 @@ export default options => {
           selection: { from, to },
         } = state;
 
-        state.doc.nodesBetween(from, to, (node, pos) => {
-          if (
-            node.attrs.track &&
-            node.attrs.track.find(track => track.type === 'block_change')
-          ) {
-            const blockChangeTrack = node.attrs.track.find(
-              track => track.type === 'block_change',
-            );
-            console.log(blockChangeTrack);
-          }
-        });
-
         let { decos } = this.getState(oldState);
 
         if (tr.selectionSet) {
@@ -52,40 +34,43 @@ export default options => {
           const decoType = tr.selection.node
             ? Decoration.node
             : Decoration.inline;
+
+          state.doc.nodesBetween(from, to, (node, pos) => {
+            if (
+              node.attrs.track &&
+              node.attrs.track.find(track => track.type === 'block_change')
+            ) {
+              const blockChangeTrack = node.attrs.track.find(
+                track => track.type === 'block_change',
+              );
+              console.log(state.selection, blockChangeTrack, node);
+              decos = decos.add(tr.doc, [
+                decoType(1, 100, {
+                  class: 'selected-block_change',
+                }),
+              ]);
+            }
+          });
+
           if (insertion) {
             decos = decos.add(tr.doc, [
-              decoType(
-                insertion.from,
-                insertion.to,
-                {
-                  class: 'selected-insertion',
-                },
-                selectedInsertionSpec,
-              ),
+              decoType(insertion.from, insertion.to, {
+                class: 'selected-insertion',
+              }),
             ]);
           }
           if (deletion) {
             decos = decos.add(tr.doc, [
-              decoType(
-                deletion.from,
-                deletion.to,
-                {
-                  class: 'selected-deletion',
-                },
-                selectedDeletionSpec,
-              ),
+              decoType(deletion.from, deletion.to, {
+                class: 'selected-deletion',
+              }),
             ]);
           }
           if (formatChange) {
             decos = decos.add(tr.doc, [
-              decoType(
-                formatChange.from,
-                formatChange.to,
-                {
-                  class: 'selected-format-change',
-                },
-                selectedChangeFormatSpec,
-              ),
+              decoType(formatChange.from, formatChange.to, {
+                class: 'selected-format-change',
+              }),
             ]);
           }
         } else {

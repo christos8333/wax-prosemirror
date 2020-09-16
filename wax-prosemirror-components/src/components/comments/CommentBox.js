@@ -14,10 +14,10 @@ const CommentBoxStyled = styled.div`
   flex-direction: column;
   margin-top: 10px;
   border: 1px solid #ffab20;
-  position: absolute;
+  position: relative;
   transition: ${({ state }) => 'top 1s, opacity 1.5s, left 1s'};
   top: ${props => (props.top ? `${props.top}px` : 0)};
-  left: ${props => (props.active ? `${63}%` : `${65}%`)};
+  left: ${props => (props.active ? `${-2}%` : `0%`)};
   opacity: ${({ state }) => {
     switch (state) {
       case 'exited':

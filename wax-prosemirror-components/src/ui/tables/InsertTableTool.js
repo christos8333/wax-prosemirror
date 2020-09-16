@@ -1,8 +1,9 @@
 /**
  * Adapted from https://github.com/chanzuckerberg/czi-prosemirror/blob/master/src/ui/TableGridSizeEditor.js
+ *
+ * TO DO -- Implement a gdocs-style CSS only solution to dramatically cut back on renders
  */
 
-/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-handler-names */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-find-dom-node */
@@ -14,6 +15,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 const clamp = (min, val, max) => {
@@ -93,6 +95,12 @@ class GridCell extends React.PureComponent {
   }
 }
 
+GridCell.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  selected: PropTypes.bool.isRequired,
+};
+
 class TableGridSizeEditor extends React.PureComponent {
   _ex = 0;
   _ey = 0;
@@ -109,10 +117,6 @@ class TableGridSizeEditor extends React.PureComponent {
       cols: 1,
     };
   }
-
-  // props: {
-  //   close: (val: TableGridSizeEditorValue) => void,
-  // };
 
   componentWillUnmount() {
     if (this._entered) {
@@ -179,7 +183,7 @@ class TableGridSizeEditor extends React.PureComponent {
 
   _onMouseDown = e => {
     e.preventDefault();
-    this.props.close(this.state);
+    this.props.onGridSelect(this.state);
   };
 
   render() {
@@ -250,5 +254,9 @@ class TableGridSizeEditor extends React.PureComponent {
     );
   }
 }
+
+TableGridSizeEditor.propTypes = {
+  onGridSelect: PropTypes.func.isRequired,
+};
 
 export default TableGridSizeEditor;

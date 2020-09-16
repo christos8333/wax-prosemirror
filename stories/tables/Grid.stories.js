@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 
 export const Base = () => (
   <Wrapper>
-    <Grid intialRows={5} initialColumns={5} />;
+    <Grid />
   </Wrapper>
 );
 

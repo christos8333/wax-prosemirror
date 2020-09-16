@@ -89,6 +89,23 @@ class RejectTrackChange extends Tools {
               formatChangeMark,
             ),
           );
+        } else if (!node.isInline && node.attrs.track) {
+          const blockChangeTrack = node.attrs.track.find(
+            track => track.type === 'block_change',
+          );
+          if (blockChangeTrack) {
+            const track = node.attrs.track.filter(
+              track => track !== blockChangeTrack,
+            );
+            tr.setNodeMarkup(
+              map.map(pos),
+              state.schema.nodes[blockChangeTrack.before.type],
+              Object.assign({}, node.attrs, blockChangeTrack.before.attrs, {
+                track,
+              }),
+              node.marks,
+            );
+          }
         }
       });
       if (tr.steps.length) dispatch(tr);

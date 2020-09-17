@@ -1,6 +1,10 @@
+import React from 'react';
+import { isEmpty } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
+import { icons, CreateTable } from 'wax-prosemirror-components';
+
 import Tools from '../../lib/Tools';
 
 export default
@@ -11,9 +15,7 @@ class Table extends Tools {
   name = 'Table';
 
   get run() {
-    return (state, dispatch) => {
-      return Commands.createTable(state, dispatch);
-    };
+    return (state, dispatch) => {};
   }
 
   select = (state, activeViewId) => {
@@ -25,5 +27,13 @@ class Table extends Tools {
     return state => {
       return Commands.canInsert(state.config.schema.nodes.table)(state);
     };
+  }
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+
+    return this._isDisplayed ? (
+      <CreateTable key={uuidv4()} item={this.toJSON()} view={view} />
+    ) : null;
   }
 }

@@ -1,36 +1,36 @@
-import Service from "../../Service";
-import { tableNodes, goToNextCell } from "prosemirror-tables";
-import Table from "./Table";
+import Service from '../../Service';
+import { tableNodes, goToNextCell } from 'prosemirror-tables';
+import Table from './Table';
 
 class InsertTableService extends Service {
   boot() {
-    const shortCuts = this.container.get("ShortCuts");
+    const shortCuts = this.container.get('ShortCuts');
     shortCuts.addShortCut({
       Tab: goToNextCell(1),
-      "Shift-Tab": goToNextCell(-1)
+      'Shift-Tab': goToNextCell(-1),
     });
   }
 
   register() {
-    this.container.bind("Table").to(Table);
+    this.container.bind('Table').to(Table);
 
     const { table, table_row, table_cell, table_header } = tableNodes({
-      tableGroup: "block",
-      cellContent: "block+"
+      tableGroup: 'block',
+      cellContent: 'block+',
     });
-    const createNode = this.container.get("CreateNode");
+    const createNode = this.container.get('CreateNode');
 
     createNode({
-      table
+      table,
     });
     createNode({
-      table_row
+      table_row,
     });
     createNode({
-      table_cell
+      table_cell,
     });
     createNode({
-      table_header
+      table_header,
     });
   }
 }

@@ -226,8 +226,10 @@ class TableGridSizeEditor extends React.PureComponent {
     }
 
     const wrapperStyle = {
+      background: '#fff',
       border: '1px solid gray',
       boxSizing: 'border-box',
+      display: 'block',
       position: 'absolute',
       zIndex: 2,
     };

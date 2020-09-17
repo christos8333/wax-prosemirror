@@ -20,7 +20,7 @@ const ButtonStyled = styled.button`
 `;
 
 const InsertTableToolContainer = styled.div`
-  top: 50px;
+  top: 53px;
   position: absolute;
   height: auto;
   width: 167px;
@@ -37,22 +37,17 @@ const CreateTable = ({ view = {}, item }) => {
   }
 
   const { state, dispatch } = view;
-
   const [isTableToolDisplayed, setTableToolDisplay] = useState(false);
-
-  const showHideTable = () => {
-    setTableToolDisplay(!isTableToolDisplayed);
-  };
 
   const CreateButton = (
     <ButtonStyled
       type="button"
-      isActive={item.active && item.active(view.state)}
+      isActive={isTableToolDisplayed}
       title={item.title}
       disabled={item.enable && !item.enable(view.state)}
       onMouseDown={e => {
         e.preventDefault();
-        showHideTable();
+        setTableToolDisplay(!isTableToolDisplayed);
       }}
       select={item.select && item.select(view.state, activeViewId)}
     >

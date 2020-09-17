@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// import { th } from '../_helpers'
+import DateParser from './DateParser';
 
 const Wrapper = styled.div``;
 
@@ -32,7 +32,13 @@ const CommentItem = props => {
     <Wrapper className={className}>
       <Head>
         <Name>{displayName}</Name>
-        <Timestamp>{timestamp}</Timestamp>
+        <Timestamp>
+          <DateParser timestamp={timestamp}>
+            {(timeStamp, timeAgo) => {
+              return `${timeAgo} ago`;
+            }}
+          </DateParser>
+        </Timestamp>
       </Head>
       <Content>{content}</Content>
     </Wrapper>

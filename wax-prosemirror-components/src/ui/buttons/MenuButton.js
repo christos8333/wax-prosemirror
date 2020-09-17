@@ -2,27 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
+import { th, override } from '@pubsweet/ui-toolkit';
+
 import Icon from './Icon';
 
 const activeStyles = css`
-  background: gray;
-  color: white;
+  background: ${th('colorPrimary')};
+  color: ${th('colorTextReverse')};
 
   > svg {
-    fill: white;
+    fill: ${th('colorTextReverse')};
   }
 
   &:hover {
-    background: gray;
+    background: ${th('colorPrimary')};
   }
 `;
 
 const disabledStyles = css`
   cursor: not-allowed;
-
-  > svg {
-    fill: gainsboro;
-  }
+  opacity: 0.4;
 
   &:hover {
     background: none;
@@ -37,21 +36,25 @@ const Wrapper = styled.button.attrs(props => ({
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  font-family: ${th('fontInterface')};
   height: 28px;
   outline: none;
   padding: 2px;
   transition: all 0.1s ease-in;
+  color: ${th('colorText')};
 
   > svg {
     transition: all 0.1s ease-in;
   }
 
   &:hover {
-    background: gainsboro;
+    background: ${th('colorBackgroundHue')};
   }
 
   ${props => props.active && activeStyles}
   ${props => props.disabled && disabledStyles}
+
+  ${override('Wax.MenuButton')}
 `;
 
 const StyledIcon = styled(Icon)`

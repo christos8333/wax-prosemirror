@@ -1,27 +1,32 @@
 import { css } from 'styled-components';
 
+import { th } from '@pubsweet/ui-toolkit';
+
 /* All styles regarding ProseMirror surface and elements */
 
 export default css`
   .ProseMirror {
+    background: white;
     counter-reset: footnote;
-    font-family: ${props => props.theme.fontReading};
+    font-family: ${th('fontWriting')};
+    color: ${th('colorText')};
+
+    p::selection,
+    p span::selection {
+      background-color: transparent;
+    }
+
     &:focus {
       outline: none;
     }
   }
 
   .ProseMirror .wax-selection-marker {
-    background: #0a78ff;
+    background-color: teal;
     color: white;
   }
 
   div[contenteditable='false'] {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     pointer-events: none;
   }
@@ -180,9 +185,9 @@ export default css`
 
   span.deletion {
     text-decoration: line-through;
-    color: red;
+    color: ${th('colorError')};
     footnote {
-      background: red;
+      background: ${th('colorError')};
     }
   }
 

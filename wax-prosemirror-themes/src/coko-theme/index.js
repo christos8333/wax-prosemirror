@@ -2,18 +2,18 @@
 import 'typeface-fira-sans-condensed';
 import 'typeface-vollkorn';
 
-import { ButtonStyles } from './elements';
+import { css } from 'styled-components';
 
 const cokoTheme = {
   /* Colors */
   colorBackground: 'white',
-  colorPrimary: '#808080',
+  colorPrimary: 'teal',
   colorSecondary: '#E7E7E7',
   colorFurniture: '#CCC',
   colorBorder: '#AAA',
   colorBackgroundHue: '#F1F1F1',
   colorSuccess: '#008800',
-  colorError: '#FF2D1A',
+  colorError: 'indianred',
   colorText: '#111',
   colorTextReverse: '#FFF',
   colorTextPlaceholder: '#595959',
@@ -24,10 +24,10 @@ const cokoTheme = {
   /* Text variables */
 
   // fonts
-  fontInterface: "'Fira Sans Condensed'",
-  fontHeading: "'Fira Sans Condensed'",
-  fontReading: "'Vollkorn'",
-  fontWriting: "'Cokourier Prime Sans'",
+  fontInterface: 'Fira Sans Condensed',
+  fontHeading: 'Fira Sans Condensed',
+  fontReading: 'Vollkorn',
+  fontWriting: 'Vollkorn',
 
   // font sizes
   fontSizeBase: '16px',
@@ -50,7 +50,7 @@ const cokoTheme = {
   lineHeightHeading6: '24px',
 
   /* Spacing */
-  gridUnit: '8px',
+  gridUnit: '4px',
 
   /* Border */
   borderRadius: '0',
@@ -68,8 +68,14 @@ const cokoTheme = {
   breakpoints: [480, 768, 1000, 1272],
 
   cssOverrides: {
-    ui: {
-      ButtonStyles,
+    Wax: {
+      MenuButton: css`
+        /* color: magenta;
+
+        > svg {
+          fill: indianred;
+        } */
+      `,
     },
   },
 };

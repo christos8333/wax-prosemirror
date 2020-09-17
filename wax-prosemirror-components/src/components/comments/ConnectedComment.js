@@ -65,7 +65,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     const obj = {
       content,
       displayName: user.username,
-      timestamp: Math.floor(Date.now() / 300000),
+      timestamp: Math.floor(Date.now()),
     };
 
     comment.attrs.conversation.push(obj);

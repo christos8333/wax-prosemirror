@@ -17,6 +17,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import { withTheme } from 'styled-components';
 
 const clamp = (min, val, max) => {
   if (val < min) {
@@ -77,19 +78,19 @@ const CELL_SIZE = 16;
 const MAX_SIZE = 20;
 
 const GridCell = props => {
-  const { x, y, selected } = props;
+  const { x, y, selected, theme } = props;
   const style = {
     left: x + 'px',
     top: y + 'px',
     width: CELL_SIZE + 'px',
     height: CELL_SIZE + 'px',
-    border: '1px solid gray',
+    border: `1px solid ${theme.colorBorder}`,
     boxSizing: 'border-box',
     position: 'absolute',
     zIndex: 2,
   };
 
-  if (selected) style.background = '#E2E2E2';
+  if (selected) style.background = theme.colorPrimary;
   return <div style={style} />;
 };
 
@@ -98,6 +99,8 @@ GridCell.propTypes = {
   y: PropTypes.number.isRequired,
   selected: PropTypes.bool.isRequired,
 };
+
+const ThemedCell = withTheme(GridCell);
 
 const TableGridSizeEditor = props => {
   let _ex = 0;
@@ -202,7 +205,7 @@ const TableGridSizeEditor = props => {
       x += GUTTER_SIZE;
       const selected = ii < rows && jj < cols;
       cells.push(
-        <GridCell
+        <ThemedCell
           key={`${String(ii)}-${String(jj)}`}
           selected={selected}
           x={x}

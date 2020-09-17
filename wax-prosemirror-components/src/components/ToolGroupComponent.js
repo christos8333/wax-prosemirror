@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Dropdown from '../ui/buttons/Dropdown';
 
 const Wrapper = styled.div`
-  background: #fff;
   display: inline-flex;
   align-items: center;
   padding: 0 4px;

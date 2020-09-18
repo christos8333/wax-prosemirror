@@ -25,6 +25,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  position: absolute;
   /* padding: 8px 0; */
 
   ${props => !props.active && inactive}
@@ -59,6 +60,7 @@ const CommentBox = props => {
     onClickBox,
     onClickPost,
     onClickResolve,
+    top,
   } = props;
 
   // send signal to make this comment active
@@ -69,8 +71,18 @@ const CommentBox = props => {
 
   if (!active && (!commentData || commentData.length === 0)) return null;
 
+  const style = {
+    top: `${top}px`,
+  };
+
   return (
-    <Wrapper active={active} className={className} onClick={onClickWrapper}>
+    <Wrapper
+      style={style}
+      active={active}
+      className={className}
+      onClick={onClickWrapper}
+      top={top}
+    >
       {active && commentData.length > 0 && (
         <Head>
           <Resolve onClick={() => onClickResolve(commentId)}>Resolve</Resolve>
@@ -92,6 +104,7 @@ const CommentBox = props => {
 CommentBox.propTypes = {
   /** Whether this is the current active comment */
   active: PropTypes.bool,
+  top: PropTypes.number,
   /** List of objects containing data for comment items */
   commentData: PropTypes.arrayOf(
     PropTypes.shape({
@@ -115,6 +128,7 @@ CommentBox.propTypes = {
 };
 
 CommentBox.defaultProps = {
+  top: 0,
   active: false,
   commentData: [],
 };

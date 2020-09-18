@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import { Mark } from 'prosemirror-model';
 import React from 'react';
-import CommentBox from '../comments/CommentBox';
+import ConnectedComment from '../comments/ConnectedComment';
 import TrackChangeBox from '../trackChanges/TrackChangeBox';
 
 export default ({ commentsTracks, view, position }) => {
@@ -18,11 +18,13 @@ export default ({ commentsTracks, view, position }) => {
 
         if (commentTrack.type && commentTrack.type.name === 'comment') {
           return (
-            <CommentBox
+            <ConnectedComment
               key={id}
               comment={commentTrack}
-              top={top}
               dataBox={id}
+              top={top}
+              commentId={id}
+              commentData={commentTrack.attrs.conversation}
             />
           );
         }

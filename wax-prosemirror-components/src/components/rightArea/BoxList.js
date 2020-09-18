@@ -21,10 +21,8 @@ export default ({ commentsTracks, view, position }) => {
             <ConnectedComment
               key={id}
               comment={commentTrack}
-              dataBox={id}
               top={top}
               commentId={id}
-              commentData={commentTrack.attrs.conversation}
             />
           );
         }

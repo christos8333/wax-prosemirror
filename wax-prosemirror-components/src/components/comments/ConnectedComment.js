@@ -1,5 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useEffect, useContext, memo } from 'react';
+import { TextSelection } from 'prosemirror-state';
+import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -9,7 +11,7 @@ const ConnectedCommentStyled = styled.div`
   position: absolute;
 `;
 
-export default ({ key, comment, dataBox, top, commentId, commentData }) => {
+export default ({ comment, top, commentId }) => {
   const [commentAnnotation, setCommentAnnotation] = useState(comment);
 
   const MemorizedComponent = memo(() => {
@@ -23,12 +25,15 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
       app,
       activeView,
     } = useContext(WaxContext);
+
     const { state, dispatch } = activeView;
+    const viewId = comment.attrs.viewid;
 
     const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-      state,
+      view[viewId].state,
       comment,
     );
+
     const commentMark = state.schema.marks.comment;
 
     let active = false;
@@ -67,16 +72,57 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
       });
     };
 
+    const onClickBox = () => {
+      if (active) {
+        view[viewId].focus();
+        return false;
+      }
+
+      const maxPos = maxBy(allCommentsWithSameId, 'pos');
+      maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
+
+      view[viewId].dispatch(
+        view[viewId].state.tr.setSelection(
+          new TextSelection(
+            view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
+          ),
+        ),
+      );
+
+      view[viewId].focus();
+      return true;
+    };
+
+    const onClickResolve = () => {
+      let maxPos = comment.pos;
+      let minPos = comment.pos;
+
+      allCommentsWithSameId.forEach(singleComment => {
+        const markPosition = DocumentHelpers.findMarkPosition(
+          state,
+          singleComment.pos,
+          'comment',
+        );
+        if (markPosition.from < minPos) minPos = markPosition.from;
+        if (markPosition.to > maxPos) maxPos = markPosition.to;
+      });
+
+      if (allCommentsWithSameId.length > 1)
+        maxPos += last(allCommentsWithSameId).node.nodeSize;
+      dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
+      activeView.focus();
+    };
+
     return (
       <ConnectedCommentStyled data-box={commentId} style={styles}>
         <CommentBox
           key={commentId}
           active={active}
-          dataBox={commentId}
-          top={top}
           commentId={commentId}
-          commentData={commentData}
+          commentData={comment.attrs.conversation}
           onClickPost={onClickPost}
+          onClickBox={onClickBox}
+          onClickResolve={onClickResolve}
         />
       </ConnectedCommentStyled>
     );

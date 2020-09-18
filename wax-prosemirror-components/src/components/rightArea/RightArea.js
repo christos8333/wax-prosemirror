@@ -58,7 +58,6 @@ export default ({ area }) => {
       // get height of this markNode box
       const boxEl = document.querySelector(`div[data-box="${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight, 10);
-      console.log(boxHeight);
 
       // where the box should move to
       top = annotationTop;
@@ -72,13 +71,13 @@ export default ({ area }) => {
         }
       }
       // store where the box ends to be aware of overlaps in the next box
-      markNode.endHeight = top + boxHeight + 2;
+      markNode.endHeight = top + boxHeight + 4;
       result[pos] = top;
       allCommentsTop.push({ [id]: result[pos] });
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
-        markNode.endHeight = annotationTop + boxHeight + 2;
+        markNode.endHeight = annotationTop + boxHeight + 3;
         result[pos] = annotationTop;
         allCommentsTop[pos][id] = result[pos];
         let b = true;

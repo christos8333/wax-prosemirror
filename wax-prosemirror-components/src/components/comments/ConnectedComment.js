@@ -7,10 +7,26 @@ import CommentBox from '../../ui/comments/CommentBox';
 
 export default ({ key, comment, dataBox, top, commentId, commentData }) => {
   const MemorizedComponent = memo(() => {
+    const {
+      view,
+      view: {
+        main: {
+          props: { user },
+        },
+      },
+      app,
+      activeView,
+    } = useContext(WaxContext);
+    let active = false;
+
+    const commentPlugin = app.PmPlugins.get('commentPlugin');
+    const activeComment = commentPlugin.getState(activeView.state).comment;
+
+    if (activeComment && commentId === activeComment.attrs.id) active = true;
     return (
       <CommentBox
         key={commentId}
-        comment={commentData}
+        active={active}
         dataBox={commentId}
         top={top}
         commentId={commentId}

@@ -79,6 +79,7 @@ const CommentBox = props => {
     <Wrapper
       style={style}
       active={active}
+      data-box={commentId}
       className={className}
       onClick={onClickWrapper}
       top={top}

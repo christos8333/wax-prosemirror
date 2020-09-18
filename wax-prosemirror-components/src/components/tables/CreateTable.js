@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { ButtonStyles } from 'wax-prosemirror-themes';
 import { WaxContext } from 'wax-prosemirror-core';
-import { Commands } from 'wax-prosemirror-utilities';
 import InsertTableTool from '../../ui/tables/InsertTableTool';
 
 const ButtonStyled = styled.button`
@@ -60,7 +59,7 @@ const CreateTable = ({ view = {}, item }) => {
       <InsertTableToolContainer>
         <InsertTableTool
           onGridSelect={colRows => {
-            return Commands.createTable(colRows, state, dispatch);
+            item.run(colRows, state, dispatch);
           }}
         />
       </InsertTableToolContainer>

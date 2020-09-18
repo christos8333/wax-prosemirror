@@ -15,7 +15,9 @@ class Table extends Tools {
   name = 'Table';
 
   get run() {
-    return (state, dispatch) => {};
+    return (colRows, state, dispatch) => {
+      Commands.createTable(colRows, state, dispatch);
+    };
   }
 
   select = (state, activeViewId) => {

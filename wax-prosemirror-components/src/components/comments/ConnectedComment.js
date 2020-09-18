@@ -43,8 +43,6 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
     if (activeComment && commentId === activeComment.attrs.id) active = true;
 
     const onClickPost = content => {
-      console.log('post', content);
-
       const { tr } = state;
 
       const obj = {

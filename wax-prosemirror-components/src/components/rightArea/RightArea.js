@@ -20,7 +20,6 @@ export default ({ area }) => {
   const [isFirstRun, setFirstRun] = useState(true);
 
   const setTops = useCallback(() => {
-    console.log('setTops');
     const result = [];
     let markNodeEl = null;
     let annotationTop = 0;
@@ -116,6 +115,12 @@ export default ({ area }) => {
     return allCommentsTop;
   });
 
+  const recalculateTops = () => {
+    setTimeout(() => {
+      setPosition(setTops());
+    });
+  };
+
   useDeepCompareEffect(() => {
     setMarksNodes(updateMarks(view));
     if (isFirstRun) {
@@ -135,6 +140,7 @@ export default ({ area }) => {
         area={area}
         view={main}
         position={position}
+        recalculateTops={recalculateTops}
       />
     ),
     [marksNodes[area] || [], position],

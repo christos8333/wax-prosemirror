@@ -11,7 +11,7 @@ const ConnectedCommentStyled = styled.div`
   position: absolute;
 `;
 
-export default ({ comment, top, commentId }) => {
+export default ({ comment, top, commentId, recalculateTops }) => {
   // const MemorizedComponent = memo(() => {
   const {
     view,
@@ -68,6 +68,7 @@ export default ({ comment, top, commentId }) => {
         ),
       );
     });
+    recalculateTops();
   };
 
   const onClickBox = () => {
@@ -121,6 +122,7 @@ export default ({ comment, top, commentId }) => {
         onClickPost={onClickPost}
         onClickBox={onClickBox}
         onClickResolve={onClickResolve}
+        recalculateTops={recalculateTops}
       />
     </ConnectedCommentStyled>
   );

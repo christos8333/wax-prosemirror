@@ -76,24 +76,22 @@ const GUTTER_SIZE = 5;
 const CELL_SIZE = 16;
 const MAX_SIZE = 20;
 
-class GridCell extends React.PureComponent {
-  render() {
-    const { x, y, selected } = this.props;
-    const style = {
-      left: x + 'px',
-      top: y + 'px',
-      width: CELL_SIZE + 'px',
-      height: CELL_SIZE + 'px',
-      border: '1px solid gray',
-      boxSizing: 'border-box',
-      position: 'absolute',
-      zIndex: 2,
-    };
+const GridCell = props => {
+  const { x, y, selected } = props;
+  const style = {
+    left: x + 'px',
+    top: y + 'px',
+    width: CELL_SIZE + 'px',
+    height: CELL_SIZE + 'px',
+    border: '1px solid gray',
+    boxSizing: 'border-box',
+    position: 'absolute',
+    zIndex: 2,
+  };
 
-    if (selected) style.background = 'skyblue';
-    return <div style={style} />;
-  }
-}
+  if (selected) style.background = 'skyblue';
+  return <div style={style} />;
+};
 
 GridCell.propTypes = {
   x: PropTypes.number.isRequired,

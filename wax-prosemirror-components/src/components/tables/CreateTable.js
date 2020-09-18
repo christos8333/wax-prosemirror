@@ -20,11 +20,11 @@ const ButtonStyled = styled.button`
 `;
 
 const InsertTableToolContainer = styled.div`
-  top: 53px;
-  position: absolute;
-  height: auto;
-  width: 167px;
   display: block !important;
+  height: auto;
+  top: 53px;
+  left: 556px;
+  position: absolute;
 `;
 
 const CreateTable = ({ view = {}, item }) => {

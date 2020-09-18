@@ -5,6 +5,10 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import CommentBox from '../../ui/comments/CommentBox';
 
+const ConnectedCommentStyled = styled.div`
+  position: absolute;
+`;
+
 export default ({ key, comment, dataBox, top, commentId, commentData }) => {
   const MemorizedComponent = memo(() => {
     const {
@@ -19,19 +23,25 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
     } = useContext(WaxContext);
     let active = false;
 
+    const styles = {
+      top: `${top}px`,
+    };
+
     const commentPlugin = app.PmPlugins.get('commentPlugin');
     const activeComment = commentPlugin.getState(activeView.state).comment;
 
     if (activeComment && commentId === activeComment.attrs.id) active = true;
     return (
-      <CommentBox
-        key={commentId}
-        active={active}
-        dataBox={commentId}
-        top={top}
-        commentId={commentId}
-        commentData={commentData}
-      />
+      <ConnectedCommentStyled data-box={commentId} style={styles}>
+        <CommentBox
+          key={commentId}
+          active={active}
+          dataBox={commentId}
+          top={top}
+          commentId={commentId}
+          commentData={commentData}
+        />
+      </ConnectedCommentStyled>
     );
   });
   return <MemorizedComponent />;

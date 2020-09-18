@@ -20,6 +20,7 @@ export default ({ area }) => {
   const [isFirstRun, setFirstRun] = useState(true);
 
   const setTops = useCallback(() => {
+    console.log('setTops');
     const result = [];
     let markNodeEl = null;
     let annotationTop = 0;

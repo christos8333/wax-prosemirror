@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useState, useEffect, useContext, memo } from 'react';
+import React, { useContext, memo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
@@ -12,8 +12,6 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ comment, top, commentId }) => {
-  const [commentAnnotation, setCommentAnnotation] = useState(comment);
-
   const MemorizedComponent = memo(() => {
     const {
       view,
@@ -56,7 +54,7 @@ export default ({ comment, top, commentId }) => {
         timestamp: Math.floor(Date.now() / 300000),
       };
 
-      commentAnnotation.attrs.conversation.push(obj);
+      comment.attrs.conversation.push(obj);
 
       allCommentsWithSameId.forEach(singleComment => {
         dispatch(
@@ -64,8 +62,8 @@ export default ({ comment, top, commentId }) => {
             singleComment.pos,
             singleComment.pos + singleComment.nodeSize,
             commentMark.create({
-              ...((commentAnnotation && commentAnnotation.attrs) || {}),
-              conversation: commentAnnotation.attrs.conversation,
+              ...((comment && comment.attrs) || {}),
+              conversation: comment.attrs.conversation,
             }),
           ),
         );

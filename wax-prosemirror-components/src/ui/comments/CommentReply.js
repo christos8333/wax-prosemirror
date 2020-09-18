@@ -50,7 +50,9 @@ const CommentReply = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    e.stopPropagation();
     onClickPost(value);
+    setValue('');
   };
 
   const resetValue = e => {

@@ -10,6 +10,8 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ key, comment, dataBox, top, commentId, commentData }) => {
+  const [commentAnnotation, setCommentAnnotation] = useState(comment);
+
   const MemorizedComponent = memo(() => {
     const {
       view,
@@ -21,6 +23,14 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
       app,
       activeView,
     } = useContext(WaxContext);
+    const { state, dispatch } = activeView;
+
+    const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
+      state,
+      comment,
+    );
+    const commentMark = state.schema.marks.comment;
+
     let active = false;
 
     const styles = {
@@ -31,6 +41,34 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
     const activeComment = commentPlugin.getState(activeView.state).comment;
 
     if (activeComment && commentId === activeComment.attrs.id) active = true;
+
+    const onClickPost = content => {
+      console.log('post', content);
+
+      const { tr } = state;
+
+      const obj = {
+        content,
+        displayName: user.username,
+        timestamp: Math.floor(Date.now() / 300000),
+      };
+
+      commentAnnotation.attrs.conversation.push(obj);
+
+      allCommentsWithSameId.forEach(singleComment => {
+        dispatch(
+          tr.addMark(
+            singleComment.pos,
+            singleComment.pos + singleComment.nodeSize,
+            commentMark.create({
+              ...((commentAnnotation && commentAnnotation.attrs) || {}),
+              conversation: commentAnnotation.attrs.conversation,
+            }),
+          ),
+        );
+      });
+    };
+
     return (
       <ConnectedCommentStyled data-box={commentId} style={styles}>
         <CommentBox
@@ -40,6 +78,7 @@ export default ({ key, comment, dataBox, top, commentId, commentData }) => {
           top={top}
           commentId={commentId}
           commentData={commentData}
+          onClickPost={onClickPost}
         />
       </ConnectedCommentStyled>
     );

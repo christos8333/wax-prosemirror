@@ -58,6 +58,7 @@ export default ({ area }) => {
       // get height of this markNode box
       const boxEl = document.querySelector(`div[data-box="${id}"]`);
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight, 10);
+      console.log(boxHeight);
 
       // where the box should move to
       top = annotationTop;

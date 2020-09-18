@@ -36,6 +36,7 @@ const Button = styled.button`
   padding: 8px 16px;
 
   ${props => props.primary && primary}
+  ${props => props.disabled && `cursor: not-allowed;`}
 `;
 
 const ButtonGroup = styled.div`
@@ -77,17 +78,17 @@ const CommentReply = props => {
           />
         </TextWrapper>
 
-        {value.length > 0 && (
-          <ActionWrapper>
-            <ButtonGroup>
-              <Button disabled={value.length === 0} primary type="submit">
-                Post
-              </Button>
+        <ActionWrapper>
+          <ButtonGroup>
+            <Button disabled={value.length === 0} primary type="submit">
+              Post
+            </Button>
 
-              <Button onClick={resetValue}>Cancel</Button>
-            </ButtonGroup>
-          </ActionWrapper>
-        )}
+            <Button disabled={value.length === 0} onClick={resetValue}>
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </ActionWrapper>
       </form>
     </Wrapper>
   );

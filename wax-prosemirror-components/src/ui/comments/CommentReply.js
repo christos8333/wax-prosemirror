@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
@@ -48,6 +48,13 @@ const ButtonGroup = styled.div`
 const CommentReply = props => {
   const { className, isNewComment, onClickPost } = props;
   const [value, setValue] = useState('');
+  const commentInput = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isNewComment) commentInput.current.focus();
+    });
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -66,6 +73,7 @@ const CommentReply = props => {
       <form onSubmit={handleSubmit}>
         <TextWrapper>
           <ReplyTextArea
+            ref={commentInput}
             placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
             onChange={e => setValue(e.target.value)}
             onKeyDown={e => {

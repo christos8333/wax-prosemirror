@@ -14,7 +14,7 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
@@ -99,53 +99,46 @@ GridCell.propTypes = {
   selected: PropTypes.bool.isRequired,
 };
 
-class TableGridSizeEditor extends React.PureComponent {
-  _ex = 0;
-  _ey = 0;
-  _mx = 0;
-  _my = 0;
-  _rafID = 0;
-  _ref = null;
-  _entered = false;
+const TableGridSizeEditor = props => {
+  let _ex = 0;
+  let _ey = 0;
+  let _mx = 0;
+  let _my = 0;
+  let _rafID = 0;
+  let _ref = null;
+  let _entered = true;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      rows: 1,
-      cols: 1,
+  const [colsRows, setColsRows] = useState({ rows: 1, cols: 1 });
+
+  useEffect(() => {
+    _entered = false;
+    return () => {
+      if (_entered) {
+        document.removeEventListener('mousemove', _onMouseMove, true);
+      }
+      _rafID && cancelAnimationFrame(_rafID);
     };
-  }
+  }, []);
 
-  componentWillUnmount() {
-    if (this._entered) {
-      document.removeEventListener('mousemove', this._onMouseMove, true);
-    }
-    this._rafID && cancelAnimationFrame(this._rafID);
-  }
-
-  _onRef = ref => {
-    this._ref = ref;
-  };
-
-  _onMouseEnter = e => {
+  const _onMouseEnter = e => {
     const node = e.currentTarget;
     if (node instanceof HTMLElement) {
       const rect = fromHTMlElement(node);
       const mx = Math.round(e.clientX);
       const my = Math.round(e.clientY);
-      this._ex = rect.x;
-      this._ey = rect.y;
-      this._mx = mx;
-      this._my = my;
-      if (!this._entered) {
-        this._entered = true;
-        document.addEventListener('mousemove', this._onMouseMove, true);
+      _ex = rect.x;
+      _ey = rect.y;
+      _mx = mx;
+      _my = my;
+      if (!_entered) {
+        _entered = true;
+        document.addEventListener('mousemove', _onMouseMove, true);
       }
     }
   };
 
-  _onMouseMove = e => {
-    const el = this._ref && ReactDOM.findDOMNode(this._ref);
+  const _onMouseMove = e => {
+    const el = _ref && ReactDOM.findDOMNode(_ref);
     const elRect = el ? htmlElementToRect(el) : null;
     const mouseRect = fromXY(e.screenX, e.screenY, 10);
 
@@ -155,105 +148,106 @@ class TableGridSizeEditor extends React.PureComponent {
       e.stopImmediatePropagation();
     }
 
+    const _updateGridSize = () => {
+      _rafID = 0;
+      const mx = _mx;
+      const my = _my;
+      const x = mx - _ex;
+      const y = my - _ey;
+      const rr = clamp(1, Math.ceil(y / (CELL_SIZE + GUTTER_SIZE)), MAX_SIZE);
+      const cc = clamp(1, Math.ceil(x / (CELL_SIZE + GUTTER_SIZE)), MAX_SIZE);
+      const { rows, cols } = colsRows;
+      if (rows !== rr || cols !== cc) {
+        setColsRows({ rows: rr, cols: cc });
+      }
+    };
+
     const mx = Math.round(e.clientX);
     const my = Math.round(e.clientY);
-    if (mx !== this._mx || my !== this._my) {
-      this._mx = mx;
-      this._my = my;
-      this._rafID && cancelAnimationFrame(this._rafID);
-      this._rafID = requestAnimationFrame(this._updateGridSize);
+    if (mx !== _mx || my !== _my) {
+      _mx = mx;
+      _my = my;
+      _rafID && window.cancelAnimationFrame(_rafID);
+      _rafID = window.requestAnimationFrame(_updateGridSize);
     }
   };
-
-  _updateGridSize = () => {
-    this._rafID = 0;
-    const mx = this._mx;
-    const my = this._my;
-    const x = mx - this._ex;
-    const y = my - this._ey;
-    const rr = clamp(1, Math.ceil(y / (CELL_SIZE + GUTTER_SIZE)), MAX_SIZE);
-    const cc = clamp(1, Math.ceil(x / (CELL_SIZE + GUTTER_SIZE)), MAX_SIZE);
-    const { rows, cols } = this.state;
-    if (rows !== rr || cols !== cc) {
-      this.setState({ rows: rr, cols: cc });
-    }
+  const _onRef = ref => {
+    _ref = ref;
   };
 
-  _onMouseDown = e => {
+  const _onMouseDown = e => {
     e.preventDefault();
-    this.props.onGridSelect(this.state);
+    props.onGridSelect(colsRows);
   };
 
-  render() {
-    const { rows, cols } = this.state;
-    let rr = Math.max(5, rows);
-    let cc = Math.max(5, cols);
-    if (rr === rows) {
-      rr = Math.min(MAX_SIZE, rr + 1);
-    }
-    if (cc === cols) {
-      cc = Math.min(MAX_SIZE, cc + 1);
-    }
-    const cells = [];
-    let ii = 0;
-    let y = 0;
-    let w = 0;
-    let h = 0;
-    while (ii < rr) {
-      y += GUTTER_SIZE;
-      let jj = 0;
-      let x = 0;
-      while (jj < cc) {
-        x += GUTTER_SIZE;
-        const selected = ii < rows && jj < cols;
-        cells.push(
-          <GridCell
-            key={`${String(ii)}-${String(jj)}`}
-            selected={selected}
-            x={x}
-            y={y}
-          />,
-        );
-        x += CELL_SIZE;
-        w = x + GUTTER_SIZE;
-        jj++;
-      }
-      y += CELL_SIZE;
-      h = y + GUTTER_SIZE;
-      ii++;
-    }
-
-    const wrapperStyle = {
-      background: '#fff',
-      border: '1px solid gray',
-      boxSizing: 'border-box',
-      display: 'block',
-      position: 'absolute',
-      zIndex: 2,
-    };
-
-    const bodyStyle = {
-      width: w + 'px',
-      height: h + 'px',
-      position: 'relative',
-    };
-
-    return (
-      <div style={wrapperStyle} ref={this._onRef}>
-        <div
-          onMouseDown={this._onMouseDown}
-          onMouseEnter={this._onMouseEnter}
-          style={bodyStyle}
-        >
-          {cells}
-        </div>
-        <div>
-          {rows} X {cols}
-        </div>
-      </div>
-    );
+  const { rows, cols } = colsRows;
+  let rr = Math.max(5, rows);
+  let cc = Math.max(5, cols);
+  if (rr === rows) {
+    rr = Math.min(MAX_SIZE, rr + 1);
   }
-}
+  if (cc === cols) {
+    cc = Math.min(MAX_SIZE, cc + 1);
+  }
+  const cells = [];
+  let ii = 0;
+  let y = 0;
+  let w = 0;
+  let h = 0;
+  while (ii < rr) {
+    y += GUTTER_SIZE;
+    let jj = 0;
+    let x = 0;
+    while (jj < cc) {
+      x += GUTTER_SIZE;
+      const selected = ii < rows && jj < cols;
+      cells.push(
+        <GridCell
+          key={`${String(ii)}-${String(jj)}`}
+          selected={selected}
+          x={x}
+          y={y}
+        />,
+      );
+      x += CELL_SIZE;
+      w = x + GUTTER_SIZE;
+      jj++;
+    }
+    y += CELL_SIZE;
+    h = y + GUTTER_SIZE;
+    ii++;
+  }
+
+  const wrapperStyle = {
+    background: '#fff',
+    border: '1px solid gray',
+    boxSizing: 'border-box',
+    display: 'block',
+    position: 'absolute',
+    zIndex: 2,
+  };
+
+  const bodyStyle = {
+    width: w + 'px',
+    height: h + 'px',
+    position: 'relative',
+  };
+
+  return (
+    <div style={wrapperStyle} ref={_onRef}>
+      <div
+        onMouseDown={_onMouseDown}
+        onMouseEnter={_onMouseEnter}
+        style={bodyStyle}
+      >
+        {cells}
+      </div>
+      <div>
+        {rows} X {cols}
+      </div>
+    </div>
+  );
+};
 
 TableGridSizeEditor.propTypes = {
   onGridSelect: PropTypes.func.isRequired,

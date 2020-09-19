@@ -88,6 +88,9 @@ const EditorContainer = styled.div`
     min-height: 90%;
     padding: 40px;
   }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const WaxSurfaceScroll = styled.div`
@@ -107,15 +110,21 @@ const WaxSurfaceScroll = styled.div`
 const MainMenuContainer = styled.div`
   background: #fff;
   min-height: 52px;
-  line-height: 32px;
+  /* line-height: 32px; */
   position: relative;
   user-select: none;
   border-bottom: 2px solid #ecedf1;
+  @media (max-width: 600px) {
+    font-size: 10px;
+    min-height: 72px;
+  }
 `;
 const MainMenuInner = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+
+  /* align-items: center; */
+  /* justify-content: center; */
   flex-direction: column;
   left: 0;
   position: absolute;
@@ -135,6 +144,9 @@ const SideMenuContainer = styled.div`
   display: flex;
   width: 14%;
   height: 98%;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const SideMenuInner = styled.div`
@@ -176,6 +188,9 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
   position: relative;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const CommentsContainer = styled.div`
@@ -183,6 +198,9 @@ const CommentsContainer = styled.div`
   flex-direction: column;
   width: 35%;
   height: 100%;
+  @media (max-width: 600px) {
+    width: auto;
+  }
 `;
 
 let surfaceHeight = 500;

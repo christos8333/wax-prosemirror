@@ -9,6 +9,7 @@ import CommentBox from '../../ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
   position: absolute;
+  width: 200px;
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {

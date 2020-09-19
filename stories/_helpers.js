@@ -36,5 +36,12 @@ const Demo = props => {
   );
 };
 
-/* eslint-disable import/prefer-default-export */
-export { Demo };
+const Note = styled.p`
+  width: 400px;
+  background: gainsboro;
+  padding: 12px;
+  text-align: justify;
+  border-radius: 4px;
+`;
+
+export { Demo, Note };

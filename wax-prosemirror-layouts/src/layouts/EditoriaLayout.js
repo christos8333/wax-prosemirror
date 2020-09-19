@@ -110,13 +110,14 @@ const WaxSurfaceScroll = styled.div`
 const MainMenuContainer = styled.div`
   background: #fff;
   min-height: 52px;
-  /* line-height: 32px; */
+  line-height: 32px;
   position: relative;
   user-select: none;
   border-bottom: 2px solid #ecedf1;
   @media (max-width: 600px) {
     font-size: 10px;
     min-height: 72px;
+    line-height: 32px;
   }
 `;
 const MainMenuInner = styled.div`

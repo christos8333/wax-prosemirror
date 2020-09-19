@@ -2,6 +2,7 @@
 import React, { useLayoutEffect, useContext } from 'react';
 import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
+import CommentBubble from '../../ui/comments/CommentBubble';
 
 const CommentBubbleComponent = ({
   setPosition,
@@ -41,13 +42,11 @@ const CommentBubbleComponent = ({
   return (
     !isSelectionComment() &&
     showComment(activeViewId) && (
-      <button
-        onMouseDown={event => {
+      <CommentBubble
+        onClick={event => {
           createComment(event);
         }}
-      >
-        create
-      </button>
+      />
     )
   );
 };

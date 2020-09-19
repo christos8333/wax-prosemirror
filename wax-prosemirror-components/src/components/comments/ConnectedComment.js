@@ -9,7 +9,11 @@ import CommentBox from '../../ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
   position: absolute;
+  margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
   width: 200px;
+  @media (max-width: 600px) {
+    margin-left: 15px;
+  }
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {
@@ -114,7 +118,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   };
 
   return (
-    <ConnectedCommentStyled data-box={commentId} style={styles}>
+    <ConnectedCommentStyled data-box={commentId} style={styles} active={active}>
       <CommentBox
         key={commentId}
         active={active}

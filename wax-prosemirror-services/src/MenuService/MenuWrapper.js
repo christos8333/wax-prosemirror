@@ -1,13 +1,14 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { map } from "lodash";
+import { map } from 'lodash';
 
 const MainMenu = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   background: #fff;
   padding: 2px 2px 2px 0;
   position: relative;
-  background: transparent;
 `;
 
 const MainMenuBar = ({ items = [], view }) => {

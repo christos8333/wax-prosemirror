@@ -107,15 +107,21 @@ const WaxSurfaceScroll = styled.div`
 const MainMenuContainer = styled.div`
   background: #fff;
   min-height: 52px;
-  line-height: 32px;
+  /* line-height: 32px; */
   position: relative;
   user-select: none;
   border-bottom: 2px solid #ecedf1;
+  @media (max-width: 600px) {
+    font-size: 10px;
+    min-height: 72px;
+  }
 `;
 const MainMenuInner = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+
+  /* align-items: center; */
+  /* justify-content: center; */
   flex-direction: column;
   left: 0;
   position: absolute;
@@ -135,6 +141,9 @@ const SideMenuContainer = styled.div`
   display: flex;
   width: 14%;
   height: 98%;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const SideMenuInner = styled.div`

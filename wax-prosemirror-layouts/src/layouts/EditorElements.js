@@ -73,6 +73,7 @@ export default css`
 
   img {
     cursor: default;
+    width: 100%;
   }
 
   sup,

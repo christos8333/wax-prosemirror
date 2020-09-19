@@ -88,6 +88,9 @@ const EditorContainer = styled.div`
     min-height: 90%;
     padding: 40px;
   }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const WaxSurfaceScroll = styled.div`
@@ -185,6 +188,9 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
   position: relative;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const CommentsContainer = styled.div`
@@ -192,6 +198,9 @@ const CommentsContainer = styled.div`
   flex-direction: column;
   width: 35%;
   height: 100%;
+  @media (max-width: 600px) {
+    width: auto;
+  }
 `;
 
 let surfaceHeight = 500;

@@ -47,7 +47,7 @@ const ButtonGroup = styled.div`
 
 const CommentReply = props => {
   const { className, isNewComment, onClickPost } = props;
-  const [value, setValue] = useState('');
+  const [commentValue, setCommentValue] = useState('');
   const commentInput = useRef(null);
 
   useEffect(() => {
@@ -59,13 +59,26 @@ const CommentReply = props => {
   const handleSubmit = e => {
     e.preventDefault();
     e.stopPropagation();
-    onClickPost(value);
-    setValue('');
+    onClickPost(commentValue);
+    setCommentValue('');
   };
 
   const resetValue = e => {
     e.preventDefault();
-    setValue('');
+    setCommentValue('');
+  };
+
+  const onBlur = () => {
+    const {
+      current: { value },
+    } = commentInput;
+    if (value !== '') {
+      // Save into local storage
+    }
+
+    if (isNewComment === 0 && value === '') {
+      // resolveComment();
+    }
   };
 
   return (
@@ -74,25 +87,26 @@ const CommentReply = props => {
         <TextWrapper>
           <ReplyTextArea
             ref={commentInput}
+            onBlur={onBlur}
             placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
-            onChange={e => setValue(e.target.value)}
+            onChange={e => setCommentValue(e.target.value)}
             onKeyDown={e => {
               if (e.keyCode === 13 && !e.shiftKey) {
                 e.preventDefault();
-                if (value) handleSubmit(e);
+                if (commentValue) handleSubmit(e);
               }
             }}
-            value={value}
+            value={commentValue}
           />
         </TextWrapper>
 
         <ActionWrapper>
           <ButtonGroup>
-            <Button disabled={value.length === 0} primary type="submit">
+            <Button disabled={commentValue.length === 0} primary type="submit">
               Post
             </Button>
 
-            <Button disabled={value.length === 0} onClick={resetValue}>
+            <Button disabled={commentValue.length === 0} onClick={resetValue}>
               Cancel
             </Button>
           </ButtonGroup>

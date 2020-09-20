@@ -86,7 +86,7 @@ const EditorContainer = styled.div`
     -webkit-box-shadow: 0 0 8px #ecedf1;
     box-shadow: 0 0 8px #ecedf1;
     min-height: 90%;
-    padding: 40px;
+    padding: 65px 40px 40px 40px;
   }
   @media (max-width: 600px) {
     width: 100%;
@@ -146,6 +146,8 @@ const MainMenuInner = styled.div`
 
 const SideMenuContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  overflow-y: auto;
   width: 14%;
   height: 98%;
   @media (max-width: 600px) {
@@ -161,7 +163,7 @@ const SideMenuInner = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: 15px;
+    margin-top: 65px;
     button {
       display: flex;
       flex-direction: column;

@@ -89,7 +89,7 @@ const GridCell = props => {
     zIndex: 2,
   };
 
-  if (selected) style.background = 'skyblue';
+  if (selected) style.background = '#E2E2E2';
   return <div style={style} />;
 };
 

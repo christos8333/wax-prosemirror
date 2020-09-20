@@ -86,11 +86,13 @@ const EditorContainer = styled.div`
     -webkit-box-shadow: 0 0 8px #ecedf1;
     box-shadow: 0 0 8px #ecedf1;
     min-height: 90%;
-    padding: 65px 40px 40px 40px;
+    padding: 30px 30px 30px 30px;
+    @media (max-width: 600px) {
+      padding: 65px 10px 10px 10px;
+    }
   }
   @media (max-width: 600px) {
-    width: 100%;
-    padding: 30px 0px 0px 0px;
+    width: 95%;
   }
 `;
 
@@ -112,11 +114,13 @@ const MainMenuContainer = styled.div`
   background: #fff;
   min-height: 52px;
   line-height: 32px;
-  position: absolute;
+  position: relative;
   width: 100%;
   user-select: none;
   border-bottom: 2px solid #ecedf1;
   @media (max-width: 600px) {
+    position: absolute;
+    /* width: 100%; */
     font-size: 10px;
     min-height: 72px;
     line-height: 0px;
@@ -163,7 +167,7 @@ const SideMenuInner = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: 65px;
+    margin-top: 35px;
     button {
       display: flex;
       flex-direction: column;

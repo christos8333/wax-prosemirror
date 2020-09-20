@@ -19,10 +19,10 @@ const ButtonStyled = styled.button`
 `;
 
 const InsertTableToolContainer = styled.div`
-  display: block !important;
+  display: block;
   height: auto;
   top: 53px;
-  left: 556px;
+  /* left: 54%; */
   position: absolute;
 `;
 

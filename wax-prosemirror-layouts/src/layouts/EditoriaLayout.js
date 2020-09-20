@@ -123,9 +123,8 @@ const MainMenuContainer = styled.div`
 const MainMenuInner = styled.div`
   display: flex;
   flex-wrap: wrap;
-
-  /* align-items: center; */
-  /* justify-content: center; */
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   left: 0;
   position: absolute;
@@ -135,7 +134,6 @@ const MainMenuInner = styled.div`
   background: #fff;
   z-index: 9999;
   div {
-    display: flex;
     align-items: center;
     justify-content: center;
   }

@@ -77,7 +77,7 @@ const CommentReply = props => {
     }
 
     if (isNewComment === 0 && value === '') {
-      // resolveComment();
+      // removeComment();
     }
   };
 
@@ -89,7 +89,7 @@ const CommentReply = props => {
             ref={commentInput}
             onBlur={onBlur}
             placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
-            onChange={e => setCommentValue(e.target.value)}
+            onChange={() => setCommentValue(commentInput.current.value)}
             onKeyDown={e => {
               if (e.keyCode === 13 && !e.shiftKey) {
                 e.preventDefault();

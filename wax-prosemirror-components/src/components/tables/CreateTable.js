@@ -22,7 +22,6 @@ const InsertTableToolContainer = styled.div`
   display: block;
   height: auto;
   top: 53px;
-  /* left: 54%; */
   position: absolute;
 `;
 

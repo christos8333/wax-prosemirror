@@ -90,6 +90,7 @@ const EditorContainer = styled.div`
   }
   @media (max-width: 600px) {
     width: 100%;
+    padding: 30px 0px 0px 0px;
   }
 `;
 
@@ -111,13 +112,14 @@ const MainMenuContainer = styled.div`
   background: #fff;
   min-height: 52px;
   line-height: 32px;
-  position: relative;
+  position: absolute;
+  width: 100%;
   user-select: none;
   border-bottom: 2px solid #ecedf1;
   @media (max-width: 600px) {
     font-size: 10px;
     min-height: 72px;
-    line-height: 32px;
+    line-height: 0px;
   }
 `;
 const MainMenuInner = styled.div`
@@ -136,6 +138,9 @@ const MainMenuInner = styled.div`
   div {
     align-items: center;
     justify-content: center;
+    @media (max-width: 600px) {
+      justify-content: start;
+    }
   }
 `;
 

@@ -73,6 +73,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
         ),
       );
     });
+    activeView.focus();
     recalculateTops();
   };
 

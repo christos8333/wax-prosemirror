@@ -151,6 +151,7 @@ const LinkComponent = ({ mark, setPosition, position }) => {
           .setMeta('addToHistory', false)
           .removeMark(mark.from, mark.to, state.schema.marks.link),
       );
+      activeView.focus();
       return false;
     }
     setLinkHref(lastLinkMark.attrs.href);

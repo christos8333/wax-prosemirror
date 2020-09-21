@@ -417,11 +417,11 @@ Is used for adding menus to the editor.
 
 ## Latest versions
 
-- wax-prosemirror-components@0.0.16
-- wax-prosemirror-core@0.0.16
-- wax-prosemirror-layouts@0.0.16
-- wax-prosemirror-plugins@0.0.16
-- wax-prosemirror-schema@0.0.16
-- wax-prosemirror-services@0.0.16
-- wax-prosemirror-themes@0.0.16
-- wax-prosemirror-utilities@0.0.16
+- wax-prosemirror-components@0.0.17
+- wax-prosemirror-core@0.0.17
+- wax-prosemirror-layouts@0.0.17
+- wax-prosemirror-plugins@0.0.17
+- wax-prosemirror-schema@0.0.17
+- wax-prosemirror-services@0.0.17
+- wax-prosemirror-themes@0.0.17
+- wax-prosemirror-utilities@0.0.17

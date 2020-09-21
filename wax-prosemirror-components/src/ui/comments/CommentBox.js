@@ -68,7 +68,7 @@ const CommentBox = props => {
     onClickBox(commentId);
   };
 
-  // if (!active && (!commentData || commentData.length === 0)) return null;
+  if (!active && (!commentData || commentData.length === 0)) return null;
 
   return (
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
@@ -81,14 +81,6 @@ const CommentBox = props => {
       <CommentItemList active={active} data={commentData} />
 
       {active && (
-        <StyledReply
-          onTextAreaBlur={onTextAreaBlur}
-          isNewComment={commentData.length === 0}
-          onClickPost={onClickPost}
-        />
-      )}
-
-      {!active && commentData.length === 0 && (
         <StyledReply
           onTextAreaBlur={onTextAreaBlur}
           isNewComment={commentData.length === 0}

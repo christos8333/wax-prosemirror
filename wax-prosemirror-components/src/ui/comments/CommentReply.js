@@ -70,6 +70,7 @@ const CommentReply = props => {
 
   const onBlur = content => {
     onTextAreaBlur(content, isNewComment);
+    setCommentValue('');
   };
 
   return (

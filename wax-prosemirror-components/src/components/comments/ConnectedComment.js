@@ -94,6 +94,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     );
 
     view[viewId].focus();
+    recalculateTops();
     return true;
   };
 
@@ -117,6 +118,18 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     activeView.focus();
   };
 
+  const onTextAreaBlur = (content, isNewComment) => {
+    // TODO Save into local storage
+    if (content !== '') {
+      onClickPost(content);
+    }
+
+    if (content === '' && isNewComment) {
+      onClickResolve();
+      activeView.focus();
+    }
+  };
+
   return (
     <ConnectedCommentStyled data-box={commentId} style={styles} active={active}>
       <CommentBox
@@ -128,6 +141,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
         onClickBox={onClickBox}
         onClickResolve={onClickResolve}
         recalculateTops={recalculateTops}
+        onTextAreaBlur={onTextAreaBlur}
       />
     </ConnectedCommentStyled>
   );

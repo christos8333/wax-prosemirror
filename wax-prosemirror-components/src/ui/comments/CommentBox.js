@@ -59,6 +59,7 @@ const CommentBox = props => {
     onClickBox,
     onClickPost,
     onClickResolve,
+    onTextAreaBlur,
   } = props;
 
   // send signal to make this comment active
@@ -67,7 +68,7 @@ const CommentBox = props => {
     onClickBox(commentId);
   };
 
-  if (!active && (!commentData || commentData.length === 0)) return null;
+  // if (!active && (!commentData || commentData.length === 0)) return null;
 
   return (
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
@@ -81,6 +82,15 @@ const CommentBox = props => {
 
       {active && (
         <StyledReply
+          onTextAreaBlur={onTextAreaBlur}
+          isNewComment={commentData.length === 0}
+          onClickPost={onClickPost}
+        />
+      )}
+
+      {!active && commentData.length === 0 && (
+        <StyledReply
+          onTextAreaBlur={onTextAreaBlur}
           isNewComment={commentData.length === 0}
           onClickPost={onClickPost}
         />
@@ -112,6 +122,8 @@ CommentBox.propTypes = {
   onClickPost: PropTypes.func.isRequired,
   /** Function to run when "resolve" button is clicked */
   onClickResolve: PropTypes.func.isRequired,
+  /** Function to run when text area loses focus */
+  onTextAreaBlur: PropTypes.func.isRequired,
 };
 
 CommentBox.defaultProps = {

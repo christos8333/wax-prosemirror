@@ -46,13 +46,13 @@ const ButtonGroup = styled.div`
 `;
 
 const CommentReply = props => {
-  const { className, isNewComment, onClickPost } = props;
-  const [commentValue, setCommentValue] = useState('');
+  const { className, isNewComment, onClickPost, onTextAreaBlur } = props;
   const commentInput = useRef(null);
+  const [commentValue, setCommentValue] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
-      if (isNewComment) commentInput.current.focus();
+      if (commentInput.current && isNewComment) commentInput.current.focus();
     });
   }, []);
 
@@ -68,17 +68,8 @@ const CommentReply = props => {
     setCommentValue('');
   };
 
-  const onBlur = () => {
-    const {
-      current: { value },
-    } = commentInput;
-    if (value !== '') {
-      // Save into local storage
-    }
-
-    if (isNewComment === 0 && value === '') {
-      // removeComment();
-    }
+  const onBlur = content => {
+    onTextAreaBlur(content, isNewComment);
   };
 
   return (
@@ -87,7 +78,7 @@ const CommentReply = props => {
         <TextWrapper>
           <ReplyTextArea
             ref={commentInput}
-            onBlur={onBlur}
+            onBlur={() => onBlur(commentInput.current.value)}
             placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
             onChange={() => setCommentValue(commentInput.current.value)}
             onKeyDown={e => {
@@ -119,6 +110,7 @@ const CommentReply = props => {
 CommentReply.propTypes = {
   isNewComment: PropTypes.bool.isRequired,
   onClickPost: PropTypes.func.isRequired,
+  onTextAreaBlur: PropTypes.func.isRequired,
 };
 
 CommentReply.defaultProps = {};

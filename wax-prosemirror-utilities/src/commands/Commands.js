@@ -62,17 +62,14 @@ const canInsert = type => state => {
   return false;
 };
 
-const createTable = (state, dispatch) => {
-  let rowCount = window && window.prompt('How many rows?', 2);
-  let colCount = window && window.prompt('How many columns?', 2);
-
+const createTable = (colsRows, state, dispatch) => {
   const cells = [];
-  while (colCount--) {
+  while (colsRows.cols--) {
     cells.push(state.config.schema.nodes.table_cell.createAndFill());
   }
 
   const rows = [];
-  while (rowCount--) {
+  while (colsRows.rows--) {
     rows.push(state.config.schema.nodes.table_row.createAndFill(null, cells));
   }
 

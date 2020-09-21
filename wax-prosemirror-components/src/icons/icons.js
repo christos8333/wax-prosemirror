@@ -3,6 +3,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import {
   faBold,
   faItalic,
+  faCheck,
   faCode,
   faSuperscript,
   faSubscript,
@@ -16,6 +17,7 @@ import {
   faListUl,
   faImage,
   faTable,
+  faTimes,
   faUndo,
   faRedo,
   faOutdent,
@@ -71,4 +73,6 @@ export default {
       </svg>
     </span>
   ),
+  check: <FontAwesomeIcon icon={faCheck} />,
+  times: <FontAwesomeIcon icon={faTimes} />,
 };

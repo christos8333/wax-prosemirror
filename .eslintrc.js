@@ -8,6 +8,10 @@ const { eslint } = require('@coko/lint');
  *
  */
 
+eslint.env = {
+  browser: true,
+};
+
 eslint.parser = 'babel-eslint';
 
 eslint.parserOptions = {
@@ -22,7 +26,7 @@ eslint.rules = {
   'import/no-extraneous-dependencies': [
     'error',
     {
-      devDependencies: ['.storybook/**', 'stories/**'],
+      devDependencies: ['.storybook/**', 'stories/**', '.cz-config.js'],
     },
   ],
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
@@ -30,7 +34,7 @@ eslint.rules = {
 
   'react/prop-types': [
     2,
-    { ignore: ['children', 'className', 'onClick', 'theme'] },
+    { ignore: ['children', 'className', 'onClick', 'onMouseEnter', 'theme'] },
   ],
   // 'import/no-named-as-default': 0,
 };

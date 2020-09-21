@@ -1,32 +1,32 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 // import { th } from '../_helpers'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div``;
 
 const Head = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
-`
+`;
 
 const Name = styled.div`
   font-size: 14px;
-`
+`;
 
 const Timestamp = styled.div`
   font-size: 12px;
   color: gray;
-`
+`;
 
 const Content = styled.div`
   font-size: 16px;
-`
+`;
 
 const CommentItem = props => {
-  const { className, content, displayName, timestamp } = props
+  const { className, content, displayName, timestamp } = props;
 
   return (
     <Wrapper className={className}>
@@ -36,8 +36,8 @@ const CommentItem = props => {
       </Head>
       <Content>{content}</Content>
     </Wrapper>
-  )
-}
+  );
+};
 
 CommentItem.propTypes = {
   /** Actual comment text */
@@ -46,8 +46,8 @@ CommentItem.propTypes = {
   displayName: PropTypes.string.isRequired,
   /** When the comment was made */
   timestamp: PropTypes.string.isRequired,
-}
+};
 
-CommentItem.defaultProps = {}
+CommentItem.defaultProps = {};
 
-export default CommentItem
+export default CommentItem;

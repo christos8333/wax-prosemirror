@@ -4,19 +4,39 @@ import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
-const LinkWrapper = styled.div`
-  padding: 20px;
-  border-radius: 3px;
-  border: 1px solid #000;
-  background: #ecedf1;
-  z-index: 9999;
-  -webkit-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.75);
+const Wrapper = styled.div`
+  background: silver;
+  display: inline-block;
+  padding: 12px;
+  a {
+    color: unset;
+    text-decoration: none;
+  }
 `;
 
-const Button = styled.button`
-  cursor: pointer;
+const LinkWrapper = styled.div`
+  display: inline-block;
+  width: 250px;
+  margin-right: 12px;
+`;
+
+const Input = styled.input`
+  width: calc(100% - 8px);
+  border: none;
+  outline: none;
+  :focus {
+    outline: none;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: inline-block;
+`;
+
+const StyledButton = styled.button`
+  margin-right: 10px;
+  background: #777;
+  color: #fff;
 `;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
@@ -26,9 +46,9 @@ const LinkComponent = ({ mark, setPosition, position }) => {
   const { state, dispatch } = activeView;
   const ref = useRef(null);
   const linkInput = useRef(null);
-  const [addButtonText, setButtonText] = useState('Create');
   const [lastLinkMark, setLLastLinkMark] = useState(linkMark);
   const [linkHref, setLinkHref] = useState(href);
+  const [editable, setEditable] = useState(!linkHref);
 
   useEffect(() => {
     setLinkText();
@@ -37,6 +57,10 @@ const LinkComponent = ({ mark, setPosition, position }) => {
 
   const addLinkHref = () => {
     const href = linkHref;
+    if (linkInput.current.value === '') {
+      linkInput.current.focus();
+      return false;
+    }
     const linkMark = state.schema.marks.link;
     const { tr } = state;
 
@@ -50,6 +74,7 @@ const LinkComponent = ({ mark, setPosition, position }) => {
         }),
       ),
     );
+    setEditable(false);
     activeView.focus();
   };
 
@@ -74,10 +99,8 @@ const LinkComponent = ({ mark, setPosition, position }) => {
 
   const setLinkText = () => {
     if (mark && mark.attrs.href !== '') {
-      setButtonText('Update');
       setLinkHref(mark.attrs.href);
     } else {
-      setButtonText('Create');
       setLinkHref('');
       if (linkInput.current) linkInput.current.focus();
     }
@@ -87,7 +110,7 @@ const LinkComponent = ({ mark, setPosition, position }) => {
     const {
       selection: { $from, $to },
     } = state;
-    const PMLinkMark = state.schema.marks['link'];
+    const PMLinkMark = state.schema.marks.link;
     const actualMark = DocumentHelpers.findMark(state, PMLinkMark);
     setLLastLinkMark(actualMark);
 
@@ -98,29 +121,89 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       dispatch(
         state.tr
           .setMeta('addToHistory', false)
-          .removeMark(
-            lastLinkMark.from,
-            lastLinkMark.to,
-            state.schema.marks.link,
-          ),
+          .removeMark(lastLinkMark.from, lastLinkMark.to, PMLinkMark),
       );
     }
   };
 
+  const getValidUrl = (url = '') => {
+    let newUrl = window.decodeURIComponent(url);
+    newUrl = newUrl.trim().replace(/\s/g, '');
+
+    if (/^(:\/\/)/.test(newUrl)) {
+      return `http${newUrl}`;
+    }
+    if (!/^(f|ht)tps?:\/\//i.test(newUrl)) {
+      return `http://${newUrl}`;
+    }
+
+    return newUrl;
+  };
+
+  const editLinkHref = () => {
+    if (
+      linkInput.current &&
+      linkInput.current.value === '' &&
+      lastLinkMark.attrs.href === ''
+    ) {
+      dispatch(
+        state.tr
+          .setMeta('addToHistory', false)
+          .removeMark(mark.from, mark.to, state.schema.marks.link),
+      );
+      activeView.focus();
+      return false;
+    }
+    setLinkHref(lastLinkMark.attrs.href);
+    setEditable(!editable);
+    return false;
+  };
+
   return mark ? (
-    <LinkWrapper ref={ref}>
-      <input
-        type="text"
-        ref={linkInput}
-        onChange={updateLinkHref}
-        onKeyPress={handleKeyDown}
-        value={linkHref}
-      />
-      <Button primary onClick={addLinkHref}>
-        {addButtonText}
-      </Button>
-      <Button onClick={removeLink}>Remove</Button>
-    </LinkWrapper>
+    <Wrapper>
+      <LinkWrapper ref={ref}>
+        {editable && (
+          <Input
+            ref={linkInput}
+            onChange={updateLinkHref}
+            onKeyPress={handleKeyDown}
+            value={linkHref}
+          />
+        )}
+
+        {!editable && (
+          <a href={getValidUrl(linkHref)} rel="noreferrer" target="_blank">
+            {getValidUrl(linkHref)}
+          </a>
+        )}
+      </LinkWrapper>
+
+      <ButtonGroup>
+        {editable && (
+          <>
+            <StyledButton onClick={addLinkHref} type="button">
+              Apply
+            </StyledButton>
+
+            <StyledButton onClick={editLinkHref} type="button">
+              Cancel
+            </StyledButton>
+          </>
+        )}
+
+        {!editable && (
+          <>
+            <StyledButton onClick={editLinkHref} type="button">
+              Edit
+            </StyledButton>
+
+            <StyledButton onClick={removeLink} type="button">
+              Remove
+            </StyledButton>
+          </>
+        )}
+      </ButtonGroup>
+    </Wrapper>
   ) : null;
 };
 

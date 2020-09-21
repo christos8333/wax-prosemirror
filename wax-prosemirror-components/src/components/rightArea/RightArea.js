@@ -71,13 +71,13 @@ export default ({ area }) => {
         }
       }
       // store where the box ends to be aware of overlaps in the next box
-      markNode.endHeight = top + boxHeight + 2;
+      markNode.endHeight = top + boxHeight + 4;
       result[pos] = top;
       allCommentsTop.push({ [id]: result[pos] });
 
       // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
-        markNode.endHeight = annotationTop + boxHeight + 2;
+        markNode.endHeight = annotationTop + boxHeight + 3;
         result[pos] = annotationTop;
         allCommentsTop[pos][id] = result[pos];
         let b = true;
@@ -115,6 +115,12 @@ export default ({ area }) => {
     return allCommentsTop;
   });
 
+  const recalculateTops = () => {
+    setTimeout(() => {
+      setPosition(setTops());
+    });
+  };
+
   useDeepCompareEffect(() => {
     setMarksNodes(updateMarks(view));
     if (isFirstRun) {
@@ -134,6 +140,7 @@ export default ({ area }) => {
         area={area}
         view={main}
         position={position}
+        recalculateTops={recalculateTops}
       />
     ),
     [marksNodes[area] || [], position],

@@ -29,7 +29,10 @@ const disabledStyles = css`
   }
 `;
 
-const Wrapper = styled.button`
+const Wrapper = styled.button.attrs(props => ({
+  title: props.title,
+  type: 'button',
+}))`
   align-items: center;
   background: none;
   border: none;
@@ -65,7 +68,15 @@ const Label = styled.span`
 `;
 
 const MenuButton = props => {
-  const { active, className, disabled, iconName, label, onClick } = props;
+  const {
+    active,
+    className,
+    disabled,
+    iconName,
+    label,
+    title,
+    onClick,
+  } = props;
 
   return (
     <Wrapper
@@ -73,6 +84,7 @@ const MenuButton = props => {
       className={className}
       disabled={disabled}
       onClick={onClick}
+      title={title}
     >
       {iconName && (
         <StyledIcon active={active} disabled={disabled} name={iconName} />
@@ -88,11 +100,13 @@ MenuButton.propTypes = {
   disabled: PropTypes.bool.isRequired,
   iconName: PropTypes.string,
   label: PropTypes.string,
+  title: PropTypes.string,
 };
 
 MenuButton.defaultProps = {
   iconName: null,
   label: null,
+  title: null,
 };
 
 export default MenuButton;

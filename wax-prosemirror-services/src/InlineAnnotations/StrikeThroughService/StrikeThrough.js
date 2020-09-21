@@ -8,7 +8,8 @@ export default
 @injectable()
 class StrikeThrough extends Tools {
   title = 'Toggle strikethrough';
-  content = icons.strikethrough;
+  // content = icons.strikethrough;
+  icon = 'strikethrough';
   name = 'StrikeThrough';
 
   get run() {

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { isFunction } from "lodash";
-import styled from "styled-components";
-import icons from "../icons/icons";
+import React, { useState } from 'react';
+import { isFunction } from 'lodash';
+import styled from 'styled-components';
+import icons from '../icons/icons';
 
 const ToolGroupStyled = styled.div`
   border-right: 1px solid #ecedf1;
@@ -27,6 +27,8 @@ const InnerStyled = styled.div`
   right: 100%;
 `;
 
+const MoreIcon = icons.more;
+
 const ToolGroupComponent = ({ view, tools, name, title }) => {
   const [more, showHide] = useState(false),
     toolsShown = [],
@@ -45,13 +47,13 @@ const ToolGroupComponent = ({ view, tools, name, title }) => {
       {toolsShown}
       {rest.length && !more ? (
         <MoreButton title="show more tools" onClick={() => showHide(!more)}>
-          {icons.ellipses}
+          <MoreIcon />
         </MoreButton>
       ) : null}
       {more && (
         <div>
           <MoreButton title="hide" onClick={() => showHide(!more)}>
-            {icons.ellipses}
+            <MoreIcon />
           </MoreButton>
           <InnerStyled>{rest}</InnerStyled>
         </div>

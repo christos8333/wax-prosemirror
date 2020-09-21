@@ -1,14 +1,15 @@
 import { toggleMark } from 'prosemirror-commands';
 import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
+// import { icons } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
 export default
 @injectable()
 class Superscript extends Tools {
   title = 'Toggle superscript';
-  content = icons.superscript;
+  // content = icons.superscript;
+  icon = 'superscript';
   name = 'Superscript';
 
   get run() {

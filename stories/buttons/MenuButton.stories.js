@@ -17,6 +17,7 @@ export const Base = () => {
         active={active}
         iconName="boldSvg"
         onClick={() => setActive(!active)}
+        title="bold"
       />
     </Demo>
   );

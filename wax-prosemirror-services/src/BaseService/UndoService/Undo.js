@@ -1,13 +1,14 @@
 import { undo } from 'prosemirror-history';
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
+// import { icons } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
 export default
 @injectable()
 class Undo extends Tools {
   title = 'Undo last change';
-  content = icons.undo;
+  // content = icons.undo;
+  icon = 'undo';
   onlyOnMain = true;
   name = 'Undo';
 

@@ -1,35 +1,43 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
+
+import MenuButton from '../ui/buttons/MenuButton';
 
 const UploadImage = styled.div`
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? 'default' : 'none')};
-  color: #777;
   display: inline-flex;
   padding: 0px 10px;
-  .custom-file-upload {
-    cursor: pointer;
-  }
-  &:hover {
-  }
+
   input {
     display: none;
   }
 `;
+
+// TO DO -- select should be done with MenuButton's disabled prop
+
 const ImageUpload = ({ item, fileUpload, view }) => {
   const { activeViewId } = useContext(WaxContext);
+
+  const inputRef = useRef(null);
+  const handleClick = () => inputRef.current.click();
+
   return (
     <UploadImage select={item.select && item.select(view.state, activeViewId)}>
-      <label
-        className="custom-file-upload"
-        title="upload image"
-        htmlFor="file-upload"
-      >
-        {item.content}
+      <label htmlFor="file-upload">
+        <MenuButton
+          active={false}
+          disabled={false}
+          iconName={item.icon}
+          onClick={handleClick}
+          title="Upload Image"
+        />
+
         <input
           id="file-upload"
+          ref={inputRef}
           onChange={e => fileUpload(e.target.files[0])}
           type="file"
         />

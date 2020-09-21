@@ -1,13 +1,14 @@
 import { redo } from 'prosemirror-history';
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
+// import { icons } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
 export default
 @injectable()
 class Redo extends Tools {
   title = 'Redo last undone change';
-  content = icons.redo;
+  // content = icons.redo;
+  icon = 'redo';
   onlyOnMain = true;
   name = 'Redo';
 

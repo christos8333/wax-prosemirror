@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-core",
   "author": "Christos Kokosias",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Wax prosemirror core",
   "license": "MIT",
   "main": "dist/index.js",
@@ -28,8 +28,8 @@
     "reflect-metadata": "^0.1.13",
     "styled-components": "^4.2.0",
     "uuid": "^7.0.3",
-    "wax-prosemirror-services": "^0.0.16",
-    "wax-prosemirror-utilities": "^0.0.16"
+    "wax-prosemirror-services": "^0.0.17",
+    "wax-prosemirror-utilities": "^0.0.17"
   },
   "resolutions": {
     "prosemirror-commands": "1.1.4",

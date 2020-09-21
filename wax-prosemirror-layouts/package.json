@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-layouts",
   "author": "Christos Kokosias",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Wax prosemirror layouts",
   "license": "MIT",
   "main": "dist/index.js",
@@ -12,11 +12,11 @@
   "dependencies": {
     "react-panelgroup": "^1.0.10",
     "styled-components": "^4.2.0",
-    "wax-prosemirror-components": "^0.0.17",
-    "wax-prosemirror-core": "^0.0.17",
-    "wax-prosemirror-services": "^0.0.17",
-    "wax-prosemirror-themes": "^0.0.17",
-    "wax-prosemirror-utilities": "^0.0.17"
+    "wax-prosemirror-components": "^0.0.18",
+    "wax-prosemirror-core": "^0.0.18",
+    "wax-prosemirror-services": "^0.0.18",
+    "wax-prosemirror-themes": "^0.0.18",
+    "wax-prosemirror-utilities": "^0.0.18"
   },
   "peerDependencies": {
     "react": "^16.13.1",

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { random } from 'faker';
 
-import LinkTooltip from '../../wax-prosemirror-components/src/ui/Link/LinkTooltip';
+import LinkTooltip from '../../wax-prosemirror-components/src/ui/link/LinkTooltip';
 
 import { Demo, Note } from '../_helpers';
 

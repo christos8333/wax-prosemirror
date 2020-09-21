@@ -16,6 +16,4 @@ export { default as RightArea } from './src/components/rightArea/RightArea';
 
 export { default as TrackChangeEnable } from './src/components/trackChanges/TrackChangeEnable';
 
-export { default as InsertTableTool } from './src/ui/tables/InsertTableTool';
-
 export { default as CreateTable } from './src/components/tables/CreateTable';

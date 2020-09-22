@@ -9,7 +9,7 @@ export default
 @injectable()
 class EnableTrackChange extends Tools {
   title = 'Toggle Track Changes';
-  content = 'track changes';
+  label = 'Track Changes';
   name = 'EnableTrackChange';
 
   get run() {

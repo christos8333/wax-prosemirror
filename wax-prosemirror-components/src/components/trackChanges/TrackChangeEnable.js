@@ -45,7 +45,7 @@ const TrackChangeEnable = ({ view = {}, item, enabled }) => {
   //   </ButtonStyled>
   // );
 
-  const handleClick = () => {
+  const handleMouseDown = () => {
     setEnabled(!isEnabled);
     item.run(view.state, view.dispatch);
   };
@@ -55,7 +55,7 @@ const TrackChangeEnable = ({ view = {}, item, enabled }) => {
       active={isEnabled}
       disabled={item.enable && !item.enable(view.state)}
       label="Track Changes"
-      onClick={handleClick}
+      onMouseDown={handleMouseDown}
       title={item.title}
     />
   );

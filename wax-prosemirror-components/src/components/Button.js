@@ -18,7 +18,7 @@ import MenuButton from '../ui/buttons/MenuButton';
 // `;
 
 const Button = ({ view = {}, item }) => {
-  const { active, enable, icon, onlyOnMain, run, title } = item;
+  const { active, enable, icon, label, onlyOnMain, run, title } = item;
 
   const {
     view: { main },
@@ -46,6 +46,7 @@ const Button = ({ view = {}, item }) => {
       active={isActive}
       disabled={isDisabled}
       iconName={icon}
+      label={label}
       onMouseDown={handleMouseDown}
       title={title}
     />

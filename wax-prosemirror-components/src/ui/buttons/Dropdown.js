@@ -4,13 +4,16 @@ import styled from 'styled-components';
 
 import MenuButton from './MenuButton';
 
+// font size 0 reason: https://stackoverflow.com/a/19212391
 const Wrapper = styled.div`
+  font-size: 0;
   position: relative;
 `;
 
 const DropWrapper = styled.div`
   margin-top: 4px;
   position: absolute;
+  z-index: 2;
 `;
 
 const Dropdown = props => {
@@ -26,7 +29,7 @@ const Dropdown = props => {
         active={isOpen}
         iconName={iconName}
         label={label}
-        onClick={() => setIsOpen(!isOpen)}
+        onMouseDown={() => setIsOpen(!isOpen)}
         title={title}
       />
 

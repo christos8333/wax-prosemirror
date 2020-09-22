@@ -33,16 +33,13 @@ const Wrapper = styled.button.attrs(props => ({
   title: props.title,
   type: 'button',
 }))`
-  align-items: center;
   background: none;
   border: none;
   border-radius: 2px;
   cursor: pointer;
-  display: flex;
-  height: 24px;
+  height: 28px;
   outline: none;
-  padding: 0;
-  /* padding: 4px 8px; */
+  padding: 2px;
   transition: all 0.1s ease-in;
 
   > svg {
@@ -75,7 +72,7 @@ const MenuButton = props => {
     iconName,
     label,
     title,
-    onClick,
+    onMouseDown,
   } = props;
 
   return (
@@ -83,7 +80,7 @@ const MenuButton = props => {
       active={active}
       className={className}
       disabled={disabled}
-      onMouseDown={e => onClick(e)}
+      onMouseDown={onMouseDown}
       title={title}
     >
       {iconName && (

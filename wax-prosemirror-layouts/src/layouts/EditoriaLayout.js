@@ -14,6 +14,7 @@ const LayoutWrapper = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
+
   .divider {
     &:before {
       content: 'Notes';
@@ -112,12 +113,12 @@ const WaxSurfaceScroll = styled.div`
 
 const MainMenuContainer = styled.div`
   background: #fff;
-  min-height: 52px;
-  line-height: 32px;
-  position: relative;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
   user-select: none;
   border-bottom: 2px solid #ecedf1;
+
   @media (max-width: 600px) {
     position: absolute;
     /* width: 100%; */
@@ -125,26 +126,9 @@ const MainMenuContainer = styled.div`
     min-height: 72px;
     line-height: 0px;
   }
-`;
-const MainMenuInner = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  background: #fff;
-  z-index: 9999;
-  div {
-    align-items: center;
-    justify-content: center;
-    @media (max-width: 600px) {
-      justify-content: start;
-    }
+
+  > div:not(:last-child) {
+    border-right: 1px solid #ecedf1;
   }
 `;
 
@@ -265,9 +249,7 @@ const EditoriaLayout = ({ editor }) => {
     <ThemeProvider theme={cokoTheme}>
       <LayoutWrapper>
         <MainMenuContainer>
-          <MainMenuInner>
-            <TopBar />
-          </MainMenuInner>
+          <TopBar />
         </MainMenuContainer>
 
         <LeftMenuSurfaceContainer>
@@ -297,6 +279,7 @@ const EditoriaLayout = ({ editor }) => {
             {AreasWithNotes}
           </PanelGroup>
         </LeftMenuSurfaceContainer>
+
         <InfoArea />
         <WaxOverlays />
       </LayoutWrapper>

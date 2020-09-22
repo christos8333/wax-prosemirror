@@ -20,8 +20,6 @@ import MenuButton from '../ui/buttons/MenuButton';
 const Button = ({ view = {}, item }) => {
   const { active, enable, icon, onlyOnMain, run, title } = item;
 
-  // let view = {};
-
   const {
     view: { main },
     // activeViewId,
@@ -31,7 +29,7 @@ const Button = ({ view = {}, item }) => {
 
   const { dispatch, state } = view;
 
-  const handleClick = e => {
+  const handleMouseDown = e => {
     e.preventDefault();
     run(state, dispatch);
   };
@@ -43,30 +41,12 @@ const Button = ({ view = {}, item }) => {
   // item.select &&
   // item.select(view.state, activeViewId);
 
-  // console.log(item);
-
-  // return (
-  //   <ButtonStyled
-  //     type="button"
-  //     isActive={item.active && item.active(view.state)}
-  //     title={item.title}
-  //     disabled={item.enable && !item.enable(view.state)}
-  //     onMouseDown={e => {
-  //       e.preventDefault();
-  //       item.run(view.state, view.dispatch);
-  //     }}
-  //     select={item.select && item.select(view.state, activeViewId)}
-  //   >
-  //     {item.content}
-  //   </ButtonStyled>
-  // );
-
   return (
     <MenuButton
       active={isActive}
       disabled={isDisabled}
       iconName={icon}
-      onClick={e => handleClick(e)}
+      onMouseDown={handleMouseDown}
       title={title}
     />
   );

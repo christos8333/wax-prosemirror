@@ -83,7 +83,7 @@ const MenuButton = props => {
       active={active}
       className={className}
       disabled={disabled}
-      onClick={onClick}
+      onMouseDown={e => onClick(e)}
       title={title}
     >
       {iconName && (

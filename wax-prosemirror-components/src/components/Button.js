@@ -32,7 +32,7 @@ const Button = ({ view = {}, item }) => {
   const { dispatch, state } = view;
 
   const handleClick = e => {
-    // e.preventDefault();
+    e.preventDefault();
     run(state, dispatch);
   };
 
@@ -66,7 +66,7 @@ const Button = ({ view = {}, item }) => {
       active={isActive}
       disabled={isDisabled}
       iconName={icon}
-      onClick={handleClick}
+      onClick={e => handleClick(e)}
       title={title}
     />
   );

@@ -15,17 +15,17 @@ export const Base = () => {
     <Demo onClickButton={reset}>
       <MenuButton
         active={active}
-        iconName="boldSvg"
-        onClick={() => setActive(!active)}
+        iconName="bold"
+        onMouseDown={() => setActive(!active)}
         title="bold"
       />
     </Demo>
   );
 };
 
-export const Inactive = () => <MenuButton iconName="boldSvg" />;
-export const Active = () => <MenuButton active iconName="boldSvg" />;
-export const Disabled = () => <MenuButton disabled iconName="boldSvg" />;
+export const Inactive = () => <MenuButton iconName="bold" />;
+export const Active = () => <MenuButton active iconName="bold" />;
+export const Disabled = () => <MenuButton disabled iconName="bold" />;
 
 export const IconAndText = () => {
   const [active, setActive] = useState(false);
@@ -38,9 +38,9 @@ export const IconAndText = () => {
     <Demo onClickButton={reset}>
       <MenuButton
         active={active}
-        iconName="boldSvg"
+        iconName="bold"
         label="Make it bold"
-        onClick={() => setActive(!active)}
+        onMouseDown={() => setActive(!active)}
       />
     </Demo>
   );
@@ -58,7 +58,7 @@ export const TextOnly = () => {
       <MenuButton
         active={active}
         label="Make it bold"
-        onClick={() => setActive(!active)}
+        onMouseDown={() => setActive(!active)}
       />
     </Demo>
   );

@@ -20,13 +20,13 @@ const DropElement = styled.div`
 
 export const Base = () => (
   <Wrapper>
-    <Dropdown iconName="boldSvg" dropComponent={<DropElement />} />
+    <Dropdown iconName="bold" dropComponent={<DropElement />} />
   </Wrapper>
 );
 
 // export const RightSide = () => (
 //   <RightWrapper>
-//     <Dropdown iconName="boldSvg" />
+//     <Dropdown iconName="bold" />
 //   </RightWrapper>
 // );
 

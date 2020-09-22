@@ -22,7 +22,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const { activeViewId } = useContext(WaxContext);
 
   const inputRef = useRef(null);
-  const handleClick = () => inputRef.current.click();
+  const handleMouseDown = () => inputRef.current.click();
 
   return (
     <UploadImage select={item.select && item.select(view.state, activeViewId)}>
@@ -31,7 +31,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           active={false}
           disabled={false}
           iconName={item.icon}
-          onClick={handleClick}
+          onMouseDown={handleMouseDown}
           title="Upload Image"
         />
 

@@ -2,11 +2,11 @@ import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 
-export default 
+export default
 @injectable()
 class Paragraph extends Tools {
   title = 'Change to Paragraph';
-  content = 'Paragraph';
+  label = 'Paragraph';
   name = 'Paragraph';
 
   get run() {

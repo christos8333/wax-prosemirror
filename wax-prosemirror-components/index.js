@@ -6,6 +6,8 @@ export { default as TableDropDown } from './src/components/TableDropDown';
 export { default as ImageUpload } from './src/components/ImageUpload';
 export { default as LeftMenuTitle } from './src/components/LeftMenuTitle';
 export { default as ToolGroupComponent } from './src/components/ToolGroupComponent';
+export { default as ToolGroups } from './src/components/ToolGroups';
+
 export { default as NoteEditorContainer } from './src/components/notes/NoteEditorContainer';
 
 export { default as LinkComponent } from './src/components/link/LinkComponent';

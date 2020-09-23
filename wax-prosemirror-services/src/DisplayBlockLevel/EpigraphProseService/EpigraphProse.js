@@ -6,7 +6,7 @@ export default
 @injectable()
 class EpigraphProse extends Tools {
   title = 'Change to Epigraph Prose';
-  content = 'Epigraph Prose';
+  label = 'Epigraph Prose';
   name = 'EpigraphProse';
 
   get run() {

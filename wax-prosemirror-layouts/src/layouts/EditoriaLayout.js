@@ -146,6 +146,7 @@ const SideMenuContainer = styled.div`
 const SideMenuInner = styled.div`
   display: flex;
   width: 100%;
+  flex-direction: column;
   > div {
     flex: 1;
     display: flex;

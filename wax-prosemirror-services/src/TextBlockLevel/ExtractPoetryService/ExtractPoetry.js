@@ -5,7 +5,7 @@ import Tools from '../../lib/Tools';
 @injectable()
 class ExtractPoetry extends Tools {
   title = 'Change to Extract Poetry';
-  content = 'Extract Poetry';
+  label = 'Extract Poetry';
   name = 'ExtractPoetry';
 
   get run() {

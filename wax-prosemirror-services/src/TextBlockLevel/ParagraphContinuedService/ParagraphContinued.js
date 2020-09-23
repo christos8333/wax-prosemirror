@@ -5,7 +5,7 @@ import Tools from '../../lib/Tools';
 @injectable()
 class ParagraphContinued extends Tools {
   title = 'Change to Paragraph Continued';
-  content = 'Paragraph Continued';
+  label = 'Paragraph Continued';
   name = 'ParagraphContinued';
 
   get run() {

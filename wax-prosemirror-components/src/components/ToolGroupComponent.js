@@ -34,9 +34,7 @@ const ToolGroupComponent = ({ view, tools, name, title }) => {
 
   return (
     <Wrapper data-name={name}>
-      <DisplayTitle />
       {toolsShown}
-
       {rest.length > 0 && (
         <Dropdown
           iconName="more"

@@ -6,7 +6,7 @@ export default
 @injectable()
 class Heading3 extends Tools {
   title = 'Change to heading level 3';
-  content = 'Heading 3';
+  label = 'Heading 3';
   name = 'Heading3';
 
   get run() {

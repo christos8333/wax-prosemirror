@@ -10,10 +10,11 @@ class DisplayText extends ToolGroup {
 
   constructor(@inject('Display') display, @inject('Text') text) {
     super();
-    this.toolGroups = [display, text];
+    this.toolGroups = [{ tabA: [display, text] }];
   }
 
   renderTools(view) {
+    console.log(this._toolGroups);
     return <span>hi</span>;
   }
 }

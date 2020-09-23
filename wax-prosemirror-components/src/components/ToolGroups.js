@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: 0 */
+/* eslint react/prop-types: 0 */
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ToolGroupComponent from './ToolGroupComponent';
@@ -12,7 +14,7 @@ const ToolGroups = ({ toolGroups, view }) => {
         key={uuidv4()}
         view={view}
         tools={toolGroup._tools}
-        title={this.title}
+        // title={this.title}
         // name={name}
       />
     );

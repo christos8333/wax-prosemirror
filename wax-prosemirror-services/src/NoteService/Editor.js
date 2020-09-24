@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext, useState } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, TextSelection } from 'prosemirror-state';
@@ -18,6 +18,8 @@ export default ({ node, view }) => {
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
   let noteView;
+  let updateMainView = true;
+
   useEffect(() => {
     noteView = new EditorView(
       { mount: editorRef.current },
@@ -40,6 +42,9 @@ export default ({ node, view }) => {
         },
         transformPasted: slice => {
           return transformPasted(slice, noteView);
+        },
+        handleKeyPress: (noteEditorView, from, to, content) => {
+          updateMainView = false;
         },
       },
     );
@@ -80,21 +85,24 @@ export default ({ node, view }) => {
     });
 
     // TODO Remove timeout and use state to check if noteView has changed
-    setTimeout(() => {
-      context.updateView({}, noteId);
-    }, 20);
+    if (updateMainView) {
+      setTimeout(() => {
+        context.updateView({}, noteId);
+      }, 20);
+    }
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(noteFound[0].pos + 1);
       for (let i = 0; i < transactions.length; i++) {
-        let steps = transactions[i].steps;
+        let { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
           outerTr.step(steps[j].map(offsetMap));
       }
 
       if (outerTr.docChanged)
         view.dispatch(outerTr.setMeta('outsideView', 'notes'));
+      updateMainView = true;
     }
   };
 
@@ -115,11 +123,11 @@ export default ({ node, view }) => {
   };
 
   if (context.view[noteId]) {
-    let state = context.view[noteId].state;
-    let start = node.content.findDiffStart(state.doc.content);
+    const { state } = context.view[noteId];
+    const start = node.content.findDiffStart(state.doc.content);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
-      let overlap = start - Math.min(endA, endB);
+      const overlap = start - Math.min(endA, endB);
       if (overlap > 0) {
         endA += overlap;
         endB += overlap;

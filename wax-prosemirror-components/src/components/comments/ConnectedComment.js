@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, memo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
@@ -17,7 +17,6 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {
-  // const MemorizedComponent = memo(() => {
   const {
     view,
     view: {
@@ -48,9 +47,19 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
-  if (activeComment && commentId === activeComment.attrs.id) active = true;
+  if (activeComment && commentId === activeComment.attrs.id) {
+    active = true;
+    recalculateTops();
+  }
 
   const onClickPost = content => {
+    // TODO find out why on enter comment posts twice.
+    if (
+      comment.attrs.conversation.length !== 0 &&
+      last(comment.attrs.conversation).content === content
+    )
+      return;
+
     const { tr } = state;
 
     const obj = {
@@ -95,7 +104,6 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     );
 
     view[viewId].focus();
-    recalculateTops();
     return true;
   };
 
@@ -131,21 +139,27 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     }
   };
 
-  return (
-    <ConnectedCommentStyled data-box={commentId} style={styles} active={active}>
-      <CommentBox
-        key={commentId}
+  const MemorizedComponent = useMemo(
+    () => (
+      <ConnectedCommentStyled
+        data-box={commentId}
+        style={styles}
         active={active}
-        commentId={commentId}
-        commentData={comment.attrs.conversation}
-        onClickPost={onClickPost}
-        onClickBox={onClickBox}
-        onClickResolve={onClickResolve}
-        recalculateTops={recalculateTops}
-        onTextAreaBlur={onTextAreaBlur}
-      />
-    </ConnectedCommentStyled>
+      >
+        <CommentBox
+          key={commentId}
+          active={active}
+          commentId={commentId}
+          commentData={comment.attrs.conversation}
+          onClickPost={onClickPost}
+          onClickBox={onClickBox}
+          onClickResolve={onClickResolve}
+          recalculateTops={recalculateTops}
+          onTextAreaBlur={onTextAreaBlur}
+        />
+      </ConnectedCommentStyled>
+    ),
+    [active, top, comment.attrs.conversation.length],
   );
-  // });
-  // return <MemorizedComponent />;
+  return <>{MemorizedComponent}</>;
 };

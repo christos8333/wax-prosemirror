@@ -159,7 +159,24 @@ const LinkComponent = ({ mark, setPosition, position }) => {
     return false;
   };
 
-  return mark ? (
+  const selectionContainsLink = () => {
+    const {
+      selection: { from, to },
+    } = state;
+    const markFound = DocumentHelpers.findMark(
+      state,
+      activeView.state.schema.marks.link,
+      true,
+    );
+
+    if (markFound.length >= 1) {
+      if (from < markFound[0].from || to > markFound[0].to) return true;
+    }
+
+    return false;
+  };
+
+  return !selectionContainsLink() && mark ? (
     <Wrapper>
       <LinkWrapper ref={ref}>
         {editable && (

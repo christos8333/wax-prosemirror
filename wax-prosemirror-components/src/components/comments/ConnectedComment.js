@@ -51,6 +51,9 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   if (activeComment && commentId === activeComment.attrs.id) active = true;
 
   const onClickPost = content => {
+    // TODO find out why on enter comment posts twice.
+    if (last(comment.attrs.conversation).content === content) return;
+
     const { tr } = state;
 
     const obj = {

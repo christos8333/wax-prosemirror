@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, memo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
@@ -17,7 +17,6 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {
-  // const MemorizedComponent = memo(() => {
   const {
     view,
     view: {
@@ -138,21 +137,27 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     }
   };
 
-  return (
-    <ConnectedCommentStyled data-box={commentId} style={styles} active={active}>
-      <CommentBox
-        key={commentId}
+  const MemorizedComponent = useMemo(
+    () => (
+      <ConnectedCommentStyled
+        data-box={commentId}
+        style={styles}
         active={active}
-        commentId={commentId}
-        commentData={comment.attrs.conversation}
-        onClickPost={onClickPost}
-        onClickBox={onClickBox}
-        onClickResolve={onClickResolve}
-        recalculateTops={recalculateTops}
-        onTextAreaBlur={onTextAreaBlur}
-      />
-    </ConnectedCommentStyled>
+      >
+        <CommentBox
+          key={commentId}
+          active={active}
+          commentId={commentId}
+          commentData={comment.attrs.conversation}
+          onClickPost={onClickPost}
+          onClickBox={onClickBox}
+          onClickResolve={onClickResolve}
+          recalculateTops={recalculateTops}
+          onTextAreaBlur={onTextAreaBlur}
+        />
+      </ConnectedCommentStyled>
+    ),
+    [active, top, comment.attrs.conversation.length],
   );
-  // });
-  // return <MemorizedComponent />;
+  return <>{MemorizedComponent}</>;
 };

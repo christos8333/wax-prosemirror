@@ -47,7 +47,10 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
-  if (activeComment && commentId === activeComment.attrs.id) active = true;
+  if (activeComment && commentId === activeComment.attrs.id) {
+    active = true;
+    recalculateTops();
+  }
 
   const onClickPost = content => {
     // TODO find out why on enter comment posts twice.
@@ -101,7 +104,6 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     );
 
     view[viewId].focus();
-    recalculateTops();
     return true;
   };
 

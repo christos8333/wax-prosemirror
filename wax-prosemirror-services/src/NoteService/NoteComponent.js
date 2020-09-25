@@ -7,12 +7,27 @@ import NoteEditor from './NoteEditor';
 
 export default () => {
   const {
+    view,
     view: { main },
   } = useContext(WaxContext);
 
   const [notes, setNotes] = useState([]);
+
+  const getUpdateNotes = () => {
+    if (view) {
+      console.log(view, notes);
+      const allNotes = DocumentHelpers.findChildrenByType(
+        main.state.doc,
+        main.state.schema.nodes.footnote,
+        true,
+      );
+      console.log(allNotes);
+    }
+  };
+
   useDeepCompareEffect(() => {
     setNotes(updateNotes(main));
+    getUpdateNotes();
   }, [updateNotes(main)]);
 
   const noteComponent = useMemo(

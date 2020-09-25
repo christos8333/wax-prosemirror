@@ -1,3 +1,5 @@
+/* eslint react/prop-types: 0 */
+/* eslint react/destructuring-assignment: 0 */
 import React, { useContext, useState } from 'react';
 
 export const WaxContext = React.createContext({
@@ -7,6 +9,7 @@ export const WaxContext = React.createContext({
   app: null,
   updateView: null,
   updateActiveView: null,
+  removeView: null,
 });
 
 export default props => {
@@ -15,13 +18,18 @@ export default props => {
     view: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
+    removeView: view => {
+      const newContext = { ...context, view };
+
+      setContext({ ...newContext });
+    },
     updateView: (newView, activeViewId) => {
       const view = Object.assign(context.view, newView);
       const activeView = view[activeViewId || context.activeViewId];
       setContext({
         ...context,
         view,
-        activeView: activeView,
+        activeView,
         activeViewId: activeViewId || context.activeViewId,
       });
     },

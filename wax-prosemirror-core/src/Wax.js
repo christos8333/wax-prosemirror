@@ -94,7 +94,7 @@ const Wax = props => {
 
   const finalOnChange = debounce(
     value => {
-      /* HACK alter toDOM of footnote, because of how PM treats inline nodes
+      /*HACK  alter toDOM of footnote, because of how PM treats inline nodes
       with content */
       if (schema.nodes.footnote) {
         const old = schema.nodes.footnote.spec.toDOM;
@@ -106,6 +106,14 @@ const Wax = props => {
 
       const serialize = serializer(schema);
       WaxOnchange(serialize(value));
+
+      if (schema.nodes.footnote) {
+        const old = schema.nodes.footnote.spec.toDOM;
+        schema.nodes.footnote.spec.toDOM = function (node) {
+          old.apply(this, arguments);
+          return ['footnote', node.attrs];
+        };
+      }
     },
     1000,
     { maxWait: 5000 },

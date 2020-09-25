@@ -13,8 +13,8 @@ class Note extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      let { empty, $from, $to } = state.selection,
-        content = Fragment.empty;
+      const { empty, $from, $to } = state.selection;
+      let content = Fragment.empty;
       if (!empty && $from.sameParent($to) && $from.parent.inlineContent)
         content = $from.parent.content.cut(
           $from.parentOffset,
@@ -22,7 +22,7 @@ class Note extends Tools {
         );
       const footnote = state.config.schema.nodes.footnote.create(
         { id: uuidv4() },
-        Fragment.empty,
+        content,
       );
       dispatch(state.tr.replaceSelectionWith(footnote));
     };

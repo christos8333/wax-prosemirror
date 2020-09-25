@@ -213,8 +213,8 @@ const CommentsContainer = styled.div`
   }
 `;
 
-let surfaceHeight = 500;
-let notesHeight = 50;
+let surfaceHeight = 700;
+let notesHeight = 150;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;
@@ -280,7 +280,7 @@ const EditoriaLayout = ({ editor }) => {
           <PanelGroup
             direction="column"
             panelWidths={[
-              { size: surfaceHeight, resize: 'stretch' },
+              { size: surfaceHeight, resize: 'dynamic' },
               { size: notesHeight, resize: 'stretch' },
             ]}
             onResizeEnd={onResizeEnd}

@@ -1,14 +1,13 @@
-// TODO Write the node in WaxSchema
 const footnote = {
   group: 'inline',
-  content: 'block*',
+  content: 'inline*',
   inline: true,
   atom: true,
   attrs: {
     id: { default: '' },
   },
   toDOM: node => {
-    return ['footnote', node.attrs, 0];
+    return ['footnote', node.attrs];
   },
   parseDOM: [
     {

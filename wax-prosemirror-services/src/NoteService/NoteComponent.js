@@ -7,12 +7,29 @@ import NoteEditor from './NoteEditor';
 
 export default () => {
   const {
+    view,
     view: { main },
   } = useContext(WaxContext);
 
   const [notes, setNotes] = useState([]);
+
+  const cleanUpNoteViews = () => {
+    if (view) {
+      const currentNotes = DocumentHelpers.findChildrenByType(
+        main.state.doc,
+        main.state.schema.nodes.footnote,
+        true,
+      );
+      if (notes.length > currentNotes.length) {
+        // TODO remove from context views that no loger exist
+        // console.log('to do cleanup');
+      }
+    }
+  };
+
   useDeepCompareEffect(() => {
     setNotes(updateNotes(main));
+    cleanUpNoteViews();
   }, [updateNotes(main)]);
 
   const noteComponent = useMemo(

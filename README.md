@@ -7,7 +7,7 @@
 
 
 This library is being developed by the [Coko Foundation](https://coko.foundation/).
-Wax Editor is build on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
+Wax Editor is built on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
 ## Roadmap
 

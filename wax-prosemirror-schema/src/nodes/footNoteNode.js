@@ -31,8 +31,7 @@ const footnote = {
     id: { default: '' },
   },
   toDOM: node => {
-    console.log(getHTMLString(node));
-    return ['footnote', node.attrs];
+    return ['footnote', node.attrs, 0];
   },
   parseDOM: [
     {

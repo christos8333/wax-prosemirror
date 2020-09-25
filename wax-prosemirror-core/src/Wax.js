@@ -90,11 +90,21 @@ const Wax = props => {
   };
 
   const parse = parser(schema);
-  const serialize = serializer(schema);
   WaxOptions.doc = parse(editorContent);
 
   const finalOnChange = debounce(
     value => {
+      /* HACK alter toDOM of footnote, because of how PM treats inline nodes
+      with content */
+      if (schema.nodes.footnote) {
+        const old = schema.nodes.footnote.spec.toDOM;
+        schema.nodes.footnote.spec.toDOM = function (node) {
+          old.apply(this, arguments);
+          return ['footnote', node.attrs, 0];
+        };
+      }
+
+      const serialize = serializer(schema);
       WaxOnchange(serialize(value));
     },
     1000,

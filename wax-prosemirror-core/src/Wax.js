@@ -3,18 +3,17 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 import styled from 'styled-components';
 
+import { DOMSerializer, DOMParser } from 'prosemirror-model';
+
 import WaxProvider from './WaxContext';
 import Application from './Application';
-
-import WaxDOMSerializer from './WaxDOMSerializer';
-import WaxDOMParser from './WaxDOMParser';
 
 import WaxView from './WaxView';
 import defaultPlugins from './plugins/defaultPlugins';
 import Placeholder from './plugins/placeholder';
 
 const parser = schema => {
-  const WaxParser = WaxDOMParser.fromSchema(schema);
+  const WaxParser = DOMParser.fromSchema(schema);
 
   return content => {
     const container = document.createElement('article');
@@ -24,7 +23,7 @@ const parser = schema => {
 };
 
 const serializer = schema => {
-  const WaxSerializer = WaxDOMSerializer.fromSchema(schema);
+  const WaxSerializer = DOMSerializer.fromSchema(schema);
   return content => {
     const container = document.createElement('article');
     container.appendChild(WaxSerializer.serializeFragment(content));

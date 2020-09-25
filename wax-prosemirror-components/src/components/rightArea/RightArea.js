@@ -25,14 +25,27 @@ export default ({ area }) => {
     let annotationTop = 0;
     let boxHeight = 0;
     let top = 0;
+    let WaxSurface = {};
     const allCommentsTop = [];
+    let panelWrapper = {};
+    let panelWrapperHeight = {};
+    let activeComment = null;
+    if (main) {
+      WaxSurface = main.dom.getBoundingClientRect();
+
+      if (area === 'main') {
+      } else {
+        panelWrapper = document.getElementsByClassName('panelWrapper');
+        panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
+      }
+    }
 
     each(marksNodes[area], (markNode, pos) => {
-      const WaxSurface = main.dom.getBoundingClientRect();
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
 
-      const activeComment = commentPlugin.getState(activeView.state).comment;
+      if (activeView)
+        activeComment = commentPlugin.getState(activeView.state).comment;
 
       let isActive = false;
       if (activeComment && id === activeComment.attrs.id) isActive = true;
@@ -44,9 +57,6 @@ export default ({ area }) => {
           annotationTop =
             markNodeEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
-        const panelWrapper = document.getElementsByClassName('panelWrapper');
-        const panelWrapperHeight = panelWrapper[0].getBoundingClientRect()
-          .height;
         markNodeEl = document
           .querySelector('#notes-container')
           .querySelector(`[data-id="${id}"]`);

@@ -13,21 +13,23 @@ export default () => {
 
   const [notes, setNotes] = useState([]);
 
-  const getUpdateNotes = () => {
+  const cleanUpNoteViews = () => {
     if (view) {
-      console.log(view, notes);
-      const allNotes = DocumentHelpers.findChildrenByType(
+      const currentNotes = DocumentHelpers.findChildrenByType(
         main.state.doc,
         main.state.schema.nodes.footnote,
         true,
       );
-      console.log(allNotes);
+      if (notes.length > currentNotes.length) {
+        // TODO remove from context views that no loger exist
+        // console.log('to do cleanup');
+      }
     }
   };
 
   useDeepCompareEffect(() => {
     setNotes(updateNotes(main));
-    getUpdateNotes();
+    cleanUpNoteViews();
   }, [updateNotes(main)]);
 
   const noteComponent = useMemo(

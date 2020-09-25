@@ -1,7 +1,7 @@
 // TODO Write the node in WaxSchema
 const footnote = {
   group: 'inline',
-  content: 'block*',
+  content: 'inline*',
   inline: true,
   atom: true,
   attrs: {

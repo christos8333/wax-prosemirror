@@ -29,7 +29,6 @@ export default ({ area }) => {
     const allCommentsTop = [];
     let panelWrapper = {};
     let panelWrapperHeight = {};
-    let activeComment = null;
     if (main) {
       WaxSurface = main.dom.getBoundingClientRect();
 
@@ -44,8 +43,7 @@ export default ({ area }) => {
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
 
-      if (activeView)
-        activeComment = commentPlugin.getState(activeView.state).comment;
+      const activeComment = commentPlugin.getState(activeView.state).comment;
 
       let isActive = false;
       if (activeComment && id === activeComment.attrs.id) isActive = true;

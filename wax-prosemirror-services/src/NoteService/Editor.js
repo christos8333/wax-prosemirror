@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, TextSelection } from 'prosemirror-state';
@@ -139,6 +139,9 @@ export default ({ node, view }) => {
       );
     }
   }
-
-  return <NoteEditorContainer ref={editorRef} />;
+  const MemorizedComponent = useMemo(
+    () => <NoteEditorContainer ref={editorRef} />,
+    [],
+  );
+  return <>{MemorizedComponent}</>;
 };

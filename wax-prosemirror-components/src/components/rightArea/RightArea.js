@@ -16,6 +16,7 @@ export default ({ area }) => {
   } = useContext(WaxContext);
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const [marksNodes, setMarksNodes] = useState([]);
+
   const [position, setPosition] = useState();
   const [isFirstRun, setFirstRun] = useState(true);
 
@@ -63,12 +64,15 @@ export default ({ area }) => {
             markNodeEl.getBoundingClientRect().top - panelWrapperHeight - 50;
       }
 
+      let boxEl = null;
       // get height of this markNode box
-      const boxEl = document.querySelector(`div[data-box="${id}"]`);
+      if (markNodeEl) {
+        boxEl = document.querySelector(`div[data-box="${id}"]`);
+      }
       if (boxEl) boxHeight = parseInt(boxEl.offsetHeight, 10);
 
       // where the box should move to
-      top = annotationTop;
+      top = boxEl ? annotationTop : -2000;
 
       // if the above comment box has already taken up the height, move down
       if (pos > 0) {
@@ -156,7 +160,6 @@ export default ({ area }) => {
   return <>{CommentTrackComponent}</>;
 };
 
-//  TODO if allInlineNodes and allBlockNodes count don't change, do not compute again
 const updateMarks = view => {
   if (view.main) {
     const allInlineNodes = [];

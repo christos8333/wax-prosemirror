@@ -1,6 +1,6 @@
 import React, { useContext, useState, useMemo } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-
+import { differenceBy } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import NoteEditor from './NoteEditor';
@@ -22,14 +22,17 @@ export default () => {
       );
       if (notes.length > currentNotes.length) {
         // TODO remove from context views that no loger exist
-        // console.log('to do cleanup');
+        const difference = differenceBy(notes, currentNotes, 'node.attrs.id');
+        difference.forEach((item, i) => {
+          // delete view[item.node.attrs.id];
+        });
       }
     }
   };
 
   useDeepCompareEffect(() => {
     setNotes(updateNotes(main));
-    cleanUpNoteViews();
+    // cleanUpNoteViews();
   }, [updateNotes(main)]);
 
   const noteComponent = useMemo(

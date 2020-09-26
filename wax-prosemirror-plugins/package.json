@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-plugins",
   "author": "Christos Kokosias",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Wax prosemirror plugins",
   "license": "MIT",
   "main": "dist/index.js",
@@ -18,10 +18,10 @@
     "prosemirror-highlightjs": "^0.2.0",
     "prosemirror-state": "1.3.3",
     "prosemirror-view": "1.15.0",
-    "wax-prosemirror-components": "^0.0.18",
-    "wax-prosemirror-core": "^0.0.18",
-    "wax-prosemirror-layouts": "^0.0.18",
-    "wax-prosemirror-utilities": "^0.0.18"
+    "wax-prosemirror-components": "^0.0.19",
+    "wax-prosemirror-core": "^0.0.19",
+    "wax-prosemirror-layouts": "^0.0.19",
+    "wax-prosemirror-utilities": "^0.0.19"
   },
   "resolutions": {
     "prosemirror-state": "1.3.3",

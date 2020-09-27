@@ -8,7 +8,7 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorElements from './EditorElements';
 
-const LayoutWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -62,11 +62,12 @@ const LayoutWrapper = styled.div`
   }
 `;
 
-const LeftMenuSurfaceContainer = styled.div`
+const Main = styled.div`
   display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
+  flex-grow: 1;
+  /* flex-direction: row; */
+  /* height: 100%; */
+  /* width: 100%; */
 `;
 
 const WaxSurfaceContainer = styled.div`
@@ -111,7 +112,7 @@ const WaxSurfaceScroll = styled.div`
   ${EditorElements};
 `;
 
-const MainMenuContainer = styled.div`
+const TopMenu = styled.div`
   background: #fff;
   display: flex;
   justify-content: center;
@@ -132,39 +133,38 @@ const MainMenuContainer = styled.div`
   }
 `;
 
-const SideMenuContainer = styled.div`
+const SideMenu = styled.div`
   display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  width: 14%;
-  height: 98%;
+  border-right: 1px solid gray;
+  /* width: 14%; */
+  height: 100%;
+
   @media (max-width: 600px) {
     display: none;
   }
 `;
 
-const SideMenuInner = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  > div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-top: 35px;
-    button {
-      display: flex;
-      flex-direction: column;
-      font-family: ${props => props.theme.fontInterface};
-      margin-left: 5%;
-      width: 90%;
-    }
-    [data-name='Display'] {
-      border-right: none;
-    }
-  }
-`;
+// const SideMenuInner = styled.div`
+//   display: flex;
+//   width: 100%;
+//   > div {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     margin-top: 15px;
+//     button {
+//       display: flex;
+//       flex-direction: column;
+//       font-family: ${props => props.theme.fontInterface};
+//       margin-left: 5%;
+//       width: 90%;
+//     }
+//     [data-name='Display'] {
+//       border-right: none;
+//     }
+//   }
+// `;
 
 const NotesAreaContainer = styled.div`
   display: flex;
@@ -248,17 +248,17 @@ const EditoriaLayout = ({ editor }) => {
 
   return (
     <ThemeProvider theme={cokoTheme}>
-      <LayoutWrapper>
-        <MainMenuContainer>
+      <Wrapper>
+        <TopMenu>
           <TopBar />
-        </MainMenuContainer>
+        </TopMenu>
 
-        <LeftMenuSurfaceContainer>
-          <SideMenuContainer>
-            <SideMenuInner>
-              <LeftSideBar />
-            </SideMenuInner>
-          </SideMenuContainer>
+        <Main>
+          <SideMenu>
+            {/* <SideMenuInner> */}
+            <LeftSideBar />
+            {/* </SideMenuInner> */}
+          </SideMenu>
 
           <PanelGroup
             direction="column"
@@ -279,11 +279,11 @@ const EditoriaLayout = ({ editor }) => {
             </WaxSurfaceContainer>
             {AreasWithNotes}
           </PanelGroup>
-        </LeftMenuSurfaceContainer>
+        </Main>
 
         <InfoArea />
         <WaxOverlays />
-      </LayoutWrapper>
+      </Wrapper>
     </ThemeProvider>
   );
 };

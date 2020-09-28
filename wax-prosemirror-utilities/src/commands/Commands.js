@@ -120,6 +120,19 @@ const isOnSameTextBlock = state => {
 };
 
 const createComment = (state, dispatch, group, viewid) => {
+  const {
+    selection: { $from, $to },
+  } = state;
+  let footnote = false;
+  state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+    if (node.type.name === 'footnote') {
+      footnote = true;
+      createCommentOnFootnote(state, dispatch, group, viewid);
+    }
+  });
+
+  if (footnote) return;
+
   toggleMark(state.config.schema.marks.comment, {
     id: uuidv4(),
     group,
@@ -128,6 +141,39 @@ const createComment = (state, dispatch, group, viewid) => {
   })(state, dispatch);
 };
 
+const createCommentOnFootnote = (state, dispatch, group, viewid) => {
+  const {
+    selection: { $from, $to },
+  } = state;
+
+  console.log('dldldld', $from.pos, $to.pos);
+  const { content } = $from.parent;
+  console.log('dkdd', content.content);
+  content.content.forEach(contentNode => {
+    console.log(contentNode);
+    const $pos = state.doc.resolve($from.pos);
+    const commentStart = $from.pos - $pos.textOffset;
+    const commentEnd = commentStart + $pos.parent.child($pos.index()).nodeSize;
+    console.log(commentStart, commentEnd);
+    if (contentNode.type.name === 'footnote') {
+      console.log('footnote');
+    } else {
+      console.log('content');
+    }
+  });
+  // dispatch(
+  //   state.tr.addMark(
+  //     $from.pos,
+  //     $to.pos,
+  //     state.config.schema.marks.comment.create({
+  //       id: uuidv4(),
+  //       group,
+  //       conversation: [],
+  //       viewid,
+  //     }),
+  //   ),
+  // );
+};
 export default {
   setBlockType,
   blockActive,

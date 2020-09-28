@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import { InfoArea } from 'wax-prosemirror-components';
 import { componentPlugin } from 'wax-prosemirror-services';
@@ -8,13 +8,7 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorElements from './EditorElements';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-
+const divider = css`
   .divider {
     &:before {
       content: 'Notes';
@@ -62,58 +56,23 @@ const Wrapper = styled.div`
   }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  ${divider}
+`;
+
 const Main = styled.div`
   display: flex;
   flex-grow: 1;
-  /* flex-direction: row; */
-  /* height: 100%; */
-  /* width: 100%; */
-`;
-
-const WaxSurfaceContainer = styled.div`
-  flex: 1;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-`;
-
-const EditorContainer = styled.div`
-  width: 65%;
-  height: 100%;
-  .ProseMirror {
-    -moz-box-shadow: 0 0 8px #ecedf1;
-    -webkit-box-shadow: 0 0 8px #ecedf1;
-    box-shadow: 0 0 8px #ecedf1;
-    min-height: 90%;
-    padding: 30px 30px 30px 30px;
-    @media (max-width: 600px) {
-      padding: 65px 10px 10px 10px;
-    }
-  }
-  @media (max-width: 600px) {
-    width: 95%;
-  }
-`;
-
-const WaxSurfaceScroll = styled.div`
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  position: absolute;
-  display: flex;
-  right: 0;
-  top: 0;
-  box-sizing: border-box;
-  padding: 0 2px 2px 2px;
-  height: 100%;
-  ${EditorElements};
 `;
 
 const TopMenu = styled.div`
-  background: #fff;
   display: flex;
   justify-content: center;
   min-height: 40px;
@@ -134,9 +93,8 @@ const TopMenu = styled.div`
 `;
 
 const SideMenu = styled.div`
-  display: flex;
-  border-right: 1px solid gray;
-  /* width: 14%; */
+  border-right: 1px solid #ecedf1;
+  min-width: 250px;
   height: 100%;
 
   @media (max-width: 600px) {
@@ -144,27 +102,45 @@ const SideMenu = styled.div`
   }
 `;
 
-// const SideMenuInner = styled.div`
-//   display: flex;
-//   width: 100%;
-//   > div {
-//     flex: 1;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: flex-start;
-//     margin-top: 15px;
-//     button {
-//       display: flex;
-//       flex-direction: column;
-//       font-family: ${props => props.theme.fontInterface};
-//       margin-left: 5%;
-//       width: 90%;
-//     }
-//     [data-name='Display'] {
-//       border-right: none;
-//     }
-//   }
-// `;
+const EditorArea = styled.div`
+  flex-grow: 1;
+`;
+
+const WaxSurfaceScroll = styled.div`
+  overflow-y: auto;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 2px 2px 2px;
+  height: 100%;
+
+  ${EditorElements};
+`;
+
+const EditorContainer = styled.div`
+  width: 65%;
+  height: 100%;
+
+  .ProseMirror {
+    box-shadow: 0 0 8px #ecedf1;
+    min-height: 90%;
+    padding: 40px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
+const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 100%;
+
+  @media (max-width: 600px) {
+    width: auto;
+  }
+`;
 
 const NotesAreaContainer = styled.div`
   display: flex;
@@ -183,18 +159,9 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
   position: relative;
+
   @media (max-width: 600px) {
     width: 100%;
-  }
-`;
-
-const CommentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 35%;
-  height: 100%;
-  @media (max-width: 600px) {
-    width: auto;
   }
 `;
 
@@ -216,35 +183,19 @@ const hasNotes = main => {
 };
 
 const LeftSideBar = componentPlugin('leftSideBar');
-const RightSideBar = componentPlugin('rightSideBar');
+// const RightSideBar = componentPlugin('rightSideBar');
 const TopBar = componentPlugin('topBar');
 const NotesArea = componentPlugin('notesArea');
 const RightArea = componentPlugin('rightArea');
 const WaxOverlays = componentPlugin('waxOverlays');
 
-const withNotes = () => {
-  return (
-    <NotesAreaContainer>
-      <NotesContainer id="notes-container">
-        <NotesArea />
-      </NotesContainer>
-      <CommentsContainer>
-        <RightArea area="notes" />
-      </CommentsContainer>
-    </NotesAreaContainer>
-  );
-};
-
 const EditoriaLayout = ({ editor }) => {
   const {
     view: { main },
   } = useContext(WaxContext);
-  let AreasWithNotes = null;
 
-  if (main) {
-    const notes = hasNotes(main);
-    if (notes.length) AreasWithNotes = withNotes();
-  }
+  const notes = main && hasNotes(main);
+  const showNotes = notes && notes.length && notes.length > 0;
 
   return (
     <ThemeProvider theme={cokoTheme}>
@@ -255,30 +206,37 @@ const EditoriaLayout = ({ editor }) => {
 
         <Main>
           <SideMenu>
-            {/* <SideMenuInner> */}
             <LeftSideBar />
-            {/* </SideMenuInner> */}
           </SideMenu>
 
-          <PanelGroup
-            direction="column"
-            panelWidths={[
-              { size: surfaceHeight, resize: 'dynamic' },
-              { size: notesHeight, resize: 'stretch' },
-            ]}
-            onResizeEnd={onResizeEnd}
-          >
-            <WaxSurfaceContainer>
-              <WaxSurfaceScroll className="wax-surface-scroll">
+          <EditorArea>
+            <PanelGroup
+              direction="column"
+              panelWidths={[
+                { size: surfaceHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'stretch' },
+              ]}
+              onResizeEnd={onResizeEnd}
+            >
+              <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
-              <RightSideBar />
-            </WaxSurfaceContainer>
-            {AreasWithNotes}
-          </PanelGroup>
+
+              {showNotes && (
+                <NotesAreaContainer>
+                  <NotesContainer id="notes-container">
+                    <NotesArea />
+                  </NotesContainer>
+                  <CommentsContainer>
+                    <RightArea area="notes" />
+                  </CommentsContainer>
+                </NotesAreaContainer>
+              )}
+            </PanelGroup>
+          </EditorArea>
         </Main>
 
         <InfoArea />

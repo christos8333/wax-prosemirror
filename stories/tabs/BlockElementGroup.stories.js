@@ -4,10 +4,10 @@ import BlockElementGroup from '../../wax-prosemirror-components/src/ui/tabs/Bloc
 
 const items = [
   {
-    content: 'Heading 1',
+    label: 'Heading 1',
   },
   {
-    content: 'Heading 2',
+    label: 'Heading 2',
   },
 ];
 

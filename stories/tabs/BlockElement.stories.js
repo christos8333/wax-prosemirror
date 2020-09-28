@@ -3,7 +3,7 @@ import React from 'react';
 import BlockElement from '../../wax-prosemirror-components/src/ui/tabs/BlockElement';
 
 const item = {
-  content: 'something',
+  label: 'something',
 };
 
 export const Base = () => <BlockElement item={item} isNested={false} />;

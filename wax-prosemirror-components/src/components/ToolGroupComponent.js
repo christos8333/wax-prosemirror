@@ -21,10 +21,9 @@ const DropWrapper = styled(Wrapper)`
   padding: 4px;
 `;
 
-const ToolGroupComponent = ({ view, tools, name, title }) => {
+const ToolGroupComponent = ({ view, tools, name }) => {
   const toolsShown = [];
   const rest = [];
-  const DisplayTitle = isFunction(title) ? title : () => title;
 
   tools.forEach(tool => {
     tool.isIntoMoreSection() && tool.isDisplayed()
@@ -34,7 +33,6 @@ const ToolGroupComponent = ({ view, tools, name, title }) => {
 
   return (
     <Wrapper data-name={name}>
-      {/* <DisplayTitle /> */}
       {toolsShown}
       {rest.length > 0 && (
         <Dropdown

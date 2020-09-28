@@ -19,3 +19,6 @@ export { default as RightArea } from './src/components/rightArea/RightArea';
 export { default as TrackChangeEnable } from './src/components/trackChanges/TrackChangeEnable';
 
 export { default as CreateTable } from './src/components/tables/CreateTable';
+
+export { default as Tabs } from './src/ui/tabs/Tabs';
+export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';

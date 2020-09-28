@@ -1,7 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-import styled from 'styled-components';
 
 import { DOMSerializer, DOMParser } from 'prosemirror-model';
 
@@ -42,12 +41,6 @@ const createApplication = props => {
 const createPlaceholder = placeholder => {
   return Placeholder({ content: placeholder });
 };
-
-const LayoutWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 99%;
-`;
 
 const Wax = props => {
   let finalPlugins = [];
@@ -125,24 +118,23 @@ const Wax = props => {
   const WaxRender = Layout.layoutComponent;
 
   return (
-    <LayoutWrapper className={`${className}`}>
-      <WaxProvider app={application}>
-        <WaxView
-          autoFocus={autoFocus}
-          readonly={readonly}
-          options={WaxOptions}
-          placeholder={placeholder}
-          fileUpload={fileUpload}
-          onBlur={onBlur || (v => true)}
-          onChange={finalOnChange || (v => true)}
-          debug={debug}
-          TrackChange={TrackChange}
-          user={user}
-        >
-          {({ editor }) => <WaxRender editor={editor} />}
-        </WaxView>
-      </WaxProvider>
-    </LayoutWrapper>
+    <WaxProvider app={application}>
+      <WaxView
+        autoFocus={autoFocus}
+        readonly={readonly}
+        options={WaxOptions}
+        placeholder={placeholder}
+        fileUpload={fileUpload}
+        onBlur={onBlur || (v => true)}
+        onChange={finalOnChange || (v => true)}
+        debug={debug}
+        TrackChange={TrackChange}
+        user={user}
+      >
+        {({ editor }) => <WaxRender className={className} editor={editor} />}
+      </WaxView>
+    </WaxProvider>
   );
 };
+
 export default Wax;

@@ -18,11 +18,11 @@ import MenuButton from '../ui/buttons/MenuButton';
 // `;
 
 const Button = ({ view = {}, item }) => {
-  const { active, enable, icon, label, onlyOnMain, run, title } = item;
+  const { active, enable, icon, label, onlyOnMain, run, select, title } = item;
 
   const {
     view: { main },
-    // activeViewId,
+    activeViewId,
   } = useContext(WaxContext);
 
   if (onlyOnMain) view = main;
@@ -36,10 +36,8 @@ const Button = ({ view = {}, item }) => {
 
   const isActive = active && active(state);
 
-  const isDisabled = enable && !enable(state);
-  // &&
-  // item.select &&
-  // item.select(view.state, activeViewId);
+  const isDisabled =
+    enable && !enable(state) && select && select(view.state, activeViewId);
 
   return (
     <MenuButton

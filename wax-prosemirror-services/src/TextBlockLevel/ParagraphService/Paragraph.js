@@ -17,6 +17,12 @@ class Paragraph extends Tools {
     };
   }
 
+  get active() {
+    return (state, activeViewId) => {
+      return Commands.blockActive(state.config.schema.nodes.paragraph)(state);
+    };
+  }
+
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
     return true;

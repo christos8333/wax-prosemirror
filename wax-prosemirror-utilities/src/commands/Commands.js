@@ -38,15 +38,30 @@ const markActive = type => state => {
     : state.doc.rangeHasMark(from, to, type);
 };
 
-const blockActive = (type, attrs = {}) => state => {
-  const { $from, to, node } = state.selection;
-
-  if (node) {
-    return node.hasMarkup(type, attrs);
-  }
-
-  return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
+const blockActive = (nodeType, attrs = {}) => {
+  return (state, dispatch) => {
+    const { from, to } = state.selection;
+    let isActive = false;
+    state.doc.nodesBetween(from, to, (node, pos) => {
+      if (!node.isTextblock || node.hasMarkup(nodeType, attrs)) return;
+      if (node.type === nodeType) {
+        isActive = true;
+      }
+    });
+    return isActive;
+  };
 };
+
+//
+// const blockActive = (type, attrs = {}) => state => {
+//   const { $from, to, node } = state.selection;
+//
+//   if (node) {
+//     return node.hasMarkup(type, attrs);
+//   }
+//
+//   return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
+// };
 
 const canInsert = type => state => {
   const { $from } = state.selection;

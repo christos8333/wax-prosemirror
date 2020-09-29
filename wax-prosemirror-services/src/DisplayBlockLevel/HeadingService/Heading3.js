@@ -18,6 +18,14 @@ class Heading3 extends Tools {
     };
   }
 
+  get active() {
+    return (state, activeViewId) => {
+      return Commands.blockActive(state.config.schema.nodes.heading, {
+        level: 3,
+      })(state);
+    };
+  }
+
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
     return true;

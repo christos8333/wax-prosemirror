@@ -21,6 +21,14 @@ class ExtractPoetry extends Tools {
     return true;
   };
 
+  get active() {
+    return (state, activeViewId) => {
+      return Commands.blockActive(state.config.schema.nodes.extractPoetry)(
+        state,
+      );
+    };
+  }
+
   get enable() {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.extractPoetry)(

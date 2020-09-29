@@ -11,7 +11,6 @@ export default
 @injectable()
 class Image extends Tools {
   title = 'Insert image';
-  // content = icons.image;
   icon = 'image';
   name = 'Image';
 

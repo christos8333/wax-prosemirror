@@ -1,13 +1,12 @@
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
-// import { icons } from 'wax-prosemirror-components';
 import { wrapInList } from 'prosemirror-schema-list';
 import { Commands } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
+export default 
 @injectable()
-export default class OrderedList extends Tools {
+class OrderedList extends Tools {
   title = 'Wrap in ordered list';
-  // content = icons.ordered_list;
   icon = 'numberedList';
   name = 'OrderedList';
 

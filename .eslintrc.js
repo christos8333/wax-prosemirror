@@ -22,7 +22,10 @@ eslint.parserOptions = {
 };
 
 eslint.rules = {
-  'class-methods-use-this': [1, { exceptMethods: ['run', 'enable', 'active'] }],
+  'class-methods-use-this': [
+    1,
+    { exceptMethods: ['run', 'enable', 'active', 'select'] },
+  ],
   // 'import/no-named-as-default': 0,
   'import/no-extraneous-dependencies': [
     'error',

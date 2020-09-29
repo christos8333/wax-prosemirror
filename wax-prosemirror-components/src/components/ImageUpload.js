@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const UploadImage = styled.div`
-  opacity: ${props => (props.select ? 1 : 0.4)};
+  /* opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? 'default' : 'none')};
   display: inline-flex;
-  padding: 0px 10px;
+  padding: 0px 10px; */
 
   input {
     display: none;
@@ -25,11 +25,11 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const handleMouseDown = () => inputRef.current.click();
 
   return (
-    <UploadImage select={item.select && item.select(view.state, activeViewId)}>
+    <UploadImage>
       <label htmlFor="file-upload">
         <MenuButton
           active={false}
-          disabled={false}
+          disabled={!(item.select && item.select(view.state, activeViewId))}
           iconName={item.icon}
           onMouseDown={handleMouseDown}
           title="Upload Image"

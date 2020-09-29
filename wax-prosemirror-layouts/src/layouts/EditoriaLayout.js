@@ -112,6 +112,7 @@ const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   padding: 0 2px 2px 2px;
   height: 100%;
+  width: 100%;
 
   ${EditorElements};
 `;
@@ -195,7 +196,7 @@ const EditoriaLayout = ({ editor }) => {
   } = useContext(WaxContext);
 
   const notes = main && hasNotes(main);
-  const showNotes = notes && notes.length && notes.length > 0;
+  const showNotes = notes && !!notes.length && notes.length > 0;
 
   return (
     <ThemeProvider theme={cokoTheme}>

@@ -19,8 +19,17 @@ class Heading3 extends Tools {
   }
 
   get active() {
-    return state => {
-      return Commands.blockActive(state.config.schema.nodes.heading, {
+    return (state, activeViewId) => {
+      let isActive = true;
+      if (activeViewId !== 'main') return false;
+      const { from, to } = state.selection;
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.type.name === 'list_item') {
+          isActive = false;
+        }
+      });
+      if (!isActive) return false;
+      return !Commands.setBlockType(state.config.schema.nodes.heading, {
         level: 3,
       })(state);
     };

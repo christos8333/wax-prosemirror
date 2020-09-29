@@ -79,14 +79,6 @@ const TopMenu = styled.div`
   user-select: none;
   border-bottom: 2px solid #ecedf1;
 
-  @media (max-width: 600px) {
-    position: absolute;
-    /* width: 100%; */
-    font-size: 10px;
-    min-height: 72px;
-    line-height: 0px;
-  }
-
   > div:not(:last-child) {
     border-right: 1px solid #ecedf1;
   }
@@ -96,10 +88,6 @@ const SideMenu = styled.div`
   border-right: 1px solid #ecedf1;
   min-width: 250px;
   height: 100%;
-
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 const EditorArea = styled.div`
@@ -126,10 +114,6 @@ const EditorContainer = styled.div`
     min-height: 90%;
     padding: 40px;
   }
-
-  @media (max-width: 600px) {
-    width: 100%;
-  }
 `;
 
 const CommentsContainer = styled.div`
@@ -137,10 +121,6 @@ const CommentsContainer = styled.div`
   flex-direction: column;
   width: 35%;
   height: 100%;
-
-  @media (max-width: 600px) {
-    width: auto;
-  }
 `;
 
 const NotesAreaContainer = styled.div`
@@ -160,10 +140,6 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
   position: relative;
-
-  @media (max-width: 600px) {
-    width: 100%;
-  }
 `;
 
 let surfaceHeight = 700;

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 import { EditoriaLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
@@ -12,16 +12,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     overflow-y: hidden;
+  }
+
   #root {
     height:100vh;
     width:100vw;
-  }
-  }
-`;
-
-const StyledWax = styled(Wax)`
-  .wax-surface-scroll {
-    /* height: ${props => (props.debug ? '50vh' : '100%')}; */
   }
 `;
 
@@ -43,7 +38,7 @@ const user = {
 const Editoria = () => (
   <Fragment>
     <GlobalStyle />
-    <StyledWax
+    <Wax
       config={config}
       autoFocus
       placeholder="Type Something..."

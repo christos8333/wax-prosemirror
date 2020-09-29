@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { injectable } from 'inversify';
-import { ToolGroupComponent } from 'wax-prosemirror-components';
+import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 import { v4 as uuidv4 } from 'uuid';
 
+export default
 @injectable()
-export default class ToolGroup {
+class ToolGroup {
   _config = {};
   title = '';
   _tools = [];
-  constructor() {}
+  _toolGroups = [];
+
   setGroupConfig(config) {
     this._config = config;
+  }
+
+  set toolGroups(groups) {
+    this._toolGroups = groups;
   }
 
   excludeIncludeTools() {
@@ -52,6 +58,9 @@ export default class ToolGroup {
 
   renderTools(view) {
     const { name } = this.constructor;
+    if (this._toolGroups > 0) {
+      return <ToolGroups toolGroups={this._toolGroups} view={view} />;
+    }
     return (
       <ToolGroupComponent
         key={uuidv4()}

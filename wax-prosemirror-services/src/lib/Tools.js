@@ -7,7 +7,6 @@ import { Button } from 'wax-prosemirror-components';
 @injectable()
 class Tools {
   title = 'title';
-  content = 'content';
   _isDisplayed = true;
   _isHiddenInToolGroup = false;
   onlyOnMain = false;
@@ -42,7 +41,8 @@ class Tools {
   toJSON() {
     return {
       title: this.title,
-      content: this.content,
+      icon: this.icon,
+      label: this.label,
       active: this.active,
       run: this.run,
       enable: this.enable,

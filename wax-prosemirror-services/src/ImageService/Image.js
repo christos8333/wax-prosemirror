@@ -2,7 +2,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { icons, ImageUpload } from 'wax-prosemirror-components';
+import { ImageUpload } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../lib/Tools';
 import fileUpload from './fileUpload';
@@ -11,7 +11,7 @@ export default
 @injectable()
 class Image extends Tools {
   title = 'Insert image';
-  content = icons.image;
+  icon = 'image';
   name = 'Image';
 
   get run() {

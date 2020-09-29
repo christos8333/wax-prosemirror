@@ -1,40 +1,41 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 
-const UploadImage = styled.div`
-  opacity: ${props => (props.select ? 1 : 0.4)};
-  pointer-events: ${props => (props.select ? 'default' : 'none')};
-  color: #777;
-  display: inline-flex;
-  padding: 0px 10px;
-  .custom-file-upload {
-    cursor: pointer;
-  }
-  &:hover {
-  }
+import MenuButton from '../ui/buttons/MenuButton';
+
+const Wrapper = styled.div`
   input {
     display: none;
   }
 `;
+
 const ImageUpload = ({ item, fileUpload, view }) => {
   const { activeViewId } = useContext(WaxContext);
+
+  const inputRef = useRef(null);
+  const handleMouseDown = () => inputRef.current.click();
+
   return (
-    <UploadImage select={item.select && item.select(view.state, activeViewId)}>
-      <label
-        className="custom-file-upload"
-        title="upload image"
-        htmlFor="file-upload"
-      >
-        {item.content}
+    <Wrapper>
+      <label htmlFor="file-upload">
+        <MenuButton
+          active={false}
+          disabled={!(item.select && item.select(view.state, activeViewId))}
+          iconName={item.icon}
+          onMouseDown={handleMouseDown}
+          title="Upload Image"
+        />
+
         <input
           id="file-upload"
+          ref={inputRef}
           onChange={e => fileUpload(e.target.files[0])}
           type="file"
         />
       </label>
-    </UploadImage>
+    </Wrapper>
   );
 };
 export default ImageUpload;

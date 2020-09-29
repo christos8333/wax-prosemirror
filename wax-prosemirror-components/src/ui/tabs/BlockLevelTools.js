@@ -5,19 +5,26 @@ import styled from 'styled-components';
 import BlockElementGroup from './BlockElementGroup';
 
 const Wrapper = styled.div`
+  padding: 8px;
+
   > div:not(:last-child) {
     margin-bottom: 8px;
   }
 `;
 
 const BlockLevelTools = props => {
-  const { groups } = props;
+  const { groups, view } = props;
 
   return (
     <Wrapper>
       {groups &&
         groups.map(group => (
-          <BlockElementGroup groupName={group.groupName} items={group.items} />
+          <BlockElementGroup
+            groupName={group.groupName}
+            key={group.groupName}
+            items={group.items}
+            view={view}
+          />
         ))}
     </Wrapper>
   );
@@ -29,7 +36,7 @@ BlockLevelTools.propTypes = {
       groupName: PropTypes.string,
       items: PropTypes.arrayOf(
         PropTypes.shape({
-          content: PropTypes.string,
+          label: PropTypes.string,
         }),
       ),
     }),

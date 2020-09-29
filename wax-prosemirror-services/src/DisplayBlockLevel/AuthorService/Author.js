@@ -5,7 +5,7 @@ import Tools from '../../lib/Tools';
 @injectable()
 class Author extends Tools {
   title = 'Change to Author';
-  content = 'Author';
+  label = 'Author';
   name = 'Author';
 
   get run() {

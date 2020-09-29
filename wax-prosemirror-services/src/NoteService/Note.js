@@ -1,6 +1,5 @@
 import Tools from '../lib/Tools';
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +7,7 @@ export default
 @injectable()
 class Note extends Tools {
   title = 'Insert Note';
-  content = icons.footnote;
+  icon = 'note';
   name = 'Note';
 
   get run() {
@@ -35,7 +34,7 @@ class Note extends Tools {
 
   get enable() {
     return state => {
-      return true;
+      return false;
     };
   }
 }

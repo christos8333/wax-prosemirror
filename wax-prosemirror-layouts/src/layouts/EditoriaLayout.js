@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import { InfoArea } from 'wax-prosemirror-components';
 import { componentPlugin } from 'wax-prosemirror-services';
@@ -8,12 +8,7 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorElements from './EditorElements';
 
-const LayoutWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+const divider = css`
   .divider {
     &:before {
       content: 'Notes';
@@ -61,124 +56,71 @@ const LayoutWrapper = styled.div`
   }
 `;
 
-const LeftMenuSurfaceContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-`;
-
-const WaxSurfaceContainer = styled.div`
-  flex: 1;
-  position: relative;
-  z-index: 1;
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   height: 100%;
   width: 100%;
+  overflow: hidden;
+
+  ${divider}
+`;
+
+const Main = styled.div`
+  display: flex;
+  flex-grow: 1;
+`;
+
+const TopMenu = styled.div`
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+  user-select: none;
+  border-bottom: 2px solid #ecedf1;
+
+  > div:not(:last-child) {
+    border-right: 1px solid #ecedf1;
+  }
+`;
+
+const SideMenu = styled.div`
+  border-right: 1px solid #ecedf1;
+  min-width: 250px;
+  height: 100%;
+`;
+
+const EditorArea = styled.div`
+  flex-grow: 1;
+`;
+
+const WaxSurfaceScroll = styled.div`
+  overflow-y: auto;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 2px 2px 2px;
+  height: 100%;
+  width: 100%;
+
+  ${EditorElements};
 `;
 
 const EditorContainer = styled.div`
   width: 65%;
   height: 100%;
+
   .ProseMirror {
-    -moz-box-shadow: 0 0 8px #ecedf1;
-    -webkit-box-shadow: 0 0 8px #ecedf1;
     box-shadow: 0 0 8px #ecedf1;
     min-height: 90%;
-    padding: 30px 30px 30px 30px;
-    @media (max-width: 600px) {
-      padding: 65px 10px 10px 10px;
-    }
-  }
-  @media (max-width: 600px) {
-    width: 95%;
+    padding: 40px;
   }
 `;
 
-const WaxSurfaceScroll = styled.div`
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  position: absolute;
-  display: flex;
-  right: 0;
-  top: 0;
-  box-sizing: border-box;
-  padding: 0 2px 2px 2px;
-  height: 100%;
-  ${EditorElements};
-`;
-
-const MainMenuContainer = styled.div`
-  background: #fff;
-  min-height: 52px;
-  line-height: 32px;
-  position: relative;
-  width: 100%;
-  user-select: none;
-  border-bottom: 2px solid #ecedf1;
-  @media (max-width: 600px) {
-    position: absolute;
-    /* width: 100%; */
-    font-size: 10px;
-    min-height: 72px;
-    line-height: 0px;
-  }
-`;
-const MainMenuInner = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  background: #fff;
-  z-index: 9999;
-  div {
-    align-items: center;
-    justify-content: center;
-    @media (max-width: 600px) {
-      justify-content: start;
-    }
-  }
-`;
-
-const SideMenuContainer = styled.div`
+const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  width: 14%;
-  height: 98%;
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const SideMenuInner = styled.div`
-  display: flex;
-  width: 100%;
-  > div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-top: 35px;
-    button {
-      display: flex;
-      flex-direction: column;
-      font-family: ${props => props.theme.fontInterface};
-      margin-left: 5%;
-      width: 90%;
-    }
-    [data-name='Display'] {
-      border-right: none;
-    }
-  }
+  width: 35%;
+  height: 100%;
 `;
 
 const NotesAreaContainer = styled.div`
@@ -198,19 +140,6 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
   position: relative;
-  @media (max-width: 600px) {
-    width: 100%;
-  }
-`;
-
-const CommentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 35%;
-  height: 100%;
-  @media (max-width: 600px) {
-    width: auto;
-  }
 `;
 
 let surfaceHeight = 700;
@@ -231,75 +160,65 @@ const hasNotes = main => {
 };
 
 const LeftSideBar = componentPlugin('leftSideBar');
-const RightSideBar = componentPlugin('rightSideBar');
+// const RightSideBar = componentPlugin('rightSideBar');
 const TopBar = componentPlugin('topBar');
 const NotesArea = componentPlugin('notesArea');
 const RightArea = componentPlugin('rightArea');
 const WaxOverlays = componentPlugin('waxOverlays');
 
-const withNotes = () => {
-  return (
-    <NotesAreaContainer>
-      <NotesContainer id="notes-container">
-        <NotesArea />
-      </NotesContainer>
-      <CommentsContainer>
-        <RightArea area="notes" />
-      </CommentsContainer>
-    </NotesAreaContainer>
-  );
-};
-
 const EditoriaLayout = ({ editor }) => {
   const {
     view: { main },
   } = useContext(WaxContext);
-  let AreasWithNotes = null;
 
-  if (main) {
-    const notes = hasNotes(main);
-    if (notes.length) AreasWithNotes = withNotes();
-  }
+  const notes = main && hasNotes(main);
+  const showNotes = notes && !!notes.length && notes.length > 0;
 
   return (
     <ThemeProvider theme={cokoTheme}>
-      <LayoutWrapper>
-        <MainMenuContainer>
-          <MainMenuInner>
-            <TopBar />
-          </MainMenuInner>
-        </MainMenuContainer>
+      <Wrapper>
+        <TopMenu>
+          <TopBar />
+        </TopMenu>
 
-        <LeftMenuSurfaceContainer>
-          <SideMenuContainer>
-            <SideMenuInner>
-              <LeftSideBar />
-            </SideMenuInner>
-          </SideMenuContainer>
+        <Main>
+          <SideMenu>
+            <LeftSideBar />
+          </SideMenu>
 
-          <PanelGroup
-            direction="column"
-            panelWidths={[
-              { size: surfaceHeight, resize: 'dynamic' },
-              { size: notesHeight, resize: 'stretch' },
-            ]}
-            onResizeEnd={onResizeEnd}
-          >
-            <WaxSurfaceContainer>
-              <WaxSurfaceScroll className="wax-surface-scroll">
+          <EditorArea>
+            <PanelGroup
+              direction="column"
+              panelWidths={[
+                { size: surfaceHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'stretch' },
+              ]}
+              onResizeEnd={onResizeEnd}
+            >
+              <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
-              <RightSideBar />
-            </WaxSurfaceContainer>
-            {AreasWithNotes}
-          </PanelGroup>
-        </LeftMenuSurfaceContainer>
+
+              {showNotes && (
+                <NotesAreaContainer>
+                  <NotesContainer id="notes-container">
+                    <NotesArea />
+                  </NotesContainer>
+                  <CommentsContainer>
+                    <RightArea area="notes" />
+                  </CommentsContainer>
+                </NotesAreaContainer>
+              )}
+            </PanelGroup>
+          </EditorArea>
+        </Main>
+
         <InfoArea />
         <WaxOverlays />
-      </LayoutWrapper>
+      </Wrapper>
     </ThemeProvider>
   );
 };

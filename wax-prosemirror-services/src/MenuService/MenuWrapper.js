@@ -1,22 +1,13 @@
+/* eslint no-underscore-dangle: 0 */
+/* eslint react/prop-types: 0 */
+
 import React from 'react';
-import styled from 'styled-components';
-
+import { v4 as uuidv4 } from 'uuid';
 import { map } from 'lodash';
-
-const MainMenu = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  background: #fff;
-  padding: 2px 2px 2px 0;
-  position: relative;
-`;
+import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 
 const MainMenuBar = ({ items = [], view }) => {
-  return (
-    <MainMenu key="MainMenu">
-      {map(items, item => item.renderTools(view))}
-    </MainMenu>
-  );
+  return <>{map(items, item => item.renderTools(view))}</>;
 };
 
 export default MainMenuBar;

@@ -2,10 +2,11 @@ import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 
+export default 
 @injectable()
-export default class Title extends Tools {
+class Title extends Tools {
   title = 'Change to Title';
-  content = 'Title';
+  label = 'Title';
   name = 'Title';
 
   get run() {

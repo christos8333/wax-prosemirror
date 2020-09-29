@@ -24,6 +24,7 @@ import {
   CodeBlockService,
   CodeBlockToolGroupService,
   TrackChangeToolGroupService,
+  DisplayTextToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -54,7 +55,7 @@ export default {
     },
     {
       templateArea: 'leftSideBar',
-      toolGroups: ['Display', 'Text'],
+      toolGroups: ['DisplayText'],
     },
   ],
 
@@ -95,5 +96,6 @@ export default {
     new CodeBlockService(),
     new CodeBlockToolGroupService(),
     new TrackChangeToolGroupService(),
+    new DisplayTextToolGroupService(),
   ],
 };

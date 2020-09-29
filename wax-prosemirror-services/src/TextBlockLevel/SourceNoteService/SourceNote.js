@@ -5,7 +5,7 @@ import { Commands } from 'wax-prosemirror-utilities';
 @injectable()
 class SourceNote extends Tools {
   title = 'Change to Source Note';
-  content = 'Source Note';
+  label = 'Source Note';
   name = 'SourceNote';
 
   get run() {

@@ -5,7 +5,7 @@ import Tools from '../../lib/Tools';
 @injectable()
 class EpigraphPoetry extends Tools {
   title = 'Change to Epigraph Poetry';
-  content = 'Epigraph Poetry';
+  label = 'Epigraph Poetry';
   name = 'EpigraphPoetry';
 
   get run() {

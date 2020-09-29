@@ -14,22 +14,22 @@ const Box = styled.div`
   background: gray;
 `;
 
-const Label = styled(Button)``;
+const StyledButton = styled(Button)``;
 
 const BlockElement = props => {
-  const { item, onClick } = props;
+  const { item, onClick, view } = props;
 
   return (
     <Wrapper onClick={onClick}>
       <Box />
-      <Label item={item} />
+      <StyledButton item={item} view={view} />
     </Wrapper>
   );
 };
 
 BlockElement.propTypes = {
   item: PropTypes.shape({
-    content: PropTypes.string,
+    label: PropTypes.string,
   }).isRequired,
 };
 

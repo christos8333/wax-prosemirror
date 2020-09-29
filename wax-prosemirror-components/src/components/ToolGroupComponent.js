@@ -1,37 +1,29 @@
-import React, { useState } from "react";
-import { isFunction } from "lodash";
-import styled from "styled-components";
-import icons from "../icons/icons";
+import React from 'react';
+import { isFunction } from 'lodash';
+import styled from 'styled-components';
 
-const ToolGroupStyled = styled.div`
-  border-right: 1px solid #ecedf1;
-  &:last-child {
-    border-right: none;
+import Dropdown from '../ui/buttons/Dropdown';
+
+const Wrapper = styled.div`
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+
+  > button,
+  > div {
+    margin: 0 2px;
   }
 `;
 
-const MoreButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  &:active {
-    outline: none;
-  }
+const DropWrapper = styled(Wrapper)`
+  border: 1px solid gray;
+  padding: 4px;
 `;
 
-const InnerStyled = styled.div`
-  display: flex;
-  width: 0;
-  top: 40px;
-  position: relative;
-  right: 100%;
-`;
-
-const ToolGroupComponent = ({ view, tools, name, title }) => {
-  const [more, showHide] = useState(false),
-    toolsShown = [],
-    rest = [],
-    DisplayTitle = isFunction(title) ? title : () => title;
+const ToolGroupComponent = ({ view, tools, name }) => {
+  const toolsShown = [];
+  const rest = [];
 
   tools.forEach(tool => {
     tool.isIntoMoreSection() && tool.isDisplayed()
@@ -40,23 +32,16 @@ const ToolGroupComponent = ({ view, tools, name, title }) => {
   });
 
   return (
-    <ToolGroupStyled data-name={name}>
-      <DisplayTitle />
+    <Wrapper data-name={name}>
       {toolsShown}
-      {rest.length && !more ? (
-        <MoreButton title="show more tools" onClick={() => showHide(!more)}>
-          {icons.ellipses}
-        </MoreButton>
-      ) : null}
-      {more && (
-        <div>
-          <MoreButton title="hide" onClick={() => showHide(!more)}>
-            {icons.ellipses}
-          </MoreButton>
-          <InnerStyled>{rest}</InnerStyled>
-        </div>
+      {rest.length > 0 && (
+        <Dropdown
+          iconName="more"
+          dropComponent={<DropWrapper>{rest}</DropWrapper>}
+          title="Show more tools"
+        />
       )}
-    </ToolGroupStyled>
+    </Wrapper>
   );
 };
 

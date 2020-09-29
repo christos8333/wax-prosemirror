@@ -22,7 +22,11 @@ eslint.parserOptions = {
 };
 
 eslint.rules = {
-  'sort-keys': 'off',
+  'class-methods-use-this': [
+    1,
+    { exceptMethods: ['run', 'enable', 'active', 'select'] },
+  ],
+  // 'import/no-named-as-default': 0,
   'import/no-extraneous-dependencies': [
     'error',
     {
@@ -30,13 +34,20 @@ eslint.rules = {
     },
   ],
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
-  'class-methods-use-this': [1, { exceptMethods: ['run', 'enable', 'active'] }],
-
   'react/prop-types': [
     2,
-    { ignore: ['children', 'className', 'onClick', 'onMouseEnter', 'theme'] },
+    {
+      ignore: [
+        'children',
+        'className',
+        'onClick',
+        'onMouseDown',
+        'onMouseEnter',
+        'theme',
+      ],
+    },
   ],
-  // 'import/no-named-as-default': 0,
+  'sort-keys': 'off',
 };
 
 module.exports = eslint;

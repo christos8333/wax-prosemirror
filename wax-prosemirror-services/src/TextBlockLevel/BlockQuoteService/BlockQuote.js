@@ -5,7 +5,7 @@ import { wrapIn } from 'prosemirror-commands';
 @injectable()
 class BlockQuote extends Tools {
   title = 'Change to Block Quote';
-  content = 'Block Quote';
+  label = 'Block Quote';
   name = 'BlockQuote';
 
   get run() {

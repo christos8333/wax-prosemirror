@@ -9,6 +9,7 @@ export default
 class BulletList extends Tools {
   title = 'Wrap in bullet list';
   content = icons.bullet_list;
+  icon = 'bulletList';
   name = 'BulletList';
 
   get run() {

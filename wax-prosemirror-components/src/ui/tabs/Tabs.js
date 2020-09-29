@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import Icon from '../buttons/Icon';
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,7 +11,6 @@ const Wrapper = styled.div`
 const Tabs = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
 `;
 
 const activeTab = css`
@@ -18,23 +18,26 @@ const activeTab = css`
 `;
 
 const Tab = styled.div`
-  height: 50px;
-  width: 50px;
-  background: papayawhip;
-  margin-bottom: 5px;
+  background: gainsboro;
+  padding: 8px;
+  margin: 0 4px 4px 4px;
   cursor: pointer;
+
+  &:first-child {
+    margin-top: 4px;
+  }
 
   ${props => props.active && activeTab}
 
   &:hover {
-    background: gray;
+    background: silver;
   }
 `;
 
 const Content = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid gray;
+  background: gainsboro;
 `;
 
 const TabsPane = props => {
@@ -52,7 +55,7 @@ const TabsPane = props => {
             key={tab.id}
             onClick={() => setTabDisplay(tab.id)}
           >
-            {tab.displayName}
+            <Icon name={tab.icon} />
           </Tab>
         ))}
       </Tabs>

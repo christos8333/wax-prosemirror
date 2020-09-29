@@ -2,7 +2,7 @@ import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 
-export default 
+export default
 @injectable()
 class Title extends Tools {
   title = 'Change to Title';
@@ -14,6 +14,12 @@ class Title extends Tools {
       Commands.setBlockType(state.config.schema.nodes.title, {
         class: 'title',
       })(state, dispatch);
+    };
+  }
+
+  get active() {
+    return state => {
+      return Commands.blockActive(state.config.schema.nodes.title)(state);
     };
   }
 

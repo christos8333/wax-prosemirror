@@ -16,6 +16,14 @@ class ExtractProse extends Tools {
     };
   }
 
+  get active() {
+    return state => {
+      return Commands.blockActive(state.config.schema.nodes.extractProse)(
+        state,
+      );
+    };
+  }
+
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
     return true;

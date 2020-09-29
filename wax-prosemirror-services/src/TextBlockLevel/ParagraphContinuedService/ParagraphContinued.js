@@ -16,6 +16,14 @@ class ParagraphContinued extends Tools {
     };
   }
 
+  get active() {
+    return state => {
+      return Commands.blockActive(state.config.schema.nodes.paragraphCont)(
+        state,
+      );
+    };
+  }
+
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
     return true;

@@ -17,6 +17,12 @@ class SubTitle extends Tools {
     };
   }
 
+  get active() {
+    return state => {
+      return Commands.blockActive(state.config.schema.nodes.subtitle)(state);
+    };
+  }
+
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
     return true;

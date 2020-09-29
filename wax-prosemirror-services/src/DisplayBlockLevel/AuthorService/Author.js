@@ -16,6 +16,12 @@ class Author extends Tools {
     };
   }
 
+  get active() {
+    return state => {
+      return Commands.blockActive(state.config.schema.nodes.author)(state);
+    };
+  }
+
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
     return true;

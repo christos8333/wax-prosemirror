@@ -19,10 +19,10 @@ const Button = ({ view = {}, item }) => {
     run(state, dispatch);
   };
 
-  const isActive = active && active(state);
+  const isActive = active && active(state, activeViewId);
 
   const isDisabled =
-    enable && !enable(state) && !(select && select(view.state, activeViewId));
+    enable && !enable(state) && !(select && select(state, activeViewId));
 
   return (
     <MenuButton

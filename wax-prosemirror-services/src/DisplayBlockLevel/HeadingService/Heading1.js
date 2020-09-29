@@ -19,7 +19,7 @@ class Heading1 extends Tools {
   }
 
   get active() {
-    return (state, activeViewId) => {
+    return state => {
       return Commands.blockActive(state.config.schema.nodes.heading, {
         level: 1,
       })(state);

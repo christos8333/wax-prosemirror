@@ -18,7 +18,7 @@ class EpigraphProse extends Tools {
   }
 
   get active() {
-    return (state, activeViewId) => {
+    return state => {
       return Commands.blockActive(state.config.schema.nodes.epigraphProse)(
         state,
       );

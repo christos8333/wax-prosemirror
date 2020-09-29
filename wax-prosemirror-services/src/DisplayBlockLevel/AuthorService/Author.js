@@ -17,7 +17,7 @@ class Author extends Tools {
   }
 
   get active() {
-    return (state, activeViewId) => {
+    return state => {
       return Commands.blockActive(state.config.schema.nodes.author)(state);
     };
   }

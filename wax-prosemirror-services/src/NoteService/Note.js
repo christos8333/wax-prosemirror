@@ -36,7 +36,7 @@ class Note extends Tools {
 
   get enable() {
     return state => {
-      return true;
+      return false;
     };
   }
 }

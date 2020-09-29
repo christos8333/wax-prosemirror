@@ -17,7 +17,7 @@ const DropWrapper = styled.div`
 `;
 
 const Dropdown = props => {
-  const { className, dropComponent, iconName, label, title } = props;
+  const { className, disabled, dropComponent, iconName, label, title } = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,6 +27,7 @@ const Dropdown = props => {
     <Wrapper className={className}>
       <MenuButton
         active={isOpen}
+        disabled={disabled}
         iconName={iconName}
         label={label}
         onMouseDown={() => setIsOpen(!isOpen)}
@@ -39,6 +40,7 @@ const Dropdown = props => {
 };
 
 Dropdown.propTypes = {
+  disabled: PropTypes.bool,
   dropComponent: PropTypes.node.isRequired,
   iconName: PropTypes.string,
   label: PropTypes.string,
@@ -46,6 +48,7 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
+  disabled: false,
   iconName: null,
   label: null,
   title: null,

@@ -5,18 +5,11 @@ import styled from 'styled-components';
 
 import MenuButton from '../ui/buttons/MenuButton';
 
-const UploadImage = styled.div`
-  /* opacity: ${props => (props.select ? 1 : 0.4)};
-  pointer-events: ${props => (props.select ? 'default' : 'none')};
-  display: inline-flex;
-  padding: 0px 10px; */
-
+const Wrapper = styled.div`
   input {
     display: none;
   }
 `;
-
-// TO DO -- select should be done with MenuButton's disabled prop
 
 const ImageUpload = ({ item, fileUpload, view }) => {
   const { activeViewId } = useContext(WaxContext);
@@ -25,7 +18,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const handleMouseDown = () => inputRef.current.click();
 
   return (
-    <UploadImage>
+    <Wrapper>
       <label htmlFor="file-upload">
         <MenuButton
           active={false}
@@ -42,7 +35,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           type="file"
         />
       </label>
-    </UploadImage>
+    </Wrapper>
   );
 };
 export default ImageUpload;

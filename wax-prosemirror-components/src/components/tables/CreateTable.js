@@ -1,90 +1,43 @@
-/* eslint react/prop-types: 0 */
 import React, { useState, useContext } from 'react';
-// import styled from 'styled-components';
-// import { ButtonStyles } from 'wax-prosemirror-themes';
 import { WaxContext } from 'wax-prosemirror-core';
 
 import Dropdown from '../../ui/buttons/Dropdown';
 import InsertTableTool from '../../ui/tables/InsertTableTool';
 
-// const ButtonStyled = styled.button`
-//   ${ButtonStyles};
-//   opacity: ${props => (props.select ? 1 : 0.4)};
-//   pointer-events: ${props => (props.select ? 'default' : 'none')};
-//   color: ${props => (props.isActive ? 'white' : props.theme.colorButton)};
-//   background-color: ${props =>
-//     props.isActive ? props.theme.colorPrimary : 'transparent'};
-//   &:hover {
-//     background-color: ${props =>
-//       props.isActive ? props.theme.colorPrimary : 'transparent'};
-//   }
-// `;
-
-// const InsertTableToolContainer = styled.div`
-//   display: block !important;
-//   height: auto;
-//   top: 53px;
-//   left: 556px;
-//   position: absolute;
-// `;
-
 const CreateTable = ({ view = {}, item }) => {
   const {
     view: { main },
-    // activeViewId,
+    activeViewId,
   } = useContext(WaxContext);
   if (item.onlyOnMain) {
     view = main;
   }
 
+  const [showTool, setShowTool] = useState(false);
+  const toggleShowTool = () => setShowTool(!showTool);
+
   const { state, dispatch } = view;
-  const [isTableToolDisplayed, setTableToolDisplay] = useState(false);
+  const { enable, icon, run, select, title } = item;
 
-  // const CreateButton = (
-  //   <ButtonStyled
-  //     type="button"
-  //     isActive={isTableToolDisplayed}
-  //     title={item.title}
-  //     disabled={item.enable && !item.enable(view.state)}
-  //     onMouseDown={e => {
-  //       e.preventDefault();
-  //       setTableToolDisplay(!isTableToolDisplayed);
-  //     }}
-  //     select={item.select && item.select(view.state, activeViewId)}
-  //   >
-  //     {item.content}
-  //   </ButtonStyled>
-  // );
-  // return isTableToolDisplayed ? (
-  //   <>
-  //     {CreateButton}
-  //     <InsertTableToolContainer>
-  //       <InsertTableTool
-  //         onGridSelect={colRows => {
-  //           item.run(colRows, state, dispatch);
-  //         }}
-  //       />
-  //     </InsertTableToolContainer>
-  //   </>
-  // ) : (
-  //   <>{CreateButton}</>
-  // );
+  const dropComponent = (
+    <InsertTableTool
+      onGridSelect={colRows => {
+        run(colRows, state, dispatch);
+      }}
+    />
+  );
 
-  // select pending
+  const isDisabled =
+    enable && !enable(state) && !(select && select(state, activeViewId));
+
   return (
     <Dropdown
-      active={isTableToolDisplayed}
-      dropComponent={
-        <InsertTableTool
-          onGridSelect={colRows => {
-            item.run(colRows, state, dispatch);
-          }}
-        />
-      }
-      iconName={item.icon}
-      disabled={item.enable && !item.enable(view.state)}
-      onClick={() => setTableToolDisplay(!isTableToolDisplayed)}
-      title={item.title}
+      active={showTool}
+      dropComponent={dropComponent}
+      iconName={icon}
+      disabled={isDisabled}
+      onClick={toggleShowTool}
+      title={title}
     />
   );
 };

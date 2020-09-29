@@ -33,13 +33,10 @@ class DisplayText extends ToolGroup {
       icon: 'title',
       component: (
         <BlockLevelTools
-          groups={this._toolGroups[0].groups.map(group => {
-            console.log(group);
-            return {
-              groupName: group.title.props.title,
-              items: group._tools,
-            };
-          })}
+          groups={this._toolGroups[0].groups.map(group => ({
+            groupName: group.title.props.title,
+            items: group._tools,
+          }))}
           view={view}
         />
       ),

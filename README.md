@@ -21,12 +21,13 @@ Alpha version, including comments and track changes. See the rest of this file f
 
 Beta version, including some new features:
 
+- Image Captions
+- Custom tags
 - Find and replace
-- Spellchecker
 - Special characters
 - Transform cases
 - Word counter
-- Custom tags
+- Spellchecker
 
 ### January 2021
 

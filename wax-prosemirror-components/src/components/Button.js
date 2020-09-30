@@ -1,3 +1,5 @@
+/* eslint react/prop-types: 0 */
+
 import React, { useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';

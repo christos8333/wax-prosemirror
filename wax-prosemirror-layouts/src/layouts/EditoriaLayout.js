@@ -48,6 +48,7 @@ const TopMenu = styled.div`
   display: flex;
   min-height: 40px;
   user-select: none;
+  background: ${th('colorBackgroundToolBar')}
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
 
   > div:not(:last-child) {
@@ -57,6 +58,7 @@ const TopMenu = styled.div`
 `;
 
 const SideMenu = styled.div`
+  background: ${th('colorBackgroundToolBar')}
   border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   min-width: 250px;
   height: 100%;
@@ -72,6 +74,7 @@ const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   height: 100%;
   width: 100%;
+  position: absolute;
 
   ${EditorElements};
 `;
@@ -88,6 +91,15 @@ const EditorContainer = styled.div`
 `;
 
 const CommentsContainer = styled.div`
+  background: ${th('colorBackgroundHue')};
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 100%;
+`;
+
+const CommentsContainerNotes = styled.div`
+  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   width: 35%;
@@ -95,27 +107,25 @@ const CommentsContainer = styled.div`
 `;
 
 const NotesAreaContainer = styled.div`
-  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  padding-top: ${grid(1)};
+  position: absolute;
 `;
 
 const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
-  padding-left: ${grid(10)};
   padding-bottom: ${grid(4)};
   height: 100%;
   width: 65%;
 `;
 
-let surfaceHeight = 700;
-let notesHeight = 150;
+let surfaceHeight = 600;
+let notesHeight = 200;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;
@@ -162,8 +172,8 @@ const EditoriaLayout = ({ editor }) => {
             <PanelGroup
               direction="column"
               panelWidths={[
-                { size: surfaceHeight, resize: 'dynamic' },
-                { size: notesHeight, resize: 'dynamic' },
+                { size: surfaceHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'stretch' },
               ]}
               onResizeEnd={onResizeEnd}
             >
@@ -179,9 +189,9 @@ const EditoriaLayout = ({ editor }) => {
                   <NotesContainer id="notes-container">
                     <NotesArea />
                   </NotesContainer>
-                  <CommentsContainer>
+                  <CommentsContainerNotes>
                     <RightArea area="notes" />
-                  </CommentsContainer>
+                  </CommentsContainerNotes>
                 </NotesAreaContainer>
               )}
             </PanelGroup>

@@ -51,7 +51,7 @@ CommentItem.propTypes = {
   /** Display name of user that made the comment */
   displayName: PropTypes.string.isRequired,
   /** When the comment was made */
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
 };
 
 CommentItem.defaultProps = {};

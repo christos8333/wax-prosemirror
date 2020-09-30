@@ -236,6 +236,12 @@ const TableGridSizeEditor = props => {
     position: 'relative',
   };
 
+  const infoStyle = {
+    height: '20px',
+    fontSize: '14px',
+    marginLeft: '5px',
+  };
+
   return (
     <div style={wrapperStyle} ref={_onRef}>
       <div
@@ -245,7 +251,7 @@ const TableGridSizeEditor = props => {
       >
         {cells}
       </div>
-      <div>
+      <div style={infoStyle}>
         {rows} X {cols}
       </div>
     </div>

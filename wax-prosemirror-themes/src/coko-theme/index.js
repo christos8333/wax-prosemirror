@@ -7,17 +7,18 @@ import { css } from 'styled-components';
 const cokoTheme = {
   /* Colors */
   colorBackground: 'white',
-  colorPrimary: 'teal',
+  colorPrimary: '#808080',
   colorSecondary: '#E7E7E7',
   colorFurniture: '#CCC',
   colorBorder: '#AAA',
-  colorBackgroundHue: '#F1F1F1',
+  colorBackgroundHue: '#F7F7F7',
   colorSuccess: '#008800',
   colorError: 'indianred',
   colorText: '#111',
   colorTextReverse: '#FFF',
   colorTextPlaceholder: '#595959',
   colorWarning: '#ffc107',
+  colorBackgroundToolBar: '#D9D9D9',
 
   /*Buttons*/
   colorButton: '#777',

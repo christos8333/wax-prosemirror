@@ -1,15 +1,16 @@
 import React from 'react';
+import { grid } from '@pubsweet/ui-toolkit';
 import styled from 'styled-components';
-
 import NoteNumber from './NoteNumber';
 
 const NoteEditorContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 28px;
-  width: 100%;
+  width: 90%;
   position: relative;
   margin-bottom: 5px;
+  padding-left: ${grid(10)};
 `;
 
 const NoteStyled = styled.div`

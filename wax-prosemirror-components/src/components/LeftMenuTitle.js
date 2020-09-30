@@ -1,10 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+/* eslint react/prop-types: 0 */
+
+import React from 'react';
+import styled from 'styled-components';
 
 const LeftMenuStyled = styled.div`
   border-bottom: 1px solid #d9d9d9;
   color: #979797;
-  font-family: "Fira Sans";
+  font-family: 'Fira Sans';
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 0.6px;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { th } from '@pubsweet/ui-toolkit';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Icon from '../buttons/Icon';
@@ -11,10 +12,11 @@ const Wrapper = styled.div`
 const Tabs = styled.div`
   display: flex;
   flex-direction: column;
+  background: #e3e3e3;
 `;
 
 const activeTab = css`
-  box-shadow: 0 0 3px blue;
+  box-shadow: 0 0 3px ${th('colorPrimary')};
 `;
 
 const Tab = styled.div`

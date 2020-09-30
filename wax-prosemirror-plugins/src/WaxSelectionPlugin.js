@@ -16,15 +16,13 @@ const WaxSelectionPlugin = new Plugin({
         if (node.type.name === 'footnote') flag = true;
       });
 
-      if (sel && !flag) {
-        const decos = [
-          Decoration.inline(sel.$from.pos, sel.$to.pos, {
-            class: 'wax-selection-marker',
-          }),
-        ];
-        const deco = DecorationSet.create(editorState.doc, decos);
-        return { deco };
-      }
+      const decos = [
+        Decoration.inline(sel.$from.pos, sel.$to.pos, {
+          class: 'wax-selection-marker',
+        }),
+      ];
+      const deco = DecorationSet.create(editorState.doc, decos);
+      return { deco };
 
       return state;
     },

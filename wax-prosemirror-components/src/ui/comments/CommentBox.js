@@ -99,7 +99,7 @@ CommentBox.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       displayName: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
+      timestamp: PropTypes.string.number,
     }),
   ),
   /** This comment's id in the document */

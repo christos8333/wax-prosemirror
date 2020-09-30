@@ -11,6 +11,9 @@ import { grid, th } from '@pubsweet/ui-toolkit';
 import EditorElements from './EditorElements';
 
 const divider = css`
+  .panelGroup {
+    background: ${th('colorBackgroundHue')};
+  }
   .divider {
     > div {
       background: ${th('colorBorder')};
@@ -91,7 +94,6 @@ const EditorContainer = styled.div`
 `;
 
 const CommentsContainer = styled.div`
-  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   width: 35%;
@@ -107,6 +109,7 @@ const CommentsContainerNotes = styled.div`
 `;
 
 const NotesAreaContainer = styled.div`
+  background: #fff;
   display: flex;
   flex-direction: row;
   width: 100%;

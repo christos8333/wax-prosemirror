@@ -2,11 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
+import { grid, th } from '@pubsweet/ui-toolkit';
+
 const Wrapper = styled.div`
   background: #e2e2e2;
   display: flex;
   flex-direction: column;
-  padding: 8px 16px;
+  padding: ${grid(2)} ${grid(4)};
 `;
 
 const TextWrapper = styled.div``;
@@ -14,6 +16,7 @@ const TextWrapper = styled.div``;
 const ReplyTextArea = styled.textarea`
   background: #e2e2e2;
   box-sizing: border-box;
+  font-family: ${th('fontWriting')};
   width: 100%;
 `;
 
@@ -33,7 +36,7 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   color: gray;
-  padding: 8px 16px;
+  padding: ${grid(2)} ${grid(4)};
 
   ${props => props.primary && primary}
   ${props => props.disabled && `cursor: not-allowed;`}

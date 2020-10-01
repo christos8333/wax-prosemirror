@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { grid, th } from '@pubsweet/ui-toolkit';
 import DateParser from './DateParser';
 
 const Wrapper = styled.div``;
@@ -9,20 +10,22 @@ const Wrapper = styled.div``;
 const Head = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
+  font-size: 14px;
+  margin-bottom: ${grid(2)};
 `;
 
 const Name = styled.div`
-  font-size: 12px;
+  font-size: ${th('fontSizeBaseSmall')};
 `;
 
 const Timestamp = styled.div`
-  font-size: 10px;
+  font-size: 14px;
   color: gray;
 `;
 
 const Content = styled.div`
-  font-size: 14px;
+  font-family: ${th('fontReading')};
+  font-size: 16px;
 `;
 
 const CommentItem = props => {

@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-import { th } from '@pubsweet/ui-toolkit';
+import { lighten, th } from '@pubsweet/ui-toolkit';
 
 /* All styles regarding ProseMirror surface and elements */
 
@@ -212,8 +212,14 @@ export default css`
     }
   }
 
-  .selected-insertion,
-  .selected-deletion,
+  .selected-insertion {
+    background: ${lighten('royalblue', 0.65)};
+  }
+
+  .selected-deletion {
+    background: ${lighten('indianred', 0.65)};
+  }
+
   .selected-format-change,
   .selected-block-change {
     background-color: #eefbfb;

@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  font-family: ${th('fontWriting')};
+  font-family: ${th('fontInterface')};
 
   ${props => !props.active && inactive}
 `;

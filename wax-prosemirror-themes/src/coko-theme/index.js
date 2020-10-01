@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import 'typeface-fira-sans-condensed';
-import 'typeface-vollkorn';
+import 'fontsource-merriweather';
+// import 'typeface-vollkorn';
 
 import { css } from 'styled-components';
 
@@ -19,19 +20,17 @@ const cokoTheme = {
   colorTextPlaceholder: '#595959',
   colorWarning: '#ffc107',
 
-  /*Buttons*/
-  colorButton: '#777',
   /* Text variables */
 
   // fonts
   fontInterface: 'Fira Sans Condensed',
   fontHeading: 'Fira Sans Condensed',
   fontReading: 'Vollkorn',
-  fontWriting: 'Vollkorn',
+  fontWriting: 'Merriweather',
 
   // font sizes
-  fontSizeBase: '16px',
-  fontSizeBaseSmall: '14px',
+  fontSizeBase: '14px',
+  fontSizeBaseSmall: '12px',
   fontSizeHeading1: '40px',
   fontSizeHeading2: '36px',
   fontSizeHeading3: '28px',

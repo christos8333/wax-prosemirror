@@ -8186,6 +8186,11 @@ follow-redirects@^1.0.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.12.1.tgz#de54a6205311b93d60398ebc01cf7015682312b6"
   integrity sha512-tmRv0AVuR7ZyouUHLeNSiO6pqulF7dYa3s19c6t+wz9LD69/uSzdMxJ2S91nTI9U3rt/IldxpzMOFejp6f0hjg==
 
+fontsource-merriweather@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/fontsource-merriweather/-/fontsource-merriweather-3.0.9.tgz#c170a179e332a530c5308274fe4a7fde7cf7e3ab"
+  integrity sha512-ugq1m28EGWW1oNltVs0Ewl5p6KTX/8yNqMzBQ26G8S4hs4gLkKuSi+3nogM4PwF0AkGtT9PobSUkNUf4Noxg9w==
+
 for-in@^0.1.3:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.8.tgz#d8773908e31256109952b1fdb9b3fa867d2775e1"

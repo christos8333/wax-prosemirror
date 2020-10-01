@@ -15,6 +15,7 @@
   "dependencies": {
     "@pubsweet/ui-toolkit": "^2.2.13",
     "cokourier-prime-sans": "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git",
+    "fontsource-merriweather": "^3.0.9",
     "typeface-fira-sans-condensed": "^0.0.54",
     "typeface-vollkorn": "^0.0.54"
   }

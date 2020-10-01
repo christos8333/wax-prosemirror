@@ -4,12 +4,17 @@ import { th } from '@pubsweet/ui-toolkit';
 
 /* All styles regarding ProseMirror surface and elements */
 
+const fontWriting = css`
+  font-family: ${th('fontWriting')};
+  font-size: ${th('fontSizeBase')};
+  color: ${th('colorText')};
+`;
+
 export default css`
   .ProseMirror {
     background: white;
     counter-reset: footnote;
-    font-family: ${th('fontWriting')};
-    color: ${th('colorText')};
+    ${fontWriting}
 
     p::selection,
     p span::selection {

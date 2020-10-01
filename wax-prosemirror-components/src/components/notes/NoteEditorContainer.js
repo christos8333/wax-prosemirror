@@ -1,7 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
+import { th } from '@pubsweet/ui-toolkit';
 import NoteNumber from './NoteNumber';
+
+const fontWriting = css`
+  font-family: ${th('fontWriting')};
+  font-size: ${th('fontSizeBase')};
+  color: ${th('colorText')};
+`;
 
 const NoteEditorContainerStyled = styled.div`
   display: flex;
@@ -10,6 +17,8 @@ const NoteEditorContainerStyled = styled.div`
   width: 100%;
   position: relative;
   margin-bottom: 5px;
+
+  ${fontWriting};
 `;
 
 const NoteStyled = styled.div`

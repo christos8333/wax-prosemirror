@@ -79,7 +79,7 @@ const WaxSurfaceScroll = styled.div`
   height: 100%;
   width: 100%;
   position: absolute;
-
+  /* PM styles  for main content*/
   ${EditorElements};
 `;
 
@@ -117,6 +117,8 @@ const NotesAreaContainer = styled.div`
   height: 100%;
   overflow-y: scroll;
   position: absolute;
+  /* PM styles  for note content*/
+  ${EditorElements};
 `;
 
 const NotesContainer = styled.div`

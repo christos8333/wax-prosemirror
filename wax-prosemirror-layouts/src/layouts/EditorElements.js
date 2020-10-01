@@ -35,7 +35,7 @@ export default css`
   }
 
   .ProseMirror .wax-selection-marker {
-    background-color: teal;
+    background-color: ${th('colorPrimary')};
     color: white;
   }
 

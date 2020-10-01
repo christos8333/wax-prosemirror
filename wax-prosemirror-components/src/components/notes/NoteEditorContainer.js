@@ -1,14 +1,8 @@
 import React from 'react';
-import { grid, th } from '@pubsweet/ui-toolkit';
-import styled, { css } from 'styled-components';
+import { grid } from '@pubsweet/ui-toolkit';
+import styled from 'styled-components';
 
 import NoteNumber from './NoteNumber';
-
-const fontWriting = css`
-  font-family: ${th('fontWriting')};
-  font-size: ${th('fontSizeBase')};
-  color: ${th('colorText')};
-`;
 
 const NoteEditorContainerStyled = styled.div`
   display: flex;
@@ -19,7 +13,6 @@ const NoteEditorContainerStyled = styled.div`
   margin-bottom: 5px;
 
   padding-left: ${grid(10)};
-  ${fontWriting};
 `;
 
 const NoteStyled = styled.div`
@@ -36,35 +29,6 @@ const NoteStyled = styled.div`
 
   p {
     margin: 0;
-  }
-
-  span.comment {
-    border-bottom: 2px solid #ffab20;
-    border-radius: 3px 3px 0 0;
-
-    .active-comment {
-      background-color: #ffab20;
-    }
-  }
-
-  span.deletion {
-    text-decoration: line-through;
-    color: red;
-  }
-
-  span.insertion {
-    color: blue;
-  }
-
-  .selected-insertion,
-  .selected-deletion,
-  .selected-format-change,
-  .selected-block-change {
-    background-color: #fffacf;
-  }
-
-  .format-change {
-    border-bottom: 2px solid blue;
   }
 `;
 

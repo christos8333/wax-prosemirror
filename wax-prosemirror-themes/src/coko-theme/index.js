@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import 'typeface-fira-sans-condensed';
 import 'fontsource-merriweather';
-// import 'typeface-vollkorn';
+import 'typeface-vollkorn';
 
 import { css } from 'styled-components';
 
@@ -24,8 +24,8 @@ const cokoTheme = {
   /* Text variables */
 
   // fonts
-  fontInterface: 'Fira Sans Condensed',
-  fontHeading: 'Fira Sans Condensed',
+  fontInterface: 'Fira-Sans-Condensed',
+  fontHeading: 'Amethysta',
   fontReading: 'Vollkorn',
   fontWriting: 'Merriweather',
 

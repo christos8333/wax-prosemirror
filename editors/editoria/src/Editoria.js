@@ -47,7 +47,7 @@ const Editoria = () => (
       // value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the second paragraph</p><p class="author">This is an author</p>`}
       layout={EditoriaLayout}
       // debug
-      // onChange={source => console.log(source)}
+      onChange={source => console.log(source)}
       user={user}
     />
   </Fragment>

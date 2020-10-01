@@ -24,8 +24,8 @@ const cokoTheme = {
   /* Text variables */
 
   // fonts
-  fontInterface: 'Fira-Sans-Condensed',
-  fontHeading: 'Fira-Sans-Condensed',
+  fontInterface: 'Fira Sans Condensed',
+  fontHeading: 'Fira Sans Condensed',
   fontReading: 'Vollkorn',
   fontWriting: 'Merriweather',
 

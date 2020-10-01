@@ -13,16 +13,16 @@ const Head = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 14px;
+  font-size: 12px;
 `;
 
 const Timestamp = styled.div`
-  font-size: 12px;
+  font-size: 10px;
   color: gray;
 `;
 
 const Content = styled.div`
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const CommentItem = props => {

@@ -13,22 +13,29 @@ const NoteEditorContainerStyled = styled.div`
   margin-bottom: 5px;
 
   padding-left: ${grid(10)};
+  padding-right: ${grid(10)};
 `;
 
 const NoteStyled = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  min-height: 20px;
+  height: auto;
   margin-top: 10px;
   height: 100%;
   border-bottom: 1px solid black;
-  &:focus {
-    outline: none;
+
+  span.comment {
+    border-bottom: none !important;
+    &: after {
+      content: '';
+      border-bottom: 2px solid gold;
+      display: block;
+    }
   }
 
-  p {
-    margin: 0;
+  &:focus {
+    outline: none;
   }
 `;
 

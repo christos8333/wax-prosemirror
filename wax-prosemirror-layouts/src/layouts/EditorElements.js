@@ -21,6 +21,7 @@ export default css`
     h2::selection,
     h3::selection,
     code::selection,
+    span::selection,
     p span::selection,
     h1 span::selection,
     h2 span::selection,
@@ -205,9 +206,9 @@ export default css`
   }
 
   span.insertion {
-    color: blue;
+    color: royalblue;
     footnote: {
-      background: blue;
+      background: royalblue;
     }
   }
 
@@ -219,7 +220,7 @@ export default css`
   }
 
   .format-change {
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid royalblue;
   }
 
   [data-track] {
@@ -240,11 +241,12 @@ export default css`
   }
 
   span.comment {
-    border-bottom: 2px solid #ffab20;
+    border-bottom: 2px solid gold;
     border-radius: 3px 3px 0 0;
 
     .active-comment {
-      background-color: #ffab20;
+      background-color: gold;
+      color: black;
     }
   }
 `;

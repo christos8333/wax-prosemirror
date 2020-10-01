@@ -12,7 +12,15 @@ export default css`
     color: ${th('colorText')};
 
     p::selection,
-    p span::selection {
+    h1::selection,
+    h2::selection,
+    h3::selection,
+    code::selection,
+    p span::selection,
+    h1 span::selection,
+    h2 span::selection,
+    h3 span::selection,
+    code span::selection {
       background-color: transparent;
     }
 

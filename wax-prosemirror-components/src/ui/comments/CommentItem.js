@@ -10,6 +10,7 @@ const Wrapper = styled.div``;
 const Head = styled.div`
   display: flex;
   flex-direction: column;
+  font-size: 14px;
   margin-bottom: ${grid(2)};
 `;
 
@@ -18,12 +19,13 @@ const Name = styled.div`
 `;
 
 const Timestamp = styled.div`
-  font-size: 10px;
+  font-size: 14px;
   color: gray;
 `;
 
 const Content = styled.div`
   font-family: ${th('fontReading')};
+  font-size: 16px;
 `;
 
 const CommentItem = props => {

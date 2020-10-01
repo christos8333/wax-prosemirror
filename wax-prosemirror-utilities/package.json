@@ -4,7 +4,7 @@
   "version": "0.0.19",
   "description": "Wax prosemirror utilities",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -16,8 +16,5 @@
     "prosemirror-commands": "1.1.4",
     "prosemirror-utils": "^0.9.6",
     "uuid": "^7.0.3"
-  },
-  "resolutions": {
-    "prosemirror-commands": "1.1.4"
   }
 }

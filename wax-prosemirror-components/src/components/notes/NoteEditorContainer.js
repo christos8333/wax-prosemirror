@@ -1,7 +1,14 @@
 import React from 'react';
-import { grid } from '@pubsweet/ui-toolkit';
-import styled from 'styled-components';
+import { grid, th } from '@pubsweet/ui-toolkit';
+import styled, { css } from 'styled-components';
+
 import NoteNumber from './NoteNumber';
+
+const fontWriting = css`
+  font-family: ${th('fontWriting')};
+  font-size: ${th('fontSizeBase')};
+  color: ${th('colorText')};
+`;
 
 const NoteEditorContainerStyled = styled.div`
   display: flex;
@@ -10,7 +17,9 @@ const NoteEditorContainerStyled = styled.div`
   width: 90%;
   position: relative;
   margin-bottom: 5px;
+
   padding-left: ${grid(10)};
+  ${fontWriting};
 `;
 
 const NoteStyled = styled.div`

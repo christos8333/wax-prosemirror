@@ -31,6 +31,7 @@ const divider = css`
 const Wrapper = styled.div`
   background: ${th('colorBackground')};
   font-family: ${th('fontInterface')};
+  font-size: ${th('fontSizeBase')};
 
   display: flex;
   flex-direction: column;

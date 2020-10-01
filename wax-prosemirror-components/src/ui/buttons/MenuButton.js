@@ -37,6 +37,7 @@ const Wrapper = styled.button.attrs(props => ({
   border-radius: 2px;
   cursor: pointer;
   font-family: ${th('fontInterface')};
+  font-size: ${th('fontSizeBase')};
   height: 28px;
   outline: none;
   padding: 2px;

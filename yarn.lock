@@ -5360,12 +5360,6 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-"cokourier-prime-sans@git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git":
-  version "0.0.1"
-  resolved "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git#55aa30adce0193baac1ea026cf4409be9dd93a10"
-  dependencies:
-    typeface-open-sans "0.0.35"
-
 collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.6.tgz#e63629c0016665792060dbbeb79c42239d2c5287"
@@ -8185,6 +8179,11 @@ follow-redirects@^1.0.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.12.1.tgz#de54a6205311b93d60398ebc01cf7015682312b6"
   integrity sha512-tmRv0AVuR7ZyouUHLeNSiO6pqulF7dYa3s19c6t+wz9LD69/uSzdMxJ2S91nTI9U3rt/IldxpzMOFejp6f0hjg==
+
+fontsource-merriweather@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/fontsource-merriweather/-/fontsource-merriweather-3.0.9.tgz#c170a179e332a530c5308274fe4a7fde7cf7e3ab"
+  integrity sha512-ugq1m28EGWW1oNltVs0Ewl5p6KTX/8yNqMzBQ26G8S4hs4gLkKuSi+3nogM4PwF0AkGtT9PobSUkNUf4Noxg9w==
 
 for-in@^0.1.3:
   version "0.1.8"
@@ -16769,7 +16768,7 @@ style-to-object@^0.2.1:
   dependencies:
     inline-style-parser "0.1.1"
 
-styled-components@^4.1.1, styled-components@^4.2.0:
+styled-components@4.2.0, styled-components@^4.1.1, styled-components@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-4.2.0.tgz#811fbbec4d64c7189f6c7482b9eb6fefa7fefef7"
   integrity sha512-L/LzkL3ZbBhqIVHdR7DbYujy4tqvTNRfc+4JWDCYyhTatI+8CRRQUmdaR0+ARl03DWsfKLhjewll5uNLrqrl4A==
@@ -17475,11 +17474,6 @@ typeface-fira-sans-condensed@^0.0.54:
   version "0.0.54"
   resolved "https://registry.yarnpkg.com/typeface-fira-sans-condensed/-/typeface-fira-sans-condensed-0.0.54.tgz#5fe692b4d1ec4083f198e22b8bb1e8b1ed541db0"
   integrity sha512-Y/+UOdN75s1hpOoJhSavN1eTfmXLrUPHDeo2syCpnq18PAKQpglvRRM+3pDWtCjsFbni8N/1brgEV94Z9FNI9g==
-
-typeface-open-sans@0.0.35:
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/typeface-open-sans/-/typeface-open-sans-0.0.35.tgz#170dc36bbbd63829c9ea64b991c2b0fd65017708"
-  integrity sha512-lNrL3aaatdSkSb8rH1R9GXS27xyD5H4h9NctEm9B5Uk/pKwCzDrUcZhbhYi5Yih5FcMa8ZTtdY5K1ziMxo6EEg==
 
 typeface-vollkorn@^0.0.54:
   version "0.0.54"

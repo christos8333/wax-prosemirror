@@ -32,12 +32,6 @@ export default ({ area }) => {
     let panelWrapperHeight = {};
     if (main) {
       WaxSurface = main.dom.getBoundingClientRect();
-
-      if (area === 'main') {
-      } else {
-        panelWrapper = document.getElementsByClassName('panelWrapper');
-        panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
-      }
     }
 
     each(marksNodes[area], (markNode, pos) => {
@@ -56,6 +50,9 @@ export default ({ area }) => {
           annotationTop =
             markNodeEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
+        panelWrapper = document.getElementsByClassName('panelWrapper');
+        panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
+
         markNodeEl = document
           .querySelector('#notes-container')
           .querySelector(`[data-id="${id}"]`);

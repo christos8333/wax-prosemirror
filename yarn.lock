@@ -1979,6 +1979,15 @@
     lodash "^4.17.4"
     styled-components "^4.1.1"
 
+"@pubsweet/ui-toolkit@^2.3.1":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui-toolkit/-/ui-toolkit-2.3.2.tgz#44b9b97b399027ef90bf0c30768475284f437fb4"
+  integrity sha512-VJ9zZI1uDOCicmuJV7uv98kK0J5hGpJKIeXpOSrgPgFw3dDFRjuuLa4W8L5aFa+FG42ZDZEj2CaOnfuZyB4HGA==
+  dependencies:
+    color "^3.0.0"
+    lodash "^4.17.4"
+    styled-components "^4.1.1"
+
 "@reach/router@^1.3.3":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.3.4.tgz#d2574b19370a70c80480ed91f3da840136d10f8c"
@@ -5351,12 +5360,6 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-"cokourier-prime-sans@git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git":
-  version "0.0.1"
-  resolved "git+https://gitlab.coko.foundation/julientaq/cokourier-sans-prime.git#55aa30adce0193baac1ea026cf4409be9dd93a10"
-  dependencies:
-    typeface-open-sans "0.0.35"
-
 collapse-white-space@^1.0.0, collapse-white-space@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.6.tgz#e63629c0016665792060dbbeb79c42239d2c5287"
@@ -8176,6 +8179,11 @@ follow-redirects@^1.0.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.12.1.tgz#de54a6205311b93d60398ebc01cf7015682312b6"
   integrity sha512-tmRv0AVuR7ZyouUHLeNSiO6pqulF7dYa3s19c6t+wz9LD69/uSzdMxJ2S91nTI9U3rt/IldxpzMOFejp6f0hjg==
+
+fontsource-merriweather@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/fontsource-merriweather/-/fontsource-merriweather-3.0.9.tgz#c170a179e332a530c5308274fe4a7fde7cf7e3ab"
+  integrity sha512-ugq1m28EGWW1oNltVs0Ewl5p6KTX/8yNqMzBQ26G8S4hs4gLkKuSi+3nogM4PwF0AkGtT9PobSUkNUf4Noxg9w==
 
 for-in@^0.1.3:
   version "0.1.8"
@@ -12007,6 +12015,11 @@ modify-values@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==
+
+moment@^2.29.0:
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.0.tgz#fcbef955844d91deb55438613ddcec56e86a3425"
+  integrity sha512-z6IJ5HXYiuxvFTI6eiQ9dm77uE0gyy1yXNApVHqTcnIKfY9tIwEjlzsZ6u1LQXvVgKeTnv9Xm7NDvJ7lso3MtA==
 
 moment@^2.6.0:
   version "2.27.0"
@@ -17461,11 +17474,6 @@ typeface-fira-sans-condensed@^0.0.54:
   version "0.0.54"
   resolved "https://registry.yarnpkg.com/typeface-fira-sans-condensed/-/typeface-fira-sans-condensed-0.0.54.tgz#5fe692b4d1ec4083f198e22b8bb1e8b1ed541db0"
   integrity sha512-Y/+UOdN75s1hpOoJhSavN1eTfmXLrUPHDeo2syCpnq18PAKQpglvRRM+3pDWtCjsFbni8N/1brgEV94Z9FNI9g==
-
-typeface-open-sans@0.0.35:
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/typeface-open-sans/-/typeface-open-sans-0.0.35.tgz#170dc36bbbd63829c9ea64b991c2b0fd65017708"
-  integrity sha512-lNrL3aaatdSkSb8rH1R9GXS27xyD5H4h9NctEm9B5Uk/pKwCzDrUcZhbhYi5Yih5FcMa8ZTtdY5K1ziMxo6EEg==
 
 typeface-vollkorn@^0.0.54:
   version "0.0.54"

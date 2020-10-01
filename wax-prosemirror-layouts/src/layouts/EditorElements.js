@@ -1,27 +1,46 @@
 import { css } from 'styled-components';
 
+import { th } from '@pubsweet/ui-toolkit';
+
 /* All styles regarding ProseMirror surface and elements */
+
+const fontWriting = css`
+  font-family: ${th('fontWriting')};
+  font-size: ${th('fontSizeBase')};
+  color: ${th('colorText')};
+`;
 
 export default css`
   .ProseMirror {
+    background: white;
     counter-reset: footnote;
-    font-family: ${props => props.theme.fontReading};
+    ${fontWriting}
+
+    p::selection,
+    h1::selection,
+    h2::selection,
+    h3::selection,
+    code::selection,
+    span::selection,
+    p span::selection,
+    h1 span::selection,
+    h2 span::selection,
+    h3 span::selection,
+    code span::selection {
+      background-color: transparent;
+    }
+
     &:focus {
       outline: none;
     }
   }
 
   .ProseMirror .wax-selection-marker {
-    background: #0a78ff;
+    background-color: ${th('colorPrimary')};
     color: white;
   }
 
   div[contenteditable='false'] {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     pointer-events: none;
   }
@@ -180,16 +199,16 @@ export default css`
 
   span.deletion {
     text-decoration: line-through;
-    color: red;
+    color: ${th('colorError')};
     footnote {
-      background: red;
+      background: ${th('colorError')};
     }
   }
 
   span.insertion {
-    color: blue;
+    color: royalblue;
     footnote: {
-      background: blue;
+      background: royalblue;
     }
   }
 
@@ -201,7 +220,7 @@ export default css`
   }
 
   .format-change {
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid royalblue;
   }
 
   [data-track] {
@@ -222,11 +241,12 @@ export default css`
   }
 
   span.comment {
-    border-bottom: 2px solid #ffab20;
+    border-bottom: 2px solid gold;
     border-radius: 3px 3px 0 0;
 
     .active-comment {
-      background-color: #ffab20;
+      background-color: gold;
+      color: black;
     }
   }
 `;

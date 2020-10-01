@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   padding: 8px;
 
   > div:not(:last-child) {
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 `;
 

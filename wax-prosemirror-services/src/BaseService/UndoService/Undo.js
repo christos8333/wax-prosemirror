@@ -19,4 +19,8 @@ class Undo extends Tools {
   get enable() {
     return undo;
   }
+
+  select(state) {
+    return undo(state);
+  }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { th } from '@pubsweet/ui-toolkit';
 
-// import { th } from '../_helpers'
 import CommentItemList from './CommentItemList';
 import CommentReply from './CommentReply';
 
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  /* padding: 8px 0; */
+  font-family: ${th('fontWriting')};
 
   ${props => !props.active && inactive}
 `;
@@ -42,7 +42,9 @@ const Resolve = styled.button`
   margin-bottom: 12px;
 
   &:hover {
-    background: blue;
+    background: gold;
+    border-color: gold;
+    border-radius: 3px;
   }
 `;
 
@@ -99,7 +101,7 @@ CommentBox.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       displayName: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
+      timestamp: PropTypes.string.number,
     }),
   ),
   /** This comment's id in the document */

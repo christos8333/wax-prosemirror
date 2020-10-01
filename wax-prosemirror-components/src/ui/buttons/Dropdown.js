@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import MenuButton from './MenuButton';
+import { grid } from '@pubsweet/ui-toolkit';
 
 // font size 0 reason: https://stackoverflow.com/a/19212391
 const Wrapper = styled.div`
@@ -11,9 +12,8 @@ const Wrapper = styled.div`
 `;
 
 const DropWrapper = styled.div`
-  margin-top: 4px;
+  margin-top: ${grid(1)};
   position: absolute;
-  z-index: 2;
 `;
 
 const Dropdown = props => {

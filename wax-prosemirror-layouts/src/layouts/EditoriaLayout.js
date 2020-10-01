@@ -6,57 +6,33 @@ import { componentPlugin } from 'wax-prosemirror-services';
 import { cokoTheme } from 'wax-prosemirror-themes';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
+
+import { grid, th } from '@pubsweet/ui-toolkit';
 import EditorElements from './EditorElements';
 
 const divider = css`
+  .panelGroup {
+    background: ${th('colorBackgroundHue')};
+  }
   .divider {
-    &:before {
-      content: 'Notes';
-      position: relative;
-      bottom: 14px;
-      background: white;
-      z-index: 999;
-      color: #a3a3a3;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-    }
-    &:after {
-      color: #a3a3a3;
-      content: '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . '
-        '. . . . . . . . . . . . . . . . . . . . ';
-      float: left;
-      font-weight: 400;
-      white-space: nowrap;
-      width: 0;
-      position: relative;
-      bottom: 14px;
+    > div {
+      background: ${th('colorBorder')};
+      height: ${grid(1)};
+      max-height: ${grid(1)};
+
+      &:hover {
+        height: ${grid(2)};
+        max-height: ${grid(2)};
+      }
     }
   }
 `;
 
 const Wrapper = styled.div`
+  background: ${th('colorBackground')};
+  font-family: ${th('fontInterface')};
+  font-size: ${th('fontSizeBase')};
+
   display: flex;
   flex-direction: column;
 
@@ -74,18 +50,20 @@ const Main = styled.div`
 
 const TopMenu = styled.div`
   display: flex;
-  justify-content: center;
   min-height: 40px;
   user-select: none;
-  border-bottom: 2px solid #ecedf1;
+  background: ${th('colorBackgroundToolBar')}
+  border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
 
   > div:not(:last-child) {
-    border-right: 1px solid #ecedf1;
+    border-right: ${th('borderWidth')} ${th('borderStyle')}
+      ${th('colorFurniture')};
   }
 `;
 
 const SideMenu = styled.div`
-  border-right: 1px solid #ecedf1;
+  background: ${th('colorBackgroundToolBar')}
+  border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   min-width: 250px;
   height: 100%;
 `;
@@ -98,10 +76,10 @@ const WaxSurfaceScroll = styled.div`
   overflow-y: auto;
   display: flex;
   box-sizing: border-box;
-  padding: 0 2px 2px 2px;
   height: 100%;
   width: 100%;
-
+  position: absolute;
+  /* PM styles  for main content*/
   ${EditorElements};
 `;
 
@@ -112,7 +90,7 @@ const EditorContainer = styled.div`
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
     min-height: 90%;
-    padding: 40px;
+    padding: ${grid(10)};
   }
 `;
 
@@ -123,27 +101,37 @@ const CommentsContainer = styled.div`
   height: 100%;
 `;
 
+const CommentsContainerNotes = styled.div`
+  background: ${th('colorBackgroundHue')};
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 100%;
+`;
+
 const NotesAreaContainer = styled.div`
+  background: #fff;
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
   position: absolute;
+  /* PM styles  for note content*/
+  ${EditorElements};
 `;
 
 const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
-  padding: 0 0 10px 5px;
+  padding-bottom: ${grid(4)};
   height: 100%;
   width: 65%;
-  position: relative;
 `;
 
-let surfaceHeight = 700;
-let notesHeight = 150;
+let surfaceHeight = 600;
+let notesHeight = 200;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;
@@ -207,9 +195,9 @@ const EditoriaLayout = ({ editor }) => {
                   <NotesContainer id="notes-container">
                     <NotesArea />
                   </NotesContainer>
-                  <CommentsContainer>
+                  <CommentsContainerNotes>
                     <RightArea area="notes" />
-                  </CommentsContainer>
+                  </CommentsContainerNotes>
                 </NotesAreaContainer>
               )}
             </PanelGroup>

@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { th } from '@pubsweet/ui-toolkit';
+
 import Button from '../../components/Button';
 
 const Wrapper = styled.div`
   display: flex;
+  button {
+    border-radius: 4px;
+    margin-left: 4px;
+  }
 `;
 
 const Box = styled.div`

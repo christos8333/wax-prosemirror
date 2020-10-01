@@ -72,7 +72,7 @@ CommentItemList.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       displayName: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
+      timestamp: PropTypes.number.isRequired,
     }),
   ),
 };

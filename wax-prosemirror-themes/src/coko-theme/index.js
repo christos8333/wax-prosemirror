@@ -1,8 +1,9 @@
 /* eslint-disable import/extensions */
 import 'typeface-fira-sans-condensed';
+import 'fontsource-merriweather';
 import 'typeface-vollkorn';
 
-import { ButtonStyles } from './elements';
+import { css } from 'styled-components';
 
 const cokoTheme = {
   /* Colors */
@@ -11,27 +12,26 @@ const cokoTheme = {
   colorSecondary: '#E7E7E7',
   colorFurniture: '#CCC',
   colorBorder: '#AAA',
-  colorBackgroundHue: '#F1F1F1',
+  colorBackgroundHue: '#F7F7F7',
   colorSuccess: '#008800',
-  colorError: '#FF2D1A',
+  colorError: 'indianred',
   colorText: '#111',
   colorTextReverse: '#FFF',
   colorTextPlaceholder: '#595959',
   colorWarning: '#ffc107',
+  colorBackgroundToolBar: '#D9D9D9',
 
-  /*Buttons*/
-  colorButton: '#777',
   /* Text variables */
 
   // fonts
-  fontInterface: "'Fira Sans Condensed'",
-  fontHeading: "'Fira Sans Condensed'",
-  fontReading: "'Vollkorn'",
-  fontWriting: "'Cokourier Prime Sans'",
+  fontInterface: 'Fira Sans Condensed',
+  fontHeading: 'Fira Sans Condensed',
+  fontReading: 'Vollkorn',
+  fontWriting: 'Merriweather',
 
   // font sizes
-  fontSizeBase: '16px',
-  fontSizeBaseSmall: '14px',
+  fontSizeBase: '14px',
+  fontSizeBaseSmall: '12px',
   fontSizeHeading1: '40px',
   fontSizeHeading2: '36px',
   fontSizeHeading3: '28px',
@@ -50,7 +50,7 @@ const cokoTheme = {
   lineHeightHeading6: '24px',
 
   /* Spacing */
-  gridUnit: '8px',
+  gridUnit: '4px',
 
   /* Border */
   borderRadius: '0',
@@ -68,8 +68,14 @@ const cokoTheme = {
   breakpoints: [480, 768, 1000, 1272],
 
   cssOverrides: {
-    ui: {
-      ButtonStyles,
+    Wax: {
+      MenuButton: css`
+        /* color: magenta;
+
+        > svg {
+          fill: indianred;
+        } */
+      `,
     },
   },
 };

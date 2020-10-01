@@ -19,4 +19,8 @@ class Redo extends Tools {
   get enable() {
     return redo;
   }
+
+  select(state) {
+    return redo(state);
+  }
 }

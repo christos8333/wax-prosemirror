@@ -15,7 +15,7 @@ const DropdownStyled = styled(Dropdown)`
   }
   .Dropdown-arrow {
     right: 25px;
-    top: 21px;
+    top: 14px;
   }
   .Dropdown-menu {
     width: 120%;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// import { th } from '../_helpers'
+import DateParser from './DateParser';
 
 const Wrapper = styled.div``;
 
@@ -13,16 +13,16 @@ const Head = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 14px;
+  font-size: 12px;
 `;
 
 const Timestamp = styled.div`
-  font-size: 12px;
+  font-size: 10px;
   color: gray;
 `;
 
 const Content = styled.div`
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 const CommentItem = props => {
@@ -32,7 +32,13 @@ const CommentItem = props => {
     <Wrapper className={className}>
       <Head>
         <Name>{displayName}</Name>
-        <Timestamp>{timestamp}</Timestamp>
+        <Timestamp>
+          <DateParser timestamp={timestamp}>
+            {(timeStamp, timeAgo) => {
+              return `${timeAgo} ago`;
+            }}
+          </DateParser>
+        </Timestamp>
       </Head>
       <Content>{content}</Content>
     </Wrapper>
@@ -45,7 +51,7 @@ CommentItem.propTypes = {
   /** Display name of user that made the comment */
   displayName: PropTypes.string.isRequired,
   /** When the comment was made */
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
 };
 
 CommentItem.defaultProps = {};

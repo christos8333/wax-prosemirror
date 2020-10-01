@@ -1,3 +1,5 @@
+/* eslint react/prop-types: 0 */
+
 import React, { useState, useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 

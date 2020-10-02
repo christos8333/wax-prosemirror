@@ -20,6 +20,7 @@ const cokoTheme = {
   colorTextPlaceholder: '#595959',
   colorWarning: '#ffc107',
   colorBackgroundToolBar: '#D9D9D9',
+  colorSelection: '#D3D3D3',
 
   /* Text variables */
 

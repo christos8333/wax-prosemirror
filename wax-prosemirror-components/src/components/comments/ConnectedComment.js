@@ -112,6 +112,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     let minPos = comment.pos;
 
     allCommentsWithSameId.forEach(singleComment => {
+      console.log(singleComment.pos);
       const markPosition = DocumentHelpers.findMarkPosition(
         state,
         singleComment.pos,
@@ -120,9 +121,8 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       if (markPosition.from < minPos) minPos = markPosition.from;
       if (markPosition.to > maxPos) maxPos = markPosition.to;
     });
-
-    if (allCommentsWithSameId.length > 1)
-      maxPos += last(allCommentsWithSameId).node.nodeSize;
+    // if (allCommentsWithSameId.length > 1);
+    // maxPos += last(allCommentsWithSameId).node.nodeSize;
     dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
   };

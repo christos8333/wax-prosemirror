@@ -9,11 +9,13 @@ import { grid } from '@pubsweet/ui-toolkit';
 const Wrapper = styled.div`
   font-size: 0;
   position: relative;
+  z-index: 2;
 `;
 
 const DropWrapper = styled.div`
   margin-top: ${grid(1)};
   position: absolute;
+  background: white;
 `;
 
 const Dropdown = props => {

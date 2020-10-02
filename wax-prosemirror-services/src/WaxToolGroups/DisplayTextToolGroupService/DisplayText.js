@@ -1,9 +1,10 @@
 import React from 'react';
 import { injectable, inject } from 'inversify';
 import { BlockLevelTools, Tabs, ToolGroups } from 'wax-prosemirror-components';
-import ToolGroup from '../../lib/ToolGroup';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import ToolGroup from '../../lib/ToolGroup';
 
 const Empty = styled.div`
   background: khaki;
@@ -49,7 +50,7 @@ class DisplayText extends ToolGroup {
     };
 
     const tabList = [first, second];
-    return <Tabs tabList={tabList} />;
+    return <Tabs key={uuidv4()} tabList={tabList} />;
   }
 }
 

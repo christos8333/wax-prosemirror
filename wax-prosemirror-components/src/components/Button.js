@@ -28,7 +28,7 @@ const Button = ({ view = {}, item }) => {
 
   return (
     <MenuButton
-      active={isActive}
+      active={isActive || false}
       disabled={isDisabled}
       iconName={icon}
       label={label}

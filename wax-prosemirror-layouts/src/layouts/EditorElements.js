@@ -36,8 +36,11 @@ export default css`
   }
 
   .ProseMirror .wax-selection-marker {
-    background-color: ${th('colorPrimary')};
-    color: white;
+    background-color: ${th('colorSelection')};
+    + footnote {
+      border: 1px solid black;
+      color: black;
+    }
   }
 
   div[contenteditable='false'] {
@@ -252,7 +255,7 @@ export default css`
 
     .active-comment {
       background-color: gold;
-      color: black;
+      /* color: black; */
     }
   }
 `;

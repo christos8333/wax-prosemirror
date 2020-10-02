@@ -120,7 +120,10 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       if (markPosition.from < minPos) minPos = markPosition.from;
       if (markPosition.to > maxPos) maxPos = markPosition.to;
     });
-
+    console.log(minPos, maxPos);
+    if (allCommentsWithSameId.length > 1);
+    maxPos += last(allCommentsWithSameId).node.nodeSize;
+    console.log(minPos, maxPos);
     dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
   };

@@ -37,10 +37,6 @@ export default css`
 
   .ProseMirror .wax-selection-marker {
     background-color: ${th('colorSelection')};
-    + footnote {
-      border: 1px solid black;
-      color: black;
-    }
   }
 
   div[contenteditable='false'] {
@@ -54,8 +50,9 @@ export default css`
     text-align: center;
     width: 17px;
     height: 17px;
-    background: black;
-    color: white;
+    background: white;
+    border-bottom: 2px solid black;
+    color: black;
     cursor: pointer;
   }
 
@@ -210,7 +207,7 @@ export default css`
 
   span.insertion {
     color: royalblue;
-    footnote: {
+    footnote {
       background: royalblue;
     }
   }

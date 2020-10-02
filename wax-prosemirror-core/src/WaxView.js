@@ -52,7 +52,10 @@ export default props => {
         'main',
       );
       if (debug) applyDevTools(view);
-      if (autoFocus) view.focus();
+      if (autoFocus)
+        setTimeout(() => {
+          view.focus();
+        });
 
       return () => view.destroy();
     }
@@ -61,7 +64,6 @@ export default props => {
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
-
     const tr =
       TrackChange && TrackChange.enabled
         ? trackedTransaction(transaction, view.state, user)

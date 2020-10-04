@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
-import { EditoriaLayout } from 'wax-prosemirror-layouts';
+import { EditoriaLayout, EditoriaMobileLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
 
 import { config } from './config';
@@ -35,6 +35,13 @@ const user = {
   username: 'demo',
 };
 
+let layout = EditoriaLayout;
+
+if (window.innerWidth < 600) {
+  console.log('smaller');
+  layout = EditoriaMobileLayout;
+}
+
 const Editoria = () => (
   <Fragment>
     <GlobalStyle />
@@ -45,7 +52,7 @@ const Editoria = () => (
       fileUpload={file => renderImage(file)}
       value={demo}
       // value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the second paragraph</p><p class="author">This is an author</p>`}
-      layout={EditoriaLayout}
+      layout={layout}
       // debug
       // onChange={source => console.log(source)}
       user={user}

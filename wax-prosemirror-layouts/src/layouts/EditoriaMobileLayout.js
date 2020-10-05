@@ -148,7 +148,7 @@ const NotesContainer = styled.div`
 `;
 
 let surfaceHeight = 500;
-let notesHeight = 100;
+let notesHeight = 150;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;

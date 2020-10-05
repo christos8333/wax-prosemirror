@@ -43,3 +43,4 @@ export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBl
 export { default as TrackChangeToolGroupService } from './src/WaxToolGroups/TrackChangeToolGroupService/TrackChangeToolGroupService';
 
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
+export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';

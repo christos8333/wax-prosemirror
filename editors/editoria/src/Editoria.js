@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import { EditoriaLayout, EditoriaMobileLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
 
-import { config } from './config';
+import { config, configMobile } from './config';
 import { demo } from './demo';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,17 +36,18 @@ const user = {
 };
 
 let layout = EditoriaLayout;
+let conf = config;
 
 if (window.innerWidth < 600) {
-  console.log('smaller');
   layout = EditoriaMobileLayout;
+  conf = configMobile;
 }
 
 const Editoria = () => (
   <Fragment>
     <GlobalStyle />
     <Wax
-      config={config}
+      config={conf}
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}

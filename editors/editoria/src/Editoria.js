@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 import { EditoriaLayout, EditoriaMobileLayout } from 'wax-prosemirror-layouts';
@@ -34,31 +34,53 @@ const user = {
   userId: '1234',
   username: 'demo',
 };
+console.log(config);
+const Editoria = () => {
+  const [width, height] = useWindowSize();
+  if (width < 600) {
+    return (
+      <>
+        <GlobalStyle />
+        <Wax
+          config={configMobile}
+          autoFocus
+          placeholder="Type Something..."
+          fileUpload={file => renderImage(file)}
+          value={demo}
+          layout={EditoriaMobileLayout}
+          user={user}
+        />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <GlobalStyle />
+        <Wax
+          config={config}
+          autoFocus
+          placeholder="Type Something..."
+          fileUpload={file => renderImage(file)}
+          value={demo}
+          layout={EditoriaLayout}
+          user={user}
+        />
+      </>
+    );
+  }
+};
 
-let layout = EditoriaLayout;
-let conf = config;
-
-if (window.innerWidth < 600) {
-  layout = EditoriaMobileLayout;
-  conf = configMobile;
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
 }
-
-const Editoria = () => (
-  <Fragment>
-    <GlobalStyle />
-    <Wax
-      config={conf}
-      autoFocus
-      placeholder="Type Something..."
-      fileUpload={file => renderImage(file)}
-      value={demo}
-      // value={`<p class="paragraph">This is the first paragraph</p><p class="paragraph">This is the second paragraph</p><p class="author">This is an author</p>`}
-      layout={layout}
-      // debug
-      // onChange={source => console.log(source)}
-      user={user}
-    />
-  </Fragment>
-);
 
 export default Editoria;

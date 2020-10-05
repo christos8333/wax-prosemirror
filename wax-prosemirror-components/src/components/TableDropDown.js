@@ -43,15 +43,18 @@ const dropDownOptions = [
   { label: 'Toggle header cells', value: 'toggleHeaderCell' },
 ];
 
-const TableDropDown = ({ view: { dispatch, state }, item }) => (
-  <DropdownStyled
-    options={dropDownOptions}
-    onChange={option => {
-      item.run(state, dispatch, tablesFn[option.value]);
-    }}
-    placeholder="Table Options"
-    select={item.select && item.select(state)}
-  />
-);
+const TableDropDown = ({ view: { dispatch, state }, item }) => {
+  if (window.innerWidth < 600) return null;
+  return (
+    <DropdownStyled
+      options={dropDownOptions}
+      onChange={option => {
+        item.run(state, dispatch, tablesFn[option.value]);
+      }}
+      placeholder="Table Options"
+      select={item.select && item.select(state)}
+    />
+  );
+};
 
 export default TableDropDown;

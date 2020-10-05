@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 import { EditoriaLayout, EditoriaMobileLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
 
-import { config, configMobile } from './config';
+import { config } from './config';
 import { demo } from './demo';
 
 const GlobalStyle = createGlobalStyle`
@@ -34,26 +34,18 @@ const user = {
   userId: '1234',
   username: 'demo',
 };
-console.log(config);
+
 const Editoria = () => {
   const [width, height] = useWindowSize();
+
+  let layout = EditoriaLayout;
+
   if (width < 600) {
-    return (
-      <>
-        <GlobalStyle />
-        <Wax
-          config={configMobile}
-          autoFocus
-          placeholder="Type Something..."
-          fileUpload={file => renderImage(file)}
-          value={demo}
-          layout={EditoriaMobileLayout}
-          user={user}
-        />
-      </>
-    );
-  } else {
-    return (
+    layout = EditoriaMobileLayout;
+  }
+
+  const MemorizedComponent = useMemo(
+    () => (
       <>
         <GlobalStyle />
         <Wax
@@ -62,22 +54,25 @@ const Editoria = () => {
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
           value={demo}
-          layout={EditoriaLayout}
+          layout={layout}
           user={user}
         />
       </>
-    );
-  }
+    ),
+    [layout],
+  );
+  return <>{MemorizedComponent}</>;
 };
 
 function useWindowSize() {
-  const [size, setSize] = useState([0, 0]);
+  const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
   useLayoutEffect(() => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
     window.addEventListener('resize', updateSize);
     updateSize();
+
     return () => window.removeEventListener('resize', updateSize);
   }, []);
   return size;

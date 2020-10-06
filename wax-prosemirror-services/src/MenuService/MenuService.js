@@ -6,6 +6,7 @@ import MenuCollection from './MenuCollection';
 class MenuService extends Service {
   name = 'MenuService';
   boot() {
+    if (this.app.config.get('config.MenuService') === undefined) return false;
     const { menus } = this.container.get('MenuCollection');
     const layout = this.container.get('Layout');
     menus.forEach(menu => {
@@ -14,6 +15,7 @@ class MenuService extends Service {
   }
 
   register() {
+    if (this.app.config.get('config.MenuService') === undefined) return false;
     /* create Menu Factory */
     this.config.map(conf => {
       this.container.bind('Menu').toFactory(context => {

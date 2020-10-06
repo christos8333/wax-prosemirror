@@ -96,9 +96,12 @@ export default class Application {
     */
     const app = container.get('Wax');
     app.setConfig();
-    appConfig.config.PmPlugins.forEach(configPlugin => {
-      app.PmPlugins.add(configPlugin.key, configPlugin);
-    });
+
+    if (appConfig.config.PmPlugins) {
+      appConfig.config.PmPlugins.forEach(configPlugin => {
+        app.PmPlugins.add(configPlugin.key, configPlugin);
+      });
+    }
     app.registerServices();
 
     return app;

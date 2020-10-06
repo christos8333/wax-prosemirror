@@ -5,9 +5,9 @@ export default class RulesService extends Service {
   name = 'RulesService';
 
   boot() {
-    const configRules = this.config;
+    const configRules = this.app.config.get('config.RulesService');
     const rules = this.container.get('Rules');
-    rules.addRule(configRules);
+    if (configRules) rules.addRule(configRules);
     rules.createRules();
   }
 

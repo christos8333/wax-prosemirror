@@ -137,4 +137,8 @@ const Wax = props => {
   );
 };
 
+Wax.defaultProps = {
+  config: { services: [] },
+};
+
 export default Wax;

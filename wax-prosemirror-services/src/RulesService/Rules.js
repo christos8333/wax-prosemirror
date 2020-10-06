@@ -1,10 +1,10 @@
-import { injectable } from "inversify";
+import { injectable } from 'inversify';
 import {
   inputRules,
   wrappingInputRule,
   textblockTypeInputRule,
-  smartQuotes
-} from "prosemirror-inputrules";
+  smartQuotes,
+} from 'prosemirror-inputrules';
 
 @injectable()
 class Rules {
@@ -21,7 +21,7 @@ class Rules {
 
   createRules() {
     const rulesCreated = inputRules({ rules: this.extendedRules });
-    this.PmPlugins.add("rules", rulesCreated);
+    this.PmPlugins.add('rules', rulesCreated);
   }
 
   allRules() {
@@ -35,7 +35,7 @@ class Rules {
         /^(\d+)\.\s$/,
         this.schema.nodes.orderedlist,
         match => ({ order: +match[1] }),
-        (match, node) => node.childCount + node.attrs.order === +match[1]
+        (match, node) => node.childCount + node.attrs.order === +match[1],
       ),
 
       // * bullet list
@@ -46,10 +46,10 @@ class Rules {
 
       // # heading
       textblockTypeInputRule(
-        new RegExp("^(#{1,6})\\s$"),
+        new RegExp('^(#{1,6})\\s$'),
         this.schema.nodes.heading,
-        match => ({ level: match[1].length })
-      )
+        match => ({ level: match[1].length }),
+      ),
     ];
   }
 }

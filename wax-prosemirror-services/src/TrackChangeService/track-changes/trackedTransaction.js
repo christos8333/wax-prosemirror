@@ -30,7 +30,11 @@ const trackedTransaction = (tr, state, user, group = 'main') => {
     let node;
     if ($pos.depth === 1) {
       node = $pos.node($pos.depth);
-      if (node.content.content[0].type.name === 'image') return tr;
+      if (
+        node.content.content[0] &&
+        node.content.content[0].type.name === 'image'
+      )
+        return tr;
     }
   }
 

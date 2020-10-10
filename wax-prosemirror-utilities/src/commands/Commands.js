@@ -143,24 +143,35 @@ const createComment = (state, dispatch, group, viewid) => {
 
 const createCommentOnFootnote = (state, dispatch, group, viewid) => {
   const {
-    selection: { $from, $to },
+    selection: { $from },
   } = state;
 
-  console.log('dldldld', $from.pos, $to.pos);
   const { content } = $from.parent;
-  console.log('dkdd', content.content);
-  content.content.forEach(contentNode => {
-    console.log(contentNode);
-    const $pos = state.doc.resolve($from.pos);
-    const commentStart = $from.pos - $pos.textOffset;
-    const commentEnd = commentStart + $pos.parent.child($pos.index()).nodeSize;
-    console.log(commentStart, commentEnd);
-    if (contentNode.type.name === 'footnote') {
-      console.log('footnote');
+
+  // const $pos = state.doc.resolve($from.pos);
+  // const commentStart = $from.pos - $pos.textOffset;
+  // const commentEnd = commentStart + $pos.parent.child($pos.index()).nodeSize;
+
+  let start = $from.pos;
+  let end = 1;
+  const ranges = [];
+  content.content.forEach((contentNode, index) => {
+    start = end;
+    end += contentNode.nodeSize;
+    ranges.push({ start, end, footnote: contentNode.type.name === 'footnote' });
+  });
+
+  const mergedRanges = [];
+  ranges.forEach((item, i) => {
+    if (item.footnote) {
+      mergedRanges[mergedRanges.length - 1].end =
+        mergedRanges[mergedRanges.length - 1].end + 2;
     } else {
-      console.log('content');
+      mergedRanges.push(item);
     }
   });
+
+  console.log(mergedRanges);
   // dispatch(
   //   state.tr.addMark(
   //     $from.pos,

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -139,9 +139,9 @@ export default ({ node, view }) => {
       );
     }
   }
-  const MemorizedComponent = useMemo(
+  const NoteEditorContainerComponent = useMemo(
     () => <NoteEditorContainer ref={editorRef} />,
     [],
   );
-  return <>{MemorizedComponent}</>;
+  return <>{NoteEditorContainerComponent}</>;
 };

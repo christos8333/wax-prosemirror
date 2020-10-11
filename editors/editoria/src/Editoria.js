@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useState, useEffect, useMemo } from 'react';
+import React, { useLayoutEffect, useState, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 import { EditoriaLayout, EditoriaMobileLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
 
-import { config } from './config';
+import { config, configMobile } from './config';
 import { demo } from './demo';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,20 +36,25 @@ const user = {
 };
 
 const Editoria = () => {
-  const [width, height] = useWindowSize();
+  const [width] = useWindowSize();
 
   let layout = EditoriaLayout;
+  let finalConfig = config;
+  let key = 'editoria';
 
   if (width < 600) {
     layout = EditoriaMobileLayout;
+    finalConfig = configMobile;
+    key = 'editoriaMobile';
   }
 
-  const MemorizedComponent = useMemo(
+  const EditoriaComponent = useMemo(
     () => (
       <>
         <GlobalStyle />
         <Wax
-          config={config}
+          key={key}
+          config={finalConfig}
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
@@ -59,9 +64,9 @@ const Editoria = () => {
         />
       </>
     ),
-    [layout],
+    [layout, finalConfig],
   );
-  return <>{MemorizedComponent}</>;
+  return <>{EditoriaComponent}</>;
 };
 
 function useWindowSize() {

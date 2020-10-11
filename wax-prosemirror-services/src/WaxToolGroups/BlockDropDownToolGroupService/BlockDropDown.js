@@ -106,8 +106,6 @@ class BlockDropDown extends ToolGroup {
       }
     });
 
-    if (window.innerWidth > 600) return null;
-
     return (
       <DropdownStyled
         value={found}

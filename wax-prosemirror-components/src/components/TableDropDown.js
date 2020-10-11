@@ -44,7 +44,6 @@ const dropDownOptions = [
 ];
 
 const TableDropDown = ({ view: { dispatch, state }, item }) => {
-  if (window.innerWidth < 600) return null;
   return (
     <DropdownStyled
       options={dropDownOptions}

@@ -13,11 +13,8 @@ Wax Editor is built on top of the Prosemirror library. Check Prosemirror [websit
 
 Wax-prosemirror is under active development. The current roadmap is as follows:
 
-### September 2020
 
-Alpha version, including comments and track changes. See the rest of this file for a full list of current functionality.
-
-### November 2020
+### December 2020
 
 Beta version, including some new features:
 
@@ -35,7 +32,7 @@ V1.0, freeze new feature development, focus on stability, testing and bug fixes
 
 ## Get up and running
 
-Run a local version of the editor
+Run a local version of the Editoria's editor
 
 1.  `git clone git@gitlab.coko.foundation:wax/wax-prosemirror.git`
 
@@ -76,11 +73,10 @@ onChange; // when the editor's surface is updated (perform an action ex. save)
 value; // the actual HTML content of the editor
 fileUpload; // used for uploading images (should return a promise with the actual file path)
 placeholder; // a placeholder used for empty documents
-config; // adds on the editor anything from new services, tools, Pmpplugins etc. Check [editoria config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js)
+config; // Editor's configuration. Menus, packages, PM plugins etc Check [editoria config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js)
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
-TrackChange; // enables track changes (under development)
 debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 ```
 
@@ -101,7 +97,13 @@ debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 7.  _Text Tool group_: `Paragraph`, `Paragraph Continued`, `Extract Prose`, `Extract Poetry`, `Source Note`, `Block Quote`
 
 8.  _Notes Tool group_: `notes`
-9.  _Comments Tool group_: `comments` ((currently under development))
+
+9.  _Comments Tool group_: `comments`
+
+10. _TrackChange Tool group_: `TrackChange`
+
+11. _Math_: `math` (https://github.com/benrbray/prosemirror-math) 
+
 
 <h2> wax-prosemirror-core </h2>
 
@@ -134,12 +136,6 @@ For more information on how a Wax node/mark is different check the [SchemaServic
 <h2> wax-prosemirror-components </h2>
 
 React components to support various features of the editor from buttons to overlays to comment discussions etc. Right now is really basic as the focus is not yet on UI.
-
-<h2> wax-prosemirror-themes </h2>
- Holds the different themes of the editor. Check the options in the [CokoTheme](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-themes/src/coko-theme)
-
-<h2> wax-prosemirror-layouts </h2>
-Holds different layouts of the editor. Through the layout service you can configure the areas of different components. As an example check [EditoriaLayout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js)
 
 <h2> wax-prosemirror-utilities </h2>
  Various helpers methods needed throughout Wax to support the funcionality needed.
@@ -334,11 +330,13 @@ If the above 2 services are registed SchemaService will merge those 2 nodes into
 
 ### LayoutService
 
-This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js).
+This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/layout/EditoriaLayout.js).
 
-A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
+A layout is a react component which has a prop the mounted prosemirror instance in order to be placed within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
 
 ```javascript
+import { ComponentPlugin } from 'wax-prosemirror-core';
+
 const LeftSideBar = componentPlugin('leftSideBar');
 const RightSideBar = componentPlugin('rightSideBar');
 const TopBar = componentPlugin('topBar');

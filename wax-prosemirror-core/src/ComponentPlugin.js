@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { useInjection } from 'wax-prosemirror-core';
+import { useInjection } from './WaxContext';
 
 class UpdateView extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { useInjection } from 'wax-prosemirror-core';
+import { useInjection } from './WaxContext';
 
 class UpdateView extends Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class UpdateView extends Component {
 
 const ComponentPlugin = renderArea => layoutProps => {
   const { instance } = useInjection('Layout');
-
   const components = instance.render(renderArea);
 
   return components

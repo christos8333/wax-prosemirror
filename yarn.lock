@@ -1970,15 +1970,6 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@pubsweet/ui-toolkit@^2.2.13":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@pubsweet/ui-toolkit/-/ui-toolkit-2.3.1.tgz#0a3506a4b9eaeb9b54811982dc44cb87ca9892bf"
-  integrity sha512-RFtkqCm/SItUEZPuBMM34WHFmiUhGs4EmreNMlNJg1TQnG9d6iirqy911oLEfJYtvR/fbxgeQFbtRle2yre64w==
-  dependencies:
-    color "^3.0.0"
-    lodash "^4.17.4"
-    styled-components "^4.1.1"
-
 "@pubsweet/ui-toolkit@^2.3.1":
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui-toolkit/-/ui-toolkit-2.3.2.tgz#44b9b97b399027ef90bf0c30768475284f437fb4"

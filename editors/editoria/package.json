@@ -8,12 +8,15 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^4.2.0",
-    "wax-prosemirror-components": "^0.0.20",
+    "@pubsweet/ui-toolkit": "^2.3.1",
+    "react-panelgroup": "^1.0.10",
     "wax-prosemirror-core": "^0.0.20",
-    "wax-prosemirror-layouts": "^0.0.20",
+    "wax-prosemirror-components": "^0.0.20",
     "wax-prosemirror-plugins": "^0.0.20",
     "wax-prosemirror-services": "^0.0.20",
-    "wax-prosemirror-themes": "^0.0.20"
+    "fontsource-merriweather": "^3.0.9",
+    "typeface-fira-sans-condensed": "^0.0.54",
+    "typeface-vollkorn": "^0.0.54"
   },
   "scripts": {
     "start": "react-app-rewired start",

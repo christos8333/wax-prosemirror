@@ -13,7 +13,10 @@
     "wax-prosemirror-core": "^0.0.20",
     "wax-prosemirror-components": "^0.0.20",
     "wax-prosemirror-plugins": "^0.0.20",
-    "wax-prosemirror-services": "^0.0.20"
+    "wax-prosemirror-services": "^0.0.20",
+    "fontsource-merriweather": "^3.0.9",
+    "typeface-fira-sans-condensed": "^0.0.54",
+    "typeface-vollkorn": "^0.0.54"
   },
   "scripts": {
     "start": "react-app-rewired start",

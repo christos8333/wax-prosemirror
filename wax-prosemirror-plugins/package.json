@@ -20,7 +20,6 @@
     "prosemirror-view": "1.15.2",
     "wax-prosemirror-components": "^0.0.20",
     "wax-prosemirror-core": "^0.0.20",
-    "wax-prosemirror-layouts": "^0.0.20",
     "wax-prosemirror-utilities": "^0.0.20"
   }
 }

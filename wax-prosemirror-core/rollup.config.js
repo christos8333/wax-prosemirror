@@ -36,7 +36,5 @@ export default {
     'prosemirror-tables',
     'wax-prosemirror-services',
     'wax-prosemirror-schema',
-    'wax-prosemirror-themes',
-    'wax-prosemirror-layouts',
   ],
 };

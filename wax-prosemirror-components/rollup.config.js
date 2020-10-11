@@ -24,10 +24,5 @@ export default {
     commonjs(),
     terser(),
   ],
-  external: [
-    'wax-prosemirror-themes',
-    'wax-prosemirror-core',
-    'inversify',
-    'prosemirror-tables',
-  ],
+  external: ['wax-prosemirror-core', 'inversify', 'prosemirror-tables'],
 };

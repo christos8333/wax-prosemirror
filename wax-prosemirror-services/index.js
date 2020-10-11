@@ -1,6 +1,5 @@
 export { default as Service } from './src/Service';
 
-export { default as componentPlugin } from './src/LayoutService/components/componentPlugin';
 export { default as LayoutService } from './src/LayoutService/LayoutService';
 export { default as MenuService } from './src/MenuService/MenuService';
 export { default as LinkService } from './src/LinkService/LinkService';

@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useState, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
-import { EditoriaLayout, EditoriaMobileLayout } from 'wax-prosemirror-layouts';
 import { Wax } from 'wax-prosemirror-core';
 
+import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
 

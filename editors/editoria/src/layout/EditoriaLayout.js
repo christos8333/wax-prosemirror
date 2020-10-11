@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
-import { InfoArea } from 'wax-prosemirror-components';
-import { componentPlugin } from 'wax-prosemirror-services';
-import { cokoTheme } from 'wax-prosemirror-themes';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { WaxContext } from 'wax-prosemirror-core';
-
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
+
+import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
 const divider = css`
@@ -50,37 +48,22 @@ const Main = styled.div`
 
 const TopMenu = styled.div`
   display: flex;
-  height: 70px;
-  padding-top: 10px;
-  flex-wrap: wrap;
-  font-size:8px;
-  position:absolute;
-  z-index: 999;
-  top: 0;
-  bottom:0;
+  min-height: 40px;
   user-select: none;
   background: ${th('colorBackgroundToolBar')}
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  > div {
-    height: 20px;
-  }
+
   > div:not(:last-child) {
     border-right: ${th('borderWidth')} ${th('borderStyle')}
       ${th('colorFurniture')};
   }
-  button: {
-    height: 20px;
-  }
-  svg {
-    width: 14px;
-    height: 14px;
-  }
-  div:last-child{
-      button span {
-        font-size: 10px;
-        margin: 0;
-      }
-  }
+`;
+
+const SideMenu = styled.div`
+  background: ${th('colorBackgroundToolBar')}
+  border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  min-width: 250px;
+  height: 100%;
 `;
 
 const EditorArea = styled.div`
@@ -89,29 +72,30 @@ const EditorArea = styled.div`
 
 const WaxSurfaceScroll = styled.div`
   overflow-y: auto;
-  overflow-x: scroll;
   display: flex;
   box-sizing: border-box;
   height: 100%;
-  width: 96%;
+  width: 100%;
   position: absolute;
   /* PM styles  for main content*/
   ${EditorElements};
 `;
 
 const EditorContainer = styled.div`
-  width: 100%;
+  width: 65%;
   height: 100%;
+
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
     min-height: 90%;
-    padding: ${grid(25)} ${grid(2)} ${grid(40)} ${grid(2)};
+    padding: ${grid(10)};
   }
 `;
 
 const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 35%;
   height: 100%;
 `;
 
@@ -119,6 +103,7 @@ const CommentsContainerNotes = styled.div`
   background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
+  width: 35%;
   height: 100%;
 `;
 
@@ -140,15 +125,11 @@ const NotesContainer = styled.div`
   flex-direction: column;
   padding-bottom: ${grid(4)};
   height: 100%;
-  width: 96%;
-  > div {
-    padding-left: ${grid(1)};
-    padding-right: ${grid(1)};
-  }
+  width: 65%;
 `;
 
-let surfaceHeight = 500;
-let notesHeight = 150;
+let surfaceHeight = 600;
+let notesHeight = 200;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;
@@ -164,10 +145,12 @@ const hasNotes = main => {
   return notes;
 };
 
-const TopBar = componentPlugin('topBar');
-const NotesArea = componentPlugin('notesArea');
-const RightArea = componentPlugin('rightArea');
-const WaxOverlays = componentPlugin('waxOverlays');
+const LeftSideBar = ComponentPlugin('leftSideBar');
+// const RightSideBar = ComponentPlugin('rightSideBar');
+const TopBar = ComponentPlugin('topBar');
+const NotesArea = ComponentPlugin('notesArea');
+const RightArea = ComponentPlugin('rightArea');
+const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const EditoriaLayout = ({ editor }) => {
   const {
@@ -185,6 +168,10 @@ const EditoriaLayout = ({ editor }) => {
         </TopMenu>
 
         <Main>
+          <SideMenu>
+            <LeftSideBar />
+          </SideMenu>
+
           <EditorArea>
             <PanelGroup
               direction="column"
@@ -215,7 +202,6 @@ const EditoriaLayout = ({ editor }) => {
           </EditorArea>
         </Main>
 
-        <InfoArea />
         <WaxOverlays />
       </Wrapper>
     </ThemeProvider>

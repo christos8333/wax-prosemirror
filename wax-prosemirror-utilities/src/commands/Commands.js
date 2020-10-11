@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { toggleMark } from 'prosemirror-commands';
+import { AddMarkStep } from 'prosemirror-transform';
 
 const setBlockType = (nodeType, attrs = {}) => {
   return (state, dispatch) => {
@@ -127,10 +128,10 @@ const createComment = (state, dispatch, group, viewid) => {
   state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
     if (node.type.name === 'footnote') {
       footnote = true;
-      createCommentOnFootnote(state, dispatch, group, viewid);
     }
   });
 
+  createCommentOnFootnote(state, dispatch, group, viewid);
   if (footnote) return;
 
   toggleMark(state.config.schema.marks.comment, {
@@ -144,47 +145,67 @@ const createComment = (state, dispatch, group, viewid) => {
 const createCommentOnFootnote = (state, dispatch, group, viewid) => {
   const {
     selection: { $from },
+    selection,
+    tr,
   } = state;
 
   const { content } = $from.parent;
-
-  // const $pos = state.doc.resolve($from.pos);
-  // const commentStart = $from.pos - $pos.textOffset;
-  // const commentEnd = commentStart + $pos.parent.child($pos.index()).nodeSize;
+  const $pos = state.doc.resolve($from.pos);
+  const commentStart = $from.pos - $pos.textOffset;
+  const commentEnd = commentStart + $pos.parent.child($pos.index()).nodeSize;
 
   let start = $from.pos;
-  let end = 1;
+  let end = commentEnd;
   const ranges = [];
-  content.content.forEach((contentNode, index) => {
-    start = end;
-    end += contentNode.nodeSize;
-    ranges.push({ start, end, footnote: contentNode.type.name === 'footnote' });
+
+  const allFragments = [];
+
+  selection.content().content.content.forEach(node => {
+    node.content.content.forEach(fragment => {
+      allFragments.push(fragment);
+    });
+  });
+
+  allFragments.forEach((contentNode, index) => {
+    start = index === 0 ? start : end;
+    end = index === 0 ? end : end + contentNode.nodeSize;
+    ranges.push({
+      start,
+      end,
+      footnote: contentNode.type.name === 'footnote',
+    });
   });
 
   const mergedRanges = [];
   ranges.forEach((item, i) => {
     if (item.footnote) {
       mergedRanges[mergedRanges.length - 1].end =
-        mergedRanges[mergedRanges.length - 1].end + 2;
+        mergedRanges[mergedRanges.length - 1].end + 1;
     } else {
       mergedRanges.push(item);
     }
   });
 
-  console.log(mergedRanges);
-  // dispatch(
-  //   state.tr.addMark(
-  //     $from.pos,
-  //     $to.pos,
-  //     state.config.schema.marks.comment.create({
-  //       id: uuidv4(),
-  //       group,
-  //       conversation: [],
-  //       viewid,
-  //     }),
-  //   ),
-  // );
+  const id = uuidv4();
+
+  mergedRanges.forEach(range => {
+    tr.step(
+      new AddMarkStep(
+        range.start,
+        range.end,
+        state.config.schema.marks.comment.create({
+          id,
+          group,
+          conversation: [],
+          viewid,
+        }),
+      ),
+    );
+  });
+
+  dispatch(tr);
 };
+
 export default {
   setBlockType,
   blockActive,

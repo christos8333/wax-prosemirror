@@ -112,7 +112,6 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     let minPos = comment.pos;
 
     allCommentsWithSameId.forEach(singleComment => {
-      console.log(singleComment.pos);
       const markPosition = DocumentHelpers.findMarkPosition(
         state,
         singleComment.pos,

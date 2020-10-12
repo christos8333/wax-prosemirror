@@ -2,9 +2,8 @@ export { default as Service } from './src/Service';
 
 export { default as LayoutService } from './src/LayoutService/LayoutService';
 export { default as MenuService } from './src/MenuService/MenuService';
-export { default as LinkService } from './src/LinkService/LinkService';
-export { default as PlaceholderService } from './src/PlaceholderService/PlaceholderService';
 export { default as OverlayService } from './src/OverlayService/OverlayService';
+export { default as PlaceholderService } from './src/PlaceholderService/PlaceholderService';
 export { default as ImageService } from './src/ImageService/ImageService';
 export { default as RulesService } from './src/RulesService/RulesService';
 export { default as SchemaService } from './src/SchemaService/SchemaService';
@@ -12,9 +11,7 @@ export { default as SchemaService } from './src/SchemaService/SchemaService';
 export { default as ShortCutsService } from './src/ShortCutsService/ShortCutsService';
 
 export { default as Tool } from './src/lib/Tools';
-export { default as TrackChangeService } from './src/TrackChangeService/TrackChangeService';
 
-export { default as trackedTransaction } from './src/TrackChangeService/track-changes/trackedTransaction';
 /*
 All Elements services
 */
@@ -27,6 +24,11 @@ export { default as DisplayBlockLevelService } from './src/DisplayBlockLevel/Dis
 export { default as NoteService } from './src/NoteService/NoteService';
 export { default as CommentsService } from './src/CommentsService/CommentsService';
 export { default as CodeBlockService } from './src/CodeBlockService/CodeBlockService';
+export { default as LinkService } from './src/LinkService/LinkService';
+export { default as TrackChangeService } from './src/TrackChangeService/TrackChangeService';
+export { default as trackedTransaction } from './src/TrackChangeService/track-changes/trackedTransaction';
+export { default as MathService } from './src/MathService/MathService';
+
 /*
 ToolGroups
 */

@@ -131,8 +131,7 @@ const createComment = (state, dispatch, group, viewid) => {
     }
   });
 
-  createCommentOnFootnote(state, dispatch, group, viewid);
-  if (footnote) return;
+  if (footnote) return createCommentOnFootnote(state, dispatch, group, viewid);
 
   toggleMark(state.config.schema.marks.comment, {
     id: uuidv4(),

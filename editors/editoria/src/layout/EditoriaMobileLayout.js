@@ -7,6 +7,7 @@ import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
+import Katex from './Katex';
 
 const divider = css`
   .panelGroup {
@@ -95,6 +96,7 @@ const WaxSurfaceScroll = styled.div`
   position: absolute;
   /* PM styles  for main content*/
   ${EditorElements};
+  ${Katex};
 `;
 
 const EditorContainer = styled.div`

@@ -25,6 +25,7 @@ import {
   CodeBlockToolGroupService,
   TrackChangeToolGroupService,
   DisplayTextToolGroupService,
+  MathService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -97,5 +98,6 @@ export default {
     new CodeBlockToolGroupService(),
     new TrackChangeToolGroupService(),
     new DisplayTextToolGroupService(),
+    new MathService(),
   ],
 };

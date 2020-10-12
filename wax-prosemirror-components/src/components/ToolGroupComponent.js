@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Dropdown from '../ui/buttons/Dropdown';
@@ -30,18 +30,22 @@ const ToolGroupComponent = ({ view, tools, name }) => {
       : toolsShown.push(tool.renderTool(view));
   });
 
-  return (
-    <Wrapper data-name={name}>
-      {toolsShown}
-      {rest.length > 0 && (
-        <Dropdown
-          iconName="more"
-          dropComponent={<DropWrapper>{rest}</DropWrapper>}
-          title="Show more tools"
-        />
-      )}
-    </Wrapper>
+  const MemorizedToolGroupComponent = useMemo(
+    () => (
+      <Wrapper data-name={name}>
+        {toolsShown}
+        {rest.length > 0 && (
+          <Dropdown
+            iconName="more"
+            dropComponent={<DropWrapper>{rest}</DropWrapper>}
+            title="Show more tools"
+          />
+        )}
+      </Wrapper>
+    ),
+    [],
   );
+  return MemorizedToolGroupComponent;
 };
 
 export default ToolGroupComponent;

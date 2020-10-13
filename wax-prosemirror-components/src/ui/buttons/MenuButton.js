@@ -78,6 +78,7 @@ const MenuButton = props => {
     title,
     onMouseDown,
   } = props;
+
   return (
     <Wrapper
       active={active}

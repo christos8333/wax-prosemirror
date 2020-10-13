@@ -11,7 +11,7 @@ const TrackChangeEnable = ({ view = {}, item, enabled }) => {
     item.run(view.state, view.dispatch);
   };
 
-  const MenuButtonComponent = useMemo(
+  const TrackChangeEnableComponent = useMemo(
     () => (
       <MenuButton
         active={isEnabled}
@@ -21,10 +21,10 @@ const TrackChangeEnable = ({ view = {}, item, enabled }) => {
         title={item.title}
       />
     ),
-    [],
+    [isEnabled],
   );
 
-  return MenuButtonComponent;
+  return TrackChangeEnableComponent;
 };
 
 export default TrackChangeEnable;

@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useContext, useMemo, useEffect, useRef } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
@@ -31,6 +31,7 @@ const CreateTable = ({ view = {}, item }) => {
 
   const { state } = view;
   const { enable, icon, run, select, title } = item;
+  const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   const dropComponent = (
@@ -47,9 +48,11 @@ const CreateTable = ({ view = {}, item }) => {
   const isDisabled =
     enable && !enable(state) && !(select && select(state, activeViewId));
 
+  useOnClickOutside(ref, () => setIsOpen(false));
+
   const MemorizedDropdown = useMemo(
     () => (
-      <Wrapper>
+      <Wrapper ref={ref}>
         <MenuButton
           active={isOpen}
           disabled={isDisabled}
@@ -67,22 +70,27 @@ const CreateTable = ({ view = {}, item }) => {
   );
 
   return MemorizedDropdown;
-
-  // const MemorizedDropdown = useMemo(
-  //   () => (
-  //     <Dropdown
-  //       active={showTool}
-  //       dropComponent={dropComponent}
-  //       iconName={icon}
-  //       disabled={isDisabled}
-  //       onMouseDown={toggleShowTool}
-  //       title={title}
-  //     />
-  //   ),
-  //   [isDisabled, showTool],
-  // );
-  //
-  // return MemorizedDropdown;
 };
 
+// Hook
+const useOnClickOutside = (ref, handler) => {
+  useEffect(() => {
+    const listener = event => {
+      /* Do nothing if clicking ref's element or descendent elements */
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+
+      handler(event);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler]);
+};
 export default CreateTable;

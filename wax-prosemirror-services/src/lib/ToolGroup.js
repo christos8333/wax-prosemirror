@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { injectable } from 'inversify';
 import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -61,14 +61,20 @@ class ToolGroup {
     if (this._toolGroups > 0) {
       return <ToolGroups toolGroups={this._toolGroups} view={view} />;
     }
-    return (
-      <ToolGroupComponent
-        key={uuidv4()}
-        view={view}
-        tools={this._tools}
-        title={this.title}
-        name={name}
-      />
+
+    const MemorizedToolGroupComponent = useMemo(
+      () => (
+        <ToolGroupComponent
+          key={uuidv4()}
+          view={view}
+          tools={this._tools}
+          title={this.title}
+          name={name}
+        />
+      ),
+      [view],
     );
+
+    return MemorizedToolGroupComponent;
   }
 }

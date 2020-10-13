@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { BlockLevelTools, Tabs, ToolGroups } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
@@ -50,7 +50,12 @@ class DisplayText extends ToolGroup {
     };
 
     const tabList = [first, second];
-    return <Tabs key={uuidv4()} tabList={tabList} />;
+
+    const TabsComponent = useMemo(
+      () => <Tabs key={uuidv4()} tabList={tabList} />,
+      [],
+    );
+    return TabsComponent;
   }
 }
 

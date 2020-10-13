@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
@@ -16,9 +16,9 @@ const Button = ({ view = {}, item }) => {
 
   const { dispatch, state } = view;
 
-  const handleMouseDown = e => {
+  const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();
-    run(state, dispatch);
+    run(editorState, dispatch);
   };
 
   const isActive = active && active(state, activeViewId);
@@ -26,16 +26,21 @@ const Button = ({ view = {}, item }) => {
   const isDisabled =
     enable && !enable(state) && !(select && select(state, activeViewId));
 
-  return (
-    <MenuButton
-      active={isActive || false}
-      disabled={isDisabled}
-      iconName={icon}
-      label={label}
-      onMouseDown={handleMouseDown}
-      title={title}
-    />
+  const MenuButtonComponent = useMemo(
+    () => (
+      <MenuButton
+        active={isActive || false}
+        disabled={isDisabled}
+        iconName={icon}
+        label={label}
+        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
+        title={title}
+      />
+    ),
+    [isActive, isDisabled],
   );
+
+  return MenuButtonComponent;
 };
 
 export default Button;

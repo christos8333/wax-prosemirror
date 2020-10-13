@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
@@ -33,9 +33,7 @@ const Button = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={(e, editorState, editorDispatch) =>
-          handleMouseDown(e, view.state, view.dispatch)
-        }
+        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
         title={title}
       />
     ),

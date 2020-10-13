@@ -35,9 +35,7 @@ const CreateTable = ({ view = {}, item }) => {
 
   const dropComponent = (
     <InsertTableTool
-      onGridSelect={(colRows, editorState, editorDispatch) =>
-        handleSelect(colRows, view.state, view.dispatch)
-      }
+      onGridSelect={colRows => handleSelect(colRows, view.state, view.dispatch)}
     />
   );
 

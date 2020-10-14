@@ -1,3 +1,5 @@
+import { isObject } from 'lodash';
+
 const findMark = (state, PMmark, toArr = false) => {
   const {
     selection: { $from, $to },
@@ -25,30 +27,11 @@ const findMark = (state, PMmark, toArr = false) => {
   return markFound;
 };
 
-// const getSelectionMark = (state, PMmark) => {
-//   const {
-//     selection: { $from, $to },
-//     doc,
-//   } = state;
-//   let markFound;
-//   doc.nodesBetween($from.pos, $to.pos, (node, from) => {
-//     if (node.marks) {
-//       const actualMark = node.marks.find(mark => mark.type === PMmark);
-//       if (actualMark) {
-//         markFound = {
-//           from,
-//           to: from + node.nodeSize,
-//           attrs: actualMark.attrs,
-//         };
-//       }
-//     }
-//   });
-//
-//   return markFound;
-// };
-
-/* this is a workaround for now to find marks
-  that are pm will break them.
+/* TODO */
+/* this is a hacky workaround for now to find marks
+  that are pm will break them. Correct way is to be done
+  by the code that is comment out, but sometimes it doesn't return
+  the mark altouhgh it works for any other mark. Find out y?
 */
 const findFragmentedMark = (state, PMmark) => {
   const {
@@ -56,8 +39,23 @@ const findFragmentedMark = (state, PMmark) => {
     doc,
   } = state;
   const fromPos = [$from.pos - 1, $from.pos];
-  const toPos = [$to.pos - 1, $to.pos];
+  const toPos = [$to.pos, $to.pos + 1];
   let markFound;
+
+  // const type = state.config.schema.marks.comment;
+  // const mark = empty
+  //   ? type.isInSet(state.storedMarks || $from.marks())
+  //   : state.doc.rangeHasMark(from, to, type);
+  //
+
+  // if (isObject(mark))
+  //   return {
+  //     from,
+  //     to,
+  //     attrs: mark.attrs,
+  //   };
+  //
+  // // return undefined;
 
   for (let i = 0; i < fromPos.length; i++) {
     doc.nodesBetween(fromPos[i], toPos[i], (node, from) => {
@@ -72,9 +70,6 @@ const findFragmentedMark = (state, PMmark) => {
         }
       }
     });
-    if (markFound) {
-      return markFound;
-    }
   }
   return markFound;
 };

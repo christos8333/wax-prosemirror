@@ -264,6 +264,12 @@ export default css`
     font-size: 0.95em;
     font-family: 'Consolas', 'Ubuntu Mono', monospace;
     cursor: auto;
+    .ProseMirror {
+      box-shadow: none;
+      min-height: 100%;
+      padding: 0;
+      background: #eee;
+    }
   }
 
   .math-node.empty-math .math-render::before {

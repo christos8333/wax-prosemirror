@@ -119,6 +119,9 @@ const NotesAreaContainer = styled.div`
   position: absolute;
   /* PM styles  for note content*/
   ${EditorElements};
+  .ProseMirror {
+    display: inline;
+  }
 `;
 
 const NotesContainer = styled.div`

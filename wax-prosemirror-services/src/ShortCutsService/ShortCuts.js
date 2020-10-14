@@ -1,5 +1,4 @@
 import { injectable } from 'inversify';
-import { minBy, maxBy } from 'lodash';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 
@@ -9,6 +8,7 @@ import {
   liftListItem,
   sinkListItem,
 } from 'prosemirror-schema-list';
+import { NodeSelection, TextSelection } from 'prosemirror-state';
 
 import {
   baseKeymap,
@@ -26,12 +26,37 @@ const backSpace = chainCommands(
   selectNodeBackward,
 );
 
-const backSpaceShortCut = (state, dispatch, view) =>
+const backSpaceShortCut = (state, dispatch, view) => {
+  const { $from, $to } = state.selection;
+  const { nodeBefore } = $from;
+  if (!nodeBefore) {
+    return false;
+  }
+
+  if (nodeBefore.type.name === 'math_inline') {
+    const index = $from.index($from.depth);
+    const $beforePos = state.doc.resolve($from.posAtIndex(index - 1));
+
+    dispatch(state.tr.setSelection(new NodeSelection($beforePos)));
+
+    return true;
+  }
+
+  state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+    if (node.type.name === 'math_display') {
+      const $start = state.tr.doc.resolve(state.tr.selection.$anchor.start());
+      const $end = state.tr.doc.resolve(state.tr.selection.$anchor.end());
+
+      dispatch(state.tr.setSelection(new TextSelection($start, $end)));
+    }
+  });
+
   backSpace(
     state,
     tr => dispatch(tr.setMeta('inputType', 'backwardsDelete')),
     view,
   );
+};
 
 const undoShortCut = (state, dispatch, view) =>
   undo(state, tr => dispatch(tr.setMeta('inputType', 'Undo')), view);

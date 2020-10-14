@@ -25,15 +25,6 @@ const NoteStyled = styled.div`
   height: 100%;
   border-bottom: 1px solid black;
 
-  span.comment {
-    border-bottom: none !important;
-    &: after {
-      content: '';
-      border-bottom: 2px solid gold;
-      display: block;
-    }
-  }
-
   &:focus {
     outline: none;
   }

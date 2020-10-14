@@ -12,6 +12,7 @@ export { default as underlineMark } from './src/marks/underlineMark';
 export { default as smallcapsMark } from './src/marks/smallcapsMark';
 export { default as sourceMark } from './src/marks/sourceMark';
 export { default as commentMark } from './src/marks/commentMark';
+export { default as mathSelectMark } from './src/marks/mathSelectMark';
 /*
 LIST OF TRACK CHANGES MARKS
 */
@@ -37,6 +38,8 @@ export { default as headingNode } from './src/nodes/headingNode';
 export { default as blockQuoteNode } from './src/nodes/blockQuoteNode';
 export { default as footNoteNode } from './src/nodes/footNoteNode';
 export { default as codeBlockNode } from './src/nodes/codeBlockNode';
+export { default as mathInlineNode } from './src/nodes/mathInlineNode';
+export { default as mathDisplayNode } from './src/nodes/mathDisplayNode';
 /*
 LIST OF TRACK CHANGES NODES
 */

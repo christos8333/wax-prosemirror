@@ -30,17 +30,31 @@ const CommentBubbleComponent = ({
     activeView.focus();
   };
 
-  const isSelectionComment = () => {
+  const isCommentAllowed = () => {
     const commentMark = activeView.state.schema.marks.comment;
     const mark = DocumentHelpers.findMark(state, commentMark, true);
 
+    let allowed = true;
+    state.doc.nodesBetween(
+      state.selection.$from.pos,
+      state.selection.$to.pos,
+      (node, from) => {
+        if (
+          node.type.name === 'math_display' ||
+          node.type.name === 'math_inline'
+        ) {
+          allowed = false;
+        }
+      },
+    );
+
     // TODO Overlapping comments . for now don't allow
-    if (mark.length >= 1) return true;
-    return false;
+    if (mark.length >= 1) allowed = false;
+    return allowed;
   };
 
   return (
-    !isSelectionComment() &&
+    isCommentAllowed() &&
     showComment(activeViewId) && (
       <CommentBubble
         onClick={event => {

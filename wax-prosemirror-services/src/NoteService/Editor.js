@@ -46,6 +46,9 @@ export default ({ node, view }) => {
         handleKeyPress: (noteEditorView, from, to, content) => {
           updateMainView = false;
         },
+        attributes: {
+          spellcheck: 'false',
+        },
       },
     );
 

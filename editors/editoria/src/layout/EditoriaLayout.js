@@ -7,6 +7,7 @@ import { grid, th } from '@pubsweet/ui-toolkit';
 
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
+import Katex from './Katex';
 
 const divider = css`
   .panelGroup {
@@ -79,6 +80,7 @@ const WaxSurfaceScroll = styled.div`
   position: absolute;
   /* PM styles  for main content*/
   ${EditorElements};
+  ${Katex};
 `;
 
 const EditorContainer = styled.div`
@@ -117,6 +119,9 @@ const NotesAreaContainer = styled.div`
   position: absolute;
   /* PM styles  for note content*/
   ${EditorElements};
+  .ProseMirror {
+    display: inline;
+  }
 `;
 
 const NotesContainer = styled.div`

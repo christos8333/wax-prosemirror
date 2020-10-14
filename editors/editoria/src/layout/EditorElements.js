@@ -269,6 +269,7 @@ export default css`
       min-height: 100%;
       padding: 0;
       background: #eee;
+      color: rgb(132, 33, 162);
     }
   }
 
@@ -294,7 +295,7 @@ export default css`
   }
 
   .math-node.ProseMirror-selectednode .math-src {
-    display: inline;
+    display: flex;
   }
   .math-node.ProseMirror-selectednode .math-render {
     display: none;

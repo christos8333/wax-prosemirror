@@ -38,9 +38,6 @@ const findFragmentedMark = (state, PMmark) => {
     selection: { $from, $to },
     doc,
   } = state;
-  const fromPos = [$from.pos - 1, $from.pos];
-  const toPos = [$to.pos, $to.pos + 1];
-  let markFound;
 
   // const type = state.config.schema.marks.comment;
   // const mark = empty
@@ -57,20 +54,21 @@ const findFragmentedMark = (state, PMmark) => {
   //
   // // return undefined;
 
-  for (let i = 0; i < fromPos.length; i++) {
-    doc.nodesBetween(fromPos[i], toPos[i], (node, from) => {
-      if (node.marks) {
-        const actualMark = node.marks.find(mark => mark.type === PMmark);
-        if (actualMark) {
-          markFound = {
-            from,
-            to: from + node.nodeSize,
-            attrs: actualMark.attrs,
-          };
-        }
+  let markFound;
+
+  doc.nodesBetween($from.pos - 1, $to.pos, (node, from) => {
+    if (node.marks) {
+      const actualMark = node.marks.find(mark => mark.type === PMmark);
+      if (actualMark) {
+        markFound = {
+          from,
+          to: from + node.nodeSize,
+          attrs: actualMark.attrs,
+        };
       }
-    });
-  }
+    }
+  });
+
   return markFound;
 };
 

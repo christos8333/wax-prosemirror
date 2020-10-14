@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Plugin as ProsePlugin, PluginKey } from 'prosemirror-state';
 import { MathView } from './math-nodeview';
 /**
@@ -11,13 +12,13 @@ function createMathView(displayMode) {
      * Docs says that for any function proprs, the current plugin instance
      * will be bound to `this`.  However, the typings don't reflect this.
      */
-    const pluginState = mathPluginKey.getState(view.state);
+    let pluginState = mathPluginKey.getState(view.state);
     if (!pluginState) {
       throw new Error('no math plugin!');
     }
-    const nodeViews = pluginState.activeNodeViews;
+    let nodeViews = pluginState.activeNodeViews;
     // set up NodeView
-    const nodeView = new MathView(
+    let nodeView = new MathView(
       node,
       view,
       getPos,
@@ -30,8 +31,8 @@ function createMathView(displayMode) {
     return nodeView;
   };
 }
-const mathPluginKey = new PluginKey('prosemirror-math');
-const mathPluginSpec = {
+let mathPluginKey = new PluginKey('prosemirror-math');
+let mathPluginSpec = {
   key: mathPluginKey,
   state: {
     init(config, instance) {
@@ -46,7 +47,7 @@ const mathPluginSpec = {
        * information about any new MathViews that were created by this transaction.
        * As a result, the cursor position may be wrong for any newly created math blocks.
        */
-      const pluginState = mathPluginKey.getState(oldState);
+      let pluginState = mathPluginKey.getState(oldState);
       if (pluginState) {
         for (let mathView of pluginState.activeNodeViews) {
           mathView.updateCursorPos(newState);

@@ -1,20 +1,21 @@
+/* eslint-disable */
+
 // prosemirror imports
 import { Plugin as ProsePlugin } from 'prosemirror-state';
 import { DecorationSet, Decoration } from 'prosemirror-view';
-
+////////////////////////////////////////////////////////////
 /**
  * Uses the selection to determine which math_select decorations
  * should be applied to the given document.
  * @param arg Should be either a Transaction or an EditorState,
  *     although any object with `selection` and `doc` will work.
  */
-
-const checkSelection = arg => {
-  const { from, to } = arg;
-  const { content } = arg.selection.content();
-  const result = [];
+let checkSelection = arg => {
+  let { from, to } = arg.selection;
+  let content = arg.selection.content().content;
+  let result = [];
   content.descendants((node, pos, parent) => {
-    if (node.type.name === 'text') {
+    if (node.type.name == 'text') {
       return false;
     }
     if (node.type.name.startsWith('math_')) {
@@ -52,7 +53,7 @@ const mathSelectPlugin = new ProsePlugin({
       if (!tr.selection || !tr.selectionSet) {
         return oldState;
       }
-      const sel = checkSelection(tr);
+      let sel = checkSelection(tr);
       return sel;
     },
   },

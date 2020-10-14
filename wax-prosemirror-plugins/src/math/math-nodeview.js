@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { StepMap } from 'prosemirror-transform';

@@ -6,6 +6,10 @@ import {
   smartQuotes,
 } from 'prosemirror-inputrules';
 
+// TODO add through service.
+import inlineInputRule from '../MathService/InlineInputRule';
+import blockInputRule from '../MathService/BlockInputRule';
+
 @injectable()
 class Rules {
   constructor(plugins, schema) {
@@ -17,6 +21,7 @@ class Rules {
 
   addRule(rules) {
     this.extendedRules.push(...rules);
+    // this.extendedRules = this.allRules().concat(...rules);
   }
 
   createRules() {
@@ -50,6 +55,8 @@ class Rules {
         this.schema.nodes.heading,
         match => ({ level: match[1].length }),
       ),
+      inlineInputRule(/(?<!\\)\$(.+)(?<!\\)\$/, this.schema.nodes.math_inline),
+      blockInputRule(/^\$\$\s+$/, this.schema.nodes.math_display),
     ];
   }
 }

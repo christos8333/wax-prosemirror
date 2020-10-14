@@ -42,6 +42,9 @@ export default props => {
           transformPasted: slice => {
             return transformPasted(slice, view);
           },
+          attributes: {
+            spellcheck: 'false',
+          },
         },
       );
 

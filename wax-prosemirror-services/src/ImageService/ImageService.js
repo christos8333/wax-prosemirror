@@ -2,7 +2,7 @@ import { imageNode } from 'wax-prosemirror-schema';
 import Service from '../Service';
 import Image from './Image';
 
-export default class ImageService extends Service {
+class ImageService extends Service {
   name = 'ImageService';
 
   register() {
@@ -16,3 +16,5 @@ export default class ImageService extends Service {
     );
   }
 }
+
+export default ImageService;

@@ -33,6 +33,7 @@ export default ({ trackChangeId, top, recalculateTops }) => {
   };
 
   const active = false;
+  return null;
   const MemorizedTrackChange = useMemo(
     () => (
       <ConnectedTrackChangeStyled

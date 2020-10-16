@@ -9,7 +9,7 @@ export default
 @injectable()
 class FindAndReplace extends Tools {
   title = 'Find And Replace';
-  icon = 'find';
+  icon = 'findAndReplace';
   name = 'find';
 
   get run() {

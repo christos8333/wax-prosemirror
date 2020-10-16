@@ -1,12 +1,13 @@
 /* eslint react/prop-types: 0 */
 
-import React, { useState, useContext, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useContext, useMemo, useRef } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 
 import MenuButton from '../../ui/buttons/MenuButton';
 import InsertTableTool from '../../ui/tables/InsertTableTool';
+import useOnClickOutside from '../../helpers/useOnClickOutside';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -72,25 +73,4 @@ const CreateTable = ({ view = {}, item }) => {
   return MemorizedDropdown;
 };
 
-// Hook
-const useOnClickOutside = (ref, handler) => {
-  useEffect(() => {
-    const listener = event => {
-      /* Do nothing if clicking ref's element or descendent elements */
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-
-      handler(event);
-    };
-
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, handler]);
-};
 export default CreateTable;

@@ -11,7 +11,7 @@ const FindAndReplaceComponent = ({ close }) => {
   const [isExpanded, setExpanded] = useState(false);
 
   const expand = () => {
-    setExpanded(!isExpanded);
+    setExpanded(true);
   };
 
   return isExpanded ? (

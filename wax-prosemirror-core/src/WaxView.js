@@ -58,7 +58,7 @@ export default props => {
       if (autoFocus)
         setTimeout(() => {
           view.focus();
-        });
+        }, 1000);
 
       return () => view.destroy();
     }

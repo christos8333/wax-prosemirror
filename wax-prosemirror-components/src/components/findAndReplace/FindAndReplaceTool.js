@@ -82,7 +82,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, styles],
+    [isOpen, style],
   );
 
   return MemorizedDropdown;

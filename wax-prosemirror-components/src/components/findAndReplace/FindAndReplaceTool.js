@@ -73,7 +73,11 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
 
         {isOpen && (
           <DropWrapper style={style} ref={dropElement}>
-            <FindAndReplaceComponent />
+            <FindAndReplaceComponent
+              close={() => {
+                setIsOpen(false);
+              }}
+            />
           </DropWrapper>
         )}
       </Wrapper>

@@ -1,5 +1,6 @@
-import React, { useRef, useMemo, useContext, useState } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+/* eslint react/prop-types: 0 */
+
+import React from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';
@@ -26,7 +27,7 @@ const SearchInput = styled.input`
   border-radius: 2px;
   border: none;
   padding: ${grid(1)};
-  width: 80%;
+  width: 73%;
   box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
   ::placeholder {
     color: #d8dae0;
@@ -42,8 +43,23 @@ const StyledIcon = styled(Icon)`
   cursor: pointer;
 `;
 
-const FindAndReplaceComponent = () => {
+const CloseWrapper = styled.div`
+  border-left: 1px solid #e0e2e7;
+  margin-left: 1%;
+`;
+
+const ExpandedWrapper = styled.div``;
+
+const FindAndReplaceComponent = ({ close }) => {
   const onChange = () => {};
+
+  const closeFind = () => {
+    close();
+  };
+
+  const showExpanded = () => {
+    console.log('expanded');
+  };
 
   return (
     <Wrapper>
@@ -56,7 +72,14 @@ const FindAndReplaceComponent = () => {
         />
         <StyledIcon name="navigatePrevious" />
         <StyledIcon name="navigateNext" />
-        <StyledIcon name="more" />
+
+        <ExpandedWrapper onClick={showExpanded}>
+          <StyledIcon name="more" />
+        </ExpandedWrapper>
+
+        <CloseWrapper onClick={closeFind}>
+          <StyledIcon name="close" />
+        </CloseWrapper>
       </SingleRow>
     </Wrapper>
   );

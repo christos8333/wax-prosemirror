@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from '../../wax-prosemirror-components/src/ui/buttons/Icon';
+import Icon from '../../wax-prosemirror-components/src/helpers/Icon';
 
 export const Base = () => <Icon name="commentBubble" />;
 

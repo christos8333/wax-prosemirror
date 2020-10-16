@@ -27,7 +27,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
     margin-top: ${grid(1)};
     position: absolute;
     background: white;
-    top: 30px;
+    top: 32px;
   `;
 
   const { state } = view;
@@ -44,7 +44,6 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
 
   const styles = { right: '-205px' };
   const [style, setStyle] = useState(styles);
-  console.log('here?');
   const onChange = isVisible => {
     if (!isVisible) setStyle({ right: '0' });
   };

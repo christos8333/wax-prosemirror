@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { th, override } from '@pubsweet/ui-toolkit';
 
-import Icon from './Icon';
+import Icon from '../../helpers/Icon';
 
 const activeStyles = css`
   background: ${th('colorPrimary')};

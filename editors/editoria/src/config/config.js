@@ -53,7 +53,6 @@ export default {
         'Images',
         'CodeBlock',
         'Tables',
-        'TrackChange',
         'TrackingAndEditing',
       ],
     },

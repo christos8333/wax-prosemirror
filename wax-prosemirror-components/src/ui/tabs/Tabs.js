@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import Icon from '../buttons/Icon';
+import Icon from '../../helpers/Icon';
 
 const Wrapper = styled.div`
   display: flex;

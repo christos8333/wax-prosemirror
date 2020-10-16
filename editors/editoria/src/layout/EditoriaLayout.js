@@ -60,6 +60,14 @@ const TopMenu = styled.div`
     border-right: ${th('borderWidth')} ${th('borderStyle')}
       ${th('colorFurniture')};
   }
+
+  > div:last-child {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  > div[data-name="Tables"]{
+    border-right: none;
+  }
 `;
 
 const SideMenu = styled.div`
@@ -152,7 +160,6 @@ const hasNotes = main => {
 };
 
 const LeftSideBar = ComponentPlugin('leftSideBar');
-// const RightSideBar = ComponentPlugin('rightSideBar');
 const TopBar = ComponentPlugin('topBar');
 const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');

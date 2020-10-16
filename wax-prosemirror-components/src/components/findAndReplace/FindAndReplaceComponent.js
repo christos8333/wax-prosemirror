@@ -43,10 +43,17 @@ const StyledIcon = styled(Icon)`
 `;
 
 const FindAndReplaceComponent = () => {
+  const onChange = () => {};
+
   return (
     <Wrapper>
       <SingleRow>
-        <SearchInput type="text" placeholder="Find" value="" />
+        <SearchInput
+          type="text"
+          placeholder="Find"
+          value=""
+          onChange={onChange}
+        />
         <StyledIcon name="navigatePrevious" />
         <StyledIcon name="navigateNext" />
         <StyledIcon name="more" />

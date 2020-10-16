@@ -1,8 +1,13 @@
-import React, { useRef, useMemo, useContext, useState } from 'react';
+import React, {
+  useRef,
+  useMemo,
+  useContext,
+  useState,
+  useLayoutEffect,
+} from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import VisibilitySensor from 'react-visibility-sensor';
 
 import MenuButton from '../../ui/buttons/MenuButton';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
@@ -32,25 +37,30 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
 
   const { state } = view;
   const { enable, icon, run, select, title } = item;
-  const ref = useRef();
+  const dropElement = useRef();
   const [isOpen, setIsOpen] = useState(false);
-
-  const dropComponent = <FindAndReplaceComponent />;
 
   // const isDisabled =
   //   enable && !enable(state) && !(select && select(state, activeViewId));
   //
-  useOnClickOutside(ref, () => setIsOpen(false));
 
-  const styles = { right: '-205px' };
+  let styles = { right: '-205px' };
   const [style, setStyle] = useState(styles);
-  const onChange = isVisible => {
-    if (!isVisible) setStyle({ right: '0' });
-  };
+
+  useLayoutEffect(() => {
+    setStyle(styles);
+    if (!dropElement.current) return;
+    const { right } = dropElement.current.getBoundingClientRect();
+    if (right > window.window.innerWidth) {
+      const newRight = -205 + (right - window.window.innerWidth) + 15;
+      styles = { right: `${newRight}px` };
+      setStyle(styles);
+    }
+  }, [isOpen]);
 
   const MemorizedDropdown = useMemo(
     () => (
-      <Wrapper ref={ref}>
+      <Wrapper>
         <MenuButton
           active={isOpen}
           disabled={false}
@@ -62,13 +72,13 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
         />
 
         {isOpen && (
-          <VisibilitySensor onChange={onChange}>
-            <DropWrapper style={style}>{dropComponent}</DropWrapper>
-          </VisibilitySensor>
+          <DropWrapper style={style} ref={dropElement}>
+            <FindAndReplaceComponent />
+          </DropWrapper>
         )}
       </Wrapper>
     ),
-    [isOpen, style],
+    [isOpen, styles],
   );
 
   return MemorizedDropdown;

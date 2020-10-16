@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useMemo, useContext, useState } from 'react';
+import React, { useRef, useMemo, useContext, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import MenuButton from '../../ui/buttons/MenuButton';
+import FindAndReplaceComponent from './FindAndReplaceComponent';
+import useOnClickOutside from '../../helpers/useOnClickOutside';
 
-const CreateTable = ({ view = {}, item }) => {
+const FindAndReplaceTool = ({ view = {}, item }) => {
   const {
     view: { main },
     activeViewId,
@@ -24,6 +27,7 @@ const CreateTable = ({ view = {}, item }) => {
     margin-top: ${grid(1)};
     position: absolute;
     background: white;
+    top: 30px;
   `;
 
   const { state } = view;
@@ -31,19 +35,26 @@ const CreateTable = ({ view = {}, item }) => {
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
-  const dropComponent = <div> find and replace</div>;
+  const dropComponent = <FindAndReplaceComponent />;
 
   // const isDisabled =
   //   enable && !enable(state) && !(select && select(state, activeViewId));
   //
-  // useOnClickOutside(ref, () => setIsOpen(false));
+  useOnClickOutside(ref, () => setIsOpen(false));
+
+  const styles = { right: '-205px' };
+  const [style, setStyle] = useState(styles);
+  console.log('here?');
+  const onChange = isVisible => {
+    if (!isVisible) setStyle({ right: '0' });
+  };
 
   const MemorizedDropdown = useMemo(
     () => (
       <Wrapper ref={ref}>
         <MenuButton
           active={isOpen}
-          // disabled={isDisabled}
+          disabled={false}
           iconName={icon}
           onMouseDown={() => {
             setIsOpen(!isOpen);
@@ -51,13 +62,17 @@ const CreateTable = ({ view = {}, item }) => {
           title={title}
         />
 
-        {isOpen && <DropWrapper>{dropComponent}</DropWrapper>}
+        {isOpen && (
+          <VisibilitySensor onChange={onChange}>
+            <DropWrapper style={style}>{dropComponent}</DropWrapper>
+          </VisibilitySensor>
+        )}
       </Wrapper>
     ),
-    [isOpen],
+    [isOpen, style],
   );
 
   return MemorizedDropdown;
 };
 
-export default CreateTable;
+export default FindAndReplaceTool;

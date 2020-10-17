@@ -1,40 +1,25 @@
-import React, {
-  useRef,
-  useMemo,
-  useContext,
-  useState,
-  useLayoutEffect,
-} from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+import React, { useRef, useMemo, useState, useLayoutEffect } from 'react';
+
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 
 import MenuButton from '../../ui/buttons/MenuButton';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
-import useOnClickOutside from '../../helpers/useOnClickOutside';
+
+const Wrapper = styled.div`
+  font-size: 0;
+  position: relative;
+  z-index: 2;
+`;
+
+const DropWrapper = styled.div`
+  margin-top: ${grid(1)};
+  position: absolute;
+  background: white;
+  top: 32px;
+`;
 
 const FindAndReplaceTool = ({ view = {}, item }) => {
-  const {
-    view: { main },
-    activeViewId,
-  } = useContext(WaxContext);
-  if (item.onlyOnMain) {
-    view = main;
-  }
-
-  const Wrapper = styled.div`
-    font-size: 0;
-    position: relative;
-    z-index: 2;
-  `;
-
-  const DropWrapper = styled.div`
-    margin-top: ${grid(1)};
-    position: absolute;
-    background: white;
-    top: 32px;
-  `;
-
   const { state } = view;
   const { enable, icon, run, select, title } = item;
   const dropElement = useRef();

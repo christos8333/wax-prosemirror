@@ -1,8 +1,9 @@
 /* eslint react/prop-types: 0 */
 
-import React from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
+import { WaxContext } from 'wax-prosemirror-core';
 import Icon from '../../helpers/Icon';
 
 const Wrapper = styled.div`
@@ -51,14 +52,68 @@ const CloseWrapper = styled.div`
 const ExpandedWrapper = styled.div``;
 
 const FindComponent = ({ close, expand }) => {
-  const onChange = () => {};
+  const {
+    view: { main },
+  } = useContext(WaxContext);
+
+  const {
+    state: { doc },
+  } = main;
+
+  const searchRef = useRef(null);
+  const [searchValue, setsearchValue] = useState('');
+
+  const onChange = () => {
+    setsearchValue(searchRef.current.value);
+    searchDocument();
+  };
+
+  const searchDocument = () => {
+    const results = [];
+    const mergedTextNodes = [];
+    let index = 0;
+
+    doc.descendants((node, pos) => {
+      if (node.isText) {
+        if (mergedTextNodes[index]) {
+          mergedTextNodes[index] = {
+            text: mergedTextNodes[index].text + node.text,
+            pos: mergedTextNodes[index].pos,
+          };
+        } else {
+          mergedTextNodes[index] = {
+            text: node.text,
+            pos,
+          };
+        }
+      } else {
+        index += 1;
+      }
+    });
+
+    mergedTextNodes.forEach(({ text, pos }) => {
+      const search = RegExp(searchValue, 'gui');
+      let m;
+      // eslint-disable-next-line no-cond-assign
+      while ((m = search.exec(text))) {
+        if (m[0] === '') {
+          break;
+        }
+
+        results.push({
+          from: pos + m.index,
+          to: pos + m.index + m[0].length,
+        });
+      }
+    });
+    console.log(results);
+  };
 
   const closeFind = () => {
     close();
   };
 
   const showExpanded = () => {
-    console.log('expanded');
     expand();
   };
 
@@ -66,9 +121,10 @@ const FindComponent = ({ close, expand }) => {
     <Wrapper>
       <SingleRow>
         <SearchInput
+          ref={searchRef}
           type="text"
           placeholder="Find"
-          value=""
+          value={searchValue}
           onChange={onChange}
         />
         <StyledIcon name="navigatePrevious" />

@@ -19,7 +19,9 @@ export default props => {
           state && findAndReplacePlugin.getState(state);
         // return findAndReplacePluginState.createDecoration;
       },
-      getSearchTerm: state => {},
+      setResults: results => {
+        console.log(results);
+      },
     },
   });
 };

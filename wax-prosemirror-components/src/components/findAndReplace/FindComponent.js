@@ -22,13 +22,17 @@ const SingleRow = styled.div`
   flex-direction: row;
 `;
 
+const SearchInputWrapper = styled.div`
+  width: 75%;
+`;
+
 const SearchInput = styled.input`
   font-size: 15px;
   font-weight: 400;
   border-radius: 2px;
   border: none;
-  padding: ${grid(1)};
-  width: 73%;
+  padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
+  width: 85%;
   box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
   ::placeholder {
     color: #d8dae0;
@@ -36,6 +40,15 @@ const SearchInput = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+const CounterInput = styled.span`
+  position: absolute;
+  right: 115px;
+  top: 13px;
+  z-index: 1;
+  font-size: 12px;
+  -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
 `;
 
 const StyledIcon = styled(Icon)`
@@ -53,6 +66,7 @@ const ExpandedWrapper = styled.div``;
 
 const FindComponent = ({ close, expand }) => {
   const {
+    app,
     view: { main },
   } = useContext(WaxContext);
 
@@ -62,6 +76,9 @@ const FindComponent = ({ close, expand }) => {
 
   const searchRef = useRef(null);
   const [searchValue, setsearchValue] = useState('');
+  const [counterText, setCounterText] = useState('0 of 0');
+  const [stepCounter, setStepCounter] = useState('1');
+  const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
   const onChange = () => {
     setsearchValue(searchRef.current.value);
@@ -69,6 +86,7 @@ const FindComponent = ({ close, expand }) => {
   };
 
   const searchDocument = () => {
+    setCounterText('0 of 0');
     const results = [];
     const mergedTextNodes = [];
     let index = 0;
@@ -92,7 +110,7 @@ const FindComponent = ({ close, expand }) => {
     });
 
     mergedTextNodes.forEach(({ text, pos }) => {
-      const search = RegExp(searchValue, 'gui');
+      const search = RegExp(searchRef.current.value, 'gui');
       let m;
       // eslint-disable-next-line no-cond-assign
       while ((m = search.exec(text))) {
@@ -106,7 +124,8 @@ const FindComponent = ({ close, expand }) => {
         });
       }
     });
-    console.log(results);
+    findAndReplacePlugin.props.setResults(results);
+    if (results.length > 0) setCounterText(`1 of ${results.length}`);
   };
 
   const closeFind = () => {
@@ -120,13 +139,16 @@ const FindComponent = ({ close, expand }) => {
   return (
     <Wrapper>
       <SingleRow>
-        <SearchInput
-          ref={searchRef}
-          type="text"
-          placeholder="Find"
-          value={searchValue}
-          onChange={onChange}
-        />
+        <SearchInputWrapper>
+          <SearchInput
+            ref={searchRef}
+            type="text"
+            placeholder="Find"
+            value={searchValue}
+            onChange={onChange}
+          />
+          <CounterInput> {counterText} </CounterInput>
+        </SearchInputWrapper>
         <StyledIcon name="navigatePrevious" />
         <StyledIcon name="navigateNext" />
 

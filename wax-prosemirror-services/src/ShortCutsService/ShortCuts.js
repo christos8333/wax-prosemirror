@@ -56,6 +56,7 @@ const backSpaceShortCut = (state, dispatch, view) => {
     tr => dispatch(tr.setMeta('inputType', 'backwardsDelete')),
     view,
   );
+  return true;
 };
 
 const undoShortCut = (state, dispatch, view) =>

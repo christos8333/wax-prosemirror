@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useState, useRef, useContext } from 'react';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -71,13 +72,12 @@ const FindComponent = ({ close, expand }) => {
   } = useContext(WaxContext);
 
   const {
-    state: { doc },
+    state: { doc, tr },
   } = main;
 
   const searchRef = useRef(null);
   const [searchValue, setsearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
-  const [stepCounter, setStepCounter] = useState('1');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
   const onChange = () => {
@@ -125,7 +125,10 @@ const FindComponent = ({ close, expand }) => {
       }
     });
     findAndReplacePlugin.props.setResults(results);
+
     if (results.length > 0) setCounterText(`1 of ${results.length}`);
+    tr.setMeta('search', true);
+    main.dispatch(tr);
   };
 
   const closeFind = () => {

@@ -256,6 +256,10 @@ export default css`
     }
   }
 
+  span.search-result {
+    background: grey;
+  }
+
   /* == Math Nodes ======================================== */
 
   .math-node {

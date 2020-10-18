@@ -1,9 +1,5 @@
 /* eslint react/prop-types: 0 */
-
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
-import Icon from '../../helpers/Icon';
 import FindComponent from './FindComponent';
 import ExandedFindAndReplaceComponent from './ExandedFindAndReplaceComponent';
 
@@ -14,8 +10,10 @@ const FindAndReplaceComponent = ({ close }) => {
     setExpanded(true);
   };
 
+  const getNonExpandedText = () => {};
+
   return isExpanded ? (
-    <ExandedFindAndReplaceComponent close={close} />
+    <ExandedFindAndReplaceComponent close={close} previousText="" />
   ) : (
     <FindComponent close={close} expand={expand} />
   );

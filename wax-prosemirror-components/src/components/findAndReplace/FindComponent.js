@@ -132,6 +132,9 @@ const FindComponent = ({ close, expand }) => {
   };
 
   const closeFind = () => {
+    findAndReplacePlugin.props.setResults([]);
+    tr.setMeta('search', false);
+    main.dispatch(tr);
     close();
   };
 

@@ -226,12 +226,14 @@ export default {
   ),
   navigatePrevious: ({ className }) => (
     <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <title>Previous</title>
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
     </Svg>
   ),
   navigateNext: ({ className }) => (
     <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <title>Next</title>
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
     </Svg>

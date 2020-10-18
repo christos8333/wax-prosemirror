@@ -70,13 +70,52 @@ const CheckBoxWrapper = styled.div`
 const ControlContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 80px;
+  margin-top: 70px;
+`;
+
+const ButtonReplace = styled.button`
+  background: ${th('colorBackgroundButton')};
+  margin-right: 20px;
+  border: 1px solid ${th('colorBackgroundButton')};
+  color: white;
+  width: 100px;
+  height: 42px;
+  cursor: pointer;
+`;
+
+const ButtonReplaceAll = styled.button`
+  background: white;
+  border: 1px solid ${th('colorBackgroundButton')};
+  margin-right: 10px;
+  color: ${th('colorBackgroundButton')};
+  width: 100px;
+  height: 42px;
+  cursor: pointer;
+`;
+
+const PreviousNextContainer = styled.div`
+  margin: 5px 0 0 auto;
+
+  svg {
+    padding: ${grid(2)};
+
+    &:hover {
+      background: #f1f5ff;
+    }
+  }
+
+  svg:first-child {
+    margin-right: 20px;
+  }
 `;
 
 const ExandedFindAndReplaceComponent = ({ close }) => {
   const closeFind = () => {
     close();
   };
+
+  const replace = () => {};
+  const replaceAll = () => {};
 
   return (
     <Wrapper>
@@ -91,13 +130,15 @@ const ExandedFindAndReplaceComponent = ({ close }) => {
       <InputLabel>Replace with</InputLabel>
       <FindReplaceInput type="text" placeholder="Replace phrase" />
       <CheckBoxWrapper>
-        <CheckBox name="case-sensitive" />
+        <CheckBox name="case-sensitive" label="Case Sensitive" />
       </CheckBoxWrapper>
       <ControlContainer>
-        <button>Replace</button>
-        <button>Replace All</button>
-        <StyledIcon name="navigatePrevious" />
-        <StyledIcon name="navigateNext" />
+        <ButtonReplace onClick={replace}>Replace</ButtonReplace>
+        <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
+        <PreviousNextContainer>
+          <StyledIcon name="navigatePrevious" />
+          <StyledIcon name="navigateNext" />
+        </PreviousNextContainer>
       </ControlContainer>
     </Wrapper>
   );

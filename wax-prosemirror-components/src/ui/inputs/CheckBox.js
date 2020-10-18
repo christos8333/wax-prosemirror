@@ -44,7 +44,7 @@ const CheckBoxLabel = styled.label`
     top: 1px;
     width: 6px;
     height: 12px;
-    border: solid #009bff;
+    border: solid ${th('colorBackgroundButton')};
     border-width: 0 2px 2px 0;
     background-color: transparent;
     border-radius: 0;
@@ -73,7 +73,7 @@ const CheckboxCustom = styled.span`
     height: 0px;
     width: 0px;
     border-radius: 5px;
-    border: solid #009bff;
+    border: solid ${th('colorBackgroundButton')};
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(0deg) scale(0);
     -ms-transform: rotate(0deg) scale(0);
@@ -96,13 +96,13 @@ const CheckboxTitle = styled.div`
 `;
 
 const CheckBox = props => {
-  const { name } = props;
+  const { name, label } = props;
   return (
     <CheckBoxContainer>
       <CheckBoxLabel>
         <input type="checkbox" id={name} name={name} />
         <CheckboxCustom />
-        <CheckboxTitle>Case Sensitive</CheckboxTitle>
+        <CheckboxTitle>{label}</CheckboxTitle>
       </CheckBoxLabel>
     </CheckBoxContainer>
   );
@@ -110,6 +110,7 @@ const CheckBox = props => {
 
 CheckBox.propTypes = {
   name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   // active: PropTypes.bool.isRequired,
   // disabled: PropTypes.bool.isRequired,
   // iconName: PropTypes.string,

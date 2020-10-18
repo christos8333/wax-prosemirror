@@ -2,6 +2,7 @@
 import 'typeface-fira-sans-condensed';
 import 'fontsource-merriweather';
 import 'typeface-vollkorn';
+import 'typeface-inter';
 
 import { css } from 'styled-components';
 
@@ -29,6 +30,7 @@ const cokoTheme = {
   fontHeading: 'Fira Sans Condensed',
   fontReading: 'Vollkorn',
   fontWriting: 'Merriweather',
+  fontTools: 'Inter',
 
   // font sizes
   fontSizeBase: '14px',

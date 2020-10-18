@@ -110,18 +110,11 @@ const CheckBox = props => {
 
 CheckBox.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  // active: PropTypes.bool.isRequired,
-  // disabled: PropTypes.bool.isRequired,
-  // iconName: PropTypes.string,
-  // label: PropTypes.string,
-  // title: PropTypes.string,
+  label: PropTypes.string,
 };
 
 CheckBox.defaultProps = {
-  // iconName: null,
-  // label: null,
-  // title: null,
+  label: null,
 };
 
 export default CheckBox;

@@ -14,19 +14,19 @@ export default props => {
       },
       apply(tr, prev, _, newState) {
         let createDecoration;
+        let decorations;
+        let createdDecorations;
         DecorationSet.empty;
-        console.log(allResults);
         if (allResults.length > 0) {
-          createDecoration = DecorationSet.create(newState.doc, [
-            Decoration.inline(allResults[0].from, allResults[0].to, {
+          decorations = allResults.map((result, index) => {
+            return Decoration.inline(result.from, result.to, {
               class: 'search-result',
-            }),
-          ]);
+            });
+          });
+          createdDecorations = DecorationSet.create(newState.doc, decorations);
         }
-        console.log(createDecoration);
         return {
-          createDecoration,
-          DecorationSet,
+          createdDecorations,
         };
       },
     },
@@ -34,7 +34,7 @@ export default props => {
       decorations: state => {
         const findAndReplacePluginState =
           state && findAndReplacePlugin.getState(state);
-        return findAndReplacePluginState.createDecoration;
+        return findAndReplacePluginState.createdDecorations;
       },
       setResults: results => {
         allResults = results;
@@ -42,9 +42,7 @@ export default props => {
     },
     view(editorState) {
       return {
-        update: (view, _prevState) => {
-          console.log('in update');
-        },
+        update: (view, prevState) => {},
       };
     },
   });

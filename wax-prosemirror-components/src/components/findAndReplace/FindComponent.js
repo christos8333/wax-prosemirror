@@ -1,7 +1,13 @@
 /* eslint react/prop-types: 0 */
 
-import React, { useState, useRef, useContext } from 'react';
-import { Decoration, DecorationSet } from 'prosemirror-view';
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+  useEffect,
+} from 'react';
+import { debounce } from 'lodash';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -78,12 +84,21 @@ const FindComponent = ({ close, expand }) => {
   const searchRef = useRef(null);
   const [searchValue, setsearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
+
+  const delayedSearch = useCallback(
+    debounce(() => searchDocument(), 300),
+    [searchValue],
+  );
+
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
   const onChange = () => {
     setsearchValue(searchRef.current.value);
-    searchDocument();
   };
+
+  useEffect(() => {
+    delayedSearch();
+  }, [searchValue, delayedSearch]);
 
   const searchDocument = () => {
     setCounterText('0 of 0');
@@ -110,7 +125,7 @@ const FindComponent = ({ close, expand }) => {
     });
 
     mergedTextNodes.forEach(({ text, pos }) => {
-      const search = RegExp(searchRef.current.value, 'gui');
+      const search = RegExp(searchValue, 'gui');
       let m;
       // eslint-disable-next-line no-cond-assign
       while ((m = search.exec(text))) {
@@ -128,9 +143,9 @@ const FindComponent = ({ close, expand }) => {
 
     if (results.length > 0) {
       setCounterText(`1 of ${results.length}`);
-      tr.setMeta('search', true);
-      main.dispatch(tr);
     }
+    tr.setMeta('search', true);
+    main.dispatch(tr);
   };
 
   const closeFind = () => {

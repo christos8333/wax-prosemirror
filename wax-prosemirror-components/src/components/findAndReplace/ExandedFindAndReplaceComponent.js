@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';
@@ -109,10 +109,16 @@ const PreviousNextContainer = styled.div`
   }
 `;
 
-const ExandedFindAndReplaceComponent = ({ close }) => {
+const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
+  const searchRef = useRef(null);
+  const replaceRef = useRef(null);
+  const [searchValue, setsearchValue] = useState(nonExpandedText);
   const closeFind = () => {
     close();
   };
+
+  const onChangeSearchInput = () => {};
+  const onChangeReplaceInput = () => {};
 
   const replace = () => {};
   const replaceAll = () => {};
@@ -126,9 +132,20 @@ const ExandedFindAndReplaceComponent = ({ close }) => {
         </CloseWrapper>
       </TitleContainer>
       <InputLabel>Find</InputLabel>
-      <FindReplaceInput type="text" placeholder="Something is this doc" />
+      <FindReplaceInput
+        type="text"
+        ref={searchRef}
+        placeholder="Something is this doc"
+        value={searchValue}
+        onChange={onChangeSearchInput}
+      />
       <InputLabel>Replace with</InputLabel>
-      <FindReplaceInput type="text" placeholder="Replace phrase" />
+      <FindReplaceInput
+        type="text"
+        ref={replaceRef}
+        placeholder="Replace text"
+        onChange={onChangeReplaceInput}
+      />
       <CheckBoxWrapper>
         <CheckBox name="case-sensitive" label="Case Sensitive" />
       </CheckBoxWrapper>

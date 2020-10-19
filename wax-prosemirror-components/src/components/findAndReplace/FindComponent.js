@@ -71,7 +71,7 @@ const CloseWrapper = styled.div`
 
 const ExpandedWrapper = styled.div``;
 
-const FindComponent = ({ close, expand }) => {
+const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const {
     app,
     view: { main },
@@ -157,6 +157,7 @@ const FindComponent = ({ close, expand }) => {
 
   const showExpanded = () => {
     expand();
+    setPreviousSearcValue(searchValue);
   };
 
   return (

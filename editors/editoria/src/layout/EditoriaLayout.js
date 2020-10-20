@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
-
+import { debounce } from 'lodash';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
@@ -150,7 +150,7 @@ const onResizeEnd = arr => {
   notesHeight = arr[1].size;
 };
 
-const hasNotes = main => {
+const getNotes = main => {
   const notes = DocumentHelpers.findChildrenByType(
     main.state.doc,
     main.state.schema.nodes.footnote,
@@ -170,8 +170,22 @@ const EditoriaLayout = ({ editor }) => {
     view: { main },
   } = useContext(WaxContext);
 
-  const notes = main && hasNotes(main);
-  const showNotes = notes && !!notes.length && notes.length > 0;
+  const notes = main && getNotes(main);
+
+  const [hasNotes, setHasNotes] = useState(
+    notes && !!notes.length && notes.length > 0,
+  );
+
+  const showNotes = () => {
+    setHasNotes(notes && !!notes.length && notes.length > 0);
+  };
+
+  const delayedShowedNotes = useCallback(
+    setTimeout(() => showNotes(), 100),
+    [],
+  );
+
+  useEffect(() => {}, [delayedShowedNotes]);
 
   return (
     <ThemeProvider theme={cokoTheme}>
@@ -190,7 +204,7 @@ const EditoriaLayout = ({ editor }) => {
               direction="column"
               panelWidths={[
                 { size: surfaceHeight, resize: 'stretch' },
-                { size: notesHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'resize' },
               ]}
               onResizeEnd={onResizeEnd}
             >
@@ -201,7 +215,7 @@ const EditoriaLayout = ({ editor }) => {
                 </CommentsContainer>
               </WaxSurfaceScroll>
 
-              {showNotes && (
+              {hasNotes && (
                 <NotesAreaContainer>
                   <NotesContainer id="notes-container">
                     <NotesArea view={main} />

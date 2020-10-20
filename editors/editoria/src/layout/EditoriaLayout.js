@@ -171,13 +171,12 @@ const EditoriaLayout = ({ editor }) => {
   } = useContext(WaxContext);
 
   const notes = main && getNotes(main);
+  const areNotes = notes && !!notes.length && notes.length > 0;
 
-  const [hasNotes, setHasNotes] = useState(
-    notes && !!notes.length && notes.length > 0,
-  );
+  const [hasNotes, setHasNotes] = useState(areNotes);
 
   const showNotes = () => {
-    setHasNotes(notes && !!notes.length && notes.length > 0);
+    setHasNotes(areNotes);
   };
 
   const delayedShowedNotes = useCallback(

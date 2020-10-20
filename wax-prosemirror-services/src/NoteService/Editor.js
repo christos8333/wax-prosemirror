@@ -19,7 +19,7 @@ export default ({ node, view }) => {
   const noteId = node.attrs.id;
   let noteView;
   let updateMainView = true;
-  console.log(context);
+
   useEffect(() => {
     noteView = new EditorView(
       { mount: editorRef.current },

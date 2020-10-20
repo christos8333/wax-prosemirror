@@ -86,7 +86,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   } = main;
 
   const searchRef = useRef(null);
-  const [searchValue, setsearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
 
   const delayedSearch = useCallback(
@@ -97,7 +97,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
   const onChange = () => {
-    setsearchValue(searchRef.current.value);
+    setSearchValue(searchRef.current.value);
   };
 
   useEffect(() => {

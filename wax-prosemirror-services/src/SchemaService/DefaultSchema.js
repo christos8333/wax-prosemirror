@@ -1,49 +1,49 @@
-import { SchemaHelpers } from "wax-prosemirror-utilities";
+import { SchemaHelpers } from 'wax-prosemirror-utilities';
 
 export default {
   nodes: {
     doc: {
-      content: "block+"
+      content: 'block+',
     },
     text: {
-      group: "inline"
+      group: 'inline',
     },
     hard_break: {
       inline: true,
-      group: "inline",
+      group: 'inline',
       selectable: false,
-      parseDOM: [{ tag: "br" }],
+      parseDOM: [{ tag: 'br' }],
       toDOM() {
-        return ["br"];
-      }
+        return ['br'];
+      },
     },
     paragraph: {
-      group: "block",
-      content: "inline*",
+      group: 'block',
+      content: 'inline*',
       attrs: {
-        id: { default: "" },
-        class: { default: "paragraph" },
+        id: { default: '' },
+        class: { default: 'paragraph' },
         track: { default: [] },
-        group: { default: "" }
+        group: { default: '' },
       },
       parseDOM: [
         {
-          tag: "p.paragraph",
+          tag: 'p.paragraph',
           getAttrs(dom) {
             return {
               id: dom.dataset.id,
-              class: dom.getAttribute("class"),
+              class: dom.getAttribute('class'),
               track: SchemaHelpers.parseTracks(dom.dataset.track),
-              group: dom.dataset.group
+              group: dom.dataset.group,
             };
-          }
-        }
+          },
+        },
       ],
       toDOM(node) {
         const attrs = SchemaHelpers.blockLevelToDOM(node);
-        return ["p", attrs, 0];
-      }
-    }
+        return ['p', attrs, 0];
+      },
+    },
   },
-  marks: {}
+  marks: {},
 };

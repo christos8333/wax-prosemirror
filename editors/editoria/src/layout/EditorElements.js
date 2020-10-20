@@ -14,6 +14,7 @@ export default css`
   .ProseMirror {
     background: white;
     counter-reset: footnote;
+    line-height: 1.6;
     ${fontWriting}
 
     p::selection,
@@ -45,7 +46,7 @@ export default css`
   }
 
   .ProseMirror footnote {
-    font-size: 0;
+    font-variant-numeric: lining-nums proportional-nums;
     display: inline-block;
     text-align: center;
     width: 17px;

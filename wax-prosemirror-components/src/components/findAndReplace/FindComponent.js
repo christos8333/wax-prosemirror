@@ -7,11 +7,13 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { debounce } from 'lodash';
+import { debounce, each } from 'lodash';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import Icon from '../../helpers/Icon';
+
+import { selectParentNode } from 'prosemirror-commands';
 
 const Wrapper = styled.div`
   width: 400px;
@@ -75,8 +77,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const {
     app,
     view: { main },
+    view,
   } = useContext(WaxContext);
 
+  console.log(view);
   const {
     state: { doc, tr },
   } = main;
@@ -105,6 +109,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     const results = [];
     const mergedTextNodes = [];
     let index = 0;
+
+    each(view, (singleView, viewId) => {
+      // console.log(singleView, viewId);
+    });
 
     doc.descendants((node, pos) => {
       if (node.isText) {

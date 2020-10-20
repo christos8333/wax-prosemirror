@@ -51,12 +51,11 @@ const backSpaceShortCut = (state, dispatch, view) => {
     }
   });
 
-  backSpace(
+  return backSpace(
     state,
     tr => dispatch(tr.setMeta('inputType', 'backwardsDelete')),
     view,
   );
-  return true;
 };
 
 const undoShortCut = (state, dispatch, view) =>

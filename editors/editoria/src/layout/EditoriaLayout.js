@@ -165,6 +165,10 @@ const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
 const WaxOverlays = ComponentPlugin('waxOverlays');
 
+const HiddenArea = styled.span`
+  display: none;
+`;
+
 const EditoriaLayout = ({ editor }) => {
   const {
     view: { main },
@@ -204,7 +208,7 @@ const EditoriaLayout = ({ editor }) => {
               {showNotes && (
                 <NotesAreaContainer>
                   <NotesContainer id="notes-container">
-                    <NotesArea />
+                    <NotesArea view={main} />
                   </NotesContainer>
                   <CommentsContainerNotes>
                     <RightArea area="notes" />
@@ -216,6 +220,9 @@ const EditoriaLayout = ({ editor }) => {
         </Main>
 
         <WaxOverlays />
+        <HiddenArea>
+          <NotesArea view={main} />
+        </HiddenArea>
       </Wrapper>
     </ThemeProvider>
   );

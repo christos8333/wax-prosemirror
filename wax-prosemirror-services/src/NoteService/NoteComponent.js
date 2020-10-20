@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useContext, useState, useMemo } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { differenceBy } from 'lodash';
@@ -5,23 +6,20 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import NoteEditor from './NoteEditor';
 
-export default () => {
+export default ({ view: view }) => {
+  if (typeof view === 'undefined') return null;
   const context = useContext(WaxContext);
-  const {
-    view,
-    view: { main },
-  } = context;
 
   const {
     state: { tr },
-  } = main;
+  } = view;
 
   const [notes, setNotes] = useState([]);
   const cleanUpNoteViews = () => {
     if (view) {
       const currentNotes = DocumentHelpers.findChildrenByType(
-        main.state.doc,
-        main.state.schema.nodes.footnote,
+        view.state.doc,
+        view.state.schema.nodes.footnote,
         true,
       );
       if (notes.length > currentNotes.length) {
@@ -31,7 +29,7 @@ export default () => {
         });
 
         tr.setMeta('notesChanged', true);
-        main.dispatch(tr);
+        view.dispatch(tr);
 
         // const newView = Object.keys(view).reduce((object, key) => {
         //   if (key !== difference[0].node.attrs.id) {
@@ -44,12 +42,12 @@ export default () => {
   };
 
   useDeepCompareEffect(() => {
-    setNotes(updateNotes(main));
+    setNotes(updateNotes(view));
     cleanUpNoteViews();
-  }, [updateNotes(main)]);
+  }, [updateNotes(view)]);
 
   const noteComponent = useMemo(
-    () => <NoteEditor notes={notes} view={main} />,
+    () => <NoteEditor notes={notes} view={view} />,
     [notes],
   );
   return <>{noteComponent}</>;

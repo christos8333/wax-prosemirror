@@ -6,13 +6,13 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import NoteEditor from './NoteEditor';
 
 export default () => {
+  const context = useContext(WaxContext);
   const {
     view,
     view: { main },
-  } = useContext(WaxContext);
+  } = context;
 
   const [notes, setNotes] = useState([]);
-
   const cleanUpNoteViews = () => {
     if (view) {
       const currentNotes = DocumentHelpers.findChildrenByType(
@@ -21,18 +21,24 @@ export default () => {
         true,
       );
       if (notes.length > currentNotes.length) {
-        // TODO remove from context views that no loger exist
         const difference = differenceBy(notes, currentNotes, 'node.attrs.id');
         difference.forEach((item, i) => {
-          // delete view[item.node.attrs.id];
+          context.removeView(item.node.attrs.id);
         });
+
+        // const newView = Object.keys(view).reduce((object, key) => {
+        //   if (key !== difference[0].node.attrs.id) {
+        //     object[key] = view[key];
+        //   }
+        //   return object;
+        // }, {});
       }
     }
   };
 
   useDeepCompareEffect(() => {
     setNotes(updateNotes(main));
-    // cleanUpNoteViews();
+    cleanUpNoteViews();
   }, [updateNotes(main)]);
 
   const noteComponent = useMemo(

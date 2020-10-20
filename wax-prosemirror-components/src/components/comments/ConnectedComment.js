@@ -30,11 +30,14 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const { state, dispatch } = activeView;
   const viewId = comment.attrs.viewid;
+  let allCommentsWithSameId = [];
 
-  const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-    view[viewId].state,
-    comment,
-  );
+  if (view[viewId]) {
+    allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
+      view[viewId].state,
+      comment,
+    );
+  }
 
   const commentMark = state.schema.marks.comment;
 

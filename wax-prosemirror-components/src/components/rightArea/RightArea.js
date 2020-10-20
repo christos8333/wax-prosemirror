@@ -66,11 +66,11 @@ export default ({ area }) => {
       if (markNodeEl) {
         boxEl = document.querySelector(`div[data-box="${id}"]`);
       }
-      if (boxEl) boxHeight = parseInt(boxEl.offsetHeight, 10);
-
-      // where the box should move to
-      top = boxEl ? annotationTop : -2000;
-
+      if (boxEl) {
+        boxHeight = parseInt(boxEl.offsetHeight, 10);
+        // where the box should move to
+        top = annotationTop;
+      }
       // if the above comment box has already taken up the height, move down
       if (pos > 0) {
         const previousBox = marksNodes[area][pos - 1];

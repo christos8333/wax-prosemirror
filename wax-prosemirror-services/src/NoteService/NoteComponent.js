@@ -12,6 +12,10 @@ export default () => {
     view: { main },
   } = context;
 
+  const {
+    state: { tr },
+  } = main;
+
   const [notes, setNotes] = useState([]);
   const cleanUpNoteViews = () => {
     if (view) {
@@ -25,6 +29,9 @@ export default () => {
         difference.forEach((item, i) => {
           context.removeView(item.node.attrs.id);
         });
+
+        tr.setMeta('notesChanged', true);
+        main.dispatch(tr);
 
         // const newView = Object.keys(view).reduce((object, key) => {
         //   if (key !== difference[0].node.attrs.id) {

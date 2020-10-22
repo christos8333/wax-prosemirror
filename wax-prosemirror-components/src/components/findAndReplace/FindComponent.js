@@ -74,15 +74,7 @@ const CloseWrapper = styled.div`
 const ExpandedWrapper = styled.div``;
 
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
-  const {
-    app,
-    view: { main },
-    view,
-  } = useContext(WaxContext);
-
-  const {
-    state: { tr },
-  } = main;
+  const { app, view } = useContext(WaxContext);
 
   const searchRef = useRef(null);
   const [searchValue, setSearchValue] = useState('');
@@ -125,9 +117,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   };
 
   const closeFind = () => {
-    findAndReplacePlugin.props.setResults([]);
-    tr.setMeta('search', false);
-    main.dispatch(tr);
+    findAndReplacePlugin.props.setSearchText('');
+    each(view, (singleView, viewId) => {
+      singleView.dispatch(singleView.state.tr);
+    });
     close();
   };
 

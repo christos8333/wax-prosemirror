@@ -1,6 +1,8 @@
 /* eslint react/prop-types: 0 */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import { each } from 'lodash';
+import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';
@@ -110,10 +112,18 @@ const PreviousNextContainer = styled.div`
 `;
 
 const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
+  const { app, view } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setsearchValue] = useState(nonExpandedText);
+
+  const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
+
   const closeFind = () => {
+    findAndReplacePlugin.props.setSearchText('');
+    each(view, (singleView, viewId) => {
+      singleView.dispatch(singleView.state.tr);
+    });
     close();
   };
 

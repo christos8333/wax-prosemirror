@@ -89,16 +89,13 @@ export default props => {
           state && findAndReplacePlugin.getState(state);
         return findAndReplacePluginState.createdDecorations;
       },
-      setResults: results => {
-        allResults = results;
-      },
       setSearchText: text => {
         searchText = text;
       },
     },
     view(editorState) {
       return {
-        update: (view, prevState) => {},
+        update: (view, previousState) => {},
       };
     },
   });

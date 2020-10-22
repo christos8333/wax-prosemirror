@@ -13,6 +13,7 @@ export default props => {
         return DecorationSet.empty;
       },
       apply(tr, prev, _, newState) {
+        console.log('again in apply', allResults);
         let createDecoration;
         let decorations;
         let createdDecorations;

@@ -81,7 +81,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   } = useContext(WaxContext);
 
   const {
-    state: { doc, tr },
+    state: { tr },
   } = main;
 
   const searchRef = useRef(null);
@@ -106,17 +106,15 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const searchDocument = () => {
     setCounterText('0 of 0');
 
-    const slpitedViews = helpers.splitViews(view);
-
-    const results = helpers.findMatches(doc, searchValue);
-
-    findAndReplacePlugin.props.setResults(results);
-
-    if (results.length > 0) {
-      setCounterText(`1 of ${results.length}`);
+    const results = helpers.getMatchesByView(
+      view,
+      searchValue,
+      findAndReplacePlugin,
+    );
+    console.log('search');
+    if (results > 0) {
+      setCounterText(`1 of ${results}`);
     }
-    tr.setMeta('search', true);
-    main.dispatch(tr);
   };
 
   const closeFind = () => {

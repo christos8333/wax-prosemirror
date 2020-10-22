@@ -101,17 +101,16 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   useEffect(() => {
     delayedSearch();
-  }, [searchValue, delayedSearch]);
+  }, [searchValue, delayedSearch, JSON.stringify(main.state)]);
 
   const searchDocument = () => {
     setCounterText('0 of 0');
-
+    console.log('search');
     const results = helpers.getMatchesByView(
       view,
       searchValue,
       findAndReplacePlugin,
     );
-    console.log('search');
     if (results > 0) {
       setCounterText(`1 of ${results}`);
     }

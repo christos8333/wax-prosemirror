@@ -84,6 +84,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
+  const [isFirstRun, setFirstRun] = useState(true);
   const allStates = [];
 
   each(view, (singleView, viewId) => {
@@ -101,6 +102,12 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   useEffect(() => {
     delayedSearch();
+    if (isFirstRun) {
+      setTimeout(() => {
+        searchRef.current.focus();
+        setFirstRun(false);
+      });
+    }
   }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
 
   const searchDocument = () => {

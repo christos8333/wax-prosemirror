@@ -78,7 +78,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     app,
     view: { main },
     view,
-    activeViewId,
   } = useContext(WaxContext);
 
   const {
@@ -97,7 +96,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const delayedSearch = useCallback(
     debounce(() => searchDocument(), 300),
-    [searchValue, JSON.stringify(allStates)],
+    [searchValue],
   );
 
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
@@ -111,19 +110,17 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
 
   const searchDocument = () => {
-    console.log(activeViewId);
-    if (searchRef.current !== document.activeElement) {
-    } else {
-      setCounterText('0 of 0');
-      const results = helpers.getMatchesByView(
-        view,
-        searchValue,
-        findAndReplacePlugin,
-      );
-      if (results > 0) {
-        setCounterText(`1 of ${results}`);
-      }
-    }
+    setCounterText('0 of 0');
+    let counter = 0;
+    findAndReplacePlugin.props.setSearchText(searchValue);
+    counter = helpers.getMatchesByView(view, searchValue);
+
+    if (counter > 0) setCounterText(`1 of ${counter}`);
+
+    each(view, (singleView, viewId) => {
+      singleView.dispatch(singleView.state.tr);
+    });
+    // if (searchRef.current === document.activeElement)
   };
 
   const closeFind = () => {

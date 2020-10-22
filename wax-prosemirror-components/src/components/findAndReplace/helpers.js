@@ -52,16 +52,12 @@ const findMatches = (doc, searchValue) => {
   return results;
 };
 
-const getMatchesByView = (views, searchValue, findAndReplacePlugin) => {
+const getMatchesByView = (views, searchValue) => {
   let allResults = 0;
-  eachRight(views, (singleView, viewId) => {
+  each(views, (singleView, viewId) => {
     const results = findMatches(singleView.state.doc, searchValue);
     allResults += results.length;
-    findAndReplacePlugin.props.setResults(results);
-    singleView.state.tr.setMeta('search', true);
-    singleView.dispatch(singleView.state.tr);
   });
-  views.main.dispatch(views.main.state.tr);
   return allResults;
 };
 

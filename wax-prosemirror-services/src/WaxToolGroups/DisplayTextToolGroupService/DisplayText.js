@@ -51,11 +51,11 @@ class DisplayText extends ToolGroup {
 
     const tabList = [first, second];
 
-    const TabsComponent = useMemo(
-      () => <Tabs key={uuidv4()} tabList={tabList} />,
-      [],
-    );
-    return TabsComponent;
+    // const TabsComponent = useMemo(
+    //   () => <Tabs key={uuidv4()} tabList={tabList} />,
+    //   [],
+    // );
+    return <Tabs key={uuidv4()} tabList={tabList} />;
   }
 }
 

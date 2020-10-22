@@ -5,6 +5,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { th } from '@pubsweet/ui-toolkit';
+
 import {
   faCheck,
   faParagraph,
@@ -23,7 +25,7 @@ const Svg = styled.svg.attrs(() => ({
 }))`
   height: 24px;
   width: 24px;
-  fill: gray;
+  fill: ${th('colorPrimary')};
   vertical-align: top;
 `;
 

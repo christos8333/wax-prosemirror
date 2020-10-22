@@ -13,7 +13,7 @@ import '~../../katex/dist/katex.min.css';
 
 const divider = css`
   .panelGroup {
-    background: ${th('colorBackgroundHue')};
+    background: #fff;
   }
   .divider {
     > div {
@@ -67,7 +67,7 @@ const TopMenu = styled.div`
   }
   > div:not(:last-child) {
     border-right: ${th('borderWidth')} ${th('borderStyle')}
-      ${th('colorFurniture')};
+      ${th('colorBorder')};
   }
   button: {
     height: 20px;
@@ -117,13 +117,13 @@ const CommentsContainer = styled.div`
 `;
 
 const CommentsContainerNotes = styled.div`
-  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   height: 100%;
 `;
 
 const NotesAreaContainer = styled.div`
+  box-shadow: 0 0 8px #ecedf1;
   background: #fff;
   display: flex;
   flex-direction: row;

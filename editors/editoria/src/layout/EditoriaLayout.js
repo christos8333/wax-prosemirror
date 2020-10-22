@@ -4,7 +4,6 @@ import PanelGroup from 'react-panelgroup';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
-import { debounce } from 'lodash';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
@@ -13,7 +12,7 @@ import '~../../katex/dist/katex.min.css';
 
 const divider = css`
   .panelGroup {
-    background: ${th('colorBackgroundHue')};
+    background: #fff;
   }
   .divider {
     > div {
@@ -111,7 +110,6 @@ const CommentsContainer = styled.div`
 `;
 
 const CommentsContainerNotes = styled.div`
-  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   width: 35%;
@@ -134,6 +132,7 @@ const NotesAreaContainer = styled.div`
 `;
 
 const NotesContainer = styled.div`
+  box-shadow: 0 0 8px #ecedf1;
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;

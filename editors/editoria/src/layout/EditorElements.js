@@ -258,7 +258,7 @@ export default css`
   }
 
   span.search-result {
-    background: grey;
+    background: #bee594;
   }
 
   /* == Math Nodes ======================================== */

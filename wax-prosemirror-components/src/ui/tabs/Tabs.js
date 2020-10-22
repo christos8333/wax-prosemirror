@@ -39,7 +39,7 @@ const Tab = styled.div`
 const Content = styled.div`
   width: 100%;
   height: 100%;
-  background: gainsboro;
+  background: #fff;
 `;
 
 const TabsPane = props => {

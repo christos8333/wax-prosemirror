@@ -18,12 +18,10 @@ const Wrapper = styled.div`
   font-size: 15px;
   width: 400px;
   height: 300px;
-  background: ${th('colorBackgroundHue')};
+  background: #fff;
   font-family: ${th('fontTools')};
-  border-radius: 1.03093% / 8%;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-  transform: rotate(0deg);
   transform-origin: 50% 50% 0px;
   padding: ${grid(2)};
 `;

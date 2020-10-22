@@ -1,12 +1,18 @@
 /* eslint react/prop-types: 0 */
-
-import React, { useState, useRef, useContext } from 'react';
-import { each } from 'lodash';
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+  useEffect,
+} from 'react';
+import { each, debounce } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';
 import CheckBox from '../../ui/inputs/CheckBox';
+import helpers from './helpers';
 
 const Wrapper = styled.div`
   font-size: 15px;
@@ -36,6 +42,22 @@ const InputLabel = styled.div`
   padding: ${grid(2)} ${grid(0)} ${grid(2)} ${grid(0)};
   font-size: 16px;
   color: #4b5871;
+`;
+
+const SearchInputWrapper = styled.div`
+  input {
+    padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
+    width: 89%;
+  }
+`;
+
+const CounterInput = styled.span`
+  position: absolute;
+  right: 14px;
+  top: 72px;
+  z-index: 1;
+  font-size: 12px;
+  -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
 `;
 
 const StyledIcon = styled(Icon)`
@@ -115,9 +137,51 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
   const { app, view } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
-  const [searchValue, setsearchValue] = useState(nonExpandedText);
-
+  const [searchValue, setSearchValue] = useState(nonExpandedText);
+  const [counterText, setCounterText] = useState('0 of 0');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
+
+  const allStates = [];
+
+  each(view, (singleView, viewId) => {
+    allStates.push(singleView.state);
+  });
+
+  const delayedSearch = useCallback(
+    debounce(() => searchDocument(), 300),
+    [searchValue],
+  );
+
+  const onChangeSearchInput = () => {
+    setSearchValue(searchRef.current.value);
+  };
+
+  useEffect(() => {
+    delayedSearch();
+  }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
+
+  const searchDocument = () => {
+    setCounterText('0 of 0');
+    let counter = 0;
+    findAndReplacePlugin.props.setSearchText(searchValue);
+    counter = helpers.getMatchesByView(view, searchValue);
+
+    if (counter > 0) setCounterText(`1 of ${counter}`);
+
+    if (searchRef.current === document.activeElement) {
+      each(view, (singleView, viewId) => {
+        singleView.dispatch(singleView.state.tr);
+      });
+    }
+  };
+
+  const onChangeReplaceInput = () => {};
+
+  const replace = () => {
+    // const { from, to } = results[0];
+    // dispatch(state.tr.insertText(replace, from, to));
+  };
+  const replaceAll = () => {};
 
   const closeFind = () => {
     findAndReplacePlugin.props.setSearchText('');
@@ -126,12 +190,6 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
     });
     close();
   };
-
-  const onChangeSearchInput = () => {};
-  const onChangeReplaceInput = () => {};
-
-  const replace = () => {};
-  const replaceAll = () => {};
 
   return (
     <Wrapper>
@@ -142,13 +200,17 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
         </CloseWrapper>
       </TitleContainer>
       <InputLabel>Find</InputLabel>
-      <FindReplaceInput
-        type="text"
-        ref={searchRef}
-        placeholder="Something is this doc"
-        value={searchValue}
-        onChange={onChangeSearchInput}
-      />
+
+      <SearchInputWrapper>
+        <FindReplaceInput
+          type="text"
+          ref={searchRef}
+          placeholder="Something is this doc"
+          value={searchValue}
+          onChange={onChangeSearchInput}
+        />
+        <CounterInput> {counterText} </CounterInput>
+      </SearchInputWrapper>
       <InputLabel>Replace with</InputLabel>
       <FindReplaceInput
         type="text"

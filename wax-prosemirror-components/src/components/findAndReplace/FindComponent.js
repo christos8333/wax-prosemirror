@@ -12,7 +12,6 @@ import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import Icon from '../../helpers/Icon';
-
 import helpers from './helpers';
 
 const Wrapper = styled.div`
@@ -79,7 +78,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const searchRef = useRef(null);
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
-
+  const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
   const allStates = [];
 
   each(view, (singleView, viewId) => {
@@ -90,8 +89,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     debounce(() => searchDocument(), 300),
     [searchValue],
   );
-
-  const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
   const onChange = () => {
     setSearchValue(searchRef.current.value);

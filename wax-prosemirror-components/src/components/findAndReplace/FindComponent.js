@@ -70,6 +70,12 @@ const CloseWrapper = styled.div`
   margin-left: 1%;
 `;
 
+const PreviousNextButton = styled.span`
+  &:focus {
+    outline: none;
+  }
+`;
+
 const ExpandedWrapper = styled.div``;
 
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
@@ -126,6 +132,14 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     setPreviousSearcValue(searchValue);
   };
 
+  const findNext = () => {
+    console.log('next');
+  };
+
+  const findPrevious = () => {
+    console.log('previous');
+  };
+
   return (
     <Wrapper>
       <SingleRow>
@@ -139,8 +153,12 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
           />
           <CounterInput> {counterText} </CounterInput>
         </SearchInputWrapper>
-        <StyledIcon name="navigatePrevious" />
-        <StyledIcon name="navigateNext" />
+        <PreviousNextButton onClick={findPrevious} role="button" tabIndex="0">
+          <StyledIcon name="navigatePrevious" />
+        </PreviousNextButton>
+        <PreviousNextButton onClick={findNext} role="button" tabIndex="0">
+          <StyledIcon name="navigateNext" />
+        </PreviousNextButton>
 
         <ExpandedWrapper onClick={showExpanded}>
           <StyledIcon name="more" />

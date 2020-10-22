@@ -68,7 +68,6 @@ const StyledIcon = styled(Icon)`
 
 const CloseWrapper = styled.div`
   margin-left: auto;
-  border-left: 1px solid #e0e2e7;
 `;
 
 const FindReplaceInput = styled.input`
@@ -118,7 +117,7 @@ const ButtonReplaceAll = styled.button`
 `;
 
 const PreviousNextContainer = styled.div`
-  margin: 5px 0 0 auto;
+  margin: 3px 0 0 auto;
 
   svg {
     padding: ${grid(2)};
@@ -130,6 +129,12 @@ const PreviousNextContainer = styled.div`
 
   svg:first-child {
     margin-right: 20px;
+  }
+`;
+
+const PreviousNextButton = styled.span`
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -206,6 +211,14 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
     close();
   };
 
+  const findNext = () => {
+    console.log('next');
+  };
+
+  const findPrevious = () => {
+    console.log('previous');
+  };
+
   return (
     <Wrapper>
       <TitleContainer>
@@ -240,8 +253,12 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>
         <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
         <PreviousNextContainer>
-          <StyledIcon name="navigatePrevious" />
-          <StyledIcon name="navigateNext" />
+          <PreviousNextButton onClick={findPrevious} role="button" tabIndex="0">
+            <StyledIcon name="navigatePrevious" />
+          </PreviousNextButton>
+          <PreviousNextButton onClick={findNext} role="button" tabIndex="0">
+            <StyledIcon name="navigateNext" />
+          </PreviousNextButton>
         </PreviousNextContainer>
       </ControlContainer>
     </Wrapper>

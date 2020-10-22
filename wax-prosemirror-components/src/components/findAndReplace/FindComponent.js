@@ -117,10 +117,11 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
     if (counter > 0) setCounterText(`1 of ${counter}`);
 
-    each(view, (singleView, viewId) => {
-      singleView.dispatch(singleView.state.tr);
-    });
-    // if (searchRef.current === document.activeElement)
+    if (searchRef.current === document.activeElement) {
+      each(view, (singleView, viewId) => {
+        singleView.dispatch(singleView.state.tr);
+      });
+    }
   };
 
   const closeFind = () => {

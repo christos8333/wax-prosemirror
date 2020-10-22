@@ -1,47 +1,6 @@
 import { each, eachRight } from 'lodash';
 
 const findMatches = (doc, searchValue) => {
-  const results = [];
-  const mergedTextNodes = [];
-  let index = 0;
-
-  doc.descendants((node, pos) => {
-    if (node.isText) {
-      if (mergedTextNodes[index]) {
-        mergedTextNodes[index] = {
-          text: mergedTextNodes[index].text + node.text,
-          pos: mergedTextNodes[index].pos,
-        };
-      } else {
-        mergedTextNodes[index] = {
-          text: node.text,
-          pos,
-        };
-      }
-    } else {
-      index += 1;
-    }
-  });
-
-  mergedTextNodes.forEach(({ text, pos }) => {
-    const search = RegExp(searchValue, 'gui');
-    let m;
-    // eslint-disable-next-line no-cond-assign
-    while ((m = search.exec(text))) {
-      if (m[0] === '') {
-        break;
-      }
-
-      results.push({
-        from: pos + m.index,
-        to: pos + m.index + m[0].length,
-      });
-    }
-  });
-  return results;
-};
-
-const findMatchesOnMain = (doc, searchValue) => {
   const allNodes = [];
 
   doc.descendants((node, pos) => {
@@ -96,19 +55,11 @@ const findMatchesOnMain = (doc, searchValue) => {
 const getMatchesByView = (views, searchValue, findAndReplacePlugin) => {
   let allResults = 0;
   each(views, (singleView, viewId) => {
-    if (viewId === 'main') {
-      const results = findMatchesOnMain(singleView.state.doc, searchValue);
-      allResults += results.length;
-      findAndReplacePlugin.props.setResults(results);
-      singleView.state.tr.setMeta('search', true);
-      singleView.dispatch(singleView.state.tr);
-    } else {
-      const results = findMatches(singleView.state.doc, searchValue);
-      allResults += results.length;
-      findAndReplacePlugin.props.setResults(results);
-      singleView.state.tr.setMeta('search', true);
-      singleView.dispatch(singleView.state.tr);
-    }
+    const results = findMatches(singleView.state.doc, searchValue);
+    allResults += results.length;
+    findAndReplacePlugin.props.setResults(results);
+    singleView.state.tr.setMeta('search', true);
+    singleView.dispatch(singleView.state.tr);
     return allResults;
   });
   return allResults;

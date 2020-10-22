@@ -105,7 +105,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const searchDocument = () => {
     setCounterText('0 of 0');
-    console.log('search');
+
     const results = helpers.getMatchesByView(
       view,
       searchValue,
@@ -122,6 +122,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     main.dispatch(tr);
     close();
   };
+
+  if (searchRef.current !== document.activeElement) {
+    console.log('not input');
+  }
 
   const showExpanded = () => {
     expand();

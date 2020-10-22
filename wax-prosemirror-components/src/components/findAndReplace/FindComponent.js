@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { debounce } from 'lodash';
+import { debounce, each } from 'lodash';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -78,6 +78,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     app,
     view: { main },
     view,
+    activeViewId,
   } = useContext(WaxContext);
 
   const {
@@ -88,9 +89,15 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
 
+  const allStates = [];
+
+  each(view, (singleView, viewId) => {
+    allStates.push(singleView.state);
+  });
+
   const delayedSearch = useCallback(
     debounce(() => searchDocument(), 300),
-    [searchValue],
+    [searchValue, JSON.stringify(allStates)],
   );
 
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
@@ -101,18 +108,21 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   useEffect(() => {
     delayedSearch();
-  }, [searchValue, delayedSearch, JSON.stringify(main.state)]);
+  }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
 
   const searchDocument = () => {
-    setCounterText('0 of 0');
-
-    const results = helpers.getMatchesByView(
-      view,
-      searchValue,
-      findAndReplacePlugin,
-    );
-    if (results > 0) {
-      setCounterText(`1 of ${results}`);
+    console.log(activeViewId);
+    if (searchRef.current !== document.activeElement) {
+    } else {
+      setCounterText('0 of 0');
+      const results = helpers.getMatchesByView(
+        view,
+        searchValue,
+        findAndReplacePlugin,
+      );
+      if (results > 0) {
+        setCounterText(`1 of ${results}`);
+      }
     }
   };
 
@@ -122,10 +132,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     main.dispatch(tr);
     close();
   };
-
-  if (searchRef.current !== document.activeElement) {
-    console.log('not input');
-  }
 
   const showExpanded = () => {
     expand();

@@ -15,8 +15,8 @@ export default props => {
       apply(tr, prev, _, newState) {
         let createDecoration;
         let decorations;
-        let createdDecorations;
-        DecorationSet.empty;
+        let createdDecorations = DecorationSet.empty;
+
         if (allResults.length > 0) {
           decorations = allResults.map((result, index) => {
             return Decoration.inline(result.from, result.to, {

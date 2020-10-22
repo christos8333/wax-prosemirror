@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { each, debounce } from 'lodash';
+import { each, eachRight, debounce } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
@@ -138,6 +138,7 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);
+  const [replaceValue, setReplaceValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
@@ -175,13 +176,27 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
     }
   };
 
-  const onChangeReplaceInput = () => {};
+  const onChangeReplaceInput = () => {
+    setReplaceValue(replaceRef.current.value);
+  };
 
   const replace = () => {
     // const { from, to } = results[0];
     // dispatch(state.tr.insertText(replace, from, to));
   };
-  const replaceAll = () => {};
+  const replaceAll = () => {
+    each(view, (singleView, viewId) => {
+      const results = helpers.findMatches(singleView.state.doc, searchValue);
+      const {
+        state: { tr },
+      } = singleView;
+
+      eachRight(results, result => {
+        tr.insertText(replaceValue, result.from, result.to);
+      });
+      singleView.dispatch(tr);
+    });
+  };
 
   const closeFind = () => {
     findAndReplacePlugin.props.setSearchText('');

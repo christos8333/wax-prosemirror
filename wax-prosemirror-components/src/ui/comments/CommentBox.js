@@ -7,20 +7,20 @@ import CommentItemList from './CommentItemList';
 import CommentReply from './CommentReply';
 
 const inactive = css`
-  background: #e2e2e2;
+  background: ${th('colorBackgroundHue')};
   cursor: pointer;
   transition: box-shadow 0.2s;
   /* transition: background-color 0.2s; */
 
   &:hover {
     /* background: white; */
-    box-shadow: 0 0 1px 2px gray;
+    box-shadow: 0 0 1px 2px ${th('colorBackgroundTabs')};
   }
 `;
 
 const Wrapper = styled.div`
   background: white;
-  border: 1px solid gray;
+  border: 1px solid ${th('colorBackgroundTabs')};
   border-radius: 3px;
   box-sizing: border-box;
   display: flex;
@@ -38,13 +38,15 @@ const Head = styled.div`
 
 const Resolve = styled.button`
   align-self: flex-end;
+  border: none;
+  background: none;
+  color: #0042c7;
   cursor: pointer;
   margin-bottom: 12px;
 
   &:hover {
-    background: gold;
-    border-color: gold;
-    border-radius: 3px;
+    background: ${th('colorBackgroundHue')};
+    border: none;
   }
 `;
 

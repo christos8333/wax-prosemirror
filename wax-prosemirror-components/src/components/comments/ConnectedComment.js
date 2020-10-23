@@ -131,9 +131,9 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const onTextAreaBlur = (content, isNewComment) => {
     // TODO Save into local storage
-    if (content !== '') {
-      onClickPost(content);
-    }
+    // if (content !== '') {
+    //   onClickPost(content);
+    // }
 
     if (content === '' && isNewComment) {
       onClickResolve();

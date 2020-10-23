@@ -14,6 +14,7 @@ const cokoTheme = {
   colorFurniture: '#CCC',
   colorBorder: '#EBEBF0',
   colorBackgroundHue: '#F1F5FF',
+  colorBackgroundTabs: '#e1ebff',
   colorSuccess: '#008800',
   colorError: 'indianred',
   colorText: '#111',

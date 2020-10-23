@@ -1,5 +1,5 @@
 import React from 'react';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, th } from '@pubsweet/ui-toolkit';
 import styled from 'styled-components';
 
 import NoteNumber from './NoteNumber';
@@ -23,7 +23,7 @@ const NoteStyled = styled.div`
   height: auto;
   margin-top: 10px;
   height: 100%;
-  border-bottom: 1px solid black;
+  box-shadow: 0 2px 2px -2px ${th('colorPrimary')};
 
   &:focus {
     outline: none;

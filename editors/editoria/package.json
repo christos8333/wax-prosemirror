@@ -1,23 +1,23 @@
 {
   "name": "editoria",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "private": true,
   "dependencies": {
     "@guardian/prosemirror-invisibles": "^1.2.0",
+    "@pubsweet/ui-toolkit": "^2.3.1",
+    "fontsource-merriweather": "^3.0.9",
     "prosemirror-tables": "^1.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^4.2.0",
-    "@pubsweet/ui-toolkit": "^2.3.1",
     "react-panelgroup": "^1.0.10",
-    "wax-prosemirror-core": "^0.0.20",
-    "wax-prosemirror-components": "^0.0.20",
-    "wax-prosemirror-plugins": "^0.0.20",
-    "wax-prosemirror-services": "^0.0.20",
-    "fontsource-merriweather": "^3.0.9",
+    "styled-components": "^4.2.0",
     "typeface-fira-sans-condensed": "^0.0.54",
+    "typeface-inter": "^1.1.13",
     "typeface-vollkorn": "^0.0.54",
-    "typeface-inter": "^1.1.13"
+    "wax-prosemirror-components": "^0.0.21",
+    "wax-prosemirror-core": "^0.0.21",
+    "wax-prosemirror-plugins": "^0.0.21",
+    "wax-prosemirror-services": "^0.0.21"
   },
   "scripts": {
     "start": "react-app-rewired start",

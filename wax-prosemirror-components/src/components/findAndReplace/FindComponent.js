@@ -7,7 +7,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { debounce, each } from 'lodash';
+import { debounce, each, eachRight } from 'lodash';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -119,7 +119,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     if (counter > 0) setCounterText(`1 of ${counter}`);
 
     if (searchRef.current === document.activeElement) {
-      each(view, (singleView, viewId) => {
+      eachRight(view, (singleView, viewId) => {
         singleView.dispatch(singleView.state.tr);
       });
     }

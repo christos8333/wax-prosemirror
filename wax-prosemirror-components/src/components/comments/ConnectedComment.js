@@ -128,7 +128,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     //   onClickPost(content);
     // }
 
-    if (content === '' && isNewComment) {
+    if (comment.attrs.conversation.length === 0 && isNewComment) {
       onClickResolve();
       activeView.focus();
     }

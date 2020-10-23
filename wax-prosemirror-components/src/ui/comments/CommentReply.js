@@ -20,6 +20,10 @@ const ReplyTextArea = styled.textarea`
   right: 5px;
   font-family: ${th('fontWriting')};
   width: 100%;
+
+  &:focus {
+    outline: 1px solid ${th('colorPrimary')};
+  }
 `;
 
 const ActionWrapper = styled.div`

@@ -51,7 +51,7 @@ const Resolve = styled.button`
 `;
 
 const StyledReply = styled(CommentReply)`
-  border-top: ${props => !props.isNewComment && '1px solid gray'};
+  border-top: ${props => !props.isNewComment && `3px solid #E1EBFF`};
 `;
 
 const CommentBox = props => {

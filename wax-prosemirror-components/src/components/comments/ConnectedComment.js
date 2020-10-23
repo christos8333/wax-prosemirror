@@ -128,10 +128,12 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     //   onClickPost(content);
     // }
 
-    if (comment.attrs.conversation.length === 0 && isNewComment) {
-      onClickResolve();
-      activeView.focus();
-    }
+    setTimeout(() => {
+      if (comment.attrs.conversation.length === 0 && isNewComment) {
+        onClickResolve();
+        activeView.focus();
+      }
+    }, 200);
   };
 
   const MemorizedComponent = useMemo(

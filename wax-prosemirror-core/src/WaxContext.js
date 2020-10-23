@@ -18,10 +18,8 @@ export default props => {
     view: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
-    removeView: view => {
-      const newContext = { ...context, view };
-
-      setContext({ ...newContext });
+    removeView: deletedView => {
+      delete context.view[deletedView];
     },
     updateView: (newView, activeViewId) => {
       const view = Object.assign(context.view, newView);

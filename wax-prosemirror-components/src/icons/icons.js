@@ -5,6 +5,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { th } from '@pubsweet/ui-toolkit';
+
 import {
   faCheck,
   faParagraph,
@@ -23,7 +25,7 @@ const Svg = styled.svg.attrs(() => ({
 }))`
   height: 24px;
   width: 24px;
-  fill: gray;
+  fill: ${th('colorPrimary')};
   vertical-align: top;
 `;
 
@@ -102,6 +104,7 @@ export default {
   ),
   more: ({ className }) => (
     <Svg className={className} viewBox="0 0 24 24">
+      <title> Expand </title>
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
     </Svg>
@@ -216,6 +219,33 @@ export default {
     <Svg className={className} viewBox="0 0 24 24">
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path d="M5 4v3h5.5v12h3V7H19V4z" />
+    </Svg>
+  ),
+  findAndReplace: ({ className }) => (
+    <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M11 6c1.38 0 2.63.56 3.54 1.46L12 10h6V4l-2.05 2.05C14.68 4.78 12.93 4 11 4c-3.53 0-6.43 2.61-6.92 6H6.1c.46-2.28 2.48-4 4.9-4zm5.64 9.14c.66-.9 1.12-1.97 1.28-3.14H15.9c-.46 2.28-2.48 4-4.9 4-1.38 0-2.63-.56-3.54-1.46L10 12H4v6l2.05-2.05C7.32 17.22 9.07 18 11 18c1.55 0 2.98-.51 4.14-1.36L20 21.49 21.49 20l-4.85-4.86z" />
+    </Svg>
+  ),
+  navigatePrevious: ({ className }) => (
+    <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <title>Previous</title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+    </Svg>
+  ),
+  navigateNext: ({ className }) => (
+    <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <title>Next</title>
+      <path d="M0 0h24v24H0V0z" fill="none" />
+      <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+    </Svg>
+  ),
+  close: ({ className }) => (
+    <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <title> Close </title>
+      <path d="M0 0h24v24H0V0z" fill="none" />
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
     </Svg>
   ),
 };

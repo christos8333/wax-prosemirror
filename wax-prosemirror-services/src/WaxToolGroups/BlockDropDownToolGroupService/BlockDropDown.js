@@ -48,7 +48,7 @@ class BlockDropDown extends ToolGroup {
     ];
   }
   renderTools(view) {
-    if (isEmpty(view)) return null;
+    if (isEmpty(view) || window.innerWidth > 600) return null;
 
     const { activeViewId } = useContext(WaxContext);
 

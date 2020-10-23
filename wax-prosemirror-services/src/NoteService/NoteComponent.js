@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useContext, useState, useMemo } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { differenceBy } from 'lodash';
@@ -5,38 +6,48 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import NoteEditor from './NoteEditor';
 
-export default () => {
+export default ({ view: view }) => {
+  if (typeof view === 'undefined') return null;
+  const context = useContext(WaxContext);
+
   const {
-    view,
-    view: { main },
-  } = useContext(WaxContext);
+    state: { tr },
+  } = view;
 
   const [notes, setNotes] = useState([]);
-
   const cleanUpNoteViews = () => {
     if (view) {
       const currentNotes = DocumentHelpers.findChildrenByType(
-        main.state.doc,
-        main.state.schema.nodes.footnote,
+        view.state.doc,
+        view.state.schema.nodes.footnote,
         true,
       );
       if (notes.length > currentNotes.length) {
-        // TODO remove from context views that no loger exist
         const difference = differenceBy(notes, currentNotes, 'node.attrs.id');
         difference.forEach((item, i) => {
-          // delete view[item.node.attrs.id];
+          context.removeView(item.node.attrs.id);
         });
+
+        tr.setMeta('notesChanged', true);
+        view.dispatch(tr);
+
+        // const newView = Object.keys(view).reduce((object, key) => {
+        //   if (key !== difference[0].node.attrs.id) {
+        //     object[key] = view[key];
+        //   }
+        //   return object;
+        // }, {});
       }
     }
   };
 
   useDeepCompareEffect(() => {
-    setNotes(updateNotes(main));
-    // cleanUpNoteViews();
-  }, [updateNotes(main)]);
+    setNotes(updateNotes(view));
+    cleanUpNoteViews();
+  }, [updateNotes(view)]);
 
   const noteComponent = useMemo(
-    () => <NoteEditor notes={notes} view={main} />,
+    () => <NoteEditor notes={notes} view={view} />,
     [notes],
   );
   return <>{noteComponent}</>;

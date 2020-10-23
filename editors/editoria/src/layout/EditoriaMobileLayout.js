@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -13,7 +13,7 @@ import '~../../katex/dist/katex.min.css';
 
 const divider = css`
   .panelGroup {
-    background: ${th('colorBackgroundHue')};
+    background: #fff;
   }
   .divider {
     > div {
@@ -67,7 +67,7 @@ const TopMenu = styled.div`
   }
   > div:not(:last-child) {
     border-right: ${th('borderWidth')} ${th('borderStyle')}
-      ${th('colorFurniture')};
+      ${th('colorBorder')};
   }
   button: {
     height: 20px;
@@ -117,13 +117,13 @@ const CommentsContainer = styled.div`
 `;
 
 const CommentsContainerNotes = styled.div`
-  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   height: 100%;
 `;
 
 const NotesAreaContainer = styled.div`
+  box-shadow: 0 0 8px #ecedf1;
   background: #fff;
   display: flex;
   flex-direction: row;
@@ -156,7 +156,7 @@ const onResizeEnd = arr => {
   notesHeight = arr[1].size;
 };
 
-const hasNotes = main => {
+const getNotes = main => {
   const notes = DocumentHelpers.findChildrenByType(
     main.state.doc,
     main.state.schema.nodes.footnote,
@@ -175,8 +175,21 @@ const EditoriaLayout = ({ editor }) => {
     view: { main },
   } = useContext(WaxContext);
 
-  const notes = main && hasNotes(main);
-  const showNotes = notes && !!notes.length && notes.length > 0;
+  const notes = main && getNotes(main);
+  const areNotes = notes && !!notes.length && notes.length > 0;
+
+  const [hasNotes, setHasNotes] = useState(areNotes);
+
+  const showNotes = () => {
+    setHasNotes(areNotes);
+  };
+
+  const delayedShowedNotes = useCallback(
+    setTimeout(() => showNotes(), 100),
+    [],
+  );
+
+  useEffect(() => {}, [delayedShowedNotes]);
 
   return (
     <ThemeProvider theme={cokoTheme}>
@@ -191,7 +204,7 @@ const EditoriaLayout = ({ editor }) => {
               direction="column"
               panelWidths={[
                 { size: surfaceHeight, resize: 'stretch' },
-                { size: notesHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'resize' },
               ]}
               onResizeEnd={onResizeEnd}
             >
@@ -202,10 +215,10 @@ const EditoriaLayout = ({ editor }) => {
                 </CommentsContainer>
               </WaxSurfaceScroll>
 
-              {showNotes && (
+              {hasNotes && (
                 <NotesAreaContainer>
                   <NotesContainer id="notes-container">
-                    <NotesArea />
+                    <NotesArea view={main} />
                   </NotesContainer>
                   <CommentsContainerNotes>
                     <RightArea area="notes" />

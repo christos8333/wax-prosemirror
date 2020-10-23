@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
-
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';
 
@@ -13,7 +12,7 @@ import '~../../katex/dist/katex.min.css';
 
 const divider = css`
   .panelGroup {
-    background: ${th('colorBackgroundHue')};
+    background: #fff;
   }
   .divider {
     > div {
@@ -60,6 +59,14 @@ const TopMenu = styled.div`
     border-right: ${th('borderWidth')} ${th('borderStyle')}
       ${th('colorFurniture')};
   }
+
+  > div:last-child {
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  > div[data-name="Tables"]{
+    border-right: none;
+  }
 `;
 
 const SideMenu = styled.div`
@@ -103,7 +110,6 @@ const CommentsContainer = styled.div`
 `;
 
 const CommentsContainerNotes = styled.div`
-  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   width: 35%;
@@ -126,6 +132,7 @@ const NotesAreaContainer = styled.div`
 `;
 
 const NotesContainer = styled.div`
+  box-shadow: 0 0 8px #ecedf1;
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
@@ -142,7 +149,7 @@ const onResizeEnd = arr => {
   notesHeight = arr[1].size;
 };
 
-const hasNotes = main => {
+const getNotes = main => {
   const notes = DocumentHelpers.findChildrenByType(
     main.state.doc,
     main.state.schema.nodes.footnote,
@@ -152,7 +159,6 @@ const hasNotes = main => {
 };
 
 const LeftSideBar = ComponentPlugin('leftSideBar');
-// const RightSideBar = ComponentPlugin('rightSideBar');
 const TopBar = ComponentPlugin('topBar');
 const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
@@ -163,8 +169,21 @@ const EditoriaLayout = ({ editor }) => {
     view: { main },
   } = useContext(WaxContext);
 
-  const notes = main && hasNotes(main);
-  const showNotes = notes && !!notes.length && notes.length > 0;
+  const notes = main && getNotes(main);
+  const areNotes = notes && !!notes.length && notes.length > 0;
+
+  const [hasNotes, setHasNotes] = useState(areNotes);
+
+  const showNotes = () => {
+    setHasNotes(areNotes);
+  };
+
+  const delayedShowedNotes = useCallback(
+    setTimeout(() => showNotes(), 100),
+    [],
+  );
+
+  useEffect(() => {}, [delayedShowedNotes]);
 
   return (
     <ThemeProvider theme={cokoTheme}>
@@ -183,7 +202,7 @@ const EditoriaLayout = ({ editor }) => {
               direction="column"
               panelWidths={[
                 { size: surfaceHeight, resize: 'stretch' },
-                { size: notesHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'resize' },
               ]}
               onResizeEnd={onResizeEnd}
             >
@@ -194,10 +213,10 @@ const EditoriaLayout = ({ editor }) => {
                 </CommentsContainer>
               </WaxSurfaceScroll>
 
-              {showNotes && (
+              {hasNotes && (
                 <NotesAreaContainer>
                   <NotesContainer id="notes-container">
-                    <NotesArea />
+                    <NotesArea view={main} />
                   </NotesContainer>
                   <CommentsContainerNotes>
                     <RightArea area="notes" />
@@ -207,7 +226,6 @@ const EditoriaLayout = ({ editor }) => {
             </PanelGroup>
           </EditorArea>
         </Main>
-
         <WaxOverlays />
       </Wrapper>
     </ThemeProvider>

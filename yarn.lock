@@ -17493,6 +17493,11 @@ typeface-fira-sans-condensed@^0.0.54:
   resolved "https://registry.yarnpkg.com/typeface-fira-sans-condensed/-/typeface-fira-sans-condensed-0.0.54.tgz#5fe692b4d1ec4083f198e22b8bb1e8b1ed541db0"
   integrity sha512-Y/+UOdN75s1hpOoJhSavN1eTfmXLrUPHDeo2syCpnq18PAKQpglvRRM+3pDWtCjsFbni8N/1brgEV94Z9FNI9g==
 
+typeface-inter@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/typeface-inter/-/typeface-inter-1.1.13.tgz#e6ce2acbfed8ae97f4c3f4b205b5cb26c9e24628"
+  integrity sha512-XHTUTR+qqsVAtr1mjJBu3f5q4e3q6PhuhLXJhQbRGKwqLrQmhC7dCoZ5n5Vd+dEmZvc3TdHhOEYfjI01xzM7HA==
+
 typeface-vollkorn@^0.0.54:
   version "0.0.54"
   resolved "https://registry.yarnpkg.com/typeface-vollkorn/-/typeface-vollkorn-0.0.54.tgz#1288bcd7d81c3dd7cd419e4448580d2a0b0640b2"

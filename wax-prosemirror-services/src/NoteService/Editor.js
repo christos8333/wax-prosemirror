@@ -43,9 +43,7 @@ export default ({ node, view }) => {
         transformPasted: slice => {
           return transformPasted(slice, noteView);
         },
-        handleKeyPress: (noteEditorView, from, to, content) => {
-          updateMainView = false;
-        },
+
         attributes: {
           spellcheck: 'false',
         },
@@ -88,11 +86,9 @@ export default ({ node, view }) => {
     });
 
     // TODO Remove timeout and use state to check if noteView has changed
-    if (updateMainView) {
-      setTimeout(() => {
-        context.updateView({}, noteId);
-      }, 20);
-    }
+    setTimeout(() => {
+      context.updateView({}, noteId);
+    }, 20);
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;
@@ -105,7 +101,6 @@ export default ({ node, view }) => {
 
       if (outerTr.docChanged)
         view.dispatch(outerTr.setMeta('outsideView', 'notes'));
-      updateMainView = true;
     }
   };
 

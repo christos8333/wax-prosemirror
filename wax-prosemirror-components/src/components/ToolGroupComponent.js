@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 
   > button,
   > div {
-    margin: 0 2px;
+    margin: 0 5px;
   }
 `;
 

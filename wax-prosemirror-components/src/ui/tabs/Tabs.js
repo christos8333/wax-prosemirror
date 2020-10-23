@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import Icon from '../buttons/Icon';
+import Icon from '../../helpers/Icon';
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,15 +12,15 @@ const Wrapper = styled.div`
 const Tabs = styled.div`
   display: flex;
   flex-direction: column;
-  background: #e3e3e3;
+  background: #fff;
 `;
 
 const activeTab = css`
-  box-shadow: 0 0 3px ${th('colorPrimary')};
+  box-shadow: 0 0 1px ${th('colorPrimary')};
+  background: ${th('colorBackgroundTabs')};
 `;
 
 const Tab = styled.div`
-  background: gainsboro;
   padding: 8px;
   margin: 0 4px 4px 4px;
   cursor: pointer;
@@ -32,14 +32,14 @@ const Tab = styled.div`
   ${props => props.active && activeTab}
 
   &:hover {
-    background: silver;
+    background: ${th('colorBackgroundTabs')};
   }
 `;
 
 const Content = styled.div`
   width: 100%;
   height: 100%;
-  background: gainsboro;
+  background: #fff;
 `;
 
 const TabsPane = props => {

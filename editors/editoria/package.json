@@ -16,7 +16,8 @@
     "wax-prosemirror-services": "^0.0.20",
     "fontsource-merriweather": "^3.0.9",
     "typeface-fira-sans-condensed": "^0.0.54",
-    "typeface-vollkorn": "^0.0.54"
+    "typeface-vollkorn": "^0.0.54",
+    "typeface-inter": "^1.1.13"
   },
   "scripts": {
     "start": "react-app-rewired start",

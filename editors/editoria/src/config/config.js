@@ -26,6 +26,8 @@ import {
   TrackChangeToolGroupService,
   DisplayTextToolGroupService,
   MathService,
+  FindAndReplaceService,
+  TrackingAndEditingToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -51,7 +53,7 @@ export default {
         'Images',
         'CodeBlock',
         'Tables',
-        'TrackChange',
+        'TrackingAndEditing',
       ],
     },
     {
@@ -99,5 +101,7 @@ export default {
     new TrackChangeToolGroupService(),
     new DisplayTextToolGroupService(),
     new MathService(),
+    new FindAndReplaceService(),
+    new TrackingAndEditingToolGroupService(),
   ],
 };

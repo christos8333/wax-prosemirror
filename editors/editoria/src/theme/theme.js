@@ -2,26 +2,28 @@
 import 'typeface-fira-sans-condensed';
 import 'fontsource-merriweather';
 import 'typeface-vollkorn';
+import 'typeface-inter';
 
 import { css } from 'styled-components';
 
 const cokoTheme = {
   /* Colors */
   colorBackground: 'white',
-  colorPrimary: '#808080',
+  colorPrimary: '#525E76',
   colorSecondary: '#E7E7E7',
   colorFurniture: '#CCC',
-  colorBorder: '#AAA',
-  colorBackgroundHue: '#F7F7F7',
+  colorBorder: '#EBEBF0',
+  colorBackgroundHue: '#F1F5FF',
+  colorBackgroundTabs: '#e1ebff',
   colorSuccess: '#008800',
   colorError: 'indianred',
   colorText: '#111',
   colorTextReverse: '#FFF',
   colorTextPlaceholder: '#595959',
   colorWarning: '#ffc107',
-  colorBackgroundToolBar: '#D9D9D9',
-  colorSelection: '#D3D3D3',
-
+  colorBackgroundToolBar: '#fff',
+  colorSelection: '#C5D7FE',
+  colorBackgroundButton: '#0042C7',
   /* Text variables */
 
   // fonts
@@ -29,6 +31,7 @@ const cokoTheme = {
   fontHeading: 'Fira Sans Condensed',
   fontReading: 'Vollkorn',
   fontWriting: 'Merriweather',
+  fontTools: 'Inter',
 
   // font sizes
   fontSizeBase: '14px',

@@ -2,6 +2,7 @@
 import { Mark } from 'prosemirror-model';
 import React from 'react';
 import ConnectedComment from '../comments/ConnectedComment';
+import ConnectedTrackChange from '../trackChanges/ConnectedTrackChange';
 import TrackChangeBox from '../trackChanges/TrackChangeBox';
 
 export default ({ commentsTracks, view, position, recalculateTops }) => {
@@ -28,12 +29,13 @@ export default ({ commentsTracks, view, position, recalculateTops }) => {
           );
         }
         return (
-          <TrackChangeBox
+          <ConnectedTrackChange
             key={id}
             trackChange={commentTrack}
             view={view}
             top={top}
             dataBox={id}
+            recalculateTops={recalculateTops}
           />
         );
       })}

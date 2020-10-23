@@ -93,7 +93,6 @@ export default props => {
         const commentPluginState = state && commentPlugin.getState(state);
         return commentPluginState.createDecoration;
       },
-      setCommentActive: state => {},
     },
   });
 };

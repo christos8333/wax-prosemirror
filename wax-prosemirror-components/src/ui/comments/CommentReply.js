@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 
 const Wrapper = styled.div`
-  background: #e2e2e2;
+  background: ${th('colorBackgroundHue')};
   display: flex;
   flex-direction: column;
   padding: ${grid(2)} ${grid(4)};
@@ -14,10 +14,16 @@ const Wrapper = styled.div`
 const TextWrapper = styled.div``;
 
 const ReplyTextArea = styled.textarea`
-  background: #e2e2e2;
-  box-sizing: border-box;
+  background: ${th('colorBackgroundHue')};
+  border: 3px solid ${th('colorBackgroundTabs')};
+  position: relative;
+  right: 5px;
   font-family: ${th('fontWriting')};
   width: 100%;
+
+  &:focus {
+    outline: 1px solid ${th('colorPrimary')};
+  }
 `;
 
 const ActionWrapper = styled.div`
@@ -27,7 +33,7 @@ const ActionWrapper = styled.div`
 `;
 
 const primary = css`
-  background: gray;
+  background: ${th('colorPrimary')};
   color: white;
 `;
 
@@ -73,7 +79,6 @@ const CommentReply = props => {
 
   const onBlur = content => {
     onTextAreaBlur(content, isNewComment);
-    setCommentValue('');
   };
 
   return (
@@ -85,6 +90,8 @@ const CommentReply = props => {
             onBlur={() => onBlur(commentInput.current.value)}
             placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
             onChange={() => setCommentValue(commentInput.current.value)}
+            cols="5"
+            rows="3"
             onKeyDown={e => {
               if (e.keyCode === 13 && !e.shiftKey) {
                 e.preventDefault();

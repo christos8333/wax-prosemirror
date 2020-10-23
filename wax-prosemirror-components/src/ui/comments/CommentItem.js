@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { grid, th } from '@pubsweet/ui-toolkit';
-import DateParser from './DateParser';
+import DateParser from '../../helpers/DateParser';
 
 const Wrapper = styled.div``;
 

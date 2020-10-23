@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { th } from '@pubsweet/ui-toolkit';
 /**
  * SVG source
  * https://material.io/resources/icons/?search=chat&icon=chat&style=baseline
@@ -40,7 +40,7 @@ const IconSVG = props => {
 const Icon = styled(IconSVG)`
   height: 28px;
   width: 28px;
-  fill: gray;
+  fill: ${th('colorPrimary')};
 `;
 
 const Bubble = props => {

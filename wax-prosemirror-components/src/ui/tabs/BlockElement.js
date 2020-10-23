@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
 
 import Button from '../../components/Button';
 
@@ -10,14 +9,21 @@ const Wrapper = styled.div`
   button {
     border-radius: 4px;
     margin-left: 4px;
+    padding-left: 25px;
+    position: relative;
+    left: -33px;
   }
 `;
 
 const Box = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
+  position: relative;
+  top: 3px;
+  right: 3px;
   border-radius: 4px;
-  background: gray;
+  background: #bfc4cd;
+  z-index: 999;
 `;
 
 const StyledButton = styled(Button)``;

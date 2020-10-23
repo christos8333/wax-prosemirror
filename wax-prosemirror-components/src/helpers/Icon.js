@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import icons from '../../icons/icons';
+import icons from '../icons/icons';
 
 /**
  * Only works with SVG icons from icons.js

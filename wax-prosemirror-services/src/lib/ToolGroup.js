@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { injectable } from 'inversify';
 import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 import { v4 as uuidv4 } from 'uuid';
+import { isEmpty } from 'lodash';
 
 export default
 @injectable()
@@ -57,6 +58,8 @@ class ToolGroup {
   }
 
   renderTools(view) {
+    if (isEmpty(view)) return null;
+
     const { name } = this.constructor;
     if (this._toolGroups > 0) {
       return <ToolGroups toolGroups={this._toolGroups} view={view} />;
@@ -72,7 +75,7 @@ class ToolGroup {
           name={name}
         />
       ),
-      [view],
+      [],
     );
 
     return MemorizedToolGroupComponent;

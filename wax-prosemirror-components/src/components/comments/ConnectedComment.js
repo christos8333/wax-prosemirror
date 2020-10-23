@@ -30,11 +30,14 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const { state, dispatch } = activeView;
   const viewId = comment.attrs.viewid;
+  let allCommentsWithSameId = [];
 
-  const allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-    view[viewId].state,
-    comment,
-  );
+  if (view[viewId]) {
+    allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
+      view[viewId].state,
+      comment,
+    );
+  }
 
   const commentMark = state.schema.marks.comment;
 
@@ -53,13 +56,6 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   }
 
   const onClickPost = content => {
-    // TODO find out why on enter comment posts twice.
-    if (
-      comment.attrs.conversation.length !== 0 &&
-      last(comment.attrs.conversation).content === content
-    )
-      return;
-
     const { tr } = state;
 
     const obj = {
@@ -128,14 +124,16 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const onTextAreaBlur = (content, isNewComment) => {
     // TODO Save into local storage
-    if (content !== '') {
-      onClickPost(content);
-    }
+    // if (content !== '') {
+    //   onClickPost(content);
+    // }
 
-    if (content === '' && isNewComment) {
-      onClickResolve();
-      activeView.focus();
-    }
+    setTimeout(() => {
+      if (comment.attrs.conversation.length === 0 && isNewComment) {
+        onClickResolve();
+        activeView.focus();
+      }
+    }, 200);
   };
 
   const MemorizedComponent = useMemo(

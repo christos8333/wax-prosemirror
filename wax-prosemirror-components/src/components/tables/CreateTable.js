@@ -46,8 +46,7 @@ const CreateTable = ({ view = {}, item }) => {
     setIsOpen(!isOpen);
   };
 
-  const isDisabled =
-    enable && !enable(state) && !(select && select(state, activeViewId));
+  const isDisabled = !select(state, activeViewId);
 
   useOnClickOutside(ref, () => setIsOpen(false));
 

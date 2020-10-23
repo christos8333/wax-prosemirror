@@ -17,13 +17,15 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const inputRef = useRef(null);
   const handleMouseDown = () => inputRef.current.click();
 
+  const isDisabled = !item.select(view.state, activeViewId);
+
   const ImageUploadComponent = useMemo(
     () => (
       <Wrapper>
         <label htmlFor="file-upload">
           <MenuButton
             active={false}
-            disabled={!(item.select && item.select(view.state, activeViewId))}
+            disabled={isDisabled}
             iconName={item.icon}
             onMouseDown={handleMouseDown}
             title="Upload Image"
@@ -38,7 +40,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
         </label>
       </Wrapper>
     ),
-    [],
+    [isDisabled],
   );
 
   return ImageUploadComponent;

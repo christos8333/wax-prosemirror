@@ -112,10 +112,10 @@ class RejectTrackChange extends Tools {
     };
   }
 
-  select = (state, activeViewId) => {
+  select = (state, activeViewId, activeView) => {
     const {
       selection: { from, to },
-    } = state;
+    } = activeView.state;
     if (from === to && activeViewId !== 'main') return false;
     return true;
   };

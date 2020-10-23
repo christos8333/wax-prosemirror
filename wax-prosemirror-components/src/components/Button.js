@@ -10,6 +10,7 @@ const Button = ({ view = {}, item }) => {
   const {
     view: { main },
     activeViewId,
+    activeView,
   } = useContext(WaxContext);
 
   if (onlyOnMain) view = main;
@@ -21,10 +22,9 @@ const Button = ({ view = {}, item }) => {
     run(editorState, dispatch);
   };
 
-  const isActive = active && active(state, activeViewId);
+  const isActive = active(state, activeViewId) && select(state, activeViewId);
 
-  const isDisabled =
-    enable && !enable(state) && !(select && select(state, activeViewId));
+  const isDisabled = !select(state, activeViewId, activeView);
 
   const MenuButtonComponent = useMemo(
     () => (

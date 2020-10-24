@@ -3,23 +3,16 @@ import { SchemaHelpers } from 'wax-prosemirror-utilities';
 export default {
   nodes: {
     doc: {
-      content: 'block+',
+      content: 'inline+',
     },
     text: {
       group: 'inline',
     },
-    hard_break: {
-      inline: true,
-      group: 'inline',
-      selectable: false,
-      parseDOM: [{ tag: 'br' }],
-      toDOM() {
-        return ['br'];
-      },
-    },
+
     paragraph: {
-      group: 'block',
+      group: 'inline',
       content: 'inline*',
+      inline: true,
       attrs: {
         id: { default: '' },
         class: { default: 'paragraph' },
@@ -42,6 +35,15 @@ export default {
       toDOM(node) {
         const attrs = SchemaHelpers.blockLevelToDOM(node);
         return ['p', attrs, 0];
+      },
+    },
+    hard_break: {
+      inline: true,
+      group: 'inline',
+      selectable: false,
+      parseDOM: [{ tag: 'br' }],
+      toDOM() {
+        return ['br'];
       },
     },
   },

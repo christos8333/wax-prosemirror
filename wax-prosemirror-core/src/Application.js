@@ -54,7 +54,6 @@ export default class Application {
 
   getSchema() {
     this.schema = this.container.get('Schema');
-    console.log(this.schema.getSchema());
     return this.schema.getSchema();
   }
 

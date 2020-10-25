@@ -15,12 +15,9 @@ const parser = schema => {
   const WaxParser = DOMParser.fromSchema(schema);
 
   return content => {
-    console.log(content);
     const container = document.createElement('article');
 
     container.innerHTML = content;
-    console.log(container.innerHTML);
-    console.log(WaxParser.parse(container));
     return WaxParser.parse(container);
   };
 };

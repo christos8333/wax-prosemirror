@@ -16,6 +16,7 @@ const parser = schema => {
 
   return content => {
     const container = document.createElement('article');
+
     container.innerHTML = content;
     return WaxParser.parse(container);
   };

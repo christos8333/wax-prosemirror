@@ -1,12 +1,14 @@
 import { Schema as PmPschema } from 'prosemirror-model';
 import { injectable } from 'inversify';
+import { pickBy, identity } from 'lodash';
 import DefaultSchema from './DefaultSchema';
 
 import Node from './Node';
 import Mark from './Mark';
 
+export default
 @injectable()
-export default class Schema {
+class Schema {
   _nodes = {};
   _marks = {};
   prosemirrorSchema = { nodes: {}, marks: {} };
@@ -84,6 +86,7 @@ export default class Schema {
     const nodes = DefaultSchema.nodes;
     const marks = {};
 
+    // console.log(this._nodes);
     for (let index in this._nodes) {
       nodes[index] = this._nodes[index].toJSON();
     }
@@ -93,8 +96,14 @@ export default class Schema {
     }
 
     this.schema = new PmPschema({
-      nodes: Object.assign(nodes, this.prosemirrorSchema.nodes),
-      marks: Object.assign(marks, this.prosemirrorSchema.marks),
+      nodes: pickBy(
+        Object.assign(nodes, this.prosemirrorSchema.nodes),
+        identity,
+      ),
+      marks: pickBy(
+        Object.assign(marks, this.prosemirrorSchema.marks),
+        identity,
+      ),
     });
     return this.schema;
   }

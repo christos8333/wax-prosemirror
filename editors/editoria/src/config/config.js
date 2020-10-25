@@ -62,6 +62,8 @@ export default {
     },
   ],
 
+  SchemaService: {},
+
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: { enabled: false },

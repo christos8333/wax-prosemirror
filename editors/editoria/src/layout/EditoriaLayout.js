@@ -60,10 +60,16 @@ const TopMenu = styled.div`
       ${th('colorFurniture')};
   }
 
-  > div:last-child {
+
+  > div:nth-last-of-type(-n+2) {
     margin-left: auto;
+  }
+
+  > div:last-child {
+    margin-left: 0;
     margin-right: 10px;
   }
+
   > div[data-name="Tables"]{
     border-right: none;
   }

@@ -127,7 +127,7 @@ const CommentTrackTools = styled.div`
   position: fixed;
   display: flex;
   margin-left: 5px;
-  z-index: 999;
+  z-index: 1;
   height: 30px;
   width: 29.4%;
   background: #fff;

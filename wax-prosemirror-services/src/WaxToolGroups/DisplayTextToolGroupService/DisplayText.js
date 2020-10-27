@@ -45,7 +45,7 @@ class DisplayText extends ToolGroup {
 
     const second = {
       id: '2',
-      icon: 'code',
+      icon: 'chapterList',
       component: <Empty />,
     };
 

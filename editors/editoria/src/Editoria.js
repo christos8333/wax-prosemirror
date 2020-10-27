@@ -58,8 +58,7 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          // value={demo}
-          value={'<title>hiii</title>'}
+          value={demo}
           layout={layout}
           onChange={source => console.log(source)}
           user={user}

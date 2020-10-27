@@ -28,6 +28,8 @@ import {
   MathService,
   FindAndReplaceService,
   TrackingAndEditingToolGroupService,
+  FullScreenService,
+  FullScreenToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -107,5 +109,7 @@ export default {
     new MathService(),
     new FindAndReplaceService(),
     new TrackingAndEditingToolGroupService(),
+    new FullScreenService(),
+    new FullScreenToolGroupService(),
   ],
 };

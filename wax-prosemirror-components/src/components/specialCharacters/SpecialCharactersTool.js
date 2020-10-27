@@ -1,10 +1,10 @@
-import React, { useRef, useMemo, useState, useLayoutEffect } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 
 import MenuButton from '../../ui/buttons/MenuButton';
-import FindAndReplaceComponent from './FindAndReplaceComponent';
+import SpecialCharactersComponent from './SpecialCharactersComponent';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -19,24 +19,10 @@ const DropWrapper = styled.div`
   top: 32px;
 `;
 
-const FindAndReplaceTool = ({ view = {}, item }) => {
+const SpecialCharactersTool = ({ view = {}, item }) => {
   const { icon, title } = item;
   const dropElement = useRef();
   const [isOpen, setIsOpen] = useState(false);
-
-  let styles = { right: '-205px' };
-  const [style, setStyle] = useState(styles);
-
-  useLayoutEffect(() => {
-    setStyle(styles);
-    if (!dropElement.current) return;
-    const { right } = dropElement.current.getBoundingClientRect();
-    if (right > window.window.innerWidth) {
-      const newRight = -205 + (right - window.window.innerWidth) + 15;
-      styles = { right: `${newRight}px` };
-      setStyle(styles);
-    }
-  }, [isOpen]);
 
   const MemorizedDropdown = useMemo(
     () => (
@@ -52,8 +38,8 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
         />
 
         {isOpen && (
-          <DropWrapper style={style} ref={dropElement}>
-            <FindAndReplaceComponent
+          <DropWrapper ref={dropElement}>
+            <SpecialCharactersComponent
               close={() => {
                 setIsOpen(false);
               }}
@@ -62,10 +48,10 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, style],
+    [isOpen],
   );
 
   return MemorizedDropdown;
 };
 
-export default FindAndReplaceTool;
+export default SpecialCharactersTool;

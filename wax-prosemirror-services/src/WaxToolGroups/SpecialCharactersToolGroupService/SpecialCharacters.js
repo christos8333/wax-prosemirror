@@ -10,4 +10,4 @@ class SpecialCharacters extends ToolGroup {
   }
 }
 
-export default SpecialCharactersTool;
+export default SpecialCharacters;

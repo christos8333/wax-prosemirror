@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
@@ -21,7 +21,6 @@ const DropWrapper = styled.div`
 
 const SpecialCharactersTool = ({ view = {}, item }) => {
   const { icon, title } = item;
-  const dropElement = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   const MemorizedDropdown = useMemo(
@@ -38,7 +37,7 @@ const SpecialCharactersTool = ({ view = {}, item }) => {
         />
 
         {isOpen && (
-          <DropWrapper ref={dropElement}>
+          <DropWrapper>
             <SpecialCharactersComponent
               close={() => {
                 setIsOpen(false);

@@ -30,6 +30,8 @@ import {
   TrackingAndEditingToolGroupService,
   FullScreenService,
   FullScreenToolGroupService,
+  SpecialCharactersService,
+  SpecialCharactersToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -55,6 +57,7 @@ export default {
         'Notes',
         'Lists',
         'Images',
+        'SpecialCharacters',
         'CodeBlock',
         'Tables',
         'TrackingAndEditing',
@@ -129,5 +132,7 @@ export default {
     new TrackingAndEditingToolGroupService(),
     new FullScreenService(),
     new FullScreenToolGroupService(),
+    new SpecialCharactersService(),
+    new SpecialCharactersToolGroupService(),
   ],
 };

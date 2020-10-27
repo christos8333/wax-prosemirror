@@ -8,9 +8,9 @@ import Tools from '../lib/Tools';
 export default
 @injectable()
 class SpecialCharacters extends Tools {
-  title = 'Find And Replace';
-  icon = 'findAndReplace';
-  name = 'find';
+  title = 'Special Characters';
+  icon = 'specialCharacters';
+  name = 'specialCharacters';
 
   get run() {
     return (state, dispatch) => {};

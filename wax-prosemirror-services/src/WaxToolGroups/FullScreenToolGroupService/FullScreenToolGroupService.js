@@ -1,9 +1,9 @@
 import Service from '../../Service';
-import FullScreenTool from './FullScreenTool';
+import FullScreen from './FullScreen';
 
 class FullScreenToolGroupService extends Service {
   register() {
-    this.container.bind('FullScreenTool').to(FullScreenTool);
+    this.container.bind('FullScreen').to(FullScreen);
   }
 }
 

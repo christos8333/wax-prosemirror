@@ -60,7 +60,7 @@ const Editoria = () => {
           fileUpload={file => renderImage(file)}
           value={demo}
           layout={layout}
-          onChange={source => console.log(source)}
+          // onChange={source => console.log(source)}
           user={user}
         />
       </>

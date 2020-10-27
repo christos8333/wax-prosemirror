@@ -1,10 +1,11 @@
 /* eslint react/prop-types: 0 */
+
 import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const Button = ({ view = {}, item }) => {
-  const { active, icon, label, onlyOnMain, run, select, title } = item;
+  const { active, enable, icon, label, onlyOnMain, run, select, title } = item;
 
   const {
     view: { main },
@@ -21,9 +22,8 @@ const Button = ({ view = {}, item }) => {
     run(editorState, dispatch);
   };
 
-  const isActive = !!(
-    active(state, activeViewId) && select(state, activeViewId)
-  );
+  const isActive = active(state, activeViewId) && select(state, activeViewId);
+
   const isDisabled = !select(state, activeViewId, activeView);
 
   const MenuButtonComponent = useMemo(

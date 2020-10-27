@@ -15,3 +15,4 @@ export { default as CreateTable } from './src/components/tables/CreateTable';
 export { default as Tabs } from './src/ui/tabs/Tabs';
 export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';
 export { default as FindAndReplaceTool } from './src/components/findAndReplace/FindAndReplaceTool';
+export { default as FullScreen } from './src/components/FullScreen';

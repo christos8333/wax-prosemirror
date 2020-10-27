@@ -1,11 +1,11 @@
 import Service from '../Service';
-import FullScreen from './FullScreen';
+import FullScreenTool from './FullScreenTool';
 
 class FullScreenService extends Service {
   name = 'FullScreenService';
 
   register() {
-    this.container.bind('FullScreen').to(FullScreen);
+    this.container.bind('FullScreenTool').to(FullScreenTool);
   }
 }
 

@@ -58,6 +58,7 @@ export default {
         'CodeBlock',
         'Tables',
         'TrackingAndEditing',
+        'FullScreen',
       ],
     },
     {

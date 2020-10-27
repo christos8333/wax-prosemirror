@@ -5,7 +5,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const Button = ({ view = {}, item }) => {
-  const { active, enable, icon, label, onlyOnMain, run, select, title } = item;
+  const { active, icon, label, onlyOnMain, run, select, title } = item;
 
   const {
     view: { main },
@@ -29,8 +29,8 @@ const Button = ({ view = {}, item }) => {
   const MenuButtonComponent = useMemo(
     () => (
       <MenuButton
-        active={isActive || false}
-        disabled={isDisabled}
+        active={false}
+        disabled={false}
         iconName={icon}
         label={label}
         onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}

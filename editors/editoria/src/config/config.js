@@ -45,7 +45,7 @@ import invisibles, {
 export default {
   MenuService: [
     {
-      templateArea: 'topBar',
+      templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
         {
@@ -64,6 +64,23 @@ export default {
     {
       templateArea: 'leftSideBar',
       toolGroups: ['DisplayText'],
+    },
+    {
+      templateArea: 'commentTrackToolBar',
+      toolGroups: [
+        {
+          name: 'Annotations',
+          more: [
+            'Superscript',
+            'Subscript',
+            'SmallCaps',
+            'Emphasis',
+            'Code',
+            'Underline',
+            'StrikeThrough',
+          ],
+        },
+      ],
     },
   ],
 

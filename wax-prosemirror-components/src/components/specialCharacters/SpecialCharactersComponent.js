@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
-import { each, groupBy, map } from 'lodash';
+import { groupBy } from 'lodash';
 import Icon from '../../helpers/Icon';
 import CharactersList from './CharactersList';
 
@@ -37,7 +37,7 @@ const SearchInput = styled.input`
 
 const CharactersListComponent = styled.div`
   height: 150px;
-  overflow-y: sroll;
+  overflow-y: scroll;
 `;
 
 const LastUsedComponent = styled.div``;
@@ -45,10 +45,27 @@ const LastUsedComponent = styled.div``;
 const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
   const [searchValue, setSearchValue] = useState('');
-  const GroupedCharacters = groupBy(CharactersList, 'group');
+  const groupedCharacters = groupBy(CharactersList, 'group');
   const onChange = () => {
     setSearchValue(searchRef.current.value);
-    console.log(GroupedCharacters);
+  };
+
+  const renderList = () => {
+    const lists = [];
+
+    Object.keys(groupedCharacters).forEach(key => {
+      lists.push(
+        <div key={key}>
+          {key}
+          <>
+            {groupedCharacters[key].map((item, index) => {
+              return <div>{item.unicode}</div>;
+            })}
+          </>
+        </div>,
+      );
+    });
+    return <div>{lists}</div>;
   };
 
   return (
@@ -60,7 +77,7 @@ const SpecialCharactersComponent = ({ close }) => {
         value={searchValue}
         onChange={onChange}
       />
-      <CharactersListComponent>Characters List</CharactersListComponent>
+      <CharactersListComponent>{renderList()}</CharactersListComponent>
       <LastUsedComponent>Characters Last Used</LastUsedComponent>
     </Wrapper>
   );

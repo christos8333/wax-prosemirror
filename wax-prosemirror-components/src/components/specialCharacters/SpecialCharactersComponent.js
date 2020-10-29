@@ -1,7 +1,8 @@
 /* eslint react/prop-types: 0 */
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
+import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { groupBy } from 'lodash';
 import Icon from '../../helpers/Icon';
@@ -9,13 +10,17 @@ import CharactersList from './CharactersList';
 
 const Wrapper = styled.div`
   width: 400px;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
   background: #fff;
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
   transform-origin: 50% 50% 0px;
+`;
+const SearchInputContainer = styled.div`
   padding: ${grid(2)};
 `;
 
@@ -25,7 +30,7 @@ const SearchInput = styled.input`
   border-radius: 2px;
   border: none;
   padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
-  width: 85%;
+  width: 88%;
   box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
   ::placeholder {
     color: #d8dae0;
@@ -37,32 +42,73 @@ const SearchInput = styled.input`
 
 const CharactersListComponent = styled.div`
   height: 150px;
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: ${grid(2)};
+`;
+
+const SpecialCharactersGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const GroupTitle = styled.div`
+  font-size: 16px;
+  padding: 0 ${grid(2)} ${grid(2)} ${grid(2)};
+`;
+
+const GroupCharacters = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+const SpecialCharacter = styled.div`
+  margin: ${grid(1)};
+  min-width: 25px;
+  height: 25px;
+  display: inline-grid;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 50%;
+  span {
+    text-align: center;
+    padding-top: 3px;
+  }
 `;
 
 const LastUsedComponent = styled.div``;
 
 const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
+  const { app, view } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
   const groupedCharacters = groupBy(CharactersList, 'group');
   const onChange = () => {
     setSearchValue(searchRef.current.value);
   };
 
+  const insertCharacter = () => {};
+
   const renderList = () => {
     const lists = [];
 
     Object.keys(groupedCharacters).forEach(key => {
       lists.push(
-        <div key={key}>
-          {key}
-          <>
+        <SpecialCharactersGroup key={key}>
+          <GroupTitle> {key} </GroupTitle>
+          <GroupCharacters>
             {groupedCharacters[key].map((item, index) => {
-              return <div>{item.unicode}</div>;
+              return (
+                <SpecialCharacter key={uuidv4()} onMouseDown={insertCharacter}>
+                  <span>{item.unicode}</span>
+                </SpecialCharacter>
+              );
             })}
-          </>
-        </div>,
+          </GroupCharacters>
+        </SpecialCharactersGroup>,
       );
     });
     return <div>{lists}</div>;
@@ -70,13 +116,15 @@ const SpecialCharactersComponent = ({ close }) => {
 
   return (
     <Wrapper>
-      <SearchInput
-        ref={searchRef}
-        type="text"
-        placeholder="Search"
-        value={searchValue}
-        onChange={onChange}
-      />
+      <SearchInputContainer>
+        <SearchInput
+          ref={searchRef}
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={onChange}
+        />
+      </SearchInputContainer>
       <CharactersListComponent>{renderList()}</CharactersListComponent>
       <LastUsedComponent>Characters Last Used</LastUsedComponent>
     </Wrapper>

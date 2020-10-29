@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 
 import MenuButton from '../../ui/buttons/MenuButton';
 import SpecialCharactersComponent from './SpecialCharactersComponent';
+import useOnClickOutside from '../../helpers/useOnClickOutside';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -22,10 +23,13 @@ const DropWrapper = styled.div`
 const SpecialCharactersTool = ({ view = {}, item }) => {
   const { icon, title } = item;
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef();
+
+  useOnClickOutside(ref, () => setIsOpen(false));
 
   const MemorizedDropdown = useMemo(
     () => (
-      <Wrapper>
+      <Wrapper ref={ref}>
         <MenuButton
           active={isOpen}
           disabled={false}

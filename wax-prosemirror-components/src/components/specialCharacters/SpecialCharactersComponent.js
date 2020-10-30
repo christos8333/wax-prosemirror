@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
-import { groupBy } from 'lodash';
+import { filter, groupBy } from 'lodash';
 import Icon from '../../helpers/Icon';
 import CharactersList from './CharactersList';
 
@@ -86,8 +86,18 @@ const SpecialCharactersComponent = ({ close }) => {
   const { app, view } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
   const groupedCharacters = groupBy(CharactersList, 'group');
+  const [specialCharactersList, setSpecialCharactersList] = useState(
+    CharactersList,
+  );
   const onChange = () => {
     setSearchValue(searchRef.current.value);
+    const filtertedSpecialCharacters = filter(CharactersList, value => {
+      console.log(value);
+      if (value.name.toLowerCase().includes(searchValue.toLowerCase()))
+        return value.name;
+      return false;
+    });
+    setSpecialCharactersList(filtertedSpecialCharacters);
   };
 
   const insertCharacter = () => {};
@@ -95,7 +105,7 @@ const SpecialCharactersComponent = ({ close }) => {
   const renderList = () => {
     const lists = [];
 
-    Object.keys(groupedCharacters).forEach(key => {
+    Object.keys(groupBy(specialCharactersList, 'group')).forEach(key => {
       lists.push(
         <SpecialCharactersGroup key={key}>
           <GroupTitle> {key} </GroupTitle>

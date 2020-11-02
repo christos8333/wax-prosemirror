@@ -17,10 +17,7 @@ class MathService extends Service {
     const schema = this.container.get('Schema');
     const rules = this.container.get('Rules');
     const newRules = [
-      inlineInputRule(
-        /(?<!\\)\$(.+)(?<!\\)\$/,
-        schema.schema.nodes.math_inline,
-      ),
+      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, schema.schema.nodes.math_inline),
       blockInputRule(/^\$\$\s+$/, schema.schema.nodes.math_display),
     ];
     // rules.addRule(newRules);

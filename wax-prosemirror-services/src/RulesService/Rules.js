@@ -55,7 +55,7 @@ class Rules {
         this.schema.nodes.heading,
         match => ({ level: match[1].length }),
       ),
-      inlineInputRule(/(?<!\\)\$(.+)(?<!\\)\$/, this.schema.nodes.math_inline),
+      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, this.schema.nodes.math_inline),
       blockInputRule(/^\$\$\s+$/, this.schema.nodes.math_display),
     ];
   }

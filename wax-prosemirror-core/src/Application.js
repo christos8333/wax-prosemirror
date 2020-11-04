@@ -66,7 +66,7 @@ export default class Application {
 
   static create(config) {
     /* Merge Core Config with User Config */
-    const appConfig = deepmerge({ config: defaultConfig }, config, {
+    const appConfig = deepmerge({ config: defaultConfig() }, config, {
       customMerge: key => {
         if (key === 'services') {
           return (coreService, configService) => {

@@ -1,8 +1,5 @@
 import { Schema as PmPschema } from 'prosemirror-model';
 import { injectable } from 'inversify';
-import { pickBy, identity } from 'lodash';
-import DefaultSchema from './DefaultSchema';
-
 import Node from './Node';
 import Mark from './Mark';
 
@@ -83,7 +80,7 @@ class Schema {
   }
 
   getSchema() {
-    const nodes = DefaultSchema.nodes;
+    const nodes = {};
     const marks = {};
 
     // console.log(this._nodes);
@@ -96,15 +93,20 @@ class Schema {
     }
 
     this.schema = new PmPschema({
-      nodes: pickBy(
-        Object.assign(nodes, this.prosemirrorSchema.nodes),
-        identity,
-      ),
-      marks: pickBy(
-        Object.assign(marks, this.prosemirrorSchema.marks),
-        identity,
-      ),
+      nodes: Object.assign(this.prosemirrorSchema.nodes, nodes),
+      marks: Object.assign(this.prosemirrorSchema.marks, marks),
     });
+
+    // this.schema = new PmPschema({
+    //   nodes: pickBy(
+    //     Object.assign(nodes, this.prosemirrorSchema.nodes),
+    //     identity,
+    //   ),
+    //   marks: pickBy(
+    //     Object.assign(marks, this.prosemirrorSchema.marks),
+    //     identity,
+    //   ),
+    // });
     return this.schema;
   }
 }

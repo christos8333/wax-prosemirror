@@ -58,6 +58,16 @@ const backSpaceShortCut = (state, dispatch, view) => {
   );
 };
 
+const pressEnter = (state, dispatch) => {
+  // LISTS
+  if (splitListItem(state.schema.nodes.list_item)(state)) {
+    splitListItem(state.schema.nodes.list_item)(state, dispatch);
+    return true;
+  }
+
+  return false;
+};
+
 const undoShortCut = (state, dispatch, view) =>
   undo(state, tr => dispatch(tr.setMeta('inputType', 'Undo')), view);
 
@@ -68,7 +78,6 @@ const redoShortCut = (state, dispatch, view) =>
 class ShortCuts {
   constructor(plugins, schema) {
     this.insertBreak = this.insertBreak.bind(this);
-    this.pressEnter = this.pressEnter.bind(this);
     this.insertRule = this.insertRule.bind(this);
     this.PmPlugins = plugins;
     this.schema = schema;
@@ -79,16 +88,6 @@ class ShortCuts {
     const br = this.schema.nodes.hard_break.create();
     dispatch(state.tr.replaceSelectionWith(br).scrollIntoView());
     return true;
-  }
-
-  pressEnter(state, dispatch) {
-    // LISTS
-    if (splitListItem(this.schema.nodes.list_item)(state)) {
-      splitListItem(this.schema.nodes.list_item)(state, dispatch);
-      return true;
-    }
-
-    return false;
   }
 
   insertRule(state, dispatch) {
@@ -131,7 +130,7 @@ class ShortCuts {
       'Mod-_': this.insertRule,
       'Mod-[': liftListItem(this.schema.nodes.list_item),
       'Mod-]': sinkListItem(this.schema.nodes.list_item),
-      Enter: this.pressEnter,
+      Enter: pressEnter,
       'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
       'Shift-Ctrl-9': wrapInList(this.schema.nodes.orderedlist),
     };

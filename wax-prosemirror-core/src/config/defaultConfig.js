@@ -7,7 +7,7 @@ import {
   OverlayService,
 } from 'wax-prosemirror-services';
 
-export default {
+export default () => ({
   services: [
     new SchemaService(),
     new RulesService(),
@@ -16,4 +16,4 @@ export default {
     new MenuService(),
     new OverlayService(),
   ],
-};
+});

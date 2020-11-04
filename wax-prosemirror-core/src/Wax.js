@@ -31,10 +31,9 @@ const serializer = schema => {
   };
 };
 
-let schema;
 const createApplication = props => {
   const application = Application.create(props);
-  schema = application.getSchema();
+  application.getSchema();
   application.bootServices();
   return application;
 };
@@ -68,7 +67,7 @@ const Wax = props => {
   } = props;
 
   if (!application) return null;
-
+  const { schema } = application.schema;
   const WaxOnchange = onChange ? onChange : value => true;
 
   const editorContent = value || '';
@@ -88,7 +87,7 @@ const Wax = props => {
 
   const finalOnChange = debounce(
     value => {
-      /*HACK  alter toDOM of footnote, because of how PM treats inline nodes
+      /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
       with content */
       if (schema.nodes.footnote) {
         const old = schema.nodes.footnote.spec.toDOM;

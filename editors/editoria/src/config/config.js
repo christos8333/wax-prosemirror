@@ -28,6 +28,10 @@ import {
   MathService,
   FindAndReplaceService,
   TrackingAndEditingToolGroupService,
+  FullScreenService,
+  FullScreenToolGroupService,
+  SpecialCharactersService,
+  SpecialCharactersToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -43,7 +47,7 @@ import invisibles, {
 export default {
   MenuService: [
     {
-      templateArea: 'topBar',
+      templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
         {
@@ -53,14 +57,33 @@ export default {
         'Notes',
         'Lists',
         'Images',
+        'SpecialCharacters',
         'CodeBlock',
         'Tables',
         'TrackingAndEditing',
+        'FullScreen',
       ],
     },
     {
       templateArea: 'leftSideBar',
       toolGroups: ['DisplayText'],
+    },
+    {
+      templateArea: 'commentTrackToolBar',
+      toolGroups: [
+        {
+          name: 'Annotations',
+          more: [
+            'Superscript',
+            'Subscript',
+            'SmallCaps',
+            'Emphasis',
+            'Code',
+            'Underline',
+            'StrikeThrough',
+          ],
+        },
+      ],
     },
   ],
 
@@ -107,5 +130,9 @@ export default {
     new MathService(),
     new FindAndReplaceService(),
     new TrackingAndEditingToolGroupService(),
+    new FullScreenService(),
+    new FullScreenToolGroupService(),
+    new SpecialCharactersService(),
+    new SpecialCharactersToolGroupService(),
   ],
 };

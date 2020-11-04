@@ -31,7 +31,7 @@ const CreateTable = ({ view = {}, item }) => {
   }
 
   const { state } = view;
-  const { enable, icon, run, select, title } = item;
+  const { icon, run, select, title } = item;
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
 

@@ -60,10 +60,16 @@ const TopMenu = styled.div`
       ${th('colorFurniture')};
   }
 
-  > div:last-child {
+
+  > div:nth-last-of-type(-n+2) {
     margin-left: auto;
-    margin-right: 10px;
   }
+
+  > div:last-child {
+    margin-left: 0;
+    margin-right: ${grid(5)};
+  }
+
   > div[data-name="Tables"]{
     border-right: none;
   }
@@ -116,6 +122,20 @@ const CommentsContainerNotes = styled.div`
   height: 100%;
 `;
 
+const CommentTrackTools = styled.div`
+  padding: ${grid(2)}0 0 0;
+  position: fixed;
+  display: flex;
+  margin-left: 5px;
+  z-index: 1;
+  height: 30px;
+  width: 29.4%;
+  background: #fff;
+  span {
+    margin-left: auto;
+  }
+`;
+
 const NotesAreaContainer = styled.div`
   background: #fff;
   display: flex;
@@ -159,9 +179,10 @@ const getNotes = main => {
 };
 
 const LeftSideBar = ComponentPlugin('leftSideBar');
-const TopBar = ComponentPlugin('topBar');
+const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
+const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const EditoriaLayout = ({ editor }) => {
@@ -189,7 +210,7 @@ const EditoriaLayout = ({ editor }) => {
     <ThemeProvider theme={cokoTheme}>
       <Wrapper>
         <TopMenu>
-          <TopBar />
+          <MainMenuToolBar />
         </TopMenu>
 
         <Main>
@@ -209,6 +230,12 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
+                  <CommentTrackTools>
+                    <span>
+                      58 COMMENTS AND SUGGESTIONS
+                      <CommentTrackToolBar />
+                    </span>
+                  </CommentTrackTools>
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>

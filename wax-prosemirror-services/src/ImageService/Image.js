@@ -15,7 +15,7 @@ class Image extends Tools {
   name = 'Image';
 
   get run() {
-    return () => true;
+    return true;
   }
 
   select = (state, activeViewId) => {

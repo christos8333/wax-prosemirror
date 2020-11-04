@@ -15,7 +15,6 @@ export default css`
     background: white;
     counter-reset: footnote;
     line-height: 1.6;
-    font-size: 14px;
     ${fontWriting}
 
     p::selection,

@@ -29,6 +29,8 @@ export { default as TrackChangeService } from './src/TrackChangeService/TrackCha
 export { default as trackedTransaction } from './src/TrackChangeService/track-changes/trackedTransaction';
 export { default as MathService } from './src/MathService/MathService';
 export { default as FindAndReplaceService } from './src/FindAndReplaceService/FindAndReplaceService';
+export { default as FullScreenService } from './src/FullScreenService/FullScreenService';
+export { default as SpecialCharactersService } from './src/SpecialCharactersService/SpecialCharactersService';
 
 /*
 ToolGroups
@@ -46,3 +48,5 @@ export { default as TrackChangeToolGroupService } from './src/WaxToolGroups/Trac
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';
 export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGroups/TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
+export { default as FullScreenToolGroupService } from './src/WaxToolGroups/FullScreenToolGroupService/FullScreenToolGroupService';
+export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';

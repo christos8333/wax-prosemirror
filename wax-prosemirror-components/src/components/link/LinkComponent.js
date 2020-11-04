@@ -1,15 +1,20 @@
 /* eslint react/prop-types: 0 */
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
+import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const Wrapper = styled.div`
-  background: silver;
-  display: inline-block;
-  padding: 12px;
+  background: #fff;
+  background: #fff;
+  border-radius: 1.03093% / 8%;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
+    rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+  transform-origin: 50% 50% 0px;
+  padding: ${grid(2)} ${grid(1)} ${grid(2)} ${grid(2)};
   a {
-    color: unset;
+    color: #3a4863;
     text-decoration: none;
   }
 `;
@@ -35,8 +40,16 @@ const ButtonGroup = styled.div`
 
 const StyledButton = styled.button`
   margin-right: 10px;
-  background: #777;
+  background: ${th('colorPrimary')};
+  cursor: pointer;
   color: #fff;
+`;
+
+const StyledButtonCancel = styled.button`
+  margin-right: 10px;
+  background: #fff
+  cursor: pointer;
+  color:${th('colorPrimary')};;
 `;
 
 const LinkComponent = ({ mark, setPosition, position }) => {
@@ -202,9 +215,9 @@ const LinkComponent = ({ mark, setPosition, position }) => {
               Apply
             </StyledButton>
 
-            <StyledButton onClick={editLinkHref} type="button">
+            <StyledButtonCancel onClick={editLinkHref} type="button">
               Cancel
-            </StyledButton>
+            </StyledButtonCancel>
           </>
         )}
 
@@ -214,9 +227,9 @@ const LinkComponent = ({ mark, setPosition, position }) => {
               Edit
             </StyledButton>
 
-            <StyledButton onClick={removeLink} type="button">
+            <StyledButtonCancel onClick={removeLink} type="button">
               Remove
-            </StyledButton>
+            </StyledButtonCancel>
           </>
         )}
       </ButtonGroup>

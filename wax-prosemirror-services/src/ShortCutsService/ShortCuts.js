@@ -60,10 +60,8 @@ const backSpaceShortCut = (state, dispatch, view) => {
 
 const pressEnter = (state, dispatch) => {
   // LISTS
-  console.log(state);
-  console.log('lisr', splitListItem(state.schema.nodes.list_item)(state));
-  splitListItem(state.schema.nodes.list_item)(state, dispatch);
   if (splitListItem(state.schema.nodes.list_item)(state)) {
+    splitListItem(state.schema.nodes.list_item)(state, dispatch);
     return true;
   }
 

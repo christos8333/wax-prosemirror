@@ -31,10 +31,9 @@ const serializer = schema => {
   };
 };
 
-let schema;
 const createApplication = props => {
   const application = Application.create(props);
-  schema = application.getSchema();
+  application.getSchema();
   application.bootServices();
   return application;
 };
@@ -69,7 +68,7 @@ const Wax = props => {
 
   if (!application) return null;
   const WaxOnchange = onChange ? onChange : value => true;
-
+  const { schema } = application.schema;
   const editorContent = value || '';
 
   finalPlugins = defaultPlugins.concat([

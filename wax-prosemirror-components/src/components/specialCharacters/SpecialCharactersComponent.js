@@ -1,10 +1,16 @@
 /* eslint react/prop-types: 0 */
-import React, { useRef, useState, useContext } from 'react';
+import React, {
+  useRef,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
-import { filter, groupBy } from 'lodash';
+import { filter, groupBy, debounce } from 'lodash';
 import Icon from '../../helpers/Icon';
 import CharactersList from './CharactersList';
 
@@ -74,6 +80,7 @@ const SpecialCharacter = styled.div`
   border: 1px solid black;
   border-radius: 50%;
   span {
+    font-size: 16px;
     text-align: center;
     padding-top: 3px;
   }
@@ -91,14 +98,25 @@ const SpecialCharactersComponent = ({ close }) => {
   );
   const onChange = () => {
     setSearchValue(searchRef.current.value);
+  };
+
+  const delayedSearch = useCallback(
+    debounce(() => searchCharacters(), 300),
+    [searchValue],
+  );
+
+  const searchCharacters = () => {
     const filtertedSpecialCharacters = filter(CharactersList, value => {
-      console.log(value);
       if (value.name.toLowerCase().includes(searchValue.toLowerCase()))
         return value.name;
       return false;
     });
     setSpecialCharactersList(filtertedSpecialCharacters);
   };
+
+  useEffect(() => {
+    delayedSearch();
+  }, [searchValue, delayedSearch]);
 
   const insertCharacter = () => {};
 
@@ -110,9 +128,13 @@ const SpecialCharactersComponent = ({ close }) => {
         <SpecialCharactersGroup key={key}>
           <GroupTitle> {key} </GroupTitle>
           <GroupCharacters>
-            {groupedCharacters[key].map((item, index) => {
+            {groupBy(specialCharactersList, 'group')[key].map((item, index) => {
               return (
-                <SpecialCharacter key={uuidv4()} onMouseDown={insertCharacter}>
+                <SpecialCharacter
+                  key={uuidv4()}
+                  onMouseDown={insertCharacter}
+                  title={item.name}
+                >
                   <span>{item.unicode}</span>
                 </SpecialCharacter>
               );

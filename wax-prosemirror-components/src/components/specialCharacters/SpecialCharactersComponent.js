@@ -7,16 +7,15 @@ import React, {
   useEffect,
 } from 'react';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, th } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { filter, groupBy, debounce } from 'lodash';
-import Icon from '../../helpers/Icon';
 import CharactersList from './CharactersList';
 
 const Wrapper = styled.div`
   width: 400px;
-  height: 220px;
+  height: 250px;
   overflow: hidden;
   background: #fff;
   display: flex;
@@ -25,9 +24,10 @@ const Wrapper = styled.div`
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
   transform-origin: 50% 50% 0px;
+  padding-bottom: ${grid(2)};
 `;
 const SearchInputContainer = styled.div`
-  padding: ${grid(2)};
+  padding: ${grid(2)} ${grid(2)} ${grid(2)} ${grid(2)};
 `;
 
 const SearchInput = styled.input`
@@ -47,7 +47,7 @@ const SearchInput = styled.input`
 `;
 
 const CharactersListComponent = styled.div`
-  height: 150px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -58,10 +58,12 @@ const CharactersListComponent = styled.div`
 const SpecialCharactersGroup = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: ${grid(2)};
 `;
 
 const GroupTitle = styled.div`
-  font-size: 16px;
+  font-size: 17px;
+  color: ${th('colorPrimary')};
   padding: 0 ${grid(2)} ${grid(2)} ${grid(2)};
 `;
 
@@ -76,23 +78,35 @@ const SpecialCharacter = styled.div`
   min-width: 25px;
   height: 25px;
   display: inline-grid;
+  background: ${th('colorPrimary')}
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid ${th('colorPrimary')};
   border-radius: 50%;
+  &:hover {
+    background: white;
+  }
   span {
     font-size: 16px;
     text-align: center;
     padding-top: 3px;
+    color: white;
+
+    &:hover {
+      color: ${th('colorPrimary')};
+    }
   }
 `;
 
-const LastUsedComponent = styled.div``;
+// const LastUsedComponent = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   height: 30px;
+// `;
 
 const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
-  const { app, view } = useContext(WaxContext);
+  const { activeView } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
-  const groupedCharacters = groupBy(CharactersList, 'group');
   const [specialCharactersList, setSpecialCharactersList] = useState(
     CharactersList,
   );
@@ -118,7 +132,11 @@ const SpecialCharactersComponent = ({ close }) => {
     delayedSearch();
   }, [searchValue, delayedSearch]);
 
-  const insertCharacter = () => {};
+  const insertCharacter = character => {
+    const { state, dispatch } = activeView;
+    const { from, to } = state.selection;
+    dispatch(state.tr.insertText(character.unicode, from, to));
+  };
 
   const renderList = () => {
     const lists = [];
@@ -128,17 +146,19 @@ const SpecialCharactersComponent = ({ close }) => {
         <SpecialCharactersGroup key={key}>
           <GroupTitle> {key} </GroupTitle>
           <GroupCharacters>
-            {groupBy(specialCharactersList, 'group')[key].map((item, index) => {
-              return (
-                <SpecialCharacter
-                  key={uuidv4()}
-                  onMouseDown={insertCharacter}
-                  title={item.name}
-                >
-                  <span>{item.unicode}</span>
-                </SpecialCharacter>
-              );
-            })}
+            {groupBy(specialCharactersList, 'group')[key].map(
+              (character, index) => {
+                return (
+                  <SpecialCharacter
+                    key={uuidv4()}
+                    onMouseDown={() => insertCharacter(character)}
+                    title={character.name}
+                  >
+                    <span>{character.unicode}</span>
+                  </SpecialCharacter>
+                );
+              },
+            )}
           </GroupCharacters>
         </SpecialCharactersGroup>,
       );
@@ -158,7 +178,6 @@ const SpecialCharactersComponent = ({ close }) => {
         />
       </SearchInputContainer>
       <CharactersListComponent>{renderList()}</CharactersListComponent>
-      <LastUsedComponent>Characters Last Used</LastUsedComponent>
     </Wrapper>
   );
 };

@@ -1,12 +1,10 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-
 import { DOMSerializer, DOMParser } from 'prosemirror-model';
-
+import { DefaultSchema } from 'wax-prosemirror-utilities';
 import WaxProvider from './WaxContext';
 import Application from './Application';
-
 import WaxView from './WaxView';
 import defaultPlugins from './plugins/defaultPlugins';
 import Placeholder from './plugins/placeholder';
@@ -137,7 +135,7 @@ const Wax = props => {
 };
 
 Wax.defaultProps = {
-  config: { services: [] },
+  config: { SchemaService: DefaultSchema, services: [] },
 };
 
 export default Wax;

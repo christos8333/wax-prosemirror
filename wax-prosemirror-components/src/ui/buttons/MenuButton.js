@@ -35,6 +35,7 @@ const Wrapper = styled.button.attrs(props => ({
   background: none;
   border: none;
   border-radius: 2px;
+  color: ${th('colorText')};
   cursor: pointer;
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
@@ -42,7 +43,6 @@ const Wrapper = styled.button.attrs(props => ({
   outline: none;
   padding: 2px;
   transition: all 0.1s ease-in;
-  color: ${th('colorText')};
 
   > svg {
     transition: all 0.1s ease-in;
@@ -52,6 +52,7 @@ const Wrapper = styled.button.attrs(props => ({
     background: ${th('colorBackgroundHue')};
   }
 
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props => props.active && activeStyles}
   ${props => props.disabled && disabledStyles}
 

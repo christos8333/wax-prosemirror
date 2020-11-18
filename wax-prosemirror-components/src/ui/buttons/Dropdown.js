@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import MenuButton from './MenuButton';
 import { grid } from '@pubsweet/ui-toolkit';
+import MenuButton from './MenuButton';
 
 // font size 0 reason: https://stackoverflow.com/a/19212391
 const Wrapper = styled.div`
@@ -13,9 +13,9 @@ const Wrapper = styled.div`
 `;
 
 const DropWrapper = styled.div`
+  background: white;
   margin-top: ${grid(1)};
   position: absolute;
-  background: white;
 `;
 
 const Dropdown = props => {

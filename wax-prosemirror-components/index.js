@@ -17,3 +17,4 @@ export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';
 export { default as FindAndReplaceTool } from './src/components/findAndReplace/FindAndReplaceTool';
 export { default as FullScreen } from './src/components/FullScreen';
 export { default as SpecialCharactersTool } from './src/components/specialCharacters/SpecialCharactersTool';
+export { default as TextHighlightingTool } from './src/components/textHighlight/TextHighlightingTool';

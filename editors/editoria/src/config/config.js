@@ -32,6 +32,8 @@ import {
   FullScreenToolGroupService,
   SpecialCharactersService,
   SpecialCharactersToolGroupService,
+  HighlightService,
+  TextHighlightToolGroupServices,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -54,6 +56,7 @@ export default {
           name: 'Annotations',
           more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
+        'HighlightToolGroup',
         'Notes',
         'Lists',
         'Images',
@@ -134,5 +137,7 @@ export default {
     new FullScreenToolGroupService(),
     new SpecialCharactersService(),
     new SpecialCharactersToolGroupService(),
+    new HighlightService(),
+    new TextHighlightToolGroupServices(),
   ],
 };

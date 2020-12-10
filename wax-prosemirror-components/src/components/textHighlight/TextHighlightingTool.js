@@ -10,23 +10,24 @@ const Wrapper = styled.div`
   font-size: 0;
   position: relative;
   z-index: 2;
+
   button:hover {
     background: transparent;
   }
 `;
 
 const DropWrapper = styled.div`
+  background: white;
   margin-top: ${grid(1)};
   position: absolute;
-  background: white;
   top: 32px;
   width: max-content;
 `;
 const TextHighlightComponent = styled.div`
+  background: white;
+  border: 1px solid gray;
   display: flex;
   flex-direction: column;
-  background:white
-  border:1px solid gray
 `;
 const Highlighter = styled.div`
   min-width: 25px;
@@ -40,7 +41,7 @@ const Highlighter = styled.div`
 const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   const { icon, title, select } = item;
   const [isOpen, setIsOpen] = useState(false);
-  let dblClick = false;
+
   const ref = useRef();
   const {
     view: { main },
@@ -96,7 +97,10 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
     setIsOpen(false);
   };
   const handleDblClk = () => {
-    item.run(state, dispatch, localStorage.getItem('lastColor'));
+    const color = localStorage.getItem('lastColor')
+      ? localStorage.getItem('lastColor')
+      : `background-color: ${highlightDropDownOptions[0].name};`;
+    item.run(state, dispatch, color);
   };
 
   const isDisabled = !select(state, activeViewId, activeView);
@@ -105,11 +109,13 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
     () => (
       <Wrapper ref={ref} onDoubleClick={handleDblClk}>
         <div
+          disabled={isDisabled}
           style={{
             backgroundColor:
               localStorage.getItem('lastBgColor') != undefined
                 ? localStorage.getItem('lastBgColor')
                 : highlightDropDownOptions[0].name,
+            opacity: isDisabled ? '0.4' : '1',
           }}
         >
           <MenuButton

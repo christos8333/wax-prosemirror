@@ -38,6 +38,7 @@ export default css`
 
   .ProseMirror .wax-selection-marker {
     background-color: ${th('colorSelection')};
+    opacity: 0.8;
   }
 
   div[contenteditable='false'] {

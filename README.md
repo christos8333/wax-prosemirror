@@ -13,7 +13,6 @@ Wax Editor is built on top of the Prosemirror library. Check Prosemirror [websit
 
 Wax-prosemirror is under active development. The current roadmap is as follows:
 
-
 ### December 2020
 
 Beta version, including some new features:
@@ -101,12 +100,11 @@ debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 
 10. _TrackChange Tool group_: `TrackChange`
 
-11. _Math_: `math` (https://github.com/benrbray/prosemirror-math) 
+11. _Math_: `math` (https://github.com/benrbray/prosemirror-math)
 
-12._Special Character_: `SpecialCharacters` 
+12._Special Character_: `SpecialCharacters`
 
 13. _Find And Replace_: ``
-
 
 <h2> wax-prosemirror-core </h2>
 
@@ -419,11 +417,11 @@ Is used for adding menus to the editor.
 
 ## Latest versions
 
-- wax-prosemirror-components@0.0.26
-- wax-prosemirror-core@0.0.26
-- wax-prosemirror-layouts@0.0.26
-- wax-prosemirror-plugins@0.0.26
-- wax-prosemirror-schema@0.0.26
-- wax-prosemirror-services@0.0.26
-- wax-prosemirror-themes@0.0.26
-- wax-prosemirror-utilities@0.0.26
+- wax-prosemirror-components@0.0.27
+- wax-prosemirror-core@0.0.27
+- wax-prosemirror-layouts@0.0.27
+- wax-prosemirror-plugins@0.0.27
+- wax-prosemirror-schema@0.0.27
+- wax-prosemirror-services@0.0.27
+- wax-prosemirror-themes@0.0.27
+- wax-prosemirror-utilities@0.0.27

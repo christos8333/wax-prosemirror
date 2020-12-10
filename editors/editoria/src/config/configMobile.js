@@ -30,6 +30,8 @@ import {
   TextHighlightToolGroupServices,
 } from 'wax-prosemirror-services';
 
+import { DefaultSchema } from 'wax-prosemirror-utilities';
+
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 
 import invisibles, {
@@ -60,6 +62,7 @@ export default {
     },
   ],
 
+  SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: { enabled: false },

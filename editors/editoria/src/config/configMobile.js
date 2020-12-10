@@ -26,6 +26,8 @@ import {
   TrackChangeToolGroupService,
   DisplayTextToolGroupService,
   BlockDropDownToolGroupService,
+  HighlightService,
+  TextHighlightToolGroupServices,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -46,6 +48,7 @@ export default {
           name: 'Annotations',
           more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
+        'HighlightToolGroup',
         'BlockDropDown',
         'Notes',
         'Lists',
@@ -96,5 +99,7 @@ export default {
     new TrackChangeToolGroupService(),
     new DisplayTextToolGroupService(),
     new BlockDropDownToolGroupService(),
+    new HighlightService(),
+    new TextHighlightToolGroupServices(),
   ],
 };

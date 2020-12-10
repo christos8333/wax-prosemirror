@@ -31,6 +31,7 @@ export { default as MathService } from './src/MathService/MathService';
 export { default as FindAndReplaceService } from './src/FindAndReplaceService/FindAndReplaceService';
 export { default as FullScreenService } from './src/FullScreenService/FullScreenService';
 export { default as SpecialCharactersService } from './src/SpecialCharactersService/SpecialCharactersService';
+export { default as HighlightService } from './src/HighlightService/HightlightService';
 
 /*
 ToolGroups
@@ -50,3 +51,4 @@ export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/Bl
 export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGroups/TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
 export { default as FullScreenToolGroupService } from './src/WaxToolGroups/FullScreenToolGroupService/FullScreenToolGroupService';
 export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';
+export { default as TextHighlightToolGroupServices } from './src/WaxToolGroups/TextHighlightToolGroupService/TextHighlightToolGroupService';

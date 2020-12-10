@@ -1,4 +1,16 @@
-const removeMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
+import { v4 as uuidv4 } from 'uuid';
+
+const removeMarkStep = (
+  state,
+  tr,
+  step,
+  newTr,
+  map,
+  doc,
+  user,
+  date,
+  group,
+) => {
   doc.nodesBetween(step.from, step.to, (node, pos) => {
     if (!node.isInline) {
       return true;
@@ -44,6 +56,8 @@ const removeMarkStep = (state, tr, step, newTr, map, doc, user, date) => {
             date,
             before,
             after,
+            id: uuidv4(),
+            group,
           }),
         );
       } else if (formatChangeMark) {

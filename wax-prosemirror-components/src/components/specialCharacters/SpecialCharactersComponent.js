@@ -107,6 +107,8 @@ const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
   const { activeView } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
+  const [isFirstRun, setFirstRun] = useState(true);
+
   const [specialCharactersList, setSpecialCharactersList] = useState(
     CharactersList,
   );
@@ -130,12 +132,21 @@ const SpecialCharactersComponent = ({ close }) => {
 
   useEffect(() => {
     delayedSearch();
+    if (isFirstRun) {
+      setTimeout(() => {
+        searchRef.current.focus();
+        setFirstRun(false);
+      });
+    }
   }, [searchValue, delayedSearch]);
 
   const insertCharacter = character => {
     const { state, dispatch } = activeView;
     const { from, to } = state.selection;
     dispatch(state.tr.insertText(character.unicode, from, to));
+    setTimeout(() => {
+      activeView.focus();
+    });
   };
 
   const renderList = () => {

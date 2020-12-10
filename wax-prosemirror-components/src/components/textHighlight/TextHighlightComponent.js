@@ -1,10 +1,6 @@
-import React, { useMemo, useState, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
-import useOnClickOutside from '../../helpers/useOnClickOutside';
-
 
 const Wrapper = styled.div`
   width: 400px;
@@ -38,8 +34,11 @@ const Highlighter = styled.div`
   }
 `;
 
-const TextHighlightComponent = ({ view = { dispatch, state }, item, close }) => {
-
+const TextHighlightComponent = ({
+  view = { dispatch, state },
+  item,
+  close,
+}) => {
   const highlightDropDownOptions = [
     { name: 'red', value: 'background-color:red' },
     { name: 'blue', value: 'background-color:blue' },
@@ -50,24 +49,24 @@ const TextHighlightComponent = ({ view = { dispatch, state }, item, close }) => 
 
   const handleMouseDown = e => {
     e.preventDefault();
-    console.log("state@@@@ ", view.state, "        ########dispatch  ", view.dispatch);
     item.run(view.state, view.dispatch);
   };
 
   const renderList = () => {
     const lists = [];
 
-    Object.keys(highlightDropDownOptions).forEach(function (key) {
+    Object.keys(highlightDropDownOptions).forEach(key => {
       lists.push(
-        <Highlighter onMouseDown={e => handleMouseDown(e)} key={uuidv4()}
-          title={highlightDropDownOptions[key].name} iconName={item.icon} 
-        >
-        </Highlighter>
+        <Highlighter
+          onMouseDown={e => handleMouseDown(e)}
+          key={uuidv4()}
+          title={highlightDropDownOptions[key].name}
+          iconName={item.icon}
+        />,
       );
     });
     return <div>{lists}</div>;
   };
-
 
   return (
     <Wrapper>
@@ -77,5 +76,3 @@ const TextHighlightComponent = ({ view = { dispatch, state }, item, close }) => 
 };
 
 export default TextHighlightComponent;
-
-

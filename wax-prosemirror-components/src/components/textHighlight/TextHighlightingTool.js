@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   position: relative;
   z-index: 2;
 
+  button,
   button:hover {
     background: transparent;
   }
@@ -42,28 +43,22 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   const { icon, title, select } = item;
   const [isOpen, setIsOpen] = useState(false);
 
+  const highlightDropDownOptions = [
+    { name: 'red', value: 'red' },
+    { name: 'Light blue', value: '#add8e6' },
+    { name: 'yellow', value: 'yellow' },
+    { name: 'green', value: '#90EE90' },
+    { name: 'gray', value: '#d3d3d3' },
+    { name: 'orange', value: 'orange' },
+    { name: 'brown', value: 'brown' },
+    { name: 'aquamarine', value: 'aquamarine' },
+    { name: 'remove highlight', value: 'transparent' },
+  ];
+
   const ref = useRef();
-  const {
-    view: { main },
-    activeViewId,
-    activeView,
-  } = useContext(WaxContext);
+  const { activeViewId, activeView } = useContext(WaxContext);
 
   useOnClickOutside(ref, () => setIsOpen(false));
-  let lastSaveColor;
-
-  const highlightDropDownOptions = [
-    { name: 'red', value: 'color:red' },
-    { name: 'blue', value: 'color:blue' },
-    { name: 'yellow', value: 'color:yellow' },
-    { name: 'black', value: 'color:black' },
-    { name: 'green', value: 'color:green' },
-    { name: 'gray', value: 'color:gray' },
-    { name: 'orange', value: 'color:orange' },
-    { name: 'brown', value: 'color:brown' },
-    { name: 'aquamarine', value: 'color:aquamarine' },
-    { name: 'transparent', value: 'color:transparent' },
-  ];
 
   const renderList = () => {
     const lists = [];
@@ -71,35 +66,31 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
     Object.keys(highlightDropDownOptions).forEach(key => {
       lists.push(
         <Highlighter
-          onMouseDown={e => handleMouseDown(e)}
+          onMouseDown={e =>
+            handleMouseDown(e, highlightDropDownOptions[key].value)
+          }
           key={uuidv4()}
           title={highlightDropDownOptions[key].name}
           data-style={highlightDropDownOptions[key].value}
-          style={{ backgroundColor: highlightDropDownOptions[key].name }}
+          style={{ backgroundColor: highlightDropDownOptions[key].value }}
         />,
       );
     });
     return <div>{lists}</div>;
   };
 
-  const handleMouseDown = e => {
+  const handleMouseDown = (e, color) => {
     e.preventDefault();
-    item.run(
-      activeView.state,
-      activeView.dispatch,
-      e.target.getAttribute('style'),
-    );
-
-    lastSaveColor = e.target.getAttribute('style');
-    localStorage.setItem('lastColor', lastSaveColor);
-    const btnBackground = e.target.title;
-    localStorage.setItem('lastBgColor', btnBackground);
+    item.run(activeView.state, activeView.dispatch, color);
+    if (color !== 'transparent') localStorage.setItem('lastBgColor', color);
     setIsOpen(false);
   };
+
   const handleDblClk = () => {
-    const color = localStorage.getItem('lastColor')
-      ? localStorage.getItem('lastColor')
-      : `background-color: ${highlightDropDownOptions[0].name};`;
+    const color = localStorage.getItem('lastBgColor')
+      ? localStorage.getItem('lastBgColor')
+      : highlightDropDownOptions[0].value;
+
     item.run(state, dispatch, color);
   };
 
@@ -115,7 +106,7 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
               localStorage.getItem('lastBgColor') != undefined
                 ? localStorage.getItem('lastBgColor')
                 : highlightDropDownOptions[0].name,
-            opacity: isDisabled ? '0.4' : '1',
+            opacity: isDisabled ? '0.6' : '1',
           }}
         >
           <MenuButton

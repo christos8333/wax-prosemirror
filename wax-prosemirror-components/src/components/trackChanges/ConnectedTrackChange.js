@@ -9,6 +9,8 @@ const ConnectedTrackChangeStyled = styled.div`
   position: absolute;
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
   width: 200px;
+  height: 200px;
+  background: red;
   @media (max-width: 600px) {
     margin-left: 15px;
   }
@@ -27,13 +29,13 @@ export default ({ trackChangeId, top, recalculateTops }) => {
   } = useContext(WaxContext);
 
   const { state, dispatch } = activeView;
-
+  console.log('topp', top, trackChangeId);
   const styles = {
     top: `${top}px`,
   };
 
   const active = false;
-  return null;
+
   const MemorizedTrackChange = useMemo(
     () => (
       <ConnectedTrackChangeStyled

@@ -120,7 +120,7 @@ export default ({ area }) => {
         }
       }
     });
-
+    console.log(allCommentsTop);
     return allCommentsTop;
   });
 

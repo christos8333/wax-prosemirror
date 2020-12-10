@@ -34,7 +34,7 @@ export default ({ commentsTracks, view, position, recalculateTops }) => {
             trackChange={commentTrack}
             view={view}
             top={top}
-            dataBox={id}
+            trackChangeId={id}
             recalculateTops={recalculateTops}
           />
         );

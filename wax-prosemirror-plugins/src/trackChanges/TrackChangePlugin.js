@@ -25,6 +25,7 @@ export default options => {
         } = state;
 
         let { decos } = this.getState(oldState);
+        let currentTrackSelected;
         decos = DecorationSet.empty;
         if (tr.selectionSet) {
           const { insertion, deletion, formatChange } = findSelectedChanges(
@@ -68,6 +69,7 @@ export default options => {
             ]);
           }
           if (formatChange) {
+            if (from === to) currentTrackSelected = formatChange;
             decos = decos.add(tr.doc, [
               decoType(formatChange.from, formatChange.to, {
                 class: 'selected-format-change',
@@ -78,6 +80,7 @@ export default options => {
           decos = decos.map(tr.mapping, tr.doc);
         }
         return {
+          trackChange: currentTrackSelected,
           decos,
         };
       },

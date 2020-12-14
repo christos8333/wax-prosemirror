@@ -29,12 +29,19 @@ export default ({ trackChangeId, top, recalculateTops }) => {
   } = useContext(WaxContext);
 
   const { state, dispatch } = activeView;
-  console.log('topp', top, trackChangeId);
+  let active = false;
   const styles = {
     top: `${top}px`,
   };
 
-  const active = false;
+  const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
+  const activeTrackChange = trakChangePlugin.getState(activeView.state)
+    .trackChange;
+
+  if (activeTrackChange && trackChangeId === activeTrackChange.attrs.id) {
+    active = true;
+    recalculateTops();
+  }
 
   const MemorizedTrackChange = useMemo(
     () => (

@@ -21,6 +21,7 @@ We maintain master as the production branch and tag it with release names. If yo
 - Create a user account on Coko GitLab : http://gitlab.coko.foundation
 - Clone master with `git clone https://gitlab.coko.foundation/wax/wax-prosemirror.git`
 - Create a new branch and work off that. Please name the branch in a way that sensibly identifies the feature you are working on. You can push the branch to Coko Gitlab at anytime.
+- If the master branch has moved forward, at the time of finishing the feature, rebase your branch to master(git rebase master),resolve if any conflicts, check that everything worked as before, and then submit a MR
 
 ## Getting your contributions merged
 

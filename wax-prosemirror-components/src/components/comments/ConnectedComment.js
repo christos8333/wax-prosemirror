@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
@@ -8,8 +8,8 @@ import { WaxContext } from 'wax-prosemirror-core';
 import CommentBox from '../../ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
-  position: absolute;
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
+  position: absolute;
   width: 200px;
   @media (max-width: 600px) {
     margin-left: 15px;
@@ -28,6 +28,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     activeView,
   } = useContext(WaxContext);
 
+  const [isActive, setIsActive] = useState(false);
   const { state, dispatch } = activeView;
   const viewId = comment.attrs.viewid;
   let allCommentsWithSameId = [];
@@ -41,8 +42,6 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const commentMark = state.schema.marks.comment;
 
-  let active = false;
-
   const styles = {
     top: `${top}px`,
   };
@@ -50,10 +49,13 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
-  if (activeComment && commentId === activeComment.attrs.id) {
-    active = true;
-    recalculateTops();
-  }
+  useEffect(() => {
+    setIsActive(false);
+    if (activeComment && commentId === activeComment.attrs.id) {
+      setIsActive(true);
+      recalculateTops();
+    }
+  }, [activeComment]);
 
   const onClickPost = content => {
     const { tr } = state;
@@ -83,7 +85,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   };
 
   const onClickBox = () => {
-    if (active) {
+    if (isActive) {
       view[viewId].focus();
       return false;
     }
@@ -133,30 +135,30 @@ export default ({ comment, top, commentId, recalculateTops }) => {
         onClickResolve();
         activeView.focus();
       }
-    }, 200);
+    }, 500);
   };
 
   const MemorizedComponent = useMemo(
     () => (
       <ConnectedCommentStyled
+        active={isActive}
         data-box={commentId}
         style={styles}
-        active={active}
       >
         <CommentBox
-          key={commentId}
-          active={active}
-          commentId={commentId}
+          active={isActive}
           commentData={comment.attrs.conversation}
-          onClickPost={onClickPost}
+          commentId={commentId}
+          key={commentId}
           onClickBox={onClickBox}
+          onClickPost={onClickPost}
           onClickResolve={onClickResolve}
-          recalculateTops={recalculateTops}
           onTextAreaBlur={onTextAreaBlur}
+          recalculateTops={recalculateTops}
         />
       </ConnectedCommentStyled>
     ),
-    [active, top, comment.attrs.conversation.length],
+    [isActive, top, comment.attrs.conversation.length],
   );
   return <>{MemorizedComponent}</>;
 };

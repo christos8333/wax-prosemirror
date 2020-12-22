@@ -1,5 +1,5 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import icons from '../../icons/icons';
 
@@ -88,30 +88,28 @@ const TrackChangesBox = props => {
   const {
     active,
     className,
-    displayName,
     label,
     onClick,
     onClickAccept,
     onClickReject,
     text,
-    timestamp,
+    trackData,
   } = props;
-
+  //   console.log(trackData);
   return (
     <Wrapper active={active} className={className} onClick={onClick}>
-      {active && (
-        <HeadWrapper>
-          <Info>
-            <Name>{displayName}</Name>
-            <Timestamp>{timestamp}</Timestamp>
-          </Info>
-
+      <HeadWrapper>
+        <Info>
+          <Name>{trackData.attrs.username}</Name>
+          <Timestamp>{trackData.attrs.date}</Timestamp>
+        </Info>
+        {active && (
           <Tools>
             <IconButton icon={check} onClick={onClickAccept} />
             <IconButton icon={times} onClick={onClickReject} />
           </Tools>
-        </HeadWrapper>
-      )}
+        )}
+      </HeadWrapper>
 
       <ChangeWrapper>
         <Label>{label}</Label>
@@ -119,20 +117,6 @@ const TrackChangesBox = props => {
       </ChangeWrapper>
     </Wrapper>
   );
-};
-
-TrackChangesBox.propTypes = {
-  active: PropTypes.bool,
-  displayName: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onClickAccept: PropTypes.func.isRequired,
-  onClickReject: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
-};
-
-TrackChangesBox.defaultProps = {
-  active: false,
 };
 
 export default TrackChangesBox;

@@ -3,7 +3,6 @@ import { Mark } from 'prosemirror-model';
 import React from 'react';
 import ConnectedComment from '../comments/ConnectedComment';
 import ConnectedTrackChange from '../trackChanges/ConnectedTrackChange';
-import TrackChangeBox from '../trackChanges/TrackChangeBox';
 
 export default ({ commentsTracks, view, position, recalculateTops }) => {
   if (!position) return null;
@@ -20,22 +19,22 @@ export default ({ commentsTracks, view, position, recalculateTops }) => {
         if (commentTrack.type && commentTrack.type.name === 'comment') {
           return (
             <ConnectedComment
-              key={id}
               comment={commentTrack}
-              top={top}
               commentId={id}
+              key={id}
               recalculateTops={recalculateTops}
+              top={top}
             />
           );
         }
         return (
           <ConnectedTrackChange
             key={id}
-            trackChange={commentTrack}
-            view={view}
-            top={top}
-            trackChangeId={id}
             recalculateTops={recalculateTops}
+            top={top}
+            trackChange={commentTrack}
+            trackChangeId={id}
+            view={view}
           />
         );
       })}

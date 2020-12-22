@@ -3,20 +3,17 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 // import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
-import TrackChangesBox from '../../ui/trackChanges/TrackChangesBox';
+import TrackChangesBox from './TrackChangesBox';
 
 const ConnectedTrackChangeStyled = styled.div`
-  background: red;
-  height: 200px;
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
   position: absolute;
-  width: 200px;
   @media (max-width: 600px) {
     margin-left: 15px;
   }
 `;
 
-export default ({ trackChangeId, top, recalculateTops }) => {
+export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const { app, activeView } = useContext(WaxContext);
 
   const [isActive, setIsActive] = useState(false);
@@ -50,7 +47,7 @@ export default ({ trackChangeId, top, recalculateTops }) => {
           key={trackChangeId}
           recalculateTops={recalculateTops}
           trackChangeId={trackChangeId}
-          trackData=""
+          trackData={trackChange}
         />
       </ConnectedTrackChangeStyled>
     ),

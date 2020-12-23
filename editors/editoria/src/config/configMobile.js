@@ -28,6 +28,8 @@ import {
   BlockDropDownToolGroupService,
   HighlightService,
   TextHighlightToolGroupServices,
+  TransformService,
+  TransformToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -51,6 +53,7 @@ export default {
           more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
         'HighlightToolGroup',
+        'TransformToolGroup',
         'BlockDropDown',
         'Notes',
         'Lists',
@@ -104,5 +107,7 @@ export default {
     new BlockDropDownToolGroupService(),
     new HighlightService(),
     new TextHighlightToolGroupServices(),
+    new TransformService(),
+    new TransformToolGroupService(),
   ],
 };

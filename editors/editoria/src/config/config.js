@@ -34,6 +34,8 @@ import {
   SpecialCharactersToolGroupService,
   HighlightService,
   TextHighlightToolGroupServices,
+  TransformService,
+  TransformToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -57,6 +59,7 @@ export default {
           more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
         'HighlightToolGroup',
+        'TransformToolGroup',
         'Notes',
         'Lists',
         'Images',
@@ -139,5 +142,7 @@ export default {
     new SpecialCharactersToolGroupService(),
     new HighlightService(),
     new TextHighlightToolGroupServices(),
+    new TransformService(),
+    new TransformToolGroupService(),
   ],
 };

@@ -14,6 +14,7 @@ export { default as sourceMark } from './src/marks/sourceMark';
 export { default as commentMark } from './src/marks/commentMark';
 export { default as mathSelectMark } from './src/marks/mathSelectMark';
 export { default as highlightMark } from './src/marks/highlightMark';
+export { default as transformMark } from './src/marks/transformMark';
 /*
 LIST OF TRACK CHANGES MARKS
 */

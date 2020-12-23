@@ -32,6 +32,7 @@ export { default as FindAndReplaceService } from './src/FindAndReplaceService/Fi
 export { default as FullScreenService } from './src/FullScreenService/FullScreenService';
 export { default as SpecialCharactersService } from './src/SpecialCharactersService/SpecialCharactersService';
 export { default as HighlightService } from './src/HighlightService/HightlightService';
+export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 /*
 ToolGroups

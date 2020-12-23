@@ -160,7 +160,19 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
 `;
+const WaxBottomRightInfo= styled.div`
 
+`;
+const InfoContainer= styled.div`
+display:flex;
+position:fixed !important;
+bottom:1px;
+right:21px;
+z-index:1;
+`;
+const InfoArea=styled.div`
+
+`;
 let surfaceHeight = 600;
 let notesHeight = 200;
 
@@ -184,7 +196,7 @@ const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
-
+const BottomRightInfo=ComponentPlugin('BottomRightInfo');
 const EditoriaLayout = ({ editor }) => {
   const {
     view: { main },
@@ -209,6 +221,13 @@ const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper>
+        
+        <WaxBottomRightInfo>
+          <InfoContainer id="info-container">
+            <BottomRightInfo/>
+          </InfoContainer>            
+         </WaxBottomRightInfo>
+
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>

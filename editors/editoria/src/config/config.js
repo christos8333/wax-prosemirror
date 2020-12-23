@@ -34,6 +34,11 @@ import {
   SpecialCharactersToolGroupService,
   HighlightService,
   TextHighlightToolGroupServices,
+  EditorInfoToolGroupServices,
+  ShortcutToolGroupServices,
+  HelpToolGroupServices,
+  CounterInfoService,
+  BottomInfoService
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -84,6 +89,19 @@ export default {
             'Code',
             'Underline',
             'StrikeThrough',
+          ],
+        },
+      ],
+    },
+    {
+      templateArea: 'BottomRightInfo',
+      toolGroups: [
+        {
+          name: 'InfoToolGroup',
+          more: [
+            'CounterInfoTool',
+            'ShortcutTool',
+            'HelpTool'
           ],
         },
       ],
@@ -139,5 +157,10 @@ export default {
     new SpecialCharactersToolGroupService(),
     new HighlightService(),
     new TextHighlightToolGroupServices(),
+    new EditorInfoToolGroupServices(),
+    new CounterInfoService(),
+    new BottomInfoService(),
+    new ShortcutToolGroupServices(),
+    new HelpToolGroupServices()
   ],
 };

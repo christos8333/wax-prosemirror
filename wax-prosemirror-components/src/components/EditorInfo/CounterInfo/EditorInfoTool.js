@@ -15,35 +15,35 @@ const Wrapper = styled.div`
 `;
 
 const DropWrapper = styled.div`
+  background: white;
   margin-top: ${grid(1)};
   position: absolute;
-  background: white;
   top: 32px;
   width: max-content;
 `;
 const CounterInfoComponent = styled.div`
+  background:white;
+  border:1px solid gray;
+  bottom:45px;
   display: flex;
   flex-direction: column;
-  background:white
-  border:1px solid gray;
   position:fixed;
-  bottom:45px;
   right:50px;
 `;
 const Counter = styled.div`
-  min-width: 150px;
+  color:black;
+  cursor: pointer;
+  display: block;
+  font-size:14px;
   height: 25px;
   margin:5px;
-  display: block;
-  cursor: pointer;
-  color:black;
-  font-size:14px;
+  min-width: 150px;
 `;
 
 const EditorInfoTool = ({ view: { state }, item }) => {
   const { title } = item;
   const [isOpen, setIsOpen] = useState(false);
-  const [getWordCountFromState, setTotalWords] = useState();
+  const [getWordCountFromState, setTotalWords] = useState(0);
   const [totalCharCount, setTotalCharCount] = useState();
   const [totalCharCountWithoutSpace, setTotalCharWithoutSpace] = useState();
   const [getSelectionCountFromState, setSelectedTextCount] = useState();
@@ -53,9 +53,9 @@ const EditorInfoTool = ({ view: { state }, item }) => {
   const [footnoteCount, setFootNoteCount] = useState();
   const [blocklevelNode, setBlockLevelNodes] = useState();
   const ref = useRef();
-  const {activeView } = useContext(WaxContext);
-  const allBlockNodes = DocumentHelpers.findBlockNodes(state.doc);
-  const InlineNodes = DocumentHelpers.findInlineNodes(state.doc);
+  const {activeView,view: { main } } = useContext(WaxContext);
+  const allBlockNodes = DocumentHelpers.findBlockNodes(main.state.doc);
+  const InlineNodes = DocumentHelpers.findInlineNodes(main.state.doc);
 
   useOnClickOutside(ref, () => setIsOpen(false));
   
@@ -96,6 +96,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
     })
     return getWordCountFromStates
   });
+  
   const getCharCount = useCallback(() => {
     let totalCharCounts = 0;
 
@@ -145,7 +146,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
       })
 
     })
-    state.doc.content.content.forEach(value => {
+    main.state.doc.content.content.forEach(value => {
       if (value.attrs.class === "paragraph" && value.content.size > 0) {
         paraCounts += 1;
       }
@@ -181,7 +182,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
     let footNodeCount = 0;
     let selectedListTableCount = 0;
     let finalNestedValueCount = 0;
-    activeView.state.selection.content().content.content.forEach(value => {
+    state.selection.content().content.content.forEach(value => {
       value.content.content.forEach((textValue) => {
         if (textValue.text) {
           const textArray = textValue.text.trim().split(" ");
@@ -296,7 +297,6 @@ const EditorInfoTool = ({ view: { state }, item }) => {
     if (activeView.state.selection.$from.pos === activeView.state.selection.$to.pos) {
       setSelectedTextCount(0);
     }
-
   })
   const MenuButtonComponent = useMemo(
     () => (

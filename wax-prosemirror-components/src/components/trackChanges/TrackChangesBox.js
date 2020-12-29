@@ -1,6 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import styled, { css } from 'styled-components';
+import DateParser from '../../helpers/DateParser';
+
 import icons from '../../icons/icons';
 
 const { check, times } = icons;
@@ -101,7 +103,13 @@ const TrackChangesBox = props => {
       <HeadWrapper>
         <Info>
           <Name>{trackData.attrs.username}</Name>
-          <Timestamp>{trackData.attrs.date}</Timestamp>
+          <Timestamp>
+            <DateParser timestamp={trackData.attrs.date}>
+              {(timeStamp, timeAgo) => {
+                return `${timeAgo} ago`;
+              }}
+            </DateParser>
+          </Timestamp>
         </Info>
         {active && (
           <Tools>

@@ -1,8 +1,10 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
-// import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
+import { last, maxBy } from 'lodash';
+import { TextSelection } from 'prosemirror-state';
 import TrackChangesBox from './TrackChangesBox';
 
 const ConnectedTrackChangeStyled = styled.div`
@@ -14,11 +16,11 @@ const ConnectedTrackChangeStyled = styled.div`
 `;
 
 export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
-  const { app, activeView } = useContext(WaxContext);
+  const { app, activeView, view } = useContext(WaxContext);
 
   const [isActive, setIsActive] = useState(false);
   // const { state, dispatch } = activeView;
-
+  const viewId = 'main';
   const styles = {
     top: `${top}px`,
   };
@@ -26,6 +28,26 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
   const activeTrackChange = trakChangePlugin.getState(activeView.state)
     .trackChange;
+
+  const onClickBox = trackData => {
+    const allTracksWithSameId = DocumentHelpers.findAllMarksWithSameId(
+      view[viewId].state,
+      trackData,
+    );
+    const maxPos = maxBy(allTracksWithSameId, 'pos');
+    maxPos.pos += last(allTracksWithSameId).node.nodeSize;
+
+    view[viewId].dispatch(
+      view[viewId].state.tr.setSelection(
+        new TextSelection(
+          view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
+        ),
+      ),
+    );
+
+    view[viewId].focus();
+    return true;
+  };
 
   useEffect(() => {
     setIsActive(false);
@@ -45,6 +67,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
         <TrackChangesBox
           active={isActive}
           key={trackChangeId}
+          onClickBox={onClickBox}
           recalculateTops={recalculateTops}
           trackChangeId={trackChangeId}
           trackData={trackChange}

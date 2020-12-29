@@ -91,15 +91,20 @@ const TrackChangesBox = props => {
     active,
     className,
     label,
-    onClick,
+    onClickBox,
     onClickAccept,
     onClickReject,
     text,
     trackData,
   } = props;
-  //   console.log(trackData);
+
+  const onClickTrackBox = () => {
+    console.log(onClickBox);
+    onClickBox(trackData);
+  };
+
   return (
-    <Wrapper active={active} className={className} onClick={onClick}>
+    <Wrapper active={active} className={className} onClick={onClickTrackBox}>
       <HeadWrapper>
         <Info>
           <Name>{trackData.attrs.username}</Name>

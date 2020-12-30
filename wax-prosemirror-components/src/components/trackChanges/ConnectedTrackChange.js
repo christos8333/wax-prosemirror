@@ -20,7 +20,9 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
   const [isActive, setIsActive] = useState(false);
   // const { state, dispatch } = activeView;
-  const viewId = trackChange.attrs.viewid;
+  const viewId = trackChange.attrs
+    ? trackChange.attrs.viewid
+    : trackChange.node.attrs.viewid;
   const styles = {
     top: `${top}px`,
   };

@@ -102,13 +102,21 @@ const TrackChangesBox = props => {
     onClickBox(trackData);
   };
 
+  const username = trackData.attrs
+    ? trackData.attrs.username
+    : trackData.node.attrs.track[0].username;
+
+  const date = trackData.attrs
+    ? trackData.attrs.date
+    : trackData.node.attrs.track[0].date;
+
   return (
     <Wrapper active={active} className={className} onClick={onClickTrackBox}>
       <HeadWrapper>
         <Info>
-          <Name>{trackData.attrs.username}</Name>
+          <Name>{username}</Name>
           <Timestamp>
-            <DateParser timestamp={trackData.attrs.date}>
+            <DateParser timestamp={date}>
               {(timeStamp, timeAgo) => {
                 return `${timeAgo} ago`;
               }}

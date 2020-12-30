@@ -99,7 +99,6 @@ const TrackChangesBox = props => {
   } = props;
 
   const onClickTrackBox = () => {
-    console.log(onClickBox);
     onClickBox(trackData);
   };
 

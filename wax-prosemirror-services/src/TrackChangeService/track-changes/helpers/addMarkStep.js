@@ -1,6 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const addMarkStep = (state, tr, step, newTr, map, doc, user, date, group) => {
+const addMarkStep = (
+  state,
+  tr,
+  step,
+  newTr,
+  map,
+  doc,
+  user,
+  date,
+  group,
+  viewId,
+) => {
   doc.nodesBetween(step.from, step.to, (node, pos) => {
     if (!node.isInline) {
       return true;
@@ -43,13 +54,14 @@ const addMarkStep = (state, tr, step, newTr, map, doc, user, date, group) => {
           step.from,
           step.to,
           state.schema.marks.format_change.create({
+            id: uuidv4(),
             user: user.userId,
             username: user.username,
             date,
             before,
             after,
             group,
-            id: uuidv4(),
+            viewid: viewId,
           }),
         );
       } else if (formatChangeMark) {

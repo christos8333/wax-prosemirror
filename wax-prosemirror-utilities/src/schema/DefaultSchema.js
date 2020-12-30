@@ -25,6 +25,7 @@ export default {
         class: { default: 'paragraph' },
         track: { default: [] },
         group: { default: '' },
+        viewid: { default: '' },
       },
       parseDOM: [
         {
@@ -35,6 +36,7 @@ export default {
               class: dom.getAttribute('class'),
               track: SchemaHelpers.parseTracks(dom.dataset.track),
               group: dom.dataset.group,
+              viewid: dom.dataset.viewid,
             };
           },
         },

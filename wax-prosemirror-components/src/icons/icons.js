@@ -23,10 +23,10 @@ const Svg = styled.svg.attrs(() => ({
   xmlns: 'http://www.w3.org/2000/svg',
   xmlnsXlink: 'http://www.w3.org/1999/xlink',
 }))`
-  height: 24px;
-  width: 24px;
   fill: ${th('colorPrimary')};
+  height: 24px;
   vertical-align: top;
+  width: 24px;
 `;
 
 export default {
@@ -220,7 +220,7 @@ export default {
       className={className}
       enable-background="new 0 0 24 24"
       viewBox="0 0 24 24"
-    ></Svg>
+    />
   ),
   title: ({ className }) => (
     <Svg className={className} viewBox="0 0 24 24">
@@ -229,46 +229,46 @@ export default {
     </Svg>
   ),
   findAndReplace: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M11 6c1.38 0 2.63.56 3.54 1.46L12 10h6V4l-2.05 2.05C14.68 4.78 12.93 4 11 4c-3.53 0-6.43 2.61-6.92 6H6.1c.46-2.28 2.48-4 4.9-4zm5.64 9.14c.66-.9 1.12-1.97 1.28-3.14H15.9c-.46 2.28-2.48 4-4.9 4-1.38 0-2.63-.56-3.54-1.46L10 12H4v6l2.05-2.05C7.32 17.22 9.07 18 11 18c1.55 0 2.98-.51 4.14-1.36L20 21.49 21.49 20l-4.85-4.86z" />
     </Svg>
   ),
   navigatePrevious: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title>Previous</title>
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
     </Svg>
   ),
   navigateNext: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title>Next</title>
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
     </Svg>
   ),
   close: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title> Close </title>
       <path d="M0 0h24v24H0V0z" fill="none" />
       <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
     </Svg>
   ),
   fullScreen: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title> Full screen </title>
       <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
     </Svg>
   ),
   fullScreenExit: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title> Exit full screen </title>
       <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
     </Svg>
   ),
   specialCharacters: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <g>
         <rect fill="none" height="24" width="24" x="0" />
       </g>
@@ -282,10 +282,34 @@ export default {
     </Svg>
   ),
   chapterList: ({ className }) => (
-    <Svg className={className} viewBox="0 0 24 24" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title> Chapters </title>
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+    </Svg>
+  ),
+  transformCase: ({ className }) => (
+    <Svg
+      className={className}
+      enableBackground="new 0 0 16 16"
+      fill="none"
+      viewBox="0 0 28 28"
+    >
+      <path d="M11.44,15.353c0-2.99-1.352-5.486-5.59-5.486c-2.314,0-4.056,0.624-4.94,1.118l0.728,2.548 c0.832-0.52,2.21-0.962,3.51-0.962c1.95,0,2.314,0.962,2.314,1.639v0.183C2.964,14.365,0,15.952,0,19.253 c0,2.028,1.534,3.9,4.108,3.9c1.508,0,2.808-0.547,3.64-1.562h0.078l0.234,1.274h3.562c-0.13-0.702-0.182-1.872-0.182-3.096 V15.353z M7.592,18.239c0,0.232-0.026,0.468-0.078,0.676c-0.26,0.807-1.066,1.456-2.054,1.456c-0.884,0-1.56-0.494-1.56-1.508 c0-1.534,1.612-2.028,3.692-2.003V18.239z" />
+      <path d="M23.062,5.343h-5.201l-5.355,17.524h4.108l1.247-4.498h5.019l1.353,4.498h4.264L23.062,5.343z M18.434,15.404l1.041-3.718 c0.285-1.014,0.545-2.34,0.806-3.38h0.052c0.26,1.04,0.572,2.34,0.884,3.38l1.093,3.718H18.434z" />
+      <polygon points="8.025,6.584 1.999,6.584 1.999,6.833 1.999,7.461 1.999,7.709 8.025,7.709 8.025,8.95 12.442,7.146 8.025,5.343" />
+    </Svg>
+  ),
+  lowerCaseTransform: ({ className }) => (
+    <Svg
+      className={className}
+      enableBackground="new 0 0 28.08 28.08"
+      fill="none"
+      viewBox="0 0 28.08 28.08"
+    >
+      <path d="M5.356,5.135L0,22.659h4.108l1.248-4.498h5.018l1.352,4.498h4.264L10.556,5.135H5.356z M5.928,15.196l1.04-3.718 c0.286-1.014,0.546-2.34,0.806-3.38h0.052c0.26,1.04,0.572,2.34,0.884,3.38l1.092,3.718H5.928z" />
+      <path d="M27.898,19.564v-4.42c0-2.99-1.353-5.486-5.59-5.486c-2.314,0-4.058,0.624-4.94,1.118l0.728,2.548 c0.832-0.52,2.211-0.962,3.51-0.962c1.951,0,2.314,0.962,2.314,1.639v0.183c-4.498-0.026-7.462,1.561-7.462,4.861 c0,2.028,1.534,3.9,4.108,3.9c1.508,0,2.808-0.547,3.64-1.562h0.078l0.233,1.274h3.562C27.95,21.957,27.898,20.787,27.898,19.564z M24.05,18.031c0,0.232-0.026,0.468-0.077,0.676c-0.261,0.807-1.066,1.456-2.055,1.456c-0.884,0-1.561-0.494-1.561-1.508 c0-1.534,1.613-2.028,3.692-2.003V18.031z" />
+      <polygon points="21.663,8.742 26.08,6.938 21.663,5.135 21.663,6.376 15.637,6.376 15.637,6.625 15.637,7.253 15.637,7.501 21.663,7.501" />
     </Svg>
   ),
 };

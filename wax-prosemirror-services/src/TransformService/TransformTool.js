@@ -74,6 +74,7 @@ class TransformTool extends Tools {
               node.marks.forEach(item => {
                 marksAdd.push({
                   name: item.type.name,
+                  type: item.type,
                   pos: DocumentHelpers.findMark(state, item.type, true),
                   attrs: item.attrs,
                 });
@@ -104,148 +105,12 @@ class TransformTool extends Tools {
 
           if (isAddMark) {
             marksAdd.forEach(item => {
-              if (item.name === 'strong') {
+              if (item.name !== 'transform') {
                 item.pos.forEach(markPos => {
                   tr.addMark(
                     markPos.from,
                     markPos.to,
-                    state.schema.marks.strong.create(),
-                  );
-                });
-              }
-              if (item.name === 'em') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.em.create(),
-                  );
-                });
-              }
-              if (item.name === 'underline') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.underline.create(),
-                  );
-                });
-              }
-              if (item.name === 'link') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.link.create({
-                      href: item.attrs.href,
-                      target: item.attrs.target,
-                    }),
-                  );
-                });
-              }
-              if (item.name === 'code_block') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.code_block.create(),
-                  );
-                });
-              }
-              if (item.name === 'comment') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.comment.create({
-                      id: item.attrs.id,
-                      group: item.attrs.group,
-                      conversation: item.attrs.conversation,
-                      viewid: item.attrs.viewid,
-                    }),
-                  );
-                });
-              }
-              if (item.name === 'format_change') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.format_change.create(),
-                  );
-                });
-              }
-              if (item.name === 'highLight') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.highlight.create(),
-                  );
-                });
-              }
-              if (item.name === 'insertion') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.insertion.create(),
-                  );
-                });
-              }
-              if (item.name === 'math_select') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.math_select.create(),
-                  );
-                });
-              }
-              if (item.name === 'strikethrough') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.strikethrough.create({
-                      style: 'text-decoration-line:line-through',
-                    }),
-                  );
-                });
-              }
-              if (item.name === 'smallcaps') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.smallcaps.create(),
-                  );
-                });
-              }
-              if (item.name === 'sub') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.sub.create(),
-                  );
-                });
-              }
-              if (item.name === 'superscript') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.superscript.create(),
-                  );
-                });
-              }
-              if (item.name === 'deletion') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    state.schema.marks.deletion.create(),
+                    item.type.create(item.attrs),
                   );
                 });
               }

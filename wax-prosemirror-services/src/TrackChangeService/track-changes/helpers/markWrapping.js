@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const markWrapping = (tr, pos, oldNode, newNode, user, date, group, viewId) => {
-  console.log(viewId, 'hooo');
   let track = oldNode.attrs.track.slice();
   let blockTrack = track.find(track => track.type === 'block_change');
 

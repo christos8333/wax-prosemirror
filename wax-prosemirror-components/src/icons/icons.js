@@ -267,6 +267,12 @@ export default {
       <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z" />
     </Svg>
   ),
+  matchCase: ({ className }) => (
+    <Svg className={className} viewBox="0 0 24 24" fill="none">
+      <title> Match Case </title>
+      <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
+    </Svg>
+  ),
   specialCharacters: ({ className }) => (
     <Svg className={className} fill="none" viewBox="0 0 24 24">
       <g>

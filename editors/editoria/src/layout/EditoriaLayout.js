@@ -160,19 +160,15 @@ const NotesContainer = styled.div`
   height: 100%;
   width: 65%;
 `;
-const WaxBottomRightInfo= styled.div`
-
+const WaxBottomRightInfo = styled.div``;
+const InfoContainer = styled.div`
+  display: flex;
+  position: fixed !important;
+  bottom: 1px;
+  right: 21px;
+  z-index: 1;
 `;
-const InfoContainer= styled.div`
-display:flex;
-position:fixed !important;
-bottom:1px;
-right:21px;
-z-index:1;
-`;
-const InfoArea=styled.div`
-
-`;
+const InfoArea = styled.div``;
 let surfaceHeight = 600;
 let notesHeight = 200;
 
@@ -196,11 +192,28 @@ const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
-const BottomRightInfo=ComponentPlugin('BottomRightInfo');
+const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 const EditoriaLayout = ({ editor }) => {
   const {
     view: { main },
+    options,
   } = useContext(WaxContext);
+
+  let fullScreenStyles = {};
+
+  if (options.fullScreen) {
+    fullScreenStyles = {
+      backgroundColor: '#fff',
+      height: '100%',
+      left: '0',
+      margin: '0',
+      padding: '0',
+      position: 'fixed',
+      top: '0',
+      width: '100%',
+      zIndex: '99999',
+    };
+  }
 
   const notes = main && getNotes(main);
   const areNotes = notes && !!notes.length && notes.length > 0;
@@ -220,14 +233,7 @@ const EditoriaLayout = ({ editor }) => {
 
   return (
     <ThemeProvider theme={cokoTheme}>
-      <Wrapper>
-        
-        <WaxBottomRightInfo>
-          <InfoContainer id="info-container">
-            <BottomRightInfo/>
-          </InfoContainer>            
-         </WaxBottomRightInfo>
-
+      <Wrapper style={fullScreenStyles}>
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>
@@ -273,6 +279,11 @@ const EditoriaLayout = ({ editor }) => {
           </EditorArea>
         </Main>
         <WaxOverlays />
+        <WaxBottomRightInfo>
+          <InfoContainer id="info-container">
+            <BottomRightInfo />
+          </InfoContainer>
+        </WaxBottomRightInfo>
       </Wrapper>
     </ThemeProvider>
   );

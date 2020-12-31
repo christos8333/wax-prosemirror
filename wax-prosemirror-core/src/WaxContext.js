@@ -18,6 +18,10 @@ export default props => {
     view: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
+    options: { fullScreen: false },
+    setOption: option => {
+      Object.assign(context.options, option);
+    },
     removeView: deletedView => {
       delete context.view[deletedView];
     },

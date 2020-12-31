@@ -1,27 +1,32 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useContext, useMemo } from 'react';
+import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const Button = ({ view = {}, item }) => {
-  const { active, icon, label, onlyOnMain, run, select, title } = item;
+  const { active, icon, label, select, title } = item;
+  const context = useContext(WaxContext);
 
-  const {
-    view: { main },
-    activeViewId,
-    activeView,
-  } = useContext(WaxContext);
+  const { activeViewId, activeView, options } = context;
 
-  if (onlyOnMain) view = main;
-
-  const { dispatch, state } = view;
+  const { state } = view;
 
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();
-    run(editorState, dispatch);
+    options.fullScreen = !options.fullScreen;
+    const { selection } = state;
+    activeView.dispatch(
+      activeView.state.tr.setSelection(
+        new TextSelection(
+          activeView.state.tr.doc.resolve(selection.from, selection.to),
+        ),
+      ),
+    );
   };
 
+  const usedIcon = options.fullScreen ? 'fullScreenExit' : icon;
   const isActive = active(state, activeViewId) && select(state, activeViewId);
 
   const isDisabled = !select(state, activeViewId, activeView);
@@ -31,13 +36,13 @@ const Button = ({ view = {}, item }) => {
       <MenuButton
         active={false}
         disabled={false}
-        iconName={icon}
+        iconName={usedIcon}
         label={label}
         onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
         title={title}
       />
     ),
-    [isActive, isDisabled],
+    [isActive, isDisabled, usedIcon],
   );
 
   return MenuButtonComponent;

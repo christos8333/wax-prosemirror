@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
-import { Commands } from 'wax-prosemirror-utilities';
+import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 
 import {
   wrapInList,
@@ -66,8 +66,17 @@ const pressEnter = (state, dispatch) => {
     return true;
   }
   // Title
-  if (!Commands.setBlockType(state.config.schema.nodes.title)(state))
+  if (!Commands.setBlockType(state.config.schema.nodes.title)(state)) {
+    const title = DocumentHelpers.findChildrenByType(
+      state.doc,
+      state.config.schema.nodes.title,
+      true,
+    );
+    if (state.selection.from === title[0].node.nodeSize - 1) {
+      return false;
+    }
     return true;
+  }
 
   return false;
 };

@@ -1,12 +1,14 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const TitleButton = ({ view = {}, item }) => {
   const { active, icon, label, onlyOnMain, run, select, title } = item;
 
   const {
+    app,
     view: { main },
     activeViewId,
     activeView,
@@ -20,6 +22,14 @@ const TitleButton = ({ view = {}, item }) => {
     e.preventDefault();
     run(editorState, dispatch);
   };
+
+  const titleNode = DocumentHelpers.findChildrenByType(
+    state.doc,
+    state.config.schema.nodes.title,
+    true,
+  );
+
+  console.log(titleNode, app.config.get('config.TitleService'));
 
   const isActive = !!active(state, activeViewId);
   const isDisabled = !select(state, activeViewId, activeView);

@@ -53,6 +53,10 @@ import invisibles, {
   paragraph,
 } from '@guardian/prosemirror-invisibles';
 
+const updateTitle = title => {
+  console.log(title);
+};
+
 export default {
   MenuService: [
     {
@@ -116,7 +120,7 @@ export default {
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: { enabled: false },
-  TitleService: 'update',
+  TitleService: { updateTitle },
   PmPlugins: [
     columnResizing(),
     tableEditing(),

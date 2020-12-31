@@ -1,6 +1,9 @@
-import Tools from '../../lib/Tools';
+import React from 'react';
+import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { Commands } from 'wax-prosemirror-utilities';
+import { TitleButton } from 'wax-prosemirror-components';
+import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
+import Tools from '../../lib/Tools';
 
 export default
 @injectable()
@@ -24,7 +27,23 @@ class Title extends Tools {
   }
 
   select = (state, activeViewId) => {
-    if (activeViewId !== 'main') return false;
+    const {
+      selection: { $from, $to },
+    } = state;
+
+    const titleCounter = DocumentHelpers.findChildrenByType(
+      state.doc,
+      state.config.schema.nodes.title,
+      true,
+    );
+
+    if (
+      activeViewId !== 'main' ||
+      $from.parent !== $to.parent ||
+      titleCounter.length === 1
+    )
+      return false;
+
     return true;
   };
 
@@ -32,5 +51,12 @@ class Title extends Tools {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.title)(state);
     };
+  }
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+    return this._isDisplayed ? (
+      <TitleButton key="Title" item={this.toJSON()} view={view} />
+    ) : null;
   }
 }

@@ -175,11 +175,11 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
       <SingleRow>
         <SearchInputWrapper>
           <SearchInput
+            onChange={onChange}
+            placeholder="Find"
             ref={searchRef}
             type="text"
-            placeholder="Find"
             value={searchValue}
-            onChange={onChange}
           />
           <CounterInput> {counterText} </CounterInput>
         </SearchInputWrapper>

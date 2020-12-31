@@ -2,31 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Button from '../../components/Button';
-
 const Wrapper = styled.div`
   display: flex;
+
   button {
     border-radius: 4px;
+    left: -33px;
     margin-left: 4px;
     padding-left: 25px;
     position: relative;
-    left: -33px;
   }
 `;
 
 const Box = styled.div`
-  width: 22px;
+  background: #bfc4cd;
+  border-radius: 4px;
   height: 22px;
   position: relative;
-  top: 3px;
   right: 3px;
-  border-radius: 4px;
-  background: #bfc4cd;
+  top: 3px;
+  width: 22px;
   z-index: 999;
 `;
-
-const StyledButton = styled(Button)``;
 
 const BlockElement = props => {
   const { item, onClick, view } = props;
@@ -34,14 +31,18 @@ const BlockElement = props => {
   return (
     <Wrapper onClick={onClick}>
       <Box />
-      <StyledButton item={item} view={view} />
+      {item.renderTool(view)}
     </Wrapper>
   );
 };
 
 BlockElement.propTypes = {
+  view: PropTypes.shape({
+    dispatch: PropTypes.func,
+  }).isRequired,
   item: PropTypes.shape({
     label: PropTypes.string,
+    renderTool: PropTypes.func,
   }).isRequired,
 };
 

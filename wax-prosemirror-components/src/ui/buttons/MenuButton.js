@@ -6,6 +6,18 @@ import { th, override } from '@pubsweet/ui-toolkit';
 
 import Icon from '../../helpers/Icon';
 
+const disabledStyles = css`
+  background: ${props =>
+    props.active ? `${th('colorPrimary')}` : 'transparent'};
+  cursor: not-allowed;
+  opacity: 0.4;
+
+  &:hover {
+    background: ${props =>
+      props.active ? `${th('colorPrimary')}` : 'transparent'};
+  }
+`;
+
 const activeStyles = css`
   background: ${th('colorPrimary')};
   color: ${th('colorTextReverse')};
@@ -16,15 +28,6 @@ const activeStyles = css`
 
   &:hover {
     background: ${th('colorPrimary')};
-  }
-`;
-
-const disabledStyles = css`
-  cursor: not-allowed;
-  opacity: 0.4;
-
-  &:hover {
-    background: none;
   }
 `;
 

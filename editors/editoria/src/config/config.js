@@ -116,7 +116,7 @@ export default {
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: { enabled: false },
-
+  TitleService: 'update',
   PmPlugins: [
     columnResizing(),
     tableEditing(),

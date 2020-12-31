@@ -3,7 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
-const Button = ({ view = {}, item }) => {
+const TitleButton = ({ view = {}, item }) => {
   const { active, icon, label, onlyOnMain, run, select, title } = item;
 
   const {
@@ -21,13 +21,10 @@ const Button = ({ view = {}, item }) => {
     run(editorState, dispatch);
   };
 
-  const isActive = !!(
-    active(state, activeViewId) && select(state, activeViewId)
-  );
-
+  const isActive = !!active(state, activeViewId);
   const isDisabled = !select(state, activeViewId, activeView);
 
-  const MenuButtonComponent = useMemo(
+  const TitleButtonComponent = useMemo(
     () => (
       <MenuButton
         active={isActive || false}
@@ -41,7 +38,7 @@ const Button = ({ view = {}, item }) => {
     [isActive, isDisabled],
   );
 
-  return MenuButtonComponent;
+  return TitleButtonComponent;
 };
 
-export default Button;
+export default TitleButton;

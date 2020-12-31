@@ -32,7 +32,9 @@ import {
   ShortcutToolGroupServices,
   HelpToolGroupServices,
   CounterInfoService,
-  BottomInfoService
+  BottomInfoService,
+  TransformService,
+  TransformToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -54,6 +56,7 @@ export default {
           more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
         'HighlightToolGroup',
+        'TransformToolGroup',
         'BlockDropDown',
         'Notes',
         'Lists',
@@ -123,6 +126,8 @@ export default {
     new CounterInfoService(),
     new BottomInfoService(),
     new ShortcutToolGroupServices(),
-    new HelpToolGroupServices()
+    new HelpToolGroupServices(),
+    new TransformService(),
+    new TransformToolGroupService(),
   ],
 };

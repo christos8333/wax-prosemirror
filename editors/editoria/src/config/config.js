@@ -38,7 +38,9 @@ import {
   ShortcutToolGroupServices,
   HelpToolGroupServices,
   CounterInfoService,
-  BottomInfoService
+  BottomInfoService,
+  TransformService,
+  TransformToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -62,6 +64,7 @@ export default {
           more: ['Superscript', 'Subscript', 'SmallCaps'],
         },
         'HighlightToolGroup',
+        'TransformToolGroup',
         'Notes',
         'Lists',
         'Images',
@@ -161,6 +164,8 @@ export default {
     new CounterInfoService(),
     new BottomInfoService(),
     new ShortcutToolGroupServices(),
-    new HelpToolGroupServices()
+    new HelpToolGroupServices(),
+    new TransformService(),
+    new TransformToolGroupService(),
   ],
 };

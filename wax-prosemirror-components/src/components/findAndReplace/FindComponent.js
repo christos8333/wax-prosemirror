@@ -15,13 +15,13 @@ import Icon from '../../helpers/Icon';
 import helpers from './helpers';
 
 const Wrapper = styled.div`
-  width: 400px;
   background: #fff;
   border-radius: 1.03093% / 8%;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-  transform-origin: 50% 50% 0px;
   padding: ${grid(2)};
+  transform-origin: 50% 50% 0px;
+  width: 400px;
 `;
 
 const SingleRow = styled.div`
@@ -39,7 +39,7 @@ const SearchInput = styled.input`
   border-radius: 2px;
   border: none;
   padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
-  width: 85%;
+  width: 78%;
   box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
   ::placeholder {
     color: #d8dae0;
@@ -51,7 +51,7 @@ const SearchInput = styled.input`
 
 const CounterInput = styled.span`
   position: absolute;
-  right: 115px;
+  right: 155px;
   top: 13px;
   z-index: 1;
   font-size: 12px;
@@ -59,9 +59,9 @@ const CounterInput = styled.span`
 `;
 
 const StyledIcon = styled(Icon)`
+  cursor: pointer;
   height: 24px;
   width: 24px;
-  cursor: pointer;
 `;
 
 const CloseWrapper = styled.div`
@@ -69,13 +69,27 @@ const CloseWrapper = styled.div`
   margin-left: 1%;
 `;
 
-const PreviousNextButton = styled.span`
+const IconWrapper = styled.span`
   &:focus {
     outline: none;
   }
 `;
 
 const ExpandedWrapper = styled.div``;
+
+const Svg = styled.svg.attrs(() => ({
+  version: '1.1',
+  xmlns: 'http://www.w3.org/2000/svg',
+  xmlnsXlink: 'http://www.w3.org/1999/xlink',
+}))`
+  background: ${props => (props.active ? '#535E76' : 'white')};
+  cursor: pointer;
+  fill: ${props => (props.active ? 'white' : '#535E76')};
+  height: 24px;
+  padding: 2px;
+  vertical-align: top;
+  width: 24px;
+`;
 
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const { app, view } = useContext(WaxContext);
@@ -138,6 +152,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     setPreviousSearcValue(searchValue);
   };
 
+  const matchCase = () => {
+    console.log('match case');
+  };
+
   const findNext = () => {
     console.log('next');
   };
@@ -159,12 +177,18 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
           />
           <CounterInput> {counterText} </CounterInput>
         </SearchInputWrapper>
-        <PreviousNextButton onClick={findPrevious} role="button" tabIndex="0">
+        <IconWrapper onClick={matchCase} role="button" tabIndex="0">
+          <Svg active fill="none" viewBox="0 0 24 24">
+            <title> Match Case </title>
+            <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
+          </Svg>
+        </IconWrapper>
+        <IconWrapper onClick={findPrevious} role="button" tabIndex="0">
           <StyledIcon name="navigatePrevious" />
-        </PreviousNextButton>
-        <PreviousNextButton onClick={findNext} role="button" tabIndex="0">
+        </IconWrapper>
+        <IconWrapper onClick={findNext} role="button" tabIndex="0">
           <StyledIcon name="navigateNext" />
-        </PreviousNextButton>
+        </IconWrapper>
 
         <ExpandedWrapper onClick={showExpanded}>
           <StyledIcon name="more" />

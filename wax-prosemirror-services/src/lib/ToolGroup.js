@@ -75,7 +75,7 @@ class ToolGroup {
           name={name}
         />
       ),
-      [view],
+      [],
     );
 
     return MemorizedToolGroupComponent;

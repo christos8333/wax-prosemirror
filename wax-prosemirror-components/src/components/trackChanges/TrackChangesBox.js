@@ -8,10 +8,11 @@ import icons from '../../icons/icons';
 const { check, times } = icons;
 
 const activeBorder = css`
-  border-color: gray;
+  border-color: #bfc4cd;
 `;
 
 const Wrapper = styled.div`
+  background: #f5f5f5;
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
@@ -66,7 +67,7 @@ const Icon = styled.div`
   width: 16px;
 
   &:hover {
-    background: gray;
+    background: #bfc4cd;
   }
 `;
 

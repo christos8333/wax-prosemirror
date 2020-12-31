@@ -1,6 +1,6 @@
 import { each, eachRight } from 'lodash';
 
-const findMatches = (doc, searchValue) => {
+const findMatches = (doc, searchValue, matchCase) => {
   const allNodes = [];
 
   doc.descendants((node, pos) => {
@@ -35,7 +35,7 @@ const findMatches = (doc, searchValue) => {
     }
   });
   mergedTextNodes.forEach(({ text, pos }) => {
-    const search = RegExp(searchValue, 'gui');
+    const search = RegExp(searchValue, matchCase ? 'gu' : 'gui');
     let m;
     // eslint-disable-next-line no-cond-assign
     while ((m = search.exec(text))) {
@@ -52,10 +52,10 @@ const findMatches = (doc, searchValue) => {
   return results;
 };
 
-const getMatchesByView = (views, searchValue) => {
+const getMatchesByView = (views, searchValue, matchCase) => {
   let allResults = 0;
   each(views, (singleView, viewId) => {
-    const results = findMatches(singleView.state.doc, searchValue);
+    const results = findMatches(singleView.state.doc, searchValue, matchCase);
     allResults += results.length;
   });
   return allResults;

@@ -34,28 +34,30 @@ const SearchInputWrapper = styled.div`
 `;
 
 const SearchInput = styled.input`
+  border: none;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
   font-size: 15px;
   font-weight: 400;
-  border-radius: 2px;
-  border: none;
   padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
   width: 78%;
-  box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
+
   ::placeholder {
     color: #d8dae0;
   }
+
   &:focus {
     outline: none;
   }
 `;
 
 const CounterInput = styled.span`
+  font-size: 12px;
   position: absolute;
   right: 155px;
+  -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
   top: 13px;
   z-index: 1;
-  font-size: 12px;
-  -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
 `;
 
 const StyledIcon = styled(Icon)`
@@ -97,8 +99,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const searchRef = useRef(null);
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
+  const [matchCaseSearch, setMatchCaseSearch] = useState(false);
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
   const [isFirstRun, setFirstRun] = useState(true);
+
   const allStates = [];
 
   each(view, (singleView, viewId) => {
@@ -107,7 +111,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const delayedSearch = useCallback(
     debounce(() => searchDocument(), 300),
-    [searchValue],
+    [searchValue, matchCaseSearch],
   );
 
   const onChange = () => {
@@ -122,13 +126,14 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
         setFirstRun(false);
       });
     }
-  }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
+  }, [searchValue, delayedSearch, matchCaseSearch, JSON.stringify(allStates)]);
 
   const searchDocument = () => {
     setCounterText('0 of 0');
     let counter = 0;
     findAndReplacePlugin.props.setSearchText(searchValue);
-    counter = helpers.getMatchesByView(view, searchValue);
+    findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
+    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
 
     if (counter > 0) setCounterText(`1 of ${counter}`);
 
@@ -153,15 +158,16 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   };
 
   const matchCase = () => {
-    console.log('match case');
+    setMatchCaseSearch(!matchCaseSearch);
+    searchRef.current.focus();
   };
 
   const findNext = () => {
-    console.log('next');
+    // console.log('next');
   };
 
   const findPrevious = () => {
-    console.log('previous');
+    // console.log('previous');
   };
 
   return (
@@ -178,7 +184,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
           <CounterInput> {counterText} </CounterInput>
         </SearchInputWrapper>
         <IconWrapper onClick={matchCase} role="button" tabIndex="0">
-          <Svg active fill="none" viewBox="0 0 24 24">
+          <Svg active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
             <title> Match Case </title>
             <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
           </Svg>

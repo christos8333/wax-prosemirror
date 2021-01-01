@@ -147,7 +147,19 @@ const NotesContainer = styled.div`
     padding-right: ${grid(1)};
   }
 `;
+const WaxBottomRightInfo= styled.div`
 
+`;
+const InfoContainer= styled.div`
+display:flex;
+position:fixed !important;
+bottom:1px;
+right:21px;
+z-index:1;
+`;
+const InfoArea=styled.div`
+
+`;
 let surfaceHeight = 500;
 let notesHeight = 150;
 
@@ -194,6 +206,13 @@ const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper>
+
+      <WaxBottomRightInfo>
+          <InfoContainer id="info-container">
+            <BottomRightInfo/>
+          </InfoContainer>            
+         </WaxBottomRightInfo>
+
         <TopMenu>
           <TopBar />
         </TopMenu>

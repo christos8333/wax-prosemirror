@@ -34,6 +34,11 @@ import {
   SpecialCharactersToolGroupService,
   HighlightService,
   TextHighlightToolGroupServices,
+  EditorInfoToolGroupServices,
+  ShortcutToolGroupServices,
+  HelpToolGroupServices,
+  CounterInfoService,
+  BottomInfoService,
   TransformService,
   TransformToolGroupService,
 } from 'wax-prosemirror-services';
@@ -91,6 +96,19 @@ export default {
         },
       ],
     },
+    {
+      templateArea: 'BottomRightInfo',
+      toolGroups: [
+        {
+          name: 'InfoToolGroup',
+          more: [
+            'CounterInfoTool',
+            'ShortcutTool',
+            'HelpTool'
+          ],
+        },
+      ],
+    },
   ],
 
   SchemaService: DefaultSchema,
@@ -142,6 +160,11 @@ export default {
     new SpecialCharactersToolGroupService(),
     new HighlightService(),
     new TextHighlightToolGroupServices(),
+    new EditorInfoToolGroupServices(),
+    new CounterInfoService(),
+    new BottomInfoService(),
+    new ShortcutToolGroupServices(),
+    new HelpToolGroupServices(),
     new TransformService(),
     new TransformToolGroupService(),
   ],

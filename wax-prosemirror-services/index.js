@@ -32,6 +32,8 @@ export { default as FindAndReplaceService } from './src/FindAndReplaceService/Fi
 export { default as FullScreenService } from './src/FullScreenService/FullScreenService';
 export { default as SpecialCharactersService } from './src/SpecialCharactersService/SpecialCharactersService';
 export { default as HighlightService } from './src/HighlightService/HightlightService';
+export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
+export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
 
 /*
@@ -53,4 +55,7 @@ export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGrou
 export { default as FullScreenToolGroupService } from './src/WaxToolGroups/FullScreenToolGroupService/FullScreenToolGroupService';
 export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';
 export { default as TextHighlightToolGroupServices } from './src/WaxToolGroups/TextHighlightToolGroupService/TextHighlightToolGroupService';
+export { default as EditorInfoToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/InfoToolGroupService/EditorInfoToolGroupService';
+export { default as ShortcutToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/ShotcutToolGroupService/ShortcutToolGroupService';
+export {default as HelpToolGroupServices} from './src/WaxToolGroups/BottomToolGroupService/HelpToolGroupService/HelpToolGroupService';
 export { default as TransformToolGroupService } from './src/WaxToolGroups/TransformToolGroupService/TransformToolGroupService';

@@ -28,11 +28,14 @@ import {
   BlockDropDownToolGroupService,
   HighlightService,
   TextHighlightToolGroupServices,
+  EditorInfoToolGroupServices,
+  ShortcutToolGroupServices,
+  HelpToolGroupServices,
+  CounterInfoService,
+  BottomInfoService,
   TransformService,
   TransformToolGroupService,
 } from 'wax-prosemirror-services';
-
-import { DefaultSchema } from 'wax-prosemirror-utilities';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 
@@ -63,9 +66,21 @@ export default {
         'TrackChange',
       ],
     },
+    {
+      templateArea: 'BottomRightInfo',
+      toolGroups: [
+        {
+          name: 'InfoToolGroup',
+          more: [
+            'CounterInfoTool',
+            'ShortcutTool',
+            'HelpTool'
+          ],
+        },
+      ],
+    },
   ],
 
-  SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: { enabled: false },
@@ -107,6 +122,11 @@ export default {
     new BlockDropDownToolGroupService(),
     new HighlightService(),
     new TextHighlightToolGroupServices(),
+    new EditorInfoToolGroupServices(),
+    new CounterInfoService(),
+    new BottomInfoService(),
+    new ShortcutToolGroupServices(),
+    new HelpToolGroupServices(),
     new TransformService(),
     new TransformToolGroupService(),
   ],

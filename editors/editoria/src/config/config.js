@@ -102,25 +102,16 @@ export default {
     },
     {
       templateArea: 'BottomRightInfo',
-      toolGroups: [
-        {
-          name: 'InfoToolGroup',
-          more: [
-            'CounterInfoTool',
-            'ShortcutTool',
-            'HelpTool'
-          ],
-        },
-      ],
+      toolGroups: ['InfoToolGroup'],
     },
   ],
 
   SchemaService: DefaultSchema,
-
+  TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: { enabled: false },
-  TitleService: { updateTitle },
+
   PmPlugins: [
     columnResizing(),
     tableEditing(),

@@ -45,6 +45,10 @@ import invisibles, {
   paragraph,
 } from '@guardian/prosemirror-invisibles';
 
+const updateTitle = title => {
+  console.log(title);
+};
+
 export default {
   MenuService: [
     {
@@ -68,21 +72,13 @@ export default {
     },
     {
       templateArea: 'BottomRightInfo',
-      toolGroups: [
-        {
-          name: 'InfoToolGroup',
-          more: [
-            'CounterInfoTool',
-            'ShortcutTool',
-            'HelpTool'
-          ],
-        },
-      ],
+      toolGroups: ['InfoToolGroup'],
     },
   ],
 
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
+  TitleService: { updateTitle },
   EnableTrackChangeService: { enabled: false },
 
   PmPlugins: [

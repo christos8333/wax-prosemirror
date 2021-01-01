@@ -147,19 +147,15 @@ const NotesContainer = styled.div`
     padding-right: ${grid(1)};
   }
 `;
-const WaxBottomRightInfo= styled.div`
-
+const WaxBottomRightInfo = styled.div``;
+const InfoContainer = styled.div`
+  display: flex;
+  position: fixed !important;
+  bottom: 1px;
+  right: 21px;
+  z-index: 1;
 `;
-const InfoContainer= styled.div`
-display:flex;
-position:fixed !important;
-bottom:1px;
-right:21px;
-z-index:1;
-`;
-const InfoArea=styled.div`
-
-`;
+const InfoArea = styled.div``;
 let surfaceHeight = 500;
 let notesHeight = 150;
 
@@ -181,6 +177,7 @@ const TopBar = ComponentPlugin('topBar');
 const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
 const WaxOverlays = ComponentPlugin('waxOverlays');
+const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
 const EditoriaLayout = ({ editor }) => {
   const {
@@ -206,13 +203,6 @@ const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper>
-
-      <WaxBottomRightInfo>
-          <InfoContainer id="info-container">
-            <BottomRightInfo/>
-          </InfoContainer>            
-         </WaxBottomRightInfo>
-
         <TopMenu>
           <TopBar />
         </TopMenu>
@@ -249,6 +239,11 @@ const EditoriaLayout = ({ editor }) => {
         </Main>
 
         <WaxOverlays />
+        <WaxBottomRightInfo>
+          <InfoContainer id="info-container">
+            <BottomRightInfo />
+          </InfoContainer>
+        </WaxBottomRightInfo>
       </Wrapper>
     </ThemeProvider>
   );

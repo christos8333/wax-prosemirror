@@ -163,12 +163,12 @@ const NotesContainer = styled.div`
 const WaxBottomRightInfo = styled.div``;
 const InfoContainer = styled.div`
   display: flex;
-  position: fixed !important;
+  position: fixed;
   bottom: 1px;
   right: 21px;
-  z-index: 1;
+  z-index: 999;
 `;
-const InfoArea = styled.div``;
+
 let surfaceHeight = 600;
 let notesHeight = 200;
 
@@ -193,6 +193,7 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
+
 const EditoriaLayout = ({ editor }) => {
   const {
     view: { main },

@@ -3,9 +3,9 @@ import Service from '../../../Service';
 import InfoToolGroup from './InfoTool';
 
 class EditorInfoToolGroupServices extends Service {
-    name = "EditorInfoToolGroupServices";
-    register(){
-        this.container.bind('InfoToolGroup').to(InfoToolGroup);
-    }
+  name = 'EditorInfoToolGroupServices';
+  register() {
+    this.container.bind('InfoToolGroup').to(InfoToolGroup);
+  }
 }
 export default EditorInfoToolGroupServices;

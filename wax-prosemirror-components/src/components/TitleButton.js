@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../ui/buttons/MenuButton';
@@ -18,18 +18,26 @@ const TitleButton = ({ view = {}, item }) => {
 
   const { dispatch, state } = view;
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
-    e.preventDefault();
-    run(editorState, dispatch);
-  };
-
   const titleNode = DocumentHelpers.findChildrenByType(
     state.doc,
     state.config.schema.nodes.title,
     true,
   );
 
-  console.log(titleNode, app.config.get('config.TitleService'));
+  const handleMouseDown = (e, editorState, editorDispatch) => {
+    e.preventDefault();
+    run(editorState, dispatch);
+  };
+
+  const serviceConfig = app.config.get('config.TitleService');
+
+  useEffect(() => {
+    if (titleNode[0]) {
+      serviceConfig.updateTitle(titleNode[0].node.textContent);
+    } else {
+      serviceConfig.updateTitle('');
+    }
+  }, [JSON.stringify(titleNode[0])]);
 
   const isActive = !!active(state, activeViewId);
   const isDisabled = !select(state, activeViewId, activeView);

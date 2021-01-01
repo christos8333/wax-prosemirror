@@ -94,7 +94,7 @@ const Svg = styled.svg.attrs(() => ({
 `;
 
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
-  const { app, view } = useContext(WaxContext);
+  const { app, view, activeViewId } = useContext(WaxContext);
 
   const searchRef = useRef(null);
   const [searchValue, setSearchValue] = useState('');
@@ -162,12 +162,31 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     searchRef.current.focus();
   };
 
+  const getAllResultsByView = () => {
+    const allResults = {};
+
+    each(view, (singleView, viewId) => {
+      if (!allResults[viewId]) {
+        allResults[viewId] = helpers.findMatches(
+          singleView.state.doc,
+          searchValue,
+          matchCaseSearch,
+        );
+      }
+    });
+    return allResults;
+  };
+
   const findNext = () => {
-    // console.log('next');
+    const results = getAllResultsByView();
+    const currentSelection = view[activeViewId].state.selection;
+    console.log(results, activeViewId, currentSelection);
   };
 
   const findPrevious = () => {
-    // console.log('previous');
+    const results = getAllResultsByView();
+    const currentSelection = view[activeViewId].state.selection;
+    console.log(results, activeViewId, currentSelection);
   };
 
   return (

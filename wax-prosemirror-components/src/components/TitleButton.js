@@ -1,12 +1,14 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../ui/buttons/MenuButton';
 
-const Button = ({ view = {}, item }) => {
+const TitleButton = ({ view = {}, item }) => {
   const { active, icon, label, onlyOnMain, run, select, title } = item;
 
   const {
+    app,
     view: { main },
     activeViewId,
     activeView,
@@ -16,18 +18,31 @@ const Button = ({ view = {}, item }) => {
 
   const { dispatch, state } = view;
 
+  const titleNode = DocumentHelpers.findChildrenByType(
+    state.doc,
+    state.config.schema.nodes.title,
+    true,
+  );
+
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();
     run(editorState, dispatch);
   };
 
-  const isActive = !!(
-    active(state, activeViewId) && select(state, activeViewId)
-  );
+  const serviceConfig = app.config.get('config.TitleService');
 
+  useEffect(() => {
+    if (titleNode[0]) {
+      serviceConfig.updateTitle(titleNode[0].node.textContent);
+    } else {
+      serviceConfig.updateTitle('');
+    }
+  }, [JSON.stringify(titleNode[0])]);
+
+  const isActive = !!active(state, activeViewId);
   const isDisabled = !select(state, activeViewId, activeView);
 
-  const MenuButtonComponent = useMemo(
+  const TitleButtonComponent = useMemo(
     () => (
       <MenuButton
         active={isActive || false}
@@ -41,7 +56,7 @@ const Button = ({ view = {}, item }) => {
     [isActive, isDisabled],
   );
 
-  return MenuButtonComponent;
+  return TitleButtonComponent;
 };
 
-export default Button;
+export default TitleButton;

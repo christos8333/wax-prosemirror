@@ -2,7 +2,7 @@ import { Selection, TextSelection } from 'prosemirror-state';
 import { Slice } from 'prosemirror-model';
 import { ReplaceStep, Mapping } from 'prosemirror-transform';
 
-const markDeletion = (tr, from, to, user, date, group) => {
+const markDeletion = (tr, from, to, user, date, group, viewId) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
     user: user.userId,
     username: user.username,

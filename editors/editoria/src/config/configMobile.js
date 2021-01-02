@@ -29,9 +29,6 @@ import {
   HighlightService,
   TextHighlightToolGroupServices,
   EditorInfoToolGroupServices,
-  ShortcutToolGroupServices,
-  HelpToolGroupServices,
-  CounterInfoService,
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
@@ -44,6 +41,10 @@ import invisibles, {
   hardBreak,
   paragraph,
 } from '@guardian/prosemirror-invisibles';
+
+const updateTitle = title => {
+  console.log(title);
+};
 
 export default {
   MenuService: [
@@ -68,21 +69,13 @@ export default {
     },
     {
       templateArea: 'BottomRightInfo',
-      toolGroups: [
-        {
-          name: 'InfoToolGroup',
-          more: [
-            'CounterInfoTool',
-            'ShortcutTool',
-            'HelpTool'
-          ],
-        },
-      ],
+      toolGroups: ['InfoToolGroup'],
     },
   ],
 
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
+  TitleService: { updateTitle },
   EnableTrackChangeService: { enabled: false },
 
   PmPlugins: [
@@ -123,10 +116,7 @@ export default {
     new HighlightService(),
     new TextHighlightToolGroupServices(),
     new EditorInfoToolGroupServices(),
-    new CounterInfoService(),
     new BottomInfoService(),
-    new ShortcutToolGroupServices(),
-    new HelpToolGroupServices(),
     new TransformService(),
     new TransformToolGroupService(),
   ],

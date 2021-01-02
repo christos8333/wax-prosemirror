@@ -5,6 +5,7 @@ import { eachRight } from 'lodash';
 const findAndReplacePlugin = new PluginKey('findAndReplacePlugin');
 
 let searchText = '';
+let matchCase = false;
 
 const findMatches = (doc, searchValue) => {
   const allNodes = [];
@@ -41,7 +42,7 @@ const findMatches = (doc, searchValue) => {
     }
   });
   mergedTextNodes.forEach(({ text, pos }) => {
-    const search = RegExp(searchValue, 'gui');
+    const search = RegExp(searchValue, matchCase ? 'gu' : 'gui');
     let m;
     // eslint-disable-next-line no-cond-assign
     while ((m = search.exec(text))) {
@@ -91,6 +92,9 @@ export default props => {
       },
       setSearchText: text => {
         searchText = text;
+      },
+      setSearchMatchCase: searchCase => {
+        matchCase = searchCase;
       },
     },
     view(editorState) {

@@ -69,7 +69,7 @@ export default ({ node, view }) => {
     );
 
     const tr = TrackChange.enabled
-      ? trackedTransaction(transaction, noteView.state, user, 'notes')
+      ? trackedTransaction(transaction, noteView.state, user, 'notes', noteId)
       : transaction;
 
     const { state, transactions } = noteView.state.applyTransaction(tr);

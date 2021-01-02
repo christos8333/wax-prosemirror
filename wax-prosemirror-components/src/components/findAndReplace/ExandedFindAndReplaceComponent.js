@@ -15,20 +15,20 @@ import CheckBox from '../../ui/inputs/CheckBox';
 import helpers from './helpers';
 
 const Wrapper = styled.div`
-  font-size: 15px;
-  width: 400px;
-  height: 300px;
   background: #fff;
-  font-family: ${th('fontTools')};
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-  transform-origin: 50% 50% 0px;
+  font-family: ${th('fontTools')};
+  font-size: 15px;
+  height: 300px;
   padding: ${grid(2)};
+  transform-origin: 50% 50% 0px;
+  width: 400px;
 `;
 
 const FindTitle = styled.span`
-  font-size: 16px;
   color: #4b5871;
+  font-size: 16px;
 `;
 
 const TitleContainer = styled.div`
@@ -37,9 +37,9 @@ const TitleContainer = styled.div`
 `;
 
 const InputLabel = styled.div`
-  padding: ${grid(2)} ${grid(0)} ${grid(2)} ${grid(0)};
-  font-size: 16px;
   color: #4b5871;
+  font-size: 16px;
+  padding: ${grid(2)} ${grid(0)} ${grid(2)} ${grid(0)};
 `;
 
 const SearchInputWrapper = styled.div`
@@ -50,18 +50,18 @@ const SearchInputWrapper = styled.div`
 `;
 
 const CounterInput = styled.span`
+  font-size: 12px;
   position: absolute;
   right: 14px;
+  -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
   top: 72px;
   z-index: 1;
-  font-size: 12px;
-  -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
 `;
 
 const StyledIcon = styled(Icon)`
+  cursor: pointer;
   height: 24px;
   width: 24px;
-  cursor: pointer;
 `;
 
 const CloseWrapper = styled.div`
@@ -69,16 +69,17 @@ const CloseWrapper = styled.div`
 `;
 
 const FindReplaceInput = styled.input`
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
   font-size: 15px;
   font-weight: 400;
-  border-radius: 2px;
-  border: none;
   padding: ${grid(1)};
   width: 98%;
-  box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
+
   ::placeholder {
     color: #d8dae0;
   }
+
   &:focus {
     outline: none;
   }
@@ -96,22 +97,22 @@ const ControlContainer = styled.div`
 
 const ButtonReplace = styled.button`
   background: ${th('colorBackgroundButton')};
-  margin-right: 20px;
   border: 1px solid ${th('colorBackgroundButton')};
   color: white;
-  width: 100px;
-  height: 42px;
   cursor: pointer;
+  height: 42px;
+  margin-right: 20px;
+  width: 100px;
 `;
 
 const ButtonReplaceAll = styled.button`
   background: white;
   border: 1px solid ${th('colorBackgroundButton')};
-  margin-right: 10px;
   color: ${th('colorBackgroundButton')};
-  width: 100px;
-  height: 42px;
   cursor: pointer;
+  height: 42px;
+  margin-right: 10px;
+  width: 100px;
 `;
 
 const PreviousNextContainer = styled.div`
@@ -210,11 +211,11 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
   };
 
   const findNext = () => {
-    console.log('next');
+    // console.log('next');
   };
 
   const findPrevious = () => {
-    console.log('previous');
+    // console.log('previous');
   };
 
   return (
@@ -229,23 +230,23 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
 
       <SearchInputWrapper>
         <FindReplaceInput
-          type="text"
-          ref={searchRef}
-          placeholder="Something is this doc"
-          value={searchValue}
           onChange={onChangeSearchInput}
+          placeholder="Something is this doc"
+          ref={searchRef}
+          type="text"
+          value={searchValue}
         />
         <CounterInput> {counterText} </CounterInput>
       </SearchInputWrapper>
       <InputLabel>Replace with</InputLabel>
       <FindReplaceInput
-        type="text"
-        ref={replaceRef}
-        placeholder="Replace text"
         onChange={onChangeReplaceInput}
+        placeholder="Replace text"
+        ref={replaceRef}
+        type="text"
       />
       <CheckBoxWrapper>
-        <CheckBox name="case-sensitive" label="Case Sensitive" />
+        <CheckBox label="Case Sensitive" name="case-sensitive" />
       </CheckBoxWrapper>
       <ControlContainer>
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>

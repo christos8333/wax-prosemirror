@@ -4,7 +4,18 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import markDeletion from './markDeletion';
 import markInsertion from './markInsertion';
 
-const replaceStep = (state, tr, step, newTr, map, doc, user, date, group) => {
+const replaceStep = (
+  state,
+  tr,
+  step,
+  newTr,
+  map,
+  doc,
+  user,
+  date,
+  group,
+  viewId,
+) => {
   const deletionMarkSchema = state.schema.marks.deletion;
   const deletionMark = DocumentHelpers.findMark(
     state,

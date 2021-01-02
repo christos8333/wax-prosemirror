@@ -1,4 +1,3 @@
-import ShortcutService from './ShortcutService/ShortcutService';
-import HelpService from './HelpService/HelpService'
+import CounterInfoService from './CounterInfoService/CounterInfoService';
 
-export default [new ShortcutService(),new HelpService()];
+export default [new CounterInfoService()];

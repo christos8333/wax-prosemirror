@@ -1,56 +1,83 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
-import TrackChangesBox from '../../ui/trackChanges/TrackChangesBox';
+import { last, maxBy } from 'lodash';
+import { TextSelection } from 'prosemirror-state';
+import TrackChangesBox from './TrackChangesBox';
 
 const ConnectedTrackChangeStyled = styled.div`
-  position: absolute;
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
+  position: absolute;
   width: 200px;
   @media (max-width: 600px) {
     margin-left: 15px;
   }
 `;
 
-export default ({ trackChangeId, top, recalculateTops }) => {
-  const {
-    view,
-    view: {
-      main: {
-        props: { user },
-      },
-    },
-    app,
-    activeView,
-  } = useContext(WaxContext);
+export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
+  const { app, activeView, view } = useContext(WaxContext);
 
-  const { state, dispatch } = activeView;
-
+  const [isActive, setIsActive] = useState(false);
+  // const { state, dispatch } = activeView;
+  const viewId = trackChange.attrs
+    ? trackChange.attrs.viewid
+    : trackChange.node.attrs.viewid;
   const styles = {
     top: `${top}px`,
   };
 
-  const active = false;
-  return null;
+  const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
+  const activeTrackChange = trakChangePlugin.getState(activeView.state)
+    .trackChange;
+
+  const onClickBox = trackData => {
+    const allTracksWithSameId = DocumentHelpers.findAllMarksWithSameId(
+      view[viewId].state,
+      trackData,
+    );
+    const maxPos = maxBy(allTracksWithSameId, 'pos');
+    maxPos.pos += last(allTracksWithSameId).node.nodeSize;
+
+    view[viewId].dispatch(
+      view[viewId].state.tr.setSelection(
+        new TextSelection(
+          view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
+        ),
+      ),
+    );
+
+    view[viewId].focus();
+    return true;
+  };
+
+  useEffect(() => {
+    setIsActive(false);
+    if (activeTrackChange && trackChangeId === activeTrackChange.attrs.id) {
+      setIsActive(true);
+      recalculateTops();
+    }
+  }, [activeTrackChange]);
+
   const MemorizedTrackChange = useMemo(
     () => (
       <ConnectedTrackChangeStyled
+        active={isActive}
         data-box={trackChangeId}
         style={styles}
-        active={active}
       >
         <TrackChangesBox
+          active={isActive}
           key={trackChangeId}
-          active={active}
-          trackChangeId={trackChangeId}
-          commentData=""
+          onClickBox={onClickBox}
           recalculateTops={recalculateTops}
+          trackChangeId={trackChangeId}
+          trackData={trackChange}
         />
       </ConnectedTrackChangeStyled>
     ),
-    [active, top],
+    [isActive, top],
   );
   return <>{MemorizedTrackChange}</>;
 };

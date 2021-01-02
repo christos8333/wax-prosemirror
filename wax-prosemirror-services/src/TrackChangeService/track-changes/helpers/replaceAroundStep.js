@@ -13,6 +13,7 @@ const replaceAroundStep = (
   user,
   date,
   group,
+  viewId,
 ) => {
   if (step.from === step.gapFrom && step.to === step.gapTo) {
     // wrapped in something
@@ -43,6 +44,7 @@ const replaceAroundStep = (
         user,
         date,
         group,
+        viewId,
       );
     }
   } else {

@@ -11,7 +11,7 @@ const parseFormatList = str => {
   if (!Array.isArray(formatList)) {
     return [];
   }
-  return formatList.filter(format => typeof format === "string");
+  return formatList.filter(format => typeof format === 'string');
 };
 
 const parseTracks = str => {
@@ -29,11 +29,11 @@ const parseTracks = str => {
   }
   return tracks.filter(
     (
-      track // ensure required fields are present
+      track, // ensure required fields are present
     ) =>
-      track.hasOwnProperty("user") &&
-      track.hasOwnProperty("username") &&
-      track.hasOwnProperty("date")
+      track.hasOwnProperty('user') &&
+      track.hasOwnProperty('username') &&
+      track.hasOwnProperty('date'),
   );
 };
 
@@ -41,10 +41,11 @@ const blockLevelToDOM = node => {
   const attrs =
     node.attrs.track && node.attrs.track.length
       ? {
-          "data-id": node.attrs.id,
+          'data-id': node.attrs.id,
           class: node.attrs.class,
-          "data-track": JSON.stringify(node.attrs.track),
-          "data-group": node.attrs.group
+          'data-track': JSON.stringify(node.attrs.track),
+          'data-group': node.attrs.group,
+          'data-viewid': node.attrs.viewid,
         }
       : { class: node.attrs.class };
   return attrs;

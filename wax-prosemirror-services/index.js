@@ -56,6 +56,4 @@ export { default as FullScreenToolGroupService } from './src/WaxToolGroups/FullS
 export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';
 export { default as TextHighlightToolGroupServices } from './src/WaxToolGroups/TextHighlightToolGroupService/TextHighlightToolGroupService';
 export { default as EditorInfoToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/InfoToolGroupService/EditorInfoToolGroupService';
-export { default as ShortcutToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/ShotcutToolGroupService/ShortcutToolGroupService';
-export {default as HelpToolGroupServices} from './src/WaxToolGroups/BottomToolGroupService/HelpToolGroupService/HelpToolGroupService';
 export { default as TransformToolGroupService } from './src/WaxToolGroups/TransformToolGroupService/TransformToolGroupService';

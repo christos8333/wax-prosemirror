@@ -3,16 +3,11 @@ import ToolGroup from '../../../lib/ToolGroup';
 
 @injectable()
 class InfoToolGroup extends ToolGroup {
-    tools = [];
-    constructor(
-      @inject('CounterInfoTool') counterinfotool,
-      @inject('ShortcutTool') shortcuttools,
-      @inject('HelpTool') helptool,
-      ) {
-        
-        super();
-        this.tools = [counterinfotool,shortcuttools,helptool];
-      }
+  tools = [];
+  constructor(@inject('CounterInfoTool') counterinfotool) {
+    super();
+    this.tools = [counterinfotool];
+  }
 }
 
 export default InfoToolGroup;

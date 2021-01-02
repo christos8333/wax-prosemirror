@@ -1,15 +1,18 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import DateParser from '../../helpers/DateParser';
+
 import icons from '../../icons/icons';
 
 const { check, times } = icons;
 
 const activeBorder = css`
-  border-color: gray;
+  border-color: #bfc4cd;
 `;
 
 const Wrapper = styled.div`
+  background: #f5f5f5;
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
@@ -64,7 +67,7 @@ const Icon = styled.div`
   width: 16px;
 
   &:hover {
-    background: gray;
+    background: #bfc4cd;
   }
 `;
 
@@ -88,30 +91,46 @@ const TrackChangesBox = props => {
   const {
     active,
     className,
-    displayName,
     label,
-    onClick,
+    onClickBox,
     onClickAccept,
     onClickReject,
     text,
-    timestamp,
+    trackData,
   } = props;
 
-  return (
-    <Wrapper active={active} className={className} onClick={onClick}>
-      {active && (
-        <HeadWrapper>
-          <Info>
-            <Name>{displayName}</Name>
-            <Timestamp>{timestamp}</Timestamp>
-          </Info>
+  const onClickTrackBox = () => {
+    onClickBox(trackData);
+  };
 
+  const username = trackData.attrs
+    ? trackData.attrs.username
+    : trackData.node.attrs.track[0].username;
+
+  const date = trackData.attrs
+    ? trackData.attrs.date
+    : trackData.node.attrs.track[0].date;
+
+  return (
+    <Wrapper active={active} className={className} onClick={onClickTrackBox}>
+      <HeadWrapper>
+        <Info>
+          <Name>{username}</Name>
+          <Timestamp>
+            <DateParser timestamp={date}>
+              {(timeStamp, timeAgo) => {
+                return `${timeAgo} ago`;
+              }}
+            </DateParser>
+          </Timestamp>
+        </Info>
+        {active && (
           <Tools>
             <IconButton icon={check} onClick={onClickAccept} />
             <IconButton icon={times} onClick={onClickReject} />
           </Tools>
-        </HeadWrapper>
-      )}
+        )}
+      </HeadWrapper>
 
       <ChangeWrapper>
         <Label>{label}</Label>
@@ -119,20 +138,6 @@ const TrackChangesBox = props => {
       </ChangeWrapper>
     </Wrapper>
   );
-};
-
-TrackChangesBox.propTypes = {
-  active: PropTypes.bool,
-  displayName: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onClickAccept: PropTypes.func.isRequired,
-  onClickReject: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
-};
-
-TrackChangesBox.defaultProps = {
-  active: false,
 };
 
 export default TrackChangesBox;

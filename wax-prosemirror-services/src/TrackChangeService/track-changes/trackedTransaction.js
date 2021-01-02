@@ -13,7 +13,13 @@ import replaceAroundStep from './helpers/replaceAroundStep';
 import addMarkStep from './helpers/addMarkStep';
 import removeMarkStep from './helpers/removeMarkStep';
 
-const trackedTransaction = (tr, state, user, group = 'main') => {
+const trackedTransaction = (
+  tr,
+  state,
+  user,
+  group = 'main',
+  viewId = 'main',
+) => {
   // Don't track table operations
   if (!tr.selectionSet) {
     const $pos = state.selection.$anchor;
@@ -52,7 +58,7 @@ const trackedTransaction = (tr, state, user, group = 'main') => {
   // const group = tr.getMeta('outsideView') ? tr.getMeta('outsideView') : 'main';
   const newTr = state.tr;
   const map = new Mapping();
-  const date = Math.floor(Date.now() / 300000);
+  const date = Math.floor(Date.now());
 
   tr.steps.forEach(originalStep => {
     const step = originalStep.map(map);
@@ -61,16 +67,60 @@ const trackedTransaction = (tr, state, user, group = 'main') => {
 
     switch (step.constructor) {
       case ReplaceStep:
-        replaceStep(state, tr, step, newTr, map, doc, user, date, group);
+        replaceStep(
+          state,
+          tr,
+          step,
+          newTr,
+          map,
+          doc,
+          user,
+          date,
+          group,
+          viewId,
+        );
         break;
       case ReplaceAroundStep:
-        replaceAroundStep(state, tr, step, newTr, map, doc, user, date, group);
+        replaceAroundStep(
+          state,
+          tr,
+          step,
+          newTr,
+          map,
+          doc,
+          user,
+          date,
+          group,
+          viewId,
+        );
         break;
       case AddMarkStep:
-        addMarkStep(state, tr, step, newTr, map, doc, user, date, group);
+        addMarkStep(
+          state,
+          tr,
+          step,
+          newTr,
+          map,
+          doc,
+          user,
+          date,
+          group,
+          viewId,
+        );
         break;
       case RemoveMarkStep:
-        removeMarkStep(state, tr, step, newTr, map, doc, user, date, group);
+        removeMarkStep(
+          state,
+          tr,
+          step,
+          newTr,
+          map,
+          doc,
+          user,
+          date,
+          group,
+          viewId,
+        );
         break;
       default:
     }

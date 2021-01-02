@@ -1,12 +1,12 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
-const markInsertion = (tr, from, to, user, date, group) => {
+const markInsertion = (tr, from, to, user, date, group, viewId) => {
   tr.removeMark(from, to, tr.doc.type.schema.marks.deletion);
   tr.removeMark(from, to, tr.doc.type.schema.marks.insertion);
 
   const insertionMark = tr.doc.type.schema.marks.insertion.create({
     user: user.userId,
-    username: user.username
+    username: user.username,
     // date
   });
 
@@ -15,12 +15,12 @@ const markInsertion = (tr, from, to, user, date, group) => {
   tr.doc.nodesBetween(from, to, (node, pos) => {
     if (
       pos < from ||
-      ["bullet_list", "ordered_list"].includes(node.type.name)
+      ['bullet_list', 'ordered_list'].includes(node.type.name)
     ) {
       return true;
     } else if (
       node.isInline ||
-      ["table_row", "table_cell"].includes(node.type.name)
+      ['table_row', 'table_cell'].includes(node.type.name)
     ) {
       return false;
     }
@@ -28,21 +28,22 @@ const markInsertion = (tr, from, to, user, date, group) => {
       const track = [];
 
       track.push({
-        type: "insertion",
+        type: 'insertion',
         user: user.userId,
         username: user.username,
         date,
-        group
+        group,
+        viewid: viewId,
       });
 
       tr.setNodeMarkup(
         pos,
         null,
         Object.assign({}, node.attrs, { track, group, id: uuidv4() }),
-        node.marks
+        node.marks,
       );
     }
-    if (node.type.name === "table") {
+    if (node.type.name === 'table') {
       // A table was inserted. We don't add track marks to elements inside of it.
       return false;
     }

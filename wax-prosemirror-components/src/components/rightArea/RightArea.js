@@ -15,6 +15,8 @@ export default ({ area }) => {
     activeView,
   } = useContext(WaxContext);
   const commentPlugin = app.PmPlugins.get('commentPlugin');
+  const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
+
   const [marksNodes, setMarksNodes] = useState([]);
 
   const [position, setPosition] = useState();
@@ -39,9 +41,15 @@ export default ({ area }) => {
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
 
       const activeComment = commentPlugin.getState(activeView.state).comment;
+      const activeTrackChange = trakChangePlugin.getState(activeView.state)
+        .trackChange;
 
       let isActive = false;
-      if (activeComment && id === activeComment.attrs.id) isActive = true;
+      if (
+        (activeComment && id === activeComment.attrs.id) ||
+        (activeTrackChange && id === activeTrackChange.attrs.id)
+      )
+        isActive = true;
 
       // annotation top
       if (area === 'main') {
@@ -120,7 +128,6 @@ export default ({ area }) => {
         }
       }
     });
-
     return allCommentsTop;
   });
 

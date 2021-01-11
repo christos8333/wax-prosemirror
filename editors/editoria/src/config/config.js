@@ -40,6 +40,7 @@ import {
   TransformToolGroupService,
   TrackOptionsService,
   TrackOptionsToolGroupService,
+  TrackCommentOptionsToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -90,20 +91,7 @@ export default {
     },
     {
       templateArea: 'commentTrackToolBar',
-      toolGroups: [
-        {
-          name: 'Annotations',
-          more: [
-            'Superscript',
-            'Subscript',
-            'SmallCaps',
-            'Emphasis',
-            'Code',
-            'Underline',
-            'StrikeThrough',
-          ],
-        },
-      ],
+      toolGroups: ['TrackCommentOptions'],
     },
     {
       templateArea: 'BottomRightInfo',
@@ -183,7 +171,7 @@ export default {
     new BottomInfoService(),
     new TransformService(),
     new TransformToolGroupService(),
-    new TrackOptionsService(),
     new TrackOptionsToolGroupService(),
+    new TrackCommentOptionsToolGroupService(),
   ],
 };

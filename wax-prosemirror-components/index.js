@@ -19,5 +19,6 @@ export { default as FindAndReplaceTool } from './src/components/findAndReplace/F
 export { default as FullScreen } from './src/components/FullScreen';
 export { default as SpecialCharactersTool } from './src/components/specialCharacters/SpecialCharactersTool';
 export { default as TextHighlightingTool } from './src/components/textHighlight/TextHighlightingTool';
-export { default as EditorInfoTool} from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
+export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
 export { default as TransformCaseComponent } from './src/components/transformCase/TransformCaseComponent';
+export { default as EditingSuggestingDropDown } from './src/components/editingSuggesting/EditingSuggestingDropDown';

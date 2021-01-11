@@ -5,6 +5,7 @@ import ToolGroup from '../../lib/ToolGroup';
 class TrackingAndEditing extends ToolGroup {
   tools = [];
   constructor(
+    @inject('EditingSuggesting') editingSuggesting,
     @inject('EnableTrackChange') enableTrackChange,
     @inject('AcceptTrackChange') acceptTrackChange,
     @inject('RejectTrackChange') rejectTrackChange,
@@ -13,6 +14,7 @@ class TrackingAndEditing extends ToolGroup {
     super();
     this.tools = [
       findAndReplace,
+      editingSuggesting,
       enableTrackChange,
       acceptTrackChange,
       rejectTrackChange,

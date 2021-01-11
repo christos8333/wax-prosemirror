@@ -35,6 +35,7 @@ export { default as HighlightService } from './src/HighlightService/HightlightSe
 export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
+export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
 
 /*
 ToolGroups
@@ -48,7 +49,6 @@ export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayT
 export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
 export { default as NoteToolGroupService } from './src/WaxToolGroups/NoteToolGroupService/NoteToolGroupService';
 export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBlockToolGroupService/CodeBlockToolGroupService';
-export { default as TrackChangeToolGroupService } from './src/WaxToolGroups/TrackChangeToolGroupService/TrackChangeToolGroupService';
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';
 export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGroups/TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';

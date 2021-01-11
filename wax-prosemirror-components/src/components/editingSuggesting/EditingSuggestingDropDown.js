@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import Icon from '../../helpers/Icon';
 
 const DropdownStyled = styled(Dropdown)`
   cursor: not-allowed;
@@ -32,11 +33,46 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
+const StyledIcon = styled(Icon)`
+  height: 16px;
+  margin-right: 5px;
+  width: 16px;
+`;
+
+const Editing = () => {
+  return (
+    <span>
+      <StyledIcon name="editing" />
+      Editing
+    </span>
+  );
+};
+
+const Suggesting = () => {
+  return (
+    <span>
+      <StyledIcon name="suggesting" />
+      Suggesting
+    </span>
+  );
+};
+
+const Viewing = () => {
+  return (
+    <span>
+      <StyledIcon name="viewing" />
+      Viewing
+    </span>
+  );
+};
+
 const dropDownOptions = [
-  { label: 'Editing', value: 'editing' },
-  { label: 'Suggesting', value: 'suggesting' },
-  { label: 'Viewing', value: 'viewing' },
+  { label: <Editing />, value: 'editing' },
+  { label: <Suggesting />, value: 'suggesting' },
+  { label: <Viewing />, value: 'viewing' },
 ];
+
+console.log(dropDownOptions[0]);
 
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
   const { activeView } = useContext(WaxContext);
@@ -47,7 +83,7 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
       <DropdownStyled
         onChange={option => {}}
         options={dropDownOptions}
-        placeholder="Table Options"
+        value={dropDownOptions[0]}
         select={isDisabled}
       />
     ),

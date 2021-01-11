@@ -207,6 +207,17 @@ const getCommentsTracks = main => {
   return commentsTracks;
 };
 
+const getTrackBlockNodes = main => {
+  const allBlockNodes = DocumentHelpers.findBlockNodes(main.state.doc);
+  const trackBlockNodes = [];
+  allBlockNodes.map(node => {
+    if (node.node.attrs.track && node.node.attrs.track.length > 0) {
+      trackBlockNodes.push(node);
+    }
+  });
+  return trackBlockNodes;
+};
+
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
@@ -238,7 +249,8 @@ const EditoriaLayout = ({ editor }) => {
   }
   const notes = main && getNotes(main);
   const commentsTracks = main && getCommentsTracks(main).length;
-  console.log('comments', commentsTracks);
+  const trackBlockNodes = main && getTrackBlockNodes(main).length;
+
   const areNotes = notes && !!notes.length && notes.length > 0;
 
   const [hasNotes, setHasNotes] = useState(areNotes);
@@ -280,7 +292,8 @@ const EditoriaLayout = ({ editor }) => {
                 <CommentsContainer>
                   <CommentTrackTools>
                     <span>
-                      {commentsTracks} COMMENTS AND SUGGESTIONS
+                      {commentsTracks + trackBlockNodes} COMMENTS AND
+                      SUGGESTIONS
                       <CommentTrackToolBar />
                     </span>
                   </CommentTrackTools>

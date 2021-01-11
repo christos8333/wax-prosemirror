@@ -186,6 +186,27 @@ const getNotes = main => {
   return notes;
 };
 
+const getCommentsTracks = main => {
+  const marks = DocumentHelpers.findInlineNodes(main.state.doc);
+  const commentsTracks = [];
+  marks.map(node => {
+    if (node.node.marks.length > 0) {
+      node.node.marks.filter(mark => {
+        if (
+          mark.type.name === 'comment' ||
+          mark.type.name === 'insertion' ||
+          mark.type.name === 'deletion' ||
+          mark.type.name === 'format_change'
+        ) {
+          mark.pos = node.pos;
+          commentsTracks.push(mark);
+        }
+      });
+    }
+  });
+  return commentsTracks;
+};
+
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
@@ -215,8 +236,9 @@ const EditoriaLayout = ({ editor }) => {
       zIndex: '99999',
     };
   }
-
   const notes = main && getNotes(main);
+  const commentsTracks = main && getCommentsTracks(main).length;
+  console.log('comments', commentsTracks);
   const areNotes = notes && !!notes.length && notes.length > 0;
 
   const [hasNotes, setHasNotes] = useState(areNotes);
@@ -258,7 +280,7 @@ const EditoriaLayout = ({ editor }) => {
                 <CommentsContainer>
                   <CommentTrackTools>
                     <span>
-                      58 COMMENTS AND SUGGESTIONS
+                      {commentsTracks} COMMENTS AND SUGGESTIONS
                       <CommentTrackToolBar />
                     </span>
                   </CommentTrackTools>

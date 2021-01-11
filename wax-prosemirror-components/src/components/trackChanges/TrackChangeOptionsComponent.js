@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
+import Icon from '../../helpers/Icon';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -17,7 +18,32 @@ const Wrapper = styled.div`
 
 const TotalSuggestions = styled.span`
   color: #bdc2ca;
-  font-size: 15px;
+  font-size: 14px;
+`;
+
+const TotalComments = styled.span`
+  color: #bdc2ca;
+  font-size: 14px;
+`;
+
+const ShowComments = styled.div`
+  color: #bdc2ca;
+  font-size: 14px;
+
+  svg {
+    cursor: not-allowed;
+    fill: #85adff;
+    opacity: 0.6;
+    width: 50px !important;
+    height: 50px !important;
+  }
+`;
+
+const StyledToggleOn = styled(Icon)`
+  cursor: pointer;
+  height: 32px;
+  margin-left: auto;
+  width: 32px;
 `;
 
 const getInlineTracks = main => {
@@ -51,18 +77,34 @@ const getTrackBlockNodes = main => {
   return trackBlockNodes;
 };
 
+const getComments = main => {
+  const comments = DocumentHelpers.findChildrenByMark(
+    main.state.doc,
+    main.state.schema.marks.comment,
+    true,
+  );
+  return comments;
+};
+
 const TrackChangeOptionsComponent = ({ groups }) => {
   console.log(groups);
   const { app, view, activeViewId } = useContext(WaxContext);
 
   const inlineTracks = getInlineTracks(view.main).length;
   const blockTracks = getTrackBlockNodes(view.main).length;
+  const comments = getComments(view.main).length;
 
   return (
     <Wrapper>
       <TotalSuggestions>
-        {inlineTracks + blockTracks} Suggestions
+        {inlineTracks + blockTracks} SUGGESTIONS
       </TotalSuggestions>
+      <div>-----</div>
+      <TotalComments>{comments} COMMENTS</TotalComments>
+      <ShowComments>
+        Show comments
+        <StyledToggleOn name="toggleOn" />
+      </ShowComments>
     </Wrapper>
   );
 };

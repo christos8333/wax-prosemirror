@@ -124,14 +124,13 @@ const CommentsContainerNotes = styled.div`
 
 const CommentTrackToolsContainer = styled.div`
   padding: ${grid(2)}0 0 0;
-  position: fixed;
+  position: absolute;
   display: flex;
-  margin-left: 5px;
   flex-dirextion: row;
   // justify-content: center;
   z-index: 1;
   height: 30px;
-  width: 27%;
+  width: 34%;
   background: #fff;
 `;
 

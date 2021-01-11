@@ -23,6 +23,7 @@ const DropWrapper = styled.div`
 
 const TrackChangeOptionsTool = ({ view = {}, item, groups }) => {
   // const { icon, title } = item;
+
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
 

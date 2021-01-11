@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -13,11 +15,54 @@ const Wrapper = styled.div`
   height: 200px;
 `;
 
-const TrackChangeOptionsComponent = ({ view = {}, groups }) => {
+const TotalSuggestions = styled.span`
+  color: #bdc2ca;
+  font-size: 15px;
+`;
+
+const getInlineTracks = main => {
+  const marks = DocumentHelpers.findInlineNodes(main.state.doc);
+  const commentsTracks = [];
+  marks.map(node => {
+    if (node.node.marks.length > 0) {
+      node.node.marks.filter(mark => {
+        if (
+          mark.type.name === 'insertion' ||
+          mark.type.name === 'deletion' ||
+          mark.type.name === 'format_change'
+        ) {
+          mark.pos = node.pos;
+          commentsTracks.push(mark);
+        }
+      });
+    }
+  });
+  return commentsTracks;
+};
+
+const getTrackBlockNodes = main => {
+  const allBlockNodes = DocumentHelpers.findBlockNodes(main.state.doc);
+  const trackBlockNodes = [];
+  allBlockNodes.map(node => {
+    if (node.node.attrs.track && node.node.attrs.track.length > 0) {
+      trackBlockNodes.push(node);
+    }
+  });
+  return trackBlockNodes;
+};
+
+const TrackChangeOptionsComponent = ({ groups }) => {
   console.log(groups);
+  const { app, view, activeViewId } = useContext(WaxContext);
+
+  const inlineTracks = getInlineTracks(view.main).length;
+  const blockTracks = getTrackBlockNodes(view.main).length;
+
   return (
     <Wrapper>
-      <span>Options</span>
+      <TotalSuggestions>
+        {inlineTracks + blockTracks} Suggestions
+      </TotalSuggestions>
     </Wrapper>
   );
 };

@@ -6,7 +6,6 @@ class TrackingAndEditing extends ToolGroup {
   tools = [];
   constructor(
     @inject('EditingSuggesting') editingSuggesting,
-    @inject('EnableTrackChange') enableTrackChange,
     @inject('AcceptTrackChange') acceptTrackChange,
     @inject('RejectTrackChange') rejectTrackChange,
     @inject('FindAndReplace') findAndReplace,
@@ -15,7 +14,6 @@ class TrackingAndEditing extends ToolGroup {
     this.tools = [
       findAndReplace,
       editingSuggesting,
-      enableTrackChange,
       acceptTrackChange,
       rejectTrackChange,
     ];

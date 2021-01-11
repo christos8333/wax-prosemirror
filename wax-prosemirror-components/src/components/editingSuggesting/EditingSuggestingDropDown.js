@@ -5,6 +5,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Icon from '../../helpers/Icon';
+import TrackChangesBox from '../trackChanges/TrackChangesBox';
 
 const DropdownStyled = styled(Dropdown)`
   cursor: not-allowed;
@@ -72,18 +73,32 @@ const dropDownOptions = [
   { label: <Viewing />, value: 'viewing' },
 ];
 
-console.log(dropDownOptions[0]);
-
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
-  const { activeView } = useContext(WaxContext);
+  const { activeView, app } = useContext(WaxContext);
 
   const isDisabled = item.select(activeView.state);
+
+  const enableDisabletrackChanges = () => {
+    app.config.get('config.EnableTrackChangeService').enabled = !app.config.get(
+      'config.EnableTrackChangeService',
+    ).enabled;
+  };
+
+  const selectedOption = () => {
+    if (app.config.get('config.EnableTrackChangeService').enabled === true)
+      return dropDownOptions[1];
+
+    return dropDownOptions[0];
+  };
+
   const EditingSuggestingComponent = useMemo(
     () => (
       <DropdownStyled
-        onChange={option => {}}
+        onChange={option => {
+          return enableDisabletrackChanges();
+        }}
         options={dropDownOptions}
-        value={dropDownOptions[0]}
+        value={selectedOption()}
         select={isDisabled}
       />
     ),

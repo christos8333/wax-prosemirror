@@ -20,8 +20,8 @@ const DropWrapper = styled.div`
   top: 32px;
 `;
 
-const TrackChangeOptionsTool = ({ view = {}, item }) => {
-  const { icon, title } = item;
+const TrackChangeOptionsTool = ({ view = {}, item, groups }) => {
+  // const { icon, title } = item;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
 
@@ -33,16 +33,17 @@ const TrackChangeOptionsTool = ({ view = {}, item }) => {
         <MenuButton
           active={isOpen}
           disabled={false}
-          iconName={icon}
+          iconName="more"
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
-          title={title}
+          // title={title}
         />
 
         {isOpen && (
           <DropWrapper>
             <TrackChangeOptionsComponent
+              groups={groups}
               close={() => {
                 setIsOpen(false);
               }}

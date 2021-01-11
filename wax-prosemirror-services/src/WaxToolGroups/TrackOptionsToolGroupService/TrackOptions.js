@@ -5,11 +5,12 @@ import ToolGroup from '../../lib/ToolGroup';
 class TrackOptions extends ToolGroup {
   tools = [];
   constructor(
+    @inject('ShowHideTrackChange') showHideTrackChange,
     @inject('AcceptTrackChange') acceptTrackChange,
     @inject('RejectTrackChange') rejectTrackChange,
   ) {
     super();
-    this.tools = [acceptTrackChange, rejectTrackChange];
+    this.tools = [showHideTrackChange, acceptTrackChange, rejectTrackChange];
   }
 }
 

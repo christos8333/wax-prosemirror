@@ -122,18 +122,21 @@ const CommentsContainerNotes = styled.div`
   height: 100%;
 `;
 
-const CommentTrackTools = styled.div`
+const CommentTrackToolsContainer = styled.div`
   padding: ${grid(2)}0 0 0;
   position: fixed;
   display: flex;
   margin-left: 5px;
   z-index: 1;
   height: 30px;
-  width: 29.4%;
+  width: 27%;
   background: #fff;
-  span {
-    margin-left: auto;
-  }
+`;
+
+const CommentTrackTools = styled.div`
+  margin-left: 10px;
+  display: flex;
+  position: relative;
 `;
 
 const NotesAreaContainer = styled.div`
@@ -290,13 +293,13 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <CommentTrackTools>
-                    <span>
+                  <CommentTrackToolsContainer>
+                    <CommentTrackTools>
                       {commentsTracks + trackBlockNodes} COMMENTS AND
                       SUGGESTIONS
                       <CommentTrackToolBar />
-                    </span>
-                  </CommentTrackTools>
+                    </CommentTrackTools>
+                  </CommentTrackToolsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>

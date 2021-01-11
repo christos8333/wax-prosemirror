@@ -107,8 +107,27 @@ export default {
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
-  EnableTrackChangeService: { enabled: false },
-
+  EnableTrackChangeService: { enabled: false, toggle: true },
+  AcceptTrackChangeService: {
+    own: {
+      accept: true,
+      reject: true,
+    },
+    others: {
+      accept: true,
+      reject: true,
+    },
+  },
+  RejectTrackChangeService: {
+    own: {
+      accept: true,
+      reject: true,
+    },
+    others: {
+      accept: true,
+      reject: true,
+    },
+  },
   PmPlugins: [
     columnResizing(),
     tableEditing(),

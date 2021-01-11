@@ -59,6 +59,7 @@ const Editoria = () => {
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
           value={demo}
+          // readonly
           layout={layout}
           // onChange={source => console.log(source)}
           user={user}

@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
@@ -8,13 +8,13 @@ import Icon from '../../helpers/Icon';
 import TrackChangesBox from '../trackChanges/TrackChangesBox';
 
 const DropdownStyled = styled(Dropdown)`
-  cursor: not-allowed;
   display: inline-flex;
   opacity: ${props => (props.select ? 1 : 0.4)};
-  pointer-events: ${props => (props.select ? 'default' : 'none')};
 
   .Dropdown-control {
     border: none;
+    cursor: ${props => (props.select ? 'default' : 'not-allowed')};
+    pointer-events: ${props => (props.select ? 'default' : 'none')};
   }
 
   .Dropdown-arrow {
@@ -70,22 +70,20 @@ const Viewing = () => {
 const dropDownOptions = [
   { label: <Editing />, value: 'editing' },
   { label: <Suggesting />, value: 'suggesting' },
-  { label: <Viewing />, value: 'viewing' },
 ];
 
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
-  const { activeView, app } = useContext(WaxContext);
+  const { app } = useContext(WaxContext);
+  const isDisabled = app.config.get('config.EnableTrackChangeService').toggle;
 
-  const isDisabled = item.select(activeView.state);
-
-  const enableDisabletrackChanges = () => {
+  const enableDisableTrackChanges = () => {
     app.config.get('config.EnableTrackChangeService').enabled = !app.config.get(
       'config.EnableTrackChangeService',
     ).enabled;
   };
 
   const selectedOption = () => {
-    if (app.config.get('config.EnableTrackChangeService').enabled === true)
+    if (app.config.get('config.EnableTrackChangeService').enabled)
       return dropDownOptions[1];
 
     return dropDownOptions[0];
@@ -95,15 +93,17 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
     () => (
       <DropdownStyled
         onChange={option => {
-          return enableDisabletrackChanges();
+          return enableDisableTrackChanges();
         }}
         options={dropDownOptions}
-        value={selectedOption()}
         select={isDisabled}
+        value={selectedOption()}
       />
     ),
-    [isDisabled],
+    [],
   );
+
+  if (app.config.get('readonly')) return <Viewing />;
 
   return EditingSuggestingComponent;
 };

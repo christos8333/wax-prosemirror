@@ -62,7 +62,13 @@ export default {
         'Base',
         {
           name: 'Annotations',
-          more: ['Superscript', 'Subscript', 'SmallCaps'],
+          more: [
+            'Superscript',
+            'Subscript',
+            'SmallCaps',
+            'Underline',
+            'StrikeThrough',
+          ],
         },
         'HighlightToolGroup',
         'TransformToolGroup',

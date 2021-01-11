@@ -73,13 +73,16 @@ const dropDownOptions = [
 ];
 
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
-  const { app } = useContext(WaxContext);
+  const { app, activeView } = useContext(WaxContext);
   const isDisabled = app.config.get('config.EnableTrackChangeService').toggle;
 
   const enableDisableTrackChanges = () => {
     app.config.get('config.EnableTrackChangeService').enabled = !app.config.get(
       'config.EnableTrackChangeService',
     ).enabled;
+    setTimeout(() => {
+      activeView.focus();
+    }, 100);
   };
 
   const selectedOption = () => {

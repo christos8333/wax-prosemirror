@@ -139,6 +139,13 @@ const CommentTrackTools = styled.div`
   position: relative;
 `;
 
+const CommentTrackOptions = styled.div`
+  display: flex;
+  margin-left: 10px;
+  bottom: 5px;
+  position: relative;
+`;
+
 const NotesAreaContainer = styled.div`
   background: #fff;
   display: flex;
@@ -297,7 +304,9 @@ const EditoriaLayout = ({ editor }) => {
                     <CommentTrackTools>
                       {commentsTracks + trackBlockNodes} COMMENTS AND
                       SUGGESTIONS
-                      <CommentTrackToolBar />
+                      <CommentTrackOptions>
+                        <CommentTrackToolBar />
+                      </CommentTrackOptions>
                     </CommentTrackTools>
                   </CommentTrackToolsContainer>
                   <RightArea area="main" />

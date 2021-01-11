@@ -22,3 +22,4 @@ export { default as TextHighlightingTool } from './src/components/textHighlight/
 export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
 export { default as TransformCaseComponent } from './src/components/transformCase/TransformCaseComponent';
 export { default as EditingSuggestingDropDown } from './src/components/editingSuggesting/EditingSuggestingDropDown';
+export { default as TrackChangeOptionsTool } from './src/components/trackChanges/TrackChangeOptionsTool';

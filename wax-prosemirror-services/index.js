@@ -36,6 +36,7 @@ export { default as CounterInfoService } from './src/BottomInfoService/CounterIn
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
+export { default as TrackOptionsService } from './src/TrackOptionsService/TrackOptionsService';
 
 /*
 ToolGroups

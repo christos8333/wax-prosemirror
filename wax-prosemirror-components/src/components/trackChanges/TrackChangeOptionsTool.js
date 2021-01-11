@@ -17,6 +17,7 @@ const DropWrapper = styled.div`
   background: white;
   margin-top: ${grid(1)};
   position: absolute;
+  right: -3px;
   top: 32px;
 `;
 

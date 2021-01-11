@@ -127,6 +127,8 @@ const CommentTrackToolsContainer = styled.div`
   position: fixed;
   display: flex;
   margin-left: 5px;
+  flex-dirextion: row;
+  // justify-content: center;
   z-index: 1;
   height: 30px;
   width: 27%;
@@ -134,7 +136,7 @@ const CommentTrackToolsContainer = styled.div`
 `;
 
 const CommentTrackTools = styled.div`
-  margin-left: 10px;
+  margin-left: auto;
   display: flex;
   position: relative;
 `;

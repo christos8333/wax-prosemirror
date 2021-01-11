@@ -38,6 +38,8 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
+  TrackOptionsService,
+  TrackOptionsToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -181,5 +183,7 @@ export default {
     new BottomInfoService(),
     new TransformService(),
     new TransformToolGroupService(),
+    new TrackOptionsService(),
+    new TrackOptionsToolGroupService(),
   ],
 };

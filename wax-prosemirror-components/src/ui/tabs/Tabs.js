@@ -16,20 +16,26 @@ const Tabs = styled.div`
 `;
 
 const activeTab = css`
-  box-shadow: 0 0 1px ${th('colorPrimary')};
   background: ${th('colorBackgroundTabs')};
+  box-shadow: 0 0 1px ${th('colorPrimary')};
+`;
+
+const disabledTab = css`
+  cursor: not-allowed;
+  opacity: 0.4;
 `;
 
 const Tab = styled.div`
-  padding: 8px;
-  margin: 0 4px 4px 4px;
   cursor: pointer;
+  margin: 0 4px 4px 4px;
+  ${props => props.active && activeTab}
+  ${props => props.disabled && disabledTab}
+
+  padding: 8px;
 
   &:first-child {
     margin-top: 4px;
   }
-
-  ${props => props.active && activeTab}
 
   &:hover {
     background: ${th('colorBackgroundTabs')};
@@ -37,9 +43,9 @@ const Tab = styled.div`
 `;
 
 const Content = styled.div`
-  width: 100%;
-  height: 100%;
   background: #fff;
+  height: 100%;
+  width: 100%;
 `;
 
 const TabsPane = props => {
@@ -54,8 +60,12 @@ const TabsPane = props => {
         {tabList.map(tab => (
           <Tab
             active={tabDisplay === tab.id}
+            disabled={tab.disabled}
             key={tab.id}
-            onClick={() => setTabDisplay(tab.id)}
+            onClick={() => {
+              if (!tab.disabled) setTabDisplay(tab.id);
+            }}
+            title={tab.title}
           >
             <Icon name={tab.icon} />
           </Tab>

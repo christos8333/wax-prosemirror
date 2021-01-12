@@ -29,6 +29,8 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   } = useContext(WaxContext);
 
   const [isActive, setIsActive] = useState(false);
+  const [clickPost, setClickPost] = useState(false);
+
   const { state, dispatch } = activeView;
   const viewId = comment.attrs.viewid;
   let allCommentsWithSameId = [];
@@ -59,7 +61,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const onClickPost = content => {
     const { tr } = state;
-
+    setClickPost(true);
     const obj = {
       content,
       displayName: user.username,
@@ -129,13 +131,16 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     // if (content !== '') {
     //   onClickPost(content);
     // }
-
     setTimeout(() => {
-      if (comment.attrs.conversation.length === 0 && isNewComment) {
+      if (
+        comment.attrs.conversation.length === 0 &&
+        isNewComment &&
+        !clickPost
+      ) {
         onClickResolve();
         activeView.focus();
       }
-    }, 500);
+    }, 200);
   };
 
   const MemorizedComponent = useMemo(

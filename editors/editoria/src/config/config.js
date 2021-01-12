@@ -23,10 +23,10 @@ import {
   CommentsService,
   CodeBlockService,
   CodeBlockToolGroupService,
-  TrackChangeToolGroupService,
   DisplayTextToolGroupService,
   MathService,
   FindAndReplaceService,
+  EditingSuggestingService,
   TrackingAndEditingToolGroupService,
   FullScreenService,
   FullScreenToolGroupService,
@@ -38,6 +38,9 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
+  TrackOptionsService,
+  TrackOptionsToolGroupService,
+  TrackCommentOptionsToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -62,7 +65,13 @@ export default {
         'Base',
         {
           name: 'Annotations',
-          more: ['Superscript', 'Subscript', 'SmallCaps'],
+          more: [
+            'Superscript',
+            'Subscript',
+            'SmallCaps',
+            'Underline',
+            'StrikeThrough',
+          ],
         },
         'HighlightToolGroup',
         'TransformToolGroup',
@@ -82,20 +91,7 @@ export default {
     },
     {
       templateArea: 'commentTrackToolBar',
-      toolGroups: [
-        {
-          name: 'Annotations',
-          more: [
-            'Superscript',
-            'Subscript',
-            'SmallCaps',
-            'Emphasis',
-            'Code',
-            'Underline',
-            'StrikeThrough',
-          ],
-        },
-      ],
+      toolGroups: ['TrackCommentOptions'],
     },
     {
       templateArea: 'BottomRightInfo',
@@ -107,8 +103,27 @@ export default {
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
-  EnableTrackChangeService: { enabled: false },
-
+  EnableTrackChangeService: { enabled: false, toggle: true },
+  AcceptTrackChangeService: {
+    own: {
+      accept: true,
+      reject: true,
+    },
+    others: {
+      accept: true,
+      reject: true,
+    },
+  },
+  RejectTrackChangeService: {
+    own: {
+      accept: true,
+      reject: true,
+    },
+    others: {
+      accept: true,
+      reject: true,
+    },
+  },
   PmPlugins: [
     columnResizing(),
     tableEditing(),
@@ -141,7 +156,7 @@ export default {
     new ListToolGroupService(),
     new CodeBlockService(),
     new CodeBlockToolGroupService(),
-    new TrackChangeToolGroupService(),
+    new EditingSuggestingService(),
     new DisplayTextToolGroupService(),
     new MathService(),
     new FindAndReplaceService(),
@@ -156,5 +171,7 @@ export default {
     new BottomInfoService(),
     new TransformService(),
     new TransformToolGroupService(),
+    new TrackOptionsToolGroupService(),
+    new TrackCommentOptionsToolGroupService(),
   ],
 };

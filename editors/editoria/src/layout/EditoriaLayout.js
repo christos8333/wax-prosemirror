@@ -122,18 +122,28 @@ const CommentsContainerNotes = styled.div`
   height: 100%;
 `;
 
-const CommentTrackTools = styled.div`
-  padding: ${grid(2)}0 0 0;
-  position: fixed;
+const CommentTrackToolsContainer = styled.div`
   display: flex;
-  margin-left: 5px;
+  position: fixed;
+  padding-top: 5px;
+  right: 30px;
+  z-index: 2;
+  background: white;
+  padding-left: 5%;
+`;
+
+const CommentTrackTools = styled.div`
+  margin-left: auto;
+  display: flex;
+  position: relative;
   z-index: 1;
-  height: 30px;
-  width: 29.4%;
-  background: #fff;
-  span {
-    margin-left: auto;
-  }
+`;
+
+const CommentTrackOptions = styled.div`
+  display: flex;
+  margin-left: 10px;
+  bottom: 5px;
+  position: relative;
 `;
 
 const NotesAreaContainer = styled.div`
@@ -186,6 +196,38 @@ const getNotes = main => {
   return notes;
 };
 
+const getCommentsTracks = main => {
+  const marks = DocumentHelpers.findInlineNodes(main.state.doc);
+  const commentsTracks = [];
+  marks.map(node => {
+    if (node.node.marks.length > 0) {
+      node.node.marks.filter(mark => {
+        if (
+          mark.type.name === 'comment' ||
+          mark.type.name === 'insertion' ||
+          mark.type.name === 'deletion' ||
+          mark.type.name === 'format_change'
+        ) {
+          mark.pos = node.pos;
+          commentsTracks.push(mark);
+        }
+      });
+    }
+  });
+  return commentsTracks;
+};
+
+const getTrackBlockNodes = main => {
+  const allBlockNodes = DocumentHelpers.findBlockNodes(main.state.doc);
+  const trackBlockNodes = [];
+  allBlockNodes.map(node => {
+    if (node.node.attrs.track && node.node.attrs.track.length > 0) {
+      trackBlockNodes.push(node);
+    }
+  });
+  return trackBlockNodes;
+};
+
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
@@ -215,8 +257,10 @@ const EditoriaLayout = ({ editor }) => {
       zIndex: '99999',
     };
   }
-
   const notes = main && getNotes(main);
+  const commentsTracks = main && getCommentsTracks(main).length;
+  const trackBlockNodes = main && getTrackBlockNodes(main).length;
+
   const areNotes = notes && !!notes.length && notes.length > 0;
 
   const [hasNotes, setHasNotes] = useState(areNotes);
@@ -256,12 +300,15 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <CommentTrackTools>
-                    <span>
-                      58 COMMENTS AND SUGGESTIONS
-                      <CommentTrackToolBar />
-                    </span>
-                  </CommentTrackTools>
+                  <CommentTrackToolsContainer>
+                    <CommentTrackTools>
+                      {commentsTracks + trackBlockNodes} COMMENTS AND
+                      SUGGESTIONS
+                      <CommentTrackOptions>
+                        <CommentTrackToolBar />
+                      </CommentTrackOptions>
+                    </CommentTrackTools>
+                  </CommentTrackToolsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>

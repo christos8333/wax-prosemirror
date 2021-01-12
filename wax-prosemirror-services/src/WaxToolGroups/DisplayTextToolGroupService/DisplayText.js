@@ -31,7 +31,9 @@ class DisplayText extends ToolGroup {
 
     const first = {
       id: '1',
+      title: 'block level tools',
       icon: 'title',
+      disabled: false,
       component: (
         <BlockLevelTools
           groups={this._toolGroups[0].groups.map(group => ({
@@ -45,6 +47,8 @@ class DisplayText extends ToolGroup {
 
     const second = {
       id: '2',
+      disabled: true,
+      title: 'chapter list',
       icon: 'chapterList',
       component: <Empty />,
     };

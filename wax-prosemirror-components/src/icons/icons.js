@@ -295,8 +295,15 @@ export default {
   viewing: ({ className }) => (
     <Svg className={className} fill="none" viewBox="0 0 24 24">
       <title> Viewing </title>
-      <path d="M0 0h24v24H0z" fill="none" />{' '}
-      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />{' '}
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+    </Svg>
+  ),
+  toggleOn: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Viewing </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M17 7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h10c2.76 0 5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
     </Svg>
   ),
   specialCharacters: ({ className }) => (
@@ -318,6 +325,41 @@ export default {
       <title> Chapters </title>
       <path d="M0 0h24v24H0z" fill="none" />
       <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+    </Svg>
+  ),
+  showTrack: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Show Changes </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M 18 2.016 L 18 0 L 0 0 L 0 2.016 Z M 18 6.984 L 18 5.016 L 0 5.016 L 0 6.984 Z M 7.5 12 L 7.5 9.984 L 0 9.984 L 0 12 Z M 16.871 11.691 L 17.633 10.93 C 17.711 10.852 17.75 10.754 17.75 10.637 C 17.75 10.52 17.711 10.422 17.633 10.344 L 17.633 10.344 L 16.656 9.367 C 16.578 9.289 16.48 9.25 16.363 9.25 C 16.246 9.25 16.148 9.289 16.07 9.367 L 16.07 9.367 L 15.309 10.129 Z M 11.813 16.75 L 16.422 12.141 L 14.859 10.578 L 10.25 15.188 L 10.25 16.75 Z" />
+    </Svg>
+  ),
+  acceptTrack: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Accept </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M 18 2.016 L 18 0 L 0 0 L 0 2.016 Z M 18 6.984 L 18 5.016 L 0 5.016 L 0 6.984 Z M 7.5 12 L 7.5 9.984 L 0 9.984 L 0 12 Z M 12.563 17.078 L 18.188 11.406 L 16.781 10 L 12.563 14.219 L 10.406 12.109 L 9 13.516 Z" />
+    </Svg>
+  ),
+  rejectTrack: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Reject </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M 18 2.016 L 18 0 L 0 0 L 0 2.016 Z M 18 6.984 L 18 5.016 L 0 5.016 L 0 6.984 Z M 7.5 12 L 7.5 9.984 L 0 9.984 L 0 12 Z M 16.609 17.516 L 18.016 16.109 L 15.438 13.484 L 18.016 10.906 L 16.609 9.5 L 14.031 12.078 L 11.406 9.5 L 10 10.906 L 12.625 13.484 L 10 16.109 L 11.406 17.516 L 14.031 14.891 Z" />
+    </Svg>
+  ),
+  acceptRejectTrack: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Accept </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M 14.531 7.078 L 20.156 1.406 L 18.75 0 L 14.531 4.219 L 12.375 2.109 L 10.969 3.516 Z M 9 5.063 L 9 3.047 L 0 3.047 L 0 5.063 Z M 17.578 16.078 L 18.984 14.672 L 16.406 12.047 L 18.984 9.469 L 17.578 8.063 L 15 10.641 L 12.375 8.063 L 10.969 9.469 L 13.594 12.047 L 10.969 14.672 L 12.375 16.078 L 15 13.453 Z M 9 13.078 L 9 11.063 L 0 11.063 L 0 13.078 Z" />
+    </Svg>
+  ),
+  checkTrack: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Accept </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
     </Svg>
   ),
   transformCase: ({ className }) => (

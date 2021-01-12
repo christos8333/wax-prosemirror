@@ -8,7 +8,8 @@ export default
 @injectable()
 class AcceptTrackChange extends Tools {
   title = 'Accept Changes';
-  label = 'Accept';
+  label = 'Accept in selection';
+  icon = 'acceptTrack';
   name = 'AcceptTrackChange';
 
   get run() {

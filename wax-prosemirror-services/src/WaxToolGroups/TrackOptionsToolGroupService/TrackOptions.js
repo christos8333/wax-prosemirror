@@ -2,16 +2,16 @@ import { injectable, inject } from 'inversify';
 import ToolGroup from '../../lib/ToolGroup';
 
 @injectable()
-class TrackChange extends ToolGroup {
+class TrackOptions extends ToolGroup {
   tools = [];
   constructor(
-    @inject('EnableTrackChange') enableTrackChange,
+    @inject('ShowHideTrackChange') showHideTrackChange,
     @inject('AcceptTrackChange') acceptTrackChange,
     @inject('RejectTrackChange') rejectTrackChange,
   ) {
     super();
-    this.tools = [enableTrackChange, acceptTrackChange, rejectTrackChange];
+    this.tools = [showHideTrackChange, acceptTrackChange, rejectTrackChange];
   }
 }
 
-export default TrackChange;
+export default TrackOptions;

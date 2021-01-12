@@ -8,21 +8,28 @@ import 'react-dropdown/style.css';
 
 const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
-  cursor: not-allowed;
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? 'default' : 'none')};
+
   .Dropdown-control {
     border: none;
+
+    &:hover {
+      box-shadow: none;
+    }
   }
+
   .Dropdown-arrow {
     right: 25px;
     top: 14px;
   }
+
   .Dropdown-menu {
-    width: 120%;
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    width: 120%;
+
     .Dropdown-option {
       width: 100%;
     }

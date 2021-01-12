@@ -125,7 +125,7 @@ const CommentsContainerNotes = styled.div`
 const CommentTrackToolsContainer = styled.div`
   display: flex;
   position: fixed;
-  top: 52px;
+  margin-top: 5px;
   right: 30px;
   z-index: 2;
   background: transparent;
@@ -288,14 +288,6 @@ const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles}>
-        <CommentTrackToolsContainer>
-          <CommentTrackTools>
-            {commentsTracks + trackBlockNodes} COMMENTS AND SUGGESTIONS
-            <CommentTrackOptions>
-              <CommentTrackToolBar />
-            </CommentTrackOptions>
-          </CommentTrackTools>
-        </CommentTrackToolsContainer>
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>
@@ -318,6 +310,15 @@ const EditoriaLayout = ({ editor }) => {
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
                   <WhiteArea />
+                  <CommentTrackToolsContainer>
+                    <CommentTrackTools>
+                      {commentsTracks + trackBlockNodes} COMMENTS AND
+                      SUGGESTIONS
+                      <CommentTrackOptions>
+                        <CommentTrackToolBar />
+                      </CommentTrackOptions>
+                    </CommentTrackTools>
+                  </CommentTrackToolsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>

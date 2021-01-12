@@ -188,8 +188,7 @@ const TrackChangeOptionsComponent = ({ groups }) => {
   const [isShownTrack, setIsShownTrack] = useState(false);
 
   const menuItems = groups[0].items;
-  console.log(menuItems);
-  const { app, view, activeViewId } = useContext(WaxContext);
+  const { view } = useContext(WaxContext);
 
   const inlineTracks = getInlineTracks(view.main).length;
   const blockTracks = getTrackBlockNodes(view.main).length;

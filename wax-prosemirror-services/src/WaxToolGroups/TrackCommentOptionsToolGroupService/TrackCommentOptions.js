@@ -24,6 +24,7 @@ class TrackCommentOptions extends ToolGroup {
     if (isEmpty(view)) return null;
     return (
       <TrackChangeOptionsTool
+        key={uuidv4()}
         view={view}
         groups={this._toolGroups[0].groups.map(group => ({
           //   groupName: group.title.props.title,

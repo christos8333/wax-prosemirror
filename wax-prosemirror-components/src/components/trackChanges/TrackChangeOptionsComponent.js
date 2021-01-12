@@ -19,23 +19,29 @@ const Wrapper = styled.div`
   width: 200px;
 `;
 
-const TotalSuggestions = styled.span`
+const TotalSuggestions = styled.div`
   color: #bdc2ca;
 `;
 
-const TotalComments = styled.span`
+const TotalComments = styled.div`
   color: #bdc2ca;
+  padding-top: ${grid(2)};
 `;
 
 const ShowComments = styled.div`
   color: #bdc2ca;
+  height: 23px;
+  padding-top: ${grid(2)};
 
   svg {
+    bottom: 12px;
     cursor: not-allowed;
     fill: #85adff;
+    height: 45px !important;
+    left: 62px;
     opacity: 0.6;
-    width: 50px !important;
-    height: 50px !important;
+    position: relative;
+    width: 45px !important;
   }
 `;
 
@@ -50,7 +56,7 @@ const StyledIcon = styled(Icon)``;
 
 const StyledIconExpand = styled(Icon)`
   bottom: 3px;
-  left: 40px;
+  left: 47px;
   position: relative;
 `;
 
@@ -98,7 +104,7 @@ const AcceptRejectAllControls = styled.div`
   font-size: 14px;
   padding: ${grid(2)};
   position: absolute;
-  right: 209px;
+  right: 207px;
   transform-origin: 50% 50% 0px;
   width: 200px;
 `;
@@ -118,8 +124,8 @@ const AcceptRejectAllRow = styled.div`
   }
 
   svg {
-    position: relative;
     bottom: 2px;
+    position: relative;
   }
 `;
 
@@ -168,8 +174,8 @@ const renderTools = menuItems => {
     menuItems.map((menuItem, index) => {
       return (
         <MenuButton
-          key={menuItem.name}
           iconName={menuItem.icon}
+          key={menuItem.name}
           label={menuItem.label}
         />
       );

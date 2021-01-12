@@ -125,10 +125,11 @@ const CommentsContainerNotes = styled.div`
 const CommentTrackToolsContainer = styled.div`
   display: flex;
   position: fixed;
-  margin-top: 5px;
+  padding-top: 5px;
   right: 30px;
   z-index: 2;
-  background: transparent;
+  background: white;
+  padding-left: 5%;
 `;
 
 const CommentTrackTools = styled.div`
@@ -136,16 +137,6 @@ const CommentTrackTools = styled.div`
   display: flex;
   position: relative;
   z-index: 1;
-`;
-
-const WhiteArea = styled.div`
-  width: 25%;
-  height: 30px;
-  background: white;
-  z-index: 1;
-  display: flex;
-  position: fixed;
-  margin-left: 10px;
 `;
 
 const CommentTrackOptions = styled.div`
@@ -309,7 +300,6 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <WhiteArea />
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>
                       {commentsTracks + trackBlockNodes} COMMENTS AND

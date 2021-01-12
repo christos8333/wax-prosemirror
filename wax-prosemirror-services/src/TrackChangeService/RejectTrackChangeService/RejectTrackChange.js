@@ -9,11 +9,11 @@ import { injectable } from 'inversify';
 import removeNode from '../track-changes/helpers/removeNode';
 import Tools from '../../lib/Tools';
 
-
 @injectable()
 class RejectTrackChange extends Tools {
   title = 'Reject Changes';
-  label = 'Reject';
+  label = 'Reject in selection';
+  icon = 'rejectTrack';
   name = 'RejectTrackChange';
 
   get run() {
@@ -125,4 +125,4 @@ class RejectTrackChange extends Tools {
   }
 }
 
-export default RejectTrackChange
+export default RejectTrackChange;

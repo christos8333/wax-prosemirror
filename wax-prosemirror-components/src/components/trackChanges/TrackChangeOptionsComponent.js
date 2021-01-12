@@ -47,6 +47,20 @@ const StyledToggleOn = styled(Icon)`
   width: 32px;
 `;
 
+const ToolsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  button {
+    padding-top: 6px;
+    text-align: start;
+  }
+
+  svg {
+    margin-top: 3px;
+  }
+`;
+
 const getInlineTracks = main => {
   const marks = DocumentHelpers.findInlineNodes(main.state.doc);
   const commentsTracks = [];
@@ -86,6 +100,22 @@ const getComments = main => {
   return comments;
 };
 
+const renderTools = menuItems => {
+  const tools = [];
+  tools.push(
+    menuItems.map((menuItem, index) => {
+      return (
+        <MenuButton
+          key={menuItem.name}
+          iconName={menuItem.icon}
+          label={menuItem.label}
+        />
+      );
+    }),
+  );
+  return <>{tools}</>;
+};
+
 const TrackChangeOptionsComponent = ({ groups }) => {
   const menuItems = groups[0].items;
   console.log(menuItems);
@@ -100,7 +130,7 @@ const TrackChangeOptionsComponent = ({ groups }) => {
       <TotalSuggestions>
         {inlineTracks + blockTracks} SUGGESTIONS
       </TotalSuggestions>
-      <div>-----</div>
+      <ToolsContainer>{renderTools(menuItems)}</ToolsContainer>
       <TotalComments>{comments} COMMENTS</TotalComments>
       <ShowComments>
         Show comments

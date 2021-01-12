@@ -1,11 +1,10 @@
 /* eslint react/prop-types: 0 */
-import React, { useMemo, useContext, useEffect } from 'react';
+import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Icon from '../../helpers/Icon';
-import TrackChangesBox from '../trackChanges/TrackChangesBox';
 
 const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
@@ -13,8 +12,12 @@ const DropdownStyled = styled(Dropdown)`
 
   .Dropdown-control {
     border: none;
-    cursor: ${props => (props.select ? 'default' : 'not-allowed')};
+    cursor: ${props => (props.select ? 'pointer' : 'not-allowed')};
     pointer-events: ${props => (props.select ? 'default' : 'none')};
+
+    &:hover {
+      box-shadow: none;
+    }
   }
 
   .Dropdown-arrow {

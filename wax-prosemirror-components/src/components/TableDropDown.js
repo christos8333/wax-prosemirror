@@ -13,6 +13,10 @@ const DropdownStyled = styled(Dropdown)`
 
   .Dropdown-control {
     border: none;
+
+    &:hover {
+      box-shadow: none;
+    }
   }
 
   .Dropdown-arrow {

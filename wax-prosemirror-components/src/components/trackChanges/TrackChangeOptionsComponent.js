@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable array-callback-return */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -17,7 +17,6 @@ const Wrapper = styled.div`
   padding: ${grid(2)};
   transform-origin: 50% 50% 0px;
   width: 200px;
-  height: 200px;
 `;
 
 const TotalSuggestions = styled.span`
@@ -47,6 +46,14 @@ const StyledToggleOn = styled(Icon)`
   width: 32px;
 `;
 
+const StyledIcon = styled(Icon)``;
+
+const StyledIconExpand = styled(Icon)`
+  bottom: 3px;
+  left: 40px;
+  position: relative;
+`;
+
 const ToolsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,6 +65,61 @@ const ToolsContainer = styled.div`
 
   svg {
     margin-top: 3px;
+  }
+`;
+
+const AcceptRejectAll = styled.div`
+  border-bottom: 1px solid #ebebf0;
+  border-top: 1px solid #ebebf0;
+  margin-top: 5px;
+  padding: 2px 0px 2px 2px;
+`;
+
+const AcceptRejectAllButton = styled.div`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-bottom: 3px;
+  padding-top: 8px;
+  text-align: start;
+  width: 100%;
+
+  &:hover {
+    background: #f0f5ff;
+  }
+`;
+
+const AcceptRejectAllControls = styled.div`
+  background: #fff;
+  border-radius: 1.03093% / 8%;
+  bottom: 43px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
+    rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+  font-size: 14px;
+  padding: ${grid(2)};
+  position: absolute;
+  right: 209px;
+  transform-origin: 50% 50% 0px;
+  width: 200px;
+`;
+
+const AcceptRejectAllRow = styled.div`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-bottom: 3px;
+  padding-top: 8px;
+  text-align: start;
+  width: 100%;
+  opacity: 0.4;
+  cursor: not-allowed;
+  &:hover {
+    background: #f0f5ff;
+  }
+
+  svg {
+    position: relative;
+    bottom: 2px;
   }
 `;
 
@@ -117,6 +179,8 @@ const renderTools = menuItems => {
 };
 
 const TrackChangeOptionsComponent = ({ groups }) => {
+  const [isShownTrack, setIsShownTrack] = useState(false);
+
   const menuItems = groups[0].items;
   console.log(menuItems);
   const { app, view, activeViewId } = useContext(WaxContext);
@@ -131,6 +195,28 @@ const TrackChangeOptionsComponent = ({ groups }) => {
         {inlineTracks + blockTracks} SUGGESTIONS
       </TotalSuggestions>
       <ToolsContainer>{renderTools(menuItems)}</ToolsContainer>
+      <AcceptRejectAll
+        onMouseEnter={() => setIsShownTrack(true)}
+        onMouseLeave={() => setIsShownTrack(false)}
+      >
+        <AcceptRejectAllButton>
+          <StyledIcon name="acceptRejectTrack" />
+          Accept/Reject All
+          <StyledIconExpand name="navigateNext" />
+        </AcceptRejectAllButton>
+        {isShownTrack && (
+          <AcceptRejectAllControls>
+            <AcceptRejectAllRow>
+              <StyledIcon name="checkTrack" />
+              Accept All
+            </AcceptRejectAllRow>
+            <AcceptRejectAllRow>
+              <StyledIcon name="close" />
+              Reject All
+            </AcceptRejectAllRow>
+          </AcceptRejectAllControls>
+        )}
+      </AcceptRejectAll>
       <TotalComments>{comments} COMMENTS</TotalComments>
       <ShowComments>
         Show comments

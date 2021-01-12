@@ -15,6 +15,7 @@ export { default as commentMark } from './src/marks/commentMark';
 export { default as mathSelectMark } from './src/marks/mathSelectMark';
 export { default as highlightMark } from './src/marks/highlightMark';
 export { default as transformMark } from './src/marks/transformMark';
+export { default as customtagInlineMark } from './src/marks/customTagInlineMark';
 /*
 LIST OF TRACK CHANGES MARKS
 */

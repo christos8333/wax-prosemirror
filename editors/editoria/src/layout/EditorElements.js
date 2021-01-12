@@ -389,4 +389,28 @@ export default css`
   math-inline.math-select .math-render {
     padding-top: 2px;
   }
+
+  .custom-tag-inline {
+    font-weight: 500;
+  } 
+
+  .custom-tag-inline:before {
+    content: ' | ';
+    color: #006f19;
+    font-weight: 600;
+    margin-left: 0
+  }
+
+  .custom-tag-inline:after {
+    content: ' | ';
+    display: inline;
+    color: #006f19;
+    font-weight: 600;
+  }
+
+  .custom-tag-inline:hover {
+    cursor: pointer;
+    color: #006f19;
+  }
+
 `;

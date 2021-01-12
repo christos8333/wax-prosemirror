@@ -31,6 +31,8 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
+  CustomTagInlineService,
+  CustomTagInlineToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -58,6 +60,7 @@ export default {
         },
         'HighlightToolGroup',
         'TransformToolGroup',
+        'CustomTagInline',
         'BlockDropDown',
         'Notes',
         'Lists',
@@ -119,5 +122,7 @@ export default {
     new BottomInfoService(),
     new TransformService(),
     new TransformToolGroupService(),
+    new CustomTagInlineToolGroupService(),
+    new CustomTagInlineService(),
   ],
 };

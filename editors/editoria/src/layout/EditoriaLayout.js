@@ -127,7 +127,7 @@ const CommentTrackToolsContainer = styled.div`
   position: fixed;
   top: 52px;
   right: 30px;
-  z-index: 999;
+  z-index: 2;
   background: transparent;
 `;
 
@@ -135,14 +135,14 @@ const CommentTrackTools = styled.div`
   margin-left: auto;
   display: flex;
   position: relative;
-  z-index: 9999;
+  z-index: 1;
 `;
 
 const WhiteArea = styled.div`
   width: 25%;
   height: 30px;
   background: white;
-  z-index: 10;
+  z-index: 1;
   display: flex;
   position: fixed;
   margin-left: 10px;

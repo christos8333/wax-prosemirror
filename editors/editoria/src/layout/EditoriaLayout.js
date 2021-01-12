@@ -123,21 +123,29 @@ const CommentsContainerNotes = styled.div`
 `;
 
 const CommentTrackToolsContainer = styled.div`
-  padding: ${grid(2)}0 0 0;
-  position: absolute;
   display: flex;
-  flex-dirextion: row;
-  // justify-content: center;
-  z-index: 1;
-  height: 30px;
-  width: 34%;
-  background: #fff;
+  position: fixed;
+  top: 52px;
+  right: 30px;
+  z-index: 999;
+  background: transparent;
 `;
 
 const CommentTrackTools = styled.div`
   margin-left: auto;
   display: flex;
   position: relative;
+  z-index: 9999;
+`;
+
+const WhiteArea = styled.div`
+  width: 25%;
+  height: 30px;
+  background: white;
+  z-index: 10;
+  display: flex;
+  position: fixed;
+  margin-left: 10px;
 `;
 
 const CommentTrackOptions = styled.div`
@@ -280,6 +288,14 @@ const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles}>
+        <CommentTrackToolsContainer>
+          <CommentTrackTools>
+            {commentsTracks + trackBlockNodes} COMMENTS AND SUGGESTIONS
+            <CommentTrackOptions>
+              <CommentTrackToolBar />
+            </CommentTrackOptions>
+          </CommentTrackTools>
+        </CommentTrackToolsContainer>
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>
@@ -301,15 +317,7 @@ const EditoriaLayout = ({ editor }) => {
               <WaxSurfaceScroll>
                 <EditorContainer>{editor}</EditorContainer>
                 <CommentsContainer>
-                  <CommentTrackToolsContainer>
-                    <CommentTrackTools>
-                      {commentsTracks + trackBlockNodes} COMMENTS AND
-                      SUGGESTIONS
-                      <CommentTrackOptions>
-                        <CommentTrackToolBar />
-                      </CommentTrackOptions>
-                    </CommentTrackTools>
-                  </CommentTrackToolsContainer>
+                  <WhiteArea />
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>

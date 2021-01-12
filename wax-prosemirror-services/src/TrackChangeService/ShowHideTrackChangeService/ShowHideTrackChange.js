@@ -1,10 +1,10 @@
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
 class ShowHideTrackChange extends Tools {
   title = 'Show/Hide Changes';
+  icon = 'showTrack';
   label = 'Accept';
   name = 'ShowHideTrackChange';
 
@@ -20,3 +20,5 @@ class ShowHideTrackChange extends Tools {
     return state => {};
   }
 }
+
+export default ShowHideTrackChange;

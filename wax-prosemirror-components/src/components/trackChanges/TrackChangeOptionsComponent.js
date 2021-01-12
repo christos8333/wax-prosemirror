@@ -1,8 +1,11 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable array-callback-return */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
+import MenuButton from '../../ui/buttons/MenuButton';
 import Icon from '../../helpers/Icon';
 
 const Wrapper = styled.div`
@@ -10,6 +13,7 @@ const Wrapper = styled.div`
   border-radius: 1.03093% / 8%;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+  font-size: 14px;
   padding: ${grid(2)};
   transform-origin: 50% 50% 0px;
   width: 200px;
@@ -18,17 +22,14 @@ const Wrapper = styled.div`
 
 const TotalSuggestions = styled.span`
   color: #bdc2ca;
-  font-size: 14px;
 `;
 
 const TotalComments = styled.span`
   color: #bdc2ca;
-  font-size: 14px;
 `;
 
 const ShowComments = styled.div`
   color: #bdc2ca;
-  font-size: 14px;
 
   svg {
     cursor: not-allowed;
@@ -57,7 +58,6 @@ const getInlineTracks = main => {
           mark.type.name === 'deletion' ||
           mark.type.name === 'format_change'
         ) {
-          mark.pos = node.pos;
           commentsTracks.push(mark);
         }
       });
@@ -87,7 +87,8 @@ const getComments = main => {
 };
 
 const TrackChangeOptionsComponent = ({ groups }) => {
-  console.log(groups);
+  const menuItems = groups[0].items;
+  console.log(menuItems);
   const { app, view, activeViewId } = useContext(WaxContext);
 
   const inlineTracks = getInlineTracks(view.main).length;

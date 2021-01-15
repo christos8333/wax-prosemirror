@@ -15,7 +15,7 @@ export default ({ area }) => {
     activeView,
   } = useContext(WaxContext);
   const commentPlugin = app.PmPlugins.get('commentPlugin');
-  const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
+  const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
   const [marksNodes, setMarksNodes] = useState([]);
 

@@ -1,13 +1,15 @@
 import { trackChangesMarks, trackChangesNodes } from 'wax-prosemirror-schema';
-import { TrackChangePlugin } from 'wax-prosemirror-plugins';
+import { TrackChangePlugin, HideShowPlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
 import TrackChangeServices from './index';
 
-const PLUGIN_KEY = 'trackChngePlugin';
-
 class TrackChangeService extends Service {
   boot() {
-    this.app.PmPlugins.add(PLUGIN_KEY, TrackChangePlugin(PLUGIN_KEY));
+    this.app.PmPlugins.add(
+      'trackChangePlugin',
+      TrackChangePlugin('trackChangePlugin'),
+    );
+    this.app.PmPlugins.add('hideShowPlugin', HideShowPlugin('hideShowPlugin'));
   }
 
   register() {

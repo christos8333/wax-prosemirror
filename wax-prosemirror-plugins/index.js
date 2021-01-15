@@ -1,4 +1,5 @@
 export { default as TrackChangePlugin } from './src/trackChanges/TrackChangePlugin';
+export { default as HideShowPlugin } from './src/trackChanges/HideShowPlugin';
 
 export { default as CommentPlugin } from './src/comments/CommentPlugin';
 export { default as WaxSelectionPlugin } from './src/WaxSelectionPlugin';

@@ -28,7 +28,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     top: `${top}px`,
   };
 
-  const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
+  const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
   const activeTrackChange = trakChangePlugin.getState(activeView.state)
     .trackChange;
 

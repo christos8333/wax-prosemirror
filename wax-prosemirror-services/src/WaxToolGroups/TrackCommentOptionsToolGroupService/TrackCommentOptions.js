@@ -22,16 +22,21 @@ class TrackCommentOptions extends ToolGroup {
 
   renderTools(view) {
     if (isEmpty(view)) return null;
-    return (
-      <TrackChangeOptionsTool
-        key={uuidv4()}
-        view={view}
-        groups={this._toolGroups[0].groups.map(group => ({
-          //   groupName: group.title.props.title,
-          items: group._tools,
-        }))}
-      />
+
+    const MemorizedComponent = useMemo(
+      () => (
+        <TrackChangeOptionsTool
+          key={uuidv4()}
+          view={view}
+          groups={this._toolGroups[0].groups.map(group => ({
+            //   groupName: group.title.props.title,
+            items: group._tools,
+          }))}
+        />
+      ),
+      [],
     );
+    return MemorizedComponent;
   }
 }
 

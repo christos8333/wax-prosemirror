@@ -107,6 +107,7 @@ const AcceptRejectAllControls = styled.div`
   right: 207px;
   transform-origin: 50% 50% 0px;
   width: 200px;
+  z-index: 9999;
 `;
 
 const AcceptRejectAllRow = styled.div`
@@ -168,38 +169,51 @@ const getComments = main => {
   return comments;
 };
 
-const renderTools = menuItems => {
-  const tools = [];
-  tools.push(
-    menuItems.map((menuItem, index) => {
-      return (
-        <MenuButton
-          iconName={menuItem.icon}
-          key={menuItem.name}
-          label={menuItem.label}
-        />
-      );
-    }),
-  );
-  return <>{tools}</>;
-};
-
 const TrackChangeOptionsComponent = ({ groups }) => {
   const [isShownTrack, setIsShownTrack] = useState(false);
 
   const menuItems = groups[0].items;
-  const { view } = useContext(WaxContext);
+  const { view, activeView, activeViewId } = useContext(WaxContext);
+  const { dispatch, state } = view;
 
   const inlineTracks = getInlineTracks(view.main).length;
   const blockTracks = getTrackBlockNodes(view.main).length;
   const comments = getComments(view.main).length;
+
+  const renderTools = () => {
+    const tools = [];
+    tools.push(
+      menuItems.map((menuItem, index) => {
+        const isActive = !!(
+          menuItem.active(state, activeViewId) &&
+          menuItem.select(state, activeViewId)
+        );
+
+        const isDisabled = !menuItem.select(state, activeViewId, activeView);
+        return (
+          <MenuButton
+            active={isActive || false}
+            disabled={isDisabled}
+            iconName={menuItem.icon}
+            key={menuItem.name}
+            label={menuItem.label}
+            onMouseDown={e => {
+              e.preventDefault();
+              menuItem.run(activeView.state, activeView.dispatch);
+            }}
+          />
+        );
+      }),
+    );
+    return <>{tools}</>;
+  };
 
   return (
     <Wrapper>
       <TotalSuggestions>
         {inlineTracks + blockTracks} SUGGESTIONS
       </TotalSuggestions>
-      <ToolsContainer>{renderTools(menuItems)}</ToolsContainer>
+      <ToolsContainer>{renderTools()}</ToolsContainer>
       <AcceptRejectAll
         onMouseEnter={() => setIsShownTrack(true)}
         onMouseLeave={() => setIsShownTrack(false)}

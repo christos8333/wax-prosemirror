@@ -127,7 +127,7 @@ const CommentTrackToolsContainer = styled.div`
   position: fixed;
   padding-top: 5px;
   right: 30px;
-  z-index: 2;
+  z-index: 1;
   background: white;
   padding-left: 5%;
 `;

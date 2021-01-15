@@ -1,10 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import styled from 'styled-components';
+
 const OverlayContainer = styled.div`
-  position: ${props => props.position.position};
   left: ${props => `${props.position.left}px`};
+  position: ${props => props.position.position};
   top: ${props => `${props.position.top}px`};
-  z-index: 999;
+  // z-index: 999;
 `;
 
 const Overlay = props => (

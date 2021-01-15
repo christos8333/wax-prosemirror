@@ -46,6 +46,7 @@ const Wrapper = styled.button.attrs(props => ({
   outline: none;
   padding: 2px;
   transition: all 0.1s ease-in;
+  user-select: none;
 
   > svg {
     transition: all 0.1s ease-in;

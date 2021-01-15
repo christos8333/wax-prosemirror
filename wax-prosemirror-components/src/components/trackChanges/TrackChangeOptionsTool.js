@@ -27,7 +27,7 @@ const TrackChangeOptionsTool = ({ view = {}, item, groups }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
 
-  useOnClickOutside(ref, () => setIsOpen(false));
+  // useOnClickOutside(ref, () => setIsOpen(false));
 
   const MemorizedDropdown = useMemo(
     () => (

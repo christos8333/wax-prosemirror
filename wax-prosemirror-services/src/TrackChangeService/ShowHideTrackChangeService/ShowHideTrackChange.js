@@ -5,7 +5,7 @@ import Tools from '../../lib/Tools';
 class ShowHideTrackChange extends Tools {
   title = 'Show/Hide Changes';
   icon = 'showTrack';
-  label = 'Show/hide suggestions';
+  label = 'Show suggestions';
   name = 'ShowHideTrackChange';
 
   get run() {

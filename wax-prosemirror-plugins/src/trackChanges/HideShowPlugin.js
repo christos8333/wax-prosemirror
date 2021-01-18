@@ -26,6 +26,8 @@ const getTrackChanges = state => {
   return finalTracks;
 };
 
+let showHide = false;
+
 export default props => {
   return new Plugin({
     key: hideShowPlugin,
@@ -37,8 +39,7 @@ export default props => {
         let decorations;
         let createdDecorations = DecorationSet.empty;
         const allMatches = getTrackChanges(newState);
-        console.log('in apply', allMatches);
-        if (allMatches.length > 0) {
+        if (allMatches.length > 0 && showHide) {
           decorations = allMatches.map((result, index) => {
             if (result.type.name === 'insertion') {
               const position = DocumentHelpers.findMarkPosition(
@@ -76,8 +77,8 @@ export default props => {
         const hideShowPluginState = state && hideShowPlugin.getState(state);
         return hideShowPluginState.createdDecorations;
       },
-      hideShow: show => {
-        console.log(show);
+      setHideShow: show => {
+        showHide = show;
       },
     },
   });

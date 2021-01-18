@@ -3,6 +3,8 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
+import { each, eachRight } from 'lodash';
+
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../../ui/buttons/MenuButton';
@@ -169,13 +171,16 @@ const getComments = main => {
   return comments;
 };
 
-const TrackChangeOptionsComponent = ({ groups }) => {
+const TrackChangeOptionsComponent = ({
+  groups,
+  setShowHidden,
+  showHiddenValue,
+}) => {
   const [isShownTrack, setIsShownTrack] = useState(false);
-
   const menuItems = groups[0].items;
-  const { view, activeView, activeViewId } = useContext(WaxContext);
+  const { app, view, activeView, activeViewId } = useContext(WaxContext);
   const { dispatch, state } = view;
-
+  const hideShowPlugin = app.PmPlugins.get('hideShowPlugin');
   const inlineTracks = getInlineTracks(view.main).length;
   const blockTracks = getTrackBlockNodes(view.main).length;
   const comments = getComments(view.main).length;
@@ -188,6 +193,10 @@ const TrackChangeOptionsComponent = ({ groups }) => {
           menuItem.active(state, activeViewId) &&
           menuItem.select(state, activeViewId)
         );
+        let { label } = menuItem;
+        if (menuItem.name === 'ShowHideTrackChange' && showHiddenValue) {
+          label = 'Hide suggestions';
+        }
 
         const isDisabled = !menuItem.select(state, activeViewId, activeView);
         return (
@@ -196,10 +205,18 @@ const TrackChangeOptionsComponent = ({ groups }) => {
             disabled={isDisabled}
             iconName={menuItem.icon}
             key={menuItem.name}
-            label={menuItem.label}
+            label={label}
             onMouseDown={e => {
               e.preventDefault();
-              menuItem.run(activeView.state, activeView.dispatch);
+              if (menuItem.name === 'ShowHideTrackChange') {
+                setShowHidden(!showHiddenValue);
+                hideShowPlugin.props.setHideShow(showHiddenValue);
+                each(view, (singleView, viewId) => {
+                  singleView.dispatch(singleView.state.tr);
+                });
+                return false;
+              }
+              return menuItem.run(activeView.state, activeView.dispatch);
             }}
           />
         );

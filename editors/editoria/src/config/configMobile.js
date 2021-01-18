@@ -3,7 +3,6 @@ import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   AnnotationToolGroupService,
   ImageService,
-  PlaceholderService,
   InlineAnnotationsService,
   LinkService,
   ListsService,
@@ -97,7 +96,6 @@ export default {
     new InlineAnnotationsService(),
     new TrackChangeService(),
     new CommentsService(),
-    new PlaceholderService(),
     new ImageService(),
     new TablesService(),
     new BaseService(),

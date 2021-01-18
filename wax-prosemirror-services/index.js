@@ -3,7 +3,6 @@ export { default as Service } from './src/Service';
 export { default as LayoutService } from './src/LayoutService/LayoutService';
 export { default as MenuService } from './src/MenuService/MenuService';
 export { default as OverlayService } from './src/OverlayService/OverlayService';
-export { default as PlaceholderService } from './src/PlaceholderService/PlaceholderService';
 export { default as ImageService } from './src/ImageService/ImageService';
 export { default as RulesService } from './src/RulesService/RulesService';
 export { default as SchemaService } from './src/SchemaService/SchemaService';

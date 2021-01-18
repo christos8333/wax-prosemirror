@@ -12,12 +12,20 @@ const Wrapper = styled.div`
 `;
 
 const ImageUpload = ({ item, fileUpload, view }) => {
-  const { activeViewId } = useContext(WaxContext);
+  const {
+    activeViewId,
+    view: { main },
+  } = useContext(WaxContext);
 
   const inputRef = useRef(null);
   const handleMouseDown = () => inputRef.current.click();
 
-  const isDisabled = !item.select(view.state, activeViewId);
+  let isDisabled = !item.select(view.state, activeViewId);
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+  if (!isEditable) isDisabled = true;
 
   const ImageUploadComponent = useMemo(
     () => (

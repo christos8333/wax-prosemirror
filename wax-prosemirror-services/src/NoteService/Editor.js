@@ -18,12 +18,17 @@ export default ({ node, view }) => {
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
   let noteView;
-  let updateMainView = true;
+
+  // eslint-disable-next-line react/destructuring-assignment
+  const isEditable = context.view.main.props.editable(editable => {
+    return editable;
+  });
 
   useEffect(() => {
     noteView = new EditorView(
       { mount: editorRef.current },
       {
+        editable: () => isEditable,
         state: EditorState.create({
           doc: node,
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],

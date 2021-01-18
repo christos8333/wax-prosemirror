@@ -14,6 +14,10 @@ const Button = ({ view = {}, item }) => {
 
   if (onlyOnMain) view = main;
 
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
   const { dispatch, state } = view;
 
   const handleMouseDown = (e, editorState, editorDispatch) => {
@@ -25,7 +29,8 @@ const Button = ({ view = {}, item }) => {
     active(state, activeViewId) && select(state, activeViewId)
   );
 
-  const isDisabled = !select(state, activeViewId, activeView);
+  let isDisabled = !select(state, activeViewId, activeView);
+  if (!isEditable) isDisabled = true;
 
   const MenuButtonComponent = useMemo(
     () => (

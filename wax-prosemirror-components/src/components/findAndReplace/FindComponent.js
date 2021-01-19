@@ -197,6 +197,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   };
 
   const findNext = () => {
+    view[lastActiveViewId].focus();
     const results = getAllResultsByView();
     const resultsFrom = {};
 

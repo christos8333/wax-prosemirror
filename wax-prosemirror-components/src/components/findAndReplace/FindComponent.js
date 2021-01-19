@@ -96,8 +96,10 @@ const Svg = styled.svg.attrs(() => ({
 
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const { app, view, activeViewId } = useContext(WaxContext);
-
   const searchRef = useRef(null);
+  const [lastActiveViewId, setlastActiveViewId] = useState();
+  const [lastSelection, setLastSelection] = useState();
+
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
   const [matchCaseSearch, setMatchCaseSearch] = useState(false);
@@ -120,6 +122,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   };
 
   useEffect(() => {
+    if (view[activeViewId].state.selection.from !== 0) {
+      setLastSelection(view[activeViewId].state.selection);
+      setlastActiveViewId(activeViewId);
+    }
     delayedSearch();
     if (isFirstRun) {
       setTimeout(() => {
@@ -192,7 +198,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const findNext = () => {
     const results = getAllResultsByView();
-    const currentSelection = view[activeViewId].state.selection;
     const resultsFrom = {};
 
     each(results, (result, viewId) => {
@@ -205,32 +210,36 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
       });
     });
 
-    const found = closest(currentSelection.from, resultsFrom[activeViewId]);
-    const position = resultsFrom[activeViewId].indexOf(found);
+    const found = closest(lastSelection.from, resultsFrom[lastActiveViewId]);
+    const position = resultsFrom[lastActiveViewId].indexOf(found);
 
     const selectionFrom = new TextSelection(
-      view[activeViewId].state.doc.resolve(
-        results[activeViewId][position].from,
+      view[lastActiveViewId].state.doc.resolve(
+        results[lastActiveViewId][position].from,
       ),
     );
 
     const selectionTo = new TextSelection(
-      view[activeViewId].state.doc.resolve(results[activeViewId][position].to),
+      view[lastActiveViewId].state.doc.resolve(
+        results[lastActiveViewId][position].to,
+      ),
     );
 
-    view[activeViewId].dispatch(
-      view[activeViewId].state.tr.setSelection(
+    view[lastActiveViewId].dispatch(
+      view[lastActiveViewId].state.tr.setSelection(
         TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
       ),
     );
 
-    view[activeViewId].dispatch(view[activeViewId].state.tr.scrollIntoView());
+    view[lastActiveViewId].dispatch(
+      view[lastActiveViewId].state.tr.scrollIntoView(),
+    );
   };
 
   const findPrevious = () => {
     const results = getAllResultsByView();
-    const currentSelection = view[activeViewId].state.selection;
-    console.log(results, activeViewId, currentSelection);
+    const currentSelection = view[lastActiveViewId].state.selection;
+    console.log(results, lastActiveViewId, currentSelection);
   };
 
   return (

@@ -97,9 +97,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
     view[viewId].dispatch(
       view[viewId].state.tr.setSelection(
-        new TextSelection(
-          view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
-        ),
+        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos)),
       ),
     );
 

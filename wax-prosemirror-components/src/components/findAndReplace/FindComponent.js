@@ -7,6 +7,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { TextSelection } from 'prosemirror-state';
 import { debounce, each, eachRight } from 'lodash';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
@@ -180,7 +181,23 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const findNext = () => {
     const results = getAllResultsByView();
     const currentSelection = view[activeViewId].state.selection;
-    console.log(results, activeViewId, currentSelection);
+    // console.log(results, activeViewId, currentSelection);
+
+    const selectionFrom = new TextSelection(
+      view[activeViewId].state.doc.resolve(results[activeViewId][0].from),
+    );
+
+    const selectionTo = new TextSelection(
+      view[activeViewId].state.doc.resolve(results[activeViewId][0].to),
+    );
+
+    view[activeViewId].dispatch(
+      view[activeViewId].state.tr.setSelection(
+        TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
+      ),
+    );
+
+    view[activeViewId].focus();
   };
 
   const findPrevious = () => {

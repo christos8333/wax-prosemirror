@@ -16,14 +16,13 @@ const Button = ({ view = {}, item }) => {
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();
     options.fullScreen = !options.fullScreen;
-    const { selection } = state;
+    const { selection } = editorState;
     activeView.dispatch(
       activeView.state.tr.setSelection(
-        new TextSelection(
-          activeView.state.tr.doc.resolve(selection.from, selection.to),
-        ),
+        new TextSelection(activeView.state.tr.doc.resolve(selection.from)),
       ),
     );
+    activeView.focus();
   };
 
   const usedIcon = options.fullScreen ? 'fullScreenExit' : icon;

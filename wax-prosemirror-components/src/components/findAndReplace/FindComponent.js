@@ -178,17 +178,44 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     return allResults;
   };
 
+  const closest = (selectionFrom, results) => {
+    return results.reduce((a, b) => {
+      const aDiff = Math.abs(a - selectionFrom);
+      const bDiff = Math.abs(b - selectionFrom);
+
+      if (aDiff === bDiff) {
+        return a > b ? a : b;
+      }
+      return bDiff < aDiff ? b : a;
+    });
+  };
+
   const findNext = () => {
     const results = getAllResultsByView();
     const currentSelection = view[activeViewId].state.selection;
-    // console.log(results, activeViewId, currentSelection);
+    const resultsFrom = {};
+
+    each(results, (result, viewId) => {
+      result.forEach(res => {
+        if (!resultsFrom[viewId]) {
+          resultsFrom[viewId] = [res.from];
+        } else {
+          resultsFrom[viewId].push(res.from);
+        }
+      });
+    });
+
+    const found = closest(currentSelection.from, resultsFrom[activeViewId]);
+    const position = resultsFrom[activeViewId].indexOf(found);
 
     const selectionFrom = new TextSelection(
-      view[activeViewId].state.doc.resolve(results[activeViewId][0].from),
+      view[activeViewId].state.doc.resolve(
+        results[activeViewId][position].from,
+      ),
     );
 
     const selectionTo = new TextSelection(
-      view[activeViewId].state.doc.resolve(results[activeViewId][0].to),
+      view[activeViewId].state.doc.resolve(results[activeViewId][position].to),
     );
 
     view[activeViewId].dispatch(

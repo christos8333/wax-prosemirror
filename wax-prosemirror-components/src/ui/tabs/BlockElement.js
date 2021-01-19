@@ -27,7 +27,7 @@ const Box = styled.div`
 
 const BlockElement = props => {
   const { item, onClick, view } = props;
-
+console.log('item : ', item);
   return (
     <Wrapper onClick={onClick}>
       <Box />

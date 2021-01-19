@@ -413,4 +413,22 @@ export default css`
     color: #006f19;
   }
 
+  .custom-tag-block:before {
+    content: '"';
+    color: #006f19;
+    font-weight: 600;
+    margin-left: 0
+  }
+
+  .custom-tag-block:after {
+    content: '"';
+    display: inline;
+    color: #006f19;
+    font-weight: 600;
+  }
+
+  .transform-icon {
+    transform: rotate(40deg);
+  }
+
 `;

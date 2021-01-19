@@ -16,18 +16,18 @@ class DisplayText extends ToolGroup {
   tools = [];
   toolGroups = [];
 
-  constructor(@inject('Display') display, @inject('Text') text) {
+  constructor(@inject('Display') display, @inject('Text') text, @inject('CustomTagBlockToolGroup') blockTag) {
     super();
     this.toolGroups = [
       {
         name: 'TabA',
-        groups: [display, text],
+        groups: [display, text, blockTag],
       },
     ];
   }
 
   renderTools(view) {
-    if (isEmpty(view)) return null;
+    if (isEmpty(view)) return null;  
 
     const first = {
       id: '1',
@@ -37,7 +37,7 @@ class DisplayText extends ToolGroup {
       component: (
         <BlockLevelTools
           groups={this._toolGroups[0].groups.map(group => ({
-            groupName: group.title.props.title,
+            groupName: group.title === 'Custom Block' ? group.title : group.title.props.title,
             items: group._tools,
           }))}
           view={view}

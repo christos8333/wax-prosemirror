@@ -37,6 +37,7 @@ export { default as TransformService } from './src/TransformService/TransformSer
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
 export { default as TrackOptionsService } from './src/TrackOptionsService/TrackOptionsService';
 export { default as CustomTagInlineService } from './src/CustomTagService/CustomTagInlineService/CustomTagInlineService';
+export { default as CustomTagBlockService } from './src/CustomTagService/CustomTagBlockService/CustomTagBlockService';
 
 /*
 ToolGroups
@@ -61,3 +62,4 @@ export { default as TransformToolGroupService } from './src/WaxToolGroups/Transf
 export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/TrackOptionsToolGroupService/TrackOptionsToolGroupService';
 export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
+export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';

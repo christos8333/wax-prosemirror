@@ -33,6 +33,8 @@ import {
   TransformToolGroupService,
   CustomTagInlineService,
   CustomTagInlineToolGroupService,
+  CustomTagBlockService,
+  CustomTagBlockToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -124,5 +126,7 @@ export default {
     new TransformToolGroupService(),
     new CustomTagInlineToolGroupService(),
     new CustomTagInlineService(),
+    new CustomTagBlockService(),
+    new CustomTagBlockToolGroupService(),
   ],
 };

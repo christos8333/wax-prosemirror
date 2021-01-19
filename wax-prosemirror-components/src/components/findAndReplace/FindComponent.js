@@ -224,7 +224,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
       ),
     );
 
-    view[activeViewId].focus();
+    view[activeViewId].dispatch(view[activeViewId].state.tr.scrollIntoView());
   };
 
   const findPrevious = () => {

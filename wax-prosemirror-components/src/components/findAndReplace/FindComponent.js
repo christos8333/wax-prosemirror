@@ -186,12 +186,12 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const closest = (selectionFrom, results, greater = true) => {
     return results.reduce((a, b) => {
-      const greatherSmaller = greater ? a > b : a < b;
+      const greaterSmaller = greater ? a > b : a < b;
       const aDiff = Math.abs(a - selectionFrom);
       const bDiff = Math.abs(b - selectionFrom);
 
       if (aDiff === bDiff) {
-        return greatherSmaller ? a : b;
+        return greaterSmaller ? a : b;
       }
       return bDiff < aDiff ? b : a;
     });

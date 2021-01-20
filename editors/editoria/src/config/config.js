@@ -106,20 +106,16 @@ export default {
   AcceptTrackChangeService: {
     own: {
       accept: true,
-      reject: true,
     },
     others: {
       accept: true,
-      reject: true,
     },
   },
   RejectTrackChangeService: {
     own: {
-      accept: true,
       reject: true,
     },
     others: {
-      accept: true,
       reject: true,
     },
   },

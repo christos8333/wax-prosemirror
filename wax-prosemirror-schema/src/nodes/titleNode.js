@@ -1,27 +1,22 @@
 const title = {
-  content: "inline*",
-  group: "block",
-  priority: 0,
-  defining: true,
   attrs: {
-    class: { default: "title" }
+    level: { default: 1 },
   },
+  content: 'inline*',
+  group: 'block',
+  defining: true,
   parseDOM: [
     {
-      tag: "p.title",
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          class: dom.getAttribute("class")
-        });
-        next();
-      }
-    }
+      tag: 'h1',
+      attrs: { level: 1 },
+    },
   ],
   toDOM(hook, next) {
-    const attrs = { class: hook.node.attrs.class };
-    hook.value = ["p", attrs, 0];
+    const attrs = {};
+    // eslint-disable-next-line no-param-reassign
+    hook.value = [`h${hook.node.attrs.level}`, attrs, 0];
     next();
-  }
+  },
 };
 
 export default title;

@@ -14,9 +14,9 @@ class Display extends ToolGroup {
     @inject('SubTitle') subtitle,
     @inject('EpigraphProse') epigraphprose,
     @inject('EpigraphPoetry') epigraphpoetry,
-    @inject('Heading1') heading1,
     @inject('Heading2') heading2,
     @inject('Heading3') heading3,
+    @inject('Heading4') heading4,
   ) {
     super();
     this.tools = [
@@ -25,9 +25,9 @@ class Display extends ToolGroup {
       subtitle,
       epigraphprose,
       epigraphpoetry,
-      heading1,
       heading2,
       heading3,
+      heading4,
     ];
   }
 }

@@ -184,13 +184,14 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     return allResults;
   };
 
-  const closest = (selectionFrom, results) => {
+  const closest = (selectionFrom, results, greater = true) => {
     return results.reduce((a, b) => {
+      const greatherSmaller = greater ? a > b : a < b;
       const aDiff = Math.abs(a - selectionFrom);
       const bDiff = Math.abs(b - selectionFrom);
 
       if (aDiff === bDiff) {
-        return a > b ? a : b;
+        return greatherSmaller ? a : b;
       }
       return bDiff < aDiff ? b : a;
     });
@@ -212,8 +213,8 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     });
 
     const found = closest(lastSelection.from, resultsFrom[lastActiveViewId]);
-    const position = resultsFrom[lastActiveViewId].indexOf(found);
-
+    let position = resultsFrom[lastActiveViewId].indexOf(found);
+    if (lastSelection.from >= found) position += 1;
     const selectionFrom = new TextSelection(
       view[lastActiveViewId].state.doc.resolve(
         results[lastActiveViewId][position].from,
@@ -238,9 +239,48 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   };
 
   const findPrevious = () => {
+    view[lastActiveViewId].focus();
     const results = getAllResultsByView();
-    const currentSelection = view[lastActiveViewId].state.selection;
-    console.log(results, lastActiveViewId, currentSelection);
+    const resultsFrom = {};
+
+    each(results, (result, viewId) => {
+      result.forEach(res => {
+        if (!resultsFrom[viewId]) {
+          resultsFrom[viewId] = [res.from];
+        } else {
+          resultsFrom[viewId].push(res.from);
+        }
+      });
+    });
+
+    const found = closest(
+      lastSelection.from,
+      resultsFrom[lastActiveViewId],
+      false,
+    );
+    let position = resultsFrom[lastActiveViewId].indexOf(found);
+    if (lastSelection.from <= found) position -= 1;
+    const selectionFrom = new TextSelection(
+      view[lastActiveViewId].state.doc.resolve(
+        results[lastActiveViewId][position].from,
+      ),
+    );
+
+    const selectionTo = new TextSelection(
+      view[lastActiveViewId].state.doc.resolve(
+        results[lastActiveViewId][position].to,
+      ),
+    );
+
+    view[lastActiveViewId].dispatch(
+      view[lastActiveViewId].state.tr.setSelection(
+        TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
+      ),
+    );
+
+    view[lastActiveViewId].dispatch(
+      view[lastActiveViewId].state.tr.scrollIntoView(),
+    );
   };
 
   return (

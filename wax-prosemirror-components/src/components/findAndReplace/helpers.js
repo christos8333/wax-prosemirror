@@ -120,6 +120,7 @@ const getClosestMatch = (selectionFrom, results, greater = true) => {
 };
 
 const moveToMatch = (view, lastActiveViewId, results, position) => {
+  console.log(lastActiveViewId, results, position);
   const selectionFrom = new TextSelection(
     view[lastActiveViewId].state.doc.resolve(
       results[lastActiveViewId][position].from,
@@ -141,6 +142,15 @@ const moveToMatch = (view, lastActiveViewId, results, position) => {
   view[lastActiveViewId].dispatch(
     view[lastActiveViewId].state.tr.scrollIntoView(),
   );
+  view[lastActiveViewId].focus();
+};
+
+const clearViewSelection = (view, lastActiveViewId) => {
+  view[lastActiveViewId].dispatch(
+    view[lastActiveViewId].state.tr.setSelection(
+      TextSelection.create(view[lastActiveViewId].state.doc, 0),
+    ),
+  );
 };
 
 export default {
@@ -151,4 +161,5 @@ export default {
   getResultsFrom,
   getClosestMatch,
   moveToMatch,
+  clearViewSelection,
 };

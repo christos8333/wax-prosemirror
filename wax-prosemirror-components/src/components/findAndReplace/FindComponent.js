@@ -206,8 +206,21 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
       if (
         notesIds.indexOf(lastActiveViewId) === notesIds.length - 1 &&
         results.main.length > 0
-      )
+      ) {
+        helpers.clearViewSelection(view, lastActiveViewId);
         helpers.moveToMatch(view, 'main', results, 0);
+      } else {
+        for (let i = 0; i < notesIds.length; i++) {
+          if (
+            results[notesIds[i]].length > 0 &&
+            notesIds[i] !== lastActiveViewId
+          ) {
+            helpers.clearViewSelection(view, lastActiveViewId);
+            helpers.moveToMatch(view, notesIds[i], results, 0);
+            break;
+          }
+        }
+      }
     }
   };
 

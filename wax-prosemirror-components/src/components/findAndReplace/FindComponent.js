@@ -178,21 +178,37 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
 
-    console.log(notesIds);
-
     const found = helpers.getClosestMatch(
       lastSelection.from,
       resultsFrom[lastActiveViewId],
     );
-    let position = resultsFrom[lastActiveViewId].indexOf(found);
+    const position = resultsFrom[lastActiveViewId].indexOf(found);
 
+    /* User selection lesser than found */
+    if (lastSelection.from < found) {
+      helpers.moveToMatch(view, lastActiveViewId, results, position);
+    }
+
+    /* User selection greater than found move to next if not already at the end of results for the view */
     if (
       lastSelection.from >= found &&
       position < resultsFrom[lastActiveViewId].length - 1
-    )
-      position += 1;
+    ) {
+      helpers.moveToMatch(view, lastActiveViewId, results, position + 1);
+    }
 
-    helpers.moveToMatch(view, lastActiveViewId, results, position);
+    /* Last result of the specific view. Move to next view */
+    if (
+      lastSelection.from === found &&
+      position === resultsFrom[lastActiveViewId].length - 1
+    ) {
+      /* End of results in notes move to main if results exist */
+      if (
+        notesIds.indexOf(lastActiveViewId) === notesIds.length - 1 &&
+        results.main.length > 0
+      )
+        helpers.moveToMatch(view, 'main', results, 0);
+    }
   };
 
   const findPrevious = () => {
@@ -205,8 +221,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
 
-    console.log(notesIds);
-
     const found = helpers.getClosestMatch(
       lastSelection.from,
       resultsFrom[lastActiveViewId],
@@ -214,7 +228,12 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     );
     let position = resultsFrom[lastActiveViewId].indexOf(found);
 
-    if (lastSelection.from <= found) position -= 1;
+    if (lastSelection.from <= found && position !== 0) position -= 1;
+
+    if (lastSelection.from === found && position === 0) {
+      view.main.focus();
+      console.log('first in view');
+    }
 
     helpers.moveToMatch(view, lastActiveViewId, results, position);
   };

@@ -240,16 +240,34 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
       resultsFrom[lastActiveViewId],
       false,
     );
-    let position = resultsFrom[lastActiveViewId].indexOf(found);
+    const position = resultsFrom[lastActiveViewId].indexOf(found);
 
-    if (lastSelection.from <= found && position !== 0) position -= 1;
-
-    if (lastSelection.from === found && position === 0) {
-      view.main.focus();
-      console.log('first in view');
+    /* User selection lesser than found */
+    if (lastSelection.from > found) {
+      helpers.moveToMatch(view, lastActiveViewId, results, position);
     }
 
-    helpers.moveToMatch(view, lastActiveViewId, results, position);
+    if (lastSelection.from <= found && position !== 0) {
+      helpers.moveToMatch(view, lastActiveViewId, results, position - 1);
+    }
+
+    if (lastSelection.from === found && position === 0) {
+      if (lastActiveViewId === 'main') {
+        for (let i = notesIds.length - 1; i >= 0; i--) {
+          if (
+            results[notesIds[i]].length > 0 &&
+            notesIds[i] !== lastActiveViewId
+          ) {
+            helpers.moveToMatch(
+              view,
+              notesIds[i],
+              results,
+              results[notesIds[i]].length - 1,
+            );
+          }
+        }
+      }
+    }
   };
 
   return (

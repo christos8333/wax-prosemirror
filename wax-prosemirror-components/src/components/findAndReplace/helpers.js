@@ -107,7 +107,6 @@ const getResultsFrom = results => {
 };
 
 const getClosestMatch = (selectionFrom, results, greater = true) => {
-  console.log(results);
   return results.reduce((a, b) => {
     const greaterSmaller = greater ? a > b : a < b;
     const aDiff = Math.abs(a - selectionFrom);

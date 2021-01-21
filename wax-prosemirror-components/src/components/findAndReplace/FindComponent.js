@@ -94,11 +94,13 @@ const Svg = styled.svg.attrs(() => ({
   width: 24px;
 `;
 
+var lastActiveViewId;
+var lastSelection;
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const { app, view, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
-  const [lastActiveViewId, setlastActiveViewId] = useState();
-  const [lastSelection, setLastSelection] = useState();
+  // const [lastActiveViewId, setlastActiveViewId] = useState();
+  // const [lastSelection, setLastSelection] = useState();
 
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
@@ -123,9 +125,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   useEffect(() => {
     if (view[activeViewId].state.selection.from !== 0) {
-      setLastSelection(view[activeViewId].state.selection);
-      setlastActiveViewId(activeViewId);
+      lastSelection = view[activeViewId].state.selection;
+      lastActiveViewId = activeViewId;
     }
+
     delayedSearch();
     if (isFirstRun) {
       setTimeout(() => {
@@ -190,6 +193,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
 
+    /* if no matches are found on focused view */
     if (!resultsFrom[lastActiveViewId]) {
       view[findViewWithMatches(results)].dispatch(
         view[findViewWithMatches(results)].state.tr.setSelection(
@@ -199,11 +203,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
         ),
       );
       view[findViewWithMatches(results)].focus();
-      setlastActiveViewId(findViewWithMatches(results));
-      console.log(lastActiveViewId);
+      lastActiveViewId = findViewWithMatches(results);
+      lastSelection = view[lastActiveViewId].state.selection;
     }
 
-    console.log(results[lastActiveViewId], lastActiveViewId);
     const found = helpers.getClosestMatch(
       lastSelection.from,
       resultsFrom[lastActiveViewId],
@@ -231,8 +234,8 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
         notesIds.indexOf(lastActiveViewId) === notesIds.length - 1 &&
         results.main.length > 0
       ) {
-        setLastSelection(view[activeViewId].state.selection);
-        setlastActiveViewId(activeViewId);
+        lastSelection = view[activeViewId].state.selection;
+        lastActiveViewId = activeViewId;
         helpers.moveToMatch(view, 'main', results, 0);
         helpers.clearViewSelection(view, lastActiveViewId);
       } else {
@@ -242,8 +245,8 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
             notesIds[i] !== lastActiveViewId
           ) {
             helpers.moveToMatch(view, notesIds[i], results, 0);
-            setLastSelection(view[activeViewId].state.selection);
-            setlastActiveViewId(activeViewId);
+            lastSelection = view[activeViewId].state.selection;
+            lastActiveViewId = activeViewId;
             helpers.clearViewSelection(view, lastActiveViewId);
 
             break;

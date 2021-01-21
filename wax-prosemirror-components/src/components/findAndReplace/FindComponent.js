@@ -182,12 +182,10 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
       resultsFrom[lastActiveViewId],
     );
     const position = resultsFrom[lastActiveViewId].indexOf(found);
-
     /* User selection lesser than found */
     if (lastSelection.from < found) {
       helpers.moveToMatch(view, lastActiveViewId, results, position);
     }
-
     /* User selection greater than found move to next if not already at the end of results for the view */
     if (
       lastSelection.from >= found &&
@@ -206,16 +204,21 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
         notesIds.indexOf(lastActiveViewId) === notesIds.length - 1 &&
         results.main.length > 0
       ) {
-        helpers.clearViewSelection(view, lastActiveViewId);
+        setLastSelection(view[activeViewId].state.selection);
         helpers.moveToMatch(view, 'main', results, 0);
+        helpers.clearViewSelection(view, lastActiveViewId);
       } else {
         for (let i = 0; i < notesIds.length; i++) {
+          console.log('here?');
           if (
             results[notesIds[i]].length > 0 &&
             notesIds[i] !== lastActiveViewId
           ) {
-            helpers.clearViewSelection(view, lastActiveViewId);
             helpers.moveToMatch(view, notesIds[i], results, 0);
+            setLastSelection(view[activeViewId].state.selection);
+            setlastActiveViewId(activeViewId);
+            helpers.clearViewSelection(view, lastActiveViewId);
+
             break;
           }
         }

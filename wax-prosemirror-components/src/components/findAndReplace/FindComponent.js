@@ -174,13 +174,29 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const findViewWithMatches = results => {
     const notesIds = helpers.getNotesIds(view.main);
+
     if (lastActiveViewId === 'main') {
       for (let i = 0; i < notesIds.length; i++) {
         if (results[notesIds[i]].length > 0) {
           return notesIds[i];
-          break;
         }
       }
+    }
+
+    if (notesIds.indexOf(lastActiveViewId) < notesIds.length - 1) {
+      for (let i = 0; i < notesIds.length; i++) {
+        if (results[notesIds[i]].length > 0) {
+          return notesIds[i];
+        }
+      }
+      return 'main';
+    }
+
+    if (
+      notesIds.indexOf(lastActiveViewId) &&
+      notesIds.indexOf(lastActiveViewId) === notesIds.length - 1
+    ) {
+      return 'main';
     }
   };
 

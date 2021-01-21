@@ -92,7 +92,8 @@ export default ({ node, view }) => {
 
     // TODO Remove timeout and use state to check if noteView has changed
     setTimeout(() => {
-      context.updateView({}, noteId);
+      if (noteView.state.selection.from !== noteView.state.selection.to)
+        context.updateView({}, noteId);
     }, 20);
 
     if (!tr.getMeta('fromOutside')) {

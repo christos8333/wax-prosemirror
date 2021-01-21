@@ -94,8 +94,8 @@ const Svg = styled.svg.attrs(() => ({
   width: 24px;
 `;
 
-var lastActiveViewId;
-var lastSelection;
+let lastActiveViewId;
+let lastSelection;
 const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   const { app, view, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
@@ -176,7 +176,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     const notesIds = helpers.getNotesIds(view.main);
 
     if (lastActiveViewId === 'main') {
-      for (let i = 0; i < notesIds.length; i++) {
+      for (let i = 0; i < notesIds.length; i += 1) {
         if (results[notesIds[i]].length > 0) {
           return notesIds[i];
         }
@@ -184,7 +184,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     }
 
     if (notesIds.indexOf(lastActiveViewId) < notesIds.length - 1) {
-      for (let i = 0; i < notesIds.length; i++) {
+      for (let i = 0; i < notesIds.length; i += 1) {
         if (results[notesIds[i]].length > 0) {
           return notesIds[i];
         }
@@ -198,6 +198,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     ) {
       return 'main';
     }
+    return false;
   };
 
   const findNext = () => {
@@ -255,7 +256,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
         helpers.moveToMatch(view, 'main', results, 0);
         helpers.clearViewSelection(view, lastActiveViewId);
       } else {
-        for (let i = 0; i < notesIds.length; i++) {
+        for (let i = 0; i < notesIds.length; i += 1) {
           if (
             results[notesIds[i]].length > 0 &&
             notesIds[i] !== lastActiveViewId
@@ -300,7 +301,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
     if (lastSelection.from === found && position === 0) {
       if (lastActiveViewId === 'main') {
-        for (let i = notesIds.length - 1; i >= 0; i--) {
+        for (let i = notesIds.length - 1; i >= 0; i -= 1) {
           if (
             results[notesIds[i]].length > 0 &&
             notesIds[i] !== lastActiveViewId

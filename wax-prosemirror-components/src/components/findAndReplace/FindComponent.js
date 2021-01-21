@@ -7,7 +7,6 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
-import { TextSelection } from 'prosemirror-state';
 import { debounce, each, eachRight } from 'lodash';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
@@ -169,118 +168,55 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     searchRef.current.focus();
   };
 
-  const getAllResultsByView = () => {
-    const allResults = {};
-
-    each(view, (singleView, viewId) => {
-      if (!allResults[viewId]) {
-        allResults[viewId] = helpers.findMatches(
-          singleView.state.doc,
-          searchValue,
-          matchCaseSearch,
-        );
-      }
-    });
-    return allResults;
-  };
-
-  const closest = (selectionFrom, results, greater = true) => {
-    return results.reduce((a, b) => {
-      const greaterSmaller = greater ? a > b : a < b;
-      const aDiff = Math.abs(a - selectionFrom);
-      const bDiff = Math.abs(b - selectionFrom);
-
-      if (aDiff === bDiff) {
-        return greaterSmaller ? a : b;
-      }
-      return bDiff < aDiff ? b : a;
-    });
-  };
-
   const findNext = () => {
     view[lastActiveViewId].focus();
-    const results = getAllResultsByView();
-    const resultsFrom = {};
+    const results = helpers.getAllResultsByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    const resultsFrom = helpers.getResultsFrom(results);
+    const notesIds = helpers.getNotesIds(view.main);
 
-    each(results, (result, viewId) => {
-      result.forEach(res => {
-        if (!resultsFrom[viewId]) {
-          resultsFrom[viewId] = [res.from];
-        } else {
-          resultsFrom[viewId].push(res.from);
-        }
-      });
-    });
+    console.log(notesIds);
 
-    const found = closest(lastSelection.from, resultsFrom[lastActiveViewId]);
+    const found = helpers.getClosestMatch(
+      lastSelection.from,
+      resultsFrom[lastActiveViewId],
+    );
     let position = resultsFrom[lastActiveViewId].indexOf(found);
-    if (lastSelection.from >= found) position += 1;
-    const selectionFrom = new TextSelection(
-      view[lastActiveViewId].state.doc.resolve(
-        results[lastActiveViewId][position].from,
-      ),
-    );
 
-    const selectionTo = new TextSelection(
-      view[lastActiveViewId].state.doc.resolve(
-        results[lastActiveViewId][position].to,
-      ),
-    );
+    if (
+      lastSelection.from >= found &&
+      position < resultsFrom[lastActiveViewId].length - 1
+    )
+      position += 1;
 
-    view[lastActiveViewId].dispatch(
-      view[lastActiveViewId].state.tr.setSelection(
-        TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
-      ),
-    );
-
-    view[lastActiveViewId].dispatch(
-      view[lastActiveViewId].state.tr.scrollIntoView(),
-    );
+    helpers.moveToMatch(view, lastActiveViewId, results, position);
   };
 
   const findPrevious = () => {
     view[lastActiveViewId].focus();
-    const results = getAllResultsByView();
-    const resultsFrom = {};
+    const results = helpers.getAllResultsByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    const resultsFrom = helpers.getResultsFrom(results);
+    const notesIds = helpers.getNotesIds(view.main);
 
-    each(results, (result, viewId) => {
-      result.forEach(res => {
-        if (!resultsFrom[viewId]) {
-          resultsFrom[viewId] = [res.from];
-        } else {
-          resultsFrom[viewId].push(res.from);
-        }
-      });
-    });
+    console.log(notesIds);
 
-    const found = closest(
+    const found = helpers.getClosestMatch(
       lastSelection.from,
       resultsFrom[lastActiveViewId],
       false,
     );
     let position = resultsFrom[lastActiveViewId].indexOf(found);
+
     if (lastSelection.from <= found) position -= 1;
-    const selectionFrom = new TextSelection(
-      view[lastActiveViewId].state.doc.resolve(
-        results[lastActiveViewId][position].from,
-      ),
-    );
 
-    const selectionTo = new TextSelection(
-      view[lastActiveViewId].state.doc.resolve(
-        results[lastActiveViewId][position].to,
-      ),
-    );
-
-    view[lastActiveViewId].dispatch(
-      view[lastActiveViewId].state.tr.setSelection(
-        TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
-      ),
-    );
-
-    view[lastActiveViewId].dispatch(
-      view[lastActiveViewId].state.tr.scrollIntoView(),
-    );
+    helpers.moveToMatch(view, lastActiveViewId, results, position);
   };
 
   return (

@@ -14,6 +14,8 @@ class AcceptTrackChange extends Tools {
 
   get run() {
     return (state, dispatch) => {
+      console.log('config accept', this.config);
+
       const {
         tr,
         selection: { from, to },

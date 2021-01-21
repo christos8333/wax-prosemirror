@@ -3,10 +3,10 @@ import AcceptTrackChange from './AcceptTrackChange';
 
 class AcceptTrackChangeService extends Service {
   name = 'AcceptTrackChangeService';
-  // boot() {}
-
   register() {
-    this.container.bind('AcceptTrackChange').to(AcceptTrackChange);
+    this.container.bind('AcceptTrackChange').toDynamicValue(() => {
+      return new AcceptTrackChange(this.config);
+    });
   }
 }
 

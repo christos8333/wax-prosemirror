@@ -5,7 +5,9 @@ class RejectTrackChangeService extends Service {
   name = 'RejectTrackChangeService';
 
   register() {
-    this.container.bind('RejectTrackChange').to(RejectTrackChange);
+    this.container.bind('RejectTrackChange').toDynamicValue(() => {
+      return new RejectTrackChange(this.config);
+    });
   }
 }
 

@@ -137,11 +137,11 @@ const moveToMatch = (view, lastActiveViewId, results, position) => {
       TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
     ),
   );
-
-  view[lastActiveViewId].dispatch(
-    view[lastActiveViewId].state.tr.scrollIntoView(),
-  );
-  view[lastActiveViewId].focus();
+  if (lastActiveViewId === 'main') {
+    view[lastActiveViewId].dispatch(
+      view[lastActiveViewId].state.tr.scrollIntoView(),
+    );
+  }
 };
 
 const clearViewSelection = (view, lastActiveViewId) => {

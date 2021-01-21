@@ -169,7 +169,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
   };
 
   const findNext = () => {
-    view[lastActiveViewId].focus();
     const results = helpers.getAllResultsByView(
       view,
       searchValue,
@@ -205,11 +204,11 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
         results.main.length > 0
       ) {
         setLastSelection(view[activeViewId].state.selection);
+        setlastActiveViewId(activeViewId);
         helpers.moveToMatch(view, 'main', results, 0);
         helpers.clearViewSelection(view, lastActiveViewId);
       } else {
         for (let i = 0; i < notesIds.length; i++) {
-          console.log('here?');
           if (
             results[notesIds[i]].length > 0 &&
             notesIds[i] !== lastActiveViewId

@@ -120,7 +120,6 @@ const getClosestMatch = (selectionFrom, results, greater = true) => {
 };
 
 const moveToMatch = (view, lastActiveViewId, results, position) => {
-  console.log(lastActiveViewId, results, position);
   const selectionFrom = new TextSelection(
     view[lastActiveViewId].state.doc.resolve(
       results[lastActiveViewId][position].from,

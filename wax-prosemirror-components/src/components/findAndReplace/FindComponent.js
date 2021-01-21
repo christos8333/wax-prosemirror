@@ -177,7 +177,6 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     );
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
-
     const found = helpers.getClosestMatch(
       lastSelection.from,
       resultsFrom[lastActiveViewId],

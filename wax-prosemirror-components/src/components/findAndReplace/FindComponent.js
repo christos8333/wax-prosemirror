@@ -7,6 +7,7 @@ import React, {
   useCallback,
   useEffect,
 } from 'react';
+import { TextSelection } from 'prosemirror-state';
 import { debounce, each, eachRight } from 'lodash';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
@@ -168,6 +169,18 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     searchRef.current.focus();
   };
 
+  const findViewWithMatches = results => {
+    const notesIds = helpers.getNotesIds(view.main);
+    if (lastActiveViewId === 'main') {
+      for (let i = 0; i < notesIds.length; i++) {
+        if (results[notesIds[i]].length > 0) {
+          return notesIds[i];
+          break;
+        }
+      }
+    }
+  };
+
   const findNext = () => {
     const results = helpers.getAllResultsByView(
       view,
@@ -176,6 +189,21 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
     );
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
+
+    if (!resultsFrom[lastActiveViewId]) {
+      view[findViewWithMatches(results)].dispatch(
+        view[findViewWithMatches(results)].state.tr.setSelection(
+          new TextSelection(
+            view[findViewWithMatches(results)].state.tr.doc.resolve(1),
+          ),
+        ),
+      );
+      view[findViewWithMatches(results)].focus();
+      setlastActiveViewId(findViewWithMatches(results));
+      console.log(lastActiveViewId);
+    }
+
+    console.log(results[lastActiveViewId], lastActiveViewId);
     const found = helpers.getClosestMatch(
       lastSelection.from,
       resultsFrom[lastActiveViewId],

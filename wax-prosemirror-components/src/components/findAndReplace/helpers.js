@@ -107,6 +107,7 @@ const getResultsFrom = results => {
 };
 
 const getClosestMatch = (selectionFrom, results, greater = true) => {
+  console.log(results);
   return results.reduce((a, b) => {
     const greaterSmaller = greater ? a > b : a < b;
     const aDiff = Math.abs(a - selectionFrom);
@@ -137,11 +138,11 @@ const moveToMatch = (view, lastActiveViewId, results, position) => {
       TextSelection.between(selectionFrom.$anchor, selectionTo.$head),
     ),
   );
-  if (lastActiveViewId === 'main') {
-    view[lastActiveViewId].dispatch(
-      view[lastActiveViewId].state.tr.scrollIntoView(),
-    );
-  }
+  // if (lastActiveViewId === 'main') {
+  view[lastActiveViewId].dispatch(
+    view[lastActiveViewId].state.tr.scrollIntoView(),
+  );
+  // }
 };
 
 const clearViewSelection = (view, lastActiveViewId) => {

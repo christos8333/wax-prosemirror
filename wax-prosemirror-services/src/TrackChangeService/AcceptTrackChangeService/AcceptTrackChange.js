@@ -4,6 +4,18 @@ import { injectable } from 'inversify';
 import removeNode from '../track-changes/helpers/removeNode';
 import Tools from '../../lib/Tools';
 
+const checkFromConfig = (mark, user, config) => {
+  if (mark.attrs.username === user.username && !config.own.accept) {
+    return false;
+  }
+
+  if (mark.attrs.username !== user.username && !config.others.accept) {
+    return false;
+  }
+
+  return true;
+};
+
 export default
 @injectable()
 class AcceptTrackChange extends Tools {
@@ -14,8 +26,6 @@ class AcceptTrackChange extends Tools {
 
   get run() {
     return (state, dispatch, user) => {
-      console.log('config accept', this.config, user);
-
       const {
         tr,
         selection: { from, to },
@@ -35,6 +45,13 @@ class AcceptTrackChange extends Tools {
           node.marks &&
           node.marks.find(mark => mark.type.name === 'deletion')
         ) {
+          const deletionMark = node.marks.find(
+            mark => mark.type.name === 'deletion',
+          );
+
+          const configCheck = checkFromConfig(deletionMark, user, this.config);
+          if (!configCheck) return;
+
           const deletionStep = new ReplaceStep(
             map.map(Math.max(pos, from)),
             map.map(Math.min(pos + node.nodeSize, to)),
@@ -62,7 +79,9 @@ class AcceptTrackChange extends Tools {
           const insertionMark = node.marks.find(
             mark => mark.type.name === 'insertion',
           );
-          console.log('inser', insertionMark);
+          const configCheck = checkFromConfig(insertionMark, user, this.config);
+          if (!configCheck) return;
+
           tr.step(
             new RemoveMarkStep(
               map.map(Math.max(pos, from)),
@@ -77,6 +96,13 @@ class AcceptTrackChange extends Tools {
           const formatChangeMark = node.marks.find(
             mark => mark.type.name === 'format_change',
           );
+          const configCheck = checkFromConfig(
+            formatChangeMark,
+            user,
+            this.config,
+          );
+          if (!configCheck) return;
+
           tr.step(
             new RemoveMarkStep(
               map.map(Math.max(pos, from)),

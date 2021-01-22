@@ -9,6 +9,18 @@ import { injectable } from 'inversify';
 import removeNode from '../track-changes/helpers/removeNode';
 import Tools from '../../lib/Tools';
 
+const checkFromConfig = (mark, user, config) => {
+  if (mark.attrs.username === user.username && !config.own.accept) {
+    return false;
+  }
+
+  if (mark.attrs.username !== user.username && !config.others.accept) {
+    return false;
+  }
+
+  return true;
+};
+
 @injectable()
 class RejectTrackChange extends Tools {
   title = 'Reject Changes';

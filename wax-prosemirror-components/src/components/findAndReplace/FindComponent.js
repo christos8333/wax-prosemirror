@@ -96,11 +96,14 @@ const Svg = styled.svg.attrs(() => ({
 
 let lastActiveViewId;
 let lastSelection;
-const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
+const FindComponent = ({
+  close,
+  expand,
+  setPreviousSearcValue,
+  setMatchCaseValue,
+}) => {
   const { app, view, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
-  // const [lastActiveViewId, setlastActiveViewId] = useState();
-  // const [lastSelection, setLastSelection] = useState();
 
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
@@ -169,6 +172,7 @@ const FindComponent = ({ close, expand, setPreviousSearcValue }) => {
 
   const matchCase = () => {
     setMatchCaseSearch(!matchCaseSearch);
+    setMatchCaseValue(!matchCaseSearch);
     searchRef.current.focus();
   };
 

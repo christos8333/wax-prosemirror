@@ -5,24 +5,31 @@ import ExandedFindAndReplaceComponent from './ExandedFindAndReplaceComponent';
 
 const FindAndReplaceComponent = ({ close }) => {
   const [isExpanded, setExpanded] = useState(false);
-  const [nonExpandedText, SetnonExpandedText] = useState('');
+  const [nonExpandedText, setNonExpandedText] = useState('');
+  const [matchCaseOption, setMatchCaseOption] = useState(false);
   const expand = () => {
     setExpanded(true);
   };
 
   const getNonExpandedText = searcString => {
-    SetnonExpandedText(searcString);
+    setNonExpandedText(searcString);
+  };
+
+  const getMatchCaseOption = matchCase => {
+    setMatchCaseOption(matchCase);
   };
 
   return isExpanded ? (
     <ExandedFindAndReplaceComponent
       close={close}
+      matchCaseOption={matchCaseOption}
       nonExpandedText={nonExpandedText}
     />
   ) : (
     <FindComponent
       close={close}
       expand={expand}
+      setMatchCaseValue={getMatchCaseOption}
       setPreviousSearcValue={getNonExpandedText}
     />
   );

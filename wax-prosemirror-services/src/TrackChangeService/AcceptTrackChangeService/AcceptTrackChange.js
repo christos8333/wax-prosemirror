@@ -13,8 +13,8 @@ class AcceptTrackChange extends Tools {
   name = 'AcceptTrackChange';
 
   get run() {
-    return (state, dispatch) => {
-      console.log('config accept', this.config);
+    return (state, dispatch, user) => {
+      console.log('config accept', this.config, user);
 
       const {
         tr,
@@ -62,6 +62,7 @@ class AcceptTrackChange extends Tools {
           const insertionMark = node.marks.find(
             mark => mark.type.name === 'insertion',
           );
+          console.log('inser', insertionMark);
           tr.step(
             new RemoveMarkStep(
               map.map(Math.max(pos, from)),

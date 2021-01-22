@@ -179,7 +179,8 @@ const TrackChangeOptionsComponent = ({
   const [isShownTrack, setIsShownTrack] = useState(false);
   const menuItems = groups[0].items;
   const { app, view, activeView, activeViewId } = useContext(WaxContext);
-  const { dispatch, state } = view;
+  const { state } = view;
+  const user = app.config.get('user');
   const hideShowPlugin = app.PmPlugins.get('hideShowPlugin');
   const inlineTracks = getInlineTracks(view.main).length;
   const blockTracks = getTrackBlockNodes(view.main).length;
@@ -216,7 +217,7 @@ const TrackChangeOptionsComponent = ({
                 });
                 return false;
               }
-              return menuItem.run(activeView.state, activeView.dispatch);
+              return menuItem.run(activeView.state, activeView.dispatch, user);
             }}
           />
         );

@@ -17,7 +17,7 @@ class RejectTrackChange extends Tools {
   name = 'RejectTrackChange';
 
   get run() {
-    return (state, dispatch) => {
+    return (state, dispatch, user) => {
       const {
         tr,
         selection: { from, to },

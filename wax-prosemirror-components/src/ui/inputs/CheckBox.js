@@ -100,7 +100,7 @@ const CheckBox = props => {
   return (
     <CheckBoxContainer>
       <CheckBoxLabel>
-        <input checked={checked} id={name} name={name} type="checkbox" />
+        <input defaultChecked={checked} id={name} name={name} type="checkbox" />
         <CheckboxCustom />
         <CheckboxTitle>{label}</CheckboxTitle>
       </CheckBoxLabel>

@@ -304,6 +304,7 @@ const FindComponent = ({
     }
 
     if (lastSelection.from === found && position === 0) {
+      console.log(lastActiveViewId);
       if (lastActiveViewId === 'main') {
         for (let i = notesIds.length - 1; i >= 0; i -= 1) {
           if (
@@ -316,6 +317,33 @@ const FindComponent = ({
               results,
               results[notesIds[i]].length - 1,
             );
+            lastSelection = view[activeViewId].state.selection;
+            lastActiveViewId = activeViewId;
+            helpers.clearViewSelection(view, lastActiveViewId);
+            break;
+          }
+        }
+      } else if (
+        notesIds[notesIds.length - 1] === activeViewId &&
+        notesIds.length > 1
+      ) {
+        for (let i = notesIds.length - 1; i >= 0; i -= 1) {
+          if (
+            results[notesIds[i]].length > 0 &&
+            notesIds[i] !== lastActiveViewId
+          ) {
+            helpers.moveToMatch(
+              view,
+              notesIds[i],
+              results,
+              results[notesIds[i]].length - 1,
+            );
+            lastSelection = view[activeViewId].state.selection;
+            lastActiveViewId = activeViewId;
+            helpers.clearViewSelection(view, lastActiveViewId);
+            break;
+          } else {
+            console.log('go to main', lastActiveViewId);
           }
         }
       }

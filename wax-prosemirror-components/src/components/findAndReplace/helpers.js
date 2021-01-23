@@ -152,6 +152,35 @@ const clearViewSelection = (view, lastActiveViewId) => {
   );
 };
 
+const findViewWithMatches = (results, view, lastActiveViewId) => {
+  const notesIds = getNotesIds(view.main);
+
+  if (lastActiveViewId === 'main') {
+    for (let i = 0; i < notesIds.length; i += 1) {
+      if (results[notesIds[i]].length > 0) {
+        return notesIds[i];
+      }
+    }
+  }
+
+  if (notesIds.indexOf(lastActiveViewId) < notesIds.length - 1) {
+    for (let i = 0; i < notesIds.length; i += 1) {
+      if (results[notesIds[i]].length > 0) {
+        return notesIds[i];
+      }
+    }
+    return 'main';
+  }
+
+  if (
+    notesIds.indexOf(lastActiveViewId) &&
+    notesIds.indexOf(lastActiveViewId) === notesIds.length - 1
+  ) {
+    return 'main';
+  }
+  return false;
+};
+
 export default {
   findMatches,
   getMatchesByView,
@@ -161,4 +190,5 @@ export default {
   getClosestMatch,
   moveToMatch,
   clearViewSelection,
+  findViewWithMatches,
 };

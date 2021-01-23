@@ -176,35 +176,6 @@ const FindComponent = ({
     searchRef.current.focus();
   };
 
-  const findViewWithMatches = results => {
-    const notesIds = helpers.getNotesIds(view.main);
-
-    if (lastActiveViewId === 'main') {
-      for (let i = 0; i < notesIds.length; i += 1) {
-        if (results[notesIds[i]].length > 0) {
-          return notesIds[i];
-        }
-      }
-    }
-
-    if (notesIds.indexOf(lastActiveViewId) < notesIds.length - 1) {
-      for (let i = 0; i < notesIds.length; i += 1) {
-        if (results[notesIds[i]].length > 0) {
-          return notesIds[i];
-        }
-      }
-      return 'main';
-    }
-
-    if (
-      notesIds.indexOf(lastActiveViewId) &&
-      notesIds.indexOf(lastActiveViewId) === notesIds.length - 1
-    ) {
-      return 'main';
-    }
-    return false;
-  };
-
   const findNext = () => {
     const results = helpers.getAllResultsByView(
       view,
@@ -213,18 +184,20 @@ const FindComponent = ({
     );
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
-
+    const findViewWithMatches = helpers.findViewWithMatches(
+      results,
+      view,
+      lastActiveViewId,
+    );
     /* if no matches are found on focused view */
     if (!resultsFrom[lastActiveViewId]) {
-      view[findViewWithMatches(results)].dispatch(
-        view[findViewWithMatches(results)].state.tr.setSelection(
-          new TextSelection(
-            view[findViewWithMatches(results)].state.tr.doc.resolve(1),
-          ),
+      view[findViewWithMatches].dispatch(
+        view[findViewWithMatches].state.tr.setSelection(
+          new TextSelection(view[findViewWithMatches].state.tr.doc.resolve(1)),
         ),
       );
-      view[findViewWithMatches(results)].focus();
-      lastActiveViewId = findViewWithMatches(results);
+      view[findViewWithMatches].focus();
+      lastActiveViewId = findViewWithMatches;
       lastSelection = view[lastActiveViewId].state.selection;
     }
 
@@ -304,7 +277,6 @@ const FindComponent = ({
     }
 
     if (lastSelection.from === found && position === 0) {
-      console.log(lastActiveViewId);
       if (lastActiveViewId === 'main') {
         for (let i = notesIds.length - 1; i >= 0; i -= 1) {
           if (

@@ -32,6 +32,8 @@ export default props => {
           state: EditorState.create(options),
           dispatchTransaction,
           user,
+          scrollMargin: 200,
+          scrollThreshold: 200,
           handleDOMEvents: {
             blur: onBlur
               ? view => {

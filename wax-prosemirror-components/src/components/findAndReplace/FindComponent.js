@@ -147,7 +147,13 @@ const FindComponent = ({
     findAndReplacePlugin.props.setSearchText(searchValue);
     findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
     counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
-
+    const results = helpers.getAllResultsByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    if (results.main) {
+    }
     if (counter > 0) setCounterText(`1 of ${counter}`);
 
     if (searchRef.current === document.activeElement) {
@@ -177,6 +183,9 @@ const FindComponent = ({
   };
 
   const findNext = () => {
+    console.log('activeViewId', activeViewId);
+    lastActiveViewId = activeViewId;
+    lastSelection = view[activeViewId].state.selection;
     const results = helpers.getAllResultsByView(
       view,
       searchValue,
@@ -197,8 +206,10 @@ const FindComponent = ({
         ),
       );
       view[findViewWithMatches].focus();
-      lastActiveViewId = findViewWithMatches;
-      lastSelection = view[lastActiveViewId].state.selection;
+      setTimeout(() => {
+        lastActiveViewId = findViewWithMatches;
+        lastSelection = view[lastActiveViewId].state.selection;
+      }, 50);
     }
 
     const found = helpers.getClosestMatch(
@@ -223,29 +234,36 @@ const FindComponent = ({
       lastSelection.from === found &&
       position === resultsFrom[lastActiveViewId].length - 1
     ) {
+      console.log('hereee?');
       /* End of results in notes move to main if results exist */
       if (
         notesIds.indexOf(lastActiveViewId) === notesIds.length - 1 &&
         results.main.length > 0
       ) {
-        lastSelection = view[activeViewId].state.selection;
-        lastActiveViewId = activeViewId;
+        console.log('im main');
+        setTimeout(() => {
+          lastActiveViewId = findViewWithMatches;
+          lastSelection = view[lastActiveViewId].state.selection;
+        }, 50);
         helpers.moveToMatch(view, 'main', results, 0);
         helpers.clearViewSelection(view, lastActiveViewId);
       } else {
+        console.log('hohoho');
         for (let i = 0; i < notesIds.length; i += 1) {
           if (
             results[notesIds[i]].length > 0 &&
             notesIds[i] !== lastActiveViewId
           ) {
-            helpers.moveToMatch(view, notesIds[i], results, 0);
-            lastSelection = view[activeViewId].state.selection;
-            lastActiveViewId = activeViewId;
             helpers.clearViewSelection(view, lastActiveViewId);
+            helpers.moveToMatch(view, notesIds[i], results, 0);
 
             break;
           }
         }
+        setTimeout(() => {
+          lastActiveViewId = findViewWithMatches;
+          lastSelection = view[lastActiveViewId].state.selection;
+        }, 50);
       }
     }
   };

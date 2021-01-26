@@ -21,7 +21,7 @@ const format_change = {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
           id: hook.dom.dataset.id,
-          user: parseInt(hook.dom.dataset.user),
+          user: hook.dom.dataset.user,
           username: hook.dom.dataset.username,
           date: parseInt(hook.dom.dataset.date),
           before: SchemaHelpers.parseFormatList(hook.dom.dataset.before),

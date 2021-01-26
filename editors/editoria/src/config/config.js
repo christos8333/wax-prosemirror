@@ -105,7 +105,7 @@ export default {
   EnableTrackChangeService: { enabled: true, toggle: true },
   AcceptTrackChangeService: {
     own: {
-      accept: false,
+      accept: true,
     },
     others: {
       accept: true,

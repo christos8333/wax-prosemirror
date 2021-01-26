@@ -1,7 +1,14 @@
-import React, { useRef, useMemo, useState, useLayoutEffect } from 'react';
+import React, {
+  useContext,
+  useRef,
+  useMemo,
+  useState,
+  useLayoutEffect,
+} from 'react';
 
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
+import { WaxContext } from 'wax-prosemirror-core';
 
 import MenuButton from '../../ui/buttons/MenuButton';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
@@ -13,19 +20,29 @@ const Wrapper = styled.div`
 `;
 
 const DropWrapper = styled.div`
+  background: white;
   margin-top: ${grid(1)};
   position: absolute;
-  background: white;
   top: 32px;
 `;
 
 const FindAndReplaceTool = ({ view = {}, item }) => {
+  const {
+    view: { main },
+  } = useContext(WaxContext);
+
   const { icon, title } = item;
   const dropElement = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   let styles = { right: '-205px' };
   const [style, setStyle] = useState(styles);
+
+  let isDisabled = false;
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+  if (!isEditable) isDisabled = true;
 
   useLayoutEffect(() => {
     setStyle(styles);
@@ -43,7 +60,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
       <Wrapper>
         <MenuButton
           active={isOpen}
-          disabled={false}
+          disabled={isDisabled}
           iconName={icon}
           onMouseDown={() => {
             setIsOpen(!isOpen);

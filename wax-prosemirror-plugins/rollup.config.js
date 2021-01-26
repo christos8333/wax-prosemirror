@@ -21,6 +21,6 @@ export default {
       runtimeHelpers: true,
     }),
     commonjs(),
-    terser(),
+    // terser(),
   ],
 };

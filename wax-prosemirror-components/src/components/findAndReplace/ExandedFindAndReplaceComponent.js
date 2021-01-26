@@ -137,7 +137,11 @@ const PreviousNextButton = styled.span`
   }
 `;
 
-const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
+const ExandedFindAndReplaceComponent = ({
+  close,
+  matchCaseOption,
+  nonExpandedText,
+}) => {
   const { app, view } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
@@ -246,7 +250,11 @@ const ExandedFindAndReplaceComponent = ({ close, nonExpandedText }) => {
         type="text"
       />
       <CheckBoxWrapper>
-        <CheckBox label="Case Sensitive" name="case-sensitive" />
+        <CheckBox
+          checked={matchCaseOption}
+          label="Case Sensitive"
+          name="case-sensitive"
+        />
       </CheckBoxWrapper>
       <ControlContainer>
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>

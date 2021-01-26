@@ -72,10 +72,18 @@ const pressEnter = (state, dispatch) => {
       state.config.schema.nodes.title,
       true,
     );
-    if (state.selection.from === title[0].node.nodeSize - 1) {
+    if (
+      title.length === 1 &&
+      state.selection.from === title[0].node.nodeSize - 1
+    ) {
       return false;
     }
-    return true;
+    if (
+      title.length === 1 &&
+      state.selection.ranges[0].$from.parent.type.name === 'title'
+    ) {
+      return true;
+    }
   }
 
   return false;

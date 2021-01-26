@@ -9,14 +9,15 @@ export default
 @injectable()
 class Title extends Tools {
   title = 'Change to Title';
-  label = 'Title';
+  label = 'Title (H1)';
   name = 'Title';
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.title, {
-        class: 'title',
-      })(state, dispatch);
+      Commands.setBlockType(state.config.schema.nodes.title, { level: 1 })(
+        state,
+        dispatch,
+      );
     };
   }
 
@@ -55,6 +56,7 @@ class Title extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
+    // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
       <TitleButton key="Title" item={this.toJSON()} view={view} />
     ) : null;

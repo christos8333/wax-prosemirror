@@ -1,14 +1,10 @@
 const underline = {
-  parseDOM: [{ tag: "u" }, { style: "text-decoration:underline" }],
+  parseDOM: [{ tag: 'u' }],
   toDOM: (hook, next) => {
-    hook.value = [
-      "span",
-      {
-        style: "text-decoration:underline"
-      }
-    ];
+    // eslint-disable-next-line no-param-reassign
+    hook.value = ['u'];
     next();
-  }
+  },
 };
 
 export default underline;

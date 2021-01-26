@@ -1,42 +1,26 @@
-// const highlight = {
-//   parseDOM: [
-//     { tag: "highlight" },
-//     { style: "color:red" },
-//   ],
-//     toDOM: (hook, next) => {
-//       hook.value = [
-//         "highlight",
-//         {
-//           style: "background-color:red"
-//         }
-//       ];
-//       next();
-//     }
-//   };
-
-
-  const highlight = {
-    attrs: {
-      style: { default: null }
+const highlight = {
+  attrs: {
+    style: { default: null },
+    class: { default: 'highlight' },
+  },
+  inclusive: false,
+  parseDOM: [
+    {
+      tag: 'span.highlight',
+      getAttrs(hook, next) {
+        Object.assign(hook, {
+          class: hook.dom.getAttribute('class'),
+          style: hook.dom.getAttribute('style'),
+        });
+        next();
+      },
     },
-    inclusive: false,
-    parseDOM: [
-      {
-        tag: "highlight",
-        getAttrs(hook, next) {
-          const style = hook.dom.getAttribute("style");
-          Object.assign(hook, {
-            style: hook.dom.getAttribute("style"),
-          });
-          next();
-        }
-      }
-    ],
-    toDOM(hook, next) {
-      hook.value = ["highlight", hook.node.attrs, 0];
-      next();
-    }
-  };
-  
-  export default highlight;
-  
+  ],
+  toDOM(hook, next) {
+    // eslint-disable-next-line no-param-reassign
+    hook.value = ['span', hook.node.attrs, 0];
+    next();
+  },
+};
+
+export default highlight;

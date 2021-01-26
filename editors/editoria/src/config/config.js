@@ -3,7 +3,6 @@ import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   AnnotationToolGroupService,
   ImageService,
-  PlaceholderService,
   InlineAnnotationsService,
   LinkService,
   ListsService,
@@ -107,20 +106,16 @@ export default {
   AcceptTrackChangeService: {
     own: {
       accept: true,
-      reject: true,
     },
     others: {
       accept: true,
-      reject: true,
     },
   },
   RejectTrackChangeService: {
     own: {
-      accept: true,
       reject: true,
     },
     others: {
-      accept: true,
       reject: true,
     },
   },
@@ -143,7 +138,6 @@ export default {
     new InlineAnnotationsService(),
     new TrackChangeService(),
     new CommentsService(),
-    new PlaceholderService(),
     new ImageService(),
     new TablesService(),
     new BaseService(),

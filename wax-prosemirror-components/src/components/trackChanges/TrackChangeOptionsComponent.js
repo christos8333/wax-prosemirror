@@ -3,6 +3,8 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
+import { each, eachRight } from 'lodash';
+
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../../ui/buttons/MenuButton';
@@ -107,6 +109,7 @@ const AcceptRejectAllControls = styled.div`
   right: 207px;
   transform-origin: 50% 50% 0px;
   width: 200px;
+  z-index: 9999;
 `;
 
 const AcceptRejectAllRow = styled.div`
@@ -168,39 +171,67 @@ const getComments = main => {
   return comments;
 };
 
-const renderTools = menuItems => {
-  const tools = [];
-  tools.push(
-    menuItems.map((menuItem, index) => {
-      return (
-        <MenuButton
-          iconName={menuItem.icon}
-          key={menuItem.name}
-          label={menuItem.label}
-        />
-      );
-    }),
-  );
-  return <>{tools}</>;
-};
-
-const TrackChangeOptionsComponent = ({ groups }) => {
+const TrackChangeOptionsComponent = ({
+  groups,
+  setShowHidden,
+  showHiddenValue,
+}) => {
   const [isShownTrack, setIsShownTrack] = useState(false);
-
   const menuItems = groups[0].items;
-  console.log(menuItems);
-  const { app, view, activeViewId } = useContext(WaxContext);
-
+  const { app, view, activeView, activeViewId } = useContext(WaxContext);
+  const { state } = view;
+  const user = app.config.get('user');
+  const hideShowPlugin = app.PmPlugins.get('hideShowPlugin');
   const inlineTracks = getInlineTracks(view.main).length;
   const blockTracks = getTrackBlockNodes(view.main).length;
   const comments = getComments(view.main).length;
+
+  const renderTools = () => {
+    const tools = [];
+    tools.push(
+      menuItems.map((menuItem, index) => {
+        const isActive = !!(
+          menuItem.active(state, activeViewId) &&
+          menuItem.select(state, activeViewId)
+        );
+        let { label } = menuItem;
+        if (menuItem.name === 'ShowHideTrackChange' && showHiddenValue) {
+          label = 'Hide suggestions';
+        }
+
+        const isDisabled = !menuItem.select(state, activeViewId, activeView);
+        return (
+          <MenuButton
+            active={isActive || false}
+            disabled={isDisabled}
+            iconName={menuItem.icon}
+            key={menuItem.name}
+            label={label}
+            onMouseDown={e => {
+              e.preventDefault();
+              if (menuItem.name === 'ShowHideTrackChange') {
+                setShowHidden(!showHiddenValue);
+                hideShowPlugin.props.setHideShow(showHiddenValue);
+                each(view, (singleView, viewId) => {
+                  singleView.dispatch(singleView.state.tr);
+                });
+                return false;
+              }
+              return menuItem.run(activeView.state, activeView.dispatch, user);
+            }}
+          />
+        );
+      }),
+    );
+    return <>{tools}</>;
+  };
 
   return (
     <Wrapper>
       <TotalSuggestions>
         {inlineTracks + blockTracks} SUGGESTIONS
       </TotalSuggestions>
-      <ToolsContainer>{renderTools(menuItems)}</ToolsContainer>
+      <ToolsContainer>{renderTools()}</ToolsContainer>
       <AcceptRejectAll
         onMouseEnter={() => setIsShownTrack(true)}
         onMouseLeave={() => setIsShownTrack(false)}

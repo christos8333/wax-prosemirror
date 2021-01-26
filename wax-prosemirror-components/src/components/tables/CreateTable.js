@@ -16,9 +16,9 @@ const Wrapper = styled.div`
 `;
 
 const DropWrapper = styled.div`
+  background: white;
   margin-top: ${grid(1)};
   position: absolute;
-  background: white;
 `;
 
 const CreateTable = ({ view = {}, item }) => {
@@ -46,7 +46,12 @@ const CreateTable = ({ view = {}, item }) => {
     setIsOpen(!isOpen);
   };
 
-  const isDisabled = !select(state, activeViewId);
+  let isDisabled = !select(state, activeViewId);
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+  if (!isEditable) isDisabled = true;
 
   useOnClickOutside(ref, () => setIsOpen(false));
 

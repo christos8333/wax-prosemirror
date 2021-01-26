@@ -248,6 +248,14 @@ export default css`
     height: 100%;
   }
 
+  .insertion .show-insertion {
+    color: black;
+  }
+
+  .deletion .hide-deletion {
+    display: none;
+  }
+
   li[data-track]::before,
   li [data-track]::before {
     left: -5px;

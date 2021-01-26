@@ -4,14 +4,14 @@ import Tools from '../../lib/Tools';
 
 export default
 @injectable()
-class Heading1 extends Tools {
-  title = 'Change to heading level 1';
-  label = 'Heading 1';
-  name = 'Heading1';
+class Heading4 extends Tools {
+  title = 'Change to heading level 4';
+  label = 'Heading 4';
+  name = 'Heading4';
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.heading, { level: 1 })(
+      Commands.setBlockType(state.config.schema.nodes.heading, { level: 4 })(
         state,
         dispatch,
       );
@@ -30,7 +30,7 @@ class Heading1 extends Tools {
       });
       if (!isActive) return false;
       return !Commands.setBlockType(state.config.schema.nodes.heading, {
-        level: 1,
+        level: 4,
       })(state);
     };
   }
@@ -43,7 +43,7 @@ class Heading1 extends Tools {
   get enable() {
     return state => {
       return Commands.setBlockType(state.config.schema.nodes.heading, {
-        level: 1,
+        level: 4,
       })(state);
     };
   }

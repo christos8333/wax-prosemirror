@@ -12,18 +12,6 @@ const heading = {
   defining: true,
   parseDOM: [
     {
-      tag: 'h1',
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          id: hook.dom.dataset.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
-          group: hook.dom.dataset.group,
-          viewid: hook.dom.dataset.viewid,
-        });
-        next();
-      },
-    },
-    {
       tag: 'h2',
       getAttrs(hook, next) {
         Object.assign(hook, {
@@ -37,6 +25,18 @@ const heading = {
     },
     {
       tag: 'h3',
+      getAttrs(hook, next) {
+        Object.assign(hook, {
+          id: hook.dom.dataset.id,
+          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
+          group: hook.dom.dataset.group,
+          viewid: hook.dom.dataset.viewid,
+        });
+        next();
+      },
+    },
+    {
+      tag: 'h4',
       getAttrs(hook, next) {
         Object.assign(hook, {
           id: hook.dom.dataset.id,

@@ -9,6 +9,18 @@ import { injectable } from 'inversify';
 import removeNode from '../track-changes/helpers/removeNode';
 import Tools from '../../lib/Tools';
 
+const checkFromConfig = (mark, user, config) => {
+  if (mark.attrs.username === user.username && !config.own.reject) {
+    return false;
+  }
+
+  if (mark.attrs.username !== user.username && !config.others.reject) {
+    return false;
+  }
+
+  return true;
+};
+
 @injectable()
 class RejectTrackChange extends Tools {
   title = 'Reject Changes';
@@ -17,7 +29,7 @@ class RejectTrackChange extends Tools {
   name = 'RejectTrackChange';
 
   get run() {
-    return (state, dispatch) => {
+    return (state, dispatch, user) => {
       const {
         tr,
         selection: { from, to },
@@ -33,6 +45,9 @@ class RejectTrackChange extends Tools {
           const deletionMark = node.marks.find(
             mark => mark.type.name === 'deletion',
           );
+          const configCheck = checkFromConfig(deletionMark, user, this.config);
+          if (!configCheck) return;
+
           tr.step(
             new RemoveMarkStep(
               map.map(Math.max(pos, from)),
@@ -49,6 +64,13 @@ class RejectTrackChange extends Tools {
           node.marks &&
           node.marks.find(mark => mark.type.name === 'insertion')
         ) {
+          const insertionMark = node.marks.find(
+            mark => mark.type.name === 'insertion',
+          );
+
+          const configCheck = checkFromConfig(insertionMark, user, this.config);
+          if (!configCheck) return;
+
           const deletionStep = new ReplaceStep(
             map.map(Math.max(pos, from)),
             map.map(Math.min(pos + node.nodeSize, to)),

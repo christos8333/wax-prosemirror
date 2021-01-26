@@ -1,11 +1,10 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 
 import MenuButton from '../../ui/buttons/MenuButton';
 import TrackChangeOptionsComponent from './TrackChangeOptionsComponent';
-import useOnClickOutside from '../../helpers/useOnClickOutside';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -22,12 +21,14 @@ const DropWrapper = styled.div`
 `;
 
 const TrackChangeOptionsTool = ({ view = {}, item, groups }) => {
-  // const { icon, title } = item;
-
   const [isOpen, setIsOpen] = useState(false);
+  const [showHide, setShowHide] = useState(true);
+
   const ref = useRef();
 
-  useOnClickOutside(ref, () => setIsOpen(false));
+  const setShowHidden = value => {
+    setShowHide(value);
+  };
 
   const MemorizedDropdown = useMemo(
     () => (
@@ -39,22 +40,23 @@ const TrackChangeOptionsTool = ({ view = {}, item, groups }) => {
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
-          // title={title}
         />
 
         {isOpen && (
           <DropWrapper>
             <TrackChangeOptionsComponent
-              groups={groups}
               close={() => {
                 setIsOpen(false);
               }}
+              groups={groups}
+              setShowHidden={setShowHidden}
+              showHiddenValue={showHide}
             />
           </DropWrapper>
         )}
       </Wrapper>
     ),
-    [isOpen],
+    [isOpen, showHide],
   );
 
   return MemorizedDropdown;

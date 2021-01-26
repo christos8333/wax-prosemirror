@@ -31,8 +31,12 @@ const renderImage = file => {
 };
 
 const user = {
-  userId: '1234',
-  username: 'demo',
+  userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+  userColor: {
+    addition: 'royalblue',
+    deletion: 'indianred',
+  },
+  username: 'admin',
 };
 
 const Editoria = () => {

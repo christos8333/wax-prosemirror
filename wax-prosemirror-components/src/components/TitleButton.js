@@ -40,7 +40,12 @@ const TitleButton = ({ view = {}, item }) => {
   }, [JSON.stringify(titleNode[0])]);
 
   const isActive = !!active(state, activeViewId);
-  const isDisabled = !select(state, activeViewId, activeView);
+  let isDisabled = !select(state, activeViewId, activeView);
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+  if (!isEditable) isDisabled = true;
 
   const TitleButtonComponent = useMemo(
     () => (

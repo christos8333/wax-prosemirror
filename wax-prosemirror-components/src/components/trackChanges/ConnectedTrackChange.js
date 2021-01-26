@@ -28,7 +28,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     top: `${top}px`,
   };
 
-  const trakChangePlugin = app.PmPlugins.get('trackChngePlugin');
+  const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
   const activeTrackChange = trakChangePlugin.getState(activeView.state)
     .trackChange;
 
@@ -42,9 +42,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
     view[viewId].dispatch(
       view[viewId].state.tr.setSelection(
-        new TextSelection(
-          view[viewId].state.tr.doc.resolve(maxPos.pos, maxPos.pos),
-        ),
+        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos)),
       ),
     );
 

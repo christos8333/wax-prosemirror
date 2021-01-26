@@ -18,12 +18,17 @@ export default ({ node, view }) => {
   const context = useContext(WaxContext);
   const noteId = node.attrs.id;
   let noteView;
-  let updateMainView = true;
+  let clickInNote = false;
+  // eslint-disable-next-line react/destructuring-assignment
+  const isEditable = context.view.main.props.editable(editable => {
+    return editable;
+  });
 
   useEffect(() => {
     noteView = new EditorView(
       { mount: editorRef.current },
       {
+        editable: () => isEditable,
         state: EditorState.create({
           doc: node,
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
@@ -33,7 +38,7 @@ export default ({ node, view }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, noteId);
-
+            clickInNote = true;
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
@@ -87,7 +92,10 @@ export default ({ node, view }) => {
 
     // TODO Remove timeout and use state to check if noteView has changed
     setTimeout(() => {
-      context.updateView({}, noteId);
+      if (clickInNote) context.updateView({}, noteId);
+      clickInNote = false;
+      if (noteView.state.selection.from !== noteView.state.selection.to)
+        context.updateView({}, noteId);
     }, 20);
 
     if (!tr.getMeta('fromOutside')) {

@@ -102,7 +102,7 @@ export default {
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
-  EnableTrackChangeService: { enabled: true, toggle: true },
+  EnableTrackChangeService: { enabled: false, toggle: true },
   AcceptTrackChangeService: {
     own: {
       accept: true,

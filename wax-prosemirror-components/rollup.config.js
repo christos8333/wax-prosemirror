@@ -22,7 +22,7 @@ export default {
       runtimeHelpers: true,
     }),
     commonjs(),
-    terser(),
+    // terser(),
   ],
   external: ['wax-prosemirror-core', 'inversify', 'prosemirror-tables'],
 };

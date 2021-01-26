@@ -1,10 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
+
 import { DOMSerializer, DOMParser } from 'prosemirror-model';
-import { DefaultSchema } from 'wax-prosemirror-utilities';
+
 import WaxProvider from './WaxContext';
 import Application from './Application';
+
 import WaxView from './WaxView';
 import defaultPlugins from './plugins/defaultPlugins';
 import Placeholder from './plugins/placeholder';
@@ -29,9 +31,10 @@ const serializer = schema => {
   };
 };
 
+let schema;
 const createApplication = props => {
   const application = Application.create(props);
-  application.getSchema();
+  schema = application.getSchema();
   application.bootServices();
   return application;
 };
@@ -65,8 +68,9 @@ const Wax = props => {
   } = props;
 
   if (!application) return null;
-  const WaxOnchange = onChange ? onChange : value => true;
-  const { schema } = application.schema;
+  // const { schema } = application.schema;
+  const WaxOnchange = onChange || (v => true);
+
   const editorContent = value || '';
 
   finalPlugins = defaultPlugins.concat([
@@ -135,7 +139,7 @@ const Wax = props => {
 };
 
 Wax.defaultProps = {
-  config: { SchemaService: DefaultSchema, services: [] },
+  config: { services: [] },
 };
 
 export default Wax;

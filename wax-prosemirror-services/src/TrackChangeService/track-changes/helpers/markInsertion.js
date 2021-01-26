@@ -7,6 +7,7 @@ const markInsertion = (tr, from, to, user, date, group, viewId) => {
   const insertionMark = tr.doc.type.schema.marks.insertion.create({
     user: user.userId,
     username: user.username,
+    style: `color: ${user.userColor.addition};`,
     // date
   });
 
@@ -35,11 +36,14 @@ const markInsertion = (tr, from, to, user, date, group, viewId) => {
         group,
         viewid: viewId,
       });
-
       tr.setNodeMarkup(
         pos,
         null,
-        Object.assign({}, node.attrs, { track, group, id: uuidv4() }),
+        Object.assign({}, node.attrs, {
+          track,
+          group,
+          id: uuidv4(),
+        }),
         node.marks,
       );
     }

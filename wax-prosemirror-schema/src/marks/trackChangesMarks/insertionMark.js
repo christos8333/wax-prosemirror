@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable radix */
 const insertion = {
   attrs: {
     class: { default: 'insertion' },
@@ -7,6 +9,7 @@ const insertion = {
     date: { default: 0 },
     group: { default: '' },
     viewid: { default: '' },
+    style: { default: null },
   },
   inclusive: false,
   group: 'track',
@@ -16,8 +19,9 @@ const insertion = {
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
+          style: hook.dom.getAttribute('style'),
           id: hook.dom.dataset.id,
-          user: parseInt(hook.dom.dataset.user),
+          user: hook.dom.dataset.user,
           username: hook.dom.dataset.username,
           date: parseInt(hook.dom.dataset.date),
           group: hook.dom.dataset.group,
@@ -38,6 +42,7 @@ const insertion = {
         'data-date': hook.node.attrs.date,
         'data-group': hook.node.attrs.group,
         'data-viewid': hook.node.attrs.viewid,
+        style: hook.node.attrs.style,
       },
     ];
     next();

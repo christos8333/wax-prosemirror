@@ -6,6 +6,7 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
     user: user.userId,
     username: user.username,
+    style: `color: ${user.userColor.deletion};`,
     // date
   });
 
@@ -89,6 +90,8 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
           type: 'deletion',
           user: user.userId,
           username: user.username,
+          style: `color: ${user.userColor.deletion};`,
+
           // date
         });
         tr.setNodeMarkup(

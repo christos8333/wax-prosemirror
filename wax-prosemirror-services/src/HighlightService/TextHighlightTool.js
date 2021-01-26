@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import { TextHighlightingTool } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 import React from 'react';
 import Tools from '../lib/Tools';
-import { v4 as uuidv4 } from 'uuid';
 
 @injectable()
 class TextHighlightTool extends Tools {

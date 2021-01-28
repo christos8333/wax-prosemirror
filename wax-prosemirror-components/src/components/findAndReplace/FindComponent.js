@@ -182,6 +182,20 @@ const FindComponent = ({
     searchRef.current.focus();
   };
 
+  const nextInNotes = (notesIds, results, findViewWithMatches) => {
+    for (let i = 0; i < notesIds.length; i += 1) {
+      if (results[notesIds[i]].length > 0 && notesIds[i] !== lastActiveViewId) {
+        helpers.clearViewSelection(view, lastActiveViewId);
+        helpers.moveToMatch(view, notesIds[i], results, 0);
+        lastActiveViewId = findViewWithMatches;
+        lastSelection = view[lastActiveViewId].state.selection;
+
+        break;
+      }
+    }
+  };
+
+  // eslint-disable-next-line consistent-return
   const findNext = () => {
     lastActiveViewId = activeViewId;
     lastSelection = view[activeViewId].state.selection;
@@ -226,6 +240,14 @@ const FindComponent = ({
       helpers.moveToMatch(view, lastActiveViewId, results, position + 1);
     }
 
+    /* User selection greater than found and end of results for the view */
+    if (
+      lastSelection.from >= found &&
+      position === resultsFrom[lastActiveViewId].length - 1
+    ) {
+      nextInNotes(notesIds, results, findViewWithMatches);
+    }
+
     /* Last result of the specific view. Move to next view */
     if (
       lastSelection.from === found &&
@@ -243,19 +265,7 @@ const FindComponent = ({
         helpers.moveToMatch(view, 'main', results, 0);
         helpers.clearViewSelection(view, lastActiveViewId);
       } else {
-        for (let i = 0; i < notesIds.length; i += 1) {
-          if (
-            results[notesIds[i]].length > 0 &&
-            notesIds[i] !== lastActiveViewId
-          ) {
-            helpers.clearViewSelection(view, lastActiveViewId);
-            helpers.moveToMatch(view, notesIds[i], results, 0);
-            lastActiveViewId = findViewWithMatches;
-            lastSelection = view[lastActiveViewId].state.selection;
-
-            break;
-          }
-        }
+        nextInNotes(notesIds, results, findViewWithMatches);
       }
     }
   };

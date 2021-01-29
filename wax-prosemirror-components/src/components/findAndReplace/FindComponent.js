@@ -118,7 +118,7 @@ const FindComponent = ({
 
   const delayedSearch = useCallback(
     debounce(() => searchDocument(), 300),
-    [searchValue, matchCaseSearch],
+    [searchValue, matchCaseSearch, activeViewId],
   );
 
   const onChange = () => {
@@ -143,7 +143,11 @@ const FindComponent = ({
       searchValue,
       matchCaseSearch,
     );
+    const resultsFrom = helpers.getResultsFrom(results);
 
+    if (results && results.main && activeViewId === 'main') {
+      console.log(view.main.state.selection.from, resultsFrom);
+    }
     setCounterText(`1 of ${counter}`);
   };
 

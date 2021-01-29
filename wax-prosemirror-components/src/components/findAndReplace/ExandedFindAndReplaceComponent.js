@@ -139,6 +139,8 @@ const PreviousNextButton = styled.span`
 
 const ExandedFindAndReplaceComponent = ({
   close,
+  findNextMatch,
+  findPreviousMatch,
   matchCaseOption,
   nonExpandedText,
 }) => {
@@ -214,14 +216,6 @@ const ExandedFindAndReplaceComponent = ({
     close();
   };
 
-  const findNext = () => {
-    // console.log('next');
-  };
-
-  const findPrevious = () => {
-    // console.log('previous');
-  };
-
   return (
     <Wrapper>
       <TitleContainer>
@@ -260,10 +254,18 @@ const ExandedFindAndReplaceComponent = ({
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>
         <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
         <PreviousNextContainer>
-          <PreviousNextButton onClick={findPrevious} role="button" tabIndex="0">
+          <PreviousNextButton
+            onClick={() => findPreviousMatch(searchValue, matchCaseOption)}
+            role="button"
+            tabIndex="0"
+          >
             <StyledIcon name="navigatePrevious" />
           </PreviousNextButton>
-          <PreviousNextButton onClick={findNext} role="button" tabIndex="0">
+          <PreviousNextButton
+            onClick={() => findNextMatch(searchValue, matchCaseOption)}
+            role="button"
+            tabIndex="0"
+          >
             <StyledIcon name="navigateNext" />
           </PreviousNextButton>
         </PreviousNextContainer>

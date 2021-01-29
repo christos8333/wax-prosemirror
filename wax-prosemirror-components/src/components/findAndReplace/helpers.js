@@ -37,7 +37,7 @@ const findMatches = (doc, searchValue, matchCase) => {
     }
   });
   mergedTextNodes.forEach(({ text, pos }) => {
-    const search = RegExp(searchValue, matchCase ? 'gu' : 'gui');
+    const search = RegExp(escapeRegExp(searchValue), matchCase ? 'gu' : 'gui');
     let m;
     // eslint-disable-next-line no-cond-assign
     while ((m = search.exec(text))) {
@@ -52,6 +52,10 @@ const findMatches = (doc, searchValue, matchCase) => {
     }
   });
   return results;
+};
+
+const escapeRegExp = string => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
 const getMatchesByView = (views, searchValue, matchCase) => {

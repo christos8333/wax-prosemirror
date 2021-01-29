@@ -101,6 +101,7 @@ const FindComponent = ({
   expand,
   setPreviousSearcValue,
   setMatchCaseValue,
+  FindNextMatch,
 }) => {
   const { app, view, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
@@ -141,20 +142,25 @@ const FindComponent = ({
     }
   }, [searchValue, delayedSearch, matchCaseSearch, JSON.stringify(allStates)]);
 
-  const searchDocument = () => {
-    setCounterText('0 of 0');
-    let counter = 0;
-    findAndReplacePlugin.props.setSearchText(searchValue);
-    findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
-    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+  const setCounterSearches = counter => {
+    if (counter === 0) return setCounterText('0 of 0');
+
     const results = helpers.getAllResultsByView(
       view,
       searchValue,
       matchCaseSearch,
     );
-    if (results.main) {
-    }
-    if (counter > 0) setCounterText(`1 of ${counter}`);
+
+    setCounterText(`1 of ${counter}`);
+  };
+
+  const searchDocument = () => {
+    let counter = 0;
+    findAndReplacePlugin.props.setSearchText(searchValue);
+    findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
+    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+
+    setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
       eachRight(view, (singleView, viewId) => {
@@ -227,6 +233,7 @@ const FindComponent = ({
       lastSelection.from,
       resultsFrom[lastActiveViewId],
     );
+
     const position = resultsFrom[lastActiveViewId].indexOf(found);
     /* User selection lesser than found */
     if (lastSelection.from < found) {
@@ -359,7 +366,11 @@ const FindComponent = ({
         <IconWrapper onClick={findPrevious} role="button" tabIndex="0">
           <StyledIcon name="navigatePrevious" />
         </IconWrapper>
-        <IconWrapper onClick={findNext} role="button" tabIndex="0">
+        <IconWrapper
+          onClick={() => FindNextMatch(findNext())}
+          role="button"
+          tabIndex="0"
+        >
           <StyledIcon name="navigateNext" />
         </IconWrapper>
 

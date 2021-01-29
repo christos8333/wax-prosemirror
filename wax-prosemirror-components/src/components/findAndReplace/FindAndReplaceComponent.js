@@ -19,6 +19,10 @@ const FindAndReplaceComponent = ({ close }) => {
     setMatchCaseOption(matchCase);
   };
 
+  const FindNextMatch = nextMatch => {
+    return nextMatch;
+  };
+
   return isExpanded ? (
     <ExandedFindAndReplaceComponent
       close={close}
@@ -31,6 +35,7 @@ const FindAndReplaceComponent = ({ close }) => {
       expand={expand}
       setMatchCaseValue={getMatchCaseOption}
       setPreviousSearcValue={getNonExpandedText}
+      FindNextMatch={FindNextMatch}
     />
   );
 };

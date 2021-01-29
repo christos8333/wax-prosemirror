@@ -42,8 +42,8 @@ import {
   TrackCommentOptionsToolGroupService,
   CustomTagInlineService,
   CustomTagInlineToolGroupService,
-  CustomTagBlockService,
   CustomTagBlockToolGroupService,
+  CustomTagService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -172,9 +172,8 @@ export default {
     new TransformToolGroupService(),
     new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
+    new CustomTagService(),
     new CustomTagInlineToolGroupService(),
-    new CustomTagInlineService(),
-    new CustomTagBlockService(),
     new CustomTagBlockToolGroupService(),
   ],
 };

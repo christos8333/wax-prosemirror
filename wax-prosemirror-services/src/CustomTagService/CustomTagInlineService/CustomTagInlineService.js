@@ -2,9 +2,8 @@ import CustomTagInlineTool from './CustomTagInlineTool';
 import Service from '../../Service';
 import { CustomTagInlineOverlayComponent } from 'wax-prosemirror-components';
 import { customtagInlineMark } from 'wax-prosemirror-schema';
-import { WaxContext } from 'wax-prosemirror-core';
 
-export default class CustomTagInlineService extends Service {
+class CustomTagInlineService extends Service {
 
   boot() {
     const createOverlay = this.container.get('CreateOverlay');
@@ -19,7 +18,7 @@ export default class CustomTagInlineService extends Service {
     );
   }
 
-  
+
   register() {
     this.container.bind('CustomTagInlineTool').to(CustomTagInlineTool);
     const createMark = this.container.get('CreateMark');
@@ -31,3 +30,6 @@ export default class CustomTagInlineService extends Service {
     );
   }
 }
+
+
+export default CustomTagInlineService;

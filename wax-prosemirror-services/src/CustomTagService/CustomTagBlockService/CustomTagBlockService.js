@@ -1,17 +1,20 @@
 import CustomTagBlockTool from './CustomTagBlockTool';
 import Service from '../../Service';
-import { customtagBlockMark } from 'wax-prosemirror-schema';
+import { customBlockNode } from 'wax-prosemirror-schema';
 
-export default class CustomTagBlockService extends Service {
-  
+
+class CustomTagBlockService extends Service {
+
   register() {
     this.container.bind('CustomTagBlockTool').to(CustomTagBlockTool);
-    const createMark = this.container.get('CreateMark');
-    createMark(
+    const createNode = this.container.get('CreateNode');
+    createNode(
       {
-        customTagBlock: customtagBlockMark,
-      },
-      { toWaxSchema: true },
+        customTagBlock: customBlockNode,
+      }
     );
   }
+
 }
+
+export default CustomTagBlockService;

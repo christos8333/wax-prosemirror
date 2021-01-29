@@ -38,6 +38,7 @@ export { default as EditingSuggestingService } from './src/EditingSuggestingServ
 export { default as TrackOptionsService } from './src/TrackOptionsService/TrackOptionsService';
 export { default as CustomTagInlineService } from './src/CustomTagService/CustomTagInlineService/CustomTagInlineService';
 export { default as CustomTagBlockService } from './src/CustomTagService/CustomTagBlockService/CustomTagBlockService';
+export { default as CustomTagService } from './src/CustomTagService/CustomTagService';
 
 /*
 ToolGroups

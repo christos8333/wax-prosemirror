@@ -1,9 +1,7 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { selectParentNode } from 'prosemirror-commands';
-import { node } from 'prop-types';
+import { Commands } from 'wax-prosemirror-utilities';
 
 const Wrapper = styled.div``;
 
@@ -82,22 +80,10 @@ const CustomTagBlockComponent = (isIconClicked) => {
   }
 
   const onSelectTag = (e, item) => {
-
-    const $pos = main.state.tr.doc.resolve($from.pos);
-    const $topos = main.state.tr.doc.resolve($to.pos);
-    const startPos = $pos.start();
-    const endPos = $topos.end();
-
-    dispatch(
-      state.tr.addMark(
-        startPos,
-        endPos,
-        state.schema.marks.customTagBlock.create({
-          tagName: item,
-          class: 'custom-tag-block',
-        }),
-      ),
-    );
+    item = item.replace(/ /g, "-");
+    Commands.setBlockType(state.config.schema.nodes.customTagBlock, {
+      class: 'custom-tag-block ' + item
+    })(state, dispatch);
   }
 
   return useMemo(

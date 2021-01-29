@@ -145,7 +145,7 @@ const ExandedFindAndReplaceComponent = ({
   nonExpandedText,
   setMatchCaseValue,
 }) => {
-  const { app, view } = useContext(WaxContext);
+  const { app, view, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);
@@ -169,24 +169,68 @@ const ExandedFindAndReplaceComponent = ({
     setSearchValue(searchRef.current.value);
   };
 
-  useEffect(
-    () => {
-      delayedSearch();
-    },
-    [searchValue, delayedSearch, JSON.stringify(allStates)],
-    matchCaseSearch,
-  );
+  useEffect(() => {
+    delayedSearch();
+  }, [searchValue, delayedSearch, matchCaseSearch, JSON.stringify(allStates)]);
+
+  const setCounterSearches = counter => {
+    if (counter === 0) return setCounterText('0 of 0');
+    setCounterText(`0 of ${counter}`);
+
+    const {
+      state: {
+        selection: { from, to },
+      },
+    } = view[activeViewId];
+
+    const results = helpers.getAllResultsByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    const resultsFrom = helpers.getResultsFrom(results);
+    let counterMatch = 0;
+    if (activeViewId === 'main') {
+      const match = results.main.filter(result => {
+        return from === result.from && to === result.to;
+      });
+
+      if (match.length === 1) {
+        setCounterText(`${resultsFrom.main.indexOf(from) + 1} of ${counter}`);
+      }
+    } else {
+      if (resultsFrom.main) counterMatch = resultsFrom.main.length;
+      const notesIds = helpers.getNotesIds(view.main);
+
+      for (let i = 0; i < notesIds.length; i += 1) {
+        if (resultsFrom[notesIds[i]] && activeViewId !== notesIds[i]) {
+          counterMatch += resultsFrom[notesIds[i]].length;
+        }
+        if (resultsFrom[notesIds[i]] && activeViewId === notesIds[i]) {
+          const match = results[notesIds[i]].filter(result => {
+            return from === result.from && to === result.to;
+          });
+
+          if (match.length === 1) {
+            counterMatch += resultsFrom[notesIds[i]].indexOf(from) + 1;
+            setCounterText(`${counterMatch} of ${counter}`);
+          }
+          break;
+        }
+      }
+    }
+  };
 
   const searchDocument = () => {
-    setCounterText('0 of 0');
     let counter = 0;
     findAndReplacePlugin.props.setSearchText(searchValue);
-    counter = helpers.getMatchesByView(view, searchValue);
+    findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
+    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
 
-    if (counter > 0) setCounterText(`1 of ${counter}`);
+    setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
-      each(view, (singleView, viewId) => {
+      eachRight(view, (singleView, viewId) => {
         singleView.dispatch(singleView.state.tr);
       });
     }
@@ -227,7 +271,6 @@ const ExandedFindAndReplaceComponent = ({
     setMatchCaseSearch(!matchCaseOption);
     setMatchCaseValue(!matchCaseOption);
     searchRef.current.focus();
-    console.log('here', !matchCaseOption);
   };
 
   return (

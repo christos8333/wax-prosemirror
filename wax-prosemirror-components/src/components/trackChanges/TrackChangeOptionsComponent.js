@@ -163,12 +163,22 @@ const getTrackBlockNodes = main => {
 };
 
 const getComments = main => {
-  const comments = DocumentHelpers.findChildrenByMark(
+  const comments = [];
+  const commentsNodes = DocumentHelpers.findChildrenByMark(
     main.state.doc,
     main.state.schema.marks.comment,
     true,
   );
-  return comments;
+  commentsNodes.map(node => {
+    if (node.node.marks.length > 0) {
+      node.node.marks.filter(mark => {
+        if (mark.type.name === 'comment') {
+          comments.push(mark);
+        }
+      });
+    }
+  });
+  return [...new Set(comments.map(item => item.attrs.id))];
 };
 
 const TrackChangeOptionsComponent = ({

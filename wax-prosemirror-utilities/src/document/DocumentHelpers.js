@@ -1,5 +1,3 @@
-import { isObject } from 'lodash';
-
 const findMark = (state, PMmark, toArr = false) => {
   const {
     selection: { $from, $to },
@@ -25,6 +23,43 @@ const findMark = (state, PMmark, toArr = false) => {
   });
   if (toArr) return marksFound;
   return markFound;
+};
+
+const getCommentsTracksCount = main => {
+  const marks = findInlineNodes(main.state.doc);
+  const commentsTracksFormat = [];
+  const insertionsDeletions = [];
+  marks.map(node => {
+    if (node.node.marks.length > 0) {
+      node.node.marks.filter(mark => {
+        if (
+          mark.type.name === 'comment' ||
+          mark.type.name === 'format_change'
+        ) {
+          commentsTracksFormat.push(mark);
+        } else if (
+          mark.type.name === 'insertion' ||
+          mark.type.name === 'deletion'
+        ) {
+          insertionsDeletions.push(mark);
+        }
+      });
+    }
+  });
+  const unique = [...new Set(commentsTracksFormat.map(item => item.attrs.id))];
+  const total = unique.length + insertionsDeletions.length;
+  return total;
+};
+
+const getTrackBlockNodesCount = main => {
+  const allBlockNodes = findBlockNodes(main.state.doc);
+  const trackBlockNodes = [];
+  allBlockNodes.map(node => {
+    if (node.node.attrs.track && node.node.attrs.track.length > 0) {
+      trackBlockNodes.push(node);
+    }
+  });
+  return trackBlockNodes.length;
 };
 
 /* TODO */
@@ -172,4 +207,6 @@ export default {
   findFragmentedMark,
   findAllMarksWithSameId,
   findMarkPosition,
+  getCommentsTracksCount,
+  getTrackBlockNodesCount,
 };

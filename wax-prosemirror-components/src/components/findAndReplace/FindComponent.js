@@ -137,11 +137,14 @@ const FindComponent = ({
 
   const setCounterSearches = counter => {
     if (counter === 0) return setCounterText('0 of 0');
+    setCounterText(`0 of ${counter}`);
+
     const {
       state: {
         selection: { from, to },
       },
     } = view[activeViewId];
+
     const results = helpers.getAllResultsByView(
       view,
       searchValue,
@@ -149,16 +152,35 @@ const FindComponent = ({
     );
     const resultsFrom = helpers.getResultsFrom(results);
 
-    if (results && results.main && activeViewId === 'main') {
-      console.log(
-        view.main.state.selection.from,
-        results,
-        resultsFrom,
-        from,
-        to,
-      );
+    if (activeViewId === 'main') {
+      const match = results.main.filter(result => {
+        return from === result.from && to === result.to;
+      });
+
+      if (match.length === 1) {
+        setCounterText(`${resultsFrom.main.indexOf(from) + 1} of ${counter}`);
+      }
+    } else {
+      let counterMatch = resultsFrom.main.length;
+      const notesIds = helpers.getNotesIds(view.main);
+
+      for (let i = 0; i < notesIds.length; i += 1) {
+        if (resultsFrom[notesIds[i]] && activeViewId !== notesIds[i]) {
+          counterMatch += resultsFrom[notesIds[i]].length;
+        }
+        if (resultsFrom[notesIds[i]] && activeViewId === notesIds[i]) {
+          const match = results[notesIds[i]].filter(result => {
+            return from === result.from && to === result.to;
+          });
+
+          if (match.length === 1) {
+            counterMatch += resultsFrom[notesIds[i]].indexOf(from) + 1;
+            setCounterText(`${counterMatch} of ${counter}`);
+          }
+          break;
+        }
+      }
     }
-    setCounterText(`1 of ${counter}`);
   };
 
   const searchDocument = () => {

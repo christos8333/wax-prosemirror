@@ -137,7 +137,11 @@ const FindComponent = ({
 
   const setCounterSearches = counter => {
     if (counter === 0) return setCounterText('0 of 0');
-
+    const {
+      state: {
+        selection: { from, to },
+      },
+    } = view[activeViewId];
     const results = helpers.getAllResultsByView(
       view,
       searchValue,
@@ -146,7 +150,13 @@ const FindComponent = ({
     const resultsFrom = helpers.getResultsFrom(results);
 
     if (results && results.main && activeViewId === 'main') {
-      console.log(view.main.state.selection.from, resultsFrom);
+      console.log(
+        view.main.state.selection.from,
+        results,
+        resultsFrom,
+        from,
+        to,
+      );
     }
     setCounterText(`1 of ${counter}`);
   };

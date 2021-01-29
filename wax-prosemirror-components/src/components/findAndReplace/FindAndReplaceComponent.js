@@ -47,6 +47,13 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   const findNextMatch = (searchValue, matchCaseSearch) => {
+    const counter = helpers.getMatchesByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    if (counter === 0) return;
+
     lastActiveViewId = activeViewId;
     lastSelection = view[activeViewId].state.selection;
     const results = helpers.getAllResultsByView(
@@ -116,6 +123,13 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   const findPreviousMatch = (searchValue, matchCaseSearch) => {
+    const counter = helpers.getMatchesByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    if (counter === 0) return;
+
     lastActiveViewId = activeViewId;
     lastSelection = view[activeViewId].state.selection;
     const results = helpers.getAllResultsByView(

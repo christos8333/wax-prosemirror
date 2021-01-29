@@ -240,18 +240,12 @@ const FindComponent = ({
       helpers.moveToMatch(view, lastActiveViewId, results, position + 1);
     }
 
-    /* User selection greater than found and end of results for the view */
-    if (
-      lastSelection.from >= found &&
-      position === resultsFrom[lastActiveViewId].length - 1
-    ) {
-      nextInNotes(notesIds, results, findViewWithMatches);
-    }
-
     /* Last result of the specific view. Move to next view */
     if (
-      lastSelection.from === found &&
-      position === resultsFrom[lastActiveViewId].length - 1
+      (lastSelection.from === found &&
+        position === resultsFrom[lastActiveViewId].length - 1) ||
+      (lastSelection.from >= found &&
+        position === resultsFrom[lastActiveViewId].length - 1)
     ) {
       /* End of results in notes move to main if results exist */
       if (

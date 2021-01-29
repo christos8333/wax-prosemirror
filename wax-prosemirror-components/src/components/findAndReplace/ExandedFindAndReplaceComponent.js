@@ -150,6 +150,7 @@ const ExandedFindAndReplaceComponent = ({
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);
   const [matchCaseSearch, setMatchCaseSearch] = useState(false);
+  const [match, setMatch] = useState([]);
   const [replaceValue, setReplaceValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
@@ -191,11 +192,12 @@ const ExandedFindAndReplaceComponent = ({
     const resultsFrom = helpers.getResultsFrom(results);
     let counterMatch = 0;
     if (activeViewId === 'main') {
-      const match = results.main.filter(result => {
+      const matchFound = results.main.filter(result => {
         return from === result.from && to === result.to;
       });
 
-      if (match.length === 1) {
+      setMatch(matchFound);
+      if (matchFound.length === 1) {
         setCounterText(`${resultsFrom.main.indexOf(from) + 1} of ${counter}`);
       }
     } else {
@@ -207,11 +209,12 @@ const ExandedFindAndReplaceComponent = ({
           counterMatch += resultsFrom[notesIds[i]].length;
         }
         if (resultsFrom[notesIds[i]] && activeViewId === notesIds[i]) {
-          const match = results[notesIds[i]].filter(result => {
+          const matchFound = results[notesIds[i]].filter(result => {
             return from === result.from && to === result.to;
           });
+          setMatch(matchFound);
 
-          if (match.length === 1) {
+          if (matchFound.length === 1) {
             counterMatch += resultsFrom[notesIds[i]].indexOf(from) + 1;
             setCounterText(`${counterMatch} of ${counter}`);
           }
@@ -241,8 +244,13 @@ const ExandedFindAndReplaceComponent = ({
   };
 
   const replace = () => {
-    // const { from, to } = results[0];
-    // dispatch(state.tr.insertText(replace, from, to));
+    if (match.length === 1) {
+      const { from, to } = match[0];
+      view[activeViewId].dispatch(
+        view[activeViewId].state.tr.insertText(replaceValue, from, to),
+      );
+      findNextMatch(searchValue, matchCaseOption);
+    }
   };
 
   const replaceAll = () => {

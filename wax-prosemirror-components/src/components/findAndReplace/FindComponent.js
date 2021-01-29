@@ -151,7 +151,7 @@ const FindComponent = ({
       matchCaseSearch,
     );
     const resultsFrom = helpers.getResultsFrom(results);
-
+    let counterMatch = 0;
     if (activeViewId === 'main') {
       const match = results.main.filter(result => {
         return from === result.from && to === result.to;
@@ -161,7 +161,7 @@ const FindComponent = ({
         setCounterText(`${resultsFrom.main.indexOf(from) + 1} of ${counter}`);
       }
     } else {
-      let counterMatch = resultsFrom.main.length;
+      if (resultsFrom.main) counterMatch = resultsFrom.main.length;
       const notesIds = helpers.getNotesIds(view.main);
 
       for (let i = 0; i < notesIds.length; i += 1) {

@@ -143,11 +143,13 @@ const ExandedFindAndReplaceComponent = ({
   findPreviousMatch,
   matchCaseOption,
   nonExpandedText,
+  setMatchCaseValue,
 }) => {
   const { app, view } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);
+  const [matchCaseSearch, setMatchCaseSearch] = useState(false);
   const [replaceValue, setReplaceValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
@@ -160,16 +162,20 @@ const ExandedFindAndReplaceComponent = ({
 
   const delayedSearch = useCallback(
     debounce(() => searchDocument(), 300),
-    [searchValue],
+    [searchValue, matchCaseSearch],
   );
 
   const onChangeSearchInput = () => {
     setSearchValue(searchRef.current.value);
   };
 
-  useEffect(() => {
-    delayedSearch();
-  }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
+  useEffect(
+    () => {
+      delayedSearch();
+    },
+    [searchValue, delayedSearch, JSON.stringify(allStates)],
+    matchCaseSearch,
+  );
 
   const searchDocument = () => {
     setCounterText('0 of 0');
@@ -194,6 +200,7 @@ const ExandedFindAndReplaceComponent = ({
     // const { from, to } = results[0];
     // dispatch(state.tr.insertText(replace, from, to));
   };
+
   const replaceAll = () => {
     each(view, (singleView, viewId) => {
       const results = helpers.findMatches(singleView.state.doc, searchValue);
@@ -214,6 +221,13 @@ const ExandedFindAndReplaceComponent = ({
       singleView.dispatch(singleView.state.tr);
     });
     close();
+  };
+
+  const matchCase = () => {
+    setMatchCaseSearch(!matchCaseOption);
+    setMatchCaseValue(!matchCaseOption);
+    searchRef.current.focus();
+    console.log('here', !matchCaseOption);
   };
 
   return (
@@ -248,6 +262,7 @@ const ExandedFindAndReplaceComponent = ({
           checked={matchCaseOption}
           label="Case Sensitive"
           name="case-sensitive"
+          onChange={matchCase}
         />
       </CheckBoxWrapper>
       <ControlContainer>

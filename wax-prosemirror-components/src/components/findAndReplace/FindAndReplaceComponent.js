@@ -209,6 +209,7 @@ const FindAndReplaceComponent = ({ close }) => {
       findPreviousMatch={findPreviousMatch}
       matchCaseOption={matchCaseOption}
       nonExpandedText={nonExpandedText}
+      setMatchCaseValue={getMatchCaseOption}
     />
   ) : (
     <FindComponent

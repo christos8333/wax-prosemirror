@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -43,6 +43,13 @@ export default ({ node, view }) => {
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
+          },
+          blur: view => {
+            view.dispatch(
+              view.state.tr.setSelection(
+                TextSelection.create(view.state.doc, 0),
+              ),
+            );
           },
         },
         transformPasted: slice => {

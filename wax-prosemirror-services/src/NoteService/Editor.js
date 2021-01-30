@@ -38,12 +38,13 @@ export default ({ node, view }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, noteId);
-            clickInNote = true;
+
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
           },
+
           blur: view => {
             view.dispatch(
               view.state.tr.setSelection(
@@ -51,6 +52,10 @@ export default ({ node, view }) => {
               ),
             );
           },
+        },
+        handleTextInput() {
+          clickInNote = true;
+          console.log('inpiut');
         },
         transformPasted: slice => {
           return transformPasted(slice, noteView);
@@ -98,12 +103,21 @@ export default ({ node, view }) => {
     });
 
     // TODO Remove timeout and use state to check if noteView has changed
-    setTimeout(() => {
-      if (clickInNote) context.updateView({}, noteId);
-      clickInNote = false;
-      if (noteView.state.selection.from !== noteView.state.selection.to)
-        context.updateView({}, noteId);
-    }, 20);
+    // setTimeout(() => {
+    //   if (clickInNote) context.updateView({}, noteId);
+    //   clickInNote = false;
+    //   if (noteView.state.selection.from !== noteView.state.selection.to)
+    // }, 20);
+    if (!clickInNote) {
+      context.updateView({}, noteId);
+    } else {
+      setTimeout(() => {
+        if (clickInNote) context.updateView({}, noteId);
+        clickInNote = false;
+        if (noteView.state.selection.from !== noteView.state.selection.to)
+          context.updateView({}, noteId);
+      }, 20);
+    }
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;

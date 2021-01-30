@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -38,24 +38,12 @@ export default ({ node, view }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, noteId);
-
+            clickInNote = true;
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
           },
-
-          blur: view => {
-            view.dispatch(
-              view.state.tr.setSelection(
-                TextSelection.create(view.state.doc, 0),
-              ),
-            );
-          },
-        },
-        handleTextInput() {
-          clickInNote = true;
-          console.log('inpiut');
         },
         transformPasted: slice => {
           return transformPasted(slice, noteView);
@@ -103,21 +91,12 @@ export default ({ node, view }) => {
     });
 
     // TODO Remove timeout and use state to check if noteView has changed
-    // setTimeout(() => {
-    //   if (clickInNote) context.updateView({}, noteId);
-    //   clickInNote = false;
-    //   if (noteView.state.selection.from !== noteView.state.selection.to)
-    // }, 20);
-    if (!clickInNote) {
-      context.updateView({}, noteId);
-    } else {
-      setTimeout(() => {
-        if (clickInNote) context.updateView({}, noteId);
-        clickInNote = false;
-        if (noteView.state.selection.from !== noteView.state.selection.to)
-          context.updateView({}, noteId);
-      }, 20);
-    }
+    setTimeout(() => {
+      if (clickInNote) context.updateView({}, noteId);
+      clickInNote = false;
+      if (noteView.state.selection.from !== noteView.state.selection.to)
+        context.updateView({}, noteId);
+    }, 20);
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;

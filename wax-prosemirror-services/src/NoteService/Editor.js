@@ -19,6 +19,7 @@ export default ({ node, view }) => {
   const noteId = node.attrs.id;
   let noteView;
   let clickInNote = false;
+  let typing = false;
   // eslint-disable-next-line react/destructuring-assignment
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
@@ -44,6 +45,9 @@ export default ({ node, view }) => {
             // the parent editor is focused.
             if (noteView.hasFocus()) noteView.focus();
           },
+        },
+        handleTextInput: (editorView, from, to, text) => {
+          typing = true;
         },
         transformPasted: slice => {
           return transformPasted(slice, noteView);
@@ -98,6 +102,12 @@ export default ({ node, view }) => {
         context.updateView({}, noteId);
     }, 20);
 
+    const findReplace = context.app.PmPlugins.get('findAndReplacePlugin');
+    const matches = findReplace.getState(noteView.state).allMatches;
+    if (matches.length > 0 && !typing) context.updateView({}, noteId);
+    typing = false;
+    // UNTIL HERE
+
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(noteFound[0].pos + 1);
@@ -108,7 +118,7 @@ export default ({ node, view }) => {
       }
 
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', 'notes'));
+        view.dispatch(outerTr.setMeta('outsideView', noteId));
     }
   };
 

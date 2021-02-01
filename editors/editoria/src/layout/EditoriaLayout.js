@@ -196,38 +196,6 @@ const getNotes = main => {
   return notes;
 };
 
-const getCommentsTracks = main => {
-  const marks = DocumentHelpers.findInlineNodes(main.state.doc);
-  const commentsTracks = [];
-  marks.map(node => {
-    if (node.node.marks.length > 0) {
-      node.node.marks.filter(mark => {
-        if (
-          mark.type.name === 'comment' ||
-          mark.type.name === 'insertion' ||
-          mark.type.name === 'deletion' ||
-          mark.type.name === 'format_change'
-        ) {
-          mark.pos = node.pos;
-          commentsTracks.push(mark);
-        }
-      });
-    }
-  });
-  return commentsTracks;
-};
-
-const getTrackBlockNodes = main => {
-  const allBlockNodes = DocumentHelpers.findBlockNodes(main.state.doc);
-  const trackBlockNodes = [];
-  allBlockNodes.map(node => {
-    if (node.node.attrs.track && node.node.attrs.track.length > 0) {
-      trackBlockNodes.push(node);
-    }
-  });
-  return trackBlockNodes;
-};
-
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
@@ -258,8 +226,10 @@ const EditoriaLayout = ({ editor }) => {
     };
   }
   const notes = main && getNotes(main);
-  const commentsTracks = main && getCommentsTracks(main).length;
-  const trackBlockNodes = main && getTrackBlockNodes(main).length;
+  const commentsTracksCount =
+    main && DocumentHelpers.getCommentsTracksCount(main);
+  const trackBlockNodesCount =
+    main && DocumentHelpers.getTrackBlockNodesCount(main);
 
   const areNotes = notes && !!notes.length && notes.length > 0;
 
@@ -302,7 +272,7 @@ const EditoriaLayout = ({ editor }) => {
                 <CommentsContainer>
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>
-                      {commentsTracks + trackBlockNodes} COMMENTS AND
+                      {commentsTracksCount + trackBlockNodesCount} COMMENTS AND
                       SUGGESTIONS
                       <CommentTrackOptions>
                         <CommentTrackToolBar />

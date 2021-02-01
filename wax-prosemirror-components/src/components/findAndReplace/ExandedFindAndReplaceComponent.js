@@ -139,13 +139,18 @@ const PreviousNextButton = styled.span`
 
 const ExandedFindAndReplaceComponent = ({
   close,
+  findNextMatch,
+  findPreviousMatch,
   matchCaseOption,
   nonExpandedText,
+  setMatchCaseValue,
 }) => {
-  const { app, view } = useContext(WaxContext);
+  const { app, view, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);
+  const [matchCaseSearch, setMatchCaseSearch] = useState(false);
+  const [match, setMatch] = useState([]);
   const [replaceValue, setReplaceValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
@@ -158,7 +163,7 @@ const ExandedFindAndReplaceComponent = ({
 
   const delayedSearch = useCallback(
     debounce(() => searchDocument(), 300),
-    [searchValue],
+    [searchValue, matchCaseSearch],
   );
 
   const onChangeSearchInput = () => {
@@ -167,18 +172,68 @@ const ExandedFindAndReplaceComponent = ({
 
   useEffect(() => {
     delayedSearch();
-  }, [searchValue, delayedSearch, JSON.stringify(allStates)]);
+  }, [searchValue, delayedSearch, matchCaseSearch, JSON.stringify(allStates)]);
+
+  const setCounterSearches = counter => {
+    if (counter === 0) return setCounterText('0 of 0');
+    setCounterText(`0 of ${counter}`);
+
+    const {
+      state: {
+        selection: { from, to },
+      },
+    } = view[activeViewId];
+
+    const results = helpers.getAllResultsByView(
+      view,
+      searchValue,
+      matchCaseSearch,
+    );
+    const resultsFrom = helpers.getResultsFrom(results);
+    let counterMatch = 0;
+    if (activeViewId === 'main') {
+      const matchFound = results.main.filter(result => {
+        return from === result.from && to === result.to;
+      });
+
+      setMatch(matchFound);
+      if (matchFound.length === 1) {
+        setCounterText(`${resultsFrom.main.indexOf(from) + 1} of ${counter}`);
+      }
+    } else {
+      if (resultsFrom.main) counterMatch = resultsFrom.main.length;
+      const notesIds = helpers.getNotesIds(view.main);
+
+      for (let i = 0; i < notesIds.length; i += 1) {
+        if (resultsFrom[notesIds[i]] && activeViewId !== notesIds[i]) {
+          counterMatch += resultsFrom[notesIds[i]].length;
+        }
+        if (resultsFrom[notesIds[i]] && activeViewId === notesIds[i]) {
+          const matchFound = results[notesIds[i]].filter(result => {
+            return from === result.from && to === result.to;
+          });
+          setMatch(matchFound);
+
+          if (matchFound.length === 1) {
+            counterMatch += resultsFrom[notesIds[i]].indexOf(from) + 1;
+            setCounterText(`${counterMatch} of ${counter}`);
+          }
+          break;
+        }
+      }
+    }
+  };
 
   const searchDocument = () => {
-    setCounterText('0 of 0');
     let counter = 0;
     findAndReplacePlugin.props.setSearchText(searchValue);
-    counter = helpers.getMatchesByView(view, searchValue);
+    findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
+    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
 
-    if (counter > 0) setCounterText(`1 of ${counter}`);
+    setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
-      each(view, (singleView, viewId) => {
+      eachRight(view, (singleView, viewId) => {
         singleView.dispatch(singleView.state.tr);
       });
     }
@@ -189,9 +244,15 @@ const ExandedFindAndReplaceComponent = ({
   };
 
   const replace = () => {
-    // const { from, to } = results[0];
-    // dispatch(state.tr.insertText(replace, from, to));
+    if (match.length === 1) {
+      const { from, to } = match[0];
+      view[activeViewId].dispatch(
+        view[activeViewId].state.tr.insertText(replaceValue, from, to),
+      );
+      findNextMatch(searchValue, matchCaseOption);
+    }
   };
+
   const replaceAll = () => {
     each(view, (singleView, viewId) => {
       const results = helpers.findMatches(singleView.state.doc, searchValue);
@@ -214,12 +275,10 @@ const ExandedFindAndReplaceComponent = ({
     close();
   };
 
-  const findNext = () => {
-    // console.log('next');
-  };
-
-  const findPrevious = () => {
-    // console.log('previous');
+  const matchCase = () => {
+    setMatchCaseSearch(!matchCaseOption);
+    setMatchCaseValue(!matchCaseOption);
+    searchRef.current.focus();
   };
 
   return (
@@ -254,16 +313,25 @@ const ExandedFindAndReplaceComponent = ({
           checked={matchCaseOption}
           label="Case Sensitive"
           name="case-sensitive"
+          onChange={matchCase}
         />
       </CheckBoxWrapper>
       <ControlContainer>
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>
         <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
         <PreviousNextContainer>
-          <PreviousNextButton onClick={findPrevious} role="button" tabIndex="0">
+          <PreviousNextButton
+            onClick={() => findPreviousMatch(searchValue, matchCaseOption)}
+            role="button"
+            tabIndex="0"
+          >
             <StyledIcon name="navigatePrevious" />
           </PreviousNextButton>
-          <PreviousNextButton onClick={findNext} role="button" tabIndex="0">
+          <PreviousNextButton
+            onClick={() => findNextMatch(searchValue, matchCaseOption)}
+            role="button"
+            tabIndex="0"
+          >
             <StyledIcon name="navigateNext" />
           </PreviousNextButton>
         </PreviousNextContainer>

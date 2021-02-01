@@ -96,11 +96,17 @@ const CheckboxTitle = styled.div`
 `;
 
 const CheckBox = props => {
-  const { checked, name, label } = props;
+  const { checked, name, label, onChange } = props;
   return (
     <CheckBoxContainer>
       <CheckBoxLabel>
-        <input defaultChecked={checked} id={name} name={name} type="checkbox" />
+        <input
+          defaultChecked={checked}
+          id={name}
+          name={name}
+          onChange={onChange}
+          type="checkbox"
+        />
         <CheckboxCustom />
         <CheckboxTitle>{label}</CheckboxTitle>
       </CheckBoxLabel>

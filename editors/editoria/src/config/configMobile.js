@@ -34,6 +34,7 @@ import {
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
+import { DefaultSchema } from 'wax-prosemirror-utilities';
 
 import invisibles, {
   space,
@@ -63,7 +64,7 @@ export default {
         'Images',
         'CodeBlock',
         'Tables',
-        'TrackChange',
+        // 'TrackChange',
       ],
     },
     {
@@ -72,6 +73,7 @@ export default {
     },
   ],
 
+  SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   TitleService: { updateTitle },

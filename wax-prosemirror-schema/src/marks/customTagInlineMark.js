@@ -1,9 +1,9 @@
 const customtagInline = {
-  excludes: 'cutomInline',
+  excludes: '',
 
   attrs: {
     class: { default: null },
-    tagName: ''
+    tagNames: '',
   },
   inclusive: false,
   parseDOM: [
@@ -12,7 +12,7 @@ const customtagInline = {
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
-          tagname: hook.dom.getAttribute('tagName')
+          tagNames: hook.dom.getAttribute('tagNames'),
         });
         next();
       },

@@ -1,8 +1,10 @@
 /* eslint react/prop-types: 0 */
-import React, { useRef, useEffect, useState, useContext } from 'react';
+import React, { useRef, useEffect, useState, useContext, Fragment } from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { v4 as uuidv4 } from 'uuid';
 
 const IconSVG = props => {
   const { className } = props;
@@ -64,12 +66,22 @@ const ListStyle = styled.div`
   cursor: pointer;
 `;
 
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const DivWidth = styled.div`
+  width: 100%;
+`;
+
+
 const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
   const ref = useRef(null);
   const [tagName, setTagName] = useState();
   const [inputValue, setInputValue] = useState('');
-  const [selectedTagName, setSelectedTagName] = useState('');
+  const [selectedTagName, setSelectedTagName] = useState([]);
   const localTagList = JSON.parse(localStorage.getItem('tagList'));
   const [isCustomTagInline, setCustomTag] = useState(JSON.parse(localStorage.getItem('isInline')));
   const { view: { main } } = useContext(WaxContext);
@@ -82,63 +94,124 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   }
 
   const onClickAdd = () => {
+    const localItem = localStorage.getItem('isInline');
     let tagNameList = [];
     if (localStorage.getItem('tagList') === null) {
-      tagNameList.push(tagName);
+      tagNameList.push({ label: tagName, type: 'inline' });
       localStorage.setItem('tagList', JSON.stringify(tagNameList));
     } else {
       tagNameList = JSON.parse(localStorage.getItem('tagList'));
-      tagNameList.push(tagName);
+      tagNameList.push({ label: tagName, type: 'inline' });
       localStorage.clear('tagList');
       localStorage.setItem('tagList', JSON.stringify(tagNameList));
+      localStorage.setItem('isInline', localItem);
     }
-    setInputValue(' ')
+    setInputValue('');
   }
 
-  const onListClicked = (e, item) => {
+  const onListClicked = (item) => {
+    let tagNames = [];
+    let finalTag = [];
+    let isExist = false;
+    let classNames = 'custom-tag-inline ';
+    const mark = DocumentHelpers.findMark(state, state.schema.marks.customTagInline, true);
 
-    setSelectedTagName(item);
+    tagNames.push(item);
+    if (mark.length > 0) {
+      mark.forEach(itemArtt => {
+        const classArray = itemArtt.attrs.class.split(' ');
+        classArray.forEach(classData => {
+          item.replace(/ /g, "-");
+          if (classData === item.replace(/ /g, "-")) {
+            isExist = true;
+          }
+        })
+        const parseArray = JSON.parse(itemArtt.attrs.tagNames)
+        classNames = itemArtt.attrs.class + ' '
+        finalTag = tagNames.concat(parseArray);
+      });
+    } else {
+      finalTag.push(item);
+    }
+
+    if (isExist) return;
+
+    setSelectedTagName(oldArray => [...oldArray, item]);
+    item = classNames + item.replace(/ /g, "-");
+
     dispatch(
       state.tr.addMark(
         $from.pos,
         $to.pos,
         state.schema.marks.customTagInline.create({
-          tagName: item,
-          class: 'custom-tag-inline',
+          tagNames: JSON.stringify(finalTag),
+          class: item
         }),
       ),
     );
+
   }
 
-  const onClickCancel = () => {
-    dispatch(state.tr.removeMark($from.pos, $to.pos, state.schema.marks.customTagInline));
-    setSelectedTagName('');
+  const onClickCancel = (tagName) => {
+    let classNames = '';
+    let classArray = [];
+    let tagArray = [];
+    let finalTag = [];
+    const mark = DocumentHelpers.findMark(state, state.schema.marks.customTagInline, true);
+
+    setSelectedTagName(finalTag)
+    tagName = tagName.replace(/ /g, "-");
+    if (mark.length > 0) {
+      mark.forEach(itemArtt => {
+        classNames = ''
+        classArray = itemArtt.attrs.class.split(' ');
+        tagArray = JSON.parse(itemArtt.attrs.tagNames);
+        classArray.forEach(classData => {
+          if (classData !== tagName) {
+            classNames = classNames + ' ' + classData
+          }
+        })
+        tagArray.forEach(tag => {
+          if (tag.replace(/ /g, "-") !== tagName) {
+            finalTag.push(tag);
+          }
+        });
+      });
+      setSelectedTagName(finalTag.filter((item, index) => finalTag.indexOf(item) === index));
+      if (finalTag.length === 0) {
+        dispatch(state.tr.removeMark($from.pos, $to.pos, state.schema.marks.customTagInline));
+      } else {
+        dispatch(
+          state.tr.addMark(
+            $from.pos,
+            $to.pos,
+            state.schema.marks.customTagInline.create({
+              tagNames: JSON.stringify(finalTag),
+              class: classNames
+            }),
+          ),
+        );
+      }
+    }
+
   }
 
   useEffect(() => {
-    state.doc.nodesBetween(
-      $from.pos, $to.pos,
-      (node, from) => {
-        node.marks.forEach(item => {
-          setSelectedTagName(item.attrs.tagName !== undefined ? item.attrs.tagName : '' );
-        });
-      },
-    );
     setCustomTag(JSON.parse(localStorage.getItem('isInline')));
   });
 
   return isCustomTagInline === true ? (
     <Wrapper>
-      {localTagList !== null && localTagList.map((item, pos) => <ListStyle key={pos}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div onClick={e => onListClicked(e, item)}> {item} </div>
-          {selectedTagName === item &&
-            <div onClick={onClickCancel}>
-              <Icon />
-            </div>
-          }
+      {localTagList !== null && localTagList.map((item) => <ListStyle key={uuidv4()}>
+        <Flex>
+          <DivWidth onClick={e => onListClicked(item.label)}> {item.label} </DivWidth>
 
-        </div>
+          {selectedTagName.map(value => <Fragment key={uuidv4()}>
+            {value === item.label ? <span onClick={e => onClickCancel(item.label)}>
+              <Icon />
+            </span> : ''}
+          </Fragment>)}
+        </Flex>
       </ListStyle>)}
       <CustomWrapper ref={ref}>
         <Input type="text" onChange={e => onChangeTagName(e)} value={inputValue} />

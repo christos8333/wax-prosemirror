@@ -1,7 +1,9 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Commands } from 'wax-prosemirror-utilities';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import { v4 as uuidv4 } from 'uuid';
 
 const Wrapper = styled.div``;
 
@@ -49,15 +51,18 @@ const StyledButton = styled.div``;
 
 
 
-const CustomTagBlockComponent = (isIconClicked) => {
+const CustomTagBlockComponent = (isIconClicked, item) => {
 
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
   const [tagName, setTagName] = useState('');
   const localTagList = JSON.parse(localStorage.getItem('tagBlockList'));
-  const { view: { main }, activeView } = useContext(WaxContext);
+  const { app, view: { main }, activeView } = useContext(WaxContext);
   const { state, dispatch } = main;
   const { selection: { $from, $to } } = state;
+  const serviceConfig = app.config.get('config.CustomTagService');
+  const [serviceList, setServiceList] = useState([]);
+
 
   const onChangeTagName = (e) => {
     setTagName(e.target.value)
@@ -68,23 +73,44 @@ const CustomTagBlockComponent = (isIconClicked) => {
     if (tagName === '') return;
     let tagNameList = [];
     if (localStorage.getItem('tagBlockList') === null) {
-      tagNameList.push(tagName);
+      tagNameList.push({ label: tagName, type: 'block' });
       localStorage.setItem('tagBlockList', JSON.stringify(tagNameList));
     } else {
       tagNameList = JSON.parse(localStorage.getItem('tagBlockList'));
-      tagNameList.push(tagName);
+      tagNameList.push({ label: tagName, type: 'block' });
       localStorage.clear('tagBlockList');
       localStorage.setItem('tagBlockList', JSON.stringify(tagNameList));
     }
     setInputValue(' ')
   }
 
-  const onSelectTag = (e, item) => {
-    item = item.replace(/ /g, "-");
+  const onSelectTag = (e, val) => {
+    val = val.replace(/ /g, "-");
+
     Commands.setBlockType(state.config.schema.nodes.customTagBlock, {
-      class: 'custom-tag-block ' + item
+      class: 'custom-tag-block ' + val
     })(state, dispatch);
+
+
   }
+
+  useDeepCompareEffect(() => {
+    let labels = [];
+    if (serviceConfig !== undefined) {
+      serviceConfig.tags.forEach(item => {
+        if (item.tagType === 'block') {
+          labels.push(item.label);
+        }
+      });
+    }
+    if (localTagList !== null) {
+      localTagList.forEach(item => {
+        labels.push(item.label)
+      })
+    }
+    setServiceList(labels);
+  }, [localTagList, serviceConfig]);
+
 
   return useMemo(
     () => (
@@ -98,7 +124,7 @@ const CustomTagBlockComponent = (isIconClicked) => {
           <Add onClick={onClickAdd}>Add</Add>
         </FlexDiv>}
 
-        {localTagList !== null && localTagList.map((item, pos) => <ListStyle key={pos}>
+        {serviceList !== null && serviceList.map((item, pos) => <ListStyle key={uuidv4()}>
           <FlexDiv onClick={e => onSelectTag(e, item)} >
             <Box />
             <StyledButton>{item}</StyledButton>

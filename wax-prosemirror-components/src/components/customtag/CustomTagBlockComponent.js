@@ -4,7 +4,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { Commands } from 'wax-prosemirror-utilities';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { v4 as uuidv4 } from 'uuid';
-
+import { th } from '@pubsweet/ui-toolkit';
 const Wrapper = styled.div``;
 
 
@@ -49,6 +49,17 @@ const Box = styled.div`
 
 const StyledButton = styled.div``;
 
+const ActiveStyles = styled.div`
+  background: ${th('colorPrimary')};
+  color: #FFF;
+  padding: 2px;
+  cursor: pointer;
+  font-family: Fira Sans Condensed;
+  font-size: 14px;
+  height: 28px;
+`;
+
+
 
 
 const CustomTagBlockComponent = props => {
@@ -63,6 +74,7 @@ const CustomTagBlockComponent = props => {
   const { selection: { $from, $to } } = state;
   const serviceConfig = app.config.get('config.CustomTagService');
   const [serviceList, setServiceList] = useState([]);
+  const isActive = item.active(activeView.state, activeViewId);
 
   const onChangeTagName = (e) => {
     setTagName(e.target.value)
@@ -106,7 +118,6 @@ const CustomTagBlockComponent = props => {
     setServiceList(labels);
   }, [localTagList, serviceConfig]);
 
-
   return useMemo(
     () => (
       <Wrapper>
@@ -120,13 +131,21 @@ const CustomTagBlockComponent = props => {
         </FlexDiv>}
 
         {serviceList !== null && serviceList.map((item, pos) => <ListStyle key={uuidv4()}>
-          <FlexDiv onClick={e => onSelectTag(e, item)} >
+          {isActive && <ActiveStyles>
+            <FlexDiv onClick={e => onSelectTag(e, item)} >
+              <Box />
+              <StyledButton>{item}</StyledButton>
+            </FlexDiv>
+          </ActiveStyles>}
+          {!isActive && <FlexDiv onClick={e => onSelectTag(e, item)} >
             <Box />
             <StyledButton>{item}</StyledButton>
           </FlexDiv>
+          }
         </ListStyle>)}
       </Wrapper>
     )
+
   );
 };
 

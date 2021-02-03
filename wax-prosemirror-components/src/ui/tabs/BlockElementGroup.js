@@ -66,7 +66,6 @@ const BlockElementGroup = props => {
     setIconClicked(isIconClicked === true ? false : true);
   }
 
-
   return (
     <Wrapper>
       {groupName !== "Custom Block" && <>
@@ -87,7 +86,7 @@ const BlockElementGroup = props => {
           </div>
         </FlexDiv>
         <ListWrapper>
-          <CustomTagBlockComponent isShowTag={isIconClicked} view={view}  />
+          <CustomTagBlockComponent isShowTag={isIconClicked} view={view} item={items[0]}  />
         </ListWrapper>
       </>}
 

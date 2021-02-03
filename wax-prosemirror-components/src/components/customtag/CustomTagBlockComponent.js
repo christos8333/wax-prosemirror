@@ -51,18 +51,18 @@ const StyledButton = styled.div``;
 
 
 
-const CustomTagBlockComponent = (isIconClicked, item) => {
+const CustomTagBlockComponent = props => {
 
+  const { isShowTag, item } = props;
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
   const [tagName, setTagName] = useState('');
   const localTagList = JSON.parse(localStorage.getItem('tagBlockList'));
-  const { app, view: { main }, activeView } = useContext(WaxContext);
+  const { app, view: { main }, activeView, activeViewId } = useContext(WaxContext);
   const { state, dispatch } = main;
   const { selection: { $from, $to } } = state;
   const serviceConfig = app.config.get('config.CustomTagService');
   const [serviceList, setServiceList] = useState([]);
-
 
   const onChangeTagName = (e) => {
     setTagName(e.target.value)
@@ -86,12 +86,7 @@ const CustomTagBlockComponent = (isIconClicked, item) => {
 
   const onSelectTag = (e, val) => {
     val = val.replace(/ /g, "-");
-
-    Commands.setBlockType(state.config.schema.nodes.customTagBlock, {
-      class: 'custom-tag-block ' + val
-    })(state, dispatch);
-
-
+    item.run(state, dispatch, val);
   }
 
   useDeepCompareEffect(() => {
@@ -115,7 +110,7 @@ const CustomTagBlockComponent = (isIconClicked, item) => {
   return useMemo(
     () => (
       <Wrapper>
-        {isIconClicked.isShowTag === true && <FlexDiv>
+        {isShowTag === true && <FlexDiv>
           <Input
             ref={ref}
             type="text"

@@ -15,7 +15,7 @@ export default (view, fileUpload, placeholderPlugin) => file => {
   if (!tr.selection.empty) tr.deleteSelection();
 
   tr.setMeta(placeholderPlugin, {
-    add: { id, pos: tr.selection.from }
+    add: { id, pos: tr.selection.from },
   });
 
   view.dispatch(tr);
@@ -35,15 +35,15 @@ export default (view, fileUpload, placeholderPlugin) => file => {
             pos,
             pos,
             view.state.schema.nodes.image.create({
-              src: url
-            })
+              src: url,
+            }),
           )
-          .setMeta(placeholderPlugin, { remove: { id } })
+          .setMeta(placeholderPlugin, { remove: { id } }),
       );
     },
     () => {
       // On failure, just clean up the placeholder
       view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
-    }
+    },
   );
 };

@@ -1,13 +1,13 @@
 import { SchemaHelpers } from 'wax-prosemirror-utilities';
 const image = {
-  inline: true,
+  // inline: true,
   attrs: {
     src: {},
     alt: { default: null },
     title: { default: null },
     track: { default: [] },
   },
-  group: 'inline',
+  group: 'figure',
   draggable: true,
   parseDOM: [
     {

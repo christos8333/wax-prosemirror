@@ -9,3 +9,4 @@ export { default as mathPlugin } from './src/math/math-plugin';
 export { default as mathSelectPlugin } from './src/math/math-select';
 export { default as FindAndReplacePlugin } from './src/findAndReplace/FindAndReplacePlugin';
 export { default as PlaceHolderPlugin } from './src/images/placeHolderPlugin';
+export { default as captionPlugin } from './src/images/captionPlugin';

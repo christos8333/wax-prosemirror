@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { v4 as uuidv4 } from 'uuid';
-import { th } from '@pubsweet/ui-toolkit';
 
 const Wrapper = styled.div``;
 
@@ -12,6 +11,7 @@ const Input = styled.input`
   border-bottom: 1px solid grey;
   font-size: 14px;
   font-weight: 400;
+
   &:focus {
     outline: none;
   }
@@ -47,16 +47,6 @@ const Box = styled.div`
 `;
 
 const StyledButton = styled.div``;
-
-const ActiveStyles = styled.div`
-  background: ${th('colorPrimary')};
-  color: #fff;
-  cursor: pointer;
-  font-family: 'Fira Sans Condensed';
-  font-size: 14px;
-  height: 28px;
-  padding: 2px;
-`;
 
 const CustomTagBlockComponent = props => {
   const { isShowTag, item } = props;
@@ -105,17 +95,17 @@ const CustomTagBlockComponent = props => {
   };
 
   useDeepCompareEffect(() => {
-    let labels = [];
+    const labels = [];
     if (serviceConfig !== undefined) {
-      serviceConfig.tags.forEach(item => {
-        if (item.tagType === 'block') {
-          labels.push(item.label);
+      serviceConfig.tags.forEach(tag => {
+        if (tag.tagType === 'block') {
+          labels.push(tag.label);
         }
       });
     }
     if (localTagList !== null) {
-      localTagList.forEach(item => {
-        labels.push(item.label);
+      localTagList.forEach(tag => {
+        labels.push(tag.label);
       });
     }
     setServiceList(labels);
@@ -135,16 +125,6 @@ const CustomTagBlockComponent = props => {
             <Add onClick={onClickAdd}>Add</Add>
           </FlexDiv>
         )}
-
-        {serviceList !== null &&
-          serviceList.map((item, pos) => (
-            <ListStyle key={uuidv4()}>
-              <FlexDiv onClick={e => onSelectTag(e, item)}>
-                <Box />
-                <StyledButton>{item}</StyledButton>
-              </FlexDiv>
-            </ListStyle>
-          ))}
       </Wrapper>
     ),
     [],

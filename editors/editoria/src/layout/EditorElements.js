@@ -392,13 +392,13 @@ export default css`
 
   .custom-tag-inline {
     font-weight: 500;
-  } 
+  }
 
   .custom-tag-inline:before {
     content: ' | ';
     color: #006f19;
     font-weight: 600;
-    margin-left: 0
+    margin-left: 0;
   }
 
   .custom-tag-inline:after {
@@ -413,22 +413,22 @@ export default css`
     color: #006f19;
   }
 
-  .custom-tag-block:before {
-    content: '"';
+  custom-tag-block:before {
     color: #006f19;
-    font-weight: 600;
-    margin-left: 0
-  }
-
-  .custom-tag-block:after {
     content: '"';
     display: inline;
+    font-weight: 600;
+    margin-left: 0;
+  }
+
+  custom-tag-block:after {
     color: #006f19;
+    content: '"';
+    display: inline;
     font-weight: 600;
   }
 
   .transform-icon {
     transform: rotate(40deg);
   }
-
 `;

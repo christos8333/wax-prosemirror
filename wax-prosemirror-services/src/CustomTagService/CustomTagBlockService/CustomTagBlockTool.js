@@ -8,7 +8,7 @@ class CustomTagBlockTool extends Tools {
   get run() {
     return (state, dispatch, val) => {
       Commands.setBlockType(state.config.schema.nodes.customTagBlock, {
-        class: `custom-tag-block ${val}`,
+        class: val,
       })(state, dispatch);
     };
   }
@@ -17,6 +17,7 @@ class CustomTagBlockTool extends Tools {
     return state => {
       return Commands.customTagBlockActive(
         state.config.schema.nodes.customTagBlock,
+        { class: 'custom-tag-label-3' },
       )(state);
     };
   }

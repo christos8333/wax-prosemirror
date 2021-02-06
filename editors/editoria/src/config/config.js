@@ -134,8 +134,8 @@ export default {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },
       { label: 'custom-tag-label-2', tagType: 'inline' },
-      { label: 'custom-tag-label-3', tagType: 'block' }
-    ]
+      { label: 'custom-tag-label-3', tagType: 'block' },
+    ],
   },
 
   // Always load first CommentsService and LinkService,

@@ -55,7 +55,11 @@ const blockActive = (nodeType, attrs = {}) => {
   };
 };
 
-const customTagBlockActive = (type, attrs = {}) => state => {};
+const customTagBlockActive = (type, attrs = {}) => state => {
+  const { $from } = state.selection;
+  console.log('type', type);
+  console.log($from);
+};
 
 // const blockActive = (type, attrs = {}) => state => {
 //   const { $from, to, node } = state.selection;

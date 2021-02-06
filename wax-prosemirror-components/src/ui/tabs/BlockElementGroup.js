@@ -85,7 +85,7 @@ const BlockElementGroup = props => {
         <>
           <FlexDiv>
             <GroupName>{groupName}</GroupName>
-            <div onClick={onIconClick}>
+            <div aria-hidden="true" onClick={onIconClick}>
               {isIconClicked === false && <Icon />}
               {isIconClicked === true && <IconCross />}
             </div>

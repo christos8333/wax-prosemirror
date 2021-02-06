@@ -1,27 +1,27 @@
 const subtitle = {
-  content: "inline*",
-  group: "block",
+  content: 'inline*',
+  group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: "cst" }
+    class: { default: 'cst' },
   },
   parseDOM: [
     {
-      tag: "p.cst",
+      tag: 'p.cst',
       getAttrs(hook, next) {
         Object.assign(hook, {
-          class: dom.getAttribute("class")
+          class: hook.dom.getAttribute('class'),
         });
         next();
-      }
-    }
+      },
+    },
   ],
   toDOM(hook, next) {
     const attrs = { class: hook.node.attrs.class };
-    hook.value = ["p", attrs, 0];
+    hook.value = ['p', attrs, 0];
     next();
-  }
+  },
 };
 
 export default subtitle;

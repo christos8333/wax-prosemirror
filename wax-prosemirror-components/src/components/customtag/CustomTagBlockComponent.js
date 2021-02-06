@@ -79,7 +79,6 @@ const CustomTagBlockComponent = props => {
   const serviceConfig = app.config.get('config.CustomTagService');
   const [serviceList, setServiceList] = useState([]);
   const isActive = item.active(activeView.state, activeViewId, type);
-  console.log(isActive);
 
   const onChangeTagName = e => {
     setTagName(e.target.value);
@@ -87,7 +86,7 @@ const CustomTagBlockComponent = props => {
   };
 
   const onClickAdd = () => {
-    if (tagName === '') return;
+    if (tagName.trim() === '') return;
     let tagNameList = [];
     if (localStorage.getItem('tagBlockList') === null) {
       tagNameList.push({ label: tagName, type: 'block' });
@@ -102,8 +101,7 @@ const CustomTagBlockComponent = props => {
   };
 
   const onSelectTag = (e, val) => {
-    val = val.replace(/ /g, '-');
-    item.run(state, dispatch, val);
+    item.run(state, dispatch, val.replace(/ /g, '-'));
   };
 
   useDeepCompareEffect(() => {

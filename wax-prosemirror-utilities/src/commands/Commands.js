@@ -57,8 +57,12 @@ const blockActive = (nodeType, attrs = {}) => {
 
 const customTagBlockActive = (type, attrs = {}) => state => {
   const { $from } = state.selection;
-  console.log('type', type);
-  console.log($from);
+  if (
+    $from.parent.attrs.class === attrs.class &&
+    $from.parent.type.name === 'custom-tag-block'
+  )
+    return true;
+  return false;
 };
 
 // const blockActive = (type, attrs = {}) => state => {

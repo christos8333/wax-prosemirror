@@ -14,10 +14,10 @@ class CustomTagBlockTool extends Tools {
   }
 
   get active() {
-    return state => {
+    return (state, activeViewId, type) => {
       return Commands.customTagBlockActive(
         state.config.schema.nodes.customTagBlock,
-        { class: 'custom-tag-label-3' },
+        { class: type },
       )(state);
     };
   }

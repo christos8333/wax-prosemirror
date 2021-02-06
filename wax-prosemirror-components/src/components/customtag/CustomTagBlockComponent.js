@@ -52,7 +52,7 @@ const ActiveStyles = styled.div`
   background: ${th('colorPrimary')};
   color: #fff;
   cursor: pointer;
-  font-family: Fira Sans Condensed;
+  font-family: 'Fira Sans Condensed';
   font-size: 14px;
   height: 28px;
   padding: 2px;
@@ -64,17 +64,22 @@ const CustomTagBlockComponent = props => {
   const [inputValue, setInputValue] = useState('');
   const [tagName, setTagName] = useState('');
   const localTagList = JSON.parse(localStorage.getItem('tagBlockList'));
+
   const {
     app,
     view: { main },
     activeView,
     activeViewId,
   } = useContext(WaxContext);
-  const { state, dispatch } = main;
 
+  const { state, dispatch } = main;
+  const { $from } = state.selection;
+
+  const type = $from.parent.attrs.class ? $from.parent.attrs.class : '';
   const serviceConfig = app.config.get('config.CustomTagService');
   const [serviceList, setServiceList] = useState([]);
-  const isActive = item.active(activeView.state, activeViewId);
+  const isActive = item.active(activeView.state, activeViewId, type);
+  console.log(isActive);
 
   const onChangeTagName = e => {
     setTagName(e.target.value);
@@ -118,41 +123,34 @@ const CustomTagBlockComponent = props => {
     setServiceList(labels);
   }, [localTagList, serviceConfig]);
 
-  return useMemo(() => (
-    <Wrapper>
-      {isShowTag === true && (
-        <FlexDiv>
-          <Input
-            onChange={e => onChangeTagName(e)}
-            ref={ref}
-            type="text"
-            value={inputValue}
-          />
-          <Add onClick={onClickAdd}>Add</Add>
-        </FlexDiv>
-      )}
+  return useMemo(
+    () => (
+      <Wrapper>
+        {isShowTag && (
+          <FlexDiv>
+            <Input
+              onChange={e => onChangeTagName(e)}
+              ref={ref}
+              type="text"
+              value={inputValue}
+            />
+            <Add onClick={onClickAdd}>Add</Add>
+          </FlexDiv>
+        )}
 
-      {serviceList !== null &&
-        serviceList.map((item, pos) => (
-          <ListStyle key={uuidv4()}>
-            {isActive && (
-              <ActiveStyles>
-                <FlexDiv onClick={e => onSelectTag(e, item)}>
-                  <Box />
-                  <StyledButton>{item}</StyledButton>
-                </FlexDiv>
-              </ActiveStyles>
-            )}
-            {!isActive && (
+        {serviceList !== null &&
+          serviceList.map((item, pos) => (
+            <ListStyle key={uuidv4()}>
               <FlexDiv onClick={e => onSelectTag(e, item)}>
                 <Box />
                 <StyledButton>{item}</StyledButton>
               </FlexDiv>
-            )}
-          </ListStyle>
-        ))}
-    </Wrapper>
-  ));
+            </ListStyle>
+          ))}
+      </Wrapper>
+    ),
+    [],
+  );
 };
 
 export default CustomTagBlockComponent;

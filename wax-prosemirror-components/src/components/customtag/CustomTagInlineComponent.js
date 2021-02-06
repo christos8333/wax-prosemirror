@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MenuButton from '../../ui/buttons/MenuButton';
 
@@ -8,17 +8,18 @@ const Wrapper = styled.div`
   z-index: 2;
 `;
 
-
 const CustomTagInlineComponent = ({ view: { state }, item }) => {
   const { icon, title } = item;
-  const localInline = JSON.parse(localStorage.getItem('isInline'))
-  const [isOpen, setIsOpen] = useState((localInline !== null && localInline !== false) ? true : false);
+  const localInline = JSON.parse(localStorage.getItem('isInline'));
+  const [isOpen, setIsOpen] = useState(
+    !!(localInline !== null && localInline !== false),
+  );
   const ref = useRef();
-  
+
   const onClickIcon = () => {
-    setIsOpen(isOpen === true ? false : true);
-    localStorage.setItem('isInline', isOpen === true ? false : true);
-  }
+    setIsOpen(isOpen !== true);
+    localStorage.setItem('isInline', isOpen !== true);
+  };
 
   return useMemo(
     () => (
@@ -26,8 +27,8 @@ const CustomTagInlineComponent = ({ view: { state }, item }) => {
         <div onClick={onClickIcon}>
           <MenuButton
             active={isOpen}
-            iconName={icon}
             disabled={false}
+            iconName={icon}
             title={title}
           />
         </div>

@@ -1,18 +1,17 @@
-import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
-import { Commands } from 'wax-prosemirror-utilities';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { v4 as uuidv4 } from 'uuid';
 import { th } from '@pubsweet/ui-toolkit';
+
 const Wrapper = styled.div``;
 
-
 const Input = styled.input`
-  font-size: 14px;
-  font-weight: 400;
   border: none;
   border-bottom: 1px solid grey;
+  font-size: 14px;
+  font-weight: 400;
   &:focus {
     outline: none;
   }
@@ -24,26 +23,26 @@ const FlexDiv = styled.div`
 
 const Add = styled.button`
   align-self: flex-end;
-  border: none;
   background: none;
+  border: none;
   color: #0042c7;
   cursor: pointer;
 `;
 
 const ListStyle = styled.div`
-  padding: 2px 3px;
-  margin: 5px 7px 7px 0px;
   cursor: pointer;
+  margin: 5px 7px 7px 0px;
+  padding: 2px 3px;
 `;
 
 const Box = styled.div`
-  width: 22px;
+  background: #bfc4cd;
+  border-radius: 4px;
   height: 22px;
   position: relative;
-  top: 3px;
   right: 3px;
-  border-radius: 4px;
-  background: #bfc4cd;
+  top: 3px;
+  width: 22px;
   z-index: 999;
 `;
 
@@ -51,35 +50,36 @@ const StyledButton = styled.div``;
 
 const ActiveStyles = styled.div`
   background: ${th('colorPrimary')};
-  color: #FFF;
-  padding: 2px;
+  color: #fff;
   cursor: pointer;
   font-family: Fira Sans Condensed;
   font-size: 14px;
   height: 28px;
+  padding: 2px;
 `;
 
-
-
-
 const CustomTagBlockComponent = props => {
-
   const { isShowTag, item } = props;
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
   const [tagName, setTagName] = useState('');
   const localTagList = JSON.parse(localStorage.getItem('tagBlockList'));
-  const { app, view: { main }, activeView, activeViewId } = useContext(WaxContext);
+  const {
+    app,
+    view: { main },
+    activeView,
+    activeViewId,
+  } = useContext(WaxContext);
   const { state, dispatch } = main;
-  const { selection: { $from, $to } } = state;
+
   const serviceConfig = app.config.get('config.CustomTagService');
   const [serviceList, setServiceList] = useState([]);
   const isActive = item.active(activeView.state, activeViewId);
 
-  const onChangeTagName = (e) => {
-    setTagName(e.target.value)
-    setInputValue(e.target.value)
-  }
+  const onChangeTagName = e => {
+    setTagName(e.target.value);
+    setInputValue(e.target.value);
+  };
 
   const onClickAdd = () => {
     if (tagName === '') return;
@@ -93,13 +93,13 @@ const CustomTagBlockComponent = props => {
       localStorage.clear('tagBlockList');
       localStorage.setItem('tagBlockList', JSON.stringify(tagNameList));
     }
-    setInputValue(' ')
-  }
+    setInputValue(' ');
+  };
 
   const onSelectTag = (e, val) => {
-    val = val.replace(/ /g, "-");
+    val = val.replace(/ /g, '-');
     item.run(state, dispatch, val);
-  }
+  };
 
   useDeepCompareEffect(() => {
     let labels = [];
@@ -112,41 +112,47 @@ const CustomTagBlockComponent = props => {
     }
     if (localTagList !== null) {
       localTagList.forEach(item => {
-        labels.push(item.label)
-      })
+        labels.push(item.label);
+      });
     }
     setServiceList(labels);
   }, [localTagList, serviceConfig]);
 
-  return useMemo(
-    () => (
-      <Wrapper>
-        {isShowTag === true && <FlexDiv>
+  return useMemo(() => (
+    <Wrapper>
+      {isShowTag === true && (
+        <FlexDiv>
           <Input
+            onChange={e => onChangeTagName(e)}
             ref={ref}
             type="text"
-            onChange={e => onChangeTagName(e)} value={inputValue}
+            value={inputValue}
           />
           <Add onClick={onClickAdd}>Add</Add>
-        </FlexDiv>}
+        </FlexDiv>
+      )}
 
-        {serviceList !== null && serviceList.map((item, pos) => <ListStyle key={uuidv4()}>
-          {isActive && <ActiveStyles>
-            <FlexDiv onClick={e => onSelectTag(e, item)} >
-              <Box />
-              <StyledButton>{item}</StyledButton>
-            </FlexDiv>
-          </ActiveStyles>}
-          {!isActive && <FlexDiv onClick={e => onSelectTag(e, item)} >
-            <Box />
-            <StyledButton>{item}</StyledButton>
-          </FlexDiv>
-          }
-        </ListStyle>)}
-      </Wrapper>
-    )
-
-  );
+      {serviceList !== null &&
+        serviceList.map((item, pos) => (
+          <ListStyle key={uuidv4()}>
+            {isActive && (
+              <ActiveStyles>
+                <FlexDiv onClick={e => onSelectTag(e, item)}>
+                  <Box />
+                  <StyledButton>{item}</StyledButton>
+                </FlexDiv>
+              </ActiveStyles>
+            )}
+            {!isActive && (
+              <FlexDiv onClick={e => onSelectTag(e, item)}>
+                <Box />
+                <StyledButton>{item}</StyledButton>
+              </FlexDiv>
+            )}
+          </ListStyle>
+        ))}
+    </Wrapper>
+  ));
 };
 
 export default CustomTagBlockComponent;

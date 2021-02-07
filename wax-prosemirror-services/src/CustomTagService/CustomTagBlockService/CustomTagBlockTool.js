@@ -35,6 +35,11 @@ class CustomTagBlockTool extends Tools {
       return tagsActive;
     };
   }
+
+  select = (state, activeViewId) => {
+    if (activeViewId !== 'main') return false;
+    return true;
+  };
 }
 
 export default CustomTagBlockTool;

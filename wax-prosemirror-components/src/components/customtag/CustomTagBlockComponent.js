@@ -35,8 +35,27 @@ const CustomTagList = styled.div`
   flex-direction: column;
 
   button {
-    margin-top: 5px;
+    border-radius: 4px;
+    left: -33px;
+    margin-left: 4px;
+    padding-left: 25px;
+    position: relative;
   }
+`;
+
+const ListWrapper = styled.div`
+  display: flex;
+`;
+
+const Box = styled.div`
+  background: #bfc4cd;
+  border-radius: 4px;
+  height: 22px;
+  position: relative;
+  right: 3px;
+  top: 3px;
+  width: 22px;
+  z-index: 999;
 `;
 
 const CustomTagBlockComponent = ({ isShowTag, item }) => {
@@ -63,6 +82,13 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     allTags,
   );
 
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
+  let isDisabled = !item.select(state, activeViewId, activeView);
+  if (!isEditable) isDisabled = true;
+
   const onChangeTagName = () => {
     setInputValue(ref.current.value);
   };
@@ -87,14 +113,18 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
     blockTags.forEach(blockTag => {
       tagList.push(
-        <MenuButton
-          active={tagStatus[blockTag.label]}
-          disabled={false}
-          key={uuidv4()}
-          label={blockTag.label}
-          onMouseDown={() => onSelectTag(blockTag.label)}
-          title={blockTag.label}
-        />,
+        <ListWrapper>
+          <Box />
+          <MenuButton
+            active={tagStatus[blockTag.label]}
+            disabled={isDisabled}
+            key={uuidv4()}
+            label={blockTag.label}
+            onMouseDown={() => onSelectTag(blockTag.label)}
+            title={blockTag.label}
+          />
+          ,
+        </ListWrapper>,
       );
     });
     return <CustomTagList>{tagList}</CustomTagList>;
@@ -117,7 +147,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         {renderTagList()}
       </>
     ),
-    [isShowTag, inputValue, tagStatus],
+    [isShowTag, inputValue, tagStatus, isDisabled],
   );
 };
 

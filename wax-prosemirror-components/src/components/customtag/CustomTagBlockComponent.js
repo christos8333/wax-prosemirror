@@ -102,7 +102,8 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
     configTags.push({ label: inputValue, tagType: 'block' });
     setAllTags(configTags);
-    setInputValue(' ');
+    setInputValue('');
+    if (ref.current) ref.current.focus();
   };
 
   const handleKeyDown = event => {

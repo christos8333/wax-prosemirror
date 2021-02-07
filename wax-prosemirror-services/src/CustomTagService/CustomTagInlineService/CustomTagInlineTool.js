@@ -1,8 +1,7 @@
 import React from 'react';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
-import Tools from '../../lib/Tools';
 import { v4 as uuidv4 } from 'uuid';
 import { CustomTagInlineComponent } from 'wax-prosemirror-components';
+import Tools from '../../lib/Tools';
 
 class CustomTagInLineTool extends Tools {
   title = 'Custom Tag Inline';
@@ -11,7 +10,11 @@ class CustomTagInLineTool extends Tools {
 
   renderTool(view) {
     return (
-      <CustomTagInlineComponent item={this.toJSON()} key={uuidv4()} view={view} />
+      <CustomTagInlineComponent
+        item={this.toJSON()}
+        key={uuidv4()}
+        view={view}
+      />
     );
   }
 }

@@ -1,9 +1,10 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
+  InlineAnnotationsService,
   AnnotationToolGroupService,
   ImageService,
-  InlineAnnotationsService,
+  ImageToolGroupService,
   LinkService,
   ListsService,
   ListToolGroupService,
@@ -13,7 +14,6 @@ import {
   BaseToolGroupService,
   DisplayBlockLevelService,
   DisplayToolGroupService,
-  ImageToolGroupService,
   TextBlockLevelService,
   TextToolGroupService,
   NoteService,
@@ -37,10 +37,8 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
-  TrackOptionsService,
   TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
-  CustomTagInlineService,
   CustomTagInlineToolGroupService,
   CustomTagBlockToolGroupService,
   CustomTagService,
@@ -139,8 +137,6 @@ export default {
     ],
   },
 
-  // Always load first CommentsService and LinkService,
-  //as it matters on how PM treats nodes and marks
   services: [
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

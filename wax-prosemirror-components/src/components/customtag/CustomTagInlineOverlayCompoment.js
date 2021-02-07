@@ -127,7 +127,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
           }
         });
         const parseArray = JSON.parse(itemArtt.attrs.tagNames);
-        classNames = itemArtt.attrs.class + ' ';
+        classNames = `${itemArtt.attrs.class} `;
         finalTag = tagNames.concat(parseArray);
       });
     } else {

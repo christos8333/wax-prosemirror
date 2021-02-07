@@ -73,7 +73,9 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const { $from } = state.selection;
 
   const className = $from.parent.attrs.class ? $from.parent.attrs.class : '';
-  const configTags = app.config.get('config.CustomTagService').tags;
+  const customTagsConfig = app.config.get('config.CustomTagService');
+  const configTags =
+    customTagsConfig && customTagsConfig.tags ? customTagsConfig.tags : [];
   const [allTags, setAllTags] = useState(configTags);
   const tagStatus = item.active(
     activeView.state,

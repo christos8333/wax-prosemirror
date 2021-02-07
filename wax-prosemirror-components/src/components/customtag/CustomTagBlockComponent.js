@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -11,6 +11,7 @@ const Input = styled.input`
   border-bottom: 1px solid grey;
   font-size: 14px;
   font-weight: 400;
+  width: 150px;
 
   &:focus {
     outline: none;
@@ -19,6 +20,7 @@ const Input = styled.input`
 
 const FlexDiv = styled.div`
   display: flex;
+  width: 150px;
 `;
 
 const Add = styled.button`
@@ -48,12 +50,10 @@ const Box = styled.div`
 
 const StyledButton = styled.div``;
 
-const CustomTagBlockComponent = props => {
-  const { isShowTag, item } = props;
+const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
   const [tagName, setTagName] = useState('');
-  const localTagList = JSON.parse(localStorage.getItem('tagBlockList'));
 
   const {
     app,
@@ -66,27 +66,20 @@ const CustomTagBlockComponent = props => {
   const { $from } = state.selection;
 
   const type = $from.parent.attrs.class ? $from.parent.attrs.class : '';
-  const serviceConfig = app.config.get('config.CustomTagService');
-  const [serviceList, setServiceList] = useState([]);
+  const configTags = app.config.get('config.CustomTagService').tags;
+  const [allTags, setAllTags] = useState(configTags);
   const isActive = item.active(activeView.state, activeViewId, type);
 
-  const onChangeTagName = e => {
-    setTagName(e.target.value);
-    setInputValue(e.target.value);
+  const onChangeTagName = () => {
+    setTagName(ref.current.value);
+    setInputValue(ref.current.value);
   };
 
   const onClickAdd = () => {
     if (tagName.trim() === '') return;
-    let tagNameList = [];
-    if (localStorage.getItem('tagBlockList') === null) {
-      tagNameList.push({ label: tagName, type: 'block' });
-      localStorage.setItem('tagBlockList', JSON.stringify(tagNameList));
-    } else {
-      tagNameList = JSON.parse(localStorage.getItem('tagBlockList'));
-      tagNameList.push({ label: tagName, type: 'block' });
-      localStorage.clear('tagBlockList');
-      localStorage.setItem('tagBlockList', JSON.stringify(tagNameList));
-    }
+
+    configTags.push({ label: tagName, tagType: 'block' });
+    setAllTags(configTags);
     setInputValue(' ');
   };
 
@@ -94,22 +87,7 @@ const CustomTagBlockComponent = props => {
     item.run(state, dispatch, val.replace(/ /g, '-'));
   };
 
-  useDeepCompareEffect(() => {
-    const labels = [];
-    if (serviceConfig !== undefined) {
-      serviceConfig.tags.forEach(tag => {
-        if (tag.tagType === 'block') {
-          labels.push(tag.label);
-        }
-      });
-    }
-    if (localTagList !== null) {
-      localTagList.forEach(tag => {
-        labels.push(tag.label);
-      });
-    }
-    setServiceList(labels);
-  }, [localTagList, serviceConfig]);
+  console.log(allTags);
 
   return useMemo(
     () => (
@@ -117,7 +95,7 @@ const CustomTagBlockComponent = props => {
         {isShowTag && (
           <FlexDiv>
             <Input
-              onChange={e => onChangeTagName(e)}
+              onChange={onChangeTagName}
               ref={ref}
               type="text"
               value={inputValue}
@@ -127,7 +105,7 @@ const CustomTagBlockComponent = props => {
         )}
       </Wrapper>
     ),
-    [],
+    [isShowTag, inputValue],
   );
 };
 

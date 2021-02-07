@@ -4,13 +4,13 @@ import { LeftMenuTitle } from '../../../../../wax-prosemirror-components/src/com
 
 @injectable()
 class CustomTagBlockToolGroup extends ToolGroup {
-    tools = [];
-    title = "Custom Block";
+  tools = [];
+  title = 'Custom Block';
 
-    constructor(@inject('CustomTagBlockTool') customTagBlock) {
-        super();
-        this.tools = [customTagBlock];
-    }
+  constructor(@inject('CustomTagBlockTool') customTagBlock) {
+    super();
+    this.tools = [customTagBlock];
+  }
 }
 
 export default CustomTagBlockToolGroup;

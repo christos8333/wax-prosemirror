@@ -6,8 +6,6 @@ import CustomTagBlockComponent from '../../components/customtag/CustomTagBlockCo
 import BlockElement from './BlockElement';
 import Icon from '../../helpers/Icon';
 
-const Wrapper = styled.div``;
-
 const GroupName = styled.div`
   font-size: 14px;
   margin-bottom: 4px;
@@ -28,12 +26,11 @@ const FlexDiv = styled.div`
 const StyledIcon = styled(Icon)`
   cursor: pointer;
   fill: ${th('colorPrimary')};
-  height: 10px;
-  width: 10px;
+  height: 14px;
+  width: 14px;
 `;
 
-const BlockElementGroup = props => {
-  const { groupName, items, view } = props;
+const BlockElementGroup = ({ groupName, items, view }) => {
   const [isIconClicked, setIconClicked] = useState(false);
 
   const onIconClick = () => {
@@ -41,7 +38,7 @@ const BlockElementGroup = props => {
   };
 
   return (
-    <Wrapper>
+    <>
       {groupName !== 'Custom Block' && (
         <>
           <GroupName>{groupName}</GroupName>
@@ -72,7 +69,7 @@ const BlockElementGroup = props => {
           </ListWrapper>
         </>
       )}
-    </Wrapper>
+    </>
   );
 };
 

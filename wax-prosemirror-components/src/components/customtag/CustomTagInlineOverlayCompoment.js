@@ -12,25 +12,11 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
 
-const IconSVG = props => {
-  const { className } = props;
-  return (
-    <svg version="1.1" viewBox="0 0 512.001 512.001" className={className}>
-      <path
-        d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717
-       L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859
-       c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287
-       l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285
-       L284.286,256.002z"
-      />
-    </svg>
-  );
-};
+import Icon from '../../helpers/Icon';
 
-const Icon = styled(IconSVG)`
+const IconRemove = styled(Icon)`
   height: 10px;
   width: 10px;
-  fill: ${th('colorPrimary')};
 `;
 
 const Wrapper = styled.div`
@@ -38,19 +24,20 @@ const Wrapper = styled.div`
   border-radius: 1.03093% / 8%;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-  transform-origin: 50% 50% 0px;
   padding: ${grid(2)} ${grid(1)} ${grid(2)} ${grid(2)};
+  transform-origin: 50% 50% 0px;
 `;
 
 const CustomWrapper = styled.div`
   display: inline-block;
-  width: 200px;
   margin-right: 12px;
+  width: 200px;
 `;
 
 const Input = styled.input`
-  width: calc(100% - 8px);
   outline: none;
+  width: calc(100% - 8px);
+
   :focus {
     outline: none;
   }
@@ -61,16 +48,16 @@ const ButtonGroup = styled.div`
 `;
 
 const StyledButton = styled.button`
-  margin-right: 10px;
   background: ${th('colorPrimary')};
-  cursor: pointer;
   color: #fff;
+  cursor: pointer;
+  margin-right: 10px;
 `;
 
 const ListStyle = styled.div`
-  padding: 2px 3px;
-  margin: 5px 7px 7px 0px;
   cursor: pointer;
+  margin: 5px 7px 7px 0px;
+  padding: 2px 3px;
 `;
 
 const Flex = styled.div`
@@ -84,7 +71,6 @@ const DivWidth = styled.div`
 
 const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   const ref = useRef(null);
-  const [tagName, setTagName] = useState();
   const [inputValue, setInputValue] = useState('');
   const [selectedTagName, setSelectedTagName] = useState([]);
   const localTagList = JSON.parse(localStorage.getItem('tagList'));
@@ -100,19 +86,18 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   } = state;
 
   const onChangeTagName = e => {
-    setTagName(e.target.value);
-    setInputValue(e.target.value);
+    setInputValue(ref.current.value);
   };
 
   const onClickAdd = () => {
     const localItem = localStorage.getItem('isInline');
     let tagNameList = [];
     if (localStorage.getItem('tagList') === null) {
-      tagNameList.push({ label: tagName, type: 'inline' });
+      tagNameList.push({ label: inputValue, type: 'inline' });
       localStorage.setItem('tagList', JSON.stringify(tagNameList));
     } else {
       tagNameList = JSON.parse(localStorage.getItem('tagList'));
-      tagNameList.push({ label: tagName, type: 'inline' });
+      tagNameList.push({ label: inputValue, type: 'inline' });
       localStorage.clear('tagList');
       localStorage.setItem('tagList', JSON.stringify(tagNameList));
       localStorage.setItem('isInline', localItem);
@@ -121,7 +106,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   };
 
   const onListClicked = item => {
-    let tagNames = [];
+    const tagNames = [];
     let finalTag = [];
     let isExist = false;
     let classNames = 'custom-tag-inline ';
@@ -232,15 +217,18 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
           <ListStyle key={uuidv4()}>
             <Flex>
               <DivWidth onClick={e => onListClicked(item.label)}>
-                {' '}
-                {item.label}{' '}
+                {item.label}
               </DivWidth>
 
               {selectedTagName.map(value => (
                 <Fragment key={uuidv4()}>
                   {value === item.label ? (
-                    <span onClick={e => onClickCancel(item.label)}>
-                      <Icon />
+                    <span
+                      aria-hidden="true"
+                      onClick={() => onClickCancel(item.label)}
+                      role="button"
+                    >
+                      <IconRemove name="removeTag" />
                     </span>
                   ) : (
                     ''
@@ -252,14 +240,14 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
         ))}
       <CustomWrapper ref={ref}>
         <Input
+          onChange={() => onChangeTagName()}
           type="text"
-          onChange={e => onChangeTagName(e)}
           value={inputValue}
         />
       </CustomWrapper>
 
       <ButtonGroup>
-        <StyledButton type="button" onClick={onClickAdd}>
+        <StyledButton onClick={onClickAdd} type="button">
           Add
         </StyledButton>
       </ButtonGroup>

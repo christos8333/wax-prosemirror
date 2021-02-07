@@ -87,7 +87,16 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     item.run(state, dispatch, val.replace(/ /g, '-'));
   };
 
-  console.log(allTags);
+  const renderTagList = () => {
+    const tagList = [];
+    const blockTags = allTags.filter(tag => {
+      return tag.tagType === 'block';
+    });
+    blockTags.forEach(blockTag => {
+      tagList.push(<span key={uuidv4()}>{blockTag.label}</span>);
+    });
+    return <div>{tagList}</div>;
+  };
 
   return useMemo(
     () => (
@@ -103,6 +112,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
             <Add onClick={onClickAdd}>Add</Add>
           </FlexDiv>
         )}
+        {renderTagList()}
       </Wrapper>
     ),
     [isShowTag, inputValue],

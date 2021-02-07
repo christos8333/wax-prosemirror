@@ -14,11 +14,25 @@ class CustomTagBlockTool extends Tools {
   }
 
   get active() {
-    return (state, activeViewId, type) => {
-      return Commands.customTagBlockActive(
+    return (state, activeViewId, className, allTags) => {
+      const isActive = Commands.customTagBlockActive(
         state.config.schema.nodes.customTagBlock,
-        { class: type },
+        { class: className },
       )(state);
+
+      const blockTags = allTags.filter(tag => {
+        return tag.tagType === 'block';
+      });
+
+      const tagsActive = {};
+      blockTags.forEach(tag => {
+        if (isActive && className === tag.label.replace(/ /g, '-')) {
+          tagsActive[tag.label] = true;
+        } else {
+          tagsActive[tag.label] = false;
+        }
+      });
+      return tagsActive;
     };
   }
 }

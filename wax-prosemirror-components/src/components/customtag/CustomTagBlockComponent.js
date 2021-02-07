@@ -1,10 +1,8 @@
-import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 import { v4 as uuidv4 } from 'uuid';
-
-const Wrapper = styled.div``;
+import MenuButton from '../../ui/buttons/MenuButton';
 
 const Input = styled.input`
   border: none;
@@ -31,29 +29,19 @@ const Add = styled.button`
   cursor: pointer;
 `;
 
-const ListStyle = styled.div`
-  cursor: pointer;
-  margin: 5px 7px 7px 0px;
-  padding: 2px 3px;
-`;
+const CustomTagList = styled.div`
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
 
-const Box = styled.div`
-  background: #bfc4cd;
-  border-radius: 4px;
-  height: 22px;
-  position: relative;
-  right: 3px;
-  top: 3px;
-  width: 22px;
-  z-index: 999;
+  button {
+    margin-top: 5px;
+  }
 `;
-
-const StyledButton = styled.div``;
 
 const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
-  const [tagName, setTagName] = useState('');
 
   const {
     app,
@@ -65,25 +53,29 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const { state, dispatch } = main;
   const { $from } = state.selection;
 
-  const type = $from.parent.attrs.class ? $from.parent.attrs.class : '';
+  const className = $from.parent.attrs.class ? $from.parent.attrs.class : '';
   const configTags = app.config.get('config.CustomTagService').tags;
   const [allTags, setAllTags] = useState(configTags);
-  const isActive = item.active(activeView.state, activeViewId, type);
+  const tagStatus = item.active(
+    activeView.state,
+    activeViewId,
+    className,
+    allTags,
+  );
 
   const onChangeTagName = () => {
-    setTagName(ref.current.value);
     setInputValue(ref.current.value);
   };
 
   const onClickAdd = () => {
-    if (tagName.trim() === '') return;
+    if (inputValue.trim() === '') return;
 
-    configTags.push({ label: tagName, tagType: 'block' });
+    configTags.push({ label: inputValue, tagType: 'block' });
     setAllTags(configTags);
     setInputValue(' ');
   };
 
-  const onSelectTag = (e, val) => {
+  const onSelectTag = val => {
     item.run(state, dispatch, val.replace(/ /g, '-'));
   };
 
@@ -92,15 +84,25 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     const blockTags = allTags.filter(tag => {
       return tag.tagType === 'block';
     });
+
     blockTags.forEach(blockTag => {
-      tagList.push(<span key={uuidv4()}>{blockTag.label}</span>);
+      tagList.push(
+        <MenuButton
+          active={tagStatus[blockTag.label]}
+          disabled={false}
+          key={uuidv4()}
+          label={blockTag.label}
+          onMouseDown={() => onSelectTag(blockTag.label)}
+          title={blockTag.label}
+        />,
+      );
     });
-    return <div>{tagList}</div>;
+    return <CustomTagList>{tagList}</CustomTagList>;
   };
 
   return useMemo(
     () => (
-      <Wrapper>
+      <>
         {isShowTag && (
           <FlexDiv>
             <Input
@@ -113,9 +115,9 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
           </FlexDiv>
         )}
         {renderTagList()}
-      </Wrapper>
+      </>
     ),
-    [isShowTag, inputValue],
+    [isShowTag, inputValue, tagStatus],
   );
 };
 

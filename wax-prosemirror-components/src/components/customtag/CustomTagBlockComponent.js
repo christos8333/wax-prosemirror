@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
@@ -43,7 +43,7 @@ const CustomTagList = styled.div`
   }
 `;
 
-const ListWrapper = styled.div`
+const TagBoxWrapper = styled.div`
   display: flex;
 `;
 
@@ -89,6 +89,10 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   let isDisabled = !item.select(state, activeViewId, activeView);
   if (!isEditable) isDisabled = true;
 
+  useEffect(() => {
+    if (ref.current) ref.current.focus();
+  }, [isShowTag]);
+
   const onChangeTagName = () => {
     setInputValue(ref.current.value);
   };
@@ -99,6 +103,12 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     configTags.push({ label: inputValue, tagType: 'block' });
     setAllTags(configTags);
     setInputValue(' ');
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === 'Enter' || event.which === 13) {
+      onClickAdd();
+    }
   };
 
   const onSelectTag = val => {
@@ -113,8 +123,8 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
     blockTags.forEach(blockTag => {
       tagList.push(
-        <ListWrapper>
-          <Box />
+        <TagBoxWrapper key={uuidv4()}>
+          <Box key={uuidv4()} />
           <MenuButton
             active={tagStatus[blockTag.label]}
             disabled={isDisabled}
@@ -123,8 +133,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
             onMouseDown={() => onSelectTag(blockTag.label)}
             title={blockTag.label}
           />
-          ,
-        </ListWrapper>,
+        </TagBoxWrapper>,
       );
     });
     return <CustomTagList>{tagList}</CustomTagList>;
@@ -137,6 +146,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
           <FlexDiv>
             <Input
               onChange={onChangeTagName}
+              onKeyPress={handleKeyDown}
               ref={ref}
               type="text"
               value={inputValue}

@@ -3,7 +3,8 @@ import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 
-import MenuButton from '../ui/buttons/MenuButton';
+import MenuButton from '../../ui/buttons/MenuButton';
+import insertImage from './Upload';
 
 const Wrapper = styled.div`
   input {
@@ -13,12 +14,28 @@ const Wrapper = styled.div`
 
 const ImageUpload = ({ item, fileUpload, view }) => {
   const {
+    app,
     activeViewId,
     view: { main },
   } = useContext(WaxContext);
 
   const inputRef = useRef(null);
-  const handleMouseDown = () => inputRef.current.click();
+  const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
+  const imageServiceConfig = app.config.get('config.ImageServie');
+
+  const handleMouseDown = () => {
+    if (imageServiceConfig && imageServiceConfig.handleAssetManager) {
+      insertThroughFileMAnager();
+    } else {
+      inputRef.current.click();
+    }
+  };
+
+  async function insertThroughFileMAnager() {
+    const handler = imageServiceConfig.handleAssetManager;
+    const urls = await handler();
+    insertImage(urls, view, placeholderPlugin);
+  }
 
   let isDisabled = !item.select(view.state, activeViewId);
 

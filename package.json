@@ -50,6 +50,7 @@
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
     "@coko/lint": "^1.1.0",
     "@coko/storybook": "^0.1.1",
     "@rollup/plugin-commonjs": "^11.0.2",

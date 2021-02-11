@@ -391,26 +391,22 @@ export default css`
   }
 
   .custom-tag-inline {
+    display: inline;
     font-weight: 500;
   }
 
-  .custom-tag-inline:before {
-    content: ' | ';
+  custom-tag-inline:before {
     color: #006f19;
+    content: ' | ';
     font-weight: 600;
     margin-left: 0;
   }
 
-  .custom-tag-inline:after {
+  custom-tag-inline:after {
+    color: #006f19;
     content: ' | ';
     display: inline;
-    color: #006f19;
     font-weight: 600;
-  }
-
-  .custom-tag-inline:hover {
-    cursor: pointer;
-    color: #006f19;
   }
 
   custom-tag-block {

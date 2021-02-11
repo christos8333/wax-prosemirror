@@ -138,6 +138,7 @@ export default {
   },
 
   services: [
+    new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
     new TextBlockLevelService(),
@@ -176,7 +177,6 @@ export default {
     new TransformToolGroupService(),
     new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
-    new CustomTagService(),
     new CustomTagInlineToolGroupService(),
     new CustomTagBlockToolGroupService(),
   ],

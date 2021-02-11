@@ -79,7 +79,7 @@ const SideMenu = styled.div`
   background: ${th('colorBackgroundToolBar')}
   border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   min-width: 250px;
-  height: 100%;
+  height: 81%;
 `;
 
 const EditorArea = styled.div`
@@ -129,7 +129,7 @@ const CommentTrackToolsContainer = styled.div`
   right: 30px;
   z-index: 1;
   background: white;
-  padding-left: 5%;
+  width: 25%;
 `;
 
 const CommentTrackTools = styled.div`

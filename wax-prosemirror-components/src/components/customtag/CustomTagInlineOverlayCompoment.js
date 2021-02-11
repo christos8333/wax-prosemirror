@@ -101,7 +101,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
       ? customTagsConfig.tags
       : initialArr;
   const saveTags =
-    customTagsConfig && customTagsConfig.tags
+    customTagsConfig && customTagsConfig.updateTags
       ? customTagsConfig.updateTags
       : () => true;
   const [allTags, setAllTags] = useState(configTags);

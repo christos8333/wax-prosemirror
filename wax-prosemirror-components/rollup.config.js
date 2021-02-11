@@ -20,6 +20,14 @@ export default {
       presets: ['react-app'],
       exclude: 'node_modules/**',
       runtimeHelpers: true,
+      plugins: [
+        [
+          '@babel/plugin-transform-runtime',
+          {
+            regenerator: true,
+          },
+        ],
+      ],
     }),
     commonjs(),
     // terser(),

@@ -122,21 +122,24 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     setInputValue('');
   };
 
-  const onClickAddToSelection = item => {
+  const addToSelection = item => {
+    const tagNames = mark ? mark.attrs.tagNames : [];
+    tagNames.push(item);
+
     dispatch(
       state.tr.addMark(
         $from.pos,
         $to.pos,
         state.schema.marks.customTagInline.create({
           ...((mark && mark.attrs) || {}),
-          tagNames: [item],
-          class: item,
+          tagNames,
+          class: tagNames.toString(),
         }),
       ),
     );
   };
 
-  const onClickCancel = tagName => {
+  const removeFromSelection = tagName => {
     // if (finalTag.length === 0) {
     //   dispatch(
     //     state.tr.removeMark(
@@ -173,17 +176,17 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
       {inlineTags.map(item => (
         <ListStyle key={uuidv4()}>
           <Flex>
-            <ItemWrapper onClick={() => onClickAddToSelection(item.label)}>
+            <ItemWrapper onMouseDown={() => addToSelection(item.label)}>
               {item.label}
             </ItemWrapper>
-            {console.log(mark)}
+            {/* {console.log(mark)} */}
             {/* {selectedTagNames.map(value => {
               return (
                 <Fragment key={uuidv4()}>
                   {value === item.label ? (
                     <span
                       aria-hidden="true"
-                      onClick={() => onClickCancel(item.label)}
+                      onClick={() => removeFromSelection(item.label)}
                       role="button"
                     >
                       <IconRemove name="removeTag" />

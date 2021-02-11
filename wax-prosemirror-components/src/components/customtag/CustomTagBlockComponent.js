@@ -58,6 +58,8 @@ const Box = styled.div`
   z-index: 999;
 `;
 
+const initialArr = [];
+
 const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
@@ -75,7 +77,9 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const className = $from.parent.attrs.class ? $from.parent.attrs.class : '';
   const customTagsConfig = app.config.get('config.CustomTagService');
   const configTags =
-    customTagsConfig && customTagsConfig.tags ? customTagsConfig.tags : [];
+    customTagsConfig && customTagsConfig.tags
+      ? customTagsConfig.tags
+      : initialArr;
   const [allTags, setAllTags] = useState(configTags);
   const tagStatus = item.active(
     activeView.state,
@@ -93,7 +97,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
   useEffect(() => {
     if (ref.current) ref.current.focus();
-  }, [isShowTag]);
+  }, [isShowTag, allTags]);
 
   const onChangeTagName = () => {
     setInputValue(ref.current.value);
@@ -160,7 +164,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         {renderTagList()}
       </>
     ),
-    [isShowTag, inputValue, tagStatus, isDisabled],
+    [isShowTag, inputValue, tagStatus, isDisabled, allTags],
   );
 };
 

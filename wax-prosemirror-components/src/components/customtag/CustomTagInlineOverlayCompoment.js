@@ -33,8 +33,9 @@ const CustomWrapper = styled.div`
   width: 200px;
 `;
 
-const InlineHeader = styled.span`
+const InlineHeader = styled.div`
   color: #4b5871;
+  display: block;
   font-size: 16px;
 `;
 
@@ -73,6 +74,8 @@ const ItemWrapper = styled.div`
   width: 100%;
 `;
 
+const initialArr = [];
+
 const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   const ref = useRef(null);
 
@@ -94,7 +97,9 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
   const customTagsConfig = app.config.get('config.CustomTagService');
   const configTags =
-    customTagsConfig && customTagsConfig.tags ? customTagsConfig.tags : [];
+    customTagsConfig && customTagsConfig.tags
+      ? customTagsConfig.tags
+      : initialArr;
   const [allTags, setAllTags] = useState(configTags);
 
   const onChangeTagName = () => {
@@ -118,7 +123,6 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   };
 
   const onClickAddToSelection = item => {
-    console.log(item, mark);
     dispatch(
       state.tr.addMark(
         $from.pos,
@@ -166,32 +170,31 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   return isCustomTagInline === true ? (
     <Wrapper>
       <InlineHeader>Custom Inline</InlineHeader>
-      {inlineTags !== null &&
-        inlineTags.map(item => (
-          <ListStyle key={uuidv4()}>
-            <Flex>
-              <ItemWrapper onClick={() => onClickAddToSelection(item.label)}>
-                {item.label}
-              </ItemWrapper>
+      {inlineTags.map(item => (
+        <ListStyle key={uuidv4()}>
+          <Flex>
+            <ItemWrapper onClick={() => onClickAddToSelection(item.label)}>
+              {item.label}
+            </ItemWrapper>
 
-              {selectedTagNames.map(value => (
-                <Fragment key={uuidv4()}>
-                  {value === item.label ? (
-                    <span
-                      aria-hidden="true"
-                      onClick={() => onClickCancel(item.label)}
-                      role="button"
-                    >
-                      <IconRemove name="removeTag" />
-                    </span>
-                  ) : (
-                    ''
-                  )}
-                </Fragment>
-              ))}
-            </Flex>
-          </ListStyle>
-        ))}
+            {selectedTagNames.map(value => (
+              <Fragment key={uuidv4()}>
+                {value === item.label ? (
+                  <span
+                    aria-hidden="true"
+                    onClick={() => onClickCancel(item.label)}
+                    role="button"
+                  >
+                    <IconRemove name="removeTag" />
+                  </span>
+                ) : (
+                  ''
+                )}
+              </Fragment>
+            ))}
+          </Flex>
+        </ListStyle>
+      ))}
       <CustomWrapper>
         <Input
           onChange={onChangeTagName}

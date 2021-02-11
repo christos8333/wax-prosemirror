@@ -73,10 +73,13 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   const [inputValue, setInputValue] = useState('');
   const [selectedTagName, setSelectedTagName] = useState([]);
   const localTagList = JSON.parse(localStorage.getItem('tagList'));
+
   const [isCustomTagInline, setCustomTag] = useState(
     JSON.parse(localStorage.getItem('isInline')),
   );
+
   const {
+    app,
     view: { main },
   } = useContext(WaxContext);
   const { state, dispatch } = main;
@@ -84,23 +87,28 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     selection: { $from, $to },
   } = state;
 
-  const onChangeTagName = e => {
+  const customTagsConfig = app.config.get('config.CustomTagService');
+  const configTags =
+    customTagsConfig && customTagsConfig.tags ? customTagsConfig.tags : [];
+  const [allTags, setAllTags] = useState(configTags);
+
+  const onChangeTagName = () => {
     setInputValue(ref.current.value);
   };
 
-  const onClickAdd = () => {
-    const localItem = localStorage.getItem('isInline');
-    let tagNameList = [];
-    if (localStorage.getItem('tagList') === null) {
-      tagNameList.push({ label: inputValue, type: 'inline' });
-      localStorage.setItem('tagList', JSON.stringify(tagNameList));
-    } else {
-      tagNameList = JSON.parse(localStorage.getItem('tagList'));
-      tagNameList.push({ label: inputValue, type: 'inline' });
-      localStorage.clear('tagList');
-      localStorage.setItem('tagList', JSON.stringify(tagNameList));
-      localStorage.setItem('isInline', localItem);
+  const handleKeyDown = event => {
+    if (event.key === 'Enter' || event.which === 13) {
+      onClickAdd();
     }
+  };
+
+  const onClickAdd = () => {
+    if (inputValue.trim() === '') return;
+
+    configTags.push({ label: inputValue, tagType: 'inline' });
+    setAllTags(configTags);
+    setInputValue('');
+    if (ref.current) ref.current.focus();
     setInputValue('');
   };
 
@@ -207,7 +215,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
   useEffect(() => {
     setCustomTag(JSON.parse(localStorage.getItem('isInline')));
-  });
+  }, []);
 
   return isCustomTagInline === true ? (
     <Wrapper>
@@ -237,9 +245,11 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
             </Flex>
           </ListStyle>
         ))}
-      <CustomWrapper ref={ref}>
+      <CustomWrapper>
         <Input
-          onChange={() => onChangeTagName()}
+          onChange={onChangeTagName}
+          onKeyPress={handleKeyDown}
+          ref={ref}
           type="text"
           value={inputValue}
         />

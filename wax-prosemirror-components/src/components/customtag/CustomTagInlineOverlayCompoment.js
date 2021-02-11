@@ -11,7 +11,6 @@ import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
-
 import Icon from '../../helpers/Icon';
 
 const IconRemove = styled(Icon)`

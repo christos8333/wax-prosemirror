@@ -413,17 +413,21 @@ export default css`
     color: #006f19;
   }
 
+  custom-tag-block {
+    display: block;
+    margin-top: 1em;
+  }
+
   custom-tag-block:before {
     color: #006f19;
-    content: '"';
+    content: '|';
     display: inline;
     font-weight: 600;
-    margin-left: 0;
   }
 
   custom-tag-block:after {
     color: #006f19;
-    content: '"';
+    content: '|';
     display: inline;
     font-weight: 600;
   }

@@ -1,9 +1,7 @@
 const customtagInline = {
-  excludes: '',
-
   attrs: {
     class: { default: null },
-    tagNames: '',
+    tagNames: { default: [] },
   },
   inclusive: false,
   parseDOM: [

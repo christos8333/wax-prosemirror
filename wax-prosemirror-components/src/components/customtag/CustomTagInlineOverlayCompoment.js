@@ -33,6 +33,11 @@ const CustomWrapper = styled.div`
   width: 200px;
 `;
 
+const InlineHeader = styled.span`
+  color: #4b5871;
+  font-size: 16px;
+`;
+
 const Input = styled.input`
   outline: none;
   width: calc(100% - 8px);
@@ -64,15 +69,15 @@ const Flex = styled.div`
   justify-content: space-between;
 `;
 
-const DivWidth = styled.div`
+const ItemWrapper = styled.div`
   width: 100%;
 `;
 
 const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   const ref = useRef(null);
+
   const [inputValue, setInputValue] = useState('');
-  const [selectedTagName, setSelectedTagName] = useState([]);
-  const localTagList = JSON.parse(localStorage.getItem('tagList'));
+  const [selectedTagNames, setSelectedTagNames] = useState([]);
 
   const [isCustomTagInline, setCustomTag] = useState(
     JSON.parse(localStorage.getItem('isInline')),
@@ -112,60 +117,64 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     setInputValue('');
   };
 
-  const onListClicked = item => {
-  
-
-    // dispatch(
-    //   state.tr.addMark(
-    //     $from.pos,
-    //     $to.pos,
-    //     state.schema.marks.customTagInline.create({
-    //       tagNames: JSON.stringify(finalTag),
-    //       class: item,
-    //     }),
-    //   ),
-    // );
+  const onClickAddToSelection = item => {
+    console.log(item, mark);
+    dispatch(
+      state.tr.addMark(
+        $from.pos,
+        $to.pos,
+        state.schema.marks.customTagInline.create({
+          ...((mark && mark.attrs) || {}),
+          tagNames: [item],
+          class: item,
+        }),
+      ),
+    );
   };
 
   const onClickCancel = tagName => {
-      // if (finalTag.length === 0) {
-      //   dispatch(
-      //     state.tr.removeMark(
-      //       $from.pos,
-      //       $to.pos,
-      //       state.schema.marks.customTagInline,
-      //     ),
-      //   );
-      // } else {
-      //   dispatch(
-      //     state.tr.addMark(
-      //       $from.pos,
-      //       $to.pos,
-      //       state.schema.marks.customTagInline.create({
-      //         tagNames: JSON.stringify(finalTag),
-      //         class: classNames,
-      //       }),
-      //     ),
-      //   );
-      // }
-    }
+    // if (finalTag.length === 0) {
+    //   dispatch(
+    //     state.tr.removeMark(
+    //       $from.pos,
+    //       $to.pos,
+    //       state.schema.marks.customTagInline,
+    //     ),
+    //   );
+    // } else {
+    //   dispatch(
+    //     state.tr.addMark(
+    //       $from.pos,
+    //       $to.pos,
+    //       state.schema.marks.customTagInline.create({
+    //         tagNames: JSON.stringify(finalTag),
+    //         class: classNames,
+    //       }),
+    //     ),
+    //   );
+    // }
   };
 
   useEffect(() => {
     setCustomTag(JSON.parse(localStorage.getItem('isInline')));
   }, []);
 
+  const inlineTags = allTags.filter(tag => {
+    return tag.tagType === 'inline';
+  });
+
   return isCustomTagInline === true ? (
     <Wrapper>
-      {localTagList !== null &&
-        localTagList.map(item => (
+      <InlineHeader>Custom Inline</InlineHeader>
+      {inlineTags !== null &&
+        inlineTags.map(item => (
           <ListStyle key={uuidv4()}>
             <Flex>
-              <DivWidth onClick={e => onListClicked(item.label)}>
+              <ItemWrapper onClick={() => onClickAddToSelection(item.label)}>
                 {item.label}
-              </DivWidth>
+              </ItemWrapper>
 
-              {selectedTagName.map(value => (
+              {selectedTagNames.map(value => (
                 <Fragment key={uuidv4()}>
                   {value === item.label ? (
                     <span
@@ -192,7 +201,6 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
           value={inputValue}
         />
       </CustomWrapper>
-
       <ButtonGroup>
         <StyledButton onClick={onClickAdd} type="button">
           Add

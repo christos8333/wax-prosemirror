@@ -113,103 +113,41 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   };
 
   const onListClicked = item => {
-    const tagNames = [];
-    let finalTag = [];
-    let isExist = false;
-    let classNames = 'custom-tag-inline ';
-    const mark = DocumentHelpers.findMark(
-      state,
-      state.schema.marks.customTagInline,
-      true,
-    );
+  
 
-    tagNames.push(item);
-    if (mark.length > 0) {
-      mark.forEach(itemArtt => {
-        const classArray = itemArtt.attrs.class.split(' ');
-        classArray.forEach(classData => {
-          item.replace(/ /g, '-');
-          if (classData === item.replace(/ /g, '-')) {
-            isExist = true;
-          }
-        });
-        const parseArray = JSON.parse(itemArtt.attrs.tagNames);
-        classNames = `${itemArtt.attrs.class} `;
-        finalTag = tagNames.concat(parseArray);
-      });
-    } else {
-      finalTag.push(item);
-    }
-
-    if (isExist) return;
-
-    setSelectedTagName(oldArray => [...oldArray, item]);
-    item = classNames + item.replace(/ /g, '-');
-
-    dispatch(
-      state.tr.addMark(
-        $from.pos,
-        $to.pos,
-        state.schema.marks.customTagInline.create({
-          tagNames: JSON.stringify(finalTag),
-          class: item,
-        }),
-      ),
-    );
+    // dispatch(
+    //   state.tr.addMark(
+    //     $from.pos,
+    //     $to.pos,
+    //     state.schema.marks.customTagInline.create({
+    //       tagNames: JSON.stringify(finalTag),
+    //       class: item,
+    //     }),
+    //   ),
+    // );
   };
 
   const onClickCancel = tagName => {
-    let classNames = '';
-    let classArray = [];
-    let tagArray = [];
-    let finalTag = [];
-    const mark = DocumentHelpers.findMark(
-      state,
-      state.schema.marks.customTagInline,
-      true,
-    );
-
-    setSelectedTagName(finalTag);
-    tagName = tagName.replace(/ /g, '-');
-    if (mark.length > 0) {
-      mark.forEach(itemArtt => {
-        classNames = '';
-        classArray = itemArtt.attrs.class.split(' ');
-        tagArray = JSON.parse(itemArtt.attrs.tagNames);
-        classArray.forEach(classData => {
-          if (classData !== tagName) {
-            classNames = classNames + ' ' + classData;
-          }
-        });
-        tagArray.forEach(tag => {
-          if (tag.replace(/ /g, '-') !== tagName) {
-            finalTag.push(tag);
-          }
-        });
-      });
-      setSelectedTagName(
-        finalTag.filter((item, index) => finalTag.indexOf(item) === index),
-      );
-      if (finalTag.length === 0) {
-        dispatch(
-          state.tr.removeMark(
-            $from.pos,
-            $to.pos,
-            state.schema.marks.customTagInline,
-          ),
-        );
-      } else {
-        dispatch(
-          state.tr.addMark(
-            $from.pos,
-            $to.pos,
-            state.schema.marks.customTagInline.create({
-              tagNames: JSON.stringify(finalTag),
-              class: classNames,
-            }),
-          ),
-        );
-      }
+      // if (finalTag.length === 0) {
+      //   dispatch(
+      //     state.tr.removeMark(
+      //       $from.pos,
+      //       $to.pos,
+      //       state.schema.marks.customTagInline,
+      //     ),
+      //   );
+      // } else {
+      //   dispatch(
+      //     state.tr.addMark(
+      //       $from.pos,
+      //       $to.pos,
+      //       state.schema.marks.customTagInline.create({
+      //         tagNames: JSON.stringify(finalTag),
+      //         class: classNames,
+      //       }),
+      //     ),
+      //   );
+      // }
     }
   };
 

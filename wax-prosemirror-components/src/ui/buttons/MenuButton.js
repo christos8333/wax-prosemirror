@@ -21,7 +21,6 @@ const disabledStyles = css`
 const activeStyles = css`
   background: ${th('colorPrimary')};
   color: ${th('colorTextReverse')};
-  pointer-events: none;
 
   > svg {
     fill: ${th('colorTextReverse')};

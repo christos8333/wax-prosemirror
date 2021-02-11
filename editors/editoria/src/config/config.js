@@ -58,6 +58,10 @@ const updateTitle = title => {
   console.log(title);
 };
 
+const saveTags = tags => {
+  console.log(tags);
+};
+
 export default {
   MenuService: [
     {
@@ -135,6 +139,7 @@ export default {
       { label: 'custom-tag-label-3', tagType: 'block' },
       { label: 'label 2', tagType: 'block' },
     ],
+    // updateTags: saveTags,
   },
 
   services: [

@@ -100,6 +100,10 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     customTagsConfig && customTagsConfig.tags
       ? customTagsConfig.tags
       : initialArr;
+  const saveTags =
+    customTagsConfig && customTagsConfig.tags
+      ? customTagsConfig.updateTags
+      : () => true;
   const [allTags, setAllTags] = useState(configTags);
 
   const onChangeTagName = () => {
@@ -117,6 +121,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
     configTags.push({ label: inputValue, tagType: 'inline' });
     setAllTags(configTags);
+    saveTags(configTags);
     setInputValue('');
     if (ref.current) ref.current.focus();
     setInputValue('');

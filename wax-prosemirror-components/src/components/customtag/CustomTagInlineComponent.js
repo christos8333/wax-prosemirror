@@ -1,12 +1,7 @@
-import React, { useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
-import MenuButton from '../../ui/buttons/MenuButton';
+import React, { useMemo, useState, useContext } from 'react';
+import { WaxContext } from 'wax-prosemirror-core';
 
-const Wrapper = styled.div`
-  font-size: 0;
-  position: relative;
-  z-index: 2;
-`;
+import MenuButton from '../../ui/buttons/MenuButton';
 
 const CustomTagInlineComponent = ({ view: { state }, item }) => {
   const { icon, title } = item;
@@ -14,7 +9,16 @@ const CustomTagInlineComponent = ({ view: { state }, item }) => {
   const [isOpen, setIsOpen] = useState(
     !!(localInline !== null && localInline !== false),
   );
-  const ref = useRef();
+
+  const {
+    view: { main },
+  } = useContext(WaxContext);
+
+  let isDisabled = false;
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+  if (!isEditable) isDisabled = true;
 
   const onClickIcon = () => {
     setIsOpen(isOpen !== true);
@@ -23,16 +27,13 @@ const CustomTagInlineComponent = ({ view: { state }, item }) => {
 
   return useMemo(
     () => (
-      <Wrapper ref={ref}>
-        <div onClick={onClickIcon}>
-          <MenuButton
-            active={isOpen}
-            disabled={false}
-            iconName={icon}
-            title={title}
-          />
-        </div>
-      </Wrapper>
+      <MenuButton
+        active={isOpen}
+        disabled={isDisabled}
+        iconName={icon}
+        onMouseDown={onClickIcon}
+        title={title}
+      />
     ),
     [isOpen],
   );

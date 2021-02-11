@@ -80,6 +80,12 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     customTagsConfig && customTagsConfig.tags
       ? customTagsConfig.tags
       : initialArr;
+
+  const saveTags =
+    customTagsConfig && customTagsConfig.tags
+      ? customTagsConfig.updateTags
+      : () => true;
+
   const [allTags, setAllTags] = useState(configTags);
   const tagStatus = item.active(
     activeView.state,
@@ -105,9 +111,9 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
   const onClickAdd = () => {
     if (inputValue.trim() === '') return;
-
     configTags.push({ label: inputValue, tagType: 'block' });
     setAllTags(configTags);
+    saveTags(configTags);
     setInputValue('');
     if (ref.current) ref.current.focus();
   };

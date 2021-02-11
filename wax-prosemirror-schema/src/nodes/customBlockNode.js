@@ -1,14 +1,14 @@
-const subtitle = {
+const customBlockNode = {
   content: 'inline*',
   group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: 'cst' },
+    class: { default: '' },
   },
   parseDOM: [
     {
-      tag: 'p.cst',
+      tag: 'custom-tag-block',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
@@ -18,10 +18,9 @@ const subtitle = {
     },
   ],
   toDOM(hook, next) {
-    const attrs = { class: hook.node.attrs.class };
-    hook.value = ['p', attrs, 0];
-    next();
+    const attrs = { class: hook.attrs.class };
+    return (hook.value = ['custom-tag-block', attrs, 0]);
   },
 };
 
-export default subtitle;
+export default customBlockNode;

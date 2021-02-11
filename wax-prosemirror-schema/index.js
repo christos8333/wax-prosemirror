@@ -15,6 +15,7 @@ export { default as commentMark } from './src/marks/commentMark';
 export { default as mathSelectMark } from './src/marks/mathSelectMark';
 export { default as highlightMark } from './src/marks/highlightMark';
 export { default as transformMark } from './src/marks/transformMark';
+export { default as customtagInlineMark } from './src/marks/customTagInlineMark';
 /*
 LIST OF TRACK CHANGES MARKS
 */
@@ -44,6 +45,7 @@ export { default as footNoteNode } from './src/nodes/footNoteNode';
 export { default as codeBlockNode } from './src/nodes/codeBlockNode';
 export { default as mathInlineNode } from './src/nodes/mathInlineNode';
 export { default as mathDisplayNode } from './src/nodes/mathDisplayNode';
+export { default as customBlockNode } from './src/nodes/customBlockNode';
 /*
 LIST OF TRACK CHANGES NODES
 */

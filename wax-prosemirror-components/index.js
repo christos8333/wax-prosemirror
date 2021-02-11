@@ -23,3 +23,6 @@ export { default as EditorInfoTool } from './src/components/EditorInfo/CounterIn
 export { default as TransformCaseComponent } from './src/components/transformCase/TransformCaseComponent';
 export { default as EditingSuggestingDropDown } from './src/components/editingSuggesting/EditingSuggestingDropDown';
 export { default as TrackChangeOptionsTool } from './src/components/trackChanges/TrackChangeOptionsTool';
+export { default as CustomTagInlineComponent } from './src/components/customtag/CustomTagInlineComponent';
+export { default as CustomTagInlineOverlayComponent } from './src/components/customtag/CustomTagInlineOverlayCompoment';
+export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';

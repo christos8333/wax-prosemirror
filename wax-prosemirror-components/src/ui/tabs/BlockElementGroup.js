@@ -1,13 +1,14 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
+import { th } from '@pubsweet/ui-toolkit';
 import styled from 'styled-components';
-
+import CustomTagBlockComponent from '../../components/customtag/CustomTagBlockComponent';
 import BlockElement from './BlockElement';
-
-const Wrapper = styled.div``;
+import Icon from '../../helpers/Icon';
 
 const GroupName = styled.div`
-  margin-bottom: 4px;
   font-size: 14px;
+  margin-bottom: 4px;
   text-transform: uppercase;
 `;
 
@@ -17,20 +18,58 @@ const ListWrapper = styled.div`
   }
 `;
 
-const BlockElementGroup = props => {
-  const { groupName, items, view } = props;
+const FlexDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+  fill: ${th('colorPrimary')};
+  height: 14px;
+  width: 14px;
+`;
+
+const BlockElementGroup = ({ groupName, items, view }) => {
+  const [isIconClicked, setIconClicked] = useState(false);
+
+  const onIconClick = () => {
+    setIconClicked(!isIconClicked);
+  };
 
   return (
-    <Wrapper>
-      <GroupName>{groupName}</GroupName>
+    <>
+      {groupName !== 'Custom Block' && (
+        <>
+          <GroupName>{groupName}</GroupName>
+          <ListWrapper>
+            {items &&
+              items.map(item => (
+                <BlockElement item={item} key={item.name} view={view} />
+              ))}
+          </ListWrapper>
+        </>
+      )}
 
-      <ListWrapper>
-        {items &&
-          items.map(item => (
-            <BlockElement key={item.name} item={item} view={view} />
-          ))}
-      </ListWrapper>
-    </Wrapper>
+      {groupName === 'Custom Block' && (
+        <>
+          <FlexDiv>
+            <GroupName>{groupName}</GroupName>
+            <div aria-hidden="true" onClick={onIconClick}>
+              {!isIconClicked && <StyledIcon name="IconCross" />}
+              {isIconClicked && <StyledIcon name="IconMinus" />}
+            </div>
+          </FlexDiv>
+          <ListWrapper>
+            <CustomTagBlockComponent
+              isShowTag={isIconClicked}
+              item={items[0]}
+              view={view}
+            />
+          </ListWrapper>
+        </>
+      )}
+    </>
   );
 };
 

@@ -1,9 +1,10 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
+  InlineAnnotationsService,
   AnnotationToolGroupService,
   ImageService,
-  InlineAnnotationsService,
+  ImageToolGroupService,
   LinkService,
   ListsService,
   ListToolGroupService,
@@ -13,7 +14,6 @@ import {
   BaseToolGroupService,
   DisplayBlockLevelService,
   DisplayToolGroupService,
-  ImageToolGroupService,
   TextBlockLevelService,
   TextToolGroupService,
   NoteService,
@@ -37,9 +37,11 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
-  TrackOptionsService,
   TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
+  CustomTagInlineToolGroupService,
+  CustomTagBlockToolGroupService,
+  CustomTagService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -54,6 +56,10 @@ import invisibles, {
 
 const updateTitle = title => {
   console.log(title);
+};
+
+const saveTags = tags => {
+  console.log(tags);
 };
 
 export default {
@@ -74,6 +80,7 @@ export default {
         },
         'HighlightToolGroup',
         'TransformToolGroup',
+        'CustomTagInline',
         'Notes',
         'Lists',
         'Images',
@@ -125,10 +132,18 @@ export default {
     invisibles([hardBreak()]),
     WaxSelectionPlugin,
   ],
+  CustomTagService: {
+    tags: [
+      { label: 'custom-tag-label-1', tagType: 'inline' },
+      { label: 'custom-tag-label-2', tagType: 'inline' },
+      { label: 'custom-tag-label-3', tagType: 'block' },
+      { label: 'label 2', tagType: 'block' },
+    ],
+    // updateTags: saveTags,
+  },
 
-  // Always load first CommentsService and LinkService,
-  //as it matters on how PM treats nodes and marks
   services: [
+    new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
     new TextBlockLevelService(),
@@ -167,5 +182,7 @@ export default {
     new TransformToolGroupService(),
     new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
+    new CustomTagInlineToolGroupService(),
+    new CustomTagBlockToolGroupService(),
   ],
 };

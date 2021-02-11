@@ -7,9 +7,7 @@ const captionPlugin = key =>
       init() {
         return DecorationSet.empty;
       },
-      apply(tr, set) {
-        console.log('in apply');
-      },
+      apply(tr, set) {},
     },
     props: {
       decorations(state) {

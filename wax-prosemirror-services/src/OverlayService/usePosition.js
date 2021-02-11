@@ -74,10 +74,31 @@ export default options => {
     };
   };
 
+  const displayOnMarkOrSelection = (activeView, options) => {
+    const { markType, followCursor } = options;
+    const PMmark = activeView.state.schema.marks[markType];
+    mark = DocumentHelpers.findMark(activeView.state, PMmark);
+
+    if (!isObject(mark)) return displayOnSelection(activeView, options);
+    const { from, to } = followCursor ? activeView.state.selection : mark;
+
+    const { left, top } = calculatePosition(activeView, from, to);
+    return {
+      left,
+      top,
+      from,
+      to,
+      mark,
+    };
+  };
+
   const updatePosition = useCallback((followCursor = true) => {
     if (Object.keys(activeView).length === 0) return defaultOverlay;
 
     const { markType, selection } = options;
+
+    if (markType && selection)
+      return displayOnMarkOrSelection(activeView, options);
 
     if (selection) return displayOnSelection(activeView, options);
 

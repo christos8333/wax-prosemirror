@@ -31,6 +31,9 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
+  CustomTagInlineToolGroupService,
+  CustomTagBlockToolGroupService,
+  CustomTagService,
 } from 'wax-prosemirror-services';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
@@ -58,6 +61,7 @@ export default {
         },
         'HighlightToolGroup',
         'TransformToolGroup',
+        'CustomTagInline',
         'BlockDropDown',
         'Notes',
         'Lists',
@@ -85,6 +89,13 @@ export default {
     invisibles([hardBreak()]),
     WaxSelectionPlugin,
   ],
+  CustomTagService: {
+    tags: [
+      { label: 'custom-tag-label-1', tagType: 'inline' },
+      { label: 'custom-tag-label-2', tagType: 'inline' },
+      { label: 'custom-tag-label-3', tagType: 'block' }
+    ]
+  },
 
   // Always load first CommentsService and LinkService,
   //as it matters on how PM treats nodes and marks
@@ -119,5 +130,8 @@ export default {
     new BottomInfoService(),
     new TransformService(),
     new TransformToolGroupService(),
+    new CustomTagService(),
+    new CustomTagInlineToolGroupService(),
+    new CustomTagBlockToolGroupService(),
   ],
 };

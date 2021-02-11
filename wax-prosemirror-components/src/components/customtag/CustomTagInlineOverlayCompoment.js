@@ -176,22 +176,24 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
             <ItemWrapper onClick={() => onClickAddToSelection(item.label)}>
               {item.label}
             </ItemWrapper>
-
-            {selectedTagNames.map(value => (
-              <Fragment key={uuidv4()}>
-                {value === item.label ? (
-                  <span
-                    aria-hidden="true"
-                    onClick={() => onClickCancel(item.label)}
-                    role="button"
-                  >
-                    <IconRemove name="removeTag" />
-                  </span>
-                ) : (
-                  ''
-                )}
-              </Fragment>
-            ))}
+            {console.log(mark)}
+            {/* {selectedTagNames.map(value => {
+              return (
+                <Fragment key={uuidv4()}>
+                  {value === item.label ? (
+                    <span
+                      aria-hidden="true"
+                      onClick={() => onClickCancel(item.label)}
+                      role="button"
+                    >
+                      <IconRemove name="removeTag" />
+                    </span>
+                  ) : (
+                    ''
+                  )}
+                </Fragment>
+              );
+            })} */}
           </Flex>
         </ListStyle>
       ))}

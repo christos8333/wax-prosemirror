@@ -97,7 +97,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
   useEffect(() => {
     if (ref.current) ref.current.focus();
-  }, [isShowTag, allTags]);
+  }, [isShowTag]);
 
   const onChangeTagName = () => {
     setInputValue(ref.current.value);
@@ -164,7 +164,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         {renderTagList()}
       </>
     ),
-    [isShowTag, inputValue, tagStatus, isDisabled, allTags],
+    [isShowTag, inputValue, tagStatus, isDisabled],
   );
 };
 

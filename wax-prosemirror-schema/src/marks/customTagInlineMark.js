@@ -10,14 +10,21 @@ const customtagInline = {
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
-          tagNames: hook.dom.getAttribute('tagNames'),
+          tagNames: JSON.parse(hook.dom.dataset.tagNames),
         });
         next();
       },
     },
   ],
   toDOM(hook, next) {
-    hook.value = ['custom-tag-inline', hook.node.attrs, 0]; // eslint-disable-line no-param-reassign
+    // eslint-disable-next-line no-param-reassign
+    hook.value = [
+      'custom-tag-inline',
+      {
+        class: hook.node.attrs.class,
+        'data-tagNames': JSON.stringify(hook.node.attrs.tagNames),
+      },
+    ];
     next();
   },
 };

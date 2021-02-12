@@ -27,7 +27,10 @@ export default css`
     h1 span::selection,
     h2 span::selection,
     h3 span::selection,
-    code span::selection {
+    h4 span::selection,
+    code span::selection,
+    custom-tag-block::selection,
+    custom-tag-inline::selection {
       background-color: transparent;
     }
 
@@ -42,8 +45,8 @@ export default css`
   }
 
   div[contenteditable='false'] {
-    user-select: none;
     pointer-events: none;
+    user-select: none;
   }
 
   /* .ProseMirror title {

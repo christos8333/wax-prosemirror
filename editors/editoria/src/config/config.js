@@ -59,7 +59,7 @@ const updateTitle = title => {
 };
 
 const saveTags = tags => {
-  console.log(tags);
+  // console.log(tags);
 };
 
 export default {

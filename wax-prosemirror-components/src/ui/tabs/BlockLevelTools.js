@@ -5,8 +5,9 @@ import styled from 'styled-components';
 import BlockElementGroup from './BlockElementGroup';
 
 const Wrapper = styled.div`
+  height: 100%;
+  overflow-y: auto;
   padding: 8px;
-
   > div:not(:last-child) {
     margin-bottom: 10px;
   }

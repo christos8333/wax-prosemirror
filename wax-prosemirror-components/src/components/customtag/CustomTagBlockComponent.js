@@ -82,7 +82,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
       : initialArr;
 
   const saveTags =
-    customTagsConfig && customTagsConfig.tags
+    customTagsConfig && customTagsConfig.updateTags
       ? customTagsConfig.updateTags
       : () => true;
 

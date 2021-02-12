@@ -21,7 +21,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
   const inputRef = useRef(null);
   const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
-  const imageServiceConfig = app.config.get('config.ImageServie');
+  const imageServiceConfig = app.config.get('config.ImageService');
 
   const handleMouseDown = () => {
     if (imageServiceConfig && imageServiceConfig.handleAssetManager) {

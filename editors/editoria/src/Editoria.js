@@ -62,7 +62,10 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value={demo}
+          value={
+            '<p>hello</p><p class="custom-tag-label-3" data-type="block">Lorem ipsum dolor si</p>'
+          }
+          // value={demo}
           // readonly
           layout={layout}
           // onChange={source => console.log(source)}

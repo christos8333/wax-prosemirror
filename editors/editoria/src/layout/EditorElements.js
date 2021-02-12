@@ -412,19 +412,19 @@ export default css`
     font-weight: 600;
   }
 
-  custom-tag-block {
+  p[data-type='block'] {
     display: block;
     margin-top: 1em;
   }
 
-  custom-tag-block:before {
+  p[data-type='block']:before {
     color: #006f19;
     content: '|';
     display: inline;
     font-weight: 600;
   }
 
-  custom-tag-block:after {
+  p[data-type='block']:after {
     color: #006f19;
     content: '|';
     display: inline;

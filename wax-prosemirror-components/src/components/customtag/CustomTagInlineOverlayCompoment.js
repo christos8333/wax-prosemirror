@@ -128,8 +128,8 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   };
 
   const addToSelection = item => {
-    const tagNames = mark ? mark.attrs.tagNames : [];
-    tagNames.push(item);
+    const tags = mark ? mark.attrs.tags : [];
+    tags.push(item);
 
     dispatch(
       state.tr.addMark(
@@ -137,8 +137,8 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
         $to.pos,
         state.schema.marks.customTagInline.create({
           ...((mark && mark.attrs) || {}),
-          tagNames,
-          class: tagNames.toString(),
+          tags,
+          class: tags.toString(),
         }),
       ),
     );

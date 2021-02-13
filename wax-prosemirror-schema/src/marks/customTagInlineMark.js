@@ -1,16 +1,18 @@
 const customtagInline = {
   attrs: {
     class: { default: null },
-    tagNames: { default: [] },
+    tags: [],
+    type: { default: 'inline' },
   },
   inclusive: false,
   parseDOM: [
     {
-      tag: 'custom-tag-inline',
+      tag: 'span[data-type="inline"]',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
-          tagNames: JSON.parse(hook.dom.dataset.tagNames),
+          tags: JSON.parse(hook.dom.dataset.tags),
+          type: hook.dom.dataset.type,
         });
         next();
       },
@@ -19,10 +21,11 @@ const customtagInline = {
   toDOM(hook, next) {
     // eslint-disable-next-line no-param-reassign
     hook.value = [
-      'custom-tag-inline',
+      'span',
       {
         class: hook.node.attrs.class,
-        'data-tagNames': JSON.stringify(hook.node.attrs.tagNames),
+        'data-type': hook.node.attrs.type,
+        'data-tags': JSON.stringify(hook.node.attrs.tags),
       },
     ];
     next();

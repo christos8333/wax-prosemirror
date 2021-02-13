@@ -393,19 +393,19 @@ export default css`
     padding-top: 2px;
   }
 
-  .custom-tag-inline {
+  span[data-type='inline'] {
     display: inline;
     font-weight: 500;
   }
 
-  custom-tag-inline:before {
+  span[data-type='inline']:before {
     color: #006f19;
     content: ' | ';
     font-weight: 600;
     margin-left: 0;
   }
 
-  custom-tag-inline:after {
+  span[data-type='inline']:after {
     color: #006f19;
     content: ' | ';
     display: inline;

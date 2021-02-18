@@ -52,11 +52,6 @@ const Editoria = () => {
     key = 'editoriaMobile';
   }
 
-  console.log(JSON.stringify('["test"]'));
-  // console.log(
-  //   JSON.parse('[{&quot;item&quot;:&quot;custom-tag-label-1&quot;}]'),
-  // );
-
   const EditoriaComponent = useMemo(
     () => (
       <>
@@ -71,7 +66,7 @@ const Editoria = () => {
           // value={demo}
           // readonly
           layout={layout}
-          onChange={source => console.log(source)}
+          // onChange={source => console.log(source)}
           user={user}
         />
       </>

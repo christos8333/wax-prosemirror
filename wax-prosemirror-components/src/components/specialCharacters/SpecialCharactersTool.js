@@ -62,7 +62,7 @@ const SpecialCharactersTool = ({ view = {}, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen],
+    [isOpen, isDisabled],
   );
 
   return MemorizedDropdown;

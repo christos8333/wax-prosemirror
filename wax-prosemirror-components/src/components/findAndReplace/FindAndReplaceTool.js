@@ -69,7 +69,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
         />
 
         {isOpen && (
-          <DropWrapper style={style} ref={dropElement}>
+          <DropWrapper ref={dropElement} style={style}>
             <FindAndReplaceComponent
               close={() => {
                 setIsOpen(false);
@@ -79,7 +79,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, style],
+    [isOpen, style, isDisabled],
   );
 
   return MemorizedDropdown;

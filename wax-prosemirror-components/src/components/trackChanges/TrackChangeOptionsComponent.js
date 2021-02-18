@@ -108,7 +108,7 @@ const AcceptRejectAllControls = styled.div`
   position: absolute;
   right: 207px;
   transform-origin: 50% 50% 0px;
-  width: 200px;
+  width: 209px;
   z-index: 9999;
 `;
 

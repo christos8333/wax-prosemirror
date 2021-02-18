@@ -69,8 +69,13 @@ const Flex = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const ItemActive = styled.div`
+  color: #006f19;
+  width: 90%;
+`;
 
-const ItemWrapper = styled.div`
+const Item = styled.div`
+  cursor: pointer;
   width: 100%;
 `;
 
@@ -180,6 +185,14 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     return tag.tagType === 'inline';
   });
 
+  const disabledStyles = {
+    cursor: 'default',
+    opacity: '0.4',
+    pointerEvents: 'none',
+  };
+
+  const styles = $from.pos === $to.pos ? disabledStyles : {};
+
   return isCustomTagInline === true ? (
     <Wrapper>
       <InlineHeader>Custom Inline</InlineHeader>
@@ -188,11 +201,14 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
           <ListStyle key={uuidv4()}>
             <Flex>
               {mark && mark.attrs.tags.includes(item.label) ? (
-                <ItemWrapper>{item.label}</ItemWrapper>
+                <ItemActive>{item.label}</ItemActive>
               ) : (
-                <ItemWrapper onMouseDown={() => addToSelection(item.label)}>
+                <Item
+                  onMouseDown={() => addToSelection(item.label)}
+                  style={styles}
+                >
                   {item.label}
-                </ItemWrapper>
+                </Item>
               )}
 
               {mark &&

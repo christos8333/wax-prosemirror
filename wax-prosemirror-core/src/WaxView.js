@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useCallback } from 'react';
+import React, { useRef, useContext, useCallback, useMemo } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -12,60 +12,61 @@ import transformPasted from './helpers/TransformPasted';
 
 export default props => {
   const { readonly, onBlur, options, debug, autoFocus, user } = props;
-
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
 
-  const setEditorRef = useCallback(node => {
-    if (editorRef.current) {
-      // this is where you do cleanup if you have to. the editorRef.current will
-      // still point to the old ref, the old node. so you have some time here to
-      // clean up the unmount if you need to.
-    }
-
-    if (node) {
-      view = new EditorView(
-        { mount: node },
-        {
-          editable: () => !readonly,
-          state: EditorState.create(options),
-          dispatchTransaction,
-          user,
-          scrollMargin: 200,
-          scrollThreshold: 200,
-          handleDOMEvents: {
-            blur: onBlur
-              ? view => {
-                  onBlur(view.state.doc.content);
-                }
-              : null,
+  const setEditorRef = useCallback(
+    node => {
+      if (editorRef.current) {
+        // this is where you do cleanup if you have to. the editorRef.current will
+        // still point to the old ref, the old node. so you have some time here to
+        // clean up the unmount if you need to.
+      }
+      if (node) {
+        view = new EditorView(
+          { mount: node },
+          {
+            editable: () => !readonly,
+            state: EditorState.create(options),
+            dispatchTransaction,
+            user,
+            scrollMargin: 200,
+            scrollThreshold: 200,
+            handleDOMEvents: {
+              blur: onBlur
+                ? view => {
+                    onBlur(view.state.doc.content);
+                  }
+                : null,
+            },
+            transformPasted: slice => {
+              return transformPasted(slice, view);
+            },
+            attributes: {
+              spellcheck: 'false',
+            },
           },
-          transformPasted: slice => {
-            return transformPasted(slice, view);
-          },
-          attributes: {
-            spellcheck: 'false',
-          },
-        },
-      );
+        );
 
-      context.updateView(
-        {
-          main: view,
-        },
-        'main',
-      );
-      if (debug) applyDevTools(view);
-      if (autoFocus)
-        setTimeout(() => {
-          view.focus();
-        }, 1000);
+        context.updateView(
+          {
+            main: view,
+          },
+          'main',
+        );
+        if (debug) applyDevTools(view);
+        if (autoFocus)
+          setTimeout(() => {
+            view.focus();
+          }, 1000);
 
-      return () => view.destroy();
-    }
-    editorRef.current = node;
-  }, []);
+        return () => view.destroy();
+      }
+      editorRef.current = node;
+    },
+    [readonly],
+  );
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
@@ -94,7 +95,11 @@ export default props => {
   };
 
   const editor = <div ref={setEditorRef} />;
-  return props.children({
-    editor,
-  });
+  return useMemo(
+    () =>
+      props.children({
+        editor,
+      }),
+    [readonly],
+  );
 };

@@ -5,21 +5,27 @@ const customBlockNode = {
   defining: true,
   attrs: {
     class: { default: '' },
+    type: { default: 'block' },
   },
   parseDOM: [
     {
-      tag: 'custom-tag-block',
+      tag: 'p[data-type="block"]',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
+          type: hook.dom.dataset.type,
         });
         next();
       },
     },
   ],
   toDOM(hook, next) {
-    const attrs = { class: hook.attrs.class };
-    return (hook.value = ['custom-tag-block', attrs, 0]);
+    const attrs = {
+      class: hook.node.attrs.class,
+      'data-type': hook.node.attrs.type,
+    };
+    hook.value = ['p', attrs, 0];
+    next();
   },
 };
 

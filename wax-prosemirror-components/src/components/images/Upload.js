@@ -30,7 +30,7 @@ const insertImage = (urls, view, placeholderPlugin) => {
           pos,
           pos,
           view.state.schema.nodes.image.create({
-            src: urls[i],
+            src: urls[i].source,
           }),
         )
         .setMeta(placeholderPlugin, { remove: { id } }),

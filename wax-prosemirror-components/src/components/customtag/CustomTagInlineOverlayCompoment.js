@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Icon from '../../helpers/Icon';
 
 const IconRemove = styled(Icon)`
+  cursor: pointer;
   height: 10px;
   width: 10px;
 `;
@@ -60,7 +61,6 @@ const StyledButton = styled.button`
 `;
 
 const ListStyle = styled.div`
-  cursor: pointer;
   margin: 5px 7px 7px 0px;
   padding: 2px 3px;
 `;
@@ -69,8 +69,13 @@ const Flex = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const ItemActive = styled.div`
+  color: #006f19;
+  width: 90%;
+`;
 
-const ItemWrapper = styled.div`
+const Item = styled.div`
+  cursor: pointer;
   width: 100%;
 `;
 
@@ -80,7 +85,6 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   const ref = useRef(null);
 
   const [inputValue, setInputValue] = useState('');
-  const [selectedTagNames, setSelectedTagNames] = useState([]);
 
   const [isCustomTagInline, setCustomTag] = useState(
     JSON.parse(localStorage.getItem('isInline')),
@@ -128,8 +132,8 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   };
 
   const addToSelection = item => {
-    const tagNames = mark ? mark.attrs.tagNames : [];
-    tagNames.push(item);
+    const tags = mark ? mark.attrs.tags : [];
+    tags.push(item);
 
     dispatch(
       state.tr.addMark(
@@ -137,34 +141,40 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
         $to.pos,
         state.schema.marks.customTagInline.create({
           ...((mark && mark.attrs) || {}),
-          tagNames,
-          class: tagNames.toString(),
+          tags,
+          class: tags.toString(),
         }),
       ),
     );
   };
 
   const removeFromSelection = tagName => {
-    // if (finalTag.length === 0) {
-    //   dispatch(
-    //     state.tr.removeMark(
-    //       $from.pos,
-    //       $to.pos,
-    //       state.schema.marks.customTagInline,
-    //     ),
-    //   );
-    // } else {
-    //   dispatch(
-    //     state.tr.addMark(
-    //       $from.pos,
-    //       $to.pos,
-    //       state.schema.marks.customTagInline.create({
-    //         tagNames: JSON.stringify(finalTag),
-    //         class: classNames,
-    //       }),
-    //     ),
-    //   );
-    // }
+    const { tags } = mark.attrs;
+    if (tags.length === 1) {
+      dispatch(
+        state.tr.removeMark(
+          mark.from,
+          mark.to,
+          state.schema.marks.customTagInline,
+        ),
+      );
+    } else {
+      const index = tags.indexOf(tagName);
+      if (index > -1) {
+        tags.splice(index, 1);
+        dispatch(
+          state.tr.addMark(
+            mark.from,
+            mark.to,
+            state.schema.marks.customTagInline.create({
+              ...((mark && mark.attrs) || {}),
+              tags,
+              class: tags.toString(),
+            }),
+          ),
+        );
+      }
+    }
   };
 
   useEffect(() => {
@@ -175,36 +185,52 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     return tag.tagType === 'inline';
   });
 
+  const disabledStyles = {
+    cursor: 'default',
+    opacity: '0.4',
+    pointerEvents: 'none',
+  };
+
+  const styles = $from.pos === $to.pos ? disabledStyles : {};
+
   return isCustomTagInline === true ? (
     <Wrapper>
       <InlineHeader>Custom Inline</InlineHeader>
-      {inlineTags.map(item => (
-        <ListStyle key={uuidv4()}>
-          <Flex>
-            <ItemWrapper onMouseDown={() => addToSelection(item.label)}>
-              {item.label}
-            </ItemWrapper>
-            {/* {console.log(mark)} */}
-            {/* {selectedTagNames.map(value => {
-              return (
-                <Fragment key={uuidv4()}>
-                  {value === item.label ? (
-                    <span
-                      aria-hidden="true"
-                      onClick={() => removeFromSelection(item.label)}
-                      role="button"
-                    >
-                      <IconRemove name="removeTag" />
-                    </span>
-                  ) : (
-                    ''
-                  )}
-                </Fragment>
-              );
-            })} */}
-          </Flex>
-        </ListStyle>
-      ))}
+      {inlineTags.map(item => {
+        return (
+          <ListStyle key={uuidv4()}>
+            <Flex>
+              {mark && mark.attrs.tags.includes(item.label) ? (
+                <ItemActive>{item.label}</ItemActive>
+              ) : (
+                <Item
+                  onMouseDown={() => addToSelection(item.label)}
+                  style={styles}
+                >
+                  {item.label}
+                </Item>
+              )}
+
+              {mark &&
+                mark.attrs.tags.map(value => {
+                  return (
+                    <Fragment key={uuidv4()}>
+                      {value === item.label ? (
+                        <span
+                          aria-hidden="true"
+                          onClick={() => removeFromSelection(item.label)}
+                          role="button"
+                        >
+                          <IconRemove name="removeTag" />
+                        </span>
+                      ) : null}
+                    </Fragment>
+                  );
+                })}
+            </Flex>
+          </ListStyle>
+        );
+      })}
       <CustomWrapper>
         <Input
           onChange={onChangeTagName}

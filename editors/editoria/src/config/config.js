@@ -62,6 +62,10 @@ const saveTags = tags => {
   // console.log(tags);
 };
 
+const updateTrackStatus = status => {
+  // console.log('status', status);
+};
+
 export default {
   MenuService: [
     {
@@ -109,7 +113,7 @@ export default {
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
-  EnableTrackChangeService: { enabled: false, toggle: true },
+  EnableTrackChangeService: { enabled: false, toggle: true, updateTrackStatus },
   AcceptTrackChangeService: {
     own: {
       accept: true,

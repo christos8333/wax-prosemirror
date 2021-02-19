@@ -76,22 +76,28 @@ const dropDownOptions = [
 ];
 
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
-  const { app, activeView } = useContext(WaxContext);
-  const isDisabled = app.config.get('config.EnableTrackChangeService').toggle;
+  const { app, activeView, view } = useContext(WaxContext);
+  const enableService = app.config.get('config.EnableTrackChangeService');
+  const isDisabled = enableService.toggle;
+
+  const isEditable = view.main.props.editable(editable => {
+    return editable;
+  });
 
   const enableDisableTrackChanges = () => {
-    app.config.get('config.EnableTrackChangeService').enabled = !app.config.get(
-      'config.EnableTrackChangeService',
-    ).enabled;
+    enableService.enabled = !enableService.enabled;
+    if (enableService.updateTrackStatus)
+      enableService.updateTrackStatus(enableService.enabled);
+
     setTimeout(() => {
       activeView.focus();
     }, 100);
   };
 
   const selectedOption = () => {
-    if (app.config.get('config.EnableTrackChangeService').enabled)
+    if (enableService.enabled) {
       return dropDownOptions[1];
-
+    }
     return dropDownOptions[0];
   };
 
@@ -109,7 +115,7 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
     [],
   );
 
-  if (app.config.get('readonly')) return <Viewing />;
+  if (!isEditable) return <Viewing />;
 
   return EditingSuggestingComponent;
 };

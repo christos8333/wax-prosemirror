@@ -6,9 +6,12 @@ class CustomTagBlockService extends Service {
   register() {
     this.container.bind('CustomTagBlockTool').to(CustomTagBlockTool);
     const createNode = this.container.get('CreateNode');
-    createNode({
-      customTagBlock: customBlockNode,
-    });
+    createNode(
+      {
+        customTagBlock: customBlockNode,
+      },
+      { toWaxSchema: true },
+    );
   }
 }
 

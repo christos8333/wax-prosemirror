@@ -142,7 +142,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
         state.schema.marks.customTagInline.create({
           ...((mark && mark.attrs) || {}),
           tags,
-          class: tags.toString(),
+          class: tags.toString().replace(/ /g, '-'),
         }),
       ),
     );
@@ -169,7 +169,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
             state.schema.marks.customTagInline.create({
               ...((mark && mark.attrs) || {}),
               tags,
-              class: tags.toString(),
+              class: tags.toString().replace(/ /g, '-'),
             }),
           ),
         );

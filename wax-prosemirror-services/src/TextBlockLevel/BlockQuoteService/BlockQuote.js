@@ -1,6 +1,7 @@
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
 import { wrapIn } from 'prosemirror-commands';
+import { NodeSelection } from 'prosemirror-state';
+import Tools from '../../lib/Tools';
 
 @injectable()
 class BlockQuote extends Tools {
@@ -18,6 +19,20 @@ class BlockQuote extends Tools {
     if (activeViewId !== 'main') return false;
     return true;
   };
+
+  get active() {
+    return state => {
+      const { $from, to } = state.selection;
+      const same = $from.sharedDepth(to);
+      if (same === 0) return false;
+      const pos = $from.before(same);
+      const node = NodeSelection.create(state.doc, pos);
+      if (node.$from.parent.hasMarkup(state.config.schema.nodes.blockquote)) {
+        return true;
+      }
+      return false;
+    };
+  }
 
   get enable() {
     return state => {

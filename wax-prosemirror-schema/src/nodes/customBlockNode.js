@@ -24,6 +24,7 @@ const customBlockNode = {
       class: hook.node.attrs.class,
       'data-type': hook.node.attrs.type,
     };
+    // eslint-disable-next-line no-param-reassign
     hook.value = ['p', attrs, 0];
     next();
   },

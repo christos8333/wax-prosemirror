@@ -1,6 +1,9 @@
+import React from 'react';
 import { injectable } from 'inversify';
+import { isEmpty } from 'lodash';
 import { wrapIn } from 'prosemirror-commands';
 import { NodeSelection } from 'prosemirror-state';
+import { LeftSideButton } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
 @injectable()
@@ -38,6 +41,14 @@ class BlockQuote extends Tools {
     return state => {
       return wrapIn(state.config.schema.nodes.blockquote)(state);
     };
+  }
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+    // eslint-disable-next-line no-underscore-dangle
+    return this._isDisplayed ? (
+      <LeftSideButton item={this.toJSON()} key="BlockQuote" view={view} />
+    ) : null;
   }
 }
 export default BlockQuote;

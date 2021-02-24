@@ -1,8 +1,16 @@
 import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
 import MenuButton from '../../ui/buttons/MenuButton';
+
+const activeStyles = css`
+  pointer-events: none;
+`;
+
+const StyledButton = styled(MenuButton)`
+  ${props => props.active && activeStyles}
+`;
 
 const Input = styled.input`
   border: none;
@@ -138,7 +146,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
       tagList.push(
         <TagBoxWrapper key={uuidv4()}>
           <Box key={uuidv4()} />
-          <MenuButton
+          <StyledButton
             active={tagStatus[blockTag.label]}
             disabled={isDisabled}
             key={uuidv4()}

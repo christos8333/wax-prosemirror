@@ -63,11 +63,13 @@ const FindAndReplaceComponent = ({ close }) => {
     );
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
-    const findViewWithMatches = helpers.findViewWithMatches(
+
+    const findViewWithMatches = helpers.findViewWithMatchesForward(
       results,
       view,
       lastActiveViewId,
     );
+
     /* if no matches are found on focused view */
     if (!resultsFrom[lastActiveViewId]) {
       view[findViewWithMatches].dispatch(
@@ -139,6 +141,24 @@ const FindAndReplaceComponent = ({ close }) => {
     );
     const resultsFrom = helpers.getResultsFrom(results);
     const notesIds = helpers.getNotesIds(view.main);
+
+    const findViewWithMatches = helpers.findViewWithMatchesBackWards(
+      results,
+      view,
+      lastActiveViewId,
+    );
+
+    /* if no matches are found on focused view */
+    if (!resultsFrom[lastActiveViewId]) {
+      view[findViewWithMatches].dispatch(
+        view[findViewWithMatches].state.tr.setSelection(
+          new TextSelection(view[findViewWithMatches].state.tr.doc.resolve(1)),
+        ),
+      );
+      view[findViewWithMatches].focus();
+      lastActiveViewId = findViewWithMatches;
+      lastSelection = view[lastActiveViewId].state.selection;
+    }
 
     const found = helpers.getClosestMatch(
       lastSelection.from,

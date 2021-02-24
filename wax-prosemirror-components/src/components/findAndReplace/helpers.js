@@ -136,7 +136,7 @@ const findViewWithMatchesForward = (results, view, lastActiveViewId) => {
 const findViewWithMatchesBackWards = (results, view, lastActiveViewId) => {
   const notesIds = getNotesIds(view.main);
   if (lastActiveViewId === 'main') {
-    for (let i = notesIds.length - 1; i > 0; i -= 1) {
+    for (let i = notesIds.length - 1; i >= 0; i -= 1) {
       if (results[notesIds[i]].length > 0) {
         return notesIds[i];
       }

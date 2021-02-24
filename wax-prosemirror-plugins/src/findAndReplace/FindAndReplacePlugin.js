@@ -20,6 +20,7 @@ export default props => {
         const allMatches = DocumentHelpers.findMatches(
           newState.doc,
           searchText,
+          matchCase,
         );
         if (allMatches.length > 0) {
           decorations = allMatches.map((result, index) => {

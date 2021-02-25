@@ -74,7 +74,7 @@ const FindAndReplaceComponent = ({ close }) => {
     if (!resultsFrom[lastActiveViewId]) {
       view[findViewWithMatches].dispatch(
         view[findViewWithMatches].state.tr.setSelection(
-          new TextSelection(view[findViewWithMatches].state.tr.doc.resolve(1)),
+          new TextSelection(view[findViewWithMatches].state.tr.doc.resolve(0)),
         ),
       );
       view[findViewWithMatches].focus();
@@ -152,7 +152,11 @@ const FindAndReplaceComponent = ({ close }) => {
     if (!resultsFrom[lastActiveViewId]) {
       view[findViewWithMatches].dispatch(
         view[findViewWithMatches].state.tr.setSelection(
-          new TextSelection(view[findViewWithMatches].state.tr.doc.resolve(1)),
+          new TextSelection(
+            view[findViewWithMatches].state.tr.doc.resolve(
+              view[findViewWithMatches].state.doc.content.size,
+            ),
+          ),
         ),
       );
       view[findViewWithMatches].focus();
@@ -165,6 +169,7 @@ const FindAndReplaceComponent = ({ close }) => {
       resultsFrom[lastActiveViewId],
       false,
     );
+
     const position = resultsFrom[lastActiveViewId].indexOf(found);
 
     /* User selection lesser than found */

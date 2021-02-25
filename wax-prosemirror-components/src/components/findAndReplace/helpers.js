@@ -150,21 +150,23 @@ const findViewWithMatchesBackWards = (results, view, lastActiveViewId) => {
     }
   }
 
-  if (notesIds.indexOf(lastActiveViewId) < notesIds.length - 1) {
-    for (let i = 0; i < notesIds.length; i += 1) {
+  if (notesIds.indexOf(lastActiveViewId) !== 0) {
+    for (let i = notesIds.indexOf(lastActiveViewId) - 1; i >= 0; i -= 1) {
+      if (results[notesIds[i]].length > 0) {
+        return notesIds[i];
+      }
+      if (results.main.length > 0) return 'main';
+    }
+  } else if (results.main.length > 0) {
+    return 'main';
+  } else {
+    for (let i = notesIds.length - 1; i >= 0; i -= 1) {
       if (results[notesIds[i]].length > 0) {
         return notesIds[i];
       }
     }
-    return 'main';
   }
 
-  if (
-    notesIds.indexOf(lastActiveViewId) &&
-    notesIds.indexOf(lastActiveViewId) === notesIds.length - 1
-  ) {
-    return 'main';
-  }
   return false;
 };
 

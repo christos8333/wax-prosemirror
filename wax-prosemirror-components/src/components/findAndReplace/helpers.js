@@ -121,7 +121,14 @@ const findViewWithMatchesForward = (results, view, lastActiveViewId) => {
         return notesIds[i];
       }
     }
+  } else if (results.main.length > 0) {
     return 'main';
+  } else {
+    for (let i = 0; i < notesIds.length; i += 1) {
+      if (results[notesIds[i]].length > 0) {
+        return notesIds[i];
+      }
+    }
   }
 
   if (

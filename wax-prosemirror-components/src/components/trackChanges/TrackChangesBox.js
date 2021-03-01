@@ -146,7 +146,6 @@ const TrackChangesBox = props => {
   }
 
   if (trackData.node) {
-    console.log(trackData);
     const track = trackData.node.attrs.track[0];
     if (track.type === 'insertion') {
       textBlockInsert = trackData.node.type.name;

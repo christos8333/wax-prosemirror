@@ -47,6 +47,7 @@ const Tools = styled.div``;
 const ChangeWrapper = styled.div``;
 
 const Label = styled.span`
+  display: flex;
   font-weight: bold;
   margin-right: 4px;
   text-transform: capitalize;
@@ -54,6 +55,12 @@ const Label = styled.span`
   &:after {
     content: ':';
   }
+`;
+
+const ActionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
 `;
 
 const Text = styled.span``;
@@ -91,11 +98,9 @@ const TrackChangesBox = props => {
   const {
     active,
     className,
-    label,
     onClickBox,
     onClickAccept,
     onClickReject,
-    text,
     trackData,
   } = props;
 
@@ -110,6 +115,45 @@ const TrackChangesBox = props => {
   const date = trackData.attrs
     ? trackData.attrs.date
     : trackData.node.attrs.track[0].date;
+
+  const labelRemoved = `removed `;
+  let textRemoved = '';
+  const labelAdded = `added `;
+  let textAdded = '';
+
+  const labelBlockChange = 'changed ';
+  let textBlockChange = '';
+  let textBlockInsert = '';
+
+  if (trackData.type && trackData.type.name === 'format_change') {
+    const { before, after } = trackData.attrs;
+
+    for (let i = 0; i < before.length; i += 1) {
+      if (i < before.length - 1) {
+        textRemoved += `${before[i]}, `;
+      } else {
+        textRemoved += `${before[i]}`;
+      }
+    }
+
+    for (let i = 0; i < after.length; i += 1) {
+      if (i < after.length - 1) {
+        textAdded += `${after[i]}, `;
+      } else {
+        textAdded += `${after[i]}`;
+      }
+    }
+  }
+
+  if (trackData.node) {
+    const track = trackData.node.attrs.track[0];
+    if (track.type === 'insertion') {
+      textBlockInsert = trackData.node.type.name;
+    }
+    if (track.type === 'block_change') {
+      textBlockChange = `${track.before.type} to ${trackData.node.type.name}`;
+    }
+  }
 
   return (
     <Wrapper active={active} className={className} onClick={onClickTrackBox}>
@@ -133,8 +177,30 @@ const TrackChangesBox = props => {
       </HeadWrapper>
 
       <ChangeWrapper>
-        <Label>{label}</Label>
-        <Text>{text}</Text>
+        {textAdded !== '' && (
+          <ActionWrapper>
+            <Label>{labelAdded}</Label>
+            <Text>{textAdded}</Text>
+          </ActionWrapper>
+        )}
+        {textRemoved !== '' && (
+          <ActionWrapper>
+            <Label>{labelRemoved}</Label>
+            <Text>{textRemoved}</Text>
+          </ActionWrapper>
+        )}
+        {textBlockInsert !== '' && (
+          <ActionWrapper>
+            <Label>{labelAdded}</Label>
+            <Text>{textBlockInsert}</Text>
+          </ActionWrapper>
+        )}
+        {textBlockChange !== '' && (
+          <ActionWrapper>
+            <Label>{labelBlockChange}</Label>
+            <Text>{textBlockChange}</Text>
+          </ActionWrapper>
+        )}
       </ChangeWrapper>
     </Wrapper>
   );

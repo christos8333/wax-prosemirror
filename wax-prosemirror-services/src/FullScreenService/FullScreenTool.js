@@ -27,8 +27,9 @@ class FullScreenTool extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
+    // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <FullScreen key="FullScreen" item={this.toJSON()} view={view} />
+      <FullScreen item={this.toJSON()} key="FullScreen" view={view} />
     ) : null;
   }
 }

@@ -1,67 +1,11 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { eachRight } from 'lodash';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const findAndReplacePlugin = new PluginKey('findAndReplacePlugin');
 
 let searchText = '';
 let matchCase = false;
-
-const findMatches = (doc, searchValue) => {
-  const allNodes = [];
-
-  doc.descendants((node, pos) => {
-    allNodes.push({ node, pos });
-  });
-
-  eachRight(allNodes, (node, index) => {
-    if (node.node.type.name === 'footnote') {
-      allNodes.splice(index + 1, node.node.childCount);
-    }
-  });
-
-  const results = [];
-  const mergedTextNodes = [];
-  let index = 0;
-
-  allNodes.forEach((node, i) => {
-    if (node.node.isText) {
-      if (mergedTextNodes[index]) {
-        mergedTextNodes[index] = {
-          text: mergedTextNodes[index].text + node.node.text,
-          pos: mergedTextNodes[index].pos,
-        };
-      } else {
-        mergedTextNodes[index] = {
-          text: node.node.text,
-          pos: node.pos,
-        };
-      }
-    } else {
-      index += 1;
-    }
-  });
-  mergedTextNodes.forEach(({ text, pos }) => {
-    const search = RegExp(escapeRegExp(searchValue), matchCase ? 'gu' : 'gui');
-    let m;
-    // eslint-disable-next-line no-cond-assign
-    while ((m = search.exec(text))) {
-      if (m[0] === '') {
-        break;
-      }
-
-      results.push({
-        from: pos + m.index,
-        to: pos + m.index + m[0].length,
-      });
-    }
-  });
-  return results;
-};
-
-const escapeRegExp = string => {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-};
 
 export default props => {
   return new Plugin({
@@ -73,7 +17,11 @@ export default props => {
       apply(tr, prev, _, newState) {
         let decorations;
         let createdDecorations = DecorationSet.empty;
-        const allMatches = findMatches(newState.doc, searchText);
+        const allMatches = DocumentHelpers.findMatches(
+          newState.doc,
+          searchText,
+          matchCase,
+        );
         if (allMatches.length > 0) {
           decorations = allMatches.map((result, index) => {
             return Decoration.inline(result.from, result.to, {

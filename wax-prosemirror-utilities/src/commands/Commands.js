@@ -133,15 +133,26 @@ const isOnSameTextBlock = state => {
 const createComment = (state, dispatch, group, viewid) => {
   const {
     selection: { $from, $to },
+    tr,
   } = state;
   let footnote = false;
+  let footnoteNode;
   state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
     if (node.type.name === 'footnote') {
       footnote = true;
+      footnoteNode = node;
     }
   });
 
-  if (footnote) return createCommentOnFootnote(state, dispatch, group, viewid);
+  if (footnote) {
+    if (
+      footnoteNode.content.size + 2 ===
+      state.selection.to - state.selection.from
+    ) {
+      return createCommentOnSingleFootnote(state, dispatch, group, viewid);
+    }
+    return createCommentOnFootnote(state, dispatch, group, viewid);
+  }
 
   toggleMark(state.config.schema.marks.comment, {
     id: uuidv4(),
@@ -149,6 +160,23 @@ const createComment = (state, dispatch, group, viewid) => {
     conversation: [],
     viewid,
   })(state, dispatch);
+};
+
+const createCommentOnSingleFootnote = (state, dispatch, group, viewid) => {
+  const { tr } = state;
+  tr.step(
+    new AddMarkStep(
+      state.selection.from,
+      state.selection.from + 1,
+      state.config.schema.marks.comment.create({
+        id: uuidv4(),
+        group,
+        conversation: [],
+        viewid,
+      }),
+    ),
+  );
+  dispatch(tr);
 };
 
 const createCommentOnFootnote = (state, dispatch, group, viewid) => {

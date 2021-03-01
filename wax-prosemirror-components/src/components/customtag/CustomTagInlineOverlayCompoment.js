@@ -9,7 +9,6 @@ import React, {
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
 import Icon from '../../helpers/Icon';
 
@@ -104,11 +103,19 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
     customTagsConfig && customTagsConfig.tags
       ? customTagsConfig.tags
       : initialArr;
+
   const saveTags =
     customTagsConfig && customTagsConfig.updateTags
       ? customTagsConfig.updateTags
       : () => true;
   const [allTags, setAllTags] = useState(configTags);
+
+  let image = false;
+  state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
+    if (node.type.name === 'image') {
+      image = true;
+    }
+  });
 
   const onChangeTagName = () => {
     setInputValue(ref.current.value);
@@ -193,7 +200,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
   const styles = $from.pos === $to.pos ? disabledStyles : {};
 
-  return isCustomTagInline === true ? (
+  return isCustomTagInline === true && !image ? (
     <Wrapper>
       <InlineHeader>Custom Inline</InlineHeader>
       {inlineTags.map(item => {

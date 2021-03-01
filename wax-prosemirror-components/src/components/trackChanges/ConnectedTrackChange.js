@@ -33,6 +33,8 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     .trackChange;
 
   const onClickBox = trackData => {
+    if (trackData.node) return focusOnBlcock(trackData);
+
     const allTracksWithSameId = DocumentHelpers.findAllMarksWithSameId(
       view[viewId].state,
       trackData,
@@ -43,6 +45,17 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     view[viewId].dispatch(
       view[viewId].state.tr.setSelection(
         new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos)),
+      ),
+    );
+
+    view[viewId].focus();
+    return true;
+  };
+
+  const focusOnBlcock = trackData => {
+    view[viewId].dispatch(
+      view[viewId].state.tr.setSelection(
+        new TextSelection(view[viewId].state.tr.doc.resolve(trackData.pos + 1)),
       ),
     );
 

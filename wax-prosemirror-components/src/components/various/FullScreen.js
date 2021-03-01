@@ -3,7 +3,7 @@
 import React, { useContext, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
-import MenuButton from '../ui/buttons/MenuButton';
+import MenuButton from '../../ui/buttons/MenuButton';
 
 const Button = ({ view = {}, item }) => {
   const { active, icon, label, select, title } = item;

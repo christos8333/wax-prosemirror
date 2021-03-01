@@ -29,11 +29,11 @@ export default options => {
   Check: wax-prosemirror-components/src/components/comments/CommentBubbleComponent.js
   for reposition the create new comment component.
  */
-  const calculatePosition = (activeView, from, to) => {
-    const WaxSurface = activeView.dom.getBoundingClientRect();
-    const start = activeView.coordsAtPos(from);
-    const end = activeView.coordsAtPos(to);
-    const left = end.left;
+  const calculatePosition = (focusedView, from, to) => {
+    const WaxSurface = focusedView.dom.getBoundingClientRect();
+    const start = focusedView.coordsAtPos(from);
+    const end = focusedView.coordsAtPos(to);
+    const { left } = end;
     const top = end.top + 20;
     return {
       top,
@@ -41,11 +41,11 @@ export default options => {
     };
   };
 
-  const displayOnSelection = (activeView, options) => {
-    const { selection } = activeView.state;
+  const displayOnSelection = focusedView => {
+    const { selection } = focusedView.state;
     const { from, to } = selection;
     if (from === to) return defaultOverlay;
-    const { left, top } = calculatePosition(activeView, from, to);
+    const { left, top } = calculatePosition(focusedView, from, to);
     return {
       left,
       top,
@@ -55,15 +55,15 @@ export default options => {
     };
   };
 
-  const displayOnMark = (activeView, options) => {
-    const { markType, followCursor } = options;
-    const PMmark = activeView.state.schema.marks[markType];
-    mark = DocumentHelpers.findMark(activeView.state, PMmark);
+  const displayOnMark = (focusedView, overlayOptions) => {
+    const { markType, followCursor } = overlayOptions;
+    const PMmark = focusedView.state.schema.marks[markType];
+    mark = DocumentHelpers.findMark(focusedView.state, PMmark);
 
     if (!isObject(mark)) return defaultOverlay;
-    const { from, to } = followCursor ? activeView.state.selection : mark;
+    const { from, to } = followCursor ? focusedView.state.selection : mark;
 
-    const { left, top } = calculatePosition(activeView, from, to);
+    const { left, top } = calculatePosition(focusedView, from, to);
 
     return {
       left,
@@ -74,15 +74,15 @@ export default options => {
     };
   };
 
-  const displayOnMarkOrSelection = (activeView, options) => {
-    const { markType, followCursor } = options;
-    const PMmark = activeView.state.schema.marks[markType];
-    mark = DocumentHelpers.findMark(activeView.state, PMmark);
+  const displayOnMarkOrSelection = (focusedView, overlayOptions) => {
+    const { markType, followCursor } = overlayOptions;
+    const PMmark = focusedView.state.schema.marks[markType];
+    mark = DocumentHelpers.findMark(focusedView.state, PMmark);
 
-    if (!isObject(mark)) return displayOnSelection(activeView, options);
-    const { from, to } = followCursor ? activeView.state.selection : mark;
+    if (!isObject(mark)) return displayOnSelection(focusedView, overlayOptions);
+    const { from, to } = followCursor ? focusedView.state.selection : mark;
 
-    const { left, top } = calculatePosition(activeView, from, to);
+    const { left, top } = calculatePosition(focusedView, from, to);
     return {
       left,
       top,

@@ -47,6 +47,7 @@ const Tools = styled.div``;
 const ChangeWrapper = styled.div``;
 
 const Label = styled.span`
+  display: flex;
   font-weight: bold;
   margin-right: 4px;
   text-transform: capitalize;
@@ -58,6 +59,7 @@ const Label = styled.span`
 
 const ActionWrapper = styled.div`
   display: flex;
+  flex-direction: row;
   margin-bottom: 5px;
 `;
 
@@ -119,7 +121,11 @@ const TrackChangesBox = props => {
   const labelAdded = `added `;
   let textAdded = '';
 
-  if (trackData.type.name === 'format_change') {
+  const labelBlockChange = 'changed ';
+  let textBlockChange = '';
+  let textBlockInsert = '';
+
+  if (trackData.type && trackData.type.name === 'format_change') {
     const { before, after } = trackData.attrs;
 
     for (let i = 0; i < before.length; i += 1) {
@@ -136,6 +142,17 @@ const TrackChangesBox = props => {
       } else {
         textAdded += `${after[i]}`;
       }
+    }
+  }
+
+  if (trackData.node) {
+    console.log(trackData);
+    const track = trackData.node.attrs.track[0];
+    if (track.type === 'insertion') {
+      textBlockInsert = trackData.node.type.name;
+    }
+    if (track.type === 'block_change') {
+      textBlockChange = `${track.before.type} to ${trackData.node.type.name}`;
     }
   }
 
@@ -171,6 +188,18 @@ const TrackChangesBox = props => {
           <ActionWrapper>
             <Label>{labelRemoved}</Label>
             <Text>{textRemoved}</Text>
+          </ActionWrapper>
+        )}
+        {textBlockInsert !== '' && (
+          <ActionWrapper>
+            <Label>{labelAdded}</Label>
+            <Text>{textBlockInsert}</Text>
+          </ActionWrapper>
+        )}
+        {textBlockChange !== '' && (
+          <ActionWrapper>
+            <Label>{labelBlockChange}</Label>
+            <Text>{textBlockChange}</Text>
           </ActionWrapper>
         )}
       </ChangeWrapper>

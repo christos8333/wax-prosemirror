@@ -31,7 +31,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
   const activeTrackChange = trakChangePlugin.getState(activeView.state)
     .trackChange;
-
+  console.log(activeTrackChange);
   const onClickBox = trackData => {
     if (trackData.node) return focusOnBlcock(trackData);
 
@@ -44,7 +44,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
     view[viewId].dispatch(
       view[viewId].state.tr.setSelection(
-        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos)),
+        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos - 1)),
       ),
     );
 

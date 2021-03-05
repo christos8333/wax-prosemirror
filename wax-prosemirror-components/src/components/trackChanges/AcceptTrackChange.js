@@ -14,7 +14,13 @@ const checkFromConfig = (mark, user, config) => {
   return true;
 };
 
-const acceptTrackChange = (state, dispatch, user, activeTrackChange) => {
+const acceptTrackChange = (
+  state,
+  dispatch,
+  user,
+  activeTrackChange,
+  acceptConfig,
+) => {
   const {
     tr,
     selection: { from, to },
@@ -41,7 +47,7 @@ const acceptTrackChange = (state, dispatch, user, activeTrackChange) => {
           mark => mark.type.name === 'deletion',
         );
 
-        const configCheck = checkFromConfig(deletionMark, user, this.config);
+        const configCheck = checkFromConfig(deletionMark, user, acceptConfig);
         if (!configCheck) return;
 
         const deletionStep = new ReplaceStep(
@@ -71,8 +77,8 @@ const acceptTrackChange = (state, dispatch, user, activeTrackChange) => {
         const insertionMark = node.marks.find(
           mark => mark.type.name === 'insertion',
         );
-        // const configCheck = checkFromConfig(insertionMark, user, this.config);
-        // if (!configCheck) return;
+        const configCheck = checkFromConfig(insertionMark, user, acceptConfig);
+        if (!configCheck) return;
 
         tr.step(
           new RemoveMarkStep(
@@ -88,12 +94,12 @@ const acceptTrackChange = (state, dispatch, user, activeTrackChange) => {
         const formatChangeMark = node.marks.find(
           mark => mark.type.name === 'format_change',
         );
-        // const configCheck = checkFromConfig(
-        //   formatChangeMark,
-        //   user,
-        //   this.config,
-        // );
-        // if (!configCheck) return;
+        const configCheck = checkFromConfig(
+          formatChangeMark,
+          user,
+          acceptConfig,
+        );
+        if (!configCheck) return;
 
         tr.step(
           new RemoveMarkStep(

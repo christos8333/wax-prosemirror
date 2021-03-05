@@ -74,12 +74,14 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   }, [activeTrackChange]);
 
   const onClickAccept = () => {
-    acceptTrackChange(state, dispatch, user, activeTrackChange);
+    const acceptConfig = app.config.get('config.AcceptTrackChangeService');
+    acceptTrackChange(state, dispatch, user, activeTrackChange, acceptConfig);
     view[viewId].focus();
   };
 
   const onClickReject = () => {
-    rejectTrackChange(state, dispatch, user, activeTrackChange);
+    const rejectConfig = app.config.get('config.RejectTrackChangeService');
+    rejectTrackChange(state, dispatch, user, activeTrackChange, rejectConfig);
     view[viewId].focus();
   };
 

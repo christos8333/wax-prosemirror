@@ -6,6 +6,8 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { last, maxBy } from 'lodash';
 import { TextSelection } from 'prosemirror-state';
 import TrackChangesBox from './TrackChangesBox';
+import acceptTrackChange from './AcceptTrackChange';
+import rejectTrackChange from './RejectTrackChange';
 
 const ConnectedTrackChangeStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
@@ -18,9 +20,9 @@ const ConnectedTrackChangeStyled = styled.div`
 
 export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const { app, activeView, view } = useContext(WaxContext);
-
+  const user = app.config.get('user');
   const [isActive, setIsActive] = useState(false);
-  // const { state, dispatch } = activeView;
+  const { state, dispatch } = activeView;
   const viewId = trackChange.attrs
     ? trackChange.attrs.viewid
     : trackChange.node.attrs.viewid;
@@ -44,7 +46,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
     view[viewId].dispatch(
       view[viewId].state.tr.setSelection(
-        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos)),
+        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos - 1)),
       ),
     );
 
@@ -71,6 +73,18 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     }
   }, [activeTrackChange]);
 
+  const onClickAccept = () => {
+    const acceptConfig = app.config.get('config.AcceptTrackChangeService');
+    acceptTrackChange(state, dispatch, user, activeTrackChange, acceptConfig);
+    view[viewId].focus();
+  };
+
+  const onClickReject = () => {
+    const rejectConfig = app.config.get('config.RejectTrackChangeService');
+    rejectTrackChange(state, dispatch, user, activeTrackChange, rejectConfig);
+    view[viewId].focus();
+  };
+
   const MemorizedTrackChange = useMemo(
     () => (
       <ConnectedTrackChangeStyled
@@ -81,7 +95,9 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
         <TrackChangesBox
           active={isActive}
           key={trackChangeId}
+          onClickAccept={onClickAccept}
           onClickBox={onClickBox}
+          onClickReject={onClickReject}
           recalculateTops={recalculateTops}
           trackChangeId={trackChangeId}
           trackData={trackChange}

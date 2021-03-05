@@ -45,7 +45,13 @@ export default options => {
               node.descendants((childNode, childPos) => {
                 nodeSize += childNode.nodeSize;
               });
-
+              // Active block
+              node.attrs.track[0].id = node.attrs.id;
+              currentTrackSelected = {
+                from: pos,
+                to: nodeSize,
+                attrs: node.attrs.track[0],
+              };
               decos = decos.add(tr.doc, [
                 decoType(pos, nodeSize, {
                   class: 'selected-block-change',

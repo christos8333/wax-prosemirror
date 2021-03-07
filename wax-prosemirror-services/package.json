@@ -4,7 +4,7 @@
   "version": "0.0.32",
   "description": "Wax prosemirror services",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
   "files": [
     "dist"
   ],

@@ -123,7 +123,11 @@ const acceptTrackChange = (
         tr.setNodeMarkup(
           map.map(pos),
           null,
-          Object.assign(node.attrs.track, { track }),
+          {
+            class: node.attrs.class,
+            track: [],
+          },
+          // Object.assign(node.attrs.track, { track }),
           node.marks,
         );
       }

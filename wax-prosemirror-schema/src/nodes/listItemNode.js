@@ -19,7 +19,7 @@ const list_item = {
   ],
   toDOM(hook, next) {
     const attrs = {};
-    if (hook.node.attrs.track.length) {
+    if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
     }
     hook.value = ['li', attrs, 0];

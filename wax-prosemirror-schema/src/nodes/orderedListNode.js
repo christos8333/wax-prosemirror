@@ -26,7 +26,7 @@ const orderedlist = {
     if (hook.node.attrs.order !== 1) {
       attrs.start = hook.node.attrs.order;
     }
-    if (hook.node.attrs.track.length) {
+    if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
     }
     hook.value = ['ol', attrs, 0];

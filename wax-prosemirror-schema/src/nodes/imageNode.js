@@ -27,7 +27,7 @@ const image = {
   toDOM(hook, next) {
     const attrs = {};
     let temp = '';
-    if (hook.node.attrs.track.length) {
+    if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
       attrs['data-id'] = hook.node.attrs.id;
     }

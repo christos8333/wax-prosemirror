@@ -1,4 +1,5 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
+import { debounce } from 'lodash';
 import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   InlineAnnotationsService,
@@ -54,9 +55,13 @@ import invisibles, {
   paragraph,
 } from '@guardian/prosemirror-invisibles';
 
-const updateTitle = title => {
+// const updateTitle = title => {
+//   console.log(title);
+// };
+
+const updateTitle = debounce(title => {
   console.log(title);
-};
+}, 3000);
 
 const saveTags = tags => {
   // console.log(tags);

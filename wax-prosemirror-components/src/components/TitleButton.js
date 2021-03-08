@@ -31,13 +31,16 @@ const TitleButton = ({ view = {}, item }) => {
 
   const serviceConfig = app.config.get('config.TitleService');
 
+  let chapterTitle = '';
+  if (titleNode[0]) chapterTitle = titleNode[0].node.textContent;
+
   useEffect(() => {
     if (titleNode[0]) {
       serviceConfig.updateTitle(titleNode[0].node.textContent);
     } else {
       serviceConfig.updateTitle('');
     }
-  }, [JSON.stringify(titleNode[0])]);
+  }, [chapterTitle]);
 
   const isActive = !!active(state, activeViewId);
   let isDisabled = !select(state, activeViewId, activeView);

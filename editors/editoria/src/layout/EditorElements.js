@@ -348,6 +348,20 @@ export default css`
 
   /* -- Block Math ---------------------------------------- */
 
+  figcaption {
+    background-color: #eee;
+    cursor: text;
+    height: 20px;
+  }
+
+  .decoration:before {
+    content: 'Caption : ';
+  }
+
+  .decoration1:before {
+    content: '';
+  }
+
   math-display {
     display: block;
   }

@@ -1,6 +1,6 @@
 import { SchemaHelpers } from 'wax-prosemirror-utilities';
+
 const image = {
-  // inline: true,
   attrs: {
     src: {},
     alt: { default: null },
@@ -26,12 +26,15 @@ const image = {
   ],
   toDOM(hook, next) {
     const attrs = {};
-    let temp = '';
+
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
       attrs['data-id'] = hook.node.attrs.id;
     }
+
     const { src, alt, title, id, track } = hook.node.attrs;
+
+    // eslint-disable-next-line no-param-reassign
     hook.value = [
       'img',
       { src, alt, title, 'data-id': id, 'data-track': track },

@@ -20,9 +20,9 @@ export default key =>
           });
           set = set.add(tr.doc, [deco]);
         } else if (action && action.remove) {
-          set = set.remove(
-            set.find(null, null, spec => spec.id === action.remove.id),
-          );
+          // set = set.remove(
+          //   set.find(null, null, spec => spec.id === action.remove.id),
+          // );
         }
         return set;
       },

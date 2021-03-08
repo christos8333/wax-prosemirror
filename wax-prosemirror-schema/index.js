@@ -37,7 +37,7 @@ export { default as bulletListNode } from './src/nodes/bulletListNode';
 export { default as listItemNode } from './src/nodes/listItemNode';
 export { default as subTitleNode } from './src/nodes/subTitleNode';
 export { default as figureNode } from './src/nodes/figureNode';
-export { default as figureCaptionNode } from './src/nodes/figureNode';
+export { default as figureCaptionNode } from './src/nodes/figureCaptionNode';
 export { default as imageNode } from './src/nodes/imageNode';
 export { default as headingNode } from './src/nodes/headingNode';
 export { default as blockQuoteNode } from './src/nodes/blockQuoteNode';

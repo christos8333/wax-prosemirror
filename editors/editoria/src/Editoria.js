@@ -10,8 +10,8 @@ import { demo } from './demo';
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
-    padding: 0;
     overflow-y: hidden;
+    padding: 0;
   }
 
   #root {

@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { each, eachRight, debounce } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';
@@ -137,7 +138,7 @@ const PreviousNextButton = styled.span`
   }
 `;
 
-const ExandedFindAndReplaceComponent = ({
+const ExpandedFindAndReplaceComponent = ({
   close,
   findNextMatch,
   findPreviousMatch,
@@ -255,7 +256,10 @@ const ExandedFindAndReplaceComponent = ({
 
   const replaceAll = () => {
     each(view, (singleView, viewId) => {
-      const results = helpers.findMatches(singleView.state.doc, searchValue);
+      const results = DocumentHelpers.findMatches(
+        singleView.state.doc,
+        searchValue,
+      );
       const {
         state: { tr },
       } = singleView;
@@ -340,4 +344,4 @@ const ExandedFindAndReplaceComponent = ({
   );
 };
 
-export default ExandedFindAndReplaceComponent;
+export default ExpandedFindAndReplaceComponent;

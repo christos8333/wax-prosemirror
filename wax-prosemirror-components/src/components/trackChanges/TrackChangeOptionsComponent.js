@@ -32,6 +32,8 @@ const TotalComments = styled.div`
 
 const ShowComments = styled.div`
   color: #bdc2ca;
+  display: flex;
+  flex-direction: row;
   height: 23px;
   padding-top: ${grid(2)};
 
@@ -40,7 +42,6 @@ const ShowComments = styled.div`
     cursor: not-allowed;
     fill: #85adff;
     height: 45px !important;
-    left: 62px;
     opacity: 0.6;
     position: relative;
     width: 45px !important;
@@ -58,7 +59,7 @@ const StyledIcon = styled(Icon)``;
 
 const StyledIconExpand = styled(Icon)`
   bottom: 3px;
-  left: 47px;
+  margin-left: auto;
   position: relative;
 `;
 
@@ -87,6 +88,8 @@ const AcceptRejectAllButton = styled.div`
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
   padding-bottom: 3px;
   padding-top: 8px;
   text-align: start;
@@ -106,7 +109,7 @@ const AcceptRejectAllControls = styled.div`
   font-size: 14px;
   padding: ${grid(2)};
   position: absolute;
-  right: 207px;
+  right: 190px;
   transform-origin: 50% 50% 0px;
   width: 209px;
   z-index: 9999;
@@ -248,7 +251,7 @@ const TrackChangeOptionsComponent = ({
       >
         <AcceptRejectAllButton>
           <StyledIcon name="acceptRejectTrack" />
-          Accept/Reject All
+          <span>Accept/Reject All</span>
           <StyledIconExpand name="navigateNext" />
         </AcceptRejectAllButton>
         {isShownTrack && (
@@ -266,7 +269,7 @@ const TrackChangeOptionsComponent = ({
       </AcceptRejectAll>
       <TotalComments>{comments} COMMENTS</TotalComments>
       <ShowComments>
-        Show comments
+        <span>Show comments</span>
         <StyledToggleOn name="toggleOn" />
       </ShowComments>
     </Wrapper>

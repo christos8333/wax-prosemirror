@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import FindComponent from './FindComponent';
-import ExandedFindAndReplaceComponent from './ExandedFindAndReplaceComponent';
+import ExpandedFindAndReplaceComponent from './ExpandedFindAndReplaceComponent';
 import helpers from './helpers';
 
 let lastActiveViewId;
@@ -228,7 +228,7 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   return isExpanded ? (
-    <ExandedFindAndReplaceComponent
+    <ExpandedFindAndReplaceComponent
       close={close}
       findNextMatch={findNextMatch}
       findPreviousMatch={findPreviousMatch}

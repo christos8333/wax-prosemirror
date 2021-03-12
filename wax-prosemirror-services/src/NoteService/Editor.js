@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -37,6 +37,14 @@ export default ({ node, view }) => {
         // This is the magic part
         dispatchTransaction,
         handleDOMEvents: {
+          blur: () => {
+            context.view[noteId].dispatch(
+              context.view[noteId].state.tr.setSelection(
+                new TextSelection(context.view[noteId].state.tr.doc.resolve(0)),
+              ),
+            );
+          },
+
           mousedown: () => {
             context.updateView({}, noteId);
             clickInNote = true;

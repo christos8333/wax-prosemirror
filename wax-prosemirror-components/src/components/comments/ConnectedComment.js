@@ -50,7 +50,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
-  console.log(activeComment);
+
   useEffect(() => {
     setIsActive(false);
     recalculateTops();
@@ -121,6 +121,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     });
     // if (allCommentsWithSameId.length > 1);
     // maxPos += last(allCommentsWithSameId).node.nodeSize;
+    recalculateTops();
     dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
   };

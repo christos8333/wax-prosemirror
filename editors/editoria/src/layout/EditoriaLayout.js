@@ -248,7 +248,7 @@ const EditoriaLayout = ({ editor }) => {
 
   return (
     <ThemeProvider theme={cokoTheme}>
-      <Wrapper style={fullScreenStyles}>
+      <Wrapper style={fullScreenStyles} id="wax-container">
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>

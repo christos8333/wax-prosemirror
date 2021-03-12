@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useMemo } from 'react';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import { Wax } from 'wax-prosemirror-core';
 
@@ -56,6 +56,7 @@ const Editoria = () => {
     () => (
       <>
         <GlobalStyle />
+        <div>Hello</div>
         <Wax
           key={key}
           config={finalConfig}

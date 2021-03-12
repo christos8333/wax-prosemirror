@@ -58,15 +58,24 @@ export default ({ area }) => {
           annotationTop =
             markNodeEl.getBoundingClientRect().top - WaxSurface.top;
       } else {
+        // Notes
         panelWrapper = document.getElementsByClassName('panelWrapper');
         panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
 
         markNodeEl = document
           .querySelector('#notes-container')
           .querySelector(`[data-id="${id}"]`);
-        if (markNodeEl)
+        if (markNodeEl) {
+          const WaxContainerTop = document
+            .querySelector('#wax-container')
+            .getBoundingClientRect().top;
+
           annotationTop =
-            markNodeEl.getBoundingClientRect().top - panelWrapperHeight - 50;
+            markNodeEl.getBoundingClientRect().top -
+            panelWrapperHeight -
+            WaxContainerTop -
+            50;
+        }
       }
 
       let boxEl = null;

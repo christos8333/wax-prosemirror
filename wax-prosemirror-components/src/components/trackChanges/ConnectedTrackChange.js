@@ -67,6 +67,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
   useEffect(() => {
     setIsActive(false);
+    recalculateTops();
     if (activeTrackChange && trackChangeId === activeTrackChange.attrs.id) {
       setIsActive(true);
       recalculateTops();

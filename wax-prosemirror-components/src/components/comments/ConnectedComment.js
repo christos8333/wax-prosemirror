@@ -50,9 +50,10 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
-
+  console.log(activeComment);
   useEffect(() => {
     setIsActive(false);
+    recalculateTops();
     if (activeComment && commentId === activeComment.attrs.id) {
       setIsActive(true);
       recalculateTops();
@@ -138,7 +139,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
         onClickResolve();
         activeView.focus();
       }
-    }, 200);
+    }, 400);
   };
 
   const MemorizedComponent = useMemo(

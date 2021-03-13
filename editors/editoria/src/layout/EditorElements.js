@@ -102,11 +102,10 @@ export default css`
   }
 
   figure {
-    display: flex;
+    display: table;
     flex-direction: column;
-    // align-items: center;
-    // justify-content: center;
-    // margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
 
     img {
       cursor: default;
@@ -117,16 +116,18 @@ export default css`
 
     figcaption {
       background: #e2ebff;
-      padding: 10px;
-      min-height: 50px;
+      caption-side: bottom;
+      display: table-caption;
       max-width: 100%;
+      min-height: 20px;
+      padding: 4px;
       width: auto;
-      overflow-y: auto;
 
       &:focus {
         outline: none;
       }
       &: before {
+        content: 'Caption : ';
         font-weight: bold;
       }
     }
@@ -374,20 +375,6 @@ export default css`
   }
 
   /* -- Block Math ---------------------------------------- */
-
-  figcaption {
-    background-color: #eee;
-    cursor: text;
-    height: 20px;
-  }
-
-  .decoration:before {
-    content: 'Caption : ';
-  }
-
-  .decoration1:before {
-    content: '';
-  }
 
   math-display {
     display: block;

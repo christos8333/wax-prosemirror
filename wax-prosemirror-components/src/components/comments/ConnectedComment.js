@@ -17,6 +17,7 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {
+  const context = useContext(WaxContext);
   const {
     view,
     view: {
@@ -26,7 +27,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     },
     app,
     activeView,
-  } = useContext(WaxContext);
+  } = context;
 
   const [isActive, setIsActive] = useState(false);
   const [clickPost, setClickPost] = useState(false);
@@ -92,6 +93,8 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       view[viewId].focus();
       return false;
     }
+
+    if (viewId !== 'main') context.updateView({}, viewId);
 
     const maxPos = maxBy(allCommentsWithSameId, 'pos');
     maxPos.pos += last(allCommentsWithSameId).node.nodeSize;

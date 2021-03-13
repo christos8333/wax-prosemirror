@@ -179,8 +179,8 @@ const InfoContainer = styled.div`
   z-index: 999;
 `;
 
-let surfaceHeight = 600;
-let notesHeight = 200;
+let surfaceHeight = (window.innerHeight / 5) * 3;
+let notesHeight = (window.innerHeight / 5) * 2;
 
 const onResizeEnd = arr => {
   surfaceHeight = arr[0].size;

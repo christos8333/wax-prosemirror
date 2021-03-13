@@ -30,8 +30,7 @@ export default css`
     h4 span::selection,
     code span::selection,
     custom-tag-block::selection,
-    custom-tag-inline::selection,
-     figcaption span::selection, {
+    custom-tag-inline::selection {
       background-color: transparent;
     }
 

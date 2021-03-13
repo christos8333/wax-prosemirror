@@ -30,7 +30,8 @@ export default css`
     h4 span::selection,
     code span::selection,
     custom-tag-block::selection,
-    custom-tag-inline::selection {
+    custom-tag-inline::selection,
+     figcaption span::selection, {
       background-color: transparent;
     }
 
@@ -100,9 +101,35 @@ export default css`
     margin-right: 0;
   }
 
-  img {
-    cursor: default;
-    width: 100%;
+  figure {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    // margin: 0px;
+
+    img {
+      cursor: default;
+      height: auto;
+      max-width: 100%;
+      width: auto;
+    }
+
+    figcaption {
+      background: #e2ebff;
+      padding: 10px;
+      min-height: 50px;
+      max-width: 100%;
+      width: auto;
+      overflow-y: auto;
+
+      &:focus {
+        outline: none;
+      }
+      &: before {
+        font-weight: bold;
+      }
+    }
   }
 
   sup,

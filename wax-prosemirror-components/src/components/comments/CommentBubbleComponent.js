@@ -41,7 +41,8 @@ const CommentBubbleComponent = ({
       (node, from) => {
         if (
           node.type.name === 'math_display' ||
-          node.type.name === 'math_inline'
+          node.type.name === 'math_inline' ||
+          node.type.name === 'image'
         ) {
           allowed = false;
         }

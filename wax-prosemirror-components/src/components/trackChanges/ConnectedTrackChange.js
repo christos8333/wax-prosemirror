@@ -19,7 +19,8 @@ const ConnectedTrackChangeStyled = styled.div`
 `;
 
 export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
-  const { app, activeView, view } = useContext(WaxContext);
+  const context = useContext(WaxContext);
+  const { app, activeView, view } = context;
   const user = app.config.get('user');
   const [isActive, setIsActive] = useState(false);
   const { state, dispatch } = activeView;
@@ -36,6 +37,8 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
   const onClickBox = trackData => {
     if (trackData.node) return focusOnBlcock(trackData);
+
+    if (viewId !== 'main') context.updateView({}, viewId);
 
     const allTracksWithSameId = DocumentHelpers.findAllMarksWithSameId(
       view[viewId].state,
@@ -67,6 +70,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
   useEffect(() => {
     setIsActive(false);
+    recalculateTops();
     if (activeTrackChange && trackChangeId === activeTrackChange.attrs.id) {
       setIsActive(true);
       recalculateTops();

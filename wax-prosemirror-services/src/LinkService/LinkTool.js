@@ -25,6 +25,10 @@ export default class LinkTool extends Tools {
     };
   }
 
+  select = state => {
+    return Commands.isOnSameTextBlock(state);
+  };
+
   get active() {
     return state => {
       return Commands.markActive(state.config.schema.marks.link)(state);

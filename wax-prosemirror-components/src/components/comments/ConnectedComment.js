@@ -17,6 +17,7 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {
+  const context = useContext(WaxContext);
   const {
     view,
     view: {
@@ -26,7 +27,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     },
     app,
     activeView,
-  } = useContext(WaxContext);
+  } = context;
 
   const [isActive, setIsActive] = useState(false);
   const [clickPost, setClickPost] = useState(false);
@@ -53,6 +54,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   useEffect(() => {
     setIsActive(false);
+    recalculateTops();
     if (activeComment && commentId === activeComment.attrs.id) {
       setIsActive(true);
       recalculateTops();
@@ -92,6 +94,8 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       return false;
     }
 
+    if (viewId !== 'main') context.updateView({}, viewId);
+
     const maxPos = maxBy(allCommentsWithSameId, 'pos');
     maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
 
@@ -120,6 +124,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     });
     // if (allCommentsWithSameId.length > 1);
     // maxPos += last(allCommentsWithSameId).node.nodeSize;
+    recalculateTops();
     dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
   };
@@ -138,7 +143,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
         onClickResolve();
         activeView.focus();
       }
-    }, 200);
+    }, 400);
   };
 
   const MemorizedComponent = useMemo(

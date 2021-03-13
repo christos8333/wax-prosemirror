@@ -34,6 +34,9 @@ export default (view, fileUpload, placeholderPlugin) => file => {
           .replaceWith(
             pos,
             pos,
+            // view.state.schema.nodes.image.create({
+            //   src: url,
+            // }),
             view.state.schema.nodes.image.create({
               src: url,
             }),

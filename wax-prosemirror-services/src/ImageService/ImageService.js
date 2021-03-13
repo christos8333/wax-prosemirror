@@ -33,7 +33,10 @@ class ImageService extends Service {
     );
     createNode({
       figcaption: figureCaptionNode,
-    });
+    }
+    // ,
+    // { toWaxSchema: true },
+    );
   }
 }
 

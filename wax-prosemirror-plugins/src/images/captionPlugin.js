@@ -81,7 +81,7 @@ const captionPlugin = key =>
             );
           }
 
-          return true;
+          return false;
         },
         keyup(view, e) {
           // delete caption if figure is deleted

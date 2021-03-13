@@ -1,5 +1,5 @@
 import { DecorationSet } from 'prosemirror-view';
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Plugin, PluginKey, NodeSelection } from 'prosemirror-state';
 
 const captionPlugin = key =>
   new Plugin({
@@ -29,23 +29,23 @@ const captionPlugin = key =>
             e.target.nodeName === 'IMG' &&
             e.target.parentNode.lastElementChild.nodeName !== 'FIGCAPTION'
           ) {
+            let pos = view.posAtDOM(e.target);
             const id = {};
             const { tr } = view.state;
-            const pos = view.posAtDOM(e.target);
-            const pos1 = pos + 1;
+            pos += 1;
             //  insert figure caption node
             view.dispatch(
               tr
                 .replaceWith(
-                  pos1,
-                  pos1,
+                  pos,
+                  pos,
                   view.state.schema.nodes.figcaption.create({
                     class: 'decoration',
                     dataContent: 'Caption : ',
                   }),
                 )
                 .setMeta(captionPlugins, {
-                  add: { id, pos: pos + 1 },
+                  add: { id, pos },
                 }),
             );
           } else if (e.target.nodeName !== 'FIGCAPTION') {
@@ -66,6 +66,19 @@ const captionPlugin = key =>
                 }
               }
             }
+          }
+
+          if (e.target.nodeName === 'IMG') {
+            let pos = view.posAtDOM(e.target);
+            const { $from } = view.state.selection;
+            const same = $from.sharedDepth(pos);
+            if (same === 0) return false;
+            pos = $from.before(same);
+            view.dispatch(
+              view.state.tr.setSelection(
+                NodeSelection.create(view.state.doc, pos),
+              ),
+            );
           }
 
           return true;

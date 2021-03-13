@@ -8,7 +8,7 @@ const image = {
     track: { default: [] },
   },
   group: 'figure',
-  draggable: true,
+  draggable: false,
   parseDOM: [
     {
       tag: 'img[src]',

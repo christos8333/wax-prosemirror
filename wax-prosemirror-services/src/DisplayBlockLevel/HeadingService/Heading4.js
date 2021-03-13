@@ -27,7 +27,12 @@ class Heading4 extends Tools {
       if (activeViewId !== 'main') return false;
       const { from, to } = state.selection;
       state.doc.nodesBetween(from, to, (node, pos) => {
-        if (node.type.name === 'list_item' || node.type.name === 'image') {
+        if (
+          node.type.name === 'list_item' ||
+          node.type.name === 'image' ||
+          node.type.name === 'figure' ||
+          node.type.name === 'figcaption'
+        ) {
           isActive = false;
         }
       });

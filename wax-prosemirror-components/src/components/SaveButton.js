@@ -29,6 +29,21 @@ const SaveButton = ({ view = {}, item }) => {
     }, 300);
   };
 
+  const triggerSave = e => {
+    if ((e.key === 83 || e.keyCode === 83) && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      handleMouseDown();
+      return false;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', triggerSave);
+
+    return () => document.removeEventListener('keydown', triggerSave);
+  }, []);
+
   let isDisabled = !select(state, activeViewId, activeView);
 
   const isEditable = main.props.editable(editable => {

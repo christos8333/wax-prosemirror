@@ -9,7 +9,7 @@ class InfoToolGroup extends ToolGroup {
     @inject('ShortCutsInfoTool') shortcutsinfotool,
   ) {
     super();
-    this.tools = [counterinfotool, shortcutsinfotool];
+    this.tools = [shortcutsinfotool, counterinfotool];
   }
 }
 

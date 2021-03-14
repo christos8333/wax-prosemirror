@@ -81,11 +81,11 @@ const captionPlugin = key =>
             );
           }
 
-          return true;
+          return false;
         },
         keyup(view, e) {
           // delete caption if figure is deleted
-          if (e.key === 'Delete') {
+          if (e.key === 'Delete' || e.code === 'Backspace') {
             const figcap = document.getElementsByTagName('figcaption');
             const figcapLength = figcap.length;
 

@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
   useLayoutEffect,
+  useEffect,
 } from 'react';
 
 import styled from 'styled-components';
@@ -43,6 +44,21 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
     return editable;
   });
   if (!isEditable) isDisabled = true;
+
+  const triggerFind = e => {
+    if ((e.key === 70 || e.keyCode === 70) && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      setIsOpen(true);
+      return false;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', triggerFind);
+
+    return () => document.removeEventListener('keydown', triggerFind);
+  }, []);
 
   useLayoutEffect(() => {
     setStyle(styles);

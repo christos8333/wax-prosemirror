@@ -32,6 +32,8 @@ export { default as FullScreenService } from './src/FullScreenService/FullScreen
 export { default as SpecialCharactersService } from './src/SpecialCharactersService/SpecialCharactersService';
 export { default as HighlightService } from './src/HighlightService/HightlightService';
 export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
+export { default as ShortCutsInfoService } from './src/BottomInfoService/ShortCutsInfoService/ShortCutsInfoService';
+
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';

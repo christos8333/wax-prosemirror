@@ -21,9 +21,12 @@ export { default as LeftSideButton } from './src/components/various/LeftSideButt
 export { default as SpecialCharactersTool } from './src/components/specialCharacters/SpecialCharactersTool';
 export { default as TextHighlightingTool } from './src/components/textHighlight/TextHighlightingTool';
 export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
+export { default as EditorShortCutsTool } from './src/components/EditorInfo/EditorShortCutsTool';
+
 export { default as TransformCaseComponent } from './src/components/transformCase/TransformCaseComponent';
 export { default as EditingSuggestingDropDown } from './src/components/editingSuggesting/EditingSuggestingDropDown';
 export { default as TrackChangeOptionsTool } from './src/components/trackChanges/TrackChangeOptionsTool';
 export { default as CustomTagInlineComponent } from './src/components/customtag/CustomTagInlineComponent';
 export { default as CustomTagInlineOverlayComponent } from './src/components/customtag/CustomTagInlineOverlayCompoment';
 export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';
+export { default as SaveButton } from './src/components/SaveButton';

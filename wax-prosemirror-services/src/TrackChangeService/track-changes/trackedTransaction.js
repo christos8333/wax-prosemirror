@@ -30,18 +30,14 @@ const trackedTransaction = (
       }
     }
   }
+
+  if (state.selection.node && state.selection.node.type.name === 'image') {
+    return tr;
+  }
+
   // images
-  if (tr.meta.inputType === 'backwardsDelete' && !tr.steps.lenght) {
-    const $pos = state.selection.$anchor;
-    let node;
-    if ($pos.depth === 1) {
-      node = $pos.node($pos.depth);
-      if (
-        node.content.content[0] &&
-        node.content.content[0].type.name === 'image'
-      )
-        return tr;
-    }
+  if (state.selection.node && state.selection.node.type.name === 'figure') {
+    return tr;
   }
 
   if (

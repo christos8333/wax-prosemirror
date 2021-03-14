@@ -27,3 +27,4 @@ export { default as TrackChangeOptionsTool } from './src/components/trackChanges
 export { default as CustomTagInlineComponent } from './src/components/customtag/CustomTagInlineComponent';
 export { default as CustomTagInlineOverlayComponent } from './src/components/customtag/CustomTagInlineOverlayCompoment';
 export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';
+export { default as SaveButton } from './src/components/SaveButton';

@@ -1,14 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useEffect, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const SaveButton = ({ view = {}, item }) => {
-  const { active, icon, label, onlyOnMain, run, select, title } = item;
+  const { icon, label, onlyOnMain, select, title } = item;
 
   const {
-    app,
     view: { main },
     activeViewId,
     activeView,

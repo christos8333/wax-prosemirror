@@ -49,7 +49,28 @@ const CounterInfoComponent = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  right: 31px;
+  right: 136px;
+`;
+
+const ShortCutsContainer = styled.div`
+  font-size: 14px;
+  height: 240px;
+  padding: 4px;
+  width: 200px;
+`;
+
+const ShortCutsList = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding-bottom: 6px;
+
+    span {
+      color: #535e76;
+    }
+  }
 `;
 
 const EditorShortCutsTool = ({ view: { state }, item }) => {
@@ -65,7 +86,40 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
   useOnClickOutside(ref, () => setIsOpen(false));
 
   const renderList = () => {
-    return <span>hii</span>;
+    return (
+      <ShortCutsContainer>
+        <ShortCutsList>
+          <li>
+            <span>Ctrl + s </span> : Save
+          </li>
+          <li>
+            <span>Ctrl + z </span> : Undo
+          </li>
+          <li>
+            <span>Ctrl + Shift + z </span> : Redo
+          </li>
+
+          <li>
+            <span>Shift+Ctrl+8 </span> : Bullet List
+          </li>
+          <li>
+            <span>Shift+Ctrl+9 </span> : Ordered List
+          </li>
+          <li>
+            <span>Ctrl-] </span> : Indent list item
+          </li>
+          <li>
+            <span>Ctrl-[ </span> : Lift list item
+          </li>
+          <li>
+            <span>Ctrl or Shift + Enter </span> : Soft break
+          </li>
+          <li>
+            <span>Ctrl + f </span> : Search and replace
+          </li>
+        </ShortCutsList>
+      </ShortCutsContainer>
+    );
   };
 
   const MenuButtonComponent = useMemo(

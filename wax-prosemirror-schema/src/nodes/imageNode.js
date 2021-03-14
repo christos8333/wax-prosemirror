@@ -6,6 +6,7 @@ const image = {
     alt: { default: null },
     title: { default: null },
     track: { default: [] },
+    fileid: { default: null },
   },
   group: 'figure',
   draggable: false,
@@ -19,6 +20,7 @@ const image = {
           id: hook.dom.dataset.id,
           track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
           alt: hook.dom.getAttribute('alt'),
+          fileid: hook.dom.dataset.fileid,
         });
         next();
       },
@@ -32,12 +34,19 @@ const image = {
       attrs['data-id'] = hook.node.attrs.id;
     }
 
-    const { src, alt, title, id, track } = hook.node.attrs;
+    const { src, alt, title, id, track, fileid } = hook.node.attrs;
 
     // eslint-disable-next-line no-param-reassign
     hook.value = [
       'img',
-      { src, alt, title, 'data-id': id, 'data-track': track },
+      {
+        src,
+        alt,
+        title,
+        'data-id': id,
+        'data-track': track,
+        'data-fileid': fileid,
+      },
     ];
     next();
   },

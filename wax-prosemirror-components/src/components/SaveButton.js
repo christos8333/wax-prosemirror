@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useMemo, useEffect } from 'react';
+import React, { useContext, useMemo, useEffect, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../ui/buttons/MenuButton';
@@ -18,11 +18,17 @@ const SaveButton = ({ view = {}, item }) => {
 
   const { state } = view;
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleMouseDown = (e, editorState, editorDispatch) => {
-    console.log('save');
+    // eslint-disable-next-line no-underscore-dangle
+    // view._props.onChange(state.doc.content);
+    setIsSaving(true);
+    setTimeout(() => {
+      setIsSaving(false);
+    }, 300);
   };
 
-  const isActive = !!active(state, activeViewId);
   let isDisabled = !select(state, activeViewId, activeView);
 
   const isEditable = main.props.editable(editable => {
@@ -30,18 +36,20 @@ const SaveButton = ({ view = {}, item }) => {
   });
   if (!isEditable) isDisabled = true;
 
+  const iconTodisplay = !isSaving ? icon : 'done';
+
   const SaveButtonComponent = useMemo(
     () => (
       <MenuButton
-        active={isActive || false}
+        active={false}
         disabled={isDisabled}
-        iconName={icon}
+        iconName={iconTodisplay}
         label={label}
         onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
         title={title}
       />
     ),
-    [isActive, isDisabled],
+    [isSaving, isDisabled],
   );
 
   return SaveButtonComponent;

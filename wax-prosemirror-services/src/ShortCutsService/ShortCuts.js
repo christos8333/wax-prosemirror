@@ -60,6 +60,15 @@ const backSpaceShortCut = (state, dispatch, view) => {
 };
 
 const pressEnter = (state, dispatch) => {
+  if (state.selection.node && state.selection.node.type.name === 'image') {
+    const { $from, to } = state.selection;
+
+    const same = $from.sharedDepth(to);
+
+    const pos = $from.before(same);
+    dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+    return true;
+  }
   // LISTS
   if (splitListItem(state.schema.nodes.list_item)(state)) {
     splitListItem(state.schema.nodes.list_item)(state, dispatch);

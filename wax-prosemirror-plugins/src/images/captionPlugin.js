@@ -48,25 +48,26 @@ const captionPlugin = key =>
                   add: { id, pos },
                 }),
             );
-          } else if (e.target.nodeName !== 'FIGCAPTION') {
-            const decorationelement = document.getElementsByTagName(
-              'figcaption',
-            );
-            const decorationLength = decorationelement.length;
-
-            if (decorationLength) {
-              for (let i = 0; i < decorationLength; i += 1) {
-                if (!decorationelement[i].textContent.length) {
-                  decorationelement[i].remove();
-                } else if (
-                  decorationelement[i].parentElement.firstChild.tagName ===
-                  'FIGCAPTION'
-                ) {
-                  decorationelement[i].parentElement.remove();
-                }
-              }
-            }
           }
+          // else if (e.target.nodeName !== 'FIGCAPTION') {
+          //   const decorationelement = document.getElementsByTagName(
+          //     'figcaption',
+          //   );
+          //   const decorationLength = decorationelement.length;
+
+          //   if (decorationLength) {
+          //     for (let i = 0; i < decorationLength; i += 1) {
+          //       if (!decorationelement[i].textContent.length) {
+          //         decorationelement[i].remove();
+          //       } else if (
+          //         decorationelement[i].parentElement.firstChild.tagName ===
+          //         'FIGCAPTION'
+          //       ) {
+          //         decorationelement[i].parentElement.remove();
+          //       }
+          //     }
+          //   }
+          // }
 
           if (e.target.nodeName === 'IMG') {
             let pos = view.posAtDOM(e.target);

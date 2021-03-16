@@ -23,23 +23,16 @@ class Heading3 extends Tools {
 
   get active() {
     return (state, activeViewId) => {
-      let isActive = true;
+      let isActive = false;
       if (activeViewId !== 'main') return false;
+
       const { from, to } = state.selection;
       state.doc.nodesBetween(from, to, (node, pos) => {
-        if (
-          node.type.name === 'list_item' ||
-          node.type.name === 'image' ||
-          node.type.name === 'figure' ||
-          node.type.name === 'figcaption'
-        ) {
-          isActive = false;
+        if (node.type.name === 'heading' && node.attrs.level === 3) {
+          isActive = true;
         }
       });
-      if (!isActive) return false;
-      return !Commands.setBlockType(state.config.schema.nodes.heading, {
-        level: 3,
-      })(state);
+      return isActive;
     };
   }
 

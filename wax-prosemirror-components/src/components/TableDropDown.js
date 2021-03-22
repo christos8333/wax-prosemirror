@@ -52,7 +52,7 @@ const dropDownOptions = [
   { label: 'Toggle header cells', value: 'toggleHeaderCell' },
 ];
 
-const TableDropDown = ({ view: { dispatch, state }, item }) => {
+const TableDropDown = ({ item }) => {
   const { activeView } = useContext(WaxContext);
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -61,7 +61,11 @@ const TableDropDown = ({ view: { dispatch, state }, item }) => {
     () => (
       <DropdownStyled
         onChange={option => {
-          item.run(activeView.state, dispatch, tablesFn[option.value]);
+          item.run(
+            activeView.state,
+            activeView.dispatch,
+            tablesFn[option.value],
+          );
           setSelectedOption(option.value);
 
           setTimeout(() => {

@@ -1,5 +1,6 @@
 /* eslint react/prop-types: 0 */
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo, useContext, useState } from 'react';
+import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -53,20 +54,26 @@ const dropDownOptions = [
 
 const TableDropDown = ({ view: { dispatch, state }, item }) => {
   const { activeView } = useContext(WaxContext);
+  const [selectedOption, setSelectedOption] = useState('');
 
   const isDisabled = item.select(activeView.state);
   const TableDropDownComponent = useMemo(
     () => (
       <DropdownStyled
-        options={dropDownOptions}
         onChange={option => {
-          item.run(state, dispatch, tablesFn[option.value]);
+          item.run(activeView.state, dispatch, tablesFn[option.value]);
+          setSelectedOption(option.value);
+
+          setTimeout(() => {
+            activeView.focus();
+          });
         }}
+        options={dropDownOptions}
         placeholder="Table Options"
         select={isDisabled}
       />
     ),
-    [isDisabled],
+    [isDisabled, selectedOption],
   );
 
   return TableDropDownComponent;

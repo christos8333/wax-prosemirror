@@ -41,7 +41,7 @@ const SearchInput = styled.input`
   font-size: 15px;
   font-weight: 400;
   padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
-  width: calc(100% - ${grid(10)});
+  width: 100%;
 
   ::placeholder {
     color: #d8dae0;
@@ -61,7 +61,7 @@ const ControlsWrapper = styled.div`
 const CounterInput = styled.span`
   font-size: 12px;
   position: absolute;
-  right: 145px;
+  right: 141px;
   -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
   top: 13px;
   z-index: 1;

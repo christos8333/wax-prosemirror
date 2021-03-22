@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   background: ${th('colorBackground')};
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
-
+  line-height: ${grid(4)};
   display: flex;
   flex-direction: column;
 

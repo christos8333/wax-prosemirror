@@ -34,11 +34,11 @@ const ShowComments = styled.div`
   color: #bdc2ca;
   display: flex;
   flex-direction: row;
-  height: 23px;
+  height: 25px;
   padding-top: ${grid(2)};
 
   svg {
-    bottom: 12px;
+    bottom: 14px;
     cursor: not-allowed;
     fill: #85adff;
     height: 45px !important;
@@ -118,7 +118,6 @@ const AcceptRejectAllControls = styled.div`
 const AcceptRejectAllRow = styled.div`
   background: none;
   border: none;
-  cursor: pointer;
   padding-bottom: 3px;
   padding-top: 8px;
   text-align: start;

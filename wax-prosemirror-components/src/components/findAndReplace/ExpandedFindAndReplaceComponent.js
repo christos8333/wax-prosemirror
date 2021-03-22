@@ -46,16 +46,16 @@ const InputLabel = styled.div`
 const SearchInputWrapper = styled.div`
   input {
     padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
-    width: 89%;
+    width: 98%;
   }
 `;
 
 const CounterInput = styled.span`
   font-size: 12px;
   position: absolute;
-  right: 14px;
+  right: 19px;
   -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
-  top: 72px;
+  top: 69px;
   z-index: 1;
 `;
 
@@ -93,7 +93,7 @@ const CheckBoxWrapper = styled.div`
 const ControlContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 70px;
+  margin-top: 62px;
 `;
 
 const ButtonReplace = styled.button`
@@ -120,6 +120,7 @@ const PreviousNextContainer = styled.div`
   margin: 3px 0 0 auto;
 
   svg {
+    box-sizing: unset !important;
     padding: ${grid(2)};
 
     &:hover {

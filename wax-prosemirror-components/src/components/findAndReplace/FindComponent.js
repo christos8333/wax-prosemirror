@@ -27,10 +27,11 @@ const Wrapper = styled.div`
 const SingleRow = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
 `;
 
 const SearchInputWrapper = styled.div`
-  width: 75%;
+  width: 266px;
 `;
 
 const SearchInput = styled.input`
@@ -40,7 +41,7 @@ const SearchInput = styled.input`
   font-size: 15px;
   font-weight: 400;
   padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
-  width: 78%;
+  width: calc(100% - ${grid(10)});
 
   ::placeholder {
     color: #d8dae0;
@@ -51,10 +52,16 @@ const SearchInput = styled.input`
   }
 `;
 
+const ControlsWrapper = styled.div`
+  display: flex;
+  margin-left: auto;
+  width: 126px;
+`;
+
 const CounterInput = styled.span`
   font-size: 12px;
   position: absolute;
-  right: 155px;
+  right: 145px;
   -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
   top: 13px;
   z-index: 1;
@@ -230,34 +237,36 @@ const FindComponent = ({
           />
           <CounterInput> {counterText} </CounterInput>
         </SearchInputWrapper>
-        <IconWrapper onClick={matchCase} role="button" tabIndex="0">
-          <Svg active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
-            <title> Match Case </title>
-            <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
-          </Svg>
-        </IconWrapper>
-        <IconWrapper
-          onClick={() => findPreviousMatch(searchValue, matchCaseSearch)}
-          role="button"
-          tabIndex="0"
-        >
-          <StyledIcon name="navigatePrevious" />
-        </IconWrapper>
-        <IconWrapper
-          onClick={() => findNextMatch(searchValue, matchCaseSearch)}
-          role="button"
-          tabIndex="0"
-        >
-          <StyledIcon name="navigateNext" />
-        </IconWrapper>
+        <ControlsWrapper>
+          <IconWrapper onClick={matchCase} role="button" tabIndex="0">
+            <Svg active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
+              <title> Match Case </title>
+              <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
+            </Svg>
+          </IconWrapper>
+          <IconWrapper
+            onClick={() => findPreviousMatch(searchValue, matchCaseSearch)}
+            role="button"
+            tabIndex="0"
+          >
+            <StyledIcon name="navigatePrevious" />
+          </IconWrapper>
+          <IconWrapper
+            onClick={() => findNextMatch(searchValue, matchCaseSearch)}
+            role="button"
+            tabIndex="0"
+          >
+            <StyledIcon name="navigateNext" />
+          </IconWrapper>
 
-        <ExpandedWrapper onClick={showExpanded}>
-          <StyledIcon name="more" />
-        </ExpandedWrapper>
+          <ExpandedWrapper onClick={showExpanded}>
+            <StyledIcon name="more" />
+          </ExpandedWrapper>
 
-        <CloseWrapper onClick={closeFind}>
-          <StyledIcon name="close" />
-        </CloseWrapper>
+          <CloseWrapper onClick={closeFind}>
+            <StyledIcon name="close" />
+          </CloseWrapper>
+        </ControlsWrapper>
       </SingleRow>
     </Wrapper>
   );

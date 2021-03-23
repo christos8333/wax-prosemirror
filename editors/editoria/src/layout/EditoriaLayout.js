@@ -41,6 +41,10 @@ const Wrapper = styled.div`
   overflow: hidden;
 
   ${divider}
+
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 const Main = styled.div`

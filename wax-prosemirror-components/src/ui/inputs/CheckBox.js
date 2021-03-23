@@ -1,84 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { th, override } from '@pubsweet/ui-toolkit';
+import { th } from '@pubsweet/ui-toolkit';
 
 const CheckBoxContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
 const CheckBoxLabel = styled.label`
-  display: block;
-  position: relative;
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 18px;
-  line-height: 20px;
-  height: 20px;
-  width: 20px;
   clear: both;
+  cursor: pointer;
+  display: block;
+  font-size: 18px;
+  height: 20px;
+  line-height: 20px;
+  margin-right: 10px;
+  position: relative;
+  width: 20px;
 
   input {
-    position: absolute;
-    opacity: 0;
     cursor: pointer;
+    opacity: 0;
+    position: absolute;
   }
 
   input:checked ~ span {
     background-color: #ffffff;
+    border: 2px solid #4b5871;
     border-radius: 5px;
+    opacity: 1;
     -webkit-transform: rotate(0deg) scale(1);
     -ms-transform: rotate(0deg) scale(1);
     transform: rotate(0deg) scale(1);
-    opacity: 1;
-    border: 2px solid #4b5871;
   }
 
   input:checked ~ span::after {
+    background-color: transparent;
+    border: solid ${th('colorBackgroundButton')};
+    border-radius: 0;
+    border-width: 0 2px 2px 0;
+    height: 12px;
+    left: 4px;
+    opacity: 1;
+    top: -1px;
     -webkit-transform: rotate(45deg) scale(1);
     -ms-transform: rotate(45deg) scale(1);
     transform: rotate(45deg) scale(1);
-    opacity: 1;
-    left: 6px;
-    top: 1px;
     width: 6px;
-    height: 12px;
-    border: solid ${th('colorBackgroundButton')};
-    border-width: 0 2px 2px 0;
-    background-color: transparent;
-    border-radius: 0;
   }
 `;
 const CheckboxCustom = styled.span`
+  background-color: transparent;
+  border: 2px solid #4b5871;
+  border-radius: 5px;
+  height: 20px;
+  left: 0px;
   position: absolute;
   top: 0px;
-  left: 0px;
-  height: 20px;
-  width: 20px;
-  background-color: transparent;
-  border-radius: 5px;
   transition: all 0.3s ease-out;
+  width: 20px;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
-  border: 2px solid #4b5871;
 
   &:after {
-    position: absolute;
-    content: '';
-    left: 12px;
-    top: 12px;
-    height: 0px;
-    width: 0px;
-    border-radius: 5px;
     border: solid ${th('colorBackgroundButton')};
+    border-radius: 5px;
     border-width: 0 3px 3px 0;
+    content: '';
+    height: 0px;
+    left: 12px;
+    opacity: 1;
+    position: absolute;
+    top: 12px;
+    width: 0px;
     -webkit-transform: rotate(0deg) scale(0);
     -ms-transform: rotate(0deg) scale(0);
     transform: rotate(0deg) scale(0);
-    opacity: 1;
     transition: all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
@@ -88,10 +88,10 @@ const CheckboxCustom = styled.span`
 `;
 const CheckboxTitle = styled.div`
   color: #4b5871;
-  position: relative;
-  top: 2px;
   font-size: 15px;
   margin-left: 30px;
+  position: relative;
+  top: 2px;
   width: 200px;
 `;
 
@@ -117,9 +117,12 @@ const CheckBox = props => {
 CheckBox.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
 };
 
 CheckBox.defaultProps = {
+  checked: false,
   label: null,
 };
 

@@ -1,8 +1,7 @@
-import React, { useMemo, useState, useRef, useContext, useEffect } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../../ui/buttons/MenuButton';
 import useOnClickOutside from '../../helpers/useOnClickOutside';
 
@@ -78,10 +77,6 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const ref = useRef();
-  const {
-    activeView,
-    view: { main },
-  } = useContext(WaxContext);
 
   useOnClickOutside(ref, () => setIsOpen(false));
 
@@ -116,6 +111,9 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
           </li>
           <li>
             <span>Ctrl + f </span> : Search and replace
+          </li>
+          <li>
+            <span>Shift + Enter </span> : Exit code block
           </li>
         </ShortCutsList>
       </ShortCutsContainer>

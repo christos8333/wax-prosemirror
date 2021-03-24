@@ -68,10 +68,10 @@ const Text = styled.span``;
 const Icon = styled.div`
   border-radius: 3px;
   display: inline-block;
-  height: 16px;
+  height: 20px;
   padding: 4px;
   transition: background 0.1s ease-in;
-  width: 16px;
+  width: 20px;
 
   &:hover {
     background: #bfc4cd;

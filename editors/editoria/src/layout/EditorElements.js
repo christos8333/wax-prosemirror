@@ -29,7 +29,8 @@ export default css`
     h3 span::selection,
     h4 span::selection,
     code span::selection,
-    figcaption span::selection {
+    custom-tag-block::selection,
+    custom-tag-inline::selection {
       background-color: transparent;
     }
 
@@ -101,9 +102,9 @@ export default css`
 
   figure {
     display: table;
-    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
+    word-break: break-word;
 
     img {
       cursor: default;
@@ -124,8 +125,8 @@ export default css`
       &:focus {
         outline: none;
       }
-      &: before {
-        content: 'Caption : ';
+      &:before {
+        content: 'Caption: ';
         font-weight: bold;
       }
     }
@@ -134,6 +135,10 @@ export default css`
   sup,
   sub {
     line-height: 0;
+  }
+
+  strong {
+    font-weight: bold;
   }
 
   /* Tables */
@@ -272,7 +277,7 @@ export default css`
   [data-track]::before {
     content: '';
     position: absolute;
-    border-left: 2px solid blue;
+    border-left: 2px solid royalblue;
     left: -10px;
     height: 100%;
   }
@@ -445,16 +450,24 @@ export default css`
 
   p[data-type='block']:before {
     color: #006f19;
-    content: '|';
+    content: '⌜';
     display: inline;
     font-weight: 600;
+    font-size: 22px;
+    position: relative;
+    top: 2px;
+    left: 6px;
   }
 
   p[data-type='block']:after {
     color: #006f19;
-    content: '|';
+    content: '⌟';
     display: inline;
     font-weight: 600;
+    font-size: 22px;
+    position: relative;
+    top: 5px;
+    right: 6px;
   }
 
   .transform-icon {

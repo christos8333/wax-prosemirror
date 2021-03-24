@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   background: ${th('colorBackground')};
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
-
+  line-height: ${grid(4)};
   display: flex;
   flex-direction: column;
 
@@ -41,18 +41,24 @@ const Wrapper = styled.div`
   overflow: hidden;
 
   ${divider}
+
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 const Main = styled.div`
   display: flex;
   flex-grow: 1;
+  height: calc(100% - 40px);
 `;
 
 const TopMenu = styled.div`
   display: flex;
   min-height: 40px;
   user-select: none;
-  background: ${th('colorBackgroundToolBar')}
+  background: ${th('colorBackgroundToolBar')};
+  border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
 
   > div:not(:last-child) {
@@ -60,8 +66,7 @@ const TopMenu = styled.div`
       ${th('colorFurniture')};
   }
 
-
-  > div:nth-last-of-type(-n+2) {
+  > div:nth-last-of-type(-n + 2) {
     margin-left: auto;
   }
 
@@ -70,7 +75,7 @@ const TopMenu = styled.div`
     margin-right: ${grid(5)};
   }
 
-  > div[data-name="Tables"]{
+  > div[data-name='Tables'] {
     border-right: none;
   }
 `;
@@ -79,7 +84,7 @@ const SideMenu = styled.div`
   background: ${th('colorBackgroundToolBar')}
   border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   min-width: 250px;
-  height: 81%;
+  height: calc(100% - 16px);
 `;
 
 const EditorArea = styled.div`
@@ -103,7 +108,7 @@ const EditorContainer = styled.div`
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
-    min-height: 90%;
+    min-height: 98%;
     padding: ${grid(10)};
   }
 `;

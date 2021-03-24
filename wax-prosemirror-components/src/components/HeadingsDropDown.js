@@ -20,12 +20,12 @@ const dropDownOptions = [
 
 const HeadingsDropDown = ({ dispatch, state, item }) => (
   <DropdownStyled
-    options={dropDownOptions}
     onChange={option => {
       Commands.setBlockType(state.config.schema.nodes.heading, {
         level: option.value,
       })(state, dispatch);
     }}
+    options={dropDownOptions}
     placeholder="Choose heading"
     select={item.select && item.select(state)}
   />

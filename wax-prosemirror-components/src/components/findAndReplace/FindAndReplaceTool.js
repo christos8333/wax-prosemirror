@@ -36,7 +36,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
   const dropElement = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
-  let styles = { right: '-205px' };
+  let styles = { right: '-190px' };
   const [style, setStyle] = useState(styles);
 
   let isDisabled = false;
@@ -65,7 +65,7 @@ const FindAndReplaceTool = ({ view = {}, item }) => {
     if (!dropElement.current) return;
     const { right } = dropElement.current.getBoundingClientRect();
     if (right > window.window.innerWidth) {
-      const newRight = -205 + (right - window.window.innerWidth) + 15;
+      const newRight = -175 + (right - window.window.innerWidth);
       styles = { right: `${newRight}px` };
       setStyle(styles);
     }

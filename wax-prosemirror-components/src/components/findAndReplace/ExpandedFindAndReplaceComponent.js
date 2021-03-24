@@ -43,19 +43,38 @@ const InputLabel = styled.div`
   padding: ${grid(2)} ${grid(0)} ${grid(2)} ${grid(0)};
 `;
 
-const SearchInputWrapper = styled.div`
-  input {
-    padding: ${grid(1)} ${grid(10)} ${grid(1)} ${grid(1)};
-    width: 89%;
+const InputWrapper = styled.div`
+  display: flex;
+
+  #search-input {
+    padding: ${grid(1)} ${grid(11)} ${grid(1)} ${grid(1)};
+  }
+`;
+
+const FindReplaceInput = styled.input`
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
+  display: flex;
+  flex-grow: 1;
+  font-size: 15px;
+  font-weight: 400;
+  padding: ${grid(1)};
+
+  ::placeholder {
+    color: #d8dae0;
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 
 const CounterInput = styled.span`
   font-size: 12px;
   position: absolute;
-  right: 14px;
+  right: 19px;
   -webkit-text-fill-color: rgba(27, 43, 75, 0.28);
-  top: 72px;
+  top: 69px;
   z-index: 1;
 `;
 
@@ -69,23 +88,6 @@ const CloseWrapper = styled.div`
   margin-left: auto;
 `;
 
-const FindReplaceInput = styled.input`
-  border: none;
-  box-shadow: inset 0 0 0 1px rgba(27, 43, 75, 0.28);
-  font-size: 15px;
-  font-weight: 400;
-  padding: ${grid(1)};
-  width: 98%;
-
-  ::placeholder {
-    color: #d8dae0;
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
 const CheckBoxWrapper = styled.div`
   margin-top: 20px;
 `;
@@ -93,7 +95,7 @@ const CheckBoxWrapper = styled.div`
 const ControlContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 70px;
+  margin-top: 62px;
 `;
 
 const ButtonReplace = styled.button`
@@ -120,6 +122,7 @@ const PreviousNextContainer = styled.div`
   margin: 3px 0 0 auto;
 
   svg {
+    box-sizing: unset !important;
     padding: ${grid(2)};
 
     &:hover {
@@ -293,25 +296,31 @@ const ExpandedFindAndReplaceComponent = ({
           <StyledIcon name="close" />
         </CloseWrapper>
       </TitleContainer>
+
       <InputLabel>Find</InputLabel>
 
-      <SearchInputWrapper>
+      <InputWrapper>
         <FindReplaceInput
           onChange={onChangeSearchInput}
+          id="search-input"
           placeholder="Something is this doc"
           ref={searchRef}
           type="text"
           value={searchValue}
         />
         <CounterInput> {counterText} </CounterInput>
-      </SearchInputWrapper>
+      </InputWrapper>
+
       <InputLabel>Replace with</InputLabel>
-      <FindReplaceInput
-        onChange={onChangeReplaceInput}
-        placeholder="Replace text"
-        ref={replaceRef}
-        type="text"
-      />
+      <InputWrapper>
+        <FindReplaceInput
+          onChange={onChangeReplaceInput}
+          placeholder="Replace text"
+          ref={replaceRef}
+          type="text"
+        />
+      </InputWrapper>
+
       <CheckBoxWrapper>
         <CheckBox
           checked={matchCaseOption}
@@ -324,20 +333,15 @@ const ExpandedFindAndReplaceComponent = ({
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>
         <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
         <PreviousNextContainer>
-          <PreviousNextButton
+          <StyledIcon
+            name="navigatePrevious"
             onClick={() => findPreviousMatch(searchValue, matchCaseOption)}
-            role="button"
-            tabIndex="0"
-          >
-            <StyledIcon name="navigatePrevious" />
-          </PreviousNextButton>
-          <PreviousNextButton
+          />
+
+          <StyledIcon
+            name="navigateNext"
             onClick={() => findNextMatch(searchValue, matchCaseOption)}
-            role="button"
-            tabIndex="0"
-          >
-            <StyledIcon name="navigateNext" />
-          </PreviousNextButton>
+          />
         </PreviousNextContainer>
       </ControlContainer>
     </Wrapper>

@@ -2,6 +2,36 @@
 /* eslint react/destructuring-assignment: 0 */
 import React, { useContext, useState } from 'react';
 
+const initialState = {};
+
+const ReactNodeViewPortalsContext = React.createContext({
+  createPortal: () => {},
+  state: {},
+});
+
+const ReactNodeViewPortalsProvider = ({ children }) => {
+  const [data, addPortal] = useState(initialState);
+
+  const { portal: Portal } = data;
+
+  return (
+    <ReactNodeViewPortalsContext.Provider
+      value={{
+        createPortal: portal => {
+          addPortal({ key: portal.key, portal });
+        },
+        state: data,
+      }}
+    >
+      {children}
+      {Portal}
+    </ReactNodeViewPortalsContext.Provider>
+  );
+};
+
+export const useReactNodeViewPortals = () =>
+  useContext(ReactNodeViewPortalsContext);
+
 export const WaxContext = React.createContext({
   view: {},
   activeView: {},
@@ -38,13 +68,15 @@ export default props => {
   });
 
   return (
-    <WaxContext.Provider
-      value={{
-        ...context,
-      }}
-    >
-      {props.children}
-    </WaxContext.Provider>
+    <ReactNodeViewPortalsProvider>
+      <WaxContext.Provider
+        value={{
+          ...context,
+        }}
+      >
+        {props.children}
+      </WaxContext.Provider>
+    </ReactNodeViewPortalsProvider>
   );
 };
 

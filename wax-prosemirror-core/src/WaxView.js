@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useContext,
-  useCallback,
-  useMemo,
-  useEffect,
-} from 'react';
+import React, { useRef, useContext, useCallback, useMemo } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -13,9 +7,8 @@ import { EditorView } from 'prosemirror-view';
 import 'prosemirror-view/style/prosemirror.css';
 
 import { trackedTransaction } from 'wax-prosemirror-services';
-import { WaxContext } from './WaxContext';
+import { WaxContext, useReactNodeViewPortals } from './WaxContext';
 import transformPasted from './helpers/TransformPasted';
-import { useReactNodeViewPortals } from './ReactNodeViewPortals';
 import { createReactNodeView } from './ReactNodeView';
 import BlockQuote from './BlockQuote';
 
@@ -23,7 +16,7 @@ let previousDoc;
 
 export default props => {
   const { readonly, onBlur, options, debug, autoFocus, user } = props;
-  const editorRef = useRef(null);
+  const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
   const { createPortal } = useReactNodeViewPortals();
@@ -121,13 +114,6 @@ export default props => {
     if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
       props.onChange(state.doc.content);
   };
-
-  useEffect(() => {
-    const editorViewDOM = editorRef.current;
-    if (editorViewDOM) {
-      setEditorRef(editorViewDOM);
-    }
-  }, [setEditorRef]);
 
   const editor = <div ref={setEditorRef} />;
 

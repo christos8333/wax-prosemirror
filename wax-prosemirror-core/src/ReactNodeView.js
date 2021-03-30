@@ -5,9 +5,8 @@
 /* eslint-disable lines-between-class-members */
 import React, { useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import shortid from 'shortid';
+import { v4 as uuidv4 } from 'uuid';
 
-let keyShort = null;
 let nodeViewTemp = null;
 const ReactNodeViewContext = React.createContext({
   node: undefined,
@@ -41,45 +40,10 @@ class ReactNodeView {
 
   renderPortal(container) {
     const Component = props => {
-      const { component: Components } = this;
-      //   const componentRef = useRef(null);
-      console.log(222222);
-      //   useEffect(() => {
-      //     let _a;
-      //     const componentDOM = componentRef.current;
-      //     if (componentDOM != null && this.contentDOM != null) {
-      //       if (!this.node.isLeaf) {
-      //         (_a = componentDOM.firstChild) === null || _a === void 0
-      //           ? void 0
-      //           : _a.appendChild(this.contentDOM);
-      //       }
-      //     }
-      //   }, [componentRef]);
-
       return React.createElement(this.component, { ...props });
-      //   return React.createElement(this.component, { ...props });
-      //   return React.createElement(
-      //     'div',
-      //     { ref: componentRef, className: 'ProseMirror__reactComponent' },
-      //     React.createElement(
-      //       ReactNodeViewContext.Provider,
-      //       {
-      //         value: {
-      //           node: this.node,
-      //           view: this.view,
-      //           getPos: this.getPos,
-      //           decorations: this.decorations,
-      //         },
-      //       },
-      //       React.createElement(this.component, { ...props }),
-      //     ),
-      //   );
     };
 
-    keyShort = keyShort === null ? shortid.generate() : keyShort;
-
-    console.log(Component, container, 111111111111);
-    return ReactDOM.createPortal(<Component />, container, shortid.generate());
+    return ReactDOM.createPortal(<Component />, container, uuidv4());
   }
 
   update(node) {
@@ -99,7 +63,6 @@ export const createReactNodeView = ({
   component,
   onCreatePortal,
 }) => {
-  //   if (!nodeViewTemp) {
   const reactNodeView = new ReactNodeView(
     node,
     view,
@@ -110,7 +73,6 @@ export const createReactNodeView = ({
   const { nodeView, portal } = reactNodeView.init();
   onCreatePortal(portal);
   nodeViewTemp = nodeView;
-  //   }
 
   return nodeViewTemp;
 };

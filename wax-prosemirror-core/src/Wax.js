@@ -11,6 +11,8 @@ import WaxView from './WaxView';
 import defaultPlugins from './plugins/defaultPlugins';
 import Placeholder from './plugins/placeholder';
 
+import ReactNodeViewPortalsProvider from './ReactNodeViewPortals';
+
 const parser = schema => {
   const WaxParser = DOMParser.fromSchema(schema);
 
@@ -119,22 +121,24 @@ const Wax = props => {
   const WaxRender = Layout.layoutComponent;
 
   return (
-    <WaxProvider app={application}>
-      <WaxView
-        autoFocus={autoFocus}
-        readonly={readonly}
-        options={WaxOptions}
-        placeholder={placeholder}
-        fileUpload={fileUpload}
-        onBlur={onBlur || (v => true)}
-        onChange={finalOnChange || (v => true)}
-        debug={debug}
-        TrackChange={TrackChange}
-        user={user}
-      >
-        {({ editor }) => <WaxRender className={className} editor={editor} />}
-      </WaxView>
-    </WaxProvider>
+    <ReactNodeViewPortalsProvider>
+      <WaxProvider app={application}>
+        <WaxView
+          autoFocus={autoFocus}
+          debug={debug}
+          fileUpload={fileUpload}
+          onBlur={onBlur || (v => true)}
+          onChange={finalOnChange || (v => true)}
+          options={WaxOptions}
+          placeholder={placeholder}
+          readonly={readonly}
+          TrackChange={TrackChange}
+          user={user}
+        >
+          {({ editor }) => <WaxRender className={className} editor={editor} />}
+        </WaxView>
+      </WaxProvider>
+    </ReactNodeViewPortalsProvider>
   );
 };
 

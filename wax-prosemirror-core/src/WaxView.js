@@ -1,4 +1,10 @@
-import React, { useRef, useContext, useCallback, useMemo } from 'react';
+import React, {
+  useRef,
+  useContext,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -9,14 +15,21 @@ import 'prosemirror-view/style/prosemirror.css';
 import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext } from './WaxContext';
 import transformPasted from './helpers/TransformPasted';
+import { useReactNodeViewPortals } from './ReactNodeViewPortals';
+import { createReactNodeView } from './ReactNodeView';
+import BlockQuote from './BlockQuote';
 
 let previousDoc;
 
 export default props => {
   const { readonly, onBlur, options, debug, autoFocus, user } = props;
-  const editorRef = useRef();
+  const editorRef = useRef(null);
   let view;
   const context = useContext(WaxContext);
+  const { createPortal } = useReactNodeViewPortals();
+
+  const handleCreatePortal = useCallback(createPortal, []);
+
   const setEditorRef = useCallback(
     node => {
       if (editorRef.current) {
@@ -34,6 +47,19 @@ export default props => {
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
+            nodeViews: {
+              blockquote(node, view, getPos, decorations) {
+                console.log('rerenders for ever');
+                return createReactNodeView({
+                  node,
+                  view,
+                  getPos,
+                  decorations,
+                  component: BlockQuote,
+                  onCreatePortal: handleCreatePortal,
+                });
+              },
+            },
             handleDOMEvents: {
               blur: onBlur
                 ? view => {
@@ -96,7 +122,15 @@ export default props => {
       props.onChange(state.doc.content);
   };
 
+  useEffect(() => {
+    const editorViewDOM = editorRef.current;
+    if (editorViewDOM) {
+      setEditorRef(editorViewDOM);
+    }
+  }, [setEditorRef]);
+
   const editor = <div ref={setEditorRef} />;
+
   return useMemo(
     () =>
       props.children({

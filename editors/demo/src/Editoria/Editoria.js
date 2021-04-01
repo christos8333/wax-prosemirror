@@ -1,24 +1,10 @@
 import React, { useLayoutEffect, useState, useMemo } from 'react';
-import { createGlobalStyle } from 'styled-components';
 
 import { Wax } from 'wax-prosemirror-core';
 
 import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    overflow-y: hidden;
-    padding: 0;
-  }
-
-  #root {
-    height:100vh;
-    width:100vw;
-  }
-`;
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -55,15 +41,13 @@ const Editoria = () => {
   const EditoriaComponent = useMemo(
     () => (
       <>
-        <GlobalStyle />
         <Wax
           key={key}
           config={finalConfig}
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value=""
-          targetFormat="JSON"
+          value={demo}
           // readonly
           layout={layout}
           // onChange={source => console.log(source)}

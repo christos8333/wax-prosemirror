@@ -49,11 +49,6 @@ import { DefaultSchema } from 'wax-prosemirror-utilities';
 
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 
-/* Test Question Service*/
-
-import MultipleChoiceQuestionService from '../MultipleChoiceQuestionService/MultipleChoiceQuestionService';
-import QuestionsToolGroupService from '../QuestionsToolGroupService/QuestionsToolGroupService';
-
 import invisibles, {
   space,
   hardBreak,
@@ -101,7 +96,6 @@ export default {
         'SpecialCharacters',
         'CodeBlock',
         'Tables',
-        'Questions',
         'TrackingAndEditing',
         'FullScreen',
       ],
@@ -158,8 +152,6 @@ export default {
   },
 
   services: [
-    new MultipleChoiceQuestionService(),
-    new QuestionsToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

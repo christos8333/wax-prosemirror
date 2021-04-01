@@ -72,8 +72,6 @@ const Wax = props => {
   // const { schema } = application.schema;
   const WaxOnchange = onChange || (v => true);
 
-  const editorContent = value || '';
-
   finalPlugins = defaultPlugins.concat([
     createPlaceholder(placeholder),
     ...application.getPlugins(),
@@ -85,8 +83,13 @@ const Wax = props => {
   };
 
   if (targetFormat === 'JSON') {
+    const editorContent = value || {
+      type: 'doc',
+      content: [],
+    };
     WaxOptions.doc = schema.nodeFromJSON(editorContent);
   } else {
+    const editorContent = value || '';
     const parse = parser(schema);
     WaxOptions.doc = parse(editorContent);
   }

@@ -52,11 +52,6 @@ const Editoria = () => {
     key = 'editoriaMobile';
   }
 
-  const initialValue = {
-    type: 'doc',
-    content: [],
-  };
-
   const EditoriaComponent = useMemo(
     () => (
       <>
@@ -67,11 +62,11 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value={initialValue}
+          value=""
           targetFormat="JSON"
           // readonly
           layout={layout}
-          onChange={source => console.log(source)}
+          // onChange={source => console.log(source)}
           user={user}
         />
       </>

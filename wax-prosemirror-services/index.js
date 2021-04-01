@@ -10,6 +10,7 @@ export { default as SchemaService } from './src/SchemaService/SchemaService';
 export { default as ShortCutsService } from './src/ShortCutsService/ShortCutsService';
 
 export { default as Tools } from './src/lib/Tools';
+export { default as ToolGroup } from './src/lib/ToolGroup';
 
 /*
 All Elements services

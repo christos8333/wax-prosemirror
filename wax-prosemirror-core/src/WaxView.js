@@ -15,7 +15,16 @@ import BlockQuote from './BlockQuote';
 let previousDoc;
 
 export default props => {
-  const { readonly, onBlur, options, debug, autoFocus, user } = props;
+  const {
+    readonly,
+    onBlur,
+    options,
+    debug,
+    autoFocus,
+    user,
+    targetFormat,
+  } = props;
+
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
@@ -113,6 +122,12 @@ export default props => {
     }
     if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
       props.onChange(state.doc.content);
+
+    if (targetFormat === 'JSON') {
+      props.onChange(state.doc.toJSON());
+    } else {
+      props.onChange(state.doc.content);
+    }
   };
 
   const editor = <div ref={setEditorRef} />;

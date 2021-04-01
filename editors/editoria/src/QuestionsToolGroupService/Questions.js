@@ -4,9 +4,9 @@ import { ToolGroup } from 'wax-prosemirror-services';
 @injectable()
 class Questions extends ToolGroup {
   tools = [];
-  constructor(@inject('Note') note) {
+  constructor(@inject('MultipleChoiceQuestion') multipleChoiceQuestion) {
     super();
-    this.tools = [note];
+    this.tools = [multipleChoiceQuestion];
   }
 }
 

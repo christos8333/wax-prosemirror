@@ -3,7 +3,7 @@ import { Tools } from 'wax-prosemirror-services';
 
 @injectable()
 class MultipleChoiceQuestion extends Tools {
-  title = 'Change to Multiple Choice';
+  title = 'Add Multiple Choice Question';
   label = 'Multiple Choice';
   name = 'Multiple Choice';
 

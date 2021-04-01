@@ -65,6 +65,7 @@ const Wax = props => {
     value,
     user,
     onChange,
+    targetFormat,
   } = props;
 
   if (!application) return null;
@@ -83,8 +84,12 @@ const Wax = props => {
     plugins: finalPlugins,
   };
 
-  const parse = parser(schema);
-  WaxOptions.doc = parse(editorContent);
+  if (targetFormat === 'JSON') {
+    WaxOptions.doc = schema.nodeFromJSON(editorContent);
+  } else {
+    const parse = parser(schema);
+    WaxOptions.doc = parse(editorContent);
+  }
 
   const finalOnChange = debounce(
     value => {
@@ -98,8 +103,12 @@ const Wax = props => {
         };
       }
 
-      const serialize = serializer(schema);
-      WaxOnchange(serialize(value));
+      if (targetFormat === 'JSON') {
+        WaxOnchange(value);
+      } else {
+        const serialize = serializer(schema);
+        WaxOnchange(serialize(value));
+      }
 
       if (schema.nodes.footnote) {
         const old = schema.nodes.footnote.spec.toDOM;
@@ -129,6 +138,7 @@ const Wax = props => {
         options={WaxOptions}
         placeholder={placeholder}
         readonly={readonly}
+        targetFormat={targetFormat}
         TrackChange={TrackChange}
         user={user}
       >

@@ -1,0 +1,41 @@
+{
+  "name": "editoria",
+  "version": "0.0.40",
+  "private": true,
+  "dependencies": {
+    "@guardian/prosemirror-invisibles": "^1.2.0",
+    "@pubsweet/ui-toolkit": "^2.3.1",
+    "fontsource-merriweather": "^3.0.9",
+    "prosemirror-tables": "^1.1.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-panelgroup": "^1.0.10",
+    "styled-components": "^4.2.0",
+    "typeface-fira-sans-condensed": "^0.0.54",
+    "typeface-inter": "^1.1.13",
+    "typeface-vollkorn": "^0.0.54",
+    "wax-prosemirror-components": "^0.0.40",
+    "wax-prosemirror-core": "^0.0.40",
+    "wax-prosemirror-plugins": "^0.0.40",
+    "wax-prosemirror-services": "^0.0.40"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "babel-eslint": "10.0.3",
+    "react-app-rewired": "^2.1.1",
+    "react-scripts": "3.4"
+  }
+}

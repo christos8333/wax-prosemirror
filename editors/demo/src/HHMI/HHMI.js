@@ -3,8 +3,8 @@ import { createGlobalStyle } from 'styled-components';
 
 import { Wax } from 'wax-prosemirror-core';
 
-import { EditoriaLayout } from '../Editoria/layout';
-import { config } from '../Editoria/config';
+import { HhmiLayout } from './layout';
+import { config } from './config';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -41,7 +41,7 @@ const Hhmi = () => {
         value=""
         targetFormat="JSON"
         // readonly
-        layout={EditoriaLayout}
+        layout={HhmiLayout}
         // onChange={source => console.log(source)}
         // user={user}
       />

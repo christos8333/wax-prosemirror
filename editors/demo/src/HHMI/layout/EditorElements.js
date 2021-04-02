@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-import { lighten, th } from '@pubsweet/ui-toolkit';
+import { th } from '@pubsweet/ui-toolkit';
 
 /* All styles regarding ProseMirror surface and elements */
 
@@ -54,37 +54,17 @@ export default css`
     font-size: 14px;
   } */
 
-  .ProseMirror footnote {
-    font-variant-numeric: lining-nums proportional-nums;
-    display: inline-block;
-    text-align: center;
-    width: 17px;
-    height: 17px;
-    background: white;
-    border-bottom: 2px solid black;
-    color: black;
-    cursor: pointer;
-  }
-
-  .ProseMirror footnote::after {
-    content: counter(footnote);
-    position: relative;
-    bottom: 2px;
-    font-size: 16px;
-    counter-increment: footnote;
-  }
-
   hr {
-    padding: 2px 10px;
     border: none;
     margin: 1em 0;
+    padding: 2px 10px;
   }
 
   hr:after {
+    background-color: silver;
     content: '';
     display: block;
     height: 1px;
-    background-color: silver;
     line-height: 2px;
   }
 
@@ -94,10 +74,10 @@ export default css`
   }
 
   blockquote {
-    padding-left: 1em;
     border-left: 3px solid #eee;
     margin-left: 0;
     margin-right: 0;
+    padding-left: 1em;
   }
 
   figure {
@@ -144,15 +124,15 @@ export default css`
   /* Tables */
 
   table {
+    border: 1px solid #eee;
     border-collapse: initial;
     border-spacing: 0;
     border-width: 0 thin thin 0;
-    border: 1px solid #eee;
-    table-layout: fixed;
-    width: 100%;
     margin: 0;
     overflow: hidden;
     page-break-inside: avoid;
+    table-layout: fixed;
+    width: 100%;
   }
 
   th,
@@ -170,14 +150,14 @@ export default css`
   }
 
   .column-resize-handle {
+    background-color: #adf;
+    bottom: 0;
+    pointer-events: none;
     position: absolute;
     right: -2px;
     top: 0;
-    bottom: 0;
     width: 4px;
     z-index: 20;
-    background-color: #adf;
-    pointer-events: none;
   }
 
   .ProseMirror.resize-cursor {
@@ -186,15 +166,15 @@ export default css`
   }
   /* Give selected cells a blue overlay */
   .selectedCell:after {
-    z-index: 2;
-    position: absolute;
+    background: rgba(200, 200, 255, 0.4);
+    bottom: 0;
     content: '';
     left: 0;
+    pointer-events: none;
+    position: absolute;
     right: 0;
     top: 0;
-    bottom: 0;
-    background: rgba(200, 200, 255, 0.4);
-    pointer-events: none;
+    z-index: 2;
   }
 
   /* placeholder */
@@ -238,77 +218,6 @@ export default css`
     content: '¶';
   }
 
-  span.deletion {
-    text-decoration: line-through;
-    color: ${th('colorError')};
-    footnote {
-      background: ${th('colorError')};
-    }
-  }
-
-  span.insertion {
-    color: royalblue;
-    footnote {
-      background: royalblue;
-    }
-  }
-
-  .selected-insertion {
-    background: ${lighten('royalblue', 0.65)};
-  }
-
-  .selected-deletion {
-    background: ${lighten('indianred', 0.65)};
-  }
-
-  .selected-format-change,
-  .selected-block-change {
-    background-color: #eefbfb;
-  }
-
-  .format-change {
-    border-bottom: 2px solid royalblue;
-  }
-
-  [data-track] {
-    position: relative;
-  }
-
-  [data-track]::before {
-    content: '';
-    position: absolute;
-    border-left: 2px solid royalblue;
-    left: -10px;
-    height: 100%;
-  }
-
-  .insertion .show-insertion {
-    color: black;
-  }
-
-  .deletion .hide-deletion {
-    display: none;
-  }
-
-  li[data-track]::before,
-  li [data-track]::before {
-    left: -5px;
-  }
-
-  span.comment {
-    border-bottom: 2px solid gold;
-    border-radius: 3px 3px 0 0;
-
-    .active-comment {
-      background-color: gold;
-      /* color: black; */
-    }
-  }
-
-  span.search-result {
-    background: #bee594;
-  }
-
   /* == Math Nodes ======================================== */
 
   .math-node {
@@ -342,8 +251,8 @@ export default css`
   }
 
   .math-node .math-src {
-    display: none;
     color: rgb(132, 33, 162);
+    display: none;
     tab-size: 4;
   }
 
@@ -422,52 +331,6 @@ export default css`
   }
   math-inline.math-select .math-render {
     padding-top: 2px;
-  }
-
-  span[data-type='inline'] {
-    display: inline;
-    font-weight: 500;
-  }
-
-  span[data-type='inline']:before {
-    color: #006f19;
-    content: ' | ';
-    font-weight: 600;
-    margin-left: 0;
-  }
-
-  span[data-type='inline']:after {
-    color: #006f19;
-    content: ' | ';
-    display: inline;
-    font-weight: 600;
-  }
-
-  p[data-type='block'] {
-    display: block;
-    margin-top: 1em;
-  }
-
-  p[data-type='block']:before {
-    color: #006f19;
-    content: '⌜';
-    display: inline;
-    font-weight: 600;
-    font-size: 22px;
-    position: relative;
-    top: 2px;
-    left: 6px;
-  }
-
-  p[data-type='block']:after {
-    color: #006f19;
-    content: '⌟';
-    display: inline;
-    font-weight: 600;
-    font-size: 22px;
-    position: relative;
-    top: 5px;
-    right: 6px;
   }
 
   .transform-icon {

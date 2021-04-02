@@ -1,23 +1,9 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
 
 import { Wax } from 'wax-prosemirror-core';
 
 import { HhmiLayout } from './layout';
 import { config } from './config';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    overflow-y: hidden;
-    padding: 0;
-  }
-
-  #root {
-    height:100vh;
-    width:100vw;
-  }
-`;
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -32,18 +18,15 @@ const renderImage = file => {
 const Hhmi = () => {
   return (
     <>
-      <GlobalStyle />
       <Wax
         config={config}
         autoFocus
-        placeholder="Type Something..."
         fileUpload={file => renderImage(file)}
         value=""
         targetFormat="JSON"
         // readonly
         layout={HhmiLayout}
         // onChange={source => console.log(source)}
-        // user={user}
       />
     </>
   );

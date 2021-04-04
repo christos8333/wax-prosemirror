@@ -167,7 +167,6 @@ const NotesAreaContainer = styled.div`
 `;
 
 const NotesContainer = styled.div`
-  box-shadow: 0 0 8px #ecedf1;
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;

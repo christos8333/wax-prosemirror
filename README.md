@@ -2,19 +2,37 @@
   <h1>Wax Editor</h1>
 </div>
 
-| [![MIT license](https://img.shields.io/badge/license-MIT-e51879.svg)](https://github.com/christos8333/wax-prosemirror/raw/master/LICENSE) |
-| :---------------------------------------------------------------------------------------------------------------------------------------: |
+| [![MIT license](https://img.shields.io/badge/license-MIT-e51879.svg)](https://gitlab.coko.foundation/wax/wax-prosemirror/raw/master/LICENSE) |
+| :------------------------------------------------------------------------------------------------------------------------------------------: |
 
 
 This library is being developed by the [Coko Foundation](https://coko.foundation/).
+Wax Editor is built on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-Wax Editor is build against Prosemirror libraries. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
+## Roadmap
+
+Wax-prosemirror is under active development. The current roadmap is as follows:
+
+### December 2020
+
+Beta version, including some new features:
+
+- Image Captions
+- Custom tags
+- Find and replace
+- Transform cases
+- Word counter
+- Spellchecker
+
+### January 2021
+
+V1.0, freeze new feature development, focus on stability, testing and bug fixes
 
 ## Get up and running
 
-Run a local version of the editor
+Run a local version of the Editoria's editor
 
-1.  `git clone git@github.com:christos8333/wax-prosemirror.git`
+1.  `git clone git@gitlab.coko.foundation:wax/wax-prosemirror.git`
 
 2.  `yarn with node >= 12`
 
@@ -25,8 +43,6 @@ Run a local version of the editor
 5.  `yarn storybook` Will bring up storybook for components
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
-
-### Check the current online demo of editoria's [editor](http://wax-demo.coko.foundation/)
 
 ## Introduction
 
@@ -42,8 +58,8 @@ Wax depends on the following libraries.
 
 Currently Wax is under heavy development. Master holds a as possible as stable version of the editor. For latest versions see [here](#latest-versions). Documentation follows, but it is rather limited for now. It lists all the basic parts , and includes a brief explanation on how to configure Wax for your own project. More detailed examples will follow.
 
-Check editoria [editor](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/package.json)
-and editoria's [configuration file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).
+Check editoria [editor](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/Editoria.js), editoria's [package.json](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/package.json)
+and editoria's [configuration file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js) for a full example on how to mount Wax and all available packages(services).
 
 ### Editor Properties
 
@@ -55,7 +71,7 @@ onChange; // when the editor's surface is updated (perform an action ex. save)
 value; // the actual HTML content of the editor
 fileUpload; // used for uploading images (should return a promise with the actual file path)
 placeholder; // a placeholder used for empty documents
-config; // adds on the editor anything from new services, tools, Pmpplugins etc. Check [editoria config](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js)
+config; // Editor's configuration. Menus, packages, PM plugins etc Check [editoria config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js)
 readonly; // editor in in read-only mode
 onBlur; // on focus lost
 layout; // used to create your own Layout using React components
@@ -79,7 +95,16 @@ debug; // dev-tools (https://github.com/d4rkr00t/prosemirror-dev-tools)
 7.  _Text Tool group_: `Paragraph`, `Paragraph Continued`, `Extract Prose`, `Extract Poetry`, `Source Note`, `Block Quote`
 
 8.  _Notes Tool group_: `notes`
-9.  _Comments Tool group_: `comments` ((currently under development))
+
+9.  _Comments Tool group_: `comments`
+
+10. _TrackChange Tool group_: `TrackChange`
+
+11. _Math_: `math` (https://github.com/benrbray/prosemirror-math)
+
+12._Special Character_: `SpecialCharacters`
+
+13. _Find And Replace_: ``
 
 <h2> wax-prosemirror-core </h2>
 
@@ -87,7 +112,7 @@ The role of wax-core is
 
 - Mount a prosemirror instance
 
-- Initiate default [services](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js)
+- Initiate default [services](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js)
 
   1.  LayoutService
 
@@ -99,7 +124,7 @@ The role of wax-core is
 
   5.  ShortCutsService
 
-A big part of wax-core is the [application layer](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-core/src/Application.js), which is responsible for the application’s lifecycle by registering and booting services, merging configs, using the schema
+A big part of wax-core is the [application layer](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/Application.js), which is responsible for the application’s lifecycle by registering and booting services, merging configs, using the schema
 and gathering all prosemirror plugins.
 
 Also holds some default prosemirror plugins that are necessary like the dropCursor, gapCursor, history and some optional as the placeholder.
@@ -113,12 +138,6 @@ For more information on how a Wax node/mark is different check the [SchemaServic
 
 React components to support various features of the editor from buttons to overlays to comment discussions etc. Right now is really basic as the focus is not yet on UI.
 
-<h2> wax-prosemirror-themes </h2>
- Holds the different themes of the editor. Check the options in the [CokoTheme](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-themes/src/coko-theme)
-
-<h2> wax-prosemirror-layouts </h2>
-Holds different layouts of the editor. Through the layout service you can configure the areas of different components. As an example check [EditoriaLayout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js)
-
 <h2> wax-prosemirror-utilities </h2>
  Various helpers methods needed throughout Wax to support the funcionality needed.
 
@@ -131,7 +150,7 @@ Editors are private pakages inside the monorepo, for development/demo purposes.
 
 But, what do we mean by "bootstrapped"? In general, we mean registering things, including registering service container bindings and event listeners. Service providers are the central place to configure your application.
 
-If you open [editoria's config file](https://github.com/christos8333/wax-prosemirror/blob/master/editors/editoria/src/config/config.js),
+If you open [editoria's config file](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/config/config.js),
 you will see the config file where you can configure the extra services (apart from those Wax will load on init) of your editor.
 These are all of the service provider classes that will be loaded for your application.
 
@@ -139,7 +158,7 @@ In the following overview we will see how to write our own service providers and
 
 <h3>Writing Service Providers</h2>
 
-All service providers extend the [Service](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-core/src/services/Service.js) class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container.
+All service providers extend the [Service](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/services/Service.js) class. Most service providers contain a register and a boot method. Within the register method, you should only bind things into the service container.
 
 <h3>The Register Method</h3>
 
@@ -196,7 +215,7 @@ In the above example we bind ShortCuts to a factory method which injects PmPlugi
 
 So, what if we need to register a view component within our service provider? This should be done within the boot method. This method is called after all other service providers have been registered, meaning you have access to all other services that have been registered.
 
-A good example could be the [MenuSerivce](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
+A good example could be the [MenuSerivce](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/MenuService/MenuService.js)
 
 ```javascript
 boot() {
@@ -230,7 +249,7 @@ class InlineAnnotationsService extends Service {
 ```
 
 2.  Within any of your service provider methods, you always have access to the app, config properties .
-3.  Dependant functionality between services. An example of the dependency between two services are [linkService](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService/LinkService.js) and [OverLayService](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/OverlayService/OverlayService.js) where OverLayService registers a function
+3.  Dependant functionality between services. An example of the dependency between two services are [linkService](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService/LinkService.js) and [OverLayService](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/OverlayService/OverlayService.js) where OverLayService registers a function
     that adds a component to the overlay area and LinkService calls OverLay and adds it’s component. ShortCut Service could be another example where each of the services like Strong, paragraph etc can call it to add a shortcut.
 
 ## Core Services
@@ -312,11 +331,13 @@ If the above 2 services are registed SchemaService will merge those 2 nodes into
 
 ### LayoutService
 
-This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-layouts/src/layouts/EditoriaLayout.js).
+This service enables us to set a layout for the editor. Internally Wax calls the setLayout method to apply a layout. How can you write your own layout. Check Editoria's [layout](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/editors/editoria/src/layout/EditoriaLayout.js).
 
-A layout is a react component which has a prop the mounted prosemirror instance in order to place within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
+A layout is a react component which has a prop the mounted prosemirror instance in order to be placed within the layout. You can also have your own “Areas”. For example in EditoriaLayout we have the following
 
 ```javascript
+import { ComponentPlugin } from 'wax-prosemirror-core';
+
 const LeftSideBar = componentPlugin('leftSideBar');
 const RightSideBar = componentPlugin('rightSideBar');
 const TopBar = componentPlugin('topBar');
@@ -374,11 +395,11 @@ Lastly Layout has a core method which is called ComponentPlugin. Is used in orde
 
 ### ShortCuts Service
 
-Another Core Service of Wax for registering shortcuts within a service. Check as an example , how it is used on Strong [Service](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations/StrongService/StrongService.js).
+Another Core Service of Wax for registering shortcuts within a service. Check as an example , how it is used on Strong [Service](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations/StrongService/StrongService.js).
 
 ### Rules Service
 
-Core Service of Wax for registering prosemirror rules. Check editoria [config](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js) or it can be used
+Core Service of Wax for registering prosemirror rules. Check editoria [config](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-core/src/config/defaultConfig.js) or it can be used
 from within any service similar to Short Cuts as an `addRule` method is available.
 
 ### Menu Service
@@ -387,18 +408,20 @@ Is used for adding menus to the editor.
 
 ## Other Stuff
 
-1.  How to create overlays. Check as an example the [link overlay](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
-2.  How to create toolgroups Check as an example Inline Annotations [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
+1.  How to create overlays. Check as an example the [link overlay](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/LinkService), which uses Wax's default overlay.
+2.  How to create toolgroups Check as an example Inline Annotations [here](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/InlineAnnotations) for the services and [here](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/WaxToolGroups/AnnotationToolGroupService) for creating your toolgroup
 3.  How to create modals inside the editor (under development)
-4.  Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by [`pmplugins.get("imagePlaceHolder")`](https://github.com/christos8333/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
+4.  Adding prosemirror plugins. You can do it either from the config or from inside any service with `PmPlugins.add("shortcuts", shortCuts)` or you can have access to the plugin by [`pmplugins.get("imagePlaceHolder")`](https://gitlab.coko.foundation/wax/wax-prosemirror/blob/master/wax-prosemirror-services/src/ImageService/Image.js#L30)
 5.  Exclude certain tool from toolgroups. `toolGroups: [{name: "Base", exclude: ['Undo']}, "Annotations", "Notes", "Lists", "Images", "Tables"]`
 6.  Adding certain tools into more section `toolGroups: [ "Base", { name: "Annotations", more: ["Superscript", "Subscript", "SmallCaps"] } ]`
 
 ## Latest versions
 
-- wax-prosemirror-components@0.0.29
-- wax-prosemirror-core@0.0.29
-- wax-prosemirror-plugins@0.0.29
-- wax-prosemirror-schema@0.0.29
-- wax-prosemirror-services@0.0.29
-- wax-prosemirror-utilities@0.0.29
+- wax-prosemirror-components@0.0.41
+- wax-prosemirror-core@0.0.41
+- wax-prosemirror-layouts@0.0.41
+- wax-prosemirror-plugins@0.0.41
+- wax-prosemirror-schema@0.0.41
+- wax-prosemirror-services@0.0.41
+- wax-prosemirror-themes@0.0.41
+- wax-prosemirror-utilities@0.0.41

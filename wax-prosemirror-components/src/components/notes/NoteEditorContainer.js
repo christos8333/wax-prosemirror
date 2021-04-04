@@ -7,13 +7,12 @@ import NoteNumber from './NoteNumber';
 const NoteEditorContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
-  min-height: 28px;
-  width: 90%;
-  position: relative;
-  margin-bottom: 5px;
-
   padding-left: ${grid(10)};
   padding-right: ${grid(10)};
+  position: relative;
+  margin-bottom: 5px;
+  width: 100%;
+  box-shadow: 0 0 8px #ecedf1;
 `;
 
 const NoteStyled = styled.div`
@@ -23,7 +22,6 @@ const NoteStyled = styled.div`
   height: auto;
   margin-top: 10px;
   height: 100%;
-  box-shadow: 0 2px 2px -2px ${th('colorPrimary')};
 
   &:focus {
     outline: none;

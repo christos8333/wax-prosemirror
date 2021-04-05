@@ -10,7 +10,6 @@ import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext, useReactNodeViewPortals } from './WaxContext';
 import transformPasted from './helpers/TransformPasted';
 import { createReactNodeView } from './ReactNodeView';
-import BlockQuote from './BlockQuote';
 
 let previousDoc;
 
@@ -23,13 +22,13 @@ export default props => {
     autoFocus,
     user,
     targetFormat,
+    nodeViews,
   } = props;
 
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
   const { createPortal } = useReactNodeViewPortals();
-
   const handleCreatePortal = useCallback(createPortal, []);
 
   const setEditorRef = useCallback(
@@ -49,19 +48,7 @@ export default props => {
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
-            nodeViews: {
-              blockquote(node, view, getPos, decorations) {
-                console.log('rerenders for ever');
-                return createReactNodeView({
-                  node,
-                  view,
-                  getPos,
-                  decorations,
-                  component: BlockQuote,
-                  onCreatePortal: handleCreatePortal,
-                });
-              },
-            },
+            nodeViews: createNodeVies(),
             handleDOMEvents: {
               blur: onBlur
                 ? view => {
@@ -96,6 +83,26 @@ export default props => {
     },
     [readonly],
   );
+
+  const createNodeVies = () => {
+    const test = nodeViews.map((nodeView, key) => {
+      return {
+        multiple_choice(node, view, getPos, decorations) {
+          console.log('rerenders for ever');
+          return createReactNodeView({
+            node,
+            view,
+            getPos,
+            decorations,
+            component: nodeView.multiple_choice.component,
+            onCreatePortal: handleCreatePortal,
+          });
+        },
+      };
+    });
+    console.log(test);
+    return test[0];
+  };
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;

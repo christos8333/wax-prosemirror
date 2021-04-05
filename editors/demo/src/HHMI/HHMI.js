@@ -4,6 +4,7 @@ import { Wax } from 'wax-prosemirror-core';
 
 import { HhmiLayout } from './layout';
 import { config } from './config';
+import TestComponent from './MultipleChoiceQuestionService/components/TestComponent';
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -24,6 +25,7 @@ const Hhmi = () => {
         fileUpload={file => renderImage(file)}
         value=""
         targetFormat="JSON"
+        nodeViews={[{ multiple_choice: { component: TestComponent } }]}
         // readonly
         layout={HhmiLayout}
         // onChange={source => console.log(source)}

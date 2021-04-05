@@ -48,7 +48,7 @@ const Editors = () => {
       case 'ncbi':
         break;
       default:
-        return <Editoria />;
+        return <HHMI />;
     }
   };
 

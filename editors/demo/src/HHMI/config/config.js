@@ -17,17 +17,8 @@ import {
   DisplayToolGroupService,
   TextBlockLevelService,
   TextToolGroupService,
-  NoteService,
-  NoteToolGroupService,
-  TrackChangeService,
-  CommentsService,
-  CodeBlockService,
-  CodeBlockToolGroupService,
   DisplayTextToolGroupService,
   MathService,
-  FindAndReplaceService,
-  EditingSuggestingService,
-  TrackingAndEditingToolGroupService,
   FullScreenService,
   FullScreenToolGroupService,
   SpecialCharactersService,
@@ -38,12 +29,12 @@ import {
   BottomInfoService,
   TransformService,
   TransformToolGroupService,
-  TrackOptionsToolGroupService,
-  TrackCommentOptionsToolGroupService,
-  CustomTagInlineToolGroupService,
-  CustomTagBlockToolGroupService,
-  CustomTagService,
 } from 'wax-prosemirror-services';
+
+/* Questions Services */
+
+import MultipleChoiceQuestionService from '../MultipleChoiceQuestionService/MultipleChoiceQuestionService';
+import QuestionsToolGroupService from '../QuestionsToolGroupService/QuestionsToolGroupService';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 
@@ -77,6 +68,7 @@ export default {
         'Images',
         'SpecialCharacters',
         'Tables',
+        'Questions',
         'FullScreen',
       ],
     },
@@ -93,6 +85,8 @@ export default {
   ],
 
   services: [
+    new MultipleChoiceQuestionService(),
+    new QuestionsToolGroupService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
     new TextBlockLevelService(),

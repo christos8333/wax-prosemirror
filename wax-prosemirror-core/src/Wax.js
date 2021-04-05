@@ -66,6 +66,7 @@ const Wax = props => {
     user,
     onChange,
     targetFormat,
+    nodeViews,
   } = props;
 
   if (!application) return null;
@@ -144,6 +145,7 @@ const Wax = props => {
         targetFormat={targetFormat}
         TrackChange={TrackChange}
         user={user}
+        nodeViews={nodeViews}
       >
         {({ editor }) => <WaxRender className={className} editor={editor} />}
       </WaxView>

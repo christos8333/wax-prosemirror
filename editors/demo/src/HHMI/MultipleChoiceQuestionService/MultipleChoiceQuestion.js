@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
-import { wrapIn } from 'prosemirror-commands';
+import { setBlockType } from 'prosemirror-commands';
 
 @injectable()
 class MultipleChoiceQuestion extends Tools {
@@ -10,7 +10,7 @@ class MultipleChoiceQuestion extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.multiple_choice)(state, dispatch);
+      setBlockType(state.config.schema.nodes.multiple_choice)(state, dispatch);
     };
   }
 

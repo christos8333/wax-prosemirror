@@ -85,9 +85,9 @@ export default props => {
   );
 
   const createNodeVies = () => {
-    const test = nodeViews.map((nodeView, key) => {
+    const test = nodeViews.map((nodeView, key, index) => {
       return {
-        multiple_choice(node, view, getPos, decorations) {
+        [nodeView.multiple_choice.node](node, view, getPos, decorations) {
           console.log('rerenders for ever');
           return createReactNodeView({
             node,

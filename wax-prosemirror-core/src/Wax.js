@@ -86,7 +86,17 @@ const Wax = props => {
   if (targetFormat === 'JSON') {
     const editorContent = value || {
       type: 'doc',
-      content: [],
+      content: [
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: ' ',
+            },
+          ],
+        },
+      ],
     };
     WaxOptions.doc = schema.nodeFromJSON(editorContent);
   } else {

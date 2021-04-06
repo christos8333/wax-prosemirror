@@ -16,6 +16,21 @@ const renderImage = file => {
   });
 };
 
+const initialValue = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'A normal block of a paragraph of text',
+        },
+      ],
+    },
+  ],
+};
+
 const Hhmi = () => {
   return (
     <>

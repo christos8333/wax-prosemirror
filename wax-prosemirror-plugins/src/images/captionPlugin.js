@@ -41,7 +41,6 @@ const captionPlugin = key =>
                   pos,
                   view.state.schema.nodes.figcaption.create({
                     class: 'decoration',
-                    dataContent: 'Caption : ',
                   }),
                 )
                 .setMeta(captionPlugins, {

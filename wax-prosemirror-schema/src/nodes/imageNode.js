@@ -5,7 +5,7 @@ const image = {
     src: {},
     alt: { default: null },
     title: { default: null },
-    track: { default: [] },
+    // track: { default: [] },
     fileid: { default: null },
   },
   group: 'figure',
@@ -18,7 +18,7 @@ const image = {
           src: hook.dom.getAttribute('src'),
           title: hook.dom.getAttribute('title'),
           id: hook.dom.dataset.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
+          // track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
           alt: hook.dom.getAttribute('alt'),
           fileid: hook.dom.dataset.fileid,
         });
@@ -30,7 +30,7 @@ const image = {
     const attrs = {};
 
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
-      attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
+      // attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
       attrs['data-id'] = hook.node.attrs.id;
     }
 
@@ -44,7 +44,7 @@ const image = {
         alt,
         title,
         'data-id': id,
-        'data-track': track,
+        // 'data-track': track,
         'data-fileid': fileid,
       },
     ];

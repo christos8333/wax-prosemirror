@@ -4,8 +4,7 @@ const figureCaption = {
   draggable: false,
   attrs: {
     class: { default: '' },
-    tabindex: { default: 0 },
-    dataContent: { default: '' },
+    // tabindex: { default: 0 },
   },
   toDOM: node => {
     return ['figcaption', node.attrs, 0];
@@ -16,7 +15,6 @@ const figureCaption = {
       getAttrs(dom) {
         return {
           class: dom.getAttribute('class'),
-          dataContent: dom.getAttribute('dataContent'),
         };
       },
     },

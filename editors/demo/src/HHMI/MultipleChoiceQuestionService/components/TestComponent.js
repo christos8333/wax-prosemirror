@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { schema } from 'prosemirror-schema-basic';
+import { WaxContext } from 'wax-prosemirror-core';
+import { useReactNodeView } from 'wax-prosemirror-core/src/ReactNodeView';
 
 const styles = {
   backgroundColor: 'red',
@@ -10,8 +12,9 @@ const styles = {
 };
 
 const onChange = () => {};
-
 export default () => {
+  const context = useReactNodeView();
+  console.log(context);
   const editorViewRef = useRef(null);
   const handleChange = useCallback(onChange, []);
   const state = useMemo(() => {

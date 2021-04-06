@@ -40,7 +40,22 @@ class ReactNodeView {
 
   renderPortal(container) {
     const Component = props => {
-      return React.createElement(this.component, { ...props });
+      const componentRef = useRef(null);
+
+      return (
+        <div ref={componentRef} className="ProseMirror__reactComponent">
+          <ReactNodeViewContext.Provider
+            value={{
+              node: this.node,
+              view: this.view,
+              getPos: this.getPos,
+              decorations: this.decorations,
+            }}
+          >
+            <this.component {...props} />
+          </ReactNodeViewContext.Provider>
+        </div>
+      );
     };
 
     return ReactDOM.createPortal(<Component />, container, uuidv4());

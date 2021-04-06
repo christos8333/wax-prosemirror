@@ -50,10 +50,10 @@ export default props => {
             scrollMargin: 200,
             scrollThreshold: 200,
             nodeViews: {
-              multiple_choice(node, view, getPos, decorations) {
-                console.log('rerenders for ever', node);
+              multiple_choice(theNode, view, getPos, decorations) {
+                console.log('rerenders for ever', theNode);
                 return createReactNodeView({
-                  node,
+                  node: theNode,
                   view,
                   getPos,
                   decorations,

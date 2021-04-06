@@ -40,17 +40,9 @@ const Hhmi = () => {
         fileUpload={file => renderImage(file)}
         value=""
         targetFormat="JSON"
-        nodeViews={[
-          {
-            multiple_choice: {
-              node: 'multiple_choice',
-              component: TestComponent,
-            },
-          },
-        ]}
         // readonly
         layout={HhmiLayout}
-        // onChange={source => console.log(source)}
+        onChange={source => console.log(source)}
       />
     </>
   );

@@ -10,6 +10,7 @@ import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext, useReactNodeViewPortals } from './WaxContext';
 import transformPasted from './helpers/TransformPasted';
 import { createReactNodeView } from './ReactNodeView';
+import TestComponent from '../../editors/demo/src/HHMI/MultipleChoiceQuestionService/components/TestComponent';
 
 let previousDoc;
 
@@ -48,7 +49,19 @@ export default props => {
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
-            nodeViews: createNodeVies(),
+            nodeViews: {
+              multiple_choice(node, view, getPos, decorations) {
+                console.log('rerenders for ever', node);
+                return createReactNodeView({
+                  node,
+                  view,
+                  getPos,
+                  decorations,
+                  component: TestComponent,
+                  onCreatePortal: handleCreatePortal,
+                });
+              },
+            },
             handleDOMEvents: {
               blur: onBlur
                 ? view => {
@@ -88,7 +101,7 @@ export default props => {
     const test = nodeViews.map((nodeView, key, index) => {
       return {
         [nodeView.multiple_choice.node](node, view, getPos, decorations) {
-          console.log('rerenders for ever');
+          console.log('rerenders for ever', node);
           return createReactNodeView({
             node,
             view,

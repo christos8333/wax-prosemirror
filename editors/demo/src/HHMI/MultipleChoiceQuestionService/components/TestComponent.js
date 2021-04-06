@@ -53,16 +53,12 @@ export default () => {
     [state, handleChange],
   );
 
-  useEffect(() => {
-    const editorViewDOM = editorViewRef.current;
-    if (editorViewDOM) {
-      createEditorView(editorViewDOM);
-    }
-  }, [createEditorView]);
-  console.log(editorViewRef);
-  return (
-    <div>
-      <div ref={editorViewRef}></div>
-    </div>
-  );
+  // useEffect(() => {
+  //   const editorViewDOM = editorViewRef.current;
+  //   if (editorViewDOM) {
+  //     createEditorView(editorViewDOM);
+  //   }
+  // }, [createEditorView]);
+
+  return <div style={styles}></div>;
 };

@@ -1,6 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useMemo, useContext, useState } from 'react';
-import { TextSelection } from 'prosemirror-state';
+import React, { useMemo, useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -37,26 +36,37 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const dropDownOptions = [
-  { label: 'add column before', value: 'addColumnBefore' },
-  { label: 'add column after', value: 'addColumnAfter' },
-  { label: 'Delete column', value: 'deleteColumn' },
-  { label: 'Insert row before', value: 'addRowBefore' },
-  { label: 'Insert row after', value: 'addRowAfter' },
-  { label: 'Delete row', value: 'deleteRow' },
-  { label: 'Delete table', value: 'deleteTable' },
-  { label: 'Merge cells', value: 'mergeCells' },
-  { label: 'Split cell', value: 'splitCell' },
-  { label: 'Toggle header column', value: 'toggleHeaderColumn' },
-  { label: 'Toggle header row', value: 'toggleHeaderRow' },
-  { label: 'Toggle header cells', value: 'toggleHeaderCell' },
-];
-
 const TableDropDown = ({ item }) => {
+  const dropDownOptions = [
+    { label: 'Add column before', value: 'addColumnBefore' },
+    { label: 'Add column after', value: 'addColumnAfter' },
+    { label: 'Delete column', value: 'deleteColumn' },
+    { label: 'Insert row before', value: 'addRowBefore' },
+    { label: 'Insert row after', value: 'addRowAfter' },
+    { label: 'Delete row', value: 'deleteRow' },
+    { label: 'Delete table', value: 'deleteTable' },
+    { label: 'Merge cells', value: 'mergeCells' },
+    { label: 'Split cell', value: 'splitCell' },
+    { label: 'Toggle header column', value: 'toggleHeaderColumn' },
+    { label: 'Toggle header row', value: 'toggleHeaderRow' },
+    { label: 'Toggle header cells', value: 'toggleHeaderCell' },
+  ];
+
   const { activeView } = useContext(WaxContext);
   const [selectedOption, setSelectedOption] = useState('');
+  const appliedDropDownOptions = [];
 
+  dropDownOptions.forEach(option => {
+    if (tablesFn[option.value](activeView.state)) {
+      appliedDropDownOptions.push(option);
+    }
+  });
   const isDisabled = item.select(activeView.state);
+
+  useEffect(() => {
+    console.log('useEfe');
+  }, [selectedOption]);
+
   const TableDropDownComponent = useMemo(
     () => (
       <DropdownStyled
@@ -72,12 +82,12 @@ const TableDropDown = ({ item }) => {
             activeView.focus();
           });
         }}
-        options={dropDownOptions}
+        options={appliedDropDownOptions}
         placeholder="Table Options"
         select={isDisabled}
       />
     ),
-    [isDisabled, selectedOption],
+    [isDisabled, selectedOption, appliedDropDownOptions],
   );
 
   return TableDropDownComponent;

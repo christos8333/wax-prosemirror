@@ -3,11 +3,12 @@ const transform = {
 
   attrs: {
     style: { default: null },
+    class: { default: 'transform' },
   },
   inclusive: false,
   parseDOM: [
     {
-      tag: 'transform',
+      tag: 'span.transform',
       getAttrs(hook, next) {
         Object.assign(hook, {
           style: hook.dom.getAttribute('style'),
@@ -17,7 +18,7 @@ const transform = {
     },
   ],
   toDOM(hook, next) {
-    hook.value = ['transform', hook.node.attrs, 0]; // eslint-disable-line no-param-reassign
+    hook.value = ['span', hook.node.attrs, 0]; // eslint-disable-line no-param-reassign
     next();
   },
 };

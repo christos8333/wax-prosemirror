@@ -6,7 +6,7 @@
 | :------------------------------------------------------------------------------------------------------------------------------------------: |
 
 
-This library is being developed by the [Coko Foundation](https://coko.foundation/).
+This library is being developed by [Cabbage Tree Labs] (https://www.cabbagetreelabs.org).
 Wax Editor is built on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
 ## Roadmap

@@ -135,7 +135,7 @@ const PreviousNextContainer = styled.div`
   }
 `;
 
-const PreviousNextButton = styled.span`
+const IconWrapper = styled.span`
   &:focus {
     outline: none;
   }
@@ -333,15 +333,20 @@ const ExpandedFindAndReplaceComponent = ({
         <ButtonReplace onClick={replace}>Replace</ButtonReplace>
         <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
         <PreviousNextContainer>
-          <StyledIcon
-            name="navigatePrevious"
+          <IconWrapper
             onClick={() => findPreviousMatch(searchValue, matchCaseOption)}
-          />
-
-          <StyledIcon
-            name="navigateNext"
+            role="button"
+            tabIndex="0"
+          >
+            <StyledIcon name="navigatePrevious" />
+          </IconWrapper>
+          <IconWrapper
             onClick={() => findNextMatch(searchValue, matchCaseOption)}
-          />
+            role="button"
+            tabIndex="0"
+          >
+            <StyledIcon name="navigateNext" />
+          </IconWrapper>
         </PreviousNextContainer>
       </ControlContainer>
     </Wrapper>

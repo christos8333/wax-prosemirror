@@ -63,9 +63,7 @@ const TableDropDown = ({ item }) => {
   });
   const isDisabled = item.select(activeView.state);
 
-  useEffect(() => {
-    console.log('useEfe');
-  }, [selectedOption]);
+  useEffect(() => {}, [selectedOption]);
 
   const TableDropDownComponent = useMemo(
     () => (

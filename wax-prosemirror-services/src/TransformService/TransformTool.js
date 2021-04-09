@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { TransformCaseComponent } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
@@ -8,14 +9,24 @@ import Tools from '../lib/Tools';
 // eslint-disable-next-line no-unused-vars
 import titleCase from './titleCase';
 
-const getText = (state, dispatch, casing) => {
+const upperLowerCase = (state, dispatch, casing) => {
   // grab the current transaction and selection
-  let { tr, selection } = state;
+  let { tr } = state;
+  const { selection } = tr;
+  const marksAdd = [];
 
-  // check we will actually need a to dispatch transaction
-  // let shouldUpdate = false;
-  let updatedText;
   state.doc.nodesBetween(selection.from, selection.to, (node, position) => {
+    if (node.marks.length > 0) {
+      node.marks.forEach(item => {
+        marksAdd.push({
+          name: item.type.name,
+          type: item.type,
+          pos: DocumentHelpers.findMark(state, item.type, true),
+          attrs: item.attrs,
+        });
+      });
+    }
+
     // we only processing text, must be a selection
     if (!node.isTextblock || selection.from === selection.to) return;
 
@@ -26,20 +37,25 @@ const getText = (state, dispatch, casing) => {
     // grab the content
     const substringFrom = Math.max(0, selection.from - position - 1);
     const substringTo = Math.max(0, selection.to - position - 1);
-    updatedText = node.textContent.substring(substringFrom, substringTo);
+    const updatedText = node.textContent.substring(substringFrom, substringTo);
 
-    // const textNode =
-    //   casing === 'upperCase'
-    //     ? state.schema.text(updatedText.toUpperCase(), node.marks)
-    //     : state.schema.text(updatedText.toLocaleLowerCase(), node.marks);
+    // set the casing
+    const textNode =
+      casing === 'upperCase'
+        ? state.schema.text(updatedText.toUpperCase())
+        : state.schema.text(updatedText.toLocaleLowerCase());
 
-    // tr = tr.replaceWith(startPosition, endPosition, textNode);
-    // shouldUpdate = true;
+    // replace
+    tr = tr.replaceWith(startPosition, endPosition, textNode);
   });
-  return updatedText;
-  // if (dispatch && shouldUpdate) {
-  //   dispatch(tr.scrollIntoView());
-  // }
+
+  marksAdd.forEach(item => {
+    item.pos.forEach(markPos => {
+      tr.addMark(markPos.from, markPos.to, item.type.create(item.attrs));
+    });
+  });
+
+  dispatch(tr.scrollIntoView());
 };
 
 class TransformTool extends Tools {
@@ -58,51 +74,68 @@ class TransformTool extends Tools {
       } = state;
 
       const { tr } = state;
-      const selectionTr = state.tr.selection;
-      const marksAdd = [
-        {
-          name: '',
-          pos: [],
-          attrs: {},
-        },
-      ];
-      let isAddMark = false;
+      const { selection } = state.tr;
+      const marksAdd = [];
 
       switch (textCase) {
         case 'upperCase':
-          dispatch(
-            state.tr.addMark(
-              $from.pos,
-              $to.pos,
-              state.schema.marks.transform.create({
-                style: 'text-transform: uppercase',
-              }),
-            ),
-          );
+          upperLowerCase(state, dispatch, 'upperCase');
           break;
         case 'lowerCase':
-          dispatch(
-            state.tr.addMark(
-              $from.pos,
-              $to.pos,
-              state.schema.marks.transform.create({
-                style: 'text-transform: lowercase',
-              }),
-            ),
-          );
+          upperLowerCase(state, dispatch, 'lowerCase');
           break;
-        case 'sentenceCase':
-          console.log(getText(state, dispatch));
-          dispatch(
-            state.tr.addMark(
-              $from.pos,
-              $to.pos,
-              state.schema.marks.transform.create({
-                style: 'text-transform: capitalize',
-              }),
-            ),
-          );
+        case 'sentenceCase': {
+          state.doc.nodesBetween($from.pos, $to.pos, (node, position) => {
+            if (node.marks.length > 0) {
+              node.marks.forEach(item => {
+                marksAdd.push({
+                  name: item.type.name,
+                  type: item.type,
+                  pos: DocumentHelpers.findMark(state, item.type, true),
+                  attrs: item.attrs,
+                });
+              });
+            }
+
+            if (node.type.name !== 'code_block') {
+              if (!node.isTextblock || $from.pos === $to.pos) return;
+              const startPosition = Math.max(position + 1, $from.pos);
+              const endPosition = Math.min(
+                position + node.nodeSize,
+                selection.to,
+              );
+              const substringFrom = Math.max(0, $from.pos - position - 1);
+              const substringTo = Math.max(0, selection.to - position - 1);
+
+              const updatedText = node.textContent.substring(
+                substringFrom,
+                substringTo,
+              );
+              if (updatedText.length > 0) {
+                const rg = /(^\w{1}|\.\s*\w{1})/gi;
+
+                const textNode = state.schema.text(
+                  updatedText.replace(rg, toReplace => {
+                    return toReplace.toUpperCase();
+                  }),
+                );
+                tr.replaceWith(startPosition, endPosition, textNode);
+              }
+            }
+          });
+
+          marksAdd.forEach(item => {
+            item.pos.forEach(markPos => {
+              tr.addMark(
+                markPos.from,
+                markPos.to,
+                item.type.create(item.attrs),
+              );
+            });
+          });
+          dispatch(tr);
           break;
+        }
         case 'titleCase':
           state.doc.nodesBetween($from.pos, $to.pos, (node, position) => {
             if (node.marks.length > 0) {
@@ -121,10 +154,10 @@ class TransformTool extends Tools {
               const startPosition = Math.max(position + 1, $from.pos);
               const endPosition = Math.min(
                 position + node.nodeSize,
-                selectionTr.to,
+                selection.to,
               );
               const substringFrom = Math.max(0, $from.pos - position - 1);
-              const substringTo = Math.max(0, selectionTr.to - position - 1);
+              const substringTo = Math.max(0, selection.to - position - 1);
 
               const updatedText = node.textContent.substring(
                 substringFrom,
@@ -135,22 +168,20 @@ class TransformTool extends Tools {
                 tr.replaceWith(startPosition, endPosition, textNode);
               }
             }
-            isAddMark = true;
           });
 
-          if (isAddMark) {
-            marksAdd.forEach(item => {
-              if (item.name !== 'transform') {
-                item.pos.forEach(markPos => {
-                  tr.addMark(
-                    markPos.from,
-                    markPos.to,
-                    item.type.create(item.attrs),
-                  );
-                });
-              }
-            });
-          }
+          marksAdd.forEach(item => {
+            if (item.name !== 'transform') {
+              item.pos.forEach(markPos => {
+                tr.addMark(
+                  markPos.from,
+                  markPos.to,
+                  item.type.create(item.attrs),
+                );
+              });
+            }
+          });
+
           dispatch(tr);
 
           break;

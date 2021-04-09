@@ -8,6 +8,40 @@ import Tools from '../lib/Tools';
 // eslint-disable-next-line no-unused-vars
 import titleCase from './titleCase';
 
+const getText = (state, dispatch, casing) => {
+  // grab the current transaction and selection
+  let { tr, selection } = state;
+
+  // check we will actually need a to dispatch transaction
+  // let shouldUpdate = false;
+  let updatedText;
+  state.doc.nodesBetween(selection.from, selection.to, (node, position) => {
+    // we only processing text, must be a selection
+    if (!node.isTextblock || selection.from === selection.to) return;
+
+    // calculate the section to replace
+    const startPosition = Math.max(position + 1, selection.from);
+    const endPosition = Math.min(position + node.nodeSize, selection.to);
+
+    // grab the content
+    const substringFrom = Math.max(0, selection.from - position - 1);
+    const substringTo = Math.max(0, selection.to - position - 1);
+    updatedText = node.textContent.substring(substringFrom, substringTo);
+
+    // const textNode =
+    //   casing === 'upperCase'
+    //     ? state.schema.text(updatedText.toUpperCase(), node.marks)
+    //     : state.schema.text(updatedText.toLocaleLowerCase(), node.marks);
+
+    // tr = tr.replaceWith(startPosition, endPosition, textNode);
+    // shouldUpdate = true;
+  });
+  return updatedText;
+  // if (dispatch && shouldUpdate) {
+  //   dispatch(tr.scrollIntoView());
+  // }
+};
+
 class TransformTool extends Tools {
   title = 'Transform';
   icon = 'transformCase';
@@ -58,6 +92,7 @@ class TransformTool extends Tools {
           );
           break;
         case 'sentenceCase':
+          console.log(getText(state, dispatch));
           dispatch(
             state.tr.addMark(
               $from.pos,

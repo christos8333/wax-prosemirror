@@ -244,7 +244,7 @@ const TrackChangeOptionsComponent = ({
         {inlineTracks + blockTracks} SUGGESTIONS
       </TotalSuggestions>
       <ToolsContainer>{renderTools()}</ToolsContainer>
-      <AcceptRejectAll
+      {/* <AcceptRejectAll
         onMouseEnter={() => setIsShownTrack(true)}
         onMouseLeave={() => setIsShownTrack(false)}
       >
@@ -265,12 +265,12 @@ const TrackChangeOptionsComponent = ({
             </AcceptRejectAllRow>
           </AcceptRejectAllControls>
         )}
-      </AcceptRejectAll>
-      <TotalComments>{comments} COMMENTS</TotalComments>
+      </AcceptRejectAll> */}
+      {/* <TotalComments>{comments} COMMENTS</TotalComments>
       <ShowComments>
         <span>Show comments</span>
         <StyledToggleOn name="toggleOn" />
-      </ShowComments>
+      </ShowComments> */}
     </Wrapper>
   );
 };

@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useContext,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useRef, useContext, useCallback, useMemo } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -23,7 +17,6 @@ export default props => {
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
-  const [previousState, setPreviousState] = useState();
   const setEditorRef = useCallback(
     node => {
       if (editorRef.current) {

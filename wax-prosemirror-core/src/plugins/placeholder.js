@@ -1,7 +1,7 @@
-import { Plugin, PluginKey } from "prosemirror-state";
-import { Decoration, DecorationSet } from "prosemirror-view";
+import { Plugin, PluginKey } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 
-const placeHolderText = new PluginKey("placeHolderText");
+const placeHolderText = new PluginKey('placeHolderText');
 
 export default props => {
   return new Plugin({
@@ -17,16 +17,16 @@ export default props => {
           ) {
             decorations.push(
               Decoration.node(pos, pos + node.nodeSize, {
-                class: "empty-node",
-                "data-content": props.content
-              })
+                class: 'empty-node',
+                'data-content': props.content,
+              }),
             );
           }
         };
         state.doc.descendants(decorate);
 
         return DecorationSet.create(state.doc, decorations);
-      }
-    }
+      },
+    },
   });
 };

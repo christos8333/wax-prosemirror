@@ -74,14 +74,16 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
     allCommentsWithSameId.forEach(singleComment => {
       dispatch(
-        tr.addMark(
-          singleComment.pos,
-          singleComment.pos + singleComment.nodeSize,
-          commentMark.create({
-            ...((comment && comment.attrs) || {}),
-            conversation: comment.attrs.conversation,
-          }),
-        ),
+        tr
+          .addMark(
+            singleComment.pos,
+            singleComment.pos + singleComment.nodeSize,
+            commentMark.create({
+              ...((comment && comment.attrs) || {}),
+              conversation: comment.attrs.conversation,
+            }),
+          )
+          .setMeta('forceUpdate', true),
       );
     });
     activeView.focus();

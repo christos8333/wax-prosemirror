@@ -10,12 +10,13 @@ import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext } from './WaxContext';
 import transformPasted from './helpers/TransformPasted';
 
+let previousDoc;
+
 export default props => {
   const { readonly, onBlur, options, debug, autoFocus, user } = props;
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
-
   const setEditorRef = useCallback(
     node => {
       if (editorRef.current) {
@@ -75,6 +76,7 @@ export default props => {
         ? trackedTransaction(transaction, view.state, user)
         : transaction;
 
+    previousDoc = view.state.doc;
     const state = view.state.apply(tr);
     view.updateState(state);
 
@@ -90,8 +92,8 @@ export default props => {
         'main',
       );
     }
-
-    props.onChange(state.doc.content);
+    if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
+      props.onChange(state.doc.content);
   };
 
   const editor = <div ref={setEditorRef} />;

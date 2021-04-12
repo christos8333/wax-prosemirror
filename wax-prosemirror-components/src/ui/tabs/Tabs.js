@@ -21,6 +21,7 @@ const activeTab = css`
 `;
 
 const disabledTab = css`
+  display: none;
   cursor: not-allowed;
   opacity: 0.4;
 `;

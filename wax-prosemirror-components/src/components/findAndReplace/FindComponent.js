@@ -134,6 +134,10 @@ const FindComponent = ({
 
   useEffect(() => {
     delayedSearch();
+    let counter = 0;
+    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+
+    setCounterSearches(counter);
     if (isFirstRun) {
       setTimeout(() => {
         searchRef.current.focus();
@@ -191,12 +195,11 @@ const FindComponent = ({
   };
 
   const searchDocument = () => {
-    let counter = 0;
     findAndReplacePlugin.props.setSearchText(searchValue);
     findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
-    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
-
-    setCounterSearches(counter);
+    // let counter = 0;
+    // counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+    // setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
       eachRight(view, (singleView, viewId) => {

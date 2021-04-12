@@ -176,6 +176,9 @@ const ExpandedFindAndReplaceComponent = ({
 
   useEffect(() => {
     delayedSearch();
+    let counter = 0;
+    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+    setCounterSearches(counter);
   }, [searchValue, delayedSearch, matchCaseSearch, JSON.stringify(allStates)]);
 
   const setCounterSearches = counter => {
@@ -229,12 +232,11 @@ const ExpandedFindAndReplaceComponent = ({
   };
 
   const searchDocument = () => {
-    let counter = 0;
     findAndReplacePlugin.props.setSearchText(searchValue);
     findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
-    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
-
-    setCounterSearches(counter);
+    // let counter = 0;
+    // counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+    // setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
       eachRight(view, (singleView, viewId) => {

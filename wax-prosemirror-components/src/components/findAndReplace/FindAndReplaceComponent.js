@@ -47,6 +47,7 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   const findNextMatch = (searchValue, matchCaseSearch) => {
+    if (!view[activeViewId].focused) view[activeViewId].focus();
     const counter = helpers.getMatchesByView(
       view,
       searchValue,
@@ -125,6 +126,8 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   const findPreviousMatch = (searchValue, matchCaseSearch) => {
+    if (!view[activeViewId].focused) view[activeViewId].focus();
+
     const counter = helpers.getMatchesByView(
       view,
       searchValue,

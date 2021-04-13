@@ -119,6 +119,7 @@ const HhmiLayout = ({ editor }) => {
             </WaxSurfaceScroll>
           </EditorArea>
         </Main>
+        WaxOverlays
         <WaxOverlays />
       </Wrapper>
     </ThemeProvider>

@@ -3,14 +3,13 @@ import React, { useRef, useContext, useCallback, useMemo } from 'react';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-
 import 'prosemirror-view/style/prosemirror.css';
-
 import { trackedTransaction } from 'wax-prosemirror-services';
-import { WaxContext, useReactNodeViewPortals } from './WaxContext';
+
+import ComponentPlugin from './ComponentPlugin';
+import { WaxContext } from './WaxContext';
 import transformPasted from './helpers/TransformPasted';
-import { createReactNodeView } from './ReactNodeView';
-import TestComponent from '../../editors/demo/src/HHMI/MultipleChoiceQuestionService/components/TestComponent';
+import useWaxOptions from './useWaxOptions';
 
 let previousDoc;
 
@@ -26,13 +25,15 @@ export default props => {
     nodeViews,
   } = props;
 
+export default props => {
+  const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
-  const { createPortal } = useReactNodeViewPortals();
-  const handleCreatePortal = useCallback(createPortal, []);
+  const options = useWaxOptions(props);
 
   const setEditorRef = useCallback(
+    // eslint-disable-next-line consistent-return
     node => {
       if (editorRef.current) {
         // this is where you do cleanup if you have to. the editorRef.current will
@@ -49,22 +50,10 @@ export default props => {
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
-            nodeViews: {
-              multiple_choice(theNode, view, getPos, decorations) {
-                console.log('rerenders for ever', theNode);
-                return createReactNodeView({
-                  node: theNode,
-                  view,
-                  getPos,
-                  decorations,
-                  component: TestComponent,
-                  onCreatePortal: handleCreatePortal,
-                });
-              },
-            },
             handleDOMEvents: {
               blur: onBlur
-                ? view => {
+                ? // eslint-disable-next-line no-shadow
+                  view => {
                     onBlur(view.state.doc.content);
                   }
                 : null,
@@ -96,26 +85,6 @@ export default props => {
     },
     [readonly],
   );
-
-  const createNodeVies = () => {
-    const test = nodeViews.map((nodeView, key, index) => {
-      return {
-        [nodeView.multiple_choice.node](node, view, getPos, decorations) {
-          console.log('rerenders for ever', node);
-          return createReactNodeView({
-            node,
-            view,
-            getPos,
-            decorations,
-            component: nodeView.multiple_choice.component,
-            onCreatePortal: handleCreatePortal,
-          });
-        },
-      };
-    });
-    console.log(test);
-    return test[0];
-  };
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
@@ -150,7 +119,12 @@ export default props => {
     }
   };
 
-  const editor = <div ref={setEditorRef} />;
+  const editor = (
+    <>
+      <div ref={setEditorRef} />
+      <WaxPortals />
+    </>
+  );
 
   return useMemo(
     () =>

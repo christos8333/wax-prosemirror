@@ -1,6 +1,7 @@
 export { default as Service } from './src/Service';
 
 export { default as LayoutService } from './src/LayoutService/LayoutService';
+export { default as PortalService } from './src/PortalService/PortalService';
 export { default as MenuService } from './src/MenuService/MenuService';
 export { default as OverlayService } from './src/OverlayService/OverlayService';
 export { default as ImageService } from './src/ImageService/ImageService';

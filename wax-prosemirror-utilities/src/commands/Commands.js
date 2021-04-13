@@ -17,16 +17,11 @@ const setBlockType = (nodeType, attrs = {}) => {
         applicable = $pos.parent.canReplaceWith(index, index + 1, nodeType);
       }
       if (applicable) {
-        tr.setBlockType(
-          from,
-          to,
-          nodeType,
-          Object.assign({}, node.attrs, attrs),
-        );
+        tr.setBlockType(from, to, nodeType, { ...node.attrs, ...attrs });
       }
     });
     if (!tr.steps.length) return false;
-    if (dispatch) dispatch(tr.scrollIntoView());
+    if (dispatch) dispatch(tr.setMeta('click', { pressed: true }));
     return true;
   };
 };

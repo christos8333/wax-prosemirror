@@ -4,14 +4,15 @@ import styled from 'styled-components';
 
 const NoteNumberStyled = styled.div`
   display: flex;
-  margin-top: 12px;
   margin-right: 10px;
+  margin-top: 18px;
+
   &:after {
     content: counter(footnote-view) '.';
-    font-size: 14px;
-    font-weight: 500;
     counter-increment: footnote-view;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
   }
 `;
 

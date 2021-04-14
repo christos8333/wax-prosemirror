@@ -11,12 +11,14 @@ const Wrapper = styled.div`
   z-index: 2;
 
   button {
+    background: ${props => (props.active ? `#535E76` : '#fff')};
     border: ${props =>
       props.active ? `1px solid #535E76` : `1px solid #D8DAE0`};
 
     &:hover {
       background: ${props => (props.active ? `#535E76` : '#D8DAE0')};
     }
+    box-shadow: 0px -2px 6px 1px rgba(204, 204, 204, 0.41);
   }
 
   &:before {
@@ -42,13 +44,19 @@ const DropWrapper = styled.div`
   width: max-content;
 `;
 const CounterInfoComponent = styled.div`
-  background: white;
-  border: 1px solid ${th('colorPrimary')};
+  background: #fff;
+  border-radius: 1.03093% / 8%;
   bottom: 45px;
+  box-shadow: rgb(9 30 66 / 25%) 0px 4px 8px 0px,
+    rgb(9 30 66 / 31%) 0px 0px 1px 0px;
   display: flex;
   flex-direction: column;
+  font-size: 14px;
+  padding: calc(4px * 2);
   position: fixed;
   right: 136px;
+  transform-origin: 50% 50% 0px;
+  width: 200px;
 `;
 
 const ShortCutsContainer = styled.div`

@@ -14,6 +14,7 @@ import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';
 import CheckBox from '../../ui/inputs/CheckBox';
 import helpers from './helpers';
+import useDebounce from '../../helpers/useDebounce';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -165,21 +166,23 @@ const ExpandedFindAndReplaceComponent = ({
     allStates.push(singleView.state);
   });
 
-  const delayedSearch = useCallback(
-    debounce(() => searchDocument(), 300),
-    [searchValue, matchCaseSearch],
-  );
+  const debouncedSearchTerm = useDebounce(searchValue, 300);
+
+  // const delayedSearch = useCallback(
+  //   debounce(() => searchDocument(), 300),
+  //   [searchValue, matchCaseSearch],
+  // );
 
   const onChangeSearchInput = () => {
     setSearchValue(searchRef.current.value);
   };
 
   useEffect(() => {
-    delayedSearch();
+    searchDocument();
     let counter = 0;
     counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
     setCounterSearches(counter);
-  }, [searchValue, delayedSearch, matchCaseSearch, JSON.stringify(allStates)]);
+  }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
   const setCounterSearches = counter => {
     if (counter === 0) return setCounterText('0 of 0');

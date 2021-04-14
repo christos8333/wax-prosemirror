@@ -1,18 +1,13 @@
 /* eslint react/prop-types: 0 */
 
-import React, {
-  useState,
-  useRef,
-  useContext,
-  useCallback,
-  useEffect,
-} from 'react';
-import { debounce, each, eachRight } from 'lodash';
+import React, { useState, useRef, useContext, useEffect } from 'react';
+import { each, eachRight } from 'lodash';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import Icon from '../../helpers/Icon';
 import helpers from './helpers';
+import useDebounce from '../../helpers/useDebounce';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -100,38 +95,6 @@ const Svg = styled.svg.attrs(() => ({
   width: 24px;
 `;
 
-const useDebounce = (value, delay) => {
-  // State and setters for debounced value
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(
-    () => {
-      // Set debouncedValue to value (passed in) after the specified delay
-      const handler = setTimeout(() => {
-        setDebouncedValue(value);
-      }, delay);
-
-      // Return a cleanup function that will be called every time ...
-      // ... useEffect is re-called. useEffect will only be re-called ...
-      // ... if value changes (see the inputs array below).
-      // This is how we prevent debouncedValue from changing if value is ...
-      // ... changed within the delay period. Timeout gets cleared and restarted.
-      // To put it in context, if the user is typing within our app's ...
-      // ... search box, we don't want the debouncedValue to update until ...
-      // ... they've stopped typing for more than 500ms.
-      return () => {
-        clearTimeout(handler);
-      };
-    },
-    // Only re-call effect if value changes
-    // You could also add the "delay" var to inputs array if you ...
-    // ... need to be able to change that dynamically.
-    [value],
-  );
-
-  return debouncedValue;
-};
-
 const FindComponent = ({
   close,
   expand,
@@ -156,10 +119,6 @@ const FindComponent = ({
   each(view, (singleView, viewId) => {
     allStates.push(singleView.state);
   });
-
-  // const delayedSearch = useCallback(searchDocument(), [
-  //   (debouncedSearchTerm, matchCaseSearch, activeViewId),
-  // ]);
 
   const onChange = () => {
     setSearchValue(searchRef.current.value);
@@ -225,11 +184,8 @@ const FindComponent = ({
 
   const searchDocument = () => {
     let counter = 0;
-    if (searchValue === '') {
-      findAndReplacePlugin.props.setSearchText('');
-    } else {
-      findAndReplacePlugin.props.setSearchText(searchValue);
-    }
+    findAndReplacePlugin.props.setSearchText(searchValue);
+
     findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
     counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
 

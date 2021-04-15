@@ -3,7 +3,6 @@ import { PortalContext } from 'wax-prosemirror-core';
 import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
-import TestComponent from './TestComponent';
 
 export default () => {
   const { element, component } = useContext(PortalContext);

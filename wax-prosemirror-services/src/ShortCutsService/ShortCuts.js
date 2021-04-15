@@ -60,6 +60,7 @@ const backSpaceShortCut = (state, dispatch, view) => {
 };
 
 const pressEnter = (state, dispatch) => {
+  console.log('enter');
   if (state.selection.node && state.selection.node.type.name === 'image') {
     const { $from, to } = state.selection;
 

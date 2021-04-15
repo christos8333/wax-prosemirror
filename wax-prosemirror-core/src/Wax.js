@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 import { DOMSerializer } from 'prosemirror-model';
 
 import WaxProvider from './WaxContext';
-import { PortalContext } from './PortalContext';
+import PortalProvider from './PortalContext';
 import Application from './Application';
 
 import WaxView from './WaxView';
@@ -23,7 +23,7 @@ let schema;
 const createApplication = props => {
   const application = Application.create(props);
   schema = application.getSchema();
-  application.bootServices();
+  // application.bootServices();
   return application;
 };
 
@@ -94,7 +94,7 @@ const Wax = props => {
   const WaxRender = Layout.layoutComponent;
   return (
     <WaxProvider app={application}>
-      <PortalContext>
+      <PortalProvider>
         <WaxView
           autoFocus={autoFocus}
           debug={debug}
@@ -110,7 +110,7 @@ const Wax = props => {
         >
           {({ editor }) => <WaxRender className={className} editor={editor} />}
         </WaxView>
-      </PortalContext>
+      </PortalProvider>
     </WaxProvider>
   );
 };

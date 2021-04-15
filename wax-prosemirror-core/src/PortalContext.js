@@ -9,13 +9,14 @@ export const PortalContext = React.createContext({
 
 export default props => {
   const [portal, setPortal] = useState({
-    portals: [],
-    createPortal: (element, Component) => {
-      portal.portals.push({
+    element: {},
+    component: {},
+    createPortal: (element, component) => {
+      setPortal({
+        ...portal,
         element,
-        component: Component,
+        component,
       });
-      setPortal({ ...portal, portals: [...portal.portals] });
     },
   });
 

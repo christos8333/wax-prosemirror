@@ -39,6 +39,10 @@ export default class Application {
     this.config = this.container.get('Config');
   }
 
+  setContext(context) {
+    this.context = context;
+  }
+
   bootServices() {
     const services = this.config.get('config.services');
     services.forEach(plugin => {

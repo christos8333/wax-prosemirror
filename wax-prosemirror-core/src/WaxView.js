@@ -8,6 +8,7 @@ import { trackedTransaction } from 'wax-prosemirror-services';
 
 import ComponentPlugin from './ComponentPlugin';
 import { WaxContext } from './WaxContext';
+import { PortalContext } from './PortalContext';
 import transformPasted from './helpers/TransformPasted';
 import useWaxOptions from './useWaxOptions';
 
@@ -30,6 +31,11 @@ export default props => {
   const editorRef = useRef();
   let view;
   const context = useContext(WaxContext);
+  const { createPortal } = useContext(PortalContext);
+
+  context.app.setContext({ ...context, createPortal });
+
+  context.app.bootServices();
   const options = useWaxOptions(props);
 
   const setEditorRef = useCallback(

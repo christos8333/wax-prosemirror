@@ -2,14 +2,11 @@ import { Service } from 'wax-prosemirror-services';
 // import { MultipleChoicePlugin } from 'wax-prosemirror-plugins';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import multipleChoiceNode from './schema/multipleChoiceNode';
-import TestComponentPortal from './components/TestComponentPortal';
+import TestComponent from './components/TestComponent';
 
 class MultipleChoiceQuestionService extends Service {
   boot() {
-    // this.app.PmPlugins.add(
-    //   'multipleChoicePlugin',
-    //   MultipleChoicePlugin('multipleChoicePlugin'),
-    // );
+
   }
 
   register() {
@@ -18,7 +15,9 @@ class MultipleChoiceQuestionService extends Service {
     createNode({
       multiple_choice: multipleChoiceNode,
     });
-    // console.log(this.schema);
+    const addPortal = this.container.get('AddPortal');
+
+    addPortal({name: 'multiple_choice', component: TestComponent})
   }
 }
 

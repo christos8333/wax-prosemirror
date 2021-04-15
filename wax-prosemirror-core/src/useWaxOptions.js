@@ -1,9 +1,7 @@
 import { useContext } from 'react';
 import { DOMParser } from 'prosemirror-model';
 import { WaxContext } from './WaxContext';
-import { PortalContext } from './PortalContext';
 import Placeholder from './plugins/placeholder';
-import PortalPlugin from './plugins/portalPlugin';
 import defaultPlugins from './plugins/defaultPlugins';
 
 const parser = schema => {
@@ -19,7 +17,6 @@ const parser = schema => {
 
 export default ({ placeholder, targetFormat, value }) => {
   const context = useContext(WaxContext);
-  const { createPortal } = useContext(PortalContext);
 
   let finalPlugins = [];
 
@@ -27,8 +24,6 @@ export default ({ placeholder, targetFormat, value }) => {
   const createPlaceholder = placeholder => {
     return Placeholder({ content: placeholder });
   };
-
-  context.app.PmPlugins.add('portalPlugin', PortalPlugin({ createPortal }));
 
   finalPlugins = defaultPlugins.concat([
     createPlaceholder(placeholder),

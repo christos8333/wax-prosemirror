@@ -11,11 +11,19 @@ export default props => {
   const [portal, setPortal] = useState({
     element: {},
     component: {},
-    createPortal: (element, component) => {
+    node: {},
+    view: {},
+    getPos: () => {},
+    decorations: [],
+    createPortal: (element, component, node, view, getPos, decorations) => {
       setPortal({
         ...portal,
         element,
         component,
+        node,
+        view,
+        getPos,
+        decorations,
       });
     },
   });

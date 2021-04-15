@@ -62,8 +62,6 @@ export default props => {
           plugins: context.app.getPlugins(),
         });
 
-        console.log(options);
-        // debugger;
         view = new EditorView(
           { mount: node },
           {

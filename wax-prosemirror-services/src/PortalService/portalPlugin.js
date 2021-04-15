@@ -8,8 +8,7 @@ class ReactNodeView {
     this.dom.id = 'portalId';
     this.dom.classList.add('portal');
 
-    console.log('dddd');
-    createPortal(this.dom, Component);
+    createPortal(this.dom, Component, node, view, getPos, decorations);
   }
 
   update(node) {

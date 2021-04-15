@@ -15,9 +15,7 @@ const parser = schema => {
   };
 };
 
-export default ({ placeholder, targetFormat, value }) => {
-  const context = useContext(WaxContext);
-
+export default ({ placeholder, targetFormat, value, schema, plugins }) => {
   let finalPlugins = [];
 
   // eslint-disable-next-line no-shadow
@@ -25,12 +23,11 @@ export default ({ placeholder, targetFormat, value }) => {
     return Placeholder({ content: placeholder });
   };
 
+  console.log(plugins);
   finalPlugins = defaultPlugins.concat([
     createPlaceholder(placeholder),
-    ...context.app.getPlugins(),
+    ...plugins,
   ]);
-
-  const schema = context.app.getSchema();
 
   const WaxOptions = {
     schema,

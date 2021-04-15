@@ -1,4 +1,10 @@
-import React, { useRef, useContext, useCallback, useMemo } from 'react';
+import React, {
+  useRef,
+  useContext,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -10,7 +16,7 @@ import ComponentPlugin from './ComponentPlugin';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import transformPasted from './helpers/TransformPasted';
-import useWaxOptions from './useWaxOptions';
+import WaxOptions from './WaxOptions';
 
 let previousDoc;
 
@@ -29,14 +35,17 @@ export default props => {
 export default props => {
   const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
   const editorRef = useRef();
-  let view;
+
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
   context.app.setContext({ ...context, createPortal });
 
-  context.app.bootServices();
-  const options = useWaxOptions(props);
+  const schema = context.app.getSchema();
+
+  if (!view) {
+    context.app.bootServices();
+  }
 
   const setEditorRef = useCallback(
     // eslint-disable-next-line consistent-return
@@ -47,6 +56,14 @@ export default props => {
         // clean up the unmount if you need to.
       }
       if (node) {
+        const options = WaxOptions({
+          ...props,
+          schema,
+          plugins: context.app.getPlugins(),
+        });
+
+        console.log(options);
+        // debugger;
         view = new EditorView(
           { mount: node },
           {

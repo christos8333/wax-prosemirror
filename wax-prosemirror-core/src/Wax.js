@@ -62,7 +62,7 @@ const Wax = props => {
           schema.nodes.footnote.spec.toDOM = node => {
             // eslint-disable-next-line prefer-rest-params
             old.apply(this);
-            return ['footnote', node.attrs, 0];
+            if (node) return ['footnote', node.attrs, 0];
           };
         }
 
@@ -72,13 +72,12 @@ const Wax = props => {
           const serialize = serializer(schema);
           WaxOnchange(serialize(value));
         }
-
         if (schema.nodes.footnote) {
           const old = schema.nodes.footnote.spec.toDOM;
           schema.nodes.footnote.spec.toDOM = node => {
             // eslint-disable-next-line prefer-rest-params
             old.apply(this);
-            return ['footnote', node.attrs];
+            if (node) return ['footnote', node.attrs];
           };
         }
       },

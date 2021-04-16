@@ -131,17 +131,11 @@ export default props => {
         'main',
       );
     }
-<<<<<<< HEAD
-    if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-      props.onChange(state.doc.content);
 
-=======
-    console.log(state);
->>>>>>> cleanup
     if (targetFormat === 'JSON') {
-      props.onChange(state.config.schema)(state.doc.toJSON());
+      props.onChange(schema)(state.doc.toJSON());
     } else {
-      props.onChange(state.config.schema)(state.doc.content);
+      props.onChange(schema)(state.doc.content);
     }
   };
 

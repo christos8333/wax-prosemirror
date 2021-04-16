@@ -52,6 +52,5 @@ export default ({ placeholder, targetFormat, value, schema, plugins }) => {
     const parse = parser(schema);
     WaxOptions.doc = parse(editorContent);
   }
-
   return WaxOptions;
 };

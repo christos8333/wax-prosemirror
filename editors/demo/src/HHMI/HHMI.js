@@ -4,7 +4,6 @@ import { Wax } from 'wax-prosemirror-core';
 
 import { HhmiLayout } from './layout';
 import { config } from './config';
-import TestComponent from './MultipleChoiceQuestionService/components/TestComponent';
 
 const renderImage = file => {
   const reader = new FileReader();

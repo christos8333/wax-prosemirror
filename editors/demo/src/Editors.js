@@ -18,7 +18,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const ProjectContainer = styled.div`
+  display: flex;
+  height: calc(100% - 55px);
+`;
+
 const ChooseProject = styled.div`
+  background: #fff;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -48,7 +54,7 @@ const Editors = () => {
       case 'ncbi':
         break;
       default:
-        return <HHMI />;
+        return <Editoria />;
     }
   };
 
@@ -65,7 +71,7 @@ const Editors = () => {
           {/* <ProjectButton onClick={() => setProject('ncbi')}>NCBI</ProjectButton> */}
         </Projects>
       </ChooseProject>
-      {displayProject()}
+      <ProjectContainer>{displayProject()}</ProjectContainer>
     </>
   );
 };

@@ -35,7 +35,7 @@ const TopMenu = styled.div`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   display: flex;
-  min-height: 40px;
+  height: 40px;
   user-select: none;
 
   > div:not(:last-child) {
@@ -66,7 +66,8 @@ const WaxSurfaceScroll = styled.div`
   display: flex;
   height: 100%;
   overflow-y: auto;
-  position: absolute;
+  position: fixed;
+  top: 95px;
   width: 100%;
   /* PM styles  for main content*/
   ${EditorElements};
@@ -74,11 +75,10 @@ const WaxSurfaceScroll = styled.div`
 
 const EditorContainer = styled.div`
   height: 100%;
-  width: 65%;
+  width: 100%;
 
   .ProseMirror {
-    box-shadow: 0 0 8px #ecedf1;
-    min-height: 98%;
+    height: 100%;
     padding: ${grid(10)};
   }
 `;
@@ -111,7 +111,6 @@ const HhmiLayout = ({ editor }) => {
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>
-
         <Main>
           <EditorArea>
             <WaxSurfaceScroll>
@@ -119,7 +118,6 @@ const HhmiLayout = ({ editor }) => {
             </WaxSurfaceScroll>
           </EditorArea>
         </Main>
-        WaxOverlays
         <WaxOverlays />
       </Wrapper>
     </ThemeProvider>

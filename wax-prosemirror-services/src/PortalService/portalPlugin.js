@@ -1,11 +1,12 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { v4 as uuidv4 } from 'uuid';
 
 const portalPlugin = new PluginKey('portalPlugin');
 
 class ReactNodeView {
   constructor(node, view, getPos, decorations, createPortal, Component) {
     this.dom = document.createElement('div');
-    this.dom.id = 'portalId';
+    this.dom.id = uuidv4();
     this.dom.classList.add('portal');
 
     createPortal(this.dom, Component, node, view, getPos, decorations);

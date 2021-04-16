@@ -18,20 +18,9 @@ import { PortalContext } from './PortalContext';
 import transformPasted from './helpers/TransformPasted';
 import WaxOptions from './WaxOptions';
 
+const WaxPortals = ComponentPlugin('waxPortals');
+
 let previousDoc;
-
-export default props => {
-  const {
-    readonly,
-    onBlur,
-    options,
-    debug,
-    autoFocus,
-    user,
-    targetFormat,
-    nodeViews,
-  } = props;
-
 let view;
 export default props => {
   const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
@@ -131,11 +120,13 @@ export default props => {
         'main',
       );
     }
-
     if (targetFormat === 'JSON') {
-      props.onChange(schema)(state.doc.toJSON());
+      if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
+        props.onChange(schema)(state.doc.toJSON());
     } else {
-      props.onChange(schema)(state.doc.content);
+      // eslint-disable-next-line no-lonely-if
+      if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
+        props.onChange(schema)(state.doc.content);
     }
   };
 

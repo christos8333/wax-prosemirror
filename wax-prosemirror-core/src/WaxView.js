@@ -32,6 +32,7 @@ export default props => {
     nodeViews,
   } = props;
 
+let view;
 export default props => {
   const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
   const editorRef = useRef();
@@ -130,13 +131,17 @@ export default props => {
         'main',
       );
     }
+<<<<<<< HEAD
     if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
       props.onChange(state.doc.content);
 
+=======
+    console.log(state);
+>>>>>>> cleanup
     if (targetFormat === 'JSON') {
-      props.onChange(state.doc.toJSON());
+      props.onChange(state.config.schema)(state.doc.toJSON());
     } else {
-      props.onChange(state.doc.content);
+      props.onChange(state.config.schema)(state.doc.content);
     }
   };
 

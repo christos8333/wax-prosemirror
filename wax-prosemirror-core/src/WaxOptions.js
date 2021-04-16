@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { DOMParser } from 'prosemirror-model';
-import { WaxContext } from './WaxContext';
 import Placeholder from './plugins/placeholder';
 import defaultPlugins from './plugins/defaultPlugins';
 
@@ -23,7 +21,6 @@ export default ({ placeholder, targetFormat, value, schema, plugins }) => {
     return Placeholder({ content: placeholder });
   };
 
-  console.log(plugins);
   finalPlugins = defaultPlugins.concat([
     createPlaceholder(placeholder),
     ...plugins,

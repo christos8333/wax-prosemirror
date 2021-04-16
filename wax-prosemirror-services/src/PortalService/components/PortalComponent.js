@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 
 export default () => {
+  // eslint-disable-next-line no-unused-vars
   const { element, component, node, view, getPos, decorations } = useContext(
     PortalContext,
   );
 
   const [portals, setPortals] = useState([]);
 
-  console.log(node, view, getPos(), decorations);
   useEffect(() => {
     if (!isEmpty(element)) {
       portals.push({ dom: element, component, active: true });

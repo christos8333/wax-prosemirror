@@ -19,11 +19,8 @@ const serializer = schema => {
   };
 };
 
-let schema;
 const createApplication = props => {
   const application = Application.create(props);
-  // schema = application.getSchema();
-  // application.bootServices();
   return application;
 };
 
@@ -54,40 +51,40 @@ const Wax = props => {
   if (!application) return null;
   const WaxOnchange = onChange || (v => true);
 
-  const finalOnChange = () => {};
-  // const finalOnChange = debounce(
-  //   // eslint-disable-next-line no-shadow
-  //   value => {
-  //     /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
-  //     with content */
-  //     if (schema.nodes.footnote) {
-  //       const old = schema.nodes.footnote.spec.toDOM;
-  //       schema.nodes.footnote.spec.toDOM = node => {
-  //         // eslint-disable-next-line prefer-rest-params
-  //         old.apply(this);
-  //         return ['footnote', node.attrs, 0];
-  //       };
-  //     }
+  const finalOnChange = schema =>
+    debounce(
+      // eslint-disable-next-line no-shadow
+      value => {
+        /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
+      with content */
+        if (schema.nodes.footnote) {
+          const old = schema.nodes.footnote.spec.toDOM;
+          schema.nodes.footnote.spec.toDOM = node => {
+            // eslint-disable-next-line prefer-rest-params
+            old.apply(this);
+            return ['footnote', node.attrs, 0];
+          };
+        }
 
-  //     if (targetFormat === 'JSON') {
-  //       WaxOnchange(value);
-  //     } else {
-  //       const serialize = serializer(schema);
-  //       WaxOnchange(serialize(value));
-  //     }
+        if (targetFormat === 'JSON') {
+          WaxOnchange(value);
+        } else {
+          const serialize = serializer(schema);
+          WaxOnchange(serialize(value));
+        }
 
-  //     if (schema.nodes.footnote) {
-  //       const old = schema.nodes.footnote.spec.toDOM;
-  //       schema.nodes.footnote.spec.toDOM = node => {
-  //         // eslint-disable-next-line prefer-rest-params
-  //         old.apply(this);
-  //         return ['footnote', node.attrs];
-  //       };
-  //     }
-  //   },
-  //   1000,
-  //   { maxWait: 5000 },
-  // );
+        if (schema.nodes.footnote) {
+          const old = schema.nodes.footnote.spec.toDOM;
+          schema.nodes.footnote.spec.toDOM = node => {
+            // eslint-disable-next-line prefer-rest-params
+            old.apply(this);
+            return ['footnote', node.attrs];
+          };
+        }
+      },
+      1000,
+      { maxWait: 5000 },
+    );
   const TrackChange = application.config.get('config.EnableTrackChangeService');
 
   const Layout = application.container.get('Layout');

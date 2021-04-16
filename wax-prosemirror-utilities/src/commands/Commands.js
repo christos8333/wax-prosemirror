@@ -21,7 +21,7 @@ const setBlockType = (nodeType, attrs = {}) => {
       }
     });
     if (!tr.steps.length) return false;
-    if (dispatch) dispatch(tr.setMeta('click', { pressed: true }));
+    if (dispatch) dispatch(tr.scrollIntoView());
     return true;
   };
 };

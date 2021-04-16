@@ -5,7 +5,6 @@ export default class ShortCutsService extends Service {
   name = 'ShortCutsService';
 
   boot() {
-    console.log('boot');
     const shortCuts = this.container.get('ShortCuts');
     shortCuts.createShortCuts();
   }

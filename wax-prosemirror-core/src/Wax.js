@@ -53,8 +53,7 @@ const Wax = props => {
 
   const finalOnChange = schema =>
     debounce(
-      // eslint-disable-next-line no-shadow
-      value => {
+      content => {
         /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
       with content */
         if (schema.nodes.footnote) {
@@ -67,10 +66,10 @@ const Wax = props => {
         }
 
         if (targetFormat === 'JSON') {
-          WaxOnchange(value);
+          WaxOnchange(content);
         } else {
           const serialize = serializer(schema);
-          WaxOnchange(serialize(value));
+          WaxOnchange(serialize(content));
         }
         if (schema.nodes.footnote) {
           const old = schema.nodes.footnote.spec.toDOM;

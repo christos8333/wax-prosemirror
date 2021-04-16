@@ -97,6 +97,10 @@ export default props => {
     [readonly],
   );
 
+  useEffect(() => {
+    return () => (view = null);
+  }, []);
+
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
     const tr =

@@ -9,9 +9,11 @@ class MultipleChoiceQuestionService extends Service {
   register() {
     this.container.bind('MultipleChoiceQuestion').to(MultipleChoiceQuestion);
     const createNode = this.container.get('CreateNode');
+
     createNode({
       multiple_choice: multipleChoiceNode,
     });
+
     const addPortal = this.container.get('AddPortal');
 
     addPortal({ name: 'multiple_choice', component: TestComponent });

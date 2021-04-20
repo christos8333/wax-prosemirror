@@ -23,7 +23,16 @@ export default () => {
     <>
       {portals.length > 0 &&
         portals.map(({ dom, component: Component }) => {
-          return ReactDOM.createPortal(<Component />, dom, uuidv4());
+          return ReactDOM.createPortal(
+            <Component
+              node={node}
+              view={view}
+              getPos={getPos}
+              decorations={decorations}
+            />,
+            dom,
+            uuidv4(),
+          );
         })}
     </>
   );

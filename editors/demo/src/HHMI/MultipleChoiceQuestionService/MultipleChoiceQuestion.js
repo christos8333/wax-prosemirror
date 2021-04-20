@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
-import {Commands} from 'wax-prosemirror-utilities'
+import { Fragment } from 'prosemirror-model';
+import { v4 as uuidv4 } from 'uuid';
 
 @injectable()
 class MultipleChoiceQuestion extends Tools {
@@ -9,9 +10,15 @@ class MultipleChoiceQuestion extends Tools {
   name = 'Multiple Choice';
 
   get run() {
-
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.multiple_choice)(state, dispatch);
+      const { empty, $from, $to } = state.selection;
+      const content = Fragment.empty;
+
+      const footnote = state.config.schema.nodes.multiple_choice.create(
+        { id: uuidv4() },
+        content,
+      );
+      dispatch(state.tr.replaceSelectionWith(footnote));
     };
   }
 

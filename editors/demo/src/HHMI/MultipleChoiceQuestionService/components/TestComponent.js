@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { StepMap } from 'prosemirror-transform';
@@ -16,42 +16,34 @@ const EditorWrapper = styled.div`
 
 let questionView;
 export default ({ node, view, getPos }) => {
-  console.log(node);
   const editorRef = useRef();
-  useEffect(() => {
-    questionView = new EditorView(
-      { mount: editorRef.current },
-      {
-        state: EditorState.create({
-          doc: node,
-          // plugins: [keymap(createKeyBindings()), ...app.getPlugins()],
-        }),
-        dispatchTransaction,
-        handleDOMEvents: {
-          // blur: () => {
-          //   view[noteId].dispatch(
-          //     view[noteId].state.tr.setSelection(
-          //       new TextSelection(view[noteId].state.tr.doc.resolve(0)),
-          //     ),
-          //   );
-          // },
+  const setEditorRef = useCallback(
+    // eslint-disable-next-line consistent-return
+    editorNode => {
+      if (editorRef.current) {
+        console.log(editorRef);
+      }
+      if (editorNode) {
+        questionView = new EditorView(
+          { mount: editorNode },
+          {
+            state: EditorState.create({
+              doc: node,
+            }),
+            dispatchTransaction,
+            scrollMargin: 200,
+            scrollThreshold: 200,
 
-          mousedown: () => {
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
-
-            if (view.hasFocus()) questionView.focus();
+            attributes: {
+              spellcheck: 'false',
+            },
           },
-        },
-
-        attributes: {
-          spellcheck: 'false',
-        },
-      },
-    );
-  }, []);
-
+        );
+      }
+      editorRef.current = editorNode;
+    },
+    [],
+  );
   const dispatchTransaction = tr => {
     console.log('dispatch', questionView.state.applyTransaction(tr));
     let { state, transactions } = questionView.state.applyTransaction(tr);
@@ -96,7 +88,7 @@ export default ({ node, view, getPos }) => {
   const MemorizedComponent = useMemo(
     () => (
       <>
-        <EditorWrapper ref={editorRef} style={styles} />
+        <EditorWrapper ref={setEditorRef} style={styles} />
         <button onClick={clickMe}>Click me</button>
       </>
     ),

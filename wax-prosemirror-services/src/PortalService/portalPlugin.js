@@ -6,6 +6,7 @@ const portalPlugin = new PluginKey('portalPlugin');
 class ReactNodeView {
   constructor(node, view, getPos, decorations, createPortal, Component) {
     this.dom = document.createElement('div');
+    this.dom.setAttribute('contenteditable', true);
     this.dom.id = uuidv4();
     this.dom.classList.add('portal');
 

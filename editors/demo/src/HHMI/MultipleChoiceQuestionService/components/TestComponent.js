@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { StepMap } from 'prosemirror-transform';
@@ -9,11 +9,16 @@ const styles = {
   border: '1px solid black',
 };
 
+const EditorWrapper = styled.div`
+  pointer-events: visible;
+  user-select: all;
+`;
+
+let questionView;
 export default ({ node, view, getPos }) => {
   console.log(node);
   const editorRef = useRef();
-  let questionView;
-  useLayoutEffect(() => {
+  useEffect(() => {
     questionView = new EditorView(
       { mount: editorRef.current },
       {
@@ -88,10 +93,15 @@ export default ({ node, view, getPos }) => {
     view.dispatch(view.state.tr);
   };
 
-  return (
-    <>
-      <div ref={editorRef} style={styles} />
-      <button onClick={clickMe}>Click me</button>
-    </>
+  const MemorizedComponent = useMemo(
+    () => (
+      <>
+        <EditorWrapper ref={editorRef} style={styles} />
+        <button onClick={clickMe}>Click me</button>
+      </>
+    ),
+    [],
   );
+
+  return <>{MemorizedComponent}</>;
 };

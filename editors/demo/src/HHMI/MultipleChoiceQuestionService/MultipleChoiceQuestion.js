@@ -12,7 +12,12 @@ class MultipleChoiceQuestion extends Tools {
   get run() {
     return (state, dispatch) => {
       const { empty, $from, $to } = state.selection;
-      const content = Fragment.empty;
+      let content = Fragment.empty;
+      if (!empty && $from.sameParent($to) && $from.parent.inlineContent)
+        content = $from.parent.content.cut(
+          $from.parentOffset,
+          $to.parentOffset,
+        );
 
       const footnote = state.config.schema.nodes.multiple_choice.create(
         { id: uuidv4() },

@@ -4,7 +4,9 @@ import styled, { css } from 'styled-components';
 
 import { th, override } from '@pubsweet/ui-toolkit';
 
-import Icon from '../../helpers/Icon';
+// import Icon from '../../helpers/Icon';
+
+import icons from '../../icons/icons';
 
 const disabledStyles = css`
   background: ${props =>
@@ -63,10 +65,10 @@ const Wrapper = styled.button.attrs(props => ({
   ${override('Wax.MenuButton')}
 `;
 
-const StyledIcon = styled(Icon)`
-  height: 24px;
-  width: 24px;
-`;
+// const StyledIcon = styled(Icon)`
+//   height: 24px;
+//   width: 24px;
+// `;
 
 const Label = styled.span`
   margin: 0 8px;
@@ -84,6 +86,12 @@ const MenuButton = props => {
     onMouseDown,
   } = props;
 
+  let Component = icons[iconName];
+
+  if (typeof iconName === 'function') {
+    Component = iconName;
+  }
+
   return (
     <Wrapper
       active={active}
@@ -92,9 +100,7 @@ const MenuButton = props => {
       onMouseDown={onMouseDown}
       title={title}
     >
-      {iconName && (
-        <StyledIcon active={active} disabled={disabled} name={iconName} />
-      )}
+      {iconName && <Component className={className} />}
 
       {label && <Label hasIcon={!!iconName}>{label}</Label>}
     </Wrapper>
@@ -104,7 +110,7 @@ const MenuButton = props => {
 MenuButton.propTypes = {
   active: PropTypes.bool.isRequired,
   disabled: PropTypes.bool.isRequired,
-  iconName: PropTypes.string,
+  iconName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   label: PropTypes.string,
   title: PropTypes.string,
 };

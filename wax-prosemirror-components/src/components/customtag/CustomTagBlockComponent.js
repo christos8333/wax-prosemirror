@@ -121,7 +121,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     if (inputValue.trim() === '') return;
     configTags.push({ label: inputValue, tagType: 'block' });
     setAllTags(configTags);
-    saveTags(configTags);
+    saveTags({ label: inputValue, tagType: 'block' });
     setInputValue('');
     if (ref.current) ref.current.focus();
   };
@@ -178,7 +178,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         {renderTagList()}
       </>
     ),
-    [isShowTag, inputValue, tagStatus, isDisabled],
+    [isShowTag, inputValue, JSON.stringify(tagStatus), isDisabled],
   );
 };
 

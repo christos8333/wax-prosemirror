@@ -132,7 +132,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
     configTags.push({ label: inputValue, tagType: 'inline' });
     setAllTags(configTags);
-    saveTags(configTags);
+    saveTags({ label: inputValue, tagType: 'inline' });
     setInputValue('');
     if (ref.current) ref.current.focus();
     setInputValue('');

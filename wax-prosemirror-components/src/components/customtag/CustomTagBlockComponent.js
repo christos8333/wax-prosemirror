@@ -132,10 +132,6 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
     }
   };
 
-  const onSelectTag = val => {
-    item.run(state, dispatch, val.replace(/ /g, '-').toLowerCase());
-  };
-
   const renderTagList = () => {
     const tagList = [];
     const blockTags = allTags.filter(tag => {
@@ -147,11 +143,13 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         <TagBoxWrapper key={uuidv4()}>
           <Box key={uuidv4()} />
           <StyledButton
-            active={JSON.parse(tagStatus[blockTag.label])}
+            active={tagStatus[blockTag.label]}
             disabled={isDisabled}
             key={uuidv4()}
             label={blockTag.label}
-            onMouseDown={() => onSelectTag(blockTag.label)}
+            onMouseDown={() => {
+              item.run(activeView.state, activeView.dispatch, blockTag.label);
+            }}
             title={blockTag.label}
           />
         </TagBoxWrapper>,

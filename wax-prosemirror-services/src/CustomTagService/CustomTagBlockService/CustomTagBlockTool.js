@@ -8,7 +8,7 @@ class CustomTagBlockTool extends Tools {
   get run() {
     return (state, dispatch, val) => {
       Commands.setBlockType(state.config.schema.nodes.customTagBlock, {
-        class: val,
+        class: val.replace(/ /g, '-').toLowerCase(),
       })(state, dispatch);
     };
   }

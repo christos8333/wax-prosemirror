@@ -133,7 +133,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   };
 
   const onSelectTag = val => {
-    item.run(state, dispatch, val.replace(/ /g, '-'));
+    item.run(state, dispatch, val.replace(/ /g, '-').toLowerCase());
   };
 
   const renderTagList = () => {
@@ -147,7 +147,7 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
         <TagBoxWrapper key={uuidv4()}>
           <Box key={uuidv4()} />
           <StyledButton
-            active={tagStatus[blockTag.label]}
+            active={JSON.parse(tagStatus[blockTag.label])}
             disabled={isDisabled}
             key={uuidv4()}
             label={blockTag.label}

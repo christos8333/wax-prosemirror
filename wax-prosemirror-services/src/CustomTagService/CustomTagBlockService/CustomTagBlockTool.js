@@ -26,7 +26,10 @@ class CustomTagBlockTool extends Tools {
 
       const tagsActive = {};
       blockTags.forEach(tag => {
-        if (isActive && className === tag.label.replace(/ /g, '-')) {
+        if (
+          isActive &&
+          className === tag.label.replace(/ /g, '-').toLowerCase()
+        ) {
           tagsActive[tag.label] = true;
         } else {
           tagsActive[tag.label] = false;

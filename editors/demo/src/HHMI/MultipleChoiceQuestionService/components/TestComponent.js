@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useMemo, useCallback } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+  useState,
+} from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { StepMap } from 'prosemirror-transform';
@@ -14,8 +20,10 @@ const EditorWrapper = styled.div`
   user-select: all;
 `;
 
+let showExp = false;
 let questionView;
 export default ({ node, view, getPos }) => {
+  const [showExplanation, setShowExplanation] = useState(false);
   const editorRef = useRef();
   const setEditorRef = useCallback(
     // eslint-disable-next-line consistent-return
@@ -82,6 +90,8 @@ export default ({ node, view, getPos }) => {
 
   const clickMe = () => {
     console.log(node.attrs);
+    setShowExplanation(true);
+    showExp = true;
     view.dispatch(view.state.tr);
   };
 
@@ -89,11 +99,20 @@ export default ({ node, view, getPos }) => {
     () => (
       <>
         <EditorWrapper ref={setEditorRef} style={styles} />
-        <button onClick={clickMe}>Click me</button>
+        <button onClick={clickMe}>Add Explanation</button>
+        {showExplanation && <input type="text"></input>}
       </>
     ),
-    [],
+    [showExplanation],
   );
-
-  return <>{MemorizedComponent}</>;
+  console.log(showExplanation);
+  return (
+    <>
+      <EditorWrapper ref={setEditorRef} style={styles} />
+      <button onClick={clickMe}>Show Explanation</button>
+      {showExp && (
+        <input type="text" placeholder="type your explanation"></input>
+      )}
+    </>
+  );
 };

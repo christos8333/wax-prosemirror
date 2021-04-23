@@ -2,6 +2,7 @@ import { Service } from 'wax-prosemirror-services';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import multipleChoiceNode from './schema/multipleChoiceNode';
 import TestComponent from './components/TestComponent';
+import nodeView from './MultipleChoiceNodeView';
 
 class MultipleChoiceQuestionService extends Service {
   boot() {}
@@ -16,7 +17,7 @@ class MultipleChoiceQuestionService extends Service {
 
     const addPortal = this.container.get('AddPortal');
 
-    addPortal({ name: 'multiple_choice', component: TestComponent });
+    addPortal({ nodeView, component: TestComponent });
   }
 }
 

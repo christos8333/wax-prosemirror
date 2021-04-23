@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { PortalContext } from 'wax-prosemirror-core';
 import ReactDOM from 'react-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 
 export default () => {
@@ -28,6 +27,7 @@ export default () => {
   return (
     <>
       {portals.length > 0 &&
+        // eslint-disable-next-line no-shadow
         portals.map(({ dom, component: Component, id }) => {
           return ReactDOM.createPortal(
             <Component

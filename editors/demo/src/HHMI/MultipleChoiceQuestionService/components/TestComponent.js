@@ -92,7 +92,7 @@ export default ({ node, view, getPos }) => {
     console.log(node.attrs);
     setShowExplanation(true);
     showExp = true;
-    view.dispatch(view.state.tr);
+    // view.dispatch(view.state.tr);
   };
 
   const MemorizedComponent = useMemo(
@@ -110,7 +110,7 @@ export default ({ node, view, getPos }) => {
     <>
       <EditorWrapper ref={setEditorRef} style={styles} />
       <button onClick={clickMe}>Show Explanation</button>
-      {showExp && (
+      {showExplanation && (
         <input type="text" placeholder="type your explanation"></input>
       )}
     </>

@@ -10,6 +10,11 @@ const multipleChoiceNode = {
   parseDOM: [
     {
       tag: 'multiple-choice',
+      getAttrs(dom) {
+        return {
+          id: dom.getAttribute('id'),
+        };
+      },
     },
   ],
 };

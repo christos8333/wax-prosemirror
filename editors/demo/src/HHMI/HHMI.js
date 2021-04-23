@@ -20,10 +20,29 @@ const initialValue = {
   content: [
     {
       type: 'paragraph',
+      attrs: {
+        id: '',
+        class: 'paragraph',
+        track: [],
+        group: '',
+        viewid: '',
+      },
       content: [
         {
           type: 'text',
-          text: 'A normal block of a paragraph of text',
+          text: ' ',
+        },
+        {
+          type: 'multiple_choice',
+          attrs: {
+            id: '206bda35-858e-422d-a90d-164b7f460eb0',
+          },
+          content: [
+            {
+              type: 'text',
+              text: 'sss',
+            },
+          ],
         },
       ],
     },
@@ -37,8 +56,13 @@ const Hhmi = () => {
         config={config}
         autoFocus
         fileUpload={file => renderImage(file)}
+<<<<<<< HEAD
         value=""
         // targetFormat="JSON"
+=======
+        value={initialValue}
+        targetFormat="JSON"
+>>>>>>> create editor
         // readonly
         layout={HhmiLayout}
         onChange={source => console.log(source)}

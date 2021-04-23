@@ -3,12 +3,16 @@ import React, {
   useEffect,
   useRef,
   useMemo,
-  useCallback,
+  useLayoutEffect,
   useState,
 } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { StepMap } from 'prosemirror-transform';
+import { baseKeymap } from 'prosemirror-commands';
+import { keymap } from 'prosemirror-keymap';
+import { undo, redo } from 'prosemirror-history';
+
 import styled from 'styled-components';
 
 const styles = {
@@ -24,11 +28,9 @@ const EditorWrapper = styled.div`
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
  }
-  // }
 
   const clickMe = () => {
     setShowExplanation(true);
-    showExp = true;
     // view.dispatch(view.state.tr);
   };
 

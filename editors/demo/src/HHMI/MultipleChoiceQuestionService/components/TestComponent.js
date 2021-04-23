@@ -24,6 +24,7 @@ const EditorWrapper = styled.div`
   user-select: all;
 `;
 
+let questionView;
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
 

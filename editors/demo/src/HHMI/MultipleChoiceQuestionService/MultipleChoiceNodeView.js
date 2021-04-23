@@ -57,7 +57,6 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   }
 
   update(node) {
-<<<<<<< HEAD
     if (!node.sameMarkup(this.node)) return false;
     this.node = node;
     if (this.innerView) {
@@ -77,9 +76,7 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
         );
       }
     }
-=======
-    console.log('in nodes update');
->>>>>>> fix
+
     return true;
   }
 }

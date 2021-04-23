@@ -24,17 +24,14 @@ const EditorWrapper = styled.div`
   user-select: all;
 `;
 
-
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
- }
 
   const clickMe = () => {
     setShowExplanation(true);
     // view.dispatch(view.state.tr);
   };
 
-;
   return (
     <>
       <button onClick={clickMe}>Show Explanation</button>

@@ -4,10 +4,13 @@ export default class AbstractNodeView {
   constructor(node, view, getPos, decorations, createPortal, Component) {
     this.dom = document.createElement('div');
     // this.dom.setAttribute('contenteditable', true);
+<<<<<<< HEAD
     const testDiv = document.createElement('div');
 
     testDiv.setAttribute('id', 'test');
     this.dom.append(testDiv);
+=======
+>>>>>>> fix
     this.dom.id = uuidv4();
     this.dom.classList.add('portal');
 

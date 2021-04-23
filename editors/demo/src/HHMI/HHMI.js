@@ -56,13 +56,8 @@ const Hhmi = () => {
         config={config}
         autoFocus
         fileUpload={file => renderImage(file)}
-<<<<<<< HEAD
-        value=""
-        // targetFormat="JSON"
-=======
         value={initialValue}
         targetFormat="JSON"
->>>>>>> create editor
         // readonly
         layout={HhmiLayout}
         onChange={source => console.log(source)}

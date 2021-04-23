@@ -25,71 +25,72 @@ let questionView;
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const editorRef = useRef();
-  const setEditorRef = useCallback(
-    // eslint-disable-next-line consistent-return
-    editorNode => {
-      if (editorRef.current) {
-        console.log(editorRef);
-      }
-      if (editorNode) {
-        questionView = new EditorView(
-          { mount: editorNode },
-          {
-            state: EditorState.create({
-              doc: node,
-            }),
-            dispatchTransaction,
-            scrollMargin: 200,
-            scrollThreshold: 200,
+  console.log(node);
+  // const setEditorRef = useCallback(
+  //   // eslint-disable-next-line consistent-return
+  //   editorNode => {
+  //     if (editorRef.current) {
+  //       console.log(editorRef);
+  //     }
+  //     if (editorNode) {
+  //       questionView = new EditorView(
+  //         { mount: editorNode },
+  //         {
+  //           state: EditorState.create({
+  //             doc: node,
+  //           }),
+  //           dispatchTransaction,
+  //           scrollMargin: 200,
+  //           scrollThreshold: 200,
 
-            attributes: {
-              spellcheck: 'false',
-            },
-          },
-        );
-      }
-      editorRef.current = editorNode;
-    },
-    [],
-  );
-  const dispatchTransaction = tr => {
-    console.log('dispatch', questionView.state.applyTransaction(tr));
-    let { state, transactions } = questionView.state.applyTransaction(tr);
-    questionView.updateState(state);
+  //           attributes: {
+  //             spellcheck: 'false',
+  //           },
+  //         },
+  //       );
+  //     }
+  //     editorRef.current = editorNode;
+  //   },
+  //   [],
+  // );
+  // const dispatchTransaction = tr => {
+  //   console.log('dispatch', questionView.state.applyTransaction(tr));
+  //   let { state, transactions } = questionView.state.applyTransaction(tr);
+  //   questionView.updateState(state);
 
-    if (!tr.getMeta('fromOutside')) {
-      let outerTr = view.state.tr,
-        offsetMap = StepMap.offset(getPos() + 1);
-      for (let i = 0; i < transactions.length; i++) {
-        let steps = transactions[i].steps;
-        for (let j = 0; j < steps.length; j++)
-          outerTr.step(steps[j].map(offsetMap));
-      }
-      if (outerTr.docChanged) view.dispatch(outerTr);
-    }
-  };
+  //   if (!tr.getMeta('fromOutside')) {
+  //     let outerTr = view.state.tr,
+  //       offsetMap = StepMap.offset(getPos() + 1);
+  //     for (let i = 0; i < transactions.length; i++) {
+  //       let steps = transactions[i].steps;
+  //       for (let j = 0; j < steps.length; j++)
+  //         outerTr.step(steps[j].map(offsetMap));
+  //     }
+  //     if (outerTr.docChanged) view.dispatch(outerTr);
+  //   }
+  // };
 
-  console.log(questionView);
-  if (questionView) {
-    const { state } = questionView;
-    const start = node.content.findDiffStart(state.doc.content);
-    if (start != null) {
-      let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
-      const overlap = start - Math.min(endA, endB);
-      if (overlap > 0) {
-        endA += overlap;
-        endB += overlap;
-      }
-      questionView.dispatch(
-        state.tr
-          .replace(start, endB, node.slice(start, endA))
-          .setMeta('fromOutside', true),
-      );
-    }
-  }
+  // console.log(questionView);
+  // if (questionView) {
+  //   const { state } = questionView;
+  //   const start = node.content.findDiffStart(state.doc.content);
+  //   if (start != null) {
+  //     let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
+  //     const overlap = start - Math.min(endA, endB);
+  //     if (overlap > 0) {
+  //       endA += overlap;
+  //       endB += overlap;
+  //     }
+  //     questionView.dispatch(
+  //       state.tr
+  //         .replace(start, endB, node.slice(start, endA))
+  //         .setMeta('fromOutside', true),
+  //     );
+  //   }
+  // }
 
   const clickMe = () => {
-    console.log(node.attrs);
+    // console.log(node.attrs);
     setShowExplanation(true);
     showExp = true;
     // view.dispatch(view.state.tr);
@@ -98,7 +99,6 @@ export default ({ node, view, getPos }) => {
   const MemorizedComponent = useMemo(
     () => (
       <>
-        <EditorWrapper ref={setEditorRef} style={styles} />
         <button onClick={clickMe}>Add Explanation</button>
         {showExplanation && <input type="text"></input>}
       </>
@@ -108,7 +108,6 @@ export default ({ node, view, getPos }) => {
   console.log(showExplanation);
   return (
     <>
-      <EditorWrapper ref={setEditorRef} style={styles} />
       <button onClick={clickMe}>Show Explanation</button>
       {showExplanation && (
         <input type="text" placeholder="type your explanation"></input>

@@ -16,8 +16,7 @@ class MultipleChoiceQuestionService extends Service {
     });
 
     const addPortal = this.container.get('AddPortal');
-
-    addPortal({ nodeView, component: TestComponent });
+    addPortal({ nodeView, component: TestComponent, context: this.app });
   }
 }
 

@@ -3,13 +3,22 @@ import { EditorView } from 'prosemirror-view';
 import { AbstractNodeView } from 'wax-prosemirror-services';
 import { StepMap } from 'prosemirror-transform';
 
-let questionView;
 export default class MultipleChoiceNodeView extends AbstractNodeView {
-  constructor(node, view, getPos, decorations, createPortal, Component) {
-    super(node, view, getPos, decorations, createPortal, Component);
+  constructor(
+    node,
+    view,
+    getPos,
+    decorations,
+    createPortal,
+    Component,
+    context,
+  ) {
+    super(node, view, getPos, decorations, createPortal, Component, context);
+    console.log('ccc', context);
     this.node = node;
     this.outerView = view;
     this.getPos = getPos;
+    this.context = context;
 
     this.innerView = new EditorView(
       {
@@ -41,6 +50,12 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   }
 
   dispatchInner(tr) {
+    this.context.updateView(
+      {
+        ['mytest']: this.innerView,
+      },
+      'mytest',
+    );
     let { state, transactions } = this.innerView.state.applyTransaction(tr);
     this.innerView.updateState(state);
 

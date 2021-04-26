@@ -17,7 +17,16 @@ export default props => {
     id: null,
     getPos: () => {},
     decorations: [],
-    createPortal: (element, component, node, view, getPos, decorations) => {
+    context: {},
+    createPortal: (
+      element,
+      component,
+      node,
+      view,
+      getPos,
+      decorations,
+      context,
+    ) => {
       setPortal({
         ...portal,
         id: uuidv4(),
@@ -27,6 +36,7 @@ export default props => {
         view,
         getPos,
         decorations,
+        context,
       });
     },
   });

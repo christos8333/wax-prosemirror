@@ -45,8 +45,8 @@ export default css`
   }
 
   div[contenteditable='false'] {
-    pointer-events: none;
-    user-select: none;
+    // pointer-events: none;
+    // user-select: none;
   }
 
   /* .ProseMirror title {

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default class AbstractNodeView {
   constructor(node, view, getPos, decorations, createPortal, Component) {
     this.dom = document.createElement('div');
-    this.dom.setAttribute('contenteditable', true);
+    // this.dom.setAttribute('contenteditable', true);
     const testDiv = document.createElement('div');
 
     testDiv.setAttribute('id', 'test');

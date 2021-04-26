@@ -1,30 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  useEffect,
-  useRef,
-  useMemo,
-  useLayoutEffect,
-  useState,
-} from 'react';
-import { EditorState } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-import { StepMap } from 'prosemirror-transform';
-import { baseKeymap } from 'prosemirror-commands';
-import { keymap } from 'prosemirror-keymap';
-import { undo, redo } from 'prosemirror-history';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-const styles = {
-  border: '1px solid black',
-};
-
-const EditorWrapper = styled.div`
-  pointer-events: visible;
-  user-select: all;
-`;
-
-let questionView;
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
 

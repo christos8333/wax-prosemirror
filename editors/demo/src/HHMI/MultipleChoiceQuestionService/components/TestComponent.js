@@ -8,8 +8,8 @@ import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 
 const QuestionWrapper = styled.div`
-  display: flex;
   border: 1px solid black;
+  display: flex;
   flex-direction: column;
 `;
 
@@ -26,14 +26,17 @@ const Question = styled.div`
   .ProseMirror {
     background: #ebebf0;
     padding: 5px;
-    width: 95%;
+    width: 96%;
   }
 `;
 
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
-  const context = useContext(WaxContext);
+  const [explanationValue, setExplanationValue] = useState('');
   const editorRef = useRef();
+  const explanationRef = useRef(null);
+
+  const context = useContext(WaxContext);
   let questionView;
   const questionId = node.attrs.id;
 
@@ -71,6 +74,10 @@ export default ({ node, view, getPos }) => {
     );
   }, []);
 
+  const onChangeExplanationInput = () => {
+    setExplanationValue(explanationRef.current.value);
+  };
+
   const dispatchTransaction = tr => {
     let { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
@@ -101,7 +108,13 @@ export default ({ node, view, getPos }) => {
       </Question>
       <button onClick={clickMe}>Show Explanation</button>
       {showExplanation && (
-        <input type="text" placeholder="type your explanation"></input>
+        <input
+          type="text"
+          ref={explanationRef}
+          onChange={onChangeExplanationInput}
+          placeholder="type your explanation"
+          value={explanationValue}
+        ></input>
       )}
     </QuestionWrapper>
   );

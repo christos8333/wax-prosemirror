@@ -7,6 +7,29 @@ import { WaxContext } from 'wax-prosemirror-core';
 
 import styled from 'styled-components';
 
+const QuestionWrapper = styled.div`
+  display: flex;
+  border: 1px solid black;
+  flex-direction: column;
+`;
+
+const Question = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  input {
+    position: relative;
+    top: 5px;
+    width: 4%;
+  }
+
+  .ProseMirror {
+    background: #ebebf0;
+    padding: 5px;
+    width: 95%;
+  }
+`;
+
 export default ({ node, view, getPos }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const context = useContext(WaxContext);
@@ -66,17 +89,20 @@ export default ({ node, view, getPos }) => {
   };
 
   const clickMe = () => {
-    setShowExplanation(true);
+    setShowExplanation(!showExplanation);
     // view.dispatch(view.state.tr);
   };
 
   return (
-    <>
-      <div ref={editorRef} />
+    <QuestionWrapper>
+      <Question>
+        <input type="checkbox" />
+        <div ref={editorRef} />
+      </Question>
       <button onClick={clickMe}>Show Explanation</button>
       {showExplanation && (
         <input type="text" placeholder="type your explanation"></input>
       )}
-    </>
+    </QuestionWrapper>
   );
 };

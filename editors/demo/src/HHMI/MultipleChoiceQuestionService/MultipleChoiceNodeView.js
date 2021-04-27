@@ -1,7 +1,4 @@
-import { EditorState } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
 import { AbstractNodeView } from 'wax-prosemirror-services';
-import { StepMap } from 'prosemirror-transform';
 
 export default class MultipleChoiceNodeView extends AbstractNodeView {
   constructor(

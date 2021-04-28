@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useRef, useState, useEffect } from 'react';
-import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
-import { StepMap } from 'prosemirror-transform';
-import { WaxContext } from 'wax-prosemirror-core';
-
 import styled from 'styled-components';
+import { EditorView } from 'prosemirror-view';
+import { EditorState } from 'prosemirror-state';
+import { StepMap } from 'prosemirror-transform';
+import { keymap } from 'prosemirror-keymap';
+import { baseKeymap } from 'prosemirror-commands';
+import { undo, redo } from 'prosemirror-history';
+import { WaxContext } from 'wax-prosemirror-core';
 
 const QuestionWrapper = styled.div`
   border: 1px solid black;
@@ -46,6 +48,7 @@ export default ({ node, view, getPos }) => {
       {
         state: EditorState.create({
           doc: node,
+          plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
         }),
         // This is the magic part
         dispatchTransaction,
@@ -98,6 +101,21 @@ export default ({ node, view, getPos }) => {
   const clickMe = () => {
     setShowExplanation(!showExplanation);
     // view.dispatch(view.state.tr);
+  };
+
+  const createKeyBindings = () => {
+    const keys = getKeys();
+    Object.keys(baseKeymap).forEach(key => {
+      keys[key] = baseKeymap[key];
+    });
+    return keys;
+  };
+
+  const getKeys = () => {
+    return {
+      'Mod-z': () => undo(view.state, view.dispatch),
+      'Mod-y': () => redo(view.state, view.dispatch),
+    };
   };
 
   return (

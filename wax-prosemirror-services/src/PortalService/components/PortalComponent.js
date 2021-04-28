@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { isEmpty } from 'lodash';
 
 export default () => {
-  // eslint-disable-next-line no-unused-vars
   const {
     element,
     component,
@@ -31,10 +30,10 @@ export default () => {
         portals.map(({ dom, component: Component, id }) => {
           return ReactDOM.createPortal(
             <Component
+              decorations={decorations}
+              getPos={getPos}
               node={node}
               view={view}
-              getPos={getPos}
-              decorations={decorations}
             />,
             dom,
             id,

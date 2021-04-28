@@ -18,14 +18,13 @@ const CreateNodeView = (createPortal, Component, NodeView, context) => {
 
 export default props => {
   const nodeViews = {};
-  props.portals.forEach(p => {
-    const name = p.nodeView ? p.nodeView.name() : p.name;
-    console.log('ppp', p);
+  props.portals.forEach(portal => {
+    const name = portal.nodeView ? portal.nodeView.name() : portal.name;
     nodeViews[name] = CreateNodeView(
       props.createPortal,
-      p.component,
-      p.nodeView || AbstractNodeView,
-      p.context.context,
+      portal.component,
+      portal.nodeView || AbstractNodeView,
+      portal.context.context,
     );
   });
 

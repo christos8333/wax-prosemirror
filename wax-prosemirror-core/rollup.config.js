@@ -29,7 +29,6 @@ export default {
     // terser(),
   ],
   external: [
-    '@fortawesome/react-fontawesome',
     'react-dropdown',
     'uuid',
     'prop-types',

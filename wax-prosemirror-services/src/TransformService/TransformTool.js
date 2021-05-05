@@ -37,8 +37,9 @@ const upperLowerCase = (state, dispatch, casing) => {
     // grab the content
     const substringFrom = Math.max(0, selection.from - position - 1);
     const substringTo = Math.max(0, selection.to - position - 1);
-    const updatedText = node.textContent.substring(substringFrom, substringTo);
-
+    const updatedText = node.textBetween(substringFrom, substringTo);
+    console.log(node.textBetween(substringFrom, substringTo));
+    console.log(node.textContent.substring(substringFrom - 1, substringTo - 1));
     // set the casing
     const textNode =
       casing === 'upperCase'
@@ -107,10 +108,8 @@ class TransformTool extends Tools {
               const substringFrom = Math.max(0, $from.pos - position - 1);
               const substringTo = Math.max(0, selection.to - position - 1);
 
-              const updatedText = node.textContent.substring(
-                substringFrom,
-                substringTo,
-              );
+              const updatedText = node.textBetween(substringFrom, substringTo);
+
               if (updatedText.length > 0) {
                 const rg = /(^\w{1}|\.\s*\w{1})/gi;
 
@@ -159,10 +158,8 @@ class TransformTool extends Tools {
               const substringFrom = Math.max(0, $from.pos - position - 1);
               const substringTo = Math.max(0, selection.to - position - 1);
 
-              const updatedText = node.textContent.substring(
-                substringFrom,
-                substringTo,
-              );
+              const updatedText = node.textBetween(substringFrom, substringTo);
+
               if (updatedText.length > 0) {
                 const textNode = state.schema.text(updatedText.toTitleCase());
                 tr.replaceWith(startPosition, endPosition, textNode);

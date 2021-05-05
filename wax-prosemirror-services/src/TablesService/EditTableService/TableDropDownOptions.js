@@ -1,14 +1,15 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
 import { TableDropDown } from 'wax-prosemirror-components';
-import { addColumnBefore } from 'prosemirror-tables';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
+export default
 @injectable()
-export default class TableDropDownOptions extends Tools {
+class TableDropDownOptions extends Tools {
   title = 'Select Options';
   content = 'table';
   name = 'TableDropDownOptions';
@@ -26,7 +27,7 @@ export default class TableDropDownOptions extends Tools {
   }
 
   select(state) {
-    return addColumnBefore(state);
+    return Commands.isInTable(state);
   }
 
   renderTool(view) {

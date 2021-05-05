@@ -27,7 +27,7 @@
     "clean:packages": "lerna clean --yes",
     "clean:root": "rm -rf node_modules",
     "cz": "git-cz",
-    "editoria": "cd editors/editoria && yarn start",
+    "editoria": "cd editors/demo && yarn start",
     "reset": "yarn clean && yarn",
     "storybook": "coko-storybook"
   },

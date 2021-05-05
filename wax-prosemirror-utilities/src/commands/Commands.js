@@ -17,12 +17,7 @@ const setBlockType = (nodeType, attrs = {}) => {
         applicable = $pos.parent.canReplaceWith(index, index + 1, nodeType);
       }
       if (applicable) {
-        tr.setBlockType(
-          from,
-          to,
-          nodeType,
-          Object.assign({}, node.attrs, attrs),
-        );
+        tr.setBlockType(from, to, nodeType, { ...node.attrs, ...attrs });
       }
     });
     if (!tr.steps.length) return false;
@@ -243,7 +238,15 @@ const createCommentOnFootnote = (state, dispatch, group, viewid) => {
   dispatch(tr);
 };
 
+const isInTable = state => {
+  const { $head } = state.selection;
+  for (let d = $head.depth; d > 0; d--)
+    if ($head.node(d).type.spec.tableRole === 'row') return true;
+  return false;
+};
+
 export default {
+  isInTable,
   setBlockType,
   blockActive,
   customTagBlockActive,

@@ -4,7 +4,7 @@
   "version": "0.0.47",
   "description": "Wax prosemirror UI components",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
   "files": [
     "dist"
   ],
@@ -13,9 +13,7 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.2",
-    "@fortawesome/free-solid-svg-icons": "^5.12.0",
-    "@fortawesome/react-fontawesome": "^0.0.17",
+
     "@pubsweet/ui-toolkit": "^2.3.1",
     "lodash": "^4.17.4",
     "moment": "^2.29.0",

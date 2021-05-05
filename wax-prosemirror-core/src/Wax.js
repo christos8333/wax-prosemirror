@@ -2,25 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 
-import { DOMSerializer, DOMParser } from 'prosemirror-model';
+import { DOMSerializer } from 'prosemirror-model';
 
 import WaxProvider from './WaxContext';
+import PortalProvider from './PortalContext';
 import Application from './Application';
 
 import WaxView from './WaxView';
-import defaultPlugins from './plugins/defaultPlugins';
-import Placeholder from './plugins/placeholder';
-
-const parser = schema => {
-  const WaxParser = DOMParser.fromSchema(schema);
-
-  return content => {
-    const container = document.createElement('article');
-
-    container.innerHTML = content;
-    return WaxParser.parse(container);
-  };
-};
 
 const serializer = schema => {
   const WaxSerializer = DOMSerializer.fromSchema(schema);
@@ -31,20 +19,12 @@ const serializer = schema => {
   };
 };
 
-let schema;
 const createApplication = props => {
   const application = Application.create(props);
-  schema = application.getSchema();
-  application.bootServices();
   return application;
 };
 
-const createPlaceholder = placeholder => {
-  return Placeholder({ content: placeholder });
-};
-
 const Wax = props => {
-  let finalPlugins = [];
   const [application, setApplication] = useState();
 
   useEffect(() => {
@@ -65,75 +45,68 @@ const Wax = props => {
     value,
     user,
     onChange,
+    targetFormat,
   } = props;
 
   if (!application) return null;
-  // const { schema } = application.schema;
   const WaxOnchange = onChange || (v => true);
 
-  const editorContent = value || '';
-
-  finalPlugins = defaultPlugins.concat([
-    createPlaceholder(placeholder),
-    ...application.getPlugins(),
-  ]);
-
-  const WaxOptions = {
-    schema,
-    plugins: finalPlugins,
-  };
-
-  const parse = parser(schema);
-  WaxOptions.doc = parse(editorContent);
-
-  const finalOnChange = debounce(
-    value => {
-      /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
+  const finalOnChange = schema =>
+    debounce(
+      content => {
+        /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
       with content */
-      if (schema.nodes.footnote) {
-        const old = schema.nodes.footnote.spec.toDOM;
-        schema.nodes.footnote.spec.toDOM = function (node) {
-          old.apply(this, arguments);
-          return ['footnote', node.attrs, 0];
-        };
-      }
+        if (schema.nodes.footnote) {
+          const old = schema.nodes.footnote.spec.toDOM;
+          schema.nodes.footnote.spec.toDOM = node => {
+            // eslint-disable-next-line prefer-rest-params
+            old.apply(this);
+            if (node) return ['footnote', node.attrs, 0];
+          };
+        }
 
-      const serialize = serializer(schema);
-      WaxOnchange(serialize(value));
-
-      if (schema.nodes.footnote) {
-        const old = schema.nodes.footnote.spec.toDOM;
-        schema.nodes.footnote.spec.toDOM = function (node) {
-          old.apply(this, arguments);
-          return ['footnote', node.attrs];
-        };
-      }
-    },
-    1000,
-    { maxWait: 5000 },
-  );
+        if (targetFormat === 'JSON') {
+          WaxOnchange(content);
+        } else {
+          const serialize = serializer(schema);
+          WaxOnchange(serialize(content));
+        }
+        if (schema.nodes.footnote) {
+          const old = schema.nodes.footnote.spec.toDOM;
+          schema.nodes.footnote.spec.toDOM = node => {
+            // eslint-disable-next-line prefer-rest-params
+            old.apply(this);
+            if (node) return ['footnote', node.attrs];
+          };
+        }
+      },
+      1000,
+      { maxWait: 5000 },
+    );
   const TrackChange = application.config.get('config.EnableTrackChangeService');
 
   const Layout = application.container.get('Layout');
   if (layout) Layout.setLayout(layout);
   const WaxRender = Layout.layoutComponent;
-
   return (
     <WaxProvider app={application}>
-      <WaxView
-        autoFocus={autoFocus}
-        readonly={readonly}
-        options={WaxOptions}
-        placeholder={placeholder}
-        fileUpload={fileUpload}
-        onBlur={onBlur || (v => true)}
-        onChange={finalOnChange || (v => true)}
-        debug={debug}
-        TrackChange={TrackChange}
-        user={user}
-      >
-        {({ editor }) => <WaxRender className={className} editor={editor} />}
-      </WaxView>
+      <PortalProvider>
+        <WaxView
+          autoFocus={autoFocus}
+          debug={debug}
+          fileUpload={fileUpload}
+          onBlur={onBlur || (v => true)}
+          onChange={finalOnChange || (v => true)}
+          placeholder={placeholder}
+          readonly={readonly}
+          targetFormat={targetFormat}
+          TrackChange={TrackChange}
+          user={user}
+          value={value}
+        >
+          {({ editor }) => <WaxRender className={className} editor={editor} />}
+        </WaxView>
+      </PortalProvider>
     </WaxProvider>
   );
 };

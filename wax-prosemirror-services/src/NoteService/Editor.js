@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { filter } from 'lodash';
@@ -67,7 +68,7 @@ export default ({ node, view }) => {
       },
     );
 
-    //Set Each note into Wax's Context
+    // Set Each note into Wax's Context
     context.updateView(
       {
         [noteId]: noteView,

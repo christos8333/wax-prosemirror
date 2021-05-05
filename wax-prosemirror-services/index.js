@@ -1,6 +1,7 @@
 export { default as Service } from './src/Service';
 
 export { default as LayoutService } from './src/LayoutService/LayoutService';
+export { default as PortalService } from './src/PortalService/PortalService';
 export { default as MenuService } from './src/MenuService/MenuService';
 export { default as OverlayService } from './src/OverlayService/OverlayService';
 export { default as ImageService } from './src/ImageService/ImageService';
@@ -9,7 +10,9 @@ export { default as SchemaService } from './src/SchemaService/SchemaService';
 
 export { default as ShortCutsService } from './src/ShortCutsService/ShortCutsService';
 
-export { default as Tool } from './src/lib/Tools';
+export { default as Tools } from './src/lib/Tools';
+export { default as AbstractNodeView } from './src/PortalService/AbstractNodeView';
+export { default as ToolGroup } from './src/lib/ToolGroup';
 
 /*
 All Elements services

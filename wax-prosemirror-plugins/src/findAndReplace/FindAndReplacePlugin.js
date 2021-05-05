@@ -17,11 +17,14 @@ export default props => {
       apply(tr, prev, _, newState) {
         let decorations;
         let createdDecorations = DecorationSet.empty;
-        const allMatches = DocumentHelpers.findMatches(
-          newState.doc,
-          searchText,
-          matchCase,
-        );
+        let allMatches = [];
+        if (searchText !== '') {
+          allMatches = DocumentHelpers.findMatches(
+            newState.doc,
+            searchText,
+            matchCase,
+          );
+        }
         if (allMatches.length > 0) {
           decorations = allMatches.map((result, index) => {
             return Decoration.inline(result.from, result.to, {

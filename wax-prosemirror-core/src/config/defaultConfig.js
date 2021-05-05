@@ -5,6 +5,7 @@ import {
   ShortCutsService,
   LayoutService,
   OverlayService,
+  PortalService,
 } from 'wax-prosemirror-services';
 
 export default () => ({
@@ -13,6 +14,7 @@ export default () => ({
     new RulesService(),
     new ShortCutsService(),
     new LayoutService(),
+    new PortalService(),
     new MenuService(),
     new OverlayService(),
   ],

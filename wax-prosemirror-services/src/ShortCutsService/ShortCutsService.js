@@ -1,20 +1,22 @@
-import Service from "../Service";
-import ShortCuts from "./ShortCuts";
+import Service from '../Service';
+import ShortCuts from './ShortCuts';
 
 export default class ShortCutsService extends Service {
-  name = "ShortCutsService";
+  name = 'ShortCutsService';
 
   boot() {
-    const shortCuts = this.container.get("ShortCuts");
+    const shortCuts = this.container.get('ShortCuts');
     shortCuts.createShortCuts();
   }
 
   register() {
-    const PmPlugins = this.app.PmPlugins;
+    const { PmPlugins } = this.app;
     this.container
-      .bind("ShortCuts")
+      .bind('ShortCuts')
       .toDynamicValue(() => {
-        const { schema: { schema } } = this.app;
+        const {
+          schema: { schema },
+        } = this.app;
 
         return new ShortCuts(PmPlugins, schema);
       })

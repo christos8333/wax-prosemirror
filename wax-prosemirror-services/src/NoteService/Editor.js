@@ -39,11 +39,15 @@ export default ({ node, view }) => {
         dispatchTransaction,
         handleDOMEvents: {
           blur: () => {
-            context.view[noteId].dispatch(
-              context.view[noteId].state.tr.setSelection(
-                new TextSelection(context.view[noteId].state.tr.doc.resolve(0)),
-              ),
-            );
+            if (context.view[noteId]) {
+              context.view[noteId].dispatch(
+                context.view[noteId].state.tr.setSelection(
+                  new TextSelection(
+                    context.view[noteId].state.tr.doc.resolve(0),
+                  ),
+                ),
+              );
+            }
           },
 
           mousedown: () => {

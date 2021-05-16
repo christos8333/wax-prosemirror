@@ -49,6 +49,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
       questionId,
     );
+    questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {

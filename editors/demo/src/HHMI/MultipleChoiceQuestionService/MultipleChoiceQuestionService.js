@@ -15,6 +15,30 @@ class MultipleChoiceQuestionService extends Service {
       multiple_choice: multipleChoiceNode,
     });
 
+    createNode({
+      question_wrapper: {
+        group: 'block',
+        content: 'inline*',
+        attrs: {
+          class: { default: 'paragraph' },
+        },
+        parseDOM: [
+          {
+            tag: 'p.question',
+            getAttrs(dom) {
+              return {
+                id: dom.dataset.id,
+                class: dom.getAttribute('class'),
+              };
+            },
+          },
+        ],
+        toDOM(node) {
+          return ['p', node.attrs, 0];
+        },
+      },
+    });
+
     const addPortal = this.container.get('AddPortal');
     addPortal({ nodeView, component: QuestionComponent, context: this.app });
   }

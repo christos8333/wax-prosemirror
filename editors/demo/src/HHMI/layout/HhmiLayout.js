@@ -64,7 +64,7 @@ const EditorArea = styled.div`
 const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   display: flex;
-  height: 100%;
+  height: 88%;
   overflow-y: auto;
   position: fixed;
   top: 95px;

@@ -13,7 +13,7 @@ const fontWriting = css`
 export default css`
   .ProseMirror {
     background: white;
-    counter-reset: footnote;
+    counter-reset: multiple-question;
     line-height: 1.6;
     ${fontWriting}
 
@@ -117,7 +117,8 @@ export default css`
     margin: 38px;
     padding: 20px;
     &:before {
-      content: 'Question 1';
+      content: 'Answer Group ' counter(multiple-question) '.';
+      counter-increment: multiple-question;
       position: relative;
       bottom: 45px;
       right: 20px;

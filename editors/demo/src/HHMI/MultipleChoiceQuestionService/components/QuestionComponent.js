@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-
+import { TextSelection } from 'prosemirror-state';
+import { WaxContext } from 'wax-prosemirror-core';
 import EditorComponent from './EditorComponent';
 
 const QuestionWrapper = styled.div`
@@ -28,6 +29,7 @@ const Question = styled.div`
 `;
 
 export default ({ node, view, getPos }) => {
+  const context = useContext(WaxContext);
   const [showExplanation, setShowExplanation] = useState(false);
   const [explanationValue, setExplanationValue] = useState('');
   const explanationRef = useRef(null);
@@ -41,12 +43,12 @@ export default ({ node, view, getPos }) => {
   };
 
   const handleKeyDown = e => {
-    console.log(e.key);
     if (e.key === 'Backspace') {
-      console.log('do validate');
-      e.preventDefault();
-      e.stopPropagation();
-      return;
+      context.view.main.dispatch(
+        context.view.main.state.tr.setSelection(
+          new TextSelection(context.view.main.state.tr.doc.resolve(0)),
+        ),
+      );
     }
   };
 

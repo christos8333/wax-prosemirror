@@ -15,11 +15,14 @@ const EditorComponent = ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   let questionView;
   const questionId = node.attrs.id;
-
+  const isEditable = context.view.main.props.editable(editable => {
+    return editable;
+  });
   useEffect(() => {
     questionView = new EditorView(
       { mount: editorRef.current },
       {
+        editable: () => isEditable,
         state: EditorState.create({
           doc: node,
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],

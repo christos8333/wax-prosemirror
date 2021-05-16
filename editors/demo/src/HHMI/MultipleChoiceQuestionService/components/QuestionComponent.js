@@ -40,6 +40,16 @@ export default ({ node, view, getPos }) => {
     setShowExplanation(!showExplanation);
   };
 
+  const handleKeyDown = e => {
+    console.log(e.key);
+    if (e.key === 'Backspace') {
+      console.log('do validate');
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+  };
+
   return (
     <QuestionWrapper>
       <Question>
@@ -50,6 +60,7 @@ export default ({ node, view, getPos }) => {
       {showExplanation && (
         <input
           type="text"
+          onKeyDown={handleKeyDown}
           ref={explanationRef}
           onChange={onChangeExplanationInput}
           placeholder="type your explanation"

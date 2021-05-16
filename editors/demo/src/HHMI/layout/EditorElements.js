@@ -112,6 +112,18 @@ export default css`
     }
   }
 
+  .question {
+    border: 1px solid green;
+    margin: 38px;
+    padding: 20px;
+    &:before {
+      content: 'Question 1';
+      position: relative;
+      bottom: 45px;
+      right: 20px;
+    }
+  }
+
   sup,
   sub {
     line-height: 0;

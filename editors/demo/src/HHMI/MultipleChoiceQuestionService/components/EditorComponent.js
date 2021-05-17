@@ -18,6 +18,13 @@ const EditorComponent = ({ node, view, getPos }) => {
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
   });
+
+  console.log(context.activeViewId);
+  console.log('node', node.attrs.id);
+  if (context.activeViewId === node.attrs.id) {
+    console.log('sss');
+  }
+
   useEffect(() => {
     questionView = new EditorView(
       { mount: editorRef.current },
@@ -37,6 +44,11 @@ const EditorComponent = ({ node, view, getPos }) => {
             // the parent editor is focused.
             if (questionView.hasFocus()) questionView.focus();
           },
+        },
+        handleKeyDown: (editoView, keyEvent) => {
+          if (keyEvent.key === 'Enter') {
+            console.log('create new');
+          }
         },
 
         attributes: {

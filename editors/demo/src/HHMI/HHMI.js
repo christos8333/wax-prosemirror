@@ -185,7 +185,7 @@ const Hhmi = () => {
         fileUpload={file => renderImage(file)}
         value={initialValue}
         targetFormat="JSON"
-        readonly
+        // readonly
         layout={HhmiLayout}
         onChange={source => console.log(source)}
       />

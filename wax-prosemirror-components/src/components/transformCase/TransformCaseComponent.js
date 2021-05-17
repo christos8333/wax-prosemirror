@@ -43,8 +43,12 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
   const { icon, title, select } = item;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
-  const { activeViewId, activeView } = useContext(WaxContext);
-  const isDisabled = !select(state, activeViewId, activeView);
+  const { activeViewId, activeView, view } = useContext(WaxContext);
+  const isEditable = view.main.props.editable(editable => {
+    return editable;
+  });
+  let isDisabled = !select(state, activeViewId, activeView);
+  if (!isEditable) isDisabled = true;
 
   useOnClickOutside(ref, () => setIsOpen(false));
 

@@ -45,27 +45,10 @@ export default css`
   }
 
   div[contenteditable='false'] {
-    // pointer-events: none;
-    // user-select: none;
-  }
-
-  /* .ProseMirror title {
-    display: inline;
-    font-size: 14px;
-  } */
-
-  hr {
-    border: none;
-    margin: 1em 0;
-    padding: 2px 10px;
-  }
-
-  hr:after {
-    background-color: silver;
-    content: '';
-    display: block;
-    height: 1px;
-    line-height: 2px;
+    math-display {
+      pointer-events: none;
+      user-select: none;
+    }
   }
 
   ul,

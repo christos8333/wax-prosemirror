@@ -14,6 +14,7 @@ class MathService extends Service {
   boot() {
     this.app.PmPlugins.add('mathplugin', mathPlugin);
     this.app.PmPlugins.add('mathselectplugin', mathSelectPlugin);
+
     const schema = this.container.get('Schema');
     const rules = this.container.get('Rules');
     const newRules = [

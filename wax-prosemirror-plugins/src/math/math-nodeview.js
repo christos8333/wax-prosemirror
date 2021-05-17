@@ -10,6 +10,8 @@ import {
 } from 'prosemirror-commands';
 // katex
 import katex, { ParseError } from 'katex';
+import { collapseMathCmd } from './helpers/collapse-math-cmd';
+
 export class MathView {
   // == Lifecycle ===================================== //
   /**
@@ -21,12 +23,13 @@ export class MathView {
    * @option tagName HTML tag name to use for this NodeView.  If none is provided,
    *     will use the node name with underscores converted to hyphens.
    */
-  constructor(node, view, getPos, options = {}, onDestroy) {
+  constructor(node, view, getPos, options = {}, mathPluginKey, onDestroy) {
     // store arguments
     this._node = node;
     this._outerView = view;
     this._getPos = getPos;
     this._onDestroy = onDestroy && onDestroy.bind(this);
+    this._mathPluginKey = mathPluginKey;
     // editing state
     this.cursorSide = 'start';
     this._isEditing = false;
@@ -63,7 +66,7 @@ export class MathView {
       this._mathSrcElt.remove();
       delete this._mathSrcElt;
     }
-    delete this.dom;
+    this.dom.remove();
   }
   /**
    * Ensure focus on the inner editor whenever this node has focus.
@@ -197,6 +200,7 @@ export class MathView {
     }
   }
   openEditor() {
+    var _a;
     if (this._innerView) {
       throw Error('inner view should not exist!');
     }
@@ -231,21 +235,21 @@ export class MathView {
                 return true;
               },
             ),
-            Enter: newlineInCode,
-            'Ctrl-Enter': (state, dispatch) => {
-              let { to } = this._outerView.state.selection;
-              let outerState = this._outerView.state;
-              // place cursor outside of math node
-              this._outerView.dispatch(
-                outerState.tr.setSelection(
-                  TextSelection.create(outerState.doc, to),
-                ),
-              );
-              // must return focus to the outer view,
-              // otherwise no cursor will appear
+            'Ctrl-Backspace': (state, dispatch, tr_inner) => {
+              // delete math node and focus the outer view
+              this._outerView.dispatch(this._outerView.state.tr.insertText(''));
               this._outerView.focus();
               return true;
             },
+            Enter: chainCommands(
+              newlineInCode,
+              collapseMathCmd(this._outerView, +1, false),
+            ),
+            'Ctrl-Enter': collapseMathCmd(this._outerView, +1, false),
+            ArrowLeft: collapseMathCmd(this._outerView, -1, true),
+            ArrowRight: collapseMathCmd(this._outerView, +1, true),
+            ArrowUp: collapseMathCmd(this._outerView, -1, true),
+            ArrowDown: collapseMathCmd(this._outerView, +1, true),
           }),
         ],
       }),
@@ -254,10 +258,25 @@ export class MathView {
     // focus element
     let innerState = this._innerView.state;
     this._innerView.focus();
-    // determine cursor position
-    let pos = this.cursorSide == 'start' ? 0 : this._node.nodeSize - 2;
+    // request outer cursor position before math node was selected
+    let maybePos =
+      (_a = this._mathPluginKey.getState(this._outerView.state)) === null ||
+      _a === void 0
+        ? void 0
+        : _a.prevCursorPos;
+    if (maybePos === null || maybePos === undefined) {
+      console.error(
+        '[prosemirror-math] Error:  Unable to fetch math plugin state from key.',
+      );
+    }
+    let prevCursorPos = maybePos !== null && maybePos !== void 0 ? maybePos : 0;
+    // compute position that cursor should appear within the expanded math node
+    let innerPos =
+      prevCursorPos <= this._getPos() ? 0 : this._node.nodeSize - 2;
     this._innerView.dispatch(
-      innerState.tr.setSelection(TextSelection.create(innerState.doc, pos)),
+      innerState.tr.setSelection(
+        TextSelection.create(innerState.doc, innerPos),
+      ),
     );
     this._isEditing = true;
   }

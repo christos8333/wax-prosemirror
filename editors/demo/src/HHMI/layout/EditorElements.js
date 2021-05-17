@@ -45,7 +45,7 @@ export default css`
   }
 
   div[contenteditable='false'] {
-    math-display {
+    .math-src {
       pointer-events: none;
       user-select: none;
     }
@@ -97,13 +97,15 @@ export default css`
 
   .question {
     border: 1px solid green;
+    counter-reset: question-item-multiple;
     margin: 38px;
     padding: 20px;
+
     &:before {
+      bottom: 45px;
       content: 'Answer Group ' counter(multiple-question) '.';
       counter-increment: multiple-question;
       position: relative;
-      bottom: 45px;
       right: 20px;
     }
   }

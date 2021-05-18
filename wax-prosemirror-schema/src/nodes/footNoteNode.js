@@ -1,5 +1,5 @@
 const footnote = {
-  group: 'notes, inline',
+  group: 'notes inline',
   content: 'inline*',
   inline: true,
   atom: true,

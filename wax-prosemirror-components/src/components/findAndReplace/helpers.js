@@ -32,14 +32,24 @@ const getAllResultsByView = (view, searchValue, matchCaseSearch) => {
 
 const getNotesIds = main => {
   const notesIds = [];
-  const notes = DocumentHelpers.findChildrenByType(
-    main.state.doc,
-    main.state.schema.nodes.footnote,
-    true,
-  );
-  notes.forEach(note => {
-    notesIds.push(note.node.attrs.id);
+  const schemaNotes = [];
+  each(main.state.schema.nodes, node => {
+    if (node.groups.includes('notes')) schemaNotes.push(node);
   });
+
+  if (schemaNotes.length > 0) {
+    schemaNotes.forEach(schemaNote => {
+      const notes = DocumentHelpers.findChildrenByType(
+        main.state.doc,
+        main.state.schema.nodes[schemaNote.name],
+        true,
+      );
+      notes.forEach(note => {
+        notesIds.push(note.node.attrs.id);
+      });
+    });
+  }
+
   return notesIds;
 };
 

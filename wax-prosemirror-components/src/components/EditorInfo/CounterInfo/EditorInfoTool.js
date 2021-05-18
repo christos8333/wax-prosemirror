@@ -175,12 +175,12 @@ const EditorInfoTool = ({ view: { state }, item }) => {
       }
     });
     setBlockLevelNodes(blockLevelCount);
-    allBlockNodes.forEach(value => {
-      value.node.forEach(imgs => {
-        if (imgs.type.name === 'image') {
+    allBlockNodes.forEach(nodes => {
+      nodes.node.forEach(node => {
+        if (node.type.name === 'image') {
           imgCounts += 1;
         }
-        if (imgs.type.name === 'footnote') {
+        if (node.type.groups.includes('notes')) {
           footNoteCount += 1;
         }
       });

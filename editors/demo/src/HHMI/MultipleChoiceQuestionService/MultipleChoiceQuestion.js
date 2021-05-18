@@ -29,11 +29,11 @@ class MultipleChoiceQuestion extends Tools {
                 $to.parentOffset,
               );
 
-            const footnote = state.config.schema.nodes.multiple_choice.create(
+            const answerOption = state.config.schema.nodes.multiple_choice.create(
               { id: uuidv4() },
               content,
             );
-            dispatch(tr.replaceSelectionWith(footnote));
+            dispatch(tr.replaceSelectionWith(answerOption));
           } else {
             tr.setBlockType(
               from,
@@ -52,11 +52,11 @@ class MultipleChoiceQuestion extends Tools {
                 $to.parentOffset,
               );
 
-            const footnote = state.config.schema.nodes.multiple_choice.create(
+            const answerOption = state.config.schema.nodes.multiple_choice.create(
               { id: uuidv4() },
               content,
             );
-            dispatch(tr.replaceSelectionWith(footnote));
+            dispatch(tr.replaceSelectionWith(answerOption));
             // dispatch(state.tr.replaceSelectionWith(footnote));
           }
         });

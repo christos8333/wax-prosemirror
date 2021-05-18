@@ -1,17 +1,17 @@
-import { isPlainObject } from "lodash";
-import ParseRule from "./ParseRule";
-import Middleware from "../lib/Middleware";
+import { isPlainObject } from 'lodash';
+import ParseRule from './ParseRule';
+import Middleware from '../lib/Middleware';
 
 export default class Node {
-  name = "";
+  name = '';
   importer = {};
 
   atom = false;
   inline = false;
   isolating = false;
   draggable = false;
-  group = "";
-  content = "";
+  group = '';
+  content = '';
   _attrs = {};
   _parseRules = [];
 
@@ -73,7 +73,7 @@ export default class Node {
           hooks = hook;
         });
         return hooks.value;
-      }
+      },
     };
   }
 }

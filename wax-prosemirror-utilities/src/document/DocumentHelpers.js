@@ -208,7 +208,7 @@ export const findMatches = (doc, searchValue, matchCase) => {
   });
 
   eachRight(allNodes, (node, index) => {
-    if (node.node.type.name === 'footnote') {
+    if (node.node.type.groups.includes('notes')) {
       allNodes.splice(index + 1, node.node.childCount);
     }
   });

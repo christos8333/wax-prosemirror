@@ -31,12 +31,12 @@ const TextHighlightComponent = styled.div`
   flex-direction: column;
 `;
 const Highlighter = styled.div`
-  min-width: 25px;
+  border: 1px solid gray;
+  cursor: pointer;
+  display: inline-grid;
   height: 25px;
   margin: 5px;
-  display: inline-grid;
-  cursor: pointer;
-  border: 1px solid gray;
+  min-width: 25px;
 `;
 
 const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
@@ -56,7 +56,10 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   ];
 
   const ref = useRef();
-  const { activeViewId, activeView } = useContext(WaxContext);
+  const { activeViewId, activeView, view } = useContext(WaxContext);
+  const isEditable = view.main.props.editable(editable => {
+    return editable;
+  });
 
   useOnClickOutside(ref, () => setIsOpen(false));
 
@@ -94,7 +97,8 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
     item.run(state, dispatch, color);
   };
 
-  const isDisabled = !select(state, activeViewId, activeView);
+  let isDisabled = !select(state, activeViewId, activeView);
+  if (!isEditable) isDisabled = true;
 
   const MenuButtonComponent = useMemo(
     () => (

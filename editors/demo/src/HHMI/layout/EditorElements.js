@@ -13,7 +13,7 @@ const fontWriting = css`
 export default css`
   .ProseMirror {
     background: white;
-    counter-reset: footnote;
+    counter-reset: multiple-question;
     line-height: 1.6;
     ${fontWriting}
 
@@ -45,27 +45,10 @@ export default css`
   }
 
   div[contenteditable='false'] {
-    // pointer-events: none;
-    // user-select: none;
-  }
-
-  /* .ProseMirror title {
-    display: inline;
-    font-size: 14px;
-  } */
-
-  hr {
-    border: none;
-    margin: 1em 0;
-    padding: 2px 10px;
-  }
-
-  hr:after {
-    background-color: silver;
-    content: '';
-    display: block;
-    height: 1px;
-    line-height: 2px;
+    .math-src {
+      pointer-events: none;
+      user-select: none;
+    }
   }
 
   ul,
@@ -109,6 +92,21 @@ export default css`
         content: 'Caption: ';
         font-weight: bold;
       }
+    }
+  }
+
+  .question {
+    border: 1px solid green;
+    counter-reset: question-item-multiple;
+    margin: 38px;
+    padding: 20px;
+
+    &:before {
+      bottom: 45px;
+      content: 'Answer Group ' counter(multiple-question) '.';
+      counter-increment: multiple-question;
+      position: relative;
+      right: 20px;
     }
   }
 

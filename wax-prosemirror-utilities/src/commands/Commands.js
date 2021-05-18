@@ -133,7 +133,7 @@ const createComment = (state, dispatch, group, viewid) => {
   let footnote = false;
   let footnoteNode;
   state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
-    if (node.type.name === 'footnote') {
+    if (node.type.groups.includes('notes')) {
       footnote = true;
       footnoteNode = node;
     }
@@ -204,7 +204,7 @@ const createCommentOnFootnote = (state, dispatch, group, viewid) => {
     ranges.push({
       start,
       end,
-      footnote: contentNode.type.name === 'footnote',
+      footnote: contentNode.type.groups.includes('notes'),
     });
   });
 

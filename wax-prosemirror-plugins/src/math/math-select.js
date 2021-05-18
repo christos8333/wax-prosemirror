@@ -10,7 +10,7 @@ import { DecorationSet, Decoration } from 'prosemirror-view';
  * @param arg Should be either a Transaction or an EditorState,
  *     although any object with `selection` and `doc` will work.
  */
-let checkSelection = arg => {
+const checkSelection = arg => {
   let { from, to } = arg.selection;
   let content = arg.selection.content().content;
   let result = [];
@@ -63,4 +63,5 @@ const mathSelectPlugin = new ProsePlugin({
     },
   },
 });
+
 export default mathSelectPlugin;

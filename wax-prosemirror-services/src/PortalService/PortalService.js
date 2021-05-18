@@ -23,9 +23,8 @@ class PortalService extends Service {
 
     this.container.bind('AddPortal').toFactory(context => {
       return portal => {
-        const schemaInstance = context.container.get('Portals');
-
-        schemaInstance.addPortal(portal);
+        const portalInstance = context.container.get('Portals');
+        portalInstance.addPortal(portal);
       };
     });
   }

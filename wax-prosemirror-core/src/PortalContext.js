@@ -40,7 +40,7 @@ export default props => {
       });
     },
   });
-
+  console.log(portal);
   return (
     <PortalContext.Provider
       value={{

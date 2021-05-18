@@ -50,7 +50,7 @@ const Editoria = () => {
           value={demo}
           // readonly
           layout={layout}
-          onChange={source => console.log(source)}
+          // onChange={source => console.log(source)}
           user={user}
         />
       </>

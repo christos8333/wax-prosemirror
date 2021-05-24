@@ -2,7 +2,8 @@ import { Service } from 'wax-prosemirror-services';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import multipleChoiceNode from './schema/multipleChoiceNode';
 import QuestionComponent from './components/QuestionComponent';
-import nodeView from './MultipleChoiceNodeView';
+import FeedbackComponent from './components/FeedbackComponent';
+import MultipleChoiceNodeView from './MultipleChoiceNodeView';
 
 class MultipleChoiceQuestionService extends Service {
   boot() {}
@@ -41,7 +42,12 @@ class MultipleChoiceQuestionService extends Service {
     });
 
     const addPortal = this.container.get('AddPortal');
-    addPortal({ nodeView, component: QuestionComponent, context: this.app });
+    addPortal({
+      nodeView: MultipleChoiceNodeView,
+      component: QuestionComponent,
+      context: this.app,
+    });
+    // addPortal({ nodeView, component: FeedbackComponent, context: this.app });
   }
 }
 

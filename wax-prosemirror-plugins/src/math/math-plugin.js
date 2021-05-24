@@ -14,7 +14,6 @@ export function createMathView(displayMode) {
      * Docs says that for any function proprs, the current plugin instance
      * will be bound to `this`.  However, the typings don't reflect this.
      */
-    console.log('ho', MATH_PLUGIN_KEY);
 
     let pluginState = MATH_PLUGIN_KEY.getState(view.state);
     if (!pluginState) {

@@ -12,7 +12,6 @@ class MultipleChoiceQuestion extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      console.log(state);
       const { from, to } = state.selection;
       const { tr } = state;
 

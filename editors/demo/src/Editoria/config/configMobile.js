@@ -45,9 +45,7 @@ import invisibles, {
   paragraph,
 } from '@guardian/prosemirror-invisibles';
 
-const updateTitle = title => {
-  console.log(title);
-};
+const updateTitle = title => {};
 
 export default {
   MenuService: [
@@ -93,8 +91,8 @@ export default {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },
       { label: 'custom-tag-label-2', tagType: 'inline' },
-      { label: 'custom-tag-label-3', tagType: 'block' }
-    ]
+      { label: 'custom-tag-label-3', tagType: 'block' },
+    ],
   },
 
   // Always load first CommentsService and LinkService,

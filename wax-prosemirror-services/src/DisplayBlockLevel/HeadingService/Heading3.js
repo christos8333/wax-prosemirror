@@ -14,7 +14,7 @@ class Heading3 extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      Commands.setBlockType(state.config.schema.nodes.heading, { level: 3 })(
+      Commands.setBlockType(state.config.schema.nodes.heading3)(
         state,
         dispatch,
       );
@@ -28,7 +28,7 @@ class Heading3 extends Tools {
 
       const { from, to } = state.selection;
       state.doc.nodesBetween(from, to, (node, pos) => {
-        if (node.type.name === 'heading' && node.attrs.level === 3) {
+        if (node.type.name === 'heading3') {
           isActive = true;
         }
       });
@@ -43,9 +43,7 @@ class Heading3 extends Tools {
 
   get enable() {
     return state => {
-      return Commands.setBlockType(state.config.schema.nodes.heading, {
-        level: 3,
-      })(state);
+      return Commands.setBlockType(state.config.schema.nodes.heading3)(state);
     };
   }
 
@@ -53,7 +51,7 @@ class Heading3 extends Tools {
     if (isEmpty(view)) return null;
     // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <LeftSideButton item={this.toJSON()} key="BlockQuote" view={view} />
+      <LeftSideButton item={this.toJSON()} key="Heading3" view={view} />
     ) : null;
   }
 }

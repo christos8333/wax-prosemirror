@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorComponent from './EditorComponent';
+import FeedbackComponent from './FeedbackComponent';
 
 const QuestionWrapper = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ const Question = styled.div`
 `;
 
 export default ({ node, view, getPos }) => {
+  console.log(node);
   const context = useContext(WaxContext);
   const [showExplanation, setShowExplanation] = useState(false);
   const [explanationValue, setExplanationValue] = useState('');

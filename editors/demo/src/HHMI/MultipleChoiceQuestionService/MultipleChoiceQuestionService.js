@@ -1,9 +1,11 @@
 import { Service } from 'wax-prosemirror-services';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import multipleChoiceNode from './schema/multipleChoiceNode';
+// import feedBackNode from './schema/feedBackNode';
 import QuestionComponent from './components/QuestionComponent';
-import FeedbackComponent from './components/FeedbackComponent';
+// import FeedbackComponent from './components/FeedbackComponent';
 import MultipleChoiceNodeView from './MultipleChoiceNodeView';
+// import FeedBackNodeView from './FeedBackNodeView';
 
 class MultipleChoiceQuestionService extends Service {
   boot() {}
@@ -15,6 +17,10 @@ class MultipleChoiceQuestionService extends Service {
     createNode({
       multiple_choice: multipleChoiceNode,
     });
+
+    // createNode({
+    //   feedback: feedBackNode,
+    // });
 
     createNode({
       question_wrapper: {
@@ -47,7 +53,11 @@ class MultipleChoiceQuestionService extends Service {
       component: QuestionComponent,
       context: this.app,
     });
-    // addPortal({ nodeView, component: FeedbackComponent, context: this.app });
+    // addPortal({
+    //   nodeView: FeedBackNodeView,
+    //   component: FeedbackComponent,
+    //   context: this.app,
+    // });
   }
 }
 

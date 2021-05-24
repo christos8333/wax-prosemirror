@@ -60,7 +60,7 @@ import invisibles, {
 // };
 
 const updateTitle = debounce(title => {
-  console.log(title);
+  // console.log(title);
 }, 3000);
 
 const saveTags = tags => {

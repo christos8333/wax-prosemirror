@@ -30,6 +30,7 @@ export default () => {
         portals.map(({ dom, component: Component, id }) => {
           return ReactDOM.createPortal(
             <Component
+              key={id}
               decorations={decorations}
               getPos={getPos}
               node={node}

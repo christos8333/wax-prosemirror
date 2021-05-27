@@ -60,7 +60,6 @@ const Question = styled.div`
 `;
 
 export default ({ node, view, getPos }) => {
-  console.log(node);
   const context = useContext(WaxContext);
   const [showExplanation, setShowExplanation] = useState(false);
   const [explanationValue, setExplanationValue] = useState('');

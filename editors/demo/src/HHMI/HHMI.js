@@ -183,7 +183,7 @@ const Hhmi = () => {
         config={config}
         autoFocus
         fileUpload={file => renderImage(file)}
-        value=""
+        value={initialValue}
         targetFormat="JSON"
         // readonly
         layout={HhmiLayout}

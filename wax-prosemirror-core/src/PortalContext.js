@@ -27,16 +27,18 @@ export default props => {
       decorations,
       context,
     ) => {
-      setPortal({
-        ...portal,
-        id: uuidv4(),
-        element,
-        component,
-        node,
-        view,
-        getPos,
-        decorations,
-        context,
+      setTimeout(() => {
+        setPortal({
+          ...portal,
+          id: uuidv4(),
+          element,
+          component,
+          node,
+          view,
+          getPos,
+          decorations,
+          context,
+        });
       });
     },
   });

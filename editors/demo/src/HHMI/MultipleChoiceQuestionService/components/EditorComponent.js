@@ -20,6 +20,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   });
 
   if (context.activeViewId === node.attrs.id) {
+    console.log(node.attrs.id, "matched")
   }
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useMemo,
   useEffect,
+  useState,
 } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
@@ -21,11 +22,12 @@ import WaxOptions from './WaxOptions';
 const WaxPortals = ComponentPlugin('waxPortals');
 
 let previousDoc;
-let view;
+
 export default props => {
   const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
   const editorRef = useRef();
-
+  let view;
+  const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
@@ -33,7 +35,7 @@ export default props => {
 
   const schema = context.app.getSchema();
 
-  if (!view) {
+  if (!mounted) {
     context.app.bootServices();
   }
 
@@ -77,6 +79,8 @@ export default props => {
             },
           },
         );
+
+        setMounted(true);
 
         context.updateView(
           {

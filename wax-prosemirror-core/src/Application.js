@@ -13,25 +13,28 @@ export default class Application {
 
   registerServices() {
     let count = 0;
-    while (count < this.config.get('config.services').length) {
-      const allServices = this.config.get('config.services');
-      const service = this.config.get('config.services')[count];
-      /*
+    console.log(this.config);
+    if (this.config) {
+      while (count < this.config.get('config.services').length) {
+        const allServices = this.config.get('config.services');
+        const service = this.config.get('config.services')[count];
+        /*
         set App to every service
         so services can have access to containers and config
         */
-      service.setApp(this);
+        service.setApp(this);
 
-      if (service.dependencies) {
-        const servicePos = count;
-        allServices.splice(servicePos + 1, 0, ...service.dependencies);
+        if (service.dependencies) {
+          const servicePos = count;
+          allServices.splice(servicePos + 1, 0, ...service.dependencies);
+        }
+
+        if (service.register) {
+          service.register();
+        }
+
+        count += 1;
       }
-
-      if (service.register) {
-        service.register();
-      }
-
-      count += 1;
     }
   }
 

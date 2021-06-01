@@ -5,7 +5,6 @@ import { Wax } from 'wax-prosemirror-core';
 import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
-import HHMI from '../HHMI/HHMI';
 
 const renderImage = file => {
   const reader = new FileReader();

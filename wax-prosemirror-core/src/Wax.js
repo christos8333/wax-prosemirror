@@ -51,49 +51,44 @@ const Wax = props => {
   if (!application) return null;
   const WaxOnchange = onChange || (v => true);
 
-  const finalOnChange = schema =>
-    debounce(
-      content => {
-        /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
+  const finalOnChange = schema => content => {
+    /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
       with content */
 
-        const notes = [];
-        each(schema.nodes, node => {
-          if (node.groups.includes('notes')) notes.push(node);
-        });
+    const notes = [];
+    each(schema.nodes, node => {
+      if (node.groups.includes('notes')) notes.push(node);
+    });
 
-        if (notes.length > 0) {
-          notes.forEach(note => {
-            const old = schema.nodes[note.name].spec.toDOM;
-            schema.nodes[note.name].spec.toDOM = node => {
-              // eslint-disable-next-line prefer-rest-params
-              old.apply(this);
-              if (node) return [note.name, node.attrs, 0];
-            };
-          });
-        }
+    if (notes.length > 0) {
+      notes.forEach(note => {
+        const old = schema.nodes[note.name].spec.toDOM;
+        schema.nodes[note.name].spec.toDOM = node => {
+          // eslint-disable-next-line prefer-rest-params
+          old.apply(this);
+          if (node) return [note.name, node.attrs, 0];
+        };
+      });
+    }
 
-        if (targetFormat === 'JSON') {
-          WaxOnchange(content);
-        } else {
-          const serialize = serializer(schema);
-          WaxOnchange(serialize(content));
-        }
+    if (targetFormat === 'JSON') {
+      WaxOnchange(content);
+    } else {
+      const serialize = serializer(schema);
+      WaxOnchange(serialize(content));
+    }
 
-        if (notes.length > 0) {
-          notes.forEach(note => {
-            const old = schema.nodes[note.name].spec.toDOM;
-            schema.nodes[note.name].spec.toDOM = node => {
-              // eslint-disable-next-line prefer-rest-params
-              old.apply(this);
-              if (node) return [note.name, node.attrs];
-            };
-          });
-        }
-      },
-      1000,
-      { maxWait: 5000 },
-    );
+    if (notes.length > 0) {
+      notes.forEach(note => {
+        const old = schema.nodes[note.name].spec.toDOM;
+        schema.nodes[note.name].spec.toDOM = node => {
+          // eslint-disable-next-line prefer-rest-params
+          old.apply(this);
+          if (node) return [note.name, node.attrs];
+        };
+      });
+    }
+  };
   const TrackChange = application.config.get('config.EnableTrackChangeService');
 
   const Layout = application.container.get('Layout');

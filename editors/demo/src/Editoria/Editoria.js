@@ -5,6 +5,7 @@ import { Wax } from 'wax-prosemirror-core';
 import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
+import { debounce } from 'lodash';
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -50,7 +51,9 @@ const Editoria = () => {
           value={`<p> some text</p><h2>h2</h2><h3>a head</h3><h4>fff</h4><h1>ttt</h1>`}
           // readonly
           layout={layout}
-          // onChange={source => console.log(source)}
+          onChange={debounce(source => {
+            console.log(source);
+          }, 3000)}
           user={user}
         />
       </>

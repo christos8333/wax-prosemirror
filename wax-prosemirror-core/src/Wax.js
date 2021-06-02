@@ -89,6 +89,7 @@ const Wax = props => {
       });
     }
   };
+
   const TrackChange = application.config.get('config.EnableTrackChangeService');
 
   const Layout = application.container.get('Layout');
@@ -109,6 +110,7 @@ const Wax = props => {
           TrackChange={TrackChange}
           user={user}
           value={value}
+          serializer={serializer}
         >
           {({ editor }) => <WaxRender className={className} editor={editor} />}
         </WaxView>

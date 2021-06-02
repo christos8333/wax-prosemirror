@@ -54,6 +54,7 @@ const Editoria = () => {
           onChange={debounce(source => {
             console.log(source);
           }, 3000)}
+          onBlur={source => console.log(source)}
           user={user}
         />
       </>

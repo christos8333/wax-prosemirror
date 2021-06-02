@@ -65,9 +65,9 @@ export default props => {
             scrollThreshold: 200,
             handleDOMEvents: {
               blur: onBlur
-                ? // eslint-disable-next-line no-shadow
-                  view => {
-                    onBlur(view.state.doc.content);
+                ? editorView => {
+                    const serialize = props.serializer(schema);
+                    onBlur(serialize(editorView.state.doc.content));
                   }
                 : null,
             },

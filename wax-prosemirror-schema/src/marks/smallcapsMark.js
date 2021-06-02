@@ -6,8 +6,11 @@ const smallcaps = {
   parseDOM: [
     {
       tag: 'span.small-caps',
-      getAttrs(dom) {
-        return { class: dom.getAttribute('class') };
+      getAttrs(hook, next) {
+        Object.assign(hook, {
+          class: hook.dom.getAttribute('class'),
+        });
+        next();
       },
     },
   ],

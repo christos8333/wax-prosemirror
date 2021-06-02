@@ -7,7 +7,7 @@ import React, {
   useEffect,
 } from 'react';
 import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { filter, groupBy, debounce } from 'lodash';
@@ -53,24 +53,32 @@ const CharactersListComponent = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   padding-top: ${grid(2)};
+
+  ${override('Wax.CharactersListComponent')}
 `;
 
 const SpecialCharactersGroup = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: ${grid(2)};
+
+  ${override('Wax.SpecialCharactersGroup')}
 `;
 
 const GroupTitle = styled.div`
   font-size: 17px;
   color: ${th('colorPrimary')};
   padding: 0 ${grid(2)} ${grid(2)} ${grid(2)};
+
+  ${override('Wax.GroupTitle')}
 `;
 
 const GroupCharacters = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
+  ${override('Wax.GroupCharacters')}
 `;
 
 const SpecialCharacter = styled.div`
@@ -95,6 +103,8 @@ const SpecialCharacter = styled.div`
       color: ${th('colorPrimary')};
     }
   }
+    ${override('Wax.SpecialCharacterButton')}
+
 `;
 
 // const LastUsedComponent = styled.div`

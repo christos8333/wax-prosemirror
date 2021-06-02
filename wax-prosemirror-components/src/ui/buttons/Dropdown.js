@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, override } from '@pubsweet/ui-toolkit';
 import MenuButton from './MenuButton';
 
 // font size 0 reason: https://stackoverflow.com/a/19212391
@@ -16,6 +16,8 @@ const DropWrapper = styled.div`
   background: white;
   margin-top: ${grid(1)};
   position: absolute;
+
+  ${override('Wax.MoreDropWrapper')}
 `;
 
 const Dropdown = props => {

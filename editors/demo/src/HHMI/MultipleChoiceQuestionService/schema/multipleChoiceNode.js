@@ -1,6 +1,6 @@
 const multipleChoiceNode = {
   group: 'inline',
-  content: 'block*',
+  content: 'inline*',
   inline: true,
   // atom: true,
   attrs: {

@@ -19,10 +19,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     return editable;
   });
 
-  console.log(context.activeViewId);
-  console.log('node', node.attrs.id);
   if (context.activeViewId === node.attrs.id) {
-    console.log('sss');
   }
 
   useEffect(() => {

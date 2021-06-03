@@ -10,14 +10,6 @@ export const PortalContext = React.createContext({
 
 export default props => {
   const [portal, setPortal] = useState({
-    element: {},
-    component: {},
-    node: {},
-    view: {},
-    id: null,
-    getPos: () => {},
-    decorations: [],
-    context: {},
     createPortal: (
       element,
       component,
@@ -27,18 +19,24 @@ export default props => {
       decorations,
       context,
     ) => {
-      setPortal({
-        ...portal,
-        id: uuidv4(),
-        element,
-        component,
-        node,
-        view,
-        getPos,
-        decorations,
-        context,
+      setTimeout(() => {
+        portal.portals.push({
+          id: uuidv4(),
+          element,
+          component,
+          node,
+          view,
+          getPos,
+          decorations,
+          context,
+        });
+        setPortal({
+          createPortal: portal.createPortal,
+          portals: [...portal.portals],
+        });
       });
     },
+    portals: [],
   });
 
   return (

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorComponent from './EditorComponent';
+import FeedbackComponent from './FeedbackComponent';
 
 const QuestionWrapper = styled.div`
   display: flex;
@@ -60,6 +61,10 @@ const Question = styled.div`
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
+  const {
+    view: { main },
+  } = context;
+
   const [showExplanation, setShowExplanation] = useState(false);
   const [explanationValue, setExplanationValue] = useState('');
   const explanationRef = useRef(null);
@@ -82,7 +87,15 @@ export default ({ node, view, getPos }) => {
     }
   };
 
-  const removeOption = () => {};
+  const removeOption = () => {
+    main.state.doc.nodesBetween(getPos(), getPos() + 1, (nodes, pos) => {
+      if (nodes.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr.deleteRange(getPos(), getPos() + nodes.nodeSize + 1),
+        );
+      }
+    });
+  };
 
   const setNoYesValues = () => {};
 

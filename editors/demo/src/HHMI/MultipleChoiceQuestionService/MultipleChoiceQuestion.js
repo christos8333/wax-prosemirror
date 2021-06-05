@@ -1,7 +1,10 @@
+import React from 'react';
+import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
+import ToolBarBtn from './components/ToolBarBtn';
 
 const createQuestion = (state, dispatch, tr) => {
   const { empty, $from, $to } = state.selection;
@@ -62,6 +65,13 @@ class MultipleChoiceQuestion extends Tools {
 
   get enable() {
     return state => {};
+  }
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+    return this._isDisplayed ? (
+      <ToolBarBtn key={uuidv4()} item={this.toJSON()} view={view} />
+    ) : null;
   }
 }
 

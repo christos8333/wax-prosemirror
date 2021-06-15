@@ -61,7 +61,7 @@ const Wax = props => {
 
     if (notes.length > 0) {
       notes.forEach(note => {
-        schema.nodes.footnote.spec.toDOM = node => {
+        schema.nodes[note.name].spec.toDOM = node => {
           // eslint-disable-next-line prefer-rest-params
           if (node) return [note.name, node.attrs, 0];
         };
@@ -77,7 +77,7 @@ const Wax = props => {
 
     if (notes.length > 0) {
       notes.forEach(note => {
-        schema.nodes.footnote.spec.toDOM = node => {
+        schema.nodes[note.name].spec.toDOM = node => {
           // eslint-disable-next-line prefer-rest-params
           if (node) return [note.name, node.attrs];
         };

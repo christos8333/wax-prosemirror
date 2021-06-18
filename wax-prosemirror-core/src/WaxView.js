@@ -130,11 +130,11 @@ export default props => {
     }
     if (targetFormat === 'JSON') {
       if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-        props.onChange(schema)(state.doc.toJSON());
+        props.onChange(state.doc.toJSON());
     } else {
       // eslint-disable-next-line no-lonely-if
       if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-        props.onChange(schema)(state.doc.content);
+        props.onChange(state.doc.content);
     }
   };
 

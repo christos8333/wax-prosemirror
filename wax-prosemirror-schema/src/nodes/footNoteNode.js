@@ -7,9 +7,7 @@ const footnote = {
     id: { default: '' },
   },
   toDOM: node => {
-    if (node) {
-      return ['footnote', node.attrs];
-    }
+    return ['footnote', node.attrs];
   },
   parseDOM: [
     {

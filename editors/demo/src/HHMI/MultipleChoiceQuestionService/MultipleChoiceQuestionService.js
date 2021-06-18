@@ -25,7 +25,7 @@ class MultipleChoiceQuestionService extends Service {
     createNode({
       question_wrapper: {
         group: 'block',
-        // atom: true,
+        atom: true,
         content: 'inline*',
         attrs: {
           class: { default: 'paragraph' },

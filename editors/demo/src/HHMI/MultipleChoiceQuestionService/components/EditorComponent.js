@@ -2,7 +2,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
@@ -19,7 +19,12 @@ const EditorComponent = ({ node, view, getPos }) => {
     return editable;
   });
 
-  if (context.activeViewId === node.attrs.id) {
+  const {
+    view: { main },
+    activeViewId,
+  } = context;
+
+  if (activeViewId === node.attrs.id && context.view[activeViewId].focused) {
   }
 
   useEffect(() => {
@@ -36,6 +41,14 @@ const EditorComponent = ({ node, view, getPos }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, questionId);
+            context.view[activeViewId].dispatch(
+              context.view[activeViewId].state.tr.setSelection(
+                TextSelection.between(
+                  context.view[activeViewId].state.selection.$anchor,
+                  context.view[activeViewId].state.selection.$head,
+                ),
+              ),
+            );
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.

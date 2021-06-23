@@ -202,7 +202,7 @@ const EditoriaLayout = ({ editor }) => {
 
   return (
     <ThemeProvider theme={cokoTheme}>
-      <Wrapper>
+      <Wrapper id="wax-container">
         <TopMenu>
           <TopBar />
         </TopMenu>

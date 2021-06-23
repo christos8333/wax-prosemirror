@@ -116,10 +116,13 @@ export default ({ node, view }) => {
     }, 20);
 
     const findReplace = context.app.PmPlugins.get('findAndReplacePlugin');
-    const matches = findReplace.getState(noteView.state).allMatches;
-    if (matches.length > 0 && !typing && context.activeViewId === noteId)
-      context.updateView({}, noteId);
-    // UNTIL HERE
+
+    if (findReplace) {
+      const matches = findReplace.getState(noteView.state).allMatches;
+      if (matches.length > 0 && !typing && context.activeViewId === noteId)
+        context.updateView({}, noteId);
+      // UNTIL HERE
+    }
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;

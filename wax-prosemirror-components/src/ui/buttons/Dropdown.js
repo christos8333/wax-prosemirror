@@ -34,7 +34,10 @@ const Dropdown = props => {
         disabled={disabled}
         iconName={iconName}
         label={label}
-        onMouseDown={() => setIsOpen(!isOpen)}
+        onMouseDown={event => {
+          event.preventDefault();
+          setIsOpen(!isOpen);
+        }}
         title={title}
       />
 

@@ -12,8 +12,8 @@ const ToolGroups = ({ toolGroups, view }) => {
     return (
       <ToolGroupComponent
         key={uuidv4()}
-        view={view}
         tools={toolGroup._tools}
+        view={view}
         // title={this.title}
         // name={name}
       />

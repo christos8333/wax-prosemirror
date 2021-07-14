@@ -24,7 +24,15 @@ const WaxPortals = ComponentPlugin('waxPortals');
 let previousDoc;
 
 export default props => {
-  const { readonly, onBlur, debug, autoFocus, user, targetFormat } = props;
+  const {
+    browserSpellCheck,
+    readonly,
+    onBlur,
+    debug,
+    autoFocus,
+    user,
+    targetFormat,
+  } = props;
   const editorRef = useRef();
   let view;
   const [mounted, setMounted] = useState(false);
@@ -75,7 +83,7 @@ export default props => {
               return transformPasted(slice, view);
             },
             attributes: {
-              spellcheck: 'false',
+              spellcheck: browserSpellCheck ? 'true' : 'false',
             },
           },
         );

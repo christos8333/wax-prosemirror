@@ -34,6 +34,7 @@ const Wax = props => {
 
   const {
     autoFocus,
+    browserSpellCheck,
     className,
     debug,
     fileUpload,
@@ -95,17 +96,18 @@ const Wax = props => {
       <PortalProvider>
         <WaxView
           autoFocus={autoFocus}
+          browserSpellCheck={browserSpellCheck}
           debug={debug}
           fileUpload={fileUpload}
           onBlur={onBlur || (v => true)}
           onChange={finalOnChange || (v => true)}
           placeholder={placeholder}
           readonly={readonly}
+          serializer={serializer}
           targetFormat={targetFormat}
           TrackChange={TrackChange}
           user={user}
           value={value}
-          serializer={serializer}
         >
           {({ editor }) => <WaxRender className={className} editor={editor} />}
         </WaxView>

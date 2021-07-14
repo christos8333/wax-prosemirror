@@ -6,6 +6,14 @@ import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import ToolBarBtn from './components/ToolBarBtn';
 
+const simulateKey = (view, keyCode, key) => {
+  let event = document.createEvent('Event');
+  event.initEvent('keydown', true, true);
+  event.keyCode = keyCode;
+  event.key = event.code = key;
+  return view.someProp('handleKeyDown', f => f(view, event));
+};
+
 const createQuestion = (state, dispatch, tr) => {
   const { empty, $from, $to } = state.selection;
   let content = Fragment.empty;
@@ -26,8 +34,10 @@ class MultipleChoiceQuestion extends Tools {
   name = 'Multiple Choice';
 
   get run() {
-    return (state, dispatch) => {
-      console.log(state);
+    return view => {
+      simulateKey(view, 13, 'Enter');
+
+      const { state, dispatch } = view;
       const { from, to } = state.selection;
       const { tr } = state;
 

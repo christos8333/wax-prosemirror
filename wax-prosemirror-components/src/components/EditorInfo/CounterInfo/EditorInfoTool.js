@@ -7,7 +7,7 @@ import React, {
   useCallback,
 } from 'react';
 import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -43,6 +43,7 @@ const Wrapper = styled.div`
     position: relative;
     width: 0;
   }
+  ${override('Wax.CounterWrapper')}
 `;
 
 const DropWrapper = styled.div`
@@ -51,7 +52,9 @@ const DropWrapper = styled.div`
   position: absolute;
   top: 32px;
   width: max-content;
+  ${override('Wax.CounterDropWrapper')}
 `;
+
 const CounterInfoComponent = styled.div`
   background: #fff;
   border-radius: 1.03093% / 8%;
@@ -65,7 +68,9 @@ const CounterInfoComponent = styled.div`
   position: fixed;
   right: 31px;
   transform-origin: 50% 50% 0px;
+  ${override('Wax.CounterInfoComponent')}
 `;
+
 const Counter = styled.div`
   color: black;
   display: block;
@@ -73,6 +78,7 @@ const Counter = styled.div`
   height: 25px;
   margin: 5px;
   min-width: 150px;
+  ${override('Wax.Counters')}
 `;
 
 const EditorInfoTool = ({ view: { state }, item }) => {

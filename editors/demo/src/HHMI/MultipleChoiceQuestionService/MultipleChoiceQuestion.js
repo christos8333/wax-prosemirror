@@ -2,16 +2,17 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
+import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import ToolBarBtn from './components/ToolBarBtn';
 
-const simulateKey = (view, keyCode, key) => {
-  let event = document.createEvent('Event');
-  event.initEvent('keydown', true, true);
-  event.keyCode = keyCode;
-  event.key = event.code = key;
-  return view.someProp('handleKeyDown', f => f(view, event));
+const checkifEmpty = view => {
+  const { state } = view;
+  const { from, to } = state.selection;
+  state.doc.nodesBetween(from, to, (node, pos) => {
+    if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
+  });
 };
 
 const createQuestion = (state, dispatch, tr) => {
@@ -35,7 +36,7 @@ class MultipleChoiceQuestion extends Tools {
 
   get run() {
     return view => {
-      simulateKey(view, 13, 'Enter');
+      checkifEmpty(view);
 
       const { state, dispatch } = view;
       const { from, to } = state.selection;

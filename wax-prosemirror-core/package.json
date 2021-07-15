@@ -29,7 +29,7 @@
     "prosemirror-transform": "1.2.6",
     "prosemirror-view": "1.18.0",
     "reflect-metadata": "^0.1.13",
-    "styled-components": "^4.2.0",
+    "styled-components": "^5.3.0",
     "uuid": "^7.0.3",
     "wax-prosemirror-services": "^0.0.50",
     "wax-prosemirror-utilities": "^0.0.50"

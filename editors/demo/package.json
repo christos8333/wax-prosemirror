@@ -3,6 +3,7 @@
   "version": "0.0.50",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@guardian/prosemirror-invisibles": "^1.2.0",
     "@pubsweet/ui-toolkit": "^2.3.1",
     "fontsource-merriweather": "^3.0.9",

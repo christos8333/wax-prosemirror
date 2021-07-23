@@ -8,6 +8,7 @@ const StyledSwitch = styled(Switch)`
 
   span:nth-child(1) {
     bottom: 36px;
+    display: flex;
     left: 4px;
     position: relative;
     width: 0px;

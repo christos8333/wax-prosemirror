@@ -3,60 +3,76 @@ import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
+import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
+
 import EditorComponent from './EditorComponent';
 import FeedbackComponent from './FeedbackComponent';
+import SwitchComponent from './SwitchComponent';
+import Button from './Button';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const InfoRow = styled.div`
+  color: black;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0px 4px 0px;
+`;
+
+const QuestionNunber = styled.span``;
+
+const QuestionControlsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 const QuestionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  &:before {
-    bottom: -20px;
-    content: 'Answer ' counter(question-item-multiple);
-    counter-increment: question-item-multiple;
-    position: relative;
-  }
-`;
-
-const QuestionWrapperInner = styled.div`
   border: 1px solid #a5a1a2;
   border-radius: 4px;
+  color: black;
+  display: flex;
+  flex: 2 1 auto;
+  flex-direction: column;
+  padding: 10px;
+`;
+
+const IconsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px;
-`;
+  justify-content: center;
 
-const CorrectLabel = styled.span`
-  margin-left: auto;
-`;
+  button {
+    border: none;
+  }
 
-const ChooseAnswer = styled.div`
-  border: 1px solid #a5a1a2;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: row;
-  height: 25px;
-  margin-left: auto;
-  padding: 4px;
-  >div: first-of-type {
-    padding-right: 4px;
+  span {
+    cursor: pointer;
   }
 `;
 
-const YesNoContainer = styled.div`
-  bottom: 3px;
-  color: #a5a1a2;
-  position: relative;
-`;
-
-const Question = styled.div`
+const QuestionData = styled.div`
+  align-items: normal;
   display: flex;
   flex-direction: row;
+`;
 
-  .ProseMirror {
-    background: #ebebf0;
-    padding: 5px;
-    width: 90%;
-  }
+const FeedBack = styled.div`
+  color: black;
+  margin-top: 10px;
+`;
+
+const FeedBackLabel = styled.span`
+  font-weight: 700;
+`;
+
+const FeedBackInput = styled.input`
+  border: none;
+  display: flex;
+  width: 100%;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -66,11 +82,12 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const [showExplanation, setShowExplanation] = useState(false);
-  const [explanationValue, setExplanationValue] = useState('');
-  const explanationRef = useRef(null);
+  const [feadBack, setFeedBack] = useState('');
+
+  const feedBackRef = useRef(null);
 
   const onChangeExplanationInput = () => {
-    setExplanationValue(explanationRef.current.value);
+    setFeedBack(feedBackRef.current.value);
   };
 
   const clickMe = () => {
@@ -99,30 +116,79 @@ export default ({ node, view, getPos }) => {
 
   const setNoYesValues = () => {};
 
+  const addOption = () => {};
+
+  const questionNumber = 1;
+  const questionText = '';
+  const readOnly = false;
+  const feedBackInput = '';
+  const showAddIcon = true;
+  const showRemoveIcon = true;
+
   return (
-    <QuestionWrapper>
-      <CorrectLabel>Correct?</CorrectLabel>
-      <QuestionWrapperInner>
-        <Question>
-          <EditorComponent node={node} view={view} getPos={getPos} />
-          <ChooseAnswer>
-            <YesNoContainer onClick={setNoYesValues}>No</YesNoContainer>
-            <YesNoContainer onClick={setNoYesValues}>Yes</YesNoContainer>
-          </ChooseAnswer>
-        </Question>
-        <button onClick={clickMe}>Show Explanation</button>
-        {showExplanation && (
-          <input
-            type="text"
-            onKeyDown={handleKeyDown}
-            ref={explanationRef}
-            onChange={onChangeExplanationInput}
-            placeholder="type your explanation"
-            value={explanationValue}
-          ></input>
-        )}
-        <button onClick={removeOption}> X </button>
-      </QuestionWrapperInner>
-    </QuestionWrapper>
+    <Wrapper>
+      <InfoRow>
+        <QuestionNunber>Answer {questionNumber}</QuestionNunber>
+      </InfoRow>
+      <QuestionControlsWrapper>
+        <QuestionWrapper>
+          <QuestionData>
+            <EditorComponent node={node} view={view} getPos={getPos} />
+
+            <SwitchComponent />
+          </QuestionData>
+          <FeedBack>
+            <FeedBackLabel>Feedback</FeedBackLabel>
+            <FeedBackInput
+              onChange={feedBackInput}
+              placeholder="Insert feedback"
+              ref={feedBackRef}
+              type="text"
+              value={feadBack}
+            />
+          </FeedBack>
+        </QuestionWrapper>
+        <IconsWrapper>
+          {showAddIcon && !readOnly && (
+            <Button
+              icon={
+                <PlusSquareOutlined onClick={addOption} title="Add Option" />
+              }
+            />
+          )}
+          {showRemoveIcon && !readOnly && (
+            <Button
+              icon={
+                <DeleteOutlined onClick={removeOption} title="Delete Option" />
+              }
+            />
+          )}
+        </IconsWrapper>
+      </QuestionControlsWrapper>
+    </Wrapper>
+
+    // <QuestionWrapper>
+    //   <CorrectLabel>Correct?</CorrectLabel>
+    //   <QuestionWrapperInner>
+    //     <Question>
+    //       <EditorComponent node={node} view={view} getPos={getPos} />
+    //       <ChooseAnswer>
+    //         <SwitchComponent />
+    //       </ChooseAnswer>
+    //     </Question>
+    //     <button onClick={clickMe}>Show Explanation</button>
+    //     {showExplanation && (
+    //       <input
+    //         type="text"
+    //         onKeyDown={handleKeyDown}
+    //         ref={explanationRef}
+    //         onChange={onChangeExplanationInput}
+    //         placeholder="type your explanation"
+    //         value={explanationValue}
+    //       ></input>
+    //     )}
+    //     <button onClick={removeOption}> X </button>
+    //   </QuestionWrapperInner>
+    // </QuestionWrapper>
   );
 };

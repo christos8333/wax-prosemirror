@@ -9,6 +9,36 @@ import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 
+const EditorWrapper = styled.div`
+  border: none;
+  display: flex;
+  flex: 2 1 auto;
+  justify-content: left;
+  margin-right: 15px;
+
+  .ProseMirror {
+    white-space: break-spaces;
+    width: 100%;
+    word-wrap: break-word;
+
+    &:focus {
+      outline: none;
+    }
+
+    p.empty-node:first-child::before {
+      content: attr(data-content);
+    }
+
+    .empty-node::before {
+      color: rgb(170, 170, 170);
+      float: left;
+      font-style: italic;
+      height: 0px;
+      pointer-events: none;
+    }
+  }
+`;
+
 const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
@@ -109,7 +139,11 @@ const EditorComponent = ({ node, view, getPos }) => {
     };
   };
 
-  return <div ref={editorRef} />;
+  return (
+    <EditorWrapper>
+      <div ref={editorRef} />
+    </EditorWrapper>
+  );
 };
 
 export default EditorComponent;

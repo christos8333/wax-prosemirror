@@ -16,6 +16,7 @@ const checkifEmpty = view => {
 };
 
 const createQuestion = (state, dispatch, tr) => {
+  console.log(state.selection);
   const { empty, $from, $to } = state.selection;
   let content = Fragment.empty;
   if (!empty && $from.sameParent($to) && $from.parent.inlineContent)

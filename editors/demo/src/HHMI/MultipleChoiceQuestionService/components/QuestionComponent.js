@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Fragment } from 'prosemirror-model';
+import { v4 as uuidv4 } from 'uuid';
 
 import EditorComponent from './EditorComponent';
 import FeedbackComponent from './FeedbackComponent';
@@ -81,17 +83,16 @@ export default ({ node, view, getPos }) => {
     view: { main },
   } = context;
 
-  const [showExplanation, setShowExplanation] = useState(false);
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
   const [feadBack, setFeedBack] = useState('');
 
   const feedBackRef = useRef(null);
 
-  const onChangeExplanationInput = () => {
+  const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
-  };
-
-  const clickMe = () => {
-    setShowExplanation(!showExplanation);
   };
 
   const handleKeyDown = e => {
@@ -114,14 +115,12 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  const setNoYesValues = () => {};
-
-  const addOption = () => {};
+  const addOption = () => {
+    console.log(node);
+  };
 
   const questionNumber = 1;
-  const questionText = '';
-  const readOnly = false;
-  const feedBackInput = '';
+  const readOnly = isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
 
@@ -140,6 +139,7 @@ export default ({ node, view, getPos }) => {
           <FeedBack>
             <FeedBackLabel>Feedback</FeedBackLabel>
             <FeedBackInput
+              onKeyDown={handleKeyDown}
               onChange={feedBackInput}
               placeholder="Insert feedback"
               ref={feedBackRef}
@@ -166,29 +166,5 @@ export default ({ node, view, getPos }) => {
         </IconsWrapper>
       </QuestionControlsWrapper>
     </Wrapper>
-
-    // <QuestionWrapper>
-    //   <CorrectLabel>Correct?</CorrectLabel>
-    //   <QuestionWrapperInner>
-    //     <Question>
-    //       <EditorComponent node={node} view={view} getPos={getPos} />
-    //       <ChooseAnswer>
-    //         <SwitchComponent />
-    //       </ChooseAnswer>
-    //     </Question>
-    //     <button onClick={clickMe}>Show Explanation</button>
-    //     {showExplanation && (
-    //       <input
-    //         type="text"
-    //         onKeyDown={handleKeyDown}
-    //         ref={explanationRef}
-    //         onChange={onChangeExplanationInput}
-    //         placeholder="type your explanation"
-    //         value={explanationValue}
-    //       ></input>
-    //     )}
-    //     <button onClick={removeOption}> X </button>
-    //   </QuestionWrapperInner>
-    // </QuestionWrapper>
   );
 };

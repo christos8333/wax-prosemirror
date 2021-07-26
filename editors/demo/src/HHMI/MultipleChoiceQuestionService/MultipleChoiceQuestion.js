@@ -16,15 +16,9 @@ const checkifEmpty = view => {
 };
 
 const createQuestion = (state, dispatch, tr) => {
-  console.log(state.selection);
-  const { empty, $from, $to } = state.selection;
-  let content = Fragment.empty;
-  if (!empty && $from.sameParent($to) && $from.parent.inlineContent)
-    content = $from.parent.content.cut($from.parentOffset, $to.parentOffset);
-
   const answerOption = state.config.schema.nodes.multiple_choice.create(
     { id: uuidv4() },
-    content,
+    Fragment.empty,
   );
   dispatch(tr.replaceSelectionWith(answerOption));
 };

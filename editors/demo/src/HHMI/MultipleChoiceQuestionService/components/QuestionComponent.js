@@ -11,6 +11,7 @@ import EditorComponent from './EditorComponent';
 import FeedbackComponent from './FeedbackComponent';
 import SwitchComponent from './SwitchComponent';
 import Button from './Button';
+import { nodes } from 'prosemirror-schema-basic';
 
 const Wrapper = styled.div`
   display: flex;
@@ -115,12 +116,34 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  const addOption = () => {
-    console.log(node);
+  const addOption = nodeId => {
+    context.view.main.state.doc.descendants((editorNode, index) => {
+      if (editorNode.type.name === 'multiple_choice') {
+        if (editorNode.attrs.id === nodeId) {
+          context.view.main.dispatch(
+            context.view.main.state.tr.setSelection(
+              new TextSelection(
+                context.view.main.state.tr.doc.resolve(
+                  editorNode.nodeSize + index,
+                ),
+              ),
+            ),
+          );
+
+          const answerOption = context.view.main.state.config.schema.nodes.multiple_choice.create(
+            { id: uuidv4() },
+            Fragment.empty,
+          );
+          context.view.main.dispatch(
+            context.view.main.state.tr.replaceSelectionWith(answerOption),
+          );
+        }
+      }
+    });
   };
 
   const questionNumber = 1;
-  const readOnly = isEditable;
+  const readOnly = !isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
 
@@ -152,7 +175,10 @@ export default ({ node, view, getPos }) => {
           {showAddIcon && !readOnly && (
             <Button
               icon={
-                <PlusSquareOutlined onClick={addOption} title="Add Option" />
+                <PlusSquareOutlined
+                  onClick={() => addOption(node.attrs.id)}
+                  title="Add Option"
+                />
               }
             />
           )}

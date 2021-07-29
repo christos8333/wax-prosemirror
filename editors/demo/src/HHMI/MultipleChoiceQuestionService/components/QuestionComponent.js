@@ -117,6 +117,7 @@ export default ({ node, view, getPos }) => {
   };
 
   const addOption = nodeId => {
+    const newAnswerId = uuidv4();
     context.view.main.state.doc.descendants((editorNode, index) => {
       if (editorNode.type.name === 'multiple_choice') {
         if (editorNode.attrs.id === nodeId) {
@@ -131,12 +132,38 @@ export default ({ node, view, getPos }) => {
           );
 
           const answerOption = context.view.main.state.config.schema.nodes.multiple_choice.create(
-            { id: uuidv4() },
+            { id: newAnswerId },
             Fragment.empty,
           );
           context.view.main.dispatch(
             context.view.main.state.tr.replaceSelectionWith(answerOption),
           );
+          // create Empty Paragraph
+          setTimeout(() => {
+            if (context.view[newAnswerId]) {
+              context.view[newAnswerId].dispatch(
+                context.view[newAnswerId].state.tr.setSelection(
+                  TextSelection.between(
+                    context.view[newAnswerId].state.selection.$anchor,
+                    context.view[newAnswerId].state.selection.$head,
+                  ),
+                ),
+              );
+
+              let type = context.view.main.state.schema.nodes.paragraph;
+              context.view[newAnswerId].dispatch(
+                context.view[newAnswerId].state.tr.insert(0, type.create()),
+              );
+            }
+            context.view[newAnswerId].dispatch(
+              context.view[newAnswerId].state.tr.setSelection(
+                TextSelection.between(
+                  context.view[newAnswerId].state.selection.$anchor,
+                  context.view[newAnswerId].state.selection.$head,
+                ),
+              ),
+            );
+          }, 100);
         }
       }
     });

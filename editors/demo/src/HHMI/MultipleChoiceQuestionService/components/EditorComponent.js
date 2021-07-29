@@ -8,6 +8,7 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
+import Placeholder from '../plugins/placeholder';
 
 const EditorWrapper = styled.div`
   border: none;
@@ -49,6 +50,37 @@ const EditorComponent = ({ node, view, getPos }) => {
     return editable;
   });
 
+  let finalPlugins = [];
+
+  const createKeyBindings = () => {
+    const keys = getKeys();
+    Object.keys(baseKeymap).forEach(key => {
+      keys[key] = baseKeymap[key];
+    });
+    return keys;
+  };
+
+  const getKeys = () => {
+    return {
+      'Mod-z': () => undo(view.state, view.dispatch),
+      'Mod-y': () => redo(view.state, view.dispatch),
+    };
+  };
+
+  const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
+
+  // eslint-disable-next-line no-shadow
+  const createPlaceholder = placeholder => {
+    return Placeholder({
+      content: placeholder,
+    });
+  };
+
+  finalPlugins = finalPlugins.concat([
+    createPlaceholder('Type your answer'),
+    ...plugins,
+  ]);
+
   const {
     view: { main },
     activeViewId,
@@ -59,12 +91,14 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   useEffect(() => {
     questionView = new EditorView(
-      { mount: editorRef.current },
+      {
+        mount: editorRef.current,
+      },
       {
         editable: () => isEditable,
         state: EditorState.create({
           doc: node,
-          plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
+          plugins: finalPlugins,
         }),
         // This is the magic part
         dispatchTransaction,
@@ -122,21 +156,6 @@ const EditorComponent = ({ node, view, getPos }) => {
       }
       if (outerTr.docChanged) view.dispatch(outerTr);
     }
-  };
-
-  const createKeyBindings = () => {
-    const keys = getKeys();
-    Object.keys(baseKeymap).forEach(key => {
-      keys[key] = baseKeymap[key];
-    });
-    return keys;
-  };
-
-  const getKeys = () => {
-    return {
-      'Mod-z': () => undo(view.state, view.dispatch),
-      'Mod-y': () => redo(view.state, view.dispatch),
-    };
   };
 
   return (

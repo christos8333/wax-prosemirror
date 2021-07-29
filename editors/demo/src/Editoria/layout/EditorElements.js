@@ -32,6 +32,7 @@ export default css`
     custom-tag-block::selection,
     custom-tag-inline::selection {
       background-color: transparent;
+      color: #000;
     }
 
     &:focus {

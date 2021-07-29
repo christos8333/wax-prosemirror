@@ -5,9 +5,9 @@ import { th } from '@pubsweet/ui-toolkit';
 /* All styles regarding ProseMirror surface and elements */
 
 const fontWriting = css`
+  color: ${th('colorText')};
   font-family: ${th('fontWriting')};
   font-size: ${th('fontSizeBase')};
-  color: ${th('colorText')};
 `;
 
 export default css`
@@ -32,6 +32,7 @@ export default css`
     custom-tag-block::selection,
     custom-tag-inline::selection {
       background-color: transparent;
+      color: #000;
     }
 
     &:focus {

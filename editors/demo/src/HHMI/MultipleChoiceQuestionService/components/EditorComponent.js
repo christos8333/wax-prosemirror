@@ -9,7 +9,6 @@ import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 import Placeholder from '../plugins/placeholder';
-import EmptyParagraphPlugin from '../plugins/EmptyParagraphPlugin';
 
 const EditorWrapper = styled.div`
   border: none;
@@ -78,7 +77,6 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    EmptyParagraphPlugin(),
     createPlaceholder('Type your answer'),
     ...plugins,
   ]);
@@ -144,7 +142,6 @@ const EditorComponent = ({ node, view, getPos }) => {
   }, []);
 
   const dispatchTransaction = tr => {
-    console.log('hohoho');
     let { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
     context.updateView({}, questionId);

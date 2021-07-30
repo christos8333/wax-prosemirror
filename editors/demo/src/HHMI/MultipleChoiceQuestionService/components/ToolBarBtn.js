@@ -14,7 +14,7 @@ const StyledButton = styled(MenuButton)`
 
 const ToolBarBtn = ({ view = {}, item }) => {
   const { active, icon, label, onlyOnMain, run, select, title } = item;
-
+  const context = useContext(WaxContext);
   const {
     view: { main },
     activeViewId,
@@ -45,7 +45,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
         label={label}
         onMouseDown={e => {
           e.preventDefault();
-          run(main);
+          run(main, context);
         }}
         title={title}
       />

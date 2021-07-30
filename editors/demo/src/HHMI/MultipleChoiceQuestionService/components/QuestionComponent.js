@@ -6,12 +6,10 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
-
+import helpers from '../helpers/helpers';
 import EditorComponent from './EditorComponent';
-import FeedbackComponent from './FeedbackComponent';
 import SwitchComponent from './SwitchComponent';
 import Button from './Button';
-import { nodes } from 'prosemirror-schema-basic';
 
 const Wrapper = styled.div`
   display: flex;
@@ -140,29 +138,7 @@ export default ({ node, view, getPos }) => {
           );
           // create Empty Paragraph
           setTimeout(() => {
-            if (context.view[newAnswerId]) {
-              context.view[newAnswerId].dispatch(
-                context.view[newAnswerId].state.tr.setSelection(
-                  TextSelection.between(
-                    context.view[newAnswerId].state.selection.$anchor,
-                    context.view[newAnswerId].state.selection.$head,
-                  ),
-                ),
-              );
-
-              let type = context.view.main.state.schema.nodes.paragraph;
-              context.view[newAnswerId].dispatch(
-                context.view[newAnswerId].state.tr.insert(0, type.create()),
-              );
-            }
-            context.view[newAnswerId].dispatch(
-              context.view[newAnswerId].state.tr.setSelection(
-                TextSelection.between(
-                  context.view[newAnswerId].state.selection.$anchor,
-                  context.view[newAnswerId].state.selection.$head,
-                ),
-              ),
-            );
+            helpers.createEmptyParagraph(context, newAnswerId);
           }, 100);
         }
       }

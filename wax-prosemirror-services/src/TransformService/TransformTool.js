@@ -38,8 +38,6 @@ const upperLowerCase = (state, dispatch, casing) => {
     const substringFrom = Math.max(0, selection.from - position - 1);
     const substringTo = Math.max(0, selection.to - position - 1);
     const updatedText = node.textBetween(substringFrom, substringTo);
-    console.log(node.textBetween(substringFrom, substringTo));
-    console.log(node.textContent.substring(substringFrom - 1, substringTo - 1));
     // set the casing
     const textNode =
       casing === 'upperCase'

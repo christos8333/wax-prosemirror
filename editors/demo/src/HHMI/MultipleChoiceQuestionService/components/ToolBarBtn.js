@@ -14,7 +14,7 @@ const StyledButton = styled(MenuButton)`
 
 const ToolBarBtn = ({ view = {}, item }) => {
   const { active, icon, label, onlyOnMain, run, select, title } = item;
-
+  const context = useContext(WaxContext);
   const {
     view: { main },
     activeViewId,
@@ -27,12 +27,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
     return editable;
   });
 
-  const { dispatch, state } = view;
-
-  const handleMouseDown = (e, editorState, editorDispatch) => {
-    e.preventDefault();
-    run(editorState, dispatch);
-  };
+  const { state } = view;
 
   const isActive = !!(
     active(state, activeViewId) && select(state, activeViewId)
@@ -48,7 +43,10 @@ const ToolBarBtn = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
+        onMouseDown={e => {
+          e.preventDefault();
+          run(main, context);
+        }}
         title={title}
       />
     ),

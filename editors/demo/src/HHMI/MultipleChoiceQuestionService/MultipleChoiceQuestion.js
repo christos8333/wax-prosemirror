@@ -2,21 +2,30 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
+import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
+import helpers from './helpers/helpers';
 import ToolBarBtn from './components/ToolBarBtn';
 
-const createQuestion = (state, dispatch, tr) => {
-  const { empty, $from, $to } = state.selection;
-  let content = Fragment.empty;
-  if (!empty && $from.sameParent($to) && $from.parent.inlineContent)
-    content = $from.parent.content.cut($from.parentOffset, $to.parentOffset);
+const checkifEmpty = view => {
+  const { state } = view;
+  const { from, to } = state.selection;
+  state.doc.nodesBetween(from, to, (node, pos) => {
+    if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
+  });
+};
 
+const createQuestion = (state, dispatch, tr, context) => {
+  const newAnswerId = uuidv4();
   const answerOption = state.config.schema.nodes.multiple_choice.create(
-    { id: uuidv4() },
-    content,
+    { id: newAnswerId },
+    Fragment.empty,
   );
   dispatch(tr.replaceSelectionWith(answerOption));
+  setTimeout(() => {
+    helpers.createEmptyParagraph(context, newAnswerId);
+  }, 100);
 };
 
 @injectable()
@@ -26,8 +35,10 @@ class MultipleChoiceQuestion extends Tools {
   name = 'Multiple Choice';
 
   get run() {
-    return (state, dispatch) => {
-      console.log(state);
+    return (view, context) => {
+      checkifEmpty(view);
+
+      const { state, dispatch } = view;
       const { from, to } = state.selection;
       const { tr } = state;
 
@@ -36,7 +47,7 @@ class MultipleChoiceQuestion extends Tools {
       setTimeout(() => {
         state.doc.nodesBetween(from, to, (node, pos) => {
           if (node.type.name === 'question_wrapper') {
-            createQuestion(state, dispatch, tr);
+            createQuestion(state, dispatch, tr, context);
           } else {
             tr.setBlockType(
               from,
@@ -47,7 +58,7 @@ class MultipleChoiceQuestion extends Tools {
               },
             );
             if (!tr.steps.length) return false;
-            createQuestion(state, dispatch, tr);
+            createQuestion(state, dispatch, tr, context);
           }
         });
         state.schema.nodes.question_wrapper.spec.atom = true;
@@ -60,7 +71,14 @@ class MultipleChoiceQuestion extends Tools {
   }
 
   select = (state, activeViewId) => {
-    return true;
+    let status = true;
+    const { from, to } = state.selection;
+    state.doc.nodesBetween(from, to, (node, pos) => {
+      if (node.type.name === 'question_wrapper') {
+        status = false;
+      }
+    });
+    return status;
   };
 
   get enable() {

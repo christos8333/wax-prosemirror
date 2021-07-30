@@ -245,6 +245,14 @@ const isInTable = state => {
   return false;
 };
 
+const simulateKey = (view, keyCode, key) => {
+  const event = document.createEvent('Event');
+  event.initEvent('keydown', true, true);
+  event.keyCode = keyCode;
+  event.key = event.code = key;
+  return view.someProp('handleKeyDown', f => f(view, event));
+};
+
 export default {
   isInTable,
   setBlockType,
@@ -256,4 +264,5 @@ export default {
   createTable,
   markActive,
   isOnSameTextBlock,
+  simulateKey,
 };

@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
+import 'antd/dist/antd.css';
 import EditorElements from './EditorElements';
 
 /* Katex css */

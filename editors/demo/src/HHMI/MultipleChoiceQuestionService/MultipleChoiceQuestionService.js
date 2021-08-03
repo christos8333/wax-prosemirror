@@ -24,15 +24,16 @@ class MultipleChoiceQuestionService extends Service {
 
     createNode({
       question_wrapper: {
+        attrs: {
+          id: { default: '' },
+          class: { default: 'mutiple-choice' },
+        },
         group: 'block',
         atom: true,
         content: 'inline*',
-        attrs: {
-          class: { default: 'paragraph' },
-        },
         parseDOM: [
           {
-            tag: 'p.question',
+            tag: 'p.mutiple-choice',
             getAttrs(dom) {
               return {
                 id: dom.dataset.id,

@@ -1,11 +1,13 @@
 const multipleChoiceNode = {
+  attrs: {
+    id: { default: '' },
+    correct: { default: false },
+    feedback: { default: false },
+  },
   group: 'inline',
   content: 'block*',
   inline: true,
   // atom: true,
-  attrs: {
-    id: { default: '' },
-  },
   toDOM: node => ['multiple-choice', node.attrs, 0],
   parseDOM: [
     {

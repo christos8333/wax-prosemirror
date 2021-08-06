@@ -18,18 +18,6 @@ const checkifEmpty = view => {
   });
 };
 
-const createQuestion = (state, dispatch, tr, context) => {
-  const newAnswerId = uuidv4();
-  const answerOption = state.config.schema.nodes.multiple_choice.create(
-    { id: newAnswerId },
-    Fragment.empty,
-  );
-  dispatch(tr.replaceSelectionWith(answerOption));
-  setTimeout(() => {
-    helpers.createEmptyParagraph(context, newAnswerId);
-  }, 100);
-};
-
 @injectable()
 class MultipleChoiceQuestion extends Tools {
   title = 'Add Multiple Choice Question';
@@ -41,28 +29,30 @@ class MultipleChoiceQuestion extends Tools {
       checkifEmpty(view);
 
       const { state, dispatch } = view;
-      const { from, to } = state.selection;
       const { tr } = state;
+      /* Create Wrapping */
+      let { $from, $to } = state.selection;
+      let range = $from.blockRange($to),
+        wrapping =
+          range &&
+          findWrapping(
+            range,
+            state.config.schema.nodes.multiple_choice_container,
+            {},
+          );
+      if (!wrapping) return false;
+      if (dispatch) tr.wrap(range, wrapping).scrollIntoView();
 
-      state.doc.nodesBetween(from, to, (node, pos) => {
-        if (node.type.name === 'multiple_choice_container') {
-          createQuestion(state, dispatch, tr, context);
-        } else {
-          let { $from, $to } = state.selection;
-          let range = $from.blockRange($to),
-            wrapping =
-              range &&
-              findWrapping(
-                range,
-                state.config.schema.nodes.multiple_choice_container,
-                {},
-              );
-          if (!wrapping) return false;
-          if (dispatch) tr.wrap(range, wrapping).scrollIntoView();
-
-          createQuestion(state, dispatch, tr, context);
-        }
-      });
+      /* create First Option */
+      const newAnswerId = uuidv4();
+      const answerOption = state.config.schema.nodes.multiple_choice.create(
+        { id: newAnswerId },
+        Fragment.empty,
+      );
+      dispatch(tr.replaceSelectionWith(answerOption));
+      setTimeout(() => {
+        helpers.createEmptyParagraph(context, newAnswerId);
+      }, 100);
     };
   }
 

@@ -5,7 +5,7 @@ const multipleChoiceNode = {
     feedback: { default: false },
   },
   group: 'block',
-  content: 'block+',
+  content: 'block*',
   // atom: true,
   toDOM: node => ['multiple-choice', node.attrs, 0],
   parseDOM: [

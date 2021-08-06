@@ -4,6 +4,8 @@ import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
 import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
+import { findWrapping } from 'prosemirror-transform';
+
 import { v4 as uuidv4 } from 'uuid';
 import helpers from './helpers/helpers';
 import ToolBarBtn from './components/ToolBarBtn';
@@ -42,26 +44,24 @@ class MultipleChoiceQuestion extends Tools {
       const { from, to } = state.selection;
       const { tr } = state;
 
-      state.schema.nodes.question_wrapper.spec.atom = false;
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.type.name === 'question_wrapper') {
+          createQuestion(state, dispatch, tr, context);
+        } else {
+          let { $from, $to } = state.selection;
+          let range = $from.blockRange($to),
+            wrapping =
+              range &&
+              findWrapping(
+                range,
+                state.config.schema.nodes.question_wrapper,
+                {},
+              );
+          if (!wrapping) return false;
+          if (dispatch) tr.wrap(range, wrapping).scrollIntoView();
 
-      setTimeout(() => {
-        state.doc.nodesBetween(from, to, (node, pos) => {
-          if (node.type.name === 'question_wrapper') {
-            createQuestion(state, dispatch, tr, context);
-          } else {
-            tr.setBlockType(
-              from,
-              to,
-              state.config.schema.nodes.question_wrapper,
-              {
-                class: 'question',
-              },
-            );
-            if (!tr.steps.length) return false;
-            createQuestion(state, dispatch, tr, context);
-          }
-        });
-        state.schema.nodes.question_wrapper.spec.atom = true;
+          createQuestion(state, dispatch, tr, context);
+        }
       });
     };
   }

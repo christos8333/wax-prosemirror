@@ -30,10 +30,10 @@ class MultipleChoiceQuestionService extends Service {
         },
         group: 'block',
         atom: true,
-        content: 'inline*',
+        content: 'block+',
         parseDOM: [
           {
-            tag: 'p.mutiple-choice',
+            tag: 'div.mutiple-choice',
             getAttrs(dom) {
               return {
                 id: dom.dataset.id,
@@ -43,7 +43,7 @@ class MultipleChoiceQuestionService extends Service {
           },
         ],
         toDOM(node) {
-          return ['p', node.attrs, 0];
+          return ['div', node.attrs, 0];
         },
       },
     });

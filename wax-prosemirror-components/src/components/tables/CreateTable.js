@@ -24,20 +24,22 @@ const DropWrapper = styled.div`
 const CreateTable = ({ view = {}, item }) => {
   const {
     view: { main },
+    activeView,
     activeViewId,
   } = useContext(WaxContext);
   if (item.onlyOnMain) {
     view = main;
   }
 
-  const { state } = view;
   const { icon, run, select, title } = item;
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   const dropComponent = (
     <InsertTableTool
-      onGridSelect={colRows => handleSelect(colRows, view.state, view.dispatch)}
+      onGridSelect={colRows =>
+        handleSelect(colRows, activeView.state, activeView.dispatch)
+      }
     />
   );
 
@@ -46,7 +48,7 @@ const CreateTable = ({ view = {}, item }) => {
     setIsOpen(!isOpen);
   };
 
-  let isDisabled = !select(state, activeViewId);
+  let isDisabled = !select(activeView, activeViewId);
 
   const isEditable = main.props.editable(editable => {
     return editable;

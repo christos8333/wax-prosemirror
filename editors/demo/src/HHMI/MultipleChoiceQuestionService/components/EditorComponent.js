@@ -102,6 +102,7 @@ const EditorComponent = ({ node, view, getPos }) => {
         }),
         // This is the magic part
         dispatchTransaction,
+        disallowedTools: [],
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, questionId);

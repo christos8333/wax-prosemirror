@@ -68,6 +68,7 @@ export default props => {
             editable: () => !readonly,
             state: EditorState.create(options),
             dispatchTransaction,
+            disallowedTools: [],
             user,
             scrollMargin: 200,
             scrollThreshold: 200,

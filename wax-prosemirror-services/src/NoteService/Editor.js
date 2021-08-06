@@ -37,6 +37,7 @@ export default ({ node, view }) => {
         }),
         // This is the magic part
         dispatchTransaction,
+        disallowedTools: ['tables'],
         handleDOMEvents: {
           blur: () => {
             if (context.view[noteId]) {

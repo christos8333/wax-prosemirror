@@ -96,8 +96,8 @@ export default css`
     }
   }
 
-  .question {
-    border: 1px solid green;
+  .mutiple-choice {
+    border: 3px solid #f5f5f7;
     counter-reset: question-item-multiple;
     margin: 38px;
     padding: 20px;

@@ -23,7 +23,7 @@ class MultipleChoiceQuestionService extends Service {
     // });
 
     createNode({
-      question_wrapper: {
+      multiple_choice_container: {
         attrs: {
           id: { default: '' },
           class: { default: 'mutiple-choice' },

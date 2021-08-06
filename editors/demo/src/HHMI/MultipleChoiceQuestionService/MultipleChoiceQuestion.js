@@ -45,7 +45,7 @@ class MultipleChoiceQuestion extends Tools {
       const { tr } = state;
 
       state.doc.nodesBetween(from, to, (node, pos) => {
-        if (node.type.name === 'question_wrapper') {
+        if (node.type.name === 'multiple_choice_container') {
           createQuestion(state, dispatch, tr, context);
         } else {
           let { $from, $to } = state.selection;
@@ -54,7 +54,7 @@ class MultipleChoiceQuestion extends Tools {
               range &&
               findWrapping(
                 range,
-                state.config.schema.nodes.question_wrapper,
+                state.config.schema.nodes.multiple_choice_container,
                 {},
               );
           if (!wrapping) return false;
@@ -74,7 +74,7 @@ class MultipleChoiceQuestion extends Tools {
     let status = true;
     const { from, to } = state.selection;
     state.doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'question_wrapper') {
+      if (node.type.name === 'multiple_choice_container') {
         status = false;
       }
     });

@@ -27,9 +27,6 @@ const CreateTable = ({ view = {}, item }) => {
     activeView,
     activeViewId,
   } = useContext(WaxContext);
-  if (item.onlyOnMain) {
-    view = main;
-  }
 
   const { icon, run, select, title } = item;
   const ref = useRef();
@@ -48,7 +45,7 @@ const CreateTable = ({ view = {}, item }) => {
     setIsOpen(!isOpen);
   };
 
-  let isDisabled = !select(activeView, activeViewId);
+  let isDisabled = !select(activeView);
 
   const isEditable = main.props.editable(editable => {
     return editable;

@@ -19,8 +19,8 @@ class Table extends Tools {
     };
   }
 
-  select = (view, activeViewId) => {
-    const { disallowedTools } = view.props;
+  select = activeView => {
+    const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('tables')) return false;
     return true;
   };

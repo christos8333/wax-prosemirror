@@ -28,31 +28,31 @@ class MultipleChoiceQuestion extends Tools {
     return (view, context) => {
       checkifEmpty(view);
 
-      const { state, dispatch } = view;
-      const { tr } = state;
-      /* Create Wrapping */
-      let { $from, $to } = state.selection;
-      let range = $from.blockRange($to),
-        wrapping =
-          range &&
-          findWrapping(
-            range,
-            state.config.schema.nodes.multiple_choice_container,
-            {},
-          );
-      if (!wrapping) return false;
-      tr.wrap(range, wrapping).scrollIntoView();
+      // const { state, dispatch } = view;
+      // const { tr } = state;
+      // /* Create Wrapping */
+      // let { $from, $to } = state.selection;
+      // let range = $from.blockRange($to),
+      //   wrapping =
+      //     range &&
+      //     findWrapping(
+      //       range,
+      //       state.config.schema.nodes.multiple_choice_container,
+      //       {},
+      //     );
+      // if (!wrapping) return false;
+      // tr.wrap(range, wrapping).scrollIntoView();
 
-      /* create First Option */
-      const newAnswerId = uuidv4();
-      const answerOption = state.config.schema.nodes.multiple_choice.create(
-        { id: newAnswerId },
-        Fragment.empty,
-      );
-      dispatch(tr.replaceSelectionWith(answerOption));
-      setTimeout(() => {
-        helpers.createEmptyParagraph(context, newAnswerId);
-      }, 100);
+      // /* create First Option */
+      // const newAnswerId = uuidv4();
+      // const answerOption = state.config.schema.nodes.multiple_choice.create(
+      //   { id: newAnswerId },
+      //   Fragment.empty,
+      // );
+      // dispatch(tr.replaceSelectionWith(answerOption));
+      // setTimeout(() => {
+      //   helpers.createEmptyParagraph(context, newAnswerId);
+      // }, 100);
     };
   }
 

@@ -1,16 +1,14 @@
-import Service from "../../Service";
-import { listItemNode } from "wax-prosemirror-schema";
+import { listItemNode } from 'wax-prosemirror-schema';
+import Service from '../../Service';
 
 class ListItemService extends Service {
-  boot() {}
-
   register() {
-    const createNode = this.container.get("CreateNode");
+    const createNode = this.container.get('CreateNode');
     createNode(
       {
-        list_item: listItemNode
+        list_item: listItemNode,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

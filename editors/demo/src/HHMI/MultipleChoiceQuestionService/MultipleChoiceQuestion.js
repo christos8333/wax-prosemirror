@@ -41,7 +41,7 @@ class MultipleChoiceQuestion extends Tools {
             {},
           );
       if (!wrapping) return false;
-      if (dispatch) tr.wrap(range, wrapping).scrollIntoView();
+      tr.wrap(range, wrapping).scrollIntoView();
 
       /* create First Option */
       const newAnswerId = uuidv4();

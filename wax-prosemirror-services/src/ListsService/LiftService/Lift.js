@@ -9,9 +9,11 @@ class Lift extends Tools {
   icon = 'indentDecrease';
   name = 'Lift';
 
-  select(state) {
+  select = (state, activeViewId, activeView) => {
+    const { disallowedTools } = activeView.props;
+    if (disallowedTools.includes('lift')) return false;
     return lift(state);
-  }
+  };
 
   get run() {
     return lift;

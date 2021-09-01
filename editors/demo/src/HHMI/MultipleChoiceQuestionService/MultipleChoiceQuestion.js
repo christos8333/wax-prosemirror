@@ -3,11 +3,8 @@ import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
 import { Commands } from 'wax-prosemirror-utilities';
-import { Fragment } from 'prosemirror-model';
-import { findWrapping } from 'prosemirror-transform';
 
 import { v4 as uuidv4 } from 'uuid';
-import helpers from './helpers/helpers';
 import ToolBarBtn from './components/ToolBarBtn';
 
 const checkifEmpty = view => {

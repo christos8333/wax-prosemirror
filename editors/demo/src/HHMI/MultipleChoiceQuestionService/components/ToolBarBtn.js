@@ -3,13 +3,12 @@ import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled, { css } from 'styled-components';
 import { MenuButton } from 'wax-prosemirror-components';
-import { Commands } from 'wax-prosemirror-utilities';
+import { v4 as uuidv4 } from 'uuid';
 import { Fragment } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { wrapIn } from 'prosemirror-commands';
 import helpers from '../helpers/helpers';
 
-import { v4 as uuidv4 } from 'uuid';
 const activeStyles = css`
   pointer-events: none;
 `;
@@ -48,10 +47,9 @@ const ToolBarBtn = ({ view = {}, item }) => {
     let { $from, $to } = state.selection;
     let range = $from.blockRange($to);
 
-    wrapIn(state.config.schema.nodes.multiple_choice_container)(
-      state,
-      dispatch,
-    );
+    wrapIn(state.config.schema.nodes.multiple_choice_container, {
+      id: uuidv4(),
+    })(state, dispatch);
 
     /* set New Selection */
     dispatch(

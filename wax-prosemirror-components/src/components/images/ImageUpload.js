@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const ImageUpload = ({ item, fileUpload, view }) => {
   const {
     app,
-    activeViewId,
+    activeView,
     view: { main },
   } = useContext(WaxContext);
 
@@ -37,7 +37,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
     insertImage(urls, view, placeholderPlugin);
   }
 
-  let isDisabled = !item.select(view.state, activeViewId);
+  let isDisabled = !item.select(activeView);
 
   const isEditable = main.props.editable(editable => {
     return editable;

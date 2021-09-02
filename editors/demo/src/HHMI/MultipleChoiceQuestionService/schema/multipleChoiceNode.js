@@ -1,11 +1,12 @@
 const multipleChoiceNode = {
-  group: 'inline',
-  content: 'block*',
-  inline: true,
-  // atom: true,
   attrs: {
     id: { default: '' },
+    correct: { default: false },
+    feedback: { default: '' },
   },
+  group: 'block',
+  content: 'block*',
+  // atom: true,
   toDOM: node => ['multiple-choice', node.attrs, 0],
   parseDOM: [
     {
@@ -18,28 +19,5 @@ const multipleChoiceNode = {
     },
   ],
 };
-
-// const multipleChoiceNode = {
-//   group: 'block multiple',
-//   content: 'text*',
-//   atom: true,
-//   code: true,
-//   toDOM: () => ['multiple-choice', { class: 'multiple-choice' }, 0],
-//   parseDOM: [
-//     {
-//       tag: 'multiple-choice',
-//     },
-//   ],
-// };
-
-// const multipleChoiceNode = {
-//   content: 'block+',
-//   group: 'block',
-//   defining: true,
-//   //   parseDOM: [{ tag: 'multiple-choice' }],
-//   toDOM() {
-//     // return ['multiple-choice', 0];
-//   },
-// };
 
 export default multipleChoiceNode;

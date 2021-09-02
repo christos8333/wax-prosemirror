@@ -3,9 +3,8 @@ import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Tools } from 'wax-prosemirror-services';
 import { Commands } from 'wax-prosemirror-utilities';
-import { Fragment } from 'prosemirror-model';
+
 import { v4 as uuidv4 } from 'uuid';
-import helpers from './helpers/helpers';
 import ToolBarBtn from './components/ToolBarBtn';
 
 const checkifEmpty = view => {
@@ -14,18 +13,6 @@ const checkifEmpty = view => {
   state.doc.nodesBetween(from, to, (node, pos) => {
     if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
   });
-};
-
-const createQuestion = (state, dispatch, tr, context) => {
-  const newAnswerId = uuidv4();
-  const answerOption = state.config.schema.nodes.multiple_choice.create(
-    { id: newAnswerId },
-    Fragment.empty,
-  );
-  dispatch(tr.replaceSelectionWith(answerOption));
-  setTimeout(() => {
-    helpers.createEmptyParagraph(context, newAnswerId);
-  }, 100);
 };
 
 @injectable()
@@ -38,31 +25,31 @@ class MultipleChoiceQuestion extends Tools {
     return (view, context) => {
       checkifEmpty(view);
 
-      const { state, dispatch } = view;
-      const { from, to } = state.selection;
-      const { tr } = state;
+      // const { state, dispatch } = view;
+      // const { tr } = state;
+      // /* Create Wrapping */
+      // let { $from, $to } = state.selection;
+      // let range = $from.blockRange($to),
+      //   wrapping =
+      //     range &&
+      //     findWrapping(
+      //       range,
+      //       state.config.schema.nodes.multiple_choice_container,
+      //       {},
+      //     );
+      // if (!wrapping) return false;
+      // tr.wrap(range, wrapping).scrollIntoView();
 
-      state.schema.nodes.question_wrapper.spec.atom = false;
-
-      setTimeout(() => {
-        state.doc.nodesBetween(from, to, (node, pos) => {
-          if (node.type.name === 'question_wrapper') {
-            createQuestion(state, dispatch, tr, context);
-          } else {
-            tr.setBlockType(
-              from,
-              to,
-              state.config.schema.nodes.question_wrapper,
-              {
-                class: 'question',
-              },
-            );
-            if (!tr.steps.length) return false;
-            createQuestion(state, dispatch, tr, context);
-          }
-        });
-        state.schema.nodes.question_wrapper.spec.atom = true;
-      });
+      // /* create First Option */
+      // const newAnswerId = uuidv4();
+      // const answerOption = state.config.schema.nodes.multiple_choice.create(
+      //   { id: newAnswerId },
+      //   Fragment.empty,
+      // );
+      // dispatch(tr.replaceSelectionWith(answerOption));
+      // setTimeout(() => {
+      //   helpers.createEmptyParagraph(context, newAnswerId);
+      // }, 100);
     };
   }
 
@@ -74,7 +61,7 @@ class MultipleChoiceQuestion extends Tools {
     let status = true;
     const { from, to } = state.selection;
     state.doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'question_wrapper') {
+      if (node.type.name === 'multiple_choice_container') {
         status = false;
       }
     });

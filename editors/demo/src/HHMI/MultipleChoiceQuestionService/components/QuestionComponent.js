@@ -24,7 +24,12 @@ const InfoRow = styled.div`
   padding: 10px 0px 4px 0px;
 `;
 
-const QuestionNunber = styled.span``;
+const QuestionNunber = styled.span`
+  &:before {
+    content: 'Answer ' counter(question-item-multiple);
+    counter-increment: question-item-multiple;
+  }
+`;
 
 const QuestionControlsWrapper = styled.div`
   display: flex;
@@ -86,7 +91,7 @@ export default ({ node, view, getPos }) => {
     return editable;
   });
 
-  const [feadBack, setFeedBack] = useState('');
+  const [feadBack, setFeedBack] = useState(node.attrs.feedback);
 
   const feedBackRef = useRef(null);
 
@@ -95,6 +100,7 @@ export default ({ node, view, getPos }) => {
   };
 
   const handleKeyDown = e => {
+    e.stopPropagation();
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(
@@ -145,7 +151,25 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  const questionNumber = 1;
+  const saveFeedBack = () => {
+    setTimeout(() => {
+      context.view.main.dispatch(
+        context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+          ...node.attrs,
+          feedback: feadBack,
+        }),
+      );
+    }, 150);
+  };
+
+  const onFocus = () => {
+    context.view.main.dispatch(
+      context.view.main.state.tr.setSelection(
+        new TextSelection(context.view.main.state.tr.doc.resolve(0)),
+      ),
+    );
+  };
+
   const readOnly = !isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
@@ -153,7 +177,7 @@ export default ({ node, view, getPos }) => {
   return (
     <Wrapper>
       <InfoRow>
-        <QuestionNunber>Answer {questionNumber}</QuestionNunber>
+        <QuestionNunber></QuestionNunber>
       </InfoRow>
       <QuestionControlsWrapper>
         <QuestionWrapper>
@@ -171,6 +195,8 @@ export default ({ node, view, getPos }) => {
               ref={feedBackRef}
               type="text"
               value={feadBack}
+              onBlur={saveFeedBack}
+              onFocus={onFocus}
             />
           </FeedBack>
         </QuestionWrapper>

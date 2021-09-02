@@ -23,16 +23,17 @@ class MultipleChoiceQuestionService extends Service {
     // });
 
     createNode({
-      question_wrapper: {
+      multiple_choice_container: {
+        attrs: {
+          id: { default: '' },
+          class: { default: 'mutiple-choice' },
+        },
         group: 'block',
         atom: true,
-        content: 'inline*',
-        attrs: {
-          class: { default: 'paragraph' },
-        },
+        content: 'block+',
         parseDOM: [
           {
-            tag: 'p.question',
+            tag: 'div.mutiple-choice',
             getAttrs(dom) {
               return {
                 id: dom.dataset.id,
@@ -42,7 +43,7 @@ class MultipleChoiceQuestionService extends Service {
           },
         ],
         toDOM(node) {
-          return ['p', node.attrs, 0];
+          return ['div', node.attrs, 0];
         },
       },
     });

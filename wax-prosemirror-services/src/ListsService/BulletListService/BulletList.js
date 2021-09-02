@@ -24,8 +24,9 @@ class BulletList extends Tools {
     };
   }
 
-  select = (state, activeViewId) => {
-    if (activeViewId !== 'main') return false;
+  select = (state, activeViewId, activeView) => {
+    const { disallowedTools } = activeView.props;
+    if (disallowedTools.includes('lists')) return false;
     return true;
   };
 

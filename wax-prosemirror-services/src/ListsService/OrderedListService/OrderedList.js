@@ -3,7 +3,7 @@ import { wrapInList } from 'prosemirror-schema-list';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default 
+export default
 @injectable()
 class OrderedList extends Tools {
   title = 'Wrap in ordered list';
@@ -22,8 +22,9 @@ class OrderedList extends Tools {
     };
   }
 
-  select = (state, activeViewId) => {
-    if (activeViewId !== 'main') return false;
+  select = (state, activeViewId, activeView) => {
+    const { disallowedTools } = activeView.props;
+    if (disallowedTools.includes('lists')) return false;
     return true;
   };
 

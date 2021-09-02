@@ -102,9 +102,9 @@ const EditorComponent = ({ node, view, getPos }) => {
         }),
         // This is the magic part
         dispatchTransaction,
+        disallowedTools: ['images', 'lists', 'lift'],
         handleDOMEvents: {
           mousedown: () => {
-            context.updateView({}, questionId);
             context.view[activeViewId].dispatch(
               context.view[activeViewId].state.tr.setSelection(
                 TextSelection.between(
@@ -113,6 +113,7 @@ const EditorComponent = ({ node, view, getPos }) => {
                 ),
               ),
             );
+            context.updateView({}, questionId);
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
@@ -138,7 +139,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
       questionId,
     );
-    questionView.focus();
+    if (questionView.hasFocus()) questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {

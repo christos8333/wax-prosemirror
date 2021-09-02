@@ -1,6 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
-import { Fragment } from 'prosemirror-model';
 
 const createEmptyParagraph = (context, newAnswerId) => {
   if (context.view[newAnswerId]) {
@@ -26,6 +24,7 @@ const createEmptyParagraph = (context, newAnswerId) => {
       ),
     ),
   );
+  context.view[newAnswerId].focus();
 };
 
 export default {

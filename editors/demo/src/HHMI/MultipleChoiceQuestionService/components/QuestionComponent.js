@@ -85,6 +85,7 @@ export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
     view: { main },
+    activeViewId,
   } = context;
 
   const isEditable = main.props.editable(editable => {
@@ -152,6 +153,8 @@ export default ({ node, view, getPos }) => {
   };
 
   const saveFeedBack = () => {
+    const sel = context.view[activeViewId].state.selection;
+    console.log(sel);
     setTimeout(() => {
       context.view.main.dispatch(
         context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
@@ -160,6 +163,17 @@ export default ({ node, view, getPos }) => {
         }),
       );
     }, 150);
+    setTimeout(() => {
+      context.view[activeViewId].dispatch(
+        context.view[activeViewId].state.tr.setSelection(
+          TextSelection.between(
+            context.view[activeViewId].state.selection.$anchor,
+            context.view[activeViewId].state.selection.$head,
+          ),
+        ),
+      );
+      context.view[activeViewId].focus();
+    }, 200);
   };
 
   const onFocus = () => {

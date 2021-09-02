@@ -2,7 +2,7 @@ const multipleChoiceNode = {
   attrs: {
     id: { default: '' },
     correct: { default: false },
-    feedback: { default: false },
+    feedback: { default: '' },
   },
   group: 'block',
   content: 'block*',

@@ -24,6 +24,7 @@ const createEmptyParagraph = (context, newAnswerId) => {
       ),
     ),
   );
+  context.view[newAnswerId].focus();
 };
 
 export default {

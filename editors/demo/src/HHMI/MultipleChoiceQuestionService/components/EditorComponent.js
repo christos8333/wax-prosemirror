@@ -114,6 +114,7 @@ const EditorComponent = ({ node, view, getPos }) => {
               ),
             );
             context.updateView({}, questionId);
+            console.log(context.view.main.state.selection);
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
@@ -139,7 +140,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
       questionId,
     );
-    questionView.focus();
+    if (questionView.hasFocus()) questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {

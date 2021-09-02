@@ -111,6 +111,10 @@ export default css`
     }
   }
 
+  .mutiple-choice.ProseMirror-selectednode {
+    outline: none;
+  }
+
   sup,
   sub {
     line-height: 0;

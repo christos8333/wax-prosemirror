@@ -86,7 +86,7 @@ export default ({ node, view, getPos }) => {
     return editable;
   });
 
-  const [feadBack, setFeedBack] = useState('');
+  const [feadBack, setFeedBack] = useState(node.attrs.feedback);
 
   const feedBackRef = useRef(null);
 
@@ -95,6 +95,7 @@ export default ({ node, view, getPos }) => {
   };
 
   const handleKeyDown = e => {
+    e.stopPropagation();
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(
@@ -145,6 +146,25 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const saveFeedBack = () => {
+    setTimeout(() => {
+      context.view.main.dispatch(
+        context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+          ...node.attrs,
+          feedback: feadBack,
+        }),
+      );
+    }, 150);
+  };
+
+  const onFocus = () => {
+    context.view.main.dispatch(
+      context.view.main.state.tr.setSelection(
+        new TextSelection(context.view.main.state.tr.doc.resolve(0)),
+      ),
+    );
+  };
+
   const questionNumber = 1;
   const readOnly = !isEditable;
   const showAddIcon = true;
@@ -171,6 +191,8 @@ export default ({ node, view, getPos }) => {
               ref={feedBackRef}
               type="text"
               value={feadBack}
+              onBlur={saveFeedBack}
+              onFocus={onFocus}
             />
           </FeedBack>
         </QuestionWrapper>

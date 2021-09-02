@@ -41,6 +41,8 @@ export default ({ node, view, getPos }) => {
 
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
+    /*HACK*/
+    node.attrs.feedback = feedBackRef.current.value;
   };
 
   const saveFeedBack = () => {
@@ -83,7 +85,7 @@ export default ({ node, view, getPos }) => {
         ref={feedBackRef}
         type="text"
         value={feedBack}
-        onBlur={saveFeedBack}
+        // onBlur={saveFeedBack}
         onFocus={onFocus}
       />
     </FeedBack>

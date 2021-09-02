@@ -67,21 +67,6 @@ const QuestionData = styled.div`
   flex-direction: row;
 `;
 
-const FeedBack = styled.div`
-  color: black;
-  margin-top: 10px;
-`;
-
-const FeedBackLabel = styled.span`
-  font-weight: 700;
-`;
-
-const FeedBackInput = styled.input`
-  border: none;
-  display: flex;
-  width: 100%;
-`;
-
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {

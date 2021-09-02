@@ -203,12 +203,8 @@ export default ({ node, view, getPos }) => {
         <IconsWrapper>
           {showAddIcon && !readOnly && (
             <Button
-              icon={
-                <PlusSquareOutlined
-                  onClick={() => addOption(node.attrs.id)}
-                  title="Add Option"
-                />
-              }
+              onClick={() => addOption(node.attrs.id)}
+              icon={<PlusSquareOutlined title="Add Option" />}
             />
           )}
           {showRemoveIcon && !readOnly && (

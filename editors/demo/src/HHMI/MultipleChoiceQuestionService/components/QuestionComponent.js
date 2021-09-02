@@ -24,7 +24,12 @@ const InfoRow = styled.div`
   padding: 10px 0px 4px 0px;
 `;
 
-const QuestionNunber = styled.span``;
+const QuestionNunber = styled.span`
+  &:before {
+    content: 'Answer ' counter(question-item-multiple);
+    counter-increment: question-item-multiple;
+  }
+`;
 
 const QuestionControlsWrapper = styled.div`
   display: flex;
@@ -165,7 +170,6 @@ export default ({ node, view, getPos }) => {
     );
   };
 
-  const questionNumber = 1;
   const readOnly = !isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
@@ -173,7 +177,7 @@ export default ({ node, view, getPos }) => {
   return (
     <Wrapper>
       <InfoRow>
-        <QuestionNunber>Answer {questionNumber}</QuestionNunber>
+        <QuestionNunber></QuestionNunber>
       </InfoRow>
       <QuestionControlsWrapper>
         <QuestionWrapper>

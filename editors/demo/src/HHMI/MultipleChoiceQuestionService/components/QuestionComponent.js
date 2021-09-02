@@ -92,7 +92,7 @@ export default ({ node, view, getPos }) => {
     return editable;
   });
 
-  const [feadBack, setFeedBack] = useState(node.attrs.feedback);
+  const [feedBack, setFeedBack] = useState(node.attrs.feedback);
 
   const feedBackRef = useRef(null);
 
@@ -153,13 +153,11 @@ export default ({ node, view, getPos }) => {
   };
 
   const saveFeedBack = () => {
-    const sel = context.view[activeViewId].state.selection;
-    console.log(sel);
     setTimeout(() => {
       context.view.main.dispatch(
         context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
           ...node.attrs,
-          feedback: feadBack,
+          feedback: feedBack,
         }),
       );
     }, 150);
@@ -208,7 +206,7 @@ export default ({ node, view, getPos }) => {
               placeholder="Insert feedback"
               ref={feedBackRef}
               type="text"
-              value={feadBack}
+              value={feedBack}
               onBlur={saveFeedBack}
               onFocus={onFocus}
             />

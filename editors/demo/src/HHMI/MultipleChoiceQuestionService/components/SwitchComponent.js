@@ -19,9 +19,12 @@ const StyledSwitch = styled(Switch)`
   }
 `;
 
-const CustomSwitch = () => {
+const CustomSwitch = ({ node }) => {
   const [checked, setChecked] = useState(false);
-  const handleChange = () => setChecked(!checked);
+  const handleChange = () => {
+    setChecked(!checked);
+  };
+
   return (
     <StyledSwitch
       checked={checked}

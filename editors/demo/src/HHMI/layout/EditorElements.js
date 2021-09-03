@@ -109,6 +109,10 @@ export default css`
       position: relative;
       right: 20px;
     }
+
+    p span.wax-selection-marker:last-of-type {
+      display: none;
+    }
   }
 
   .mutiple-choice.ProseMirror-selectednode {

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import Switch from './Switch';
 
@@ -19,10 +20,19 @@ const StyledSwitch = styled(Switch)`
   }
 `;
 
-const CustomSwitch = ({ node }) => {
+const CustomSwitch = ({ node, getPos }) => {
+  const context = useContext(WaxContext);
+  const { activeViewId } = context;
   const [checked, setChecked] = useState(false);
+
   const handleChange = () => {
     setChecked(!checked);
+    context.view.main.dispatch(
+      context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+        ...node.attrs,
+        correct: !checked,
+      }),
+    );
   };
 
   return (

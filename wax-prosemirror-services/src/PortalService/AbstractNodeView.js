@@ -23,7 +23,7 @@ export default class AbstractNodeView {
   }
 
   update(node) {
-    if (!node.sameMarkup(this.node)) return false;
+    // if (!node.sameMarkup(this.node)) return false;
     this.node = node;
     if (this.context.view[node.attrs.id]) {
       const { state } = this.context.view[node.attrs.id];

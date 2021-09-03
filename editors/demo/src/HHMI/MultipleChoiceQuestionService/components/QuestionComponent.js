@@ -132,7 +132,7 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent node={node} view={view} getPos={getPos} />
 
-            <SwitchComponent node={node} />
+            <SwitchComponent node={node} getPos={getPos} />
           </QuestionData>
           <FeedbackComponent node={node} view={view} getPos={getPos} />
         </QuestionWrapper>

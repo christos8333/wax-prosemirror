@@ -21,10 +21,7 @@ const FeedBackInput = styled.input`
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
-  const {
-    view: { main },
-    activeViewId,
-  } = context;
+  const { activeViewId } = context;
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
   const feedBackRef = useRef(null);
 

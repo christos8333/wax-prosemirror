@@ -22,7 +22,6 @@ const StyledSwitch = styled(Switch)`
 
 const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
-  const { activeViewId } = context;
   const [checked, setChecked] = useState(false);
 
   const handleChange = () => {

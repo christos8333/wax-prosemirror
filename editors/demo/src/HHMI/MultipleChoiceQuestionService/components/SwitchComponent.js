@@ -27,13 +27,13 @@ const CustomSwitch = ({ node, getPos }) => {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    const allNodes = getNodes(context.view);
+    const allNodes = getNodes(context.view.main);
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
         setChecked(singNode.node.attrs.correct);
       }
     });
-  }, [getNodes(context.view)]);
+  }, [getNodes(context.view.main)]);
 
   const handleChange = () => {
     setChecked(!checked);
@@ -58,7 +58,7 @@ const CustomSwitch = ({ node, getPos }) => {
 };
 
 const getNodes = view => {
-  const allNodes = DocumentHelpers.findBlockNodes(view.main.state.doc);
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
     if (node.node.type.name === 'multiple_choice') {

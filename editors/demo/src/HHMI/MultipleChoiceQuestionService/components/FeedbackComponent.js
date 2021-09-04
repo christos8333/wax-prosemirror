@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const FeedBack = styled.div`
   color: black;
@@ -21,8 +22,19 @@ const FeedBackInput = styled.input`
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
-  const [feedBack, setFeedBack] = useState(node.attrs.feedback);
+  const [feedBack, setFeedBack] = useState('');
   const feedBackRef = useRef(null);
+
+  useEffect(() => {
+    const allNodes = getNodes(context.view.main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        console.log('here', singNode.node.attrs.feedback);
+        if (singNode.node.attrs.feedback !== '')
+          setFeedBack(singNode.node.attrs.feedback);
+      }
+    });
+  }, [getNodes(context.view.main)]);
 
   const handleKeyDown = e => {
     e.stopPropagation();
@@ -71,4 +83,15 @@ export default ({ node, view, getPos }) => {
       />
     </FeedBack>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const multipleChoiceNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'multiple_choice') {
+      multipleChoiceNodes.push(node);
+    }
+  });
+  return multipleChoiceNodes;
 };

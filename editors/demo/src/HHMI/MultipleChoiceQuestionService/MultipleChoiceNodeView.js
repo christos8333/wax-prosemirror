@@ -23,12 +23,6 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   }
 
   update(node) {
-    if (
-      node.attrs.correct !== this.node.attrs.correct ||
-      node.attrs.feedback !== this.node.attrs.feedback
-    )
-      return true;
-
     // if (!node.sameMarkup(this.node)) return false;
     this.node = node;
     if (this.context.view[node.attrs.id]) {

@@ -21,7 +21,6 @@ const FeedBackInput = styled.input`
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
-  const { activeViewId } = context;
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
   const feedBackRef = useRef(null);
 
@@ -38,30 +37,15 @@ export default ({ node, view, getPos }) => {
 
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
-    /*HACK*/
-    node.attrs.feedback = feedBackRef.current.value;
   };
 
   const saveFeedBack = () => {
-    setTimeout(() => {
-      context.view.main.dispatch(
-        context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-          ...node.attrs,
-          feedback: feedBack,
-        }),
-      );
-    }, 150);
-    setTimeout(() => {
-      context.view[activeViewId].dispatch(
-        context.view[activeViewId].state.tr.setSelection(
-          TextSelection.between(
-            context.view[activeViewId].state.selection.$anchor,
-            context.view[activeViewId].state.selection.$head,
-          ),
-        ),
-      );
-      context.view[activeViewId].focus();
-    }, 200);
+    context.view.main.dispatch(
+      context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+        ...node.attrs,
+        feedback: feedBack,
+      }),
+    );
   };
 
   const onFocus = () => {
@@ -82,7 +66,7 @@ export default ({ node, view, getPos }) => {
         ref={feedBackRef}
         type="text"
         value={feedBack}
-        // onBlur={saveFeedBack}
+        onBlur={saveFeedBack}
         onFocus={onFocus}
       />
     </FeedBack>

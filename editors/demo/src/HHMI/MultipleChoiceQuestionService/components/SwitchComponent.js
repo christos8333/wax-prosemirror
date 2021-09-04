@@ -1,5 +1,7 @@
-import React, { useState, useContext } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
 import Switch from './Switch';
 
@@ -24,6 +26,15 @@ const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
 
+  useEffect(() => {
+    const allNodes = getNodes(context.view);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        setChecked(singNode.node.attrs.correct);
+      }
+    });
+  }, [getNodes(context.view)]);
+
   const handleChange = () => {
     setChecked(!checked);
     context.view.main.dispatch(
@@ -44,6 +55,17 @@ const CustomSwitch = ({ node, getPos }) => {
       unCheckedChildren="NO"
     />
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.main.state.doc);
+  const multipleChoiceNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'multiple_choice') {
+      multipleChoiceNodes.push(node);
+    }
+  });
+  return multipleChoiceNodes;
 };
 
 export default CustomSwitch;

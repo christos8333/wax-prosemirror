@@ -23,13 +23,17 @@ const FeedBackInput = styled.input`
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const [feedBack, setFeedBack] = useState('');
+  const [isFirstRun, setFirstRun] = useState(true);
   const feedBackRef = useRef(null);
 
   useEffect(() => {
     const allNodes = getNodes(context.view.main);
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
-        console.log('here', singNode.node.attrs.feedback);
+        if (!isFirstRun) {
+          if (singNode.node.attrs.feedback === '')
+            setFeedBack(singNode.node.attrs.feedback);
+        }
         if (singNode.node.attrs.feedback !== '')
           setFeedBack(singNode.node.attrs.feedback);
       }
@@ -52,12 +56,19 @@ export default ({ node, view, getPos }) => {
   };
 
   const saveFeedBack = () => {
-    context.view.main.dispatch(
-      context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-        ...node.attrs,
-        feedback: feedBack,
-      }),
-    );
+    const allNodes = getNodes(context.view.main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        context.view.main.dispatch(
+          context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+            ...node.attrs,
+            feedback: feedBack,
+          }),
+        );
+        setFirstRun(false);
+      }
+    });
+    return false;
   };
 
   const onFocus = () => {

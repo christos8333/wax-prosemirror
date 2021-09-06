@@ -80,7 +80,7 @@ export default ({ node, view, getPos }) => {
     main.state.doc.nodesBetween(getPos(), getPos() + 1, (nodes, pos) => {
       if (nodes.attrs.id === node.attrs.id) {
         main.dispatch(
-          main.state.tr.deleteRange(getPos(), getPos() + nodes.nodeSize + 1),
+          main.state.tr.deleteRange(getPos(), getPos() + nodes.nodeSize),
         );
       }
     });

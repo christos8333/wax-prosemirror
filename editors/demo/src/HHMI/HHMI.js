@@ -15,6 +15,8 @@ const renderImage = file => {
   });
 };
 
+const data = `<p class="paragraph"></p><div id="1a351d6c-13af-4f66-b5bd-8b995fffbd48" class="mutiple-choice"><div class="mutiple-choice-option" id="cf2b1908-e611-44cd-8a5b-8d0cad5c3df0" correct="true" feedback=""><p class="paragraph"></p></div><p class="paragraph"></p></div>`;
+
 const Hhmi = () => {
   return (
     <>
@@ -22,8 +24,7 @@ const Hhmi = () => {
         config={config}
         autoFocus
         fileUpload={file => renderImage(file)}
-        value=""
-        targetFormat="JSON"
+        value={data}
         // readonly
         layout={HhmiLayout}
         onChange={source => console.log(source)}

@@ -15,6 +15,8 @@ const multipleChoiceNode = {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
+          correct: dom.getAttribute('correct'),
+          feedback: dom.getAttribute('feedback'),
         };
       },
     },

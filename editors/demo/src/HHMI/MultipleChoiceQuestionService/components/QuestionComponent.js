@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -9,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import helpers from '../helpers/helpers';
 import EditorComponent from './EditorComponent';
 import SwitchComponent from './SwitchComponent';
+import FeedbackComponent from './FeedbackComponent';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -66,21 +66,6 @@ const QuestionData = styled.div`
   flex-direction: row;
 `;
 
-const FeedBack = styled.div`
-  color: black;
-  margin-top: 10px;
-`;
-
-const FeedBackLabel = styled.span`
-  font-weight: 700;
-`;
-
-const FeedBackInput = styled.input`
-  border: none;
-  display: flex;
-  width: 100%;
-`;
-
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
@@ -90,25 +75,6 @@ export default ({ node, view, getPos }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-
-  const [feadBack, setFeedBack] = useState(node.attrs.feedback);
-
-  const feedBackRef = useRef(null);
-
-  const feedBackInput = () => {
-    setFeedBack(feedBackRef.current.value);
-  };
-
-  const handleKeyDown = e => {
-    e.stopPropagation();
-    if (e.key === 'Backspace') {
-      context.view.main.dispatch(
-        context.view.main.state.tr.setSelection(
-          new TextSelection(context.view.main.state.tr.doc.resolve(0)),
-        ),
-      );
-    }
-  };
 
   const removeOption = () => {
     main.state.doc.nodesBetween(getPos(), getPos() + 1, (nodes, pos) => {
@@ -151,25 +117,6 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  const saveFeedBack = () => {
-    setTimeout(() => {
-      context.view.main.dispatch(
-        context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-          ...node.attrs,
-          feedback: feadBack,
-        }),
-      );
-    }, 150);
-  };
-
-  const onFocus = () => {
-    context.view.main.dispatch(
-      context.view.main.state.tr.setSelection(
-        new TextSelection(context.view.main.state.tr.doc.resolve(0)),
-      ),
-    );
-  };
-
   const readOnly = !isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
@@ -184,31 +131,15 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent node={node} view={view} getPos={getPos} />
 
-            <SwitchComponent />
+            <SwitchComponent node={node} getPos={getPos} />
           </QuestionData>
-          <FeedBack>
-            <FeedBackLabel>Feedback</FeedBackLabel>
-            <FeedBackInput
-              onKeyDown={handleKeyDown}
-              onChange={feedBackInput}
-              placeholder="Insert feedback"
-              ref={feedBackRef}
-              type="text"
-              value={feadBack}
-              onBlur={saveFeedBack}
-              onFocus={onFocus}
-            />
-          </FeedBack>
+          <FeedbackComponent node={node} view={view} getPos={getPos} />
         </QuestionWrapper>
         <IconsWrapper>
           {showAddIcon && !readOnly && (
             <Button
-              icon={
-                <PlusSquareOutlined
-                  onClick={() => addOption(node.attrs.id)}
-                  title="Add Option"
-                />
-              }
+              onClick={() => addOption(node.attrs.id)}
+              icon={<PlusSquareOutlined title="Add Option" />}
             />
           )}
           {showRemoveIcon && !readOnly && (

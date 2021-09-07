@@ -109,6 +109,14 @@ export default css`
       position: relative;
       right: 20px;
     }
+
+    .portal p {
+      display: block !important;
+    }
+
+    p:last-of-type {
+      display: none;
+    }
   }
 
   .mutiple-choice.ProseMirror-selectednode {

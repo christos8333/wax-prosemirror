@@ -5,6 +5,7 @@ const link = {
     target: { default: 'blank' },
     title: { default: null },
   },
+  excludes: 'link',
   inclusive: false,
   parseDOM: [
     {

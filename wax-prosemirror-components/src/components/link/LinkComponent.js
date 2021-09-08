@@ -54,7 +54,7 @@ const StyledButtonCancel = styled.button`
 
 const LinkComponent = ({ mark, setPosition, position }) => {
   const href = mark ? mark.attrs.href : null;
-  const linkMark = mark ? mark : null;
+  const linkMark = mark || null;
   const { activeView } = useContext(WaxContext);
   const { state, dispatch } = activeView;
   const ref = useRef(null);
@@ -69,26 +69,26 @@ const LinkComponent = ({ mark, setPosition, position }) => {
   }, [ref.current, href]);
 
   const addLinkHref = () => {
-    const href = linkHref;
     if (linkInput.current.value === '') {
       linkInput.current.focus();
       return false;
     }
-    const linkMark = state.schema.marks.link;
+    const schemaLinkMark = state.schema.marks.link;
     const { tr } = state;
 
     dispatch(
       tr.addMark(
         mark.from,
         mark.to,
-        linkMark.create({
+        schemaLinkMark.create({
           ...((mark && mark.attrs) || {}),
-          href,
+          href: linkHref,
         }),
       ),
     );
     setEditable(false);
     activeView.focus();
+    return true;
   };
 
   const removeLink = () => {
@@ -194,9 +194,9 @@ const LinkComponent = ({ mark, setPosition, position }) => {
       <LinkWrapper ref={ref}>
         {editable && (
           <Input
-            ref={linkInput}
             onChange={updateLinkHref}
             onKeyPress={handleKeyDown}
+            ref={linkInput}
             value={linkHref}
           />
         )}

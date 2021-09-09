@@ -77,10 +77,10 @@ export default ({ node, view, getPos }) => {
   });
 
   const removeOption = () => {
-    main.state.doc.nodesBetween(getPos(), getPos() + 1, (nodes, pos) => {
-      if (nodes.attrs.id === node.attrs.id) {
+    main.state.doc.nodesBetween(getPos(), getPos() + 1, (sinlgeNode, pos) => {
+      if (sinlgeNode.attrs.id === node.attrs.id) {
         main.dispatch(
-          main.state.tr.deleteRange(getPos(), getPos() + nodes.nodeSize + 1),
+          main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
         );
       }
     });
@@ -111,7 +111,7 @@ export default ({ node, view, getPos }) => {
           // create Empty Paragraph
           setTimeout(() => {
             helpers.createEmptyParagraph(context, newAnswerId);
-          }, 100);
+          }, 30);
         }
       }
     });

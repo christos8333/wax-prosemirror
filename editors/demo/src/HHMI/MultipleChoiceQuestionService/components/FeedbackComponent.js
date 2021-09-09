@@ -41,7 +41,6 @@ export default ({ node, view, getPos }) => {
   }, [getNodes(context.view.main)]);
 
   const handleKeyDown = e => {
-    e.stopPropagation();
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(

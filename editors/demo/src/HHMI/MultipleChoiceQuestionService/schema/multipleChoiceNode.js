@@ -1,5 +1,6 @@
 const multipleChoiceNode = {
   attrs: {
+    class: { default: 'mutiple-choice-option' },
     id: { default: '' },
     correct: { default: false },
     feedback: { default: '' },
@@ -7,17 +8,20 @@ const multipleChoiceNode = {
   group: 'block',
   content: 'block*',
   // atom: true,
-  toDOM: node => ['multiple-choice', node.attrs, 0],
   parseDOM: [
     {
-      tag: 'multiple-choice',
+      tag: 'div.mutiple-choice-option',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),
+          class: dom.getAttribute('class'),
+          correct: dom.getAttribute('correct'),
+          feedback: dom.getAttribute('feedback'),
         };
       },
     },
   ],
+  toDOM: node => ['div', node.attrs, 0],
 };
 
 export default multipleChoiceNode;

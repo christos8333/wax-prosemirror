@@ -11,7 +11,9 @@ export default class AbstractNodeView {
     Component,
     context,
   ) {
-    this.dom = document.createElement('div');
+    this.dom = node.type.spec.inline
+      ? document.createElement('span')
+      : document.createElement('div');
     this.dom.id = uuidv4();
     this.dom.classList.add('portal');
     this.node = node;
@@ -23,6 +25,7 @@ export default class AbstractNodeView {
   }
 
   update(node) {
+    if (node.type !== this.node.type) return false;
     if (!node.sameMarkup(this.node)) return false;
     this.node = node;
     if (this.context.view[node.attrs.id]) {
@@ -59,4 +62,8 @@ export default class AbstractNodeView {
   ignoreMutation() {
     return true;
   }
+
+  selectNode() {}
+
+  deselectNode() {}
 }

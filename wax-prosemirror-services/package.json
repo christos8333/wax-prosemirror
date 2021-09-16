@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-services",
   "author": "Christos Kokosias",
-  "version": "0.0.50",
+  "version": "0.0.51",
   "description": "Wax prosemirror services",
   "license": "MIT",
   "main": "dist/index.js",
@@ -28,11 +28,11 @@
     "styled-components": "^5.3.0",
     "use-deep-compare-effect": "^1.3.1",
     "uuid": "^7.0.3",
-    "wax-prosemirror-components": "^0.0.50",
-    "wax-prosemirror-core": "^0.0.50",
-    "wax-prosemirror-plugins": "^0.0.50",
-    "wax-prosemirror-schema": "^0.0.50",
-    "wax-prosemirror-utilities": "^0.0.50"
+    "wax-prosemirror-components": "^0.0.51",
+    "wax-prosemirror-core": "^0.0.51",
+    "wax-prosemirror-plugins": "^0.0.51",
+    "wax-prosemirror-schema": "^0.0.51",
+    "wax-prosemirror-utilities": "^0.0.51"
   },
   "peerDependencies": {
     "react": "^16.13.1",

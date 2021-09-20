@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
+import PanelGroup from 'react-panelgroup';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
   font-size: ${th('fontSizeBase')};
   height: 100%;
   line-height: ${grid(4)};
+
   overflow: hidden;
   width: 100%;
 
@@ -36,7 +38,7 @@ const TopMenu = styled.div`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   display: flex;
-  height: 40px;
+  min-height: 40px;
   user-select: none;
 
   > div:not(:last-child) {
@@ -65,10 +67,9 @@ const EditorArea = styled.div`
 const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   display: flex;
-  height: 88%;
+  height: 100%;
   overflow-y: auto;
-  position: fixed;
-  top: 95px;
+  position: absolute;
   width: 100%;
   /* PM styles  for main content*/
   ${EditorElements};
@@ -79,10 +80,19 @@ const EditorContainer = styled.div`
   width: 100%;
 
   .ProseMirror {
-    height: 100%;
+    box-shadow: 0 0 8px #ecedf1;
+    min-height: 98%;
     padding: ${grid(10)};
   }
 `;
+
+let surfaceHeight = (window.innerHeight / 5) * 3;
+let notesHeight = (window.innerHeight / 5) * 2;
+
+const onResizeEnd = arr => {
+  surfaceHeight = arr[0].size;
+  notesHeight = arr[1].size;
+};
 
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
@@ -112,11 +122,21 @@ const HhmiLayout = ({ editor }) => {
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>
+
         <Main>
           <EditorArea>
-            <WaxSurfaceScroll>
-              <EditorContainer>{editor}</EditorContainer>
-            </WaxSurfaceScroll>
+            <PanelGroup
+              direction="column"
+              panelWidths={[
+                { size: surfaceHeight, resize: 'stretch' },
+                { size: notesHeight, resize: 'resize' },
+              ]}
+              onResizeEnd={onResizeEnd}
+            >
+              <WaxSurfaceScroll>
+                <EditorContainer>{editor}</EditorContainer>
+              </WaxSurfaceScroll>
+            </PanelGroup>
           </EditorArea>
         </Main>
         <WaxOverlays />

@@ -60,6 +60,7 @@ const TopMenu = styled.div`
 `;
 
 const EditorArea = styled.div`
+  background: #f4f4f7;
   flex-grow: 1;
 `;
 
@@ -68,6 +69,7 @@ const WaxSurfaceScroll = styled.div`
   display: flex;
   height: 100%;
   overflow-y: auto;
+  padding: 25px 25% 0 25%;
   width: 100%;
   /* PM styles  for main content*/
   ${EditorElements};
@@ -79,7 +81,7 @@ const EditorContainer = styled.div`
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
-    min-height: 98%;
+    min-height: 100%;
     padding: ${grid(10)};
   }
 `;

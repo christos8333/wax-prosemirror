@@ -96,33 +96,6 @@ export default css`
     }
   }
 
-  .mutiple-choice {
-    border: 3px solid #f5f5f7;
-    counter-reset: question-item-multiple;
-    margin: 38px;
-    padding: 20px;
-
-    &:before {
-      bottom: 45px;
-      content: 'Answer Group ' counter(multiple-question) '.';
-      counter-increment: multiple-question;
-      position: relative;
-      right: 20px;
-    }
-
-    .portal p {
-      display: block !important;
-    }
-
-    p:last-of-type {
-      display: none;
-    }
-  }
-
-  .mutiple-choice.ProseMirror-selectednode {
-    outline: none;
-  }
-
   sup,
   sub {
     line-height: 0;
@@ -346,5 +319,41 @@ export default css`
 
   .transform-icon {
     transform: rotate(40deg);
+  }
+
+  /* -- Questions ---------------------------------- */
+
+  /* -- Multiple Choice ---------------------------------- */
+
+  .mutiple-choice {
+    border: 3px solid #f5f5f7;
+    counter-reset: question-item-multiple;
+    margin: 38px;
+    padding: 20px;
+
+    &:before {
+      bottom: 45px;
+      content: 'Answer Group ' counter(multiple-question) '.';
+      counter-increment: multiple-question;
+      position: relative;
+      right: 20px;
+    }
+
+    .portal p {
+      display: block !important;
+    }
+
+    p:last-of-type {
+      display: none;
+    }
+
+    .ProseMirror {
+      box-shadow: none;
+      padding: 5px 5px 0 5px;
+    }
+  }
+
+  .mutiple-choice.ProseMirror-selectednode {
+    outline: none;
   }
 `;

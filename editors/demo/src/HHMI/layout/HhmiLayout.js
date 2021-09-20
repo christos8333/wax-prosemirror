@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
-import PanelGroup from 'react-panelgroup';
+import styled, { ThemeProvider } from 'styled-components';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
@@ -69,7 +68,6 @@ const WaxSurfaceScroll = styled.div`
   display: flex;
   height: 100%;
   overflow-y: auto;
-  position: absolute;
   width: 100%;
   /* PM styles  for main content*/
   ${EditorElements};
@@ -85,14 +83,6 @@ const EditorContainer = styled.div`
     padding: ${grid(10)};
   }
 `;
-
-let surfaceHeight = (window.innerHeight / 5) * 3;
-let notesHeight = (window.innerHeight / 5) * 2;
-
-const onResizeEnd = arr => {
-  surfaceHeight = arr[0].size;
-  notesHeight = arr[1].size;
-};
 
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
@@ -125,18 +115,9 @@ const HhmiLayout = ({ editor }) => {
 
         <Main>
           <EditorArea>
-            <PanelGroup
-              direction="column"
-              panelWidths={[
-                { size: surfaceHeight, resize: 'stretch' },
-                { size: notesHeight, resize: 'resize' },
-              ]}
-              onResizeEnd={onResizeEnd}
-            >
-              <WaxSurfaceScroll>
-                <EditorContainer>{editor}</EditorContainer>
-              </WaxSurfaceScroll>
-            </PanelGroup>
+            <WaxSurfaceScroll>
+              <EditorContainer>{editor}</EditorContainer>
+            </WaxSurfaceScroll>
           </EditorArea>
         </Main>
         <WaxOverlays />

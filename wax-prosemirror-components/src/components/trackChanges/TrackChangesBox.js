@@ -3,9 +3,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import DateParser from '../../helpers/DateParser';
 
-import icons from '../../icons/icons';
-
-const { check, times } = icons;
+import Icon from '../../helpers/Icon';
 
 const activeBorder = css`
   border-color: #bfc4cd;
@@ -63,9 +61,18 @@ const ActionWrapper = styled.div`
   margin-bottom: 5px;
 `;
 
+const StyledIcon = styled(Icon)`
+  bottom: 2px;
+  cursor: pointer;
+  height: 16px;
+  position: relative;
+  right: 2px;
+  width: 16px;
+`;
+
 const Text = styled.span``;
 
-const Icon = styled.div`
+const Icons = styled.div`
   border-radius: 3px;
   display: inline-block;
   height: 20px;
@@ -80,17 +87,16 @@ const Icon = styled.div`
 
 const IconButton = props => {
   // eslint-disable-next-line react/prop-types
-  const { icon, onClick } = props;
-
+  const { name, onClick } = props;
   const handleClick = e => {
     e.stopPropagation();
     onClick();
   };
 
   return (
-    <Icon onClick={handleClick} type="button">
-      {icon}
-    </Icon>
+    <Icons onClick={handleClick} type="button">
+      <StyledIcon name={name.toString()} />
+    </Icons>
   );
 };
 
@@ -170,8 +176,8 @@ const TrackChangesBox = props => {
         </Info>
         {active && (
           <Tools>
-            <IconButton icon={check} onClick={onClickAccept} />
-            <IconButton icon={times} onClick={onClickReject} />
+            <IconButton name="checkTrack" onClick={onClickAccept} />
+            <IconButton name="reject" onClick={onClickReject} />
           </Tools>
         )}
       </HeadWrapper>

@@ -11,7 +11,9 @@ export default class AbstractNodeView {
     Component,
     context,
   ) {
-    this.dom = document.createElement('div');
+    this.dom = node.type.spec.inline
+      ? document.createElement('span')
+      : document.createElement('div');
     this.dom.id = uuidv4();
     this.dom.classList.add('portal');
     this.node = node;
@@ -23,25 +25,7 @@ export default class AbstractNodeView {
   }
 
   update(node) {
-    if (!node.sameMarkup(this.node)) return false;
-    this.node = node;
-    if (this.context.view[node.attrs.id]) {
-      const { state } = this.context.view[node.attrs.id];
-      const start = node.content.findDiffStart(state.doc.content);
-      if (start != null) {
-        let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
-        const overlap = start - Math.min(endA, endB);
-        if (overlap > 0) {
-          endA += overlap;
-          endB += overlap;
-        }
-        this.context.view[node.attrs.id].dispatch(
-          state.tr
-            .replace(start, endB, node.slice(start, endA))
-            .setMeta('fromOutside', true),
-        );
-      }
-    }
+    if (node.type !== this.node.type) return false;
 
     return true;
   }
@@ -57,6 +41,14 @@ export default class AbstractNodeView {
   }
 
   ignoreMutation() {
+    return true;
+  }
+
+  selectNode() {
+    return true;
+  }
+
+  deselectNode() {
     return true;
   }
 }

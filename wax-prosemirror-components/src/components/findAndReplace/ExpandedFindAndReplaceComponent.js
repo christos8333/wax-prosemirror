@@ -1,12 +1,6 @@
 /* eslint react/prop-types: 0 */
-import React, {
-  useState,
-  useRef,
-  useContext,
-  useCallback,
-  useEffect,
-} from 'react';
-import { each, eachRight, debounce } from 'lodash';
+import React, { useState, useRef, useContext, useEffect } from 'react';
+import { each, eachRight } from 'lodash';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';

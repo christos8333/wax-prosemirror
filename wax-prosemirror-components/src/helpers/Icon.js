@@ -9,7 +9,6 @@ import icons from '../icons/icons';
 
 const SVGIcon = props => {
   const { className, name } = props;
-
   const Component = icons[name];
   return <Component className={className} />;
 };

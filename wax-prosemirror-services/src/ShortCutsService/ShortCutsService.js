@@ -16,10 +16,11 @@ export default class ShortCutsService extends Service {
       .bind('ShortCuts')
       .toDynamicValue(() => {
         if (this.app.schema) {
-          return new ShortCuts(
-            PmPlugins,
-            this.container.get('Schema').getSchema(),
-          );
+          const {
+            schema: { schema },
+          } = this.app;
+
+          return new ShortCuts(PmPlugins, schema);
         }
 
         return new ShortCuts(

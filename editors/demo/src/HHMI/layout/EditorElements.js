@@ -330,6 +330,7 @@ export default css`
     counter-reset: question-item-multiple;
     margin: 38px;
     padding: 20px;
+    padding-top: 0px;
 
     &:before {
       bottom: 45px;
@@ -337,14 +338,6 @@ export default css`
       counter-increment: multiple-question;
       position: relative;
       right: 20px;
-    }
-
-    .portal p {
-      display: block !important;
-    }
-
-    p:last-of-type {
-      display: none;
     }
 
     .ProseMirror {

@@ -19,9 +19,9 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const activeStyles = css`
-  background: #fff;
-  color: #535e76;
-  border: 1px solid#535E76;
+  background: #535e76;
+  color: #fff;
+  padding: 5px 15px 5px 15px;
 `;
 
 const ProjectContainer = styled.div`
@@ -50,12 +50,12 @@ const Projects = styled.div`
 `;
 
 const ProjectButton = styled.button`
+  border: 1px solid #535e76;
   cursor: pointer;
+  color: #535e76;
   margin-right: 20px;
-  border: none;
-  background: #535e76;
-  padding: 5px 15px 5px 15px;
-  color: #fff;
+  background: #fff;
+  padding: 4px 14px 4px 14px;
   ${props => props.isActive && activeStyles}
 `;
 

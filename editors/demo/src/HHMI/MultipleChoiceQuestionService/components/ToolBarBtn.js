@@ -58,7 +58,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
       ),
     );
 
-    /* create First Option */
+    /* create Second Option */
     const newAnswerId = uuidv4();
     const answerOption = main.state.config.schema.nodes.multiple_choice.create(
       { id: newAnswerId },

@@ -4,8 +4,10 @@ const multipleChoiceContainerNode = {
     class: { default: 'mutiple-choice' },
   },
   group: 'block',
-  atom: true,
-  content: 'block+',
+  // atom: true,
+  selectable: true,
+  draggable: false,
+  content: 'multiple_choice+',
   parseDOM: [
     {
       tag: 'div.mutiple-choice',

@@ -120,11 +120,6 @@ const EditorComponent = ({ node, view, getPos }) => {
             if (questionView.hasFocus()) questionView.focus();
           },
         },
-        handleKeyDown: (editoView, keyEvent) => {
-          if (keyEvent.key === 'Enter') {
-            console.log('create new');
-          }
-        },
 
         attributes: {
           spellcheck: 'false',

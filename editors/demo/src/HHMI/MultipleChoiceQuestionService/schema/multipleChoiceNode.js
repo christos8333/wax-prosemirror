@@ -19,7 +19,7 @@ const multipleChoiceNode = {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
-          correct: dom.getAttribute('correct'),
+          correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
           feedback: dom.getAttribute('feedback'),
         };
       },

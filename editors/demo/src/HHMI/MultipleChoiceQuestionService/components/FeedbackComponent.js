@@ -56,11 +56,11 @@ export default ({ node, view, getPos }) => {
 
   const saveFeedBack = () => {
     const allNodes = getNodes(context.view.main);
-    allNodes.forEach(singNode => {
-      if (singNode.node.attrs.id === node.attrs.id) {
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
         context.view.main.dispatch(
           context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-            ...node.attrs,
+            ...singleNode.node.attrs,
             feedback: feedBack,
           }),
         );

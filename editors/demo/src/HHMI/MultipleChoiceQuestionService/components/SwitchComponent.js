@@ -37,12 +37,17 @@ const CustomSwitch = ({ node, getPos }) => {
 
   const handleChange = () => {
     setChecked(!checked);
-    context.view.main.dispatch(
-      context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-        ...node.attrs,
-        correct: !checked,
-      }),
-    );
+    const allNodes = getNodes(context.view.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.view.main.dispatch(
+          context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+            ...singleNode.node.attrs,
+            correct: !checked,
+          }),
+        );
+      }
+    });
   };
 
   return (

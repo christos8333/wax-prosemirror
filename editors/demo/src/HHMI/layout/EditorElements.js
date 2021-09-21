@@ -333,7 +333,7 @@ export default css`
     padding-top: 0px;
 
     &:before {
-      bottom: 45px;
+      bottom: 25px;
       content: 'Answer Group ' counter(multiple-question) '.';
       counter-increment: multiple-question;
       position: relative;
@@ -344,9 +344,5 @@ export default css`
       box-shadow: none;
       padding: 5px 5px 0 5px;
     }
-  }
-
-  .mutiple-choice.ProseMirror-selectednode {
-    outline: none;
   }
 `;

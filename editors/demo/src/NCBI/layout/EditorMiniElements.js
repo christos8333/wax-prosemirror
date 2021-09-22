@@ -60,4 +60,21 @@ export default css`
   sub {
     line-height: 0;
   }
+
+  p {
+    line-height: 21px;
+  }
+
+  /* placeholder */
+  .empty-node::before {
+    color: #aaa;
+    float: left;
+    font-style: italic;
+    pointer-events: none;
+    height: 0;
+  }
+
+  p.empty-node:first-child::before {
+    content: attr(data-content);
+  }
 `;

@@ -65,22 +65,11 @@ const EditorContainer = styled.div`
   }
 `;
 
-const TitleEditor = styled.div`
-  background: #fff;
-  height: 20px;
-  left: 51px;
-  position: absolute;
-  top: 91px;
-  width: 80px;
-`;
-
 const TopBar = ComponentPlugin('topBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
-console.log(cokoTheme);
 const NcbiLayout = ({ editor }) => (
   <ThemeProvider theme={cokoTheme}>
     <Wrapper>
-      <TitleEditor>Title Editor</TitleEditor>
       <TopMenu>
         <TopBar />
       </TopMenu>

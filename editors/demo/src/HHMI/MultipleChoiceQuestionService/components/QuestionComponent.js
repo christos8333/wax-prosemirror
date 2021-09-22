@@ -111,7 +111,7 @@ export default ({ node, view, getPos }) => {
           // create Empty Paragraph
           setTimeout(() => {
             helpers.createEmptyParagraph(context, newAnswerId);
-          }, 80);
+          }, 120);
         }
       }
     });

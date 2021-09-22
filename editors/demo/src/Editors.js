@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
+import NCBI from './NCBI/NCBI';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -67,7 +68,7 @@ const Editors = () => {
       case 'hhmi':
         return <HHMI />;
       case 'ncbi':
-        break;
+        return <NCBI />;
       default:
         return <Editoria />;
     }

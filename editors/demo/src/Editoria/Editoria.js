@@ -52,7 +52,7 @@ const Editoria = () => {
           // readonly
           layout={layout}
           // onChange={debounce(source => {
-          //   console.log(source);
+          //   console.log(JSON.stringify(source));
           // }, 200)}
           // onBlur={source => console.log(source)}
           user={user}

@@ -96,7 +96,7 @@ const Editors = () => {
             isActive={project === 'ncbi'}
             onClick={() => setProject('ncbi')}
           >
-            Mini Editors
+            Basic Editors
           </ProjectButton>
         </Projects>
       </ChooseProject>

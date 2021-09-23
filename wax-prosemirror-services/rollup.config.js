@@ -1,8 +1,8 @@
 import babel from 'rollup-plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
-import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-import-css';
+// import { terser } from 'rollup-plugin-terser';
 
 export default {
   input: 'index.js',
@@ -34,6 +34,7 @@ export default {
     'uuid',
     'react',
     'react-dom',
+    'react-dropdown',
     'wax-prosemirror-schema',
     'lodash',
     'prosemirror-tables',

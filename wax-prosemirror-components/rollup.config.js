@@ -1,7 +1,8 @@
 import babel from 'rollup-plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
-import { terser } from 'rollup-plugin-terser';
+import css from 'rollup-plugin-import-css';
+// import { terser } from 'rollup-plugin-terser';
 
 export default {
   input: './index.js',
@@ -13,6 +14,7 @@ export default {
     },
   ],
   plugins: [
+    css(),
     external({
       includeDependencies: true,
     }),

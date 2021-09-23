@@ -8,10 +8,10 @@ import paragraphContTrackNode from './paragraphContTrackNode';
 import extractProseTrackNode from './extractProseTrackNode';
 import extractPoetryTrackNode from './extractPoetryTrackNode';
 import sourceNoteTrackNode from './sourceNoteTrackNode';
-import bulletListTrackNode from './bulletListTrackNode';
+// import bulletListTrackNode from './bulletListTrackNode';
 import orderedListTrackNode from './orderedListTrackNode';
-import listItemTrackNode from './listItemTrackNode';
-import imageTrackNode from './imageTrackNode';
+// import listItemTrackNode from './listItemTrackNode';
+// import imageTrackNode from './imageTrackNode';
 import customBlockTrackNode from './customBlockTrackNode';
 
 export default {

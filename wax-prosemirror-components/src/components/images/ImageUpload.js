@@ -58,8 +58,8 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
           <input
             id="file-upload"
-            ref={inputRef}
             onChange={e => fileUpload(e.target.files[0])}
+            ref={inputRef}
             type="file"
           />
         </label>

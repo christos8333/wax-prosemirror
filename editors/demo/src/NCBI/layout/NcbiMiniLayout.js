@@ -69,7 +69,7 @@ const EditorContainer = styled.div`
 
 const TopBar = ComponentPlugin('topBar');
 const WaxOverlays = ComponentPlugin('waxOverlays');
-console.log(cokoTheme);
+
 const NcbiLayout = ({ editor }) => (
   <ThemeProvider theme={cokoTheme}>
     <Wrapper>

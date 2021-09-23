@@ -1,8 +1,6 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
-
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import TrackChangeOptionsComponent from './TrackChangeOptionsComponent';
 

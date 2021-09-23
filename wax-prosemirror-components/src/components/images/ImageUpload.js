@@ -2,7 +2,6 @@
 import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import insertImage from './Upload';
 

@@ -10,9 +10,9 @@ const Wrapper = styled.div`
 `;
 
 const Tabs = styled.div`
+  background: #fff;
   display: flex;
   flex-direction: column;
-  background: #fff;
 `;
 
 const activeTab = css`

@@ -1,10 +1,8 @@
 /* eslint react/prop-types: 0 */
-
 import React, { useState, useContext, useMemo, useRef } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import InsertTableTool from '../../ui/tables/InsertTableTool';
 import useOnClickOutside from '../../helpers/useOnClickOutside';
@@ -25,7 +23,6 @@ const CreateTable = ({ view = {}, item }) => {
   const {
     view: { main },
     activeView,
-    activeViewId,
   } = useContext(WaxContext);
 
   const { icon, run, select, title } = item;

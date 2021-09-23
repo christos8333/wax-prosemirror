@@ -16,9 +16,9 @@ const TextWrapper = styled.div``;
 const ReplyTextArea = styled.textarea`
   background: ${th('colorBackgroundHue')};
   border: 3px solid ${th('colorBackgroundTabs')};
+  font-family: ${th('fontWriting')};
   position: relative;
   right: 5px;
-  font-family: ${th('fontWriting')};
   width: 100%;
 
   &:focus {

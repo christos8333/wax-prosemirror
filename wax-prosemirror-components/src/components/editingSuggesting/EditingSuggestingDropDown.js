@@ -3,8 +3,12 @@ import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import ReactDropDownStyles from '../../helpers/ReactDropDownStyles';
 import Icon from '../../helpers/Icon';
+
+const Wrapper = styled.span`
+  ${ReactDropDownStyles};
+`;
 
 const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
@@ -103,14 +107,16 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
 
   const EditingSuggestingComponent = useMemo(
     () => (
-      <DropdownStyled
-        onChange={option => {
-          return enableDisableTrackChanges();
-        }}
-        options={dropDownOptions}
-        select={isDisabled}
-        value={selectedOption()}
-      />
+      <Wrapper>
+        <DropdownStyled
+          onChange={option => {
+            return enableDisableTrackChanges();
+          }}
+          options={dropDownOptions}
+          select={isDisabled}
+          value={selectedOption()}
+        />
+      </Wrapper>
     ),
     [],
   );

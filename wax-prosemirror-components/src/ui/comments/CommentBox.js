@@ -18,6 +18,11 @@ const inactive = css`
   }
 `;
 
+const inactiveButton = css`
+  cursor: not-allowed;
+  opacity: 0.3;
+`;
+
 const Wrapper = styled.div`
   background: white;
   border: 1px solid ${th('colorBackgroundTabs')};
@@ -38,8 +43,8 @@ const Head = styled.div`
 
 const Resolve = styled.button`
   align-self: flex-end;
-  border: none;
   background: none;
+  border: none;
   color: #0042c7;
   cursor: pointer;
   margin-bottom: 12px;
@@ -48,6 +53,8 @@ const Resolve = styled.button`
     background: ${th('colorBackgroundHue')};
     border: none;
   }
+
+  ${props => props.isReadOnly && inactiveButton}
 `;
 
 const StyledReply = styled(CommentReply)`
@@ -60,6 +67,7 @@ const CommentBox = props => {
     className,
     commentId,
     commentData,
+    isReadOnly,
     onClickBox,
     onClickPost,
     onClickResolve,
@@ -78,7 +86,15 @@ const CommentBox = props => {
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
       {active && commentData.length > 0 && (
         <Head>
-          <Resolve onClick={() => onClickResolve(commentId)}>Resolve</Resolve>
+          <Resolve
+            isReadOnly={isReadOnly}
+            onClick={() => {
+              if (!isReadOnly) return onClickResolve(commentId);
+              return false;
+            }}
+          >
+            Resolve
+          </Resolve>
         </Head>
       )}
 
@@ -86,9 +102,10 @@ const CommentBox = props => {
 
       {active && (
         <StyledReply
-          onTextAreaBlur={onTextAreaBlur}
           isNewComment={commentData.length === 0}
+          isReadOnly={isReadOnly}
           onClickPost={onClickPost}
+          onTextAreaBlur={onTextAreaBlur}
         />
       )}
     </Wrapper>
@@ -98,6 +115,7 @@ const CommentBox = props => {
 CommentBox.propTypes = {
   /** Whether this is the current active comment */
   active: PropTypes.bool,
+  isReadOnly: PropTypes.bool.isRequired,
   /** List of objects containing data for comment items */
   commentData: PropTypes.arrayOf(
     PropTypes.shape({

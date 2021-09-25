@@ -16,7 +16,7 @@ export default css`
     counter-reset: footnote;
     line-height: 12px;
     width: 497px;
-    white-space: pre;
+    white-space: pre !important;
     overflow-x: auto;
     ${fontWriting}
 

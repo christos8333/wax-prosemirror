@@ -4,10 +4,6 @@ import { css } from 'styled-components';
 
 export default css`
   .ProseMirror {
-    position: relative;
-  }
-
-  .ProseMirror {
     font-feature-settings: 'liga' 0; /* the above doesn't seem to work in Edge */
     font-variant-ligatures: none;
     word-wrap: break-word;

@@ -1,10 +1,13 @@
 import hljs from 'highlight.js/lib/core';
 import { getHighlightDecorations } from 'prosemirror-highlightjs';
 import { DecorationSet } from 'prosemirror-view';
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
+
+const key = new PluginKey('codeHigh;ight');
 
 const highlightPlugin = (nodeTypes = ['code_block']) => {
   return new Plugin({
+    key,
     state: {
       init(_, instance) {
         const content = getHighlightDecorations(

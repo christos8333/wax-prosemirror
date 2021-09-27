@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 // prosemirror imports
-import { Plugin as ProsePlugin } from 'prosemirror-state';
+import { Plugin as ProsePlugin, PluginKey } from 'prosemirror-state';
 import { DecorationSet, Decoration } from 'prosemirror-view';
 ////////////////////////////////////////////////////////////
 /**
@@ -10,6 +10,9 @@ import { DecorationSet, Decoration } from 'prosemirror-view';
  * @param arg Should be either a Transaction or an EditorState,
  *     although any object with `selection` and `doc` will work.
  */
+
+const mathSelect = new PluginKey('mathSelect');
+
 const checkSelection = arg => {
   let { from, to } = arg.selection;
   let content = arg.selection.content().content;
@@ -45,6 +48,7 @@ const checkSelection = arg => {
  * @todo (6/13/20) math selection rectangles are not quite even with text
  */
 const mathSelectPlugin = new ProsePlugin({
+  key: mathSelect,
   state: {
     init(config, partialState) {
       return checkSelection(partialState);

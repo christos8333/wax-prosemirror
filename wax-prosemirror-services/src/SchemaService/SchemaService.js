@@ -9,7 +9,6 @@ export default class SchemaService extends Service {
 
   register() {
     this.container.bind('Schema').to(Schema).inSingletonScope();
-
     this.container.bind('CreateNode').toFactory(context => {
       return (schema, options = { toWaxSchema: false }) => {
         const schemaInstance = context.container.get('Schema');

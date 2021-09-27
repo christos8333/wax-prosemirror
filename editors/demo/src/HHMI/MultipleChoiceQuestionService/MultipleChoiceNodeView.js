@@ -1,4 +1,3 @@
-import { nodes } from 'prosemirror-schema-basic';
 import { AbstractNodeView } from 'wax-prosemirror-services';
 
 export default class MultipleChoiceNodeView extends AbstractNodeView {

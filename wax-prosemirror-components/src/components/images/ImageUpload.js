@@ -2,7 +2,6 @@
 import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import insertImage from './Upload';
 
@@ -58,8 +57,8 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
           <input
             id="file-upload"
-            ref={inputRef}
             onChange={e => fileUpload(e.target.files[0])}
+            ref={inputRef}
             type="file"
           />
         </label>

@@ -4,9 +4,8 @@ import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
-
+import { ReactDropDownStyles } from 'wax-prosemirror-components';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 import ToolGroup from '../../lib/ToolGroup';
 
 @injectable()
@@ -51,6 +50,10 @@ class BlockDropDown extends ToolGroup {
     if (isEmpty(view) || window.innerWidth > 600) return null;
 
     const { activeViewId } = useContext(WaxContext);
+
+    const Wrapper = styled.span`
+      ${ReactDropDownStyles};
+    `;
 
     const DropdownStyled = styled(Dropdown)`
       display: inline-flex;
@@ -107,16 +110,18 @@ class BlockDropDown extends ToolGroup {
     });
 
     return (
-      <DropdownStyled
-        value={found}
-        key={uuidv4()}
-        options={dropDownOptions}
-        onChange={option => {
-          this._tools[option.value].run(state, dispatch);
-        }}
-        placeholder="Block Level"
-        select={isDisabled}
-      />
+      <Wrapper key={uuidv4()}>
+        <DropdownStyled
+          value={found}
+          key={uuidv4()}
+          options={dropDownOptions}
+          onChange={option => {
+            this._tools[option.value].run(state, dispatch);
+          }}
+          placeholder="Block Level"
+          select={isDisabled}
+        />
+      </Wrapper>
     );
   }
 }

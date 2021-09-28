@@ -1,9 +1,7 @@
 import React, { useContext, useMemo, useState, useRef } from 'react';
-
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import SpecialCharactersComponent from './SpecialCharactersComponent';
 import useOnClickOutside from '../../helpers/useOnClickOutside';

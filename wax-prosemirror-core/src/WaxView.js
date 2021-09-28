@@ -6,18 +6,17 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-
+import styled from 'styled-components';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import 'prosemirror-view/style/prosemirror.css';
 import { trackedTransaction } from 'wax-prosemirror-services';
-
-import ComponentPlugin from './ComponentPlugin';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import transformPasted from './helpers/TransformPasted';
+import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
+import styles from './styles/styles';
 
 const WaxPortals = ComponentPlugin('waxPortals');
 
@@ -147,11 +146,15 @@ export default props => {
     }
   };
 
+  const WaxEditor = styled.div`
+    ${styles};
+  `;
+
   const editor = (
-    <>
+    <WaxEditor>
       <div ref={setEditorRef} />
       <WaxPortals />
-    </>
+    </WaxEditor>
   );
 
   return useMemo(

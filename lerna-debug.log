@@ -1,23 +1,64 @@
-0 silly input [ 'clean' ]
+0 silly input [ 'build' ]
 1 silly flags {
 1 silly flags   _: [ 'run' ],
 1 silly flags   'reject-cycles': false,
 1 silly flags   rejectCycles: false,
-1 silly flags   parallel: true,
-1 silly flags   script: 'clean',
+1 silly flags   script: 'build',
 1 silly flags   args: []
 1 silly flags }
 2 verbose rootPath /home/chris/workspace/wax-prosemirror
 3 info version 2.11.0
 4 silly existsSync /home/chris/workspace/wax-prosemirror/VERSION
-5 error EPACKAGES Errored while collecting packages and package graph
-6 error JSONError: Unexpected token } in JSON at position 1058 while parsing near '...ties": "^0.0.40",  },  "devDependencie...' in wax-prosemirror-core/package.json
-6 error     at module.exports (/home/chris/workspace/wax-prosemirror/node_modules/load-json-file/node_modules/parse-json/index.js:26:19)
-6 error     at parse (/home/chris/workspace/wax-prosemirror/node_modules/load-json-file/index.js:8:29)
-6 error     at Function.module.exports.sync (/home/chris/workspace/wax-prosemirror/node_modules/load-json-file/index.js:11:29)
-6 error     at Function.module.exports.sync (/home/chris/workspace/wax-prosemirror/node_modules/read-pkg/index.js:40:25)
-6 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/lib/PackageUtilities.js:138:47
-6 error     at Array.forEach (<anonymous>)
-6 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/lib/PackageUtilities.js:132:86
-6 error     at Array.forEach (<anonymous>)
-6 error     at Function.getPackages (/home/chris/workspace/wax-prosemirror/node_modules/lerna/lib/PackageUtilities.js:131:22)
+5 silly initialize attempt
+6 warn ECYCLE Encountered a cycle in the dependency graph.This may cause instability! Packages in cycle are: "wax-prosemirror-core", "wax-prosemirror-components", "wax-prosemirror-plugins", "wax-prosemirror-services"
+7 silly packages [ 'wax-prosemirror-core' ]
+8 silly initialize success
+9 silly execute attempt
+10 silly runScriptInDir build [] wax-prosemirror-utilities
+11 silly getExecOpts {
+11 silly getExecOpts   cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-utilities'
+11 silly getExecOpts }
+12 silly runScriptInDir build [] wax-prosemirror-schema
+13 silly getExecOpts { cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-schema' }
+14 silly runScriptInDir build [] wax-prosemirror-core
+15 silly getExecOpts { cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-core' }
+16 silly runScriptInDir build [] wax-prosemirror-components
+17 silly getExecOpts {
+17 silly getExecOpts   cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-components'
+17 silly getExecOpts }
+18 silly runScriptInDir build [] wax-prosemirror-plugins
+19 silly getExecOpts {
+19 silly getExecOpts   cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-plugins'
+19 silly getExecOpts }
+20 silly runScriptInDir build [] wax-prosemirror-services
+21 silly getExecOpts {
+21 silly getExecOpts   cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-services'
+21 silly getExecOpts }
+22 error build Errored while running script in 'wax-prosemirror-services'
+23 error execute callback with error
+24 error Error: Command failed: yarn run build
+24 error loaded rollup.config.js with warnings
+24 error (!) Unused external imports
+24 error terser imported from external module 'rollup-plugin-terser' but never used
+24 error
+24 error index.js → dist/index.js...
+24 error Browserslist: caniuse-lite is outdated. Please run:
+24 error npx browserslist@latest --update-db
+24 error [!] Error: Could not resolve './highlightStyles' from src/CodeBlockService/CodeBlockService.js
+24 error Error: Could not resolve './highlightStyles' from src/CodeBlockService/CodeBlockService.js
+24 error     at error (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:5171:30)
+24 error     at ModuleLoader.handleResolveId (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17864:24)
+24 error     at /home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17856:22
+24 error     at async Promise.all (index 5)
+24 error     at ModuleLoader.fetchStaticDependencies (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17854:34)
+24 error     at async Promise.all (index 0)
+24 error     at ModuleLoader.fetchModule (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17831:9)
+24 error     at async Promise.all (index 20)
+24 error     at ModuleLoader.fetchStaticDependencies (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17854:34)
+24 error     at async Promise.all (index 0)
+24 error
+24 error error Command failed with exit code 1.
+24 error $ BABEL_ENV=production rollup -c
+24 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+24 error
+24 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/node_modules/execa/index.js:236:11

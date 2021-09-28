@@ -1,4 +1,4 @@
-import { SchemaHelpers } from 'wax-prosemirror-utilities';
+import SchemaHelpers from './SchemaHelpers';
 
 export default {
   nodes: {

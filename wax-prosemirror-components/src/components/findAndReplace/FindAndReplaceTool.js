@@ -10,7 +10,6 @@ import React, {
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
-
 import MenuButton from '../../ui/buttons/MenuButton';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
 

@@ -19,8 +19,8 @@ const Name = styled.div`
 `;
 
 const Timestamp = styled.div`
-  font-size: 14px;
   color: gray;
+  font-size: 14px;
 `;
 
 const Content = styled.div`

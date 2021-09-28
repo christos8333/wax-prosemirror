@@ -2,7 +2,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import DateParser from '../../helpers/DateParser';
-
 import Icon from '../../helpers/Icon';
 
 const activeBorder = css`

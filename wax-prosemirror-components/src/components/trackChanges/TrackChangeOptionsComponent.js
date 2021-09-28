@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { each, eachRight } from 'lodash';
-
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../../ui/buttons/MenuButton';

@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import MenuButton from '../../ui/buttons/MenuButton';
 import useOnClickOutside from '../../helpers/useOnClickOutside';

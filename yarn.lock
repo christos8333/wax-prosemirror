@@ -14772,7 +14772,7 @@ prosemirror-model@1.14.3, prosemirror-model@>=1.0.0, prosemirror-model@^1.0.0, p
   dependencies:
     orderedmap "^1.1.0"
 
-prosemirror-schema-basic@^1.0.0, prosemirror-schema-basic@^1.1.2:
+prosemirror-schema-basic@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prosemirror-schema-basic/-/prosemirror-schema-basic-1.1.2.tgz#4bde5c339c845e0d08ec8fe473064e372ca51ae3"
   integrity sha512-G4q8WflNsR1Q33QAV4MQO0xWrHLOJ+BQcKswGXMy626wlQj6c/1n1v4eC9ns+h2y1r/fJHZEgSZnsNhm9lbrDw==

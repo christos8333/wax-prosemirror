@@ -20,6 +20,8 @@ import {
   SpecialCharactersToolGroupService,
   EditorInfoToolGroupServices,
   BottomInfoService,
+  MultipleChoiceQuestionService,
+  QuestionsToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -27,8 +29,8 @@ import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 
 /* Questions Services */
-import MultipleChoiceQuestionService from '../MultipleChoiceQuestionService/MultipleChoiceQuestionService';
-import QuestionsToolGroupService from '../QuestionsToolGroupService/QuestionsToolGroupService';
+// import MultipleChoiceQuestionService from '../MultipleChoiceQuestionService/MultipleChoiceQuestionService';
+// import QuestionsToolGroupService from '../QuestionsToolGroupService/QuestionsToolGroupService';
 
 export default {
   MenuService: [

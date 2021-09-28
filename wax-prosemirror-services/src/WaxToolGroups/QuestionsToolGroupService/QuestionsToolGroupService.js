@@ -1,4 +1,4 @@
-import { Service } from 'wax-prosemirror-services';
+import Service from '../../Service';
 import Questions from './Questions';
 
 class QuestionsToolGroupService extends Service {

@@ -29,8 +29,8 @@ import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 
 /* Questions Services */
-// import MultipleChoiceQuestionService from '../MultipleChoiceQuestionService/MultipleChoiceQuestionService';
-// import QuestionsToolGroupService from '../QuestionsToolGroupService/QuestionsToolGroupService';
+import FillTheGapQuestionService from '../FillTheGapQuestionService/FillTheGapQuestionService';
+import FillTheGapToolGroupService from '../FillTheGapToolGroupService/FillTheGapToolGroupService';
 
 export default {
   MenuService: [
@@ -52,6 +52,7 @@ export default {
         'Images',
         'Tables',
         'Questions',
+        'FillTheGap',
         'FullScreen',
       ],
     },
@@ -68,6 +69,8 @@ export default {
   ],
 
   services: [
+    new FillTheGapQuestionService(),
+    new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),
     new QuestionsToolGroupService(),
     new ListsService(),

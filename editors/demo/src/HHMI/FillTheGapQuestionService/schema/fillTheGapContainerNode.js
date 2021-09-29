@@ -4,8 +4,7 @@ const fillTheGapContainerNode = {
     class: { default: 'fill-the-gap' },
   },
   group: 'block',
-  selectable: true,
-  draggable: true,
+  defining: true,
   content: 'block+',
   parseDOM: [
     {

@@ -1,11 +1,11 @@
 const blockquote = {
-  content: "block+",
-  group: "block",
+  content: 'block+',
+  group: 'block',
   defining: true,
-  parseDOM: [{ tag: "blockquote" }],
+  parseDOM: [{ tag: 'blockquote' }],
   toDOM() {
-    return ["blockquote", 0];
-  }
+    return ['blockquote', 0];
+  },
 };
 
 export default blockquote;

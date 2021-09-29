@@ -40,12 +40,12 @@ const primary = css`
 const Button = styled.button`
   border: 0;
   border-radius: 5px;
-  cursor: pointer;
   color: gray;
+  cursor: pointer;
   padding: ${grid(2)} ${grid(4)};
 
   ${props => props.primary && primary}
-  ${props => props.disabled && `cursor: not-allowed;`}
+  ${props => props.disabled && `cursor: not-allowed; opacity: 0.3;`}
 `;
 
 const ButtonGroup = styled.div`
@@ -55,7 +55,13 @@ const ButtonGroup = styled.div`
 `;
 
 const CommentReply = props => {
-  const { className, isNewComment, onClickPost, onTextAreaBlur } = props;
+  const {
+    className,
+    isNewComment,
+    onClickPost,
+    isReadOnly,
+    onTextAreaBlur,
+  } = props;
   const commentInput = useRef(null);
   const [commentValue, setCommentValue] = useState('');
 
@@ -86,25 +92,29 @@ const CommentReply = props => {
       <form onSubmit={handleSubmit}>
         <TextWrapper>
           <ReplyTextArea
-            ref={commentInput}
-            onBlur={() => onBlur(commentInput.current.value)}
-            placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
-            onChange={() => setCommentValue(commentInput.current.value)}
             cols="5"
-            rows="3"
+            onBlur={() => onBlur(commentInput.current.value)}
+            onChange={() => setCommentValue(commentInput.current.value)}
             onKeyDown={e => {
               if (e.keyCode === 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (commentValue) handleSubmit(e);
               }
             }}
+            placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
+            ref={commentInput}
+            rows="3"
             value={commentValue}
           />
         </TextWrapper>
 
         <ActionWrapper>
           <ButtonGroup>
-            <Button disabled={commentValue.length === 0} primary type="submit">
+            <Button
+              disabled={commentValue.length === 0 || isReadOnly}
+              primary
+              type="submit"
+            >
               Post
             </Button>
 
@@ -121,6 +131,7 @@ const CommentReply = props => {
 CommentReply.propTypes = {
   isNewComment: PropTypes.bool.isRequired,
   onClickPost: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   onTextAreaBlur: PropTypes.func.isRequired,
 };
 

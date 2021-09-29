@@ -114,7 +114,7 @@ export default {
     },
   ],
 
-  CommentsService: { readOnly: true },
+  // CommentsService: { readOnly: true },
   SchemaService: DefaultSchema,
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],

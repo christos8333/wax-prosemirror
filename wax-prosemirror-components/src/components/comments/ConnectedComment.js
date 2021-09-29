@@ -49,6 +49,8 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     top: `${top}px`,
   };
 
+  const commentConfig = app.config.get('config.CommentsService');
+  const isReadOnly = commentConfig ? commentConfig.readOnly : false;
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
@@ -159,6 +161,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
           active={isActive}
           commentData={comment.attrs.conversation}
           commentId={commentId}
+          isReadOnly={isReadOnly}
           key={commentId}
           onClickBox={onClickBox}
           onClickPost={onClickPost}

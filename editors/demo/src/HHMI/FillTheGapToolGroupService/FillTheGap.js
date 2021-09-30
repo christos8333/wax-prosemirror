@@ -4,9 +4,12 @@ import { ToolGroup } from 'wax-prosemirror-services';
 @injectable()
 class FillTheGap extends ToolGroup {
   tools = [];
-  constructor(@inject('FillTheGapQuestion') FillTheGapQuestion) {
+  constructor(
+    @inject('FillTheGapQuestion') FillTheGapQuestion,
+    @inject('CreateGap') CreateGap,
+  ) {
     super();
-    this.tools = [FillTheGapQuestion];
+    this.tools = [FillTheGapQuestion, CreateGap];
   }
 }
 

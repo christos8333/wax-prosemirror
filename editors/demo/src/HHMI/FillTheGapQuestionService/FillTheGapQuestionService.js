@@ -2,6 +2,7 @@ import { Service } from 'wax-prosemirror-services';
 import FillTheGapQuestion from './FillTheGapQuestion';
 import fillTheGapContainerNode from './schema/fillTheGapContainerNode';
 import fillTheGapNode from './schema/fillTheGapNode';
+import CreateGapService from './CreateGapService/CreateGapService';
 
 class FillTheGapQuestionService extends Service {
   register() {
@@ -13,6 +14,7 @@ class FillTheGapQuestionService extends Service {
       fill_the_gap_container: fillTheGapContainerNode,
     });
   }
+  dependencies = [new CreateGapService()];
 }
 
 export default FillTheGapQuestionService;

@@ -22,6 +22,10 @@ const WaxPortals = ComponentPlugin('waxPortals');
 
 let previousDoc;
 
+const PMstyleWrapper = styled.span`
+  ${styles};
+`;
+
 export default props => {
   const {
     browserSpellCheck,
@@ -146,15 +150,11 @@ export default props => {
     }
   };
 
-  const WaxEditor = styled.span`
-    ${styles};
-  `;
-
   const editor = (
-    <WaxEditor>
+    <PMstyleWrapper>
       <div ref={setEditorRef} />
       <WaxPortals />
-    </WaxEditor>
+    </PMstyleWrapper>
   );
 
   return useMemo(

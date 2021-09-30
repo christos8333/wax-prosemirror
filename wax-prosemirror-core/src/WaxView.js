@@ -146,7 +146,7 @@ export default props => {
     }
   };
 
-  const WaxEditor = styled.div`
+  const WaxEditor = styled.span`
     ${styles};
   `;
 

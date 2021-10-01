@@ -19,7 +19,7 @@
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
     "prosemirror-model": "1.14.3",
-    "prosemirror-state": "1.3.3",
+    "prosemirror-state": "1.3.4",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-transform": "1.2.6",
     "react-dropdown": "^1.6.2",
@@ -29,10 +29,6 @@
     "uuid": "^7.0.3",
     "wax-prosemirror-core": "^0.1.1",
     "wax-prosemirror-utilities": "^0.1.1"
-  },
-  "resolutions": {
-    "prosemirror-model": "1.14.3",
-    "prosemirror-state": "1.3.3"
   },
   "peerDependencies": {
     "react": "^16.13.1",

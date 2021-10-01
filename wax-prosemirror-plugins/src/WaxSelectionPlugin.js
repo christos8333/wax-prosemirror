@@ -1,7 +1,10 @@
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
+
+const waxSelectionPlugin = new PluginKey('waxSelectionPlugin');
 
 const WaxSelectionPlugin = new Plugin({
+  key: waxSelectionPlugin,
   state: {
     init(config, instance) {
       return { deco: DecorationSet.empty };

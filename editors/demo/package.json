@@ -8,7 +8,6 @@
     "@pubsweet/ui-toolkit": "^2.3.1",
     "antd": "^4.15.4",
     "fontsource-merriweather": "^3.0.9",
-    "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

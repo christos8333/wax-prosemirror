@@ -44,6 +44,7 @@ export { default as TrackOptionsService } from './src/TrackOptionsService/TrackO
 export { default as CustomTagInlineService } from './src/CustomTagService/CustomTagInlineService/CustomTagInlineService';
 export { default as CustomTagBlockService } from './src/CustomTagService/CustomTagBlockService/CustomTagBlockService';
 export { default as CustomTagService } from './src/CustomTagService/CustomTagService';
+export { default as MultipleChoiceQuestionService } from './src/MultipleChoiceQuestionService/MultipleChoiceQuestionService';
 
 /*
 ToolGroups
@@ -69,3 +70,4 @@ export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/Tra
 export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
+export { default as QuestionsToolGroupService } from './src/WaxToolGroups/QuestionsToolGroupService/QuestionsToolGroupService';

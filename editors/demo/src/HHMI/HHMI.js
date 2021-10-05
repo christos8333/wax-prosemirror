@@ -24,7 +24,7 @@ const Hhmi = () => {
         config={config}
         autoFocus
         fileUpload={file => renderImage(file)}
-        value={t}
+        value=""
         // readonly
         layout={HhmiLayout}
         // onChange={source => console.log(source)}

@@ -1,5 +1,4 @@
-import { nodes } from 'prosemirror-schema-basic';
-import { AbstractNodeView } from 'wax-prosemirror-services';
+import AbstractNodeView from '../PortalService/AbstractNodeView';
 
 export default class MultipleChoiceNodeView extends AbstractNodeView {
   constructor(
@@ -18,6 +17,7 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
     this.getPos = getPos;
     this.context = context;
   }
+
   static name() {
     return 'multiple_choice';
   }

@@ -1,10 +1,9 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { Tools } from 'wax-prosemirror-services';
 import { Commands } from 'wax-prosemirror-utilities';
-
 import { v4 as uuidv4 } from 'uuid';
+import Tools from '../lib/Tools';
 import ToolBarBtn from './components/ToolBarBtn';
 
 const checkifEmpty = view => {

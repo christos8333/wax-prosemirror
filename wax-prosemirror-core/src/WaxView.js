@@ -44,7 +44,6 @@ export default props => {
 
   if (!mounted) {
     context.app.bootServices();
-    console.log(context);
   }
 
   const setEditorRef = useCallback(

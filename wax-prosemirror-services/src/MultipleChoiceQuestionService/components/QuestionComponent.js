@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
@@ -124,16 +125,16 @@ export default ({ node, view, getPos }) => {
   return (
     <Wrapper>
       <InfoRow>
-        <QuestionNunber></QuestionNunber>
+        <QuestionNunber />
       </InfoRow>
       <QuestionControlsWrapper>
         <QuestionWrapper>
           <QuestionData>
-            <EditorComponent node={node} view={view} getPos={getPos} />
+            <EditorComponent getPos={getPos} node={node} view={view} />
 
-            <SwitchComponent node={node} getPos={getPos} />
+            <SwitchComponent getPos={getPos} node={node} />
           </QuestionData>
-          <FeedbackComponent node={node} view={view} getPos={getPos} />
+          <FeedbackComponent getPos={getPos} node={node} view={view} />
         </QuestionWrapper>
         <IconsWrapper>
           {showAddIcon && !readOnly && (

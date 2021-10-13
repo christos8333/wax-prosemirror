@@ -23,6 +23,26 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   }
 
   update(node) {
+    // if (!node.sameMarkup(this.node)) return false;
+    this.node = node;
+    if (this.context.view[node.attrs.id]) {
+      const { state } = this.context.view[node.attrs.id];
+      const start = node.content.findDiffStart(state.doc.content);
+      if (start != null) {
+        let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
+        const overlap = start - Math.min(endA, endB);
+        if (overlap > 0) {
+          endA += overlap;
+          endB += overlap;
+        }
+        this.context.view[node.attrs.id].dispatch(
+          state.tr
+            .replace(start, endB, node.slice(start, endA))
+            .setMeta('fromOutside', true),
+        );
+      }
+    }
+
     return true;
   }
 
@@ -31,12 +51,6 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   }
 
   stopEvent(event) {
-    console.log(
-      this.context.view[this.node.attrs.id] !== undefined &&
-        event.target !== undefined &&
-        this.context.view[this.node.attrs.id].dom.contains(event.target),
-    );
-
     return (
       this.context.view[this.node.attrs.id] !== undefined &&
       event.target !== undefined &&

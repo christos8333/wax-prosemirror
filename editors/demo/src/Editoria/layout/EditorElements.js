@@ -349,7 +349,7 @@ export default css`
   }
 
   .math-node.ProseMirror-selectednode .math-src {
-    display: flex;
+    display: inline-flex;
   }
   .math-node.ProseMirror-selectednode .math-render {
     display: none;

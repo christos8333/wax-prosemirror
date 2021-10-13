@@ -25,4 +25,26 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   update(node) {
     return true;
   }
+
+  selectNode() {
+    this.context.view[this.node.attrs.id].focus();
+  }
+
+  stopEvent(event) {
+    console.log(
+      this.context.view[this.node.attrs.id] !== undefined &&
+        event.target !== undefined &&
+        this.context.view[this.node.attrs.id].dom.contains(event.target),
+    );
+
+    return (
+      this.context.view[this.node.attrs.id] !== undefined &&
+      event.target !== undefined &&
+      this.context.view[this.node.attrs.id].dom.contains(event.target)
+    );
+  }
+
+  ignoreMutation() {
+    return true;
+  }
 }

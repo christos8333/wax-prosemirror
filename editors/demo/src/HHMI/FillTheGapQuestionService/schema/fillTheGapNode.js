@@ -1,8 +1,8 @@
 const fillTheGapNode = {
   group: 'inline',
-  content: 'inline*',
+  content: 'text*',
   inline: true,
-  atom: true,
+  // atom: true,
   attrs: {
     id: { default: '' },
     class: { default: 'fill-the-gap' },

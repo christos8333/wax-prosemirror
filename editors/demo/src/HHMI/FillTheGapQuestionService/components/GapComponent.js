@@ -8,5 +8,5 @@ const Gap = styled.span`
 `;
 
 export default ({ node, view, getPos }) => {
-  return <Gap> Gap</Gap>;
+  return <EditorComponent getPos={getPos} node={node} view={view} />;
 };

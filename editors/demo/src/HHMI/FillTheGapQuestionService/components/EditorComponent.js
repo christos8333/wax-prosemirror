@@ -10,18 +10,19 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
-import Placeholder from '../plugins/placeholder';
 
-const EditorWrapper = styled.div`
-  border: none;
-  display: flex;
-  flex: 2 1 auto;
-  justify-content: left;
-  margin-right: 15px;
+const EditorWrapper = styled.span`
+  display: inline-flex;
 
   .ProseMirror {
+    border-bottom: 1px solid #145dbf;
+    box-shadow: none;
+    color: #145dbf;
+    display: inline;
+    min-width: 50px;
+    padding: 0px 2px 0px 2px;
     white-space: break-spaces;
-    width: 100%;
+    width: auto;
     word-wrap: break-word;
 
     &:focus {
@@ -46,7 +47,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
-  let questionView;
+  let gapView;
   const questionId = node.attrs.id;
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
@@ -71,22 +72,12 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
 
-  // eslint-disable-next-line no-shadow
-  const createPlaceholder = placeholder => {
-    return Placeholder({
-      content: placeholder,
-    });
-  };
-
-  finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your answer'),
-    ...plugins,
-  ]);
+  finalPlugins = finalPlugins.concat([...plugins]);
 
   const { activeViewId } = context;
 
   useEffect(() => {
-    questionView = new EditorView(
+    gapView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -113,7 +104,7 @@ const EditorComponent = ({ node, view, getPos }) => {
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
-            if (questionView.hasFocus()) questionView.focus();
+            if (gapView.hasFocus()) gapView.focus();
           },
         },
 
@@ -126,16 +117,16 @@ const EditorComponent = ({ node, view, getPos }) => {
     //Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: questionView,
+        [questionId]: gapView,
       },
       questionId,
     );
-    if (questionView.hasFocus()) questionView.focus();
+    gapView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
-    let { state, transactions } = questionView.state.applyTransaction(tr);
-    questionView.updateState(state);
+    let { state, transactions } = gapView.state.applyTransaction(tr);
+    gapView.updateState(state);
     context.updateView({}, questionId);
 
     if (!tr.getMeta('fromOutside')) {

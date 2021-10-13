@@ -364,14 +364,5 @@ export default css`
       position: relative;
       width: 30px;
     }
-
-    p {
-      bottom: 22px;
-      position: relative;
-    }
-
-    p:last-child {
-      margin-bottom: -1em;
-    }
   }
 `;

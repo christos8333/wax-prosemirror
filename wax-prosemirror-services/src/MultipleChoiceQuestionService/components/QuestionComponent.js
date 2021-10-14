@@ -14,7 +14,7 @@ import Button from './Button';
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
 `;
 
@@ -34,7 +34,8 @@ const QuestionNunber = styled.span`
 
 const QuestionControlsWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const QuestionWrapper = styled.div`
@@ -124,34 +125,33 @@ export default ({ node, view, getPos }) => {
 
   return (
     <Wrapper>
-      <InfoRow>
-        <QuestionNunber />
-      </InfoRow>
       <QuestionControlsWrapper>
+        <InfoRow>
+          <QuestionNunber />
+          <SwitchComponent getPos={getPos} node={node} />
+        </InfoRow>
         <QuestionWrapper>
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
-
-            <SwitchComponent getPos={getPos} node={node} />
           </QuestionData>
           <FeedbackComponent getPos={getPos} node={node} view={view} />
         </QuestionWrapper>
-        <IconsWrapper>
-          {showAddIcon && !readOnly && (
-            <Button
-              onClick={() => addOption(node.attrs.id)}
-              icon={<PlusSquareOutlined title="Add Option" />}
-            />
-          )}
-          {showRemoveIcon && !readOnly && (
-            <Button
-              icon={
-                <DeleteOutlined onClick={removeOption} title="Delete Option" />
-              }
-            />
-          )}
-        </IconsWrapper>
       </QuestionControlsWrapper>
+      <IconsWrapper>
+        {showAddIcon && !readOnly && (
+          <Button
+            icon={<PlusSquareOutlined title="Add Option" />}
+            onClick={() => addOption(node.attrs.id)}
+          />
+        )}
+        {showRemoveIcon && !readOnly && (
+          <Button
+            icon={
+              <DeleteOutlined onClick={removeOption} title="Delete Option" />
+            }
+          />
+        )}
+      </IconsWrapper>
     </Wrapper>
   );
 };

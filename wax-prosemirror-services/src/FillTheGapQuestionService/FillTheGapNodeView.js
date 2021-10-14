@@ -1,4 +1,4 @@
-import { AbstractNodeView } from 'wax-prosemirror-services';
+import AbstractNodeView from '../PortalService/AbstractNodeView';
 
 export default class MultipleChoiceNodeView extends AbstractNodeView {
   constructor(

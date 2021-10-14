@@ -1,4 +1,4 @@
-import { Service } from 'wax-prosemirror-services';
+import Service from '../../Service';
 import CreateGap from './CreateGap';
 
 class FillTheGapQuestionService extends Service {

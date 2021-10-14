@@ -45,6 +45,7 @@ export { default as CustomTagInlineService } from './src/CustomTagService/Custom
 export { default as CustomTagBlockService } from './src/CustomTagService/CustomTagBlockService/CustomTagBlockService';
 export { default as CustomTagService } from './src/CustomTagService/CustomTagService';
 export { default as MultipleChoiceQuestionService } from './src/MultipleChoiceQuestionService/MultipleChoiceQuestionService';
+export { default as FillTheGapQuestionService } from './src/FillTheGapQuestionService/FillTheGapQuestionService';
 
 /*
 ToolGroups
@@ -71,3 +72,4 @@ export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGro
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
 export { default as MultipleChoiceToolGroupService } from './src/WaxToolGroups/MultipleChoiceToolGroupService/MultipleChoiceToolGroupService';
+export { default as FillTheGapToolGroupService } from './src/WaxToolGroups/FillTheGapToolGroupService/FillTheGapToolGroupService';

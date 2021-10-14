@@ -1,4 +1,4 @@
-import { Service } from 'wax-prosemirror-services';
+import Service from '../Service';
 import FillTheGapQuestion from './FillTheGapQuestion';
 import fillTheGapContainerNode from './schema/fillTheGapContainerNode';
 import fillTheGapNode from './schema/fillTheGapNode';
@@ -26,6 +26,7 @@ class FillTheGapQuestionService extends Service {
       context: this.app,
     });
   }
+
   dependencies = [new CreateGapService()];
 }
 

@@ -22,15 +22,13 @@ import {
   BottomInfoService,
   MultipleChoiceQuestionService,
   MultipleChoiceToolGroupService,
+  FillTheGapQuestionService,
+  FillTheGapToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
-
-/* Questions Services */
-import FillTheGapQuestionService from '../FillTheGapQuestionService/FillTheGapQuestionService';
-import FillTheGapToolGroupService from '../FillTheGapToolGroupService/FillTheGapToolGroupService';
 
 export default {
   MenuService: [

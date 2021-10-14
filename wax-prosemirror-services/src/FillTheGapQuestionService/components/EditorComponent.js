@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -116,7 +116,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
     );
 
-    //Set Each note into Wax's Context
+    // Set Each note into Wax's Context
     context.updateView(
       {
         [questionId]: gapView,
@@ -127,15 +127,15 @@ const EditorComponent = ({ node, view, getPos }) => {
   }, []);
 
   const dispatchTransaction = tr => {
-    let { state, transactions } = gapView.state.applyTransaction(tr);
+    const { state, transactions } = gapView.state.applyTransaction(tr);
     gapView.updateState(state);
     context.updateView({}, questionId);
 
     if (!tr.getMeta('fromOutside')) {
-      let outerTr = view.state.tr,
-        offsetMap = StepMap.offset(getPos() + 1);
+      const outerTr = view.state.tr;
+      const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
-        let steps = transactions[i].steps;
+        const { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
           outerTr.step(steps[j].map(offsetMap));
       }

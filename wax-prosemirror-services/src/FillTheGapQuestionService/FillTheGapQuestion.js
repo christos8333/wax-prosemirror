@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { wrapIn } from 'prosemirror-commands';
-import { Tools } from 'wax-prosemirror-services';
+import Tools from '../lib/Tools';
 
 @injectable()
 class FillTheGapQuestion extends Tools {

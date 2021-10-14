@@ -3,7 +3,7 @@ const multipleChoiceContainerNode = {
     id: { default: '' },
     class: { default: 'mutiple-choice' },
   },
-  group: 'block',
+  group: 'block questions',
   atom: true,
   selectable: true,
   draggable: true,

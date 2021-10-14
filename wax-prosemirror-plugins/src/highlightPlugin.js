@@ -3,7 +3,7 @@ import { getHighlightDecorations } from 'prosemirror-highlightjs';
 import { DecorationSet } from 'prosemirror-view';
 import { Plugin, PluginKey } from 'prosemirror-state';
 
-const key = new PluginKey('codeHigh;ight');
+const key = new PluginKey('codeHighlight');
 
 const highlightPlugin = (nodeTypes = ['code_block']) => {
   return new Plugin({

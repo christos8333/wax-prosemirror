@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -10,11 +11,11 @@ const StyledSwitch = styled(Switch)`
   margin-left: auto;
 
   span:nth-child(1) {
-    bottom: 36px;
-    display: flex;
-    left: 4px;
-    position: relative;
-    width: 0px;
+    // bottom: 36px;
+    // display: flex;
+    // left: 4px;
+    // position: relative;
+    // width: 0px;
   }
 
   .ant-switch-checked {

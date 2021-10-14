@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
@@ -13,7 +14,7 @@ import Button from './Button';
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
 `;
 
@@ -33,7 +34,8 @@ const QuestionNunber = styled.span`
 
 const QuestionControlsWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const QuestionWrapper = styled.div`
@@ -123,34 +125,33 @@ export default ({ node, view, getPos }) => {
 
   return (
     <Wrapper>
-      <InfoRow>
-        <QuestionNunber></QuestionNunber>
-      </InfoRow>
       <QuestionControlsWrapper>
+        <InfoRow>
+          <QuestionNunber />
+          <SwitchComponent getPos={getPos} node={node} />
+        </InfoRow>
         <QuestionWrapper>
           <QuestionData>
-            <EditorComponent node={node} view={view} getPos={getPos} />
-
-            <SwitchComponent node={node} getPos={getPos} />
+            <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          <FeedbackComponent node={node} view={view} getPos={getPos} />
+          <FeedbackComponent getPos={getPos} node={node} view={view} />
         </QuestionWrapper>
-        <IconsWrapper>
-          {showAddIcon && !readOnly && (
-            <Button
-              onClick={() => addOption(node.attrs.id)}
-              icon={<PlusSquareOutlined title="Add Option" />}
-            />
-          )}
-          {showRemoveIcon && !readOnly && (
-            <Button
-              icon={
-                <DeleteOutlined onClick={removeOption} title="Delete Option" />
-              }
-            />
-          )}
-        </IconsWrapper>
       </QuestionControlsWrapper>
+      <IconsWrapper>
+        {showAddIcon && !readOnly && (
+          <Button
+            icon={<PlusSquareOutlined title="Add Option" />}
+            onClick={() => addOption(node.attrs.id)}
+          />
+        )}
+        {showRemoveIcon && !readOnly && (
+          <Button
+            icon={
+              <DeleteOutlined onClick={removeOption} title="Delete Option" />
+            }
+          />
+        )}
+      </IconsWrapper>
     </Wrapper>
   );
 };

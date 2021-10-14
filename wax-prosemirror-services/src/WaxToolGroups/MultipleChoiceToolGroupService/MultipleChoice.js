@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import ToolGroup from '../../lib/ToolGroup';
 
 @injectable()
-class Questions extends ToolGroup {
+class MultipleChoice extends ToolGroup {
   tools = [];
   constructor(@inject('MultipleChoiceQuestion') multipleChoiceQuestion) {
     super();
@@ -10,4 +10,4 @@ class Questions extends ToolGroup {
   }
 }
 
-export default Questions;
+export default MultipleChoice;

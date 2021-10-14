@@ -1,5 +1,5 @@
-import Service from "../Service";
-import TextServices from "./index";
+import Service from '../Service';
+import TextServices from './index';
 
 class TextBlockLevelService extends Service {
   dependencies = TextServices;

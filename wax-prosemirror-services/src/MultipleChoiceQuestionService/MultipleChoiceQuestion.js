@@ -17,38 +17,12 @@ const checkifEmpty = view => {
 @injectable()
 class MultipleChoiceQuestion extends Tools {
   title = 'Add Multiple Choice Question';
-  label = 'Multiple Choice';
+  icon = 'multipleChoice';
   name = 'Multiple Choice';
 
   get run() {
     return (view, context) => {
       checkifEmpty(view);
-
-      // const { state, dispatch } = view;
-      // const { tr } = state;
-      // /* Create Wrapping */
-      // let { $from, $to } = state.selection;
-      // let range = $from.blockRange($to),
-      //   wrapping =
-      //     range &&
-      //     findWrapping(
-      //       range,
-      //       state.config.schema.nodes.multiple_choice_container,
-      //       {},
-      //     );
-      // if (!wrapping) return false;
-      // tr.wrap(range, wrapping).scrollIntoView();
-
-      // /* create First Option */
-      // const newAnswerId = uuidv4();
-      // const answerOption = state.config.schema.nodes.multiple_choice.create(
-      //   { id: newAnswerId },
-      //   Fragment.empty,
-      // );
-      // dispatch(tr.replaceSelectionWith(answerOption));
-      // setTimeout(() => {
-      //   helpers.createEmptyParagraph(context, newAnswerId);
-      // }, 100);
     };
   }
 
@@ -60,7 +34,7 @@ class MultipleChoiceQuestion extends Tools {
     let status = true;
     const { from, to } = state.selection;
     state.doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'multiple_choice_container') {
+      if (node.type.groups.includes('questions')) {
         status = false;
       }
     });
@@ -73,8 +47,9 @@ class MultipleChoiceQuestion extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
+    // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <ToolBarBtn key={uuidv4()} item={this.toJSON()} view={view} />
+      <ToolBarBtn item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 }

@@ -21,16 +21,14 @@ import {
   EditorInfoToolGroupServices,
   BottomInfoService,
   MultipleChoiceQuestionService,
-  QuestionsToolGroupService,
+  MultipleChoiceToolGroupService,
+  FillTheGapQuestionService,
+  FillTheGapToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
-
-/* Questions Services */
-// import MultipleChoiceQuestionService from '../MultipleChoiceQuestionService/MultipleChoiceQuestionService';
-// import QuestionsToolGroupService from '../QuestionsToolGroupService/QuestionsToolGroupService';
 
 export default {
   MenuService: [
@@ -51,7 +49,8 @@ export default {
         'Lists',
         'Images',
         'Tables',
-        'Questions',
+        'MultipleChoice',
+        'FillTheGap',
         'FullScreen',
       ],
     },
@@ -68,8 +67,10 @@ export default {
   ],
 
   services: [
+    new FillTheGapQuestionService(),
+    new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),
-    new QuestionsToolGroupService(),
+    new MultipleChoiceToolGroupService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

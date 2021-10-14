@@ -44,16 +44,14 @@ const TopMenu = styled.div`
       ${th('colorFurniture')};
   }
 
-  > div:nth-last-of-type(-n + 2) {
-    margin-left: auto;
-  }
-
   > div:last-child {
-    margin-left: 0;
+    border-left: ${th('borderWidth')} ${th('borderStyle')}
+      ${th('colorFurniture')};
+    margin-left: auto;
     margin-right: ${grid(5)};
   }
 
-  > div[data-name='Tables'] {
+  > div[data-name='FillTheGap'] {
     border-right: none;
   }
 `;

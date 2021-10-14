@@ -21,7 +21,7 @@ import {
   EditorInfoToolGroupServices,
   BottomInfoService,
   MultipleChoiceQuestionService,
-  QuestionsToolGroupService,
+  MultipleChoiceToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -51,7 +51,7 @@ export default {
         'Lists',
         'Images',
         'Tables',
-        'Questions',
+        'MultipleChoice',
         'FillTheGap',
         'FullScreen',
       ],
@@ -72,7 +72,7 @@ export default {
     new FillTheGapQuestionService(),
     new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),
-    new QuestionsToolGroupService(),
+    new MultipleChoiceToolGroupService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

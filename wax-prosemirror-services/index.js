@@ -70,4 +70,4 @@ export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/Tra
 export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
-export { default as QuestionsToolGroupService } from './src/WaxToolGroups/QuestionsToolGroupService/QuestionsToolGroupService';
+export { default as MultipleChoiceToolGroupService } from './src/WaxToolGroups/MultipleChoiceToolGroupService/MultipleChoiceToolGroupService';

@@ -32,7 +32,7 @@ const CommentBubbleComponent = ({
 
   const isCommentAllowed = () => {
     const commentMark = activeView.state.schema.marks.comment;
-    const mark = DocumentHelpers.findMark(state, commentMark, true);
+    const marks = DocumentHelpers.findMark(state, commentMark, true);
 
     let allowed = true;
     state.doc.nodesBetween(
@@ -48,9 +48,13 @@ const CommentBubbleComponent = ({
         }
       },
     );
-
     // TODO Overlapping comments . for now don't allow
-    if (mark.length >= 1) allowed = false;
+    marks.forEach(mark => {
+      if (mark.attrs.group === 'main') allowed = false;
+    });
+
+    // TO DO this is because of a bug and overlay doesn't rerender. Fix in properly in Notes, and remove
+    if (activeViewId !== 'main' && marks.length >= 1) allowed = false;
     return allowed;
   };
 

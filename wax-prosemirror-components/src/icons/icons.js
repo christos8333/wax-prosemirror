@@ -418,4 +418,24 @@ export default {
       />
     </Svg>
   ),
+  multipleChoice: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Add Multiple Choice </title>
+      <path d="M16.54,11L13,7.46l1.41-1.41l2.12,2.12l4.24-4.24l1.41,1.41L16.54,11z M11,7H2v2h9V7z M21,13.41L19.59,12L17,14.59 L14.41,12L13,13.41L15.59,16L13,18.59L14.41,20L17,17.41L19.59,20L21,18.59L18.41,16L21,13.41z M11,15H2v2h9V15z" />
+    </Svg>
+  ),
+  gapQuestion: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Add Fill The Gap Question </title>
+      <path d="M0 0h24v24H0V0z" fill="none" />
+      <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM5 15h14v3H5z" />
+    </Svg>
+  ),
+  insertGap: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Add Gap </title>
+      <path d="M0 0h24v24H0V0z" fill="none" />
+      <path d="M18 9v4H6V9H4v6h16V9h-2z" />
+    </Svg>
+  ),
 };

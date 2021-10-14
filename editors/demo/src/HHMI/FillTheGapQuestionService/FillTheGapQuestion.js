@@ -5,7 +5,7 @@ import { Tools } from 'wax-prosemirror-services';
 @injectable()
 class FillTheGapQuestion extends Tools {
   title = 'Add Fill The Gap Question';
-  label = 'Fill The Gap';
+  icon = 'gapQuestion';
   name = 'Fill The Gap';
 
   get run() {

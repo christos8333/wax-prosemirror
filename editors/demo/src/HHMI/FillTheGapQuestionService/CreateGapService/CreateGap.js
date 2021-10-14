@@ -6,7 +6,7 @@ import { Tools } from 'wax-prosemirror-services';
 @injectable()
 class CreateGap extends Tools {
   title = 'Create Gap Option';
-  label = 'Create Gap';
+  icon = 'insertGap';
   name = 'Create Gap';
 
   get run() {

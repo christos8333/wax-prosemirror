@@ -17,7 +17,7 @@ const checkifEmpty = view => {
 @injectable()
 class MultipleChoiceQuestion extends Tools {
   title = 'Add Multiple Choice Question';
-  label = 'Multiple Choice';
+  icon = 'multipleChoice';
   name = 'Multiple Choice';
 
   get run() {

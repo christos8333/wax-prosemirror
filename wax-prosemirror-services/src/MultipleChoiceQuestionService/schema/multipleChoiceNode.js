@@ -7,7 +7,7 @@ const multipleChoiceNode = {
     correct: { default: false },
     feedback: { default: '' },
   },
-  group: 'block',
+  group: 'block questions',
   content: 'block*',
   defining: true,
 

@@ -34,7 +34,7 @@ class MultipleChoiceQuestion extends Tools {
     let status = true;
     const { from, to } = state.selection;
     state.doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'multiple_choice_container') {
+      if (node.type.groups.includes('questions')) {
         status = false;
       }
     });

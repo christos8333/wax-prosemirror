@@ -3,7 +3,7 @@ const fillTheGapContainerNode = {
     id: { default: '' },
     class: { default: 'fill-the-gap' },
   },
-  group: 'block',
+  group: 'block questions',
   defining: true,
   content: 'block+',
   parseDOM: [

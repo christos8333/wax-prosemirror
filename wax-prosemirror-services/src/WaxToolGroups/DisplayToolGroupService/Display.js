@@ -17,6 +17,8 @@ class Display extends ToolGroup {
     @inject('Heading2') heading2,
     @inject('Heading3') heading3,
     @inject('Heading4') heading4,
+    @inject('Heading5') heading5,
+    @inject('Heading6') heading6,
   ) {
     super();
     this.tools = [
@@ -28,6 +30,8 @@ class Display extends ToolGroup {
       heading2,
       heading3,
       heading4,
+      heading5,
+      heading6,
     ];
   }
 }

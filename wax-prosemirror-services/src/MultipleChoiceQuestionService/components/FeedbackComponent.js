@@ -75,7 +75,7 @@ export default ({ node, view, getPos }) => {
   const onFocus = () => {
     context.view.main.dispatch(
       context.view.main.state.tr.setSelection(
-        TextSelection.create(context.view.main.state.tr.doc, 0),
+        TextSelection.create(context.view.main.state.tr.doc, null),
       ),
     );
   };

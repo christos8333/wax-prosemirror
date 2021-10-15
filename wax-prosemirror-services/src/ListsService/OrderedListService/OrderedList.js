@@ -23,6 +23,10 @@ class OrderedList extends Tools {
   }
 
   select = (state, activeViewId, activeView) => {
+    const {
+      selection: { from },
+    } = state;
+    if (from === null) return false;
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('Lists')) return false;
     return true;

@@ -20,6 +20,10 @@ class Image extends Tools {
   }
 
   select = activeView => {
+    const {
+      selection: { from },
+    } = activeView.state;
+    if (from === null) return false;
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('Images')) return false;
     return true;

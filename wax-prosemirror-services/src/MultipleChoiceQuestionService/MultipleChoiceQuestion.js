@@ -35,6 +35,9 @@ class MultipleChoiceQuestion extends Tools {
     if (disallowedTools.includes('MultipleChoice')) return false;
     let status = true;
     const { from, to } = state.selection;
+
+    if (from === null) return false;
+
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.groups.includes('questions')) {
         status = false;

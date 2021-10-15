@@ -20,6 +20,10 @@ class Table extends Tools {
   }
 
   select = activeView => {
+    const {
+      selection: { from },
+    } = activeView.state;
+    if (from === null) return false;
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('Tables')) return false;
     return true;

@@ -16,6 +16,14 @@ class Emphasis extends Tools {
     };
   }
 
+  select = state => {
+    const {
+      selection: { from },
+    } = state;
+    if (from === null) return false;
+    return true;
+  };
+
   get active() {
     return state => {
       return Commands.markActive(state.config.schema.marks.em)(state);

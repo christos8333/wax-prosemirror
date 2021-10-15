@@ -325,7 +325,7 @@ export default css`
 
   /* -- Multiple Choice ---------------------------------- */
 
-  .mutiple-choice {
+  .multiple-choice {
     border: 3px solid #f5f5f7;
     counter-reset: question-item-multiple;
     margin: 38px;

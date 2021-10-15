@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const multipleChoiceNode = {
   attrs: {
-    class: { default: 'mutiple-choice-option' },
+    class: { default: 'multiple-choice-option' },
     id: { default: uuidv4() },
     correct: { default: false },
     feedback: { default: '' },
@@ -14,7 +14,7 @@ const multipleChoiceNode = {
   // atom: true,
   parseDOM: [
     {
-      tag: 'div.mutiple-choice-option',
+      tag: 'div.multiple-choice-option',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),

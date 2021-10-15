@@ -1,7 +1,7 @@
 const multipleChoiceContainerNode = {
   attrs: {
     id: { default: '' },
-    class: { default: 'mutiple-choice' },
+    class: { default: 'multiple-choice' },
   },
   group: 'block questions',
   atom: true,
@@ -10,7 +10,7 @@ const multipleChoiceContainerNode = {
   content: 'multiple_choice+',
   parseDOM: [
     {
-      tag: 'div.mutiple-choice',
+      tag: 'div.multiple-choice',
       getAttrs(dom) {
         return {
           id: dom.dataset.id,

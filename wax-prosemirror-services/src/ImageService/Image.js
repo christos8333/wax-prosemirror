@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
@@ -19,8 +20,12 @@ class Image extends Tools {
   }
 
   select = activeView => {
+    const {
+      selection: { from },
+    } = activeView.state;
+    if (from === null) return false;
     const { disallowedTools } = activeView.props;
-    if (disallowedTools.includes('images')) return false;
+    if (disallowedTools.includes('Images')) return false;
     return true;
   };
 
@@ -39,9 +44,9 @@ class Image extends Tools {
     );
     return this._isDisplayed ? (
       <ImageUpload
-        key={uuidv4()}
-        item={this.toJSON()}
         fileUpload={upload}
+        item={this.toJSON()}
+        key={uuidv4()}
         view={view}
       />
     ) : null;

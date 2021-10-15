@@ -83,7 +83,6 @@ class Schema {
     const nodes = {};
     const marks = {};
 
-    // console.log(this._nodes);
     for (let index in this._nodes) {
       nodes[index] = this._nodes[index].toJSON();
     }

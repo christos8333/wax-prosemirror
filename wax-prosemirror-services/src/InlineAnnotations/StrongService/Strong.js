@@ -1,7 +1,7 @@
 import { toggleMark } from 'prosemirror-commands';
 import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../../lib/Tools';
 import { injectable } from 'inversify';
+import Tools from '../../lib/Tools';
 
 export default
 @injectable()
@@ -15,6 +15,14 @@ class Strong extends Tools {
       toggleMark(state.config.schema.marks.strong)(state, dispatch);
     };
   }
+
+  select = state => {
+    const {
+      selection: { from },
+    } = state;
+    if (from === null) return false;
+    return true;
+  };
 
   get active() {
     return state => {

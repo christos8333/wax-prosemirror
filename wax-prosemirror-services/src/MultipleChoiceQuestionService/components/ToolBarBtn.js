@@ -44,8 +44,8 @@ const ToolBarBtn = ({ view = {}, item }) => {
   const createOption = () => {
     const { state, dispatch } = main;
     /* Create Wrapping */
-    let { $from, $to } = state.selection;
-    let range = $from.blockRange($to);
+    const { $from, $to } = state.selection;
+    const range = $from.blockRange($to);
 
     wrapIn(state.config.schema.nodes.multiple_choice_container, {
       id: uuidv4(),

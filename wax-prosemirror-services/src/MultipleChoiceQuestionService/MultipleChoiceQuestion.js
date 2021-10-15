@@ -30,7 +30,9 @@ class MultipleChoiceQuestion extends Tools {
     return state => {};
   }
 
-  select = (state, activeViewId) => {
+  select = (state, activeViewId, activeView) => {
+    const { disallowedTools } = activeView.props;
+    if (disallowedTools.includes('MultipleChoice')) return false;
     let status = true;
     const { from, to } = state.selection;
     state.doc.nodesBetween(from, to, (node, pos) => {

@@ -91,7 +91,7 @@ const EditorComponent = ({ node, view, getPos }) => {
         }),
         // This is the magic part
         dispatchTransaction,
-        disallowedTools: ['images', 'lists', 'lift'],
+        disallowedTools: ['Images', 'Lists', 'lift'],
         handleDOMEvents: {
           mousedown: () => {
             context.view[activeViewId].dispatch(

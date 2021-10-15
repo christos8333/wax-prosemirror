@@ -1,4 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
@@ -44,7 +46,7 @@ export default ({ node, view, getPos }) => {
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(
-          new TextSelection(context.view.main.state.tr.doc.resolve(0)),
+          TextSelection.create(context.view.main.state.tr.doc, 0),
         ),
       );
     }
@@ -73,7 +75,7 @@ export default ({ node, view, getPos }) => {
   const onFocus = () => {
     context.view.main.dispatch(
       context.view.main.state.tr.setSelection(
-        new TextSelection(context.view.main.state.tr.doc.resolve(0)),
+        TextSelection.create(context.view.main.state.tr.doc, 0),
       ),
     );
   };
@@ -82,14 +84,14 @@ export default ({ node, view, getPos }) => {
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
       <FeedBackInput
-        onKeyDown={handleKeyDown}
+        onBlur={saveFeedBack}
         onChange={feedBackInput}
+        onFocus={onFocus}
+        onKeyDown={handleKeyDown}
         placeholder="Insert feedback"
         ref={feedBackRef}
         type="text"
         value={feedBack}
-        onBlur={saveFeedBack}
-        onFocus={onFocus}
       />
     </FeedBack>
   );

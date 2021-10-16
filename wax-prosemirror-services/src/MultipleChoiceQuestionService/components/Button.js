@@ -47,7 +47,6 @@ const StyledButton = styled(AntButton)`
     return css`
       color: ${color};
       border-color: ${color};
-
       &:hover,
       &:focus {
         color: ${lighten(color, 0.25)};

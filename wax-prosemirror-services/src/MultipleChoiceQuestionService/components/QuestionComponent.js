@@ -55,6 +55,7 @@ const IconsWrapper = styled.div`
 
   button {
     border: none;
+    box-shadow: none;
   }
 
   span {

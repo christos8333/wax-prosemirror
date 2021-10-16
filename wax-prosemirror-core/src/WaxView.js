@@ -6,7 +6,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import styled from 'styled-components';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -16,15 +15,11 @@ import { PortalContext } from './PortalContext';
 import transformPasted from './helpers/TransformPasted';
 import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
-import styles from './styles/styles';
+import './styles/styles.css';
 
 const WaxPortals = ComponentPlugin('waxPortals');
 
 let previousDoc;
-
-const PMstyleWrapper = styled.span`
-  ${styles};
-`;
 
 export default props => {
   const {
@@ -151,10 +146,10 @@ export default props => {
   };
 
   const editor = (
-    <PMstyleWrapper>
+    <>
       <div ref={setEditorRef} />
       <WaxPortals />
-    </PMstyleWrapper>
+    </>
   );
 
   return useMemo(

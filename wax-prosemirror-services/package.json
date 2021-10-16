@@ -1,10 +1,11 @@
 {
   "name": "wax-prosemirror-services",
-  "author": "Christos Kokosias",
+  "author": "Christos Kokosias & Giannis Kopanas",
   "version": "0.1.4",
   "description": "Wax prosemirror services",
   "license": "MIT",
   "main": "dist/index.js",
+  "style": "dist/index.css",
   "files": [
     "dist"
   ],

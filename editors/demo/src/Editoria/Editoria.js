@@ -43,7 +43,9 @@ const Editoria = () => {
   const EditoriaComponent = useMemo(
     () => (
       <>
-        <button onClick={() => editorRef.current.getContent()}>Click</button>
+        <button onClick={() => console.log(editorRef.current.getContent())}>
+          Click
+        </button>
 
         <Wax
           ref={editorRef}

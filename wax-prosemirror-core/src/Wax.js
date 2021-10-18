@@ -1,11 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, {
-  useEffect,
-  useState,
-  forwardRef,
-  useRef,
-  useImperativeHandle,
-} from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { each } from 'lodash';
 import { DOMSerializer } from 'prosemirror-model';
 
@@ -38,12 +32,6 @@ const Wax = forwardRef((props, ref) => {
     return () => newApplication.resetApp();
   }, []);
 
-  useImperativeHandle(ref, () => ({
-    getContent() {
-      console.log('content');
-    },
-  }));
-
   const {
     autoFocus,
     browserSpellCheck,
@@ -51,7 +39,6 @@ const Wax = forwardRef((props, ref) => {
     debug,
     fileUpload,
     layout,
-    onBlur,
     placeholder,
     readonly,
     value,
@@ -111,10 +98,10 @@ const Wax = forwardRef((props, ref) => {
           browserSpellCheck={browserSpellCheck}
           debug={debug}
           fileUpload={fileUpload}
-          onBlur={onBlur || (v => true)}
           onChange={finalOnChange || (v => true)}
           placeholder={placeholder}
           readonly={readonly}
+          ref={ref}
           serializer={serializer}
           targetFormat={targetFormat}
           TrackChange={TrackChange}

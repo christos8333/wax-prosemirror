@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {
   useRef,
   useContext,
@@ -5,6 +6,8 @@ import React, {
   useMemo,
   useEffect,
   useState,
+  forwardRef,
+  useImperativeHandle,
 } from 'react';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
@@ -15,24 +18,26 @@ import { PortalContext } from './PortalContext';
 import transformPasted from './helpers/TransformPasted';
 import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
+import getDocContent from './helpers/GetDocContent';
 import './styles/styles.css';
 
 const WaxPortals = ComponentPlugin('waxPortals');
 
 let previousDoc;
 
-export default props => {
+const WaxView = forwardRef((props, ref) => {
+  let view;
   const {
     browserSpellCheck,
     readonly,
-    onBlur,
     debug,
     autoFocus,
     user,
     targetFormat,
+    serializer,
   } = props;
-  const editorRef = useRef();
-  let view;
+
+  const WaxEditorRef = useRef();
   const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
@@ -48,8 +53,8 @@ export default props => {
   const setEditorRef = useCallback(
     // eslint-disable-next-line consistent-return
     node => {
-      if (editorRef.current) {
-        // this is where you do cleanup if you have to. the editorRef.current will
+      if (WaxEditorRef.current) {
+        // this is where you do cleanup if you have to. the WaxEditorRef.current will
         // still point to the old ref, the old node. so you have some time here to
         // clean up the unmount if you need to.
       }
@@ -70,14 +75,6 @@ export default props => {
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
-            handleDOMEvents: {
-              blur: onBlur
-                ? editorView => {
-                    const serialize = props.serializer(schema);
-                    onBlur(serialize(editorView.state.doc.content));
-                  }
-                : null,
-            },
             transformPasted: slice => {
               return transformPasted(slice, view);
             },
@@ -103,7 +100,7 @@ export default props => {
 
         return () => view.destroy();
       }
-      editorRef.current = node;
+      WaxEditorRef.current = node;
     },
     [readonly],
   );
@@ -111,6 +108,12 @@ export default props => {
   useEffect(() => {
     return () => (view = null);
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    getContent() {
+      return getDocContent(schema, serializer, targetFormat, context);
+    },
+  }));
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
@@ -159,4 +162,6 @@ export default props => {
       }),
     [readonly],
   );
-};
+});
+
+export default WaxView;

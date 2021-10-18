@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { each } from 'lodash';
 import { DOMSerializer } from 'prosemirror-model';
 
@@ -23,7 +23,7 @@ const createApplication = props => {
   return application;
 };
 
-const Wax = props => {
+const Wax = forwardRef((props, ref) => {
   const [application, setApplication] = useState();
 
   useEffect(() => {
@@ -39,7 +39,6 @@ const Wax = props => {
     debug,
     fileUpload,
     layout,
-    onBlur,
     placeholder,
     readonly,
     value,
@@ -99,10 +98,10 @@ const Wax = props => {
           browserSpellCheck={browserSpellCheck}
           debug={debug}
           fileUpload={fileUpload}
-          onBlur={onBlur || (v => true)}
           onChange={finalOnChange || (v => true)}
           placeholder={placeholder}
           readonly={readonly}
+          ref={ref}
           serializer={serializer}
           targetFormat={targetFormat}
           TrackChange={TrackChange}
@@ -114,7 +113,7 @@ const Wax = props => {
       </PortalProvider>
     </WaxProvider>
   );
-};
+});
 
 Wax.defaultProps = {
   config: { services: [] },

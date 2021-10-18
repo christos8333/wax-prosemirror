@@ -11,7 +11,6 @@ import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import transformPasted from './helpers/TransformPasted';
 import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
 
 export default ({ node, view }) => {
@@ -62,9 +61,6 @@ export default ({ node, view }) => {
         },
         handleTextInput: (editorView, from, to, text) => {
           typing = true;
-        },
-        transformPasted: slice => {
-          return transformPasted(slice, noteView);
         },
 
         attributes: {

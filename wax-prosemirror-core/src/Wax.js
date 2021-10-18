@@ -1,5 +1,11 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+} from 'react';
 import { each } from 'lodash';
 import { DOMSerializer } from 'prosemirror-model';
 
@@ -23,7 +29,7 @@ const createApplication = props => {
   return application;
 };
 
-const Wax = props => {
+const Wax = forwardRef((props, ref) => {
   const [application, setApplication] = useState();
 
   useEffect(() => {
@@ -31,6 +37,12 @@ const Wax = props => {
     setApplication(newApplication);
     return () => newApplication.resetApp();
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    getContent() {
+      console.log('content');
+    },
+  }));
 
   const {
     autoFocus,
@@ -114,7 +126,7 @@ const Wax = props => {
       </PortalProvider>
     </WaxProvider>
   );
-};
+});
 
 Wax.defaultProps = {
   config: { services: [] },

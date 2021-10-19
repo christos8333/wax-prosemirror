@@ -26,23 +26,24 @@ export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const [feedBack, setFeedBack] = useState('');
   const [isFirstRun, setFirstRun] = useState(true);
+  const [typing, setTyping] = useState(false);
   const feedBackRef = useRef(null);
 
   useEffect(() => {
     const allNodes = getNodes(context.view.main);
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
+        if (!typing) setFeedBack(singNode.node.attrs.feedback);
         if (!isFirstRun) {
           if (singNode.node.attrs.feedback === '')
             setFeedBack(singNode.node.attrs.feedback);
         }
-        if (singNode.node.attrs.feedback !== '')
-          setFeedBack(singNode.node.attrs.feedback);
       }
     });
   }, [getNodes(context.view.main)]);
 
   const handleKeyDown = e => {
+    setTyping(true);
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(

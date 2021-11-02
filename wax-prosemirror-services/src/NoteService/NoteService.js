@@ -1,6 +1,6 @@
-import Service from '../Service';
 import { footNoteNode } from 'wax-prosemirror-schema';
 import { CommentBubbleComponent } from 'wax-prosemirror-components';
+import Service from '../Service';
 import Note from './Note';
 import NoteComponent from './NoteComponent';
 

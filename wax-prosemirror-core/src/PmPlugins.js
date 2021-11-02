@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { injectable } from 'inversify';
 @injectable()
 export default class PmPlugins {
   _plugins = new Map();

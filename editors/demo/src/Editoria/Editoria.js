@@ -43,10 +43,6 @@ const Editoria = () => {
   const EditoriaComponent = useMemo(
     () => (
       <>
-        <button onClick={() => console.log(editorRef.current.getContent())}>
-          Click
-        </button>
-
         <Wax
           ref={editorRef}
           key={key}
@@ -60,7 +56,6 @@ const Editoria = () => {
           // onChange={debounce(source => {
           //   console.log(JSON.stringify(source));
           // }, 200)}
-          // onBlur={source => console.log(source)}
           user={user}
         />
       </>

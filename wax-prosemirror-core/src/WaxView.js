@@ -15,7 +15,6 @@ import { EditorView } from 'prosemirror-view';
 import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
-import transformPasted from './helpers/TransformPasted';
 import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
 import getDocContent from './helpers/GetDocContent';
@@ -75,9 +74,6 @@ const WaxView = forwardRef((props, ref) => {
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
-            transformPasted: slice => {
-              return transformPasted(slice, view);
-            },
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
             },

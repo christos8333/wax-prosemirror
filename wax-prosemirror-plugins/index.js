@@ -2,6 +2,8 @@ export { default as TrackChangePlugin } from './src/trackChanges/TrackChangePlug
 export { default as HideShowPlugin } from './src/trackChanges/HideShowPlugin';
 
 export { default as CommentPlugin } from './src/comments/CommentPlugin';
+export { default as CopyPasteCommentPlugin } from './src/comments/CopyPasteCommentPlugin';
+
 export { default as WaxSelectionPlugin } from './src/WaxSelectionPlugin';
 export { default as highlightPlugin } from './src/highlightPlugin';
 

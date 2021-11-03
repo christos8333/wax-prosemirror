@@ -18,8 +18,12 @@ class MultipleDropDown extends ToolGroup {
 
   renderTools(view) {
     if (isEmpty(view)) return null;
+    const context = useContext(WaxContext);
 
-    const { activeViewId } = useContext(WaxContext);
+    const {
+      activeViewId,
+      view: { main },
+    } = context;
 
     const Wrapper = styled.span`
       ${ReactDropDownStyles};
@@ -48,7 +52,7 @@ class MultipleDropDown extends ToolGroup {
     `;
 
     const { dispatch, state } = view;
-
+    console.log('adsasda', this._tools[0]);
     const dropDownOptions = [
       { label: 'Multiple choice ', value: '0', item: this._tools[0] },
       {
@@ -74,7 +78,7 @@ class MultipleDropDown extends ToolGroup {
           key={uuidv4()}
           options={dropDownOptions}
           onChange={option => {
-            this._tools[option.value].run(state, dispatch);
+            this._tools[option.value].run(view, main, context);
           }}
           placeholder="Multiple Question Types"
           select={isDisabled}

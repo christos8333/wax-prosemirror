@@ -17,6 +17,7 @@ const DropdownStyled = styled(Dropdown)`
 
   .Dropdown-control {
     border: none;
+    padding-top: 12px;
 
     &:hover {
       box-shadow: none;
@@ -24,8 +25,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 
   .Dropdown-arrow {
-    right: 25px;
-    top: 14px;
+    top: 17px;
   }
 
   .Dropdown-menu {

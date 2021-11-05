@@ -25,7 +25,7 @@ class MultipleDropDown extends ToolGroup {
       view: { main },
     } = context;
 
-    const Wrapper = styled.span`
+    const Wrapper = styled.div`
       ${ReactDropDownStyles};
     `;
     const DropdownStyled = styled(Dropdown)`
@@ -35,13 +35,19 @@ class MultipleDropDown extends ToolGroup {
       pointer-events: ${props => (props.select ? 'default' : 'none')};
       .Dropdown-control {
         border: none;
+        padding-top: 12px;
+
+        &:hover {
+          box-shadow: none;
+        }
       }
+
       .Dropdown-arrow {
-        right: 25px;
-        top: 10px;
+        top: 17px;
       }
+
       .Dropdown-menu {
-        width: 120%;
+        width: 102%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -52,7 +58,6 @@ class MultipleDropDown extends ToolGroup {
     `;
 
     const { dispatch, state } = view;
-    console.log('adsasda', this._tools[0]);
     const dropDownOptions = [
       { label: 'Multiple choice ', value: '0', item: this._tools[0] },
       {

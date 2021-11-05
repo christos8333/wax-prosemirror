@@ -51,7 +51,6 @@ export default {
         'Images',
         'Tables',
         'MultipleDropDown',
-        'MultipleChoice',
         'FillTheGap',
         'FullScreen',
       ],

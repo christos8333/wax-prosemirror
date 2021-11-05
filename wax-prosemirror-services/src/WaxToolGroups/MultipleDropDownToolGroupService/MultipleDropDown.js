@@ -18,12 +18,6 @@ class MultipleDropDown extends ToolGroup {
 
   renderTools(view) {
     if (isEmpty(view)) return null;
-    const context = useContext(WaxContext);
-
-    const {
-      activeViewId,
-      view: { main },
-    } = context;
 
     const Wrapper = styled.div`
       ${ReactDropDownStyles};
@@ -57,11 +51,18 @@ class MultipleDropDown extends ToolGroup {
       }
     `;
 
-    const { dispatch, state } = view;
+    const context = useContext(WaxContext);
+
+    const {
+      activeView,
+      view: { main },
+    } = context;
+    const { state } = view;
+
     const dropDownOptions = [
-      { label: 'Multiple choice ', value: '0', item: this._tools[0] },
+      { label: 'Multiple Choice ', value: '0', item: this._tools[0] },
       {
-        label: 'Multiple choice (single correct)  ',
+        label: 'Multiple Choice (single correct)  ',
         value: '1',
         item: this._tools[0],
       },
@@ -73,8 +74,13 @@ class MultipleDropDown extends ToolGroup {
       },
     ];
 
-    const isDisabled = true;
+    const isDisabled = this._tools[0].select(state, activeView);
     let found = '';
+    dropDownOptions.forEach((item, i) => {
+      if (item.item.select(state, activeView) === false) {
+        found = item.item.label;
+      }
+    });
 
     return (
       <Wrapper key={uuidv4()}>

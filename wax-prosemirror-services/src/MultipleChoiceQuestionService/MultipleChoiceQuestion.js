@@ -52,6 +52,7 @@ class MultipleChoiceQuestion extends Tools {
   title = 'Add Multiple Choice Question';
   icon = 'multipleChoice';
   name = 'Multiple Choice';
+  label = 'Multiple Choice';
 
   get run() {
     return (view, main, context) => {
@@ -64,7 +65,7 @@ class MultipleChoiceQuestion extends Tools {
     return state => {};
   }
 
-  select = (state, activeViewId, activeView) => {
+  select = (state, activeView) => {
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('MultipleChoice')) return false;
     let status = true;

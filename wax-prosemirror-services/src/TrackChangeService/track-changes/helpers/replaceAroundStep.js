@@ -1,7 +1,7 @@
+import { liftListItem } from 'prosemirror-schema-list';
 import markDeletion from './markDeletion';
 import markInsertion from './markInsertion';
 import markWrapping from './markWrapping';
-import { liftListItem } from 'prosemirror-schema-list';
 
 const replaceAroundStep = (
   state,
@@ -48,8 +48,7 @@ const replaceAroundStep = (
       );
     }
   } else {
-    console.log('to fix lift list item');
-    // newTr.step(step);
+    newTr.step(step);
     const ranges = [
       {
         from: step.getMap().map(step.from, -1),
@@ -60,18 +59,12 @@ const replaceAroundStep = (
         to: step.getMap().map(step.to),
       },
     ];
-
     ranges.forEach(range =>
       doc.nodesBetween(range.from, range.to, (node, pos) => {
         if (pos < range.from) {
           return true;
         }
-        liftListItem(node.type)(state, newTr => {
-          newTr.steps.forEach(step => {
-            tr.step(step);
-            map.appendMap(step.getMap());
-          });
-        });
+        markInsertion(newTr, range.from, range.to, user, date, group, viewId);
       }),
     );
   }

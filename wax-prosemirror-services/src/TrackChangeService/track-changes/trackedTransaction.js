@@ -55,7 +55,7 @@ const trackedTransaction = (
   const newTr = state.tr;
   const map = new Mapping();
   const date = Math.floor(Date.now());
-  console.log(tr.steps);
+
   tr.steps.forEach(originalStep => {
     const step = originalStep.map(map);
     const { doc } = newTr;

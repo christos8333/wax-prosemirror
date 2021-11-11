@@ -33,7 +33,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
     active(state, activeViewId) && select(state, activeViewId)
   );
 
-  let isDisabled = !select(state, activeViewId, activeView);
+  let isDisabled = !select(state, activeView);
   if (!isEditable) isDisabled = true;
 
   const ToolBarBtnComponent = useMemo(

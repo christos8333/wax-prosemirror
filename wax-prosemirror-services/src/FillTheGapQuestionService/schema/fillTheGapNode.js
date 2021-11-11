@@ -10,7 +10,7 @@ const fillTheGapNode = {
   },
   parseDOM: [
     {
-      tag: 'span',
+      tag: 'span.fill-the-gap',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),

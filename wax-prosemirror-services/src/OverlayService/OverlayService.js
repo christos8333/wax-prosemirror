@@ -2,8 +2,6 @@ import Service from '../Service';
 import OverlayComponent from './OverlayComponent';
 
 export default class OverlayService extends Service {
-  boot() {}
-
   register() {
     this.container.bind('CreateOverlay').toFactory(context => {
       return (Component, componentProps, options) => {

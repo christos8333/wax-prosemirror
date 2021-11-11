@@ -23,8 +23,6 @@ class OrderedList extends Tools {
   }
 
   select = (state, activeViewId, activeView) => {
-    if (!activeView) return false;
-
     const {
       selection: { from },
     } = state;

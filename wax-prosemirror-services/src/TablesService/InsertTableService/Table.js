@@ -20,7 +20,6 @@ class Table extends Tools {
   }
 
   select = activeView => {
-    if (!activeView) return false;
     const {
       selection: { from },
     } = activeView.state;

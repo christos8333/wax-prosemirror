@@ -19,8 +19,9 @@ class FillTheGapQuestion extends Tools {
   }
 
   select = (state, activeViewId, activeView) => {
-    let status = true;
+    if (!activeView) return false;
     const { disallowedTools } = activeView.props;
+    let status = true;
     const { from, to } = state.selection;
     if (from === null || disallowedTools.includes('Lists')) return false;
 

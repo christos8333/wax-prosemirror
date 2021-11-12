@@ -8,9 +8,21 @@ import {
   chainCommands,
   deleteSelection,
 } from 'prosemirror-commands';
-// katex
-import katex, { ParseError } from 'katex';
 import { collapseMathCmd } from './helpers/collapse-math-cmd';
+// mathjax
+
+import { mathjax } from 'mathjax-full/js/mathjax';
+import { MathML } from 'mathjax-full/js/input/mathml';
+import { SVG } from 'mathjax-full/js/output/svg';
+// const { liteAdaptor } = require('mathjax-full/js/adaptors/liteAdaptor.js');
+import { browserAdaptor } from 'mathjax-full/js/adaptors/browserAdaptor';
+import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html';
+import { STATE } from 'mathjax-full/js/core/MathItem';
+const adaptor = browserAdaptor();
+RegisterHTMLHandler(adaptor);
+const mathml = new MathML({});
+const svg = new SVG({ fontCache: 'none' });
+const markErrors = [STATE.TYPESET + 1, null];
 
 export class MathView {
   // == Lifecycle ===================================== //

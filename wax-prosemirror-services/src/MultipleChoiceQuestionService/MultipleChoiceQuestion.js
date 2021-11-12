@@ -66,7 +66,6 @@ class MultipleChoiceQuestion extends Tools {
   }
 
   select = (state, activeView) => {
-    if (!activeView) return false;
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('MultipleChoice')) return false;
     let status = true;

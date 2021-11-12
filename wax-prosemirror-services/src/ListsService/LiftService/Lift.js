@@ -10,7 +10,6 @@ class Lift extends Tools {
   name = 'Lift';
 
   select = (state, activeViewId, activeView) => {
-    if (!activeView) return false;
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('lift')) return false;
     return lift(state);

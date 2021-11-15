@@ -12,7 +12,7 @@ import { collapseMathCmd } from './helpers/collapse-math-cmd';
 // mathjax
 
 import { mathjax } from 'mathjax-full/js/mathjax';
-import { MathML } from 'mathjax-full/js/input/mathml';
+import { TeX } from 'mathjax-full/js/input/tex.js';
 import { SVG } from 'mathjax-full/js/output/svg';
 // const { liteAdaptor } = require('mathjax-full/js/adaptors/liteAdaptor.js');
 import { browserAdaptor } from 'mathjax-full/js/adaptors/browserAdaptor';
@@ -20,7 +20,7 @@ import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html';
 import { STATE } from 'mathjax-full/js/core/MathItem';
 const adaptor = browserAdaptor();
 RegisterHTMLHandler(adaptor);
-const mathml = new MathML({});
+const texhtml = new TeX({});
 const svg = new SVG({ fontCache: 'none' });
 const markErrors = [STATE.TYPESET + 1, null];
 
@@ -174,19 +174,38 @@ export class MathView {
       this.dom.classList.remove('empty-math');
     }
     // render katex, but fail gracefully
-    try {
-      katex.render(texString, this._mathRenderElt, this._katexOptions);
-      this._mathRenderElt.classList.remove('parse-error');
-      this.dom.setAttribute('title', '');
-    } catch (err) {
-      if (err instanceof ParseError) {
-        console.error(err);
-        this._mathRenderElt.classList.add('parse-error');
-        this.dom.setAttribute('title', err.toString());
-      } else {
-        throw err;
-      }
-    }
+    // try {
+    //   katex.render(texString, this._mathRenderElt, this._katexOptions);
+    //   this._mathRenderElt.classList.remove('parse-error');
+    //   this.dom.setAttribute('title', '');
+    // } catch (err) {
+    //   if (err instanceof ParseError) {
+    //     console.error(err);
+    //     this._mathRenderElt.classList.add('parse-error');
+    //     this.dom.setAttribute('title', err.toString());
+    //   } else {
+    //     throw err;
+    //   }
+    // }
+
+    const latex_html = mathjax.document('', {
+      InputJax: texhtml,
+      OutputJax: svg,
+      renderActions: {},
+    });
+
+    let html = latex_html;
+    const math = texString;
+    const display = true;
+    // const metrics = svg.getMetricsFor(node, ture);
+    const outerHTML = adaptor.outerHTML(
+      html.convert(math, {
+        display,
+      }),
+    );
+    console.log(html);
+
+    this._mathRenderElt.innerHTML = outerHTML;
   }
   // == Inner Editor ================================== //
   dispatchInner(tr) {

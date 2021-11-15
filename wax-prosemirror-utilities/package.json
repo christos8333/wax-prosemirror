@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-utilities",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Wax prosemirror utilities",
   "license": "MIT",
   "main": "dist/index.js",

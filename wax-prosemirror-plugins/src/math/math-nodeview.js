@@ -36,66 +36,14 @@ const CSS = [
 ].join('');
 
 //
-//  Get the command-line arguments
-//
-var argv = require('yargs')
-  .demand(0)
-  .strict()
-  .usage('$0 [options] "math" > file.svg')
-  .options({
-    inline: {
-      boolean: true,
-      describe: 'process as inline math',
-    },
-    em: {
-      default: 16,
-      describe: 'em-size in pixels',
-    },
-    ex: {
-      default: 8,
-      describe: 'ex-size in pixels',
-    },
-    width: {
-      default: 80 * 16,
-      describe: 'width of container in pixels',
-    },
-    packages: {
-      default: AllPackages.sort().join(', '),
-      describe: 'the packages to use, e.g. "base, ams"',
-    },
-    styles: {
-      boolean: true,
-      default: true,
-      describe: 'include css styles for stand-alone image',
-    },
-    container: {
-      boolean: true,
-      describe: 'include <mjx-container> element',
-    },
-    css: {
-      boolean: true,
-      describe: 'output the required CSS rather than the SVG itself',
-    },
-    fontCache: {
-      boolean: true,
-      default: true,
-      describe: 'whether to use a local font cache or not',
-    },
-    assistiveMml: {
-      boolean: true,
-      default: false,
-      describe: 'whether to include assistive MathML output',
-    },
-  }).argv;
-
-//
 //  Create DOM adaptor and register it for HTML documents
 //
+const packages = AllPackages.sort().join(', ');
 const adaptor = liteAdaptor();
 const handler = RegisterHTMLHandler(adaptor);
-if (argv.assistiveMml) AssistiveMmlHandler(handler);
-const tex = new TeX({ packages: argv.packages.split(/\s*,\s*/) });
-const svg = new SVG({ fontCache: argv.fontCache ? 'local' : 'none' });
+// if (argv.assistiveMml) AssistiveMmlHandler(handler);
+const tex = new TeX({ packages: packages.split(/\s*,\s*/) });
+const svg = new SVG({ fontCache: 'none' });
 const html = mathjax.document('', { InputJax: tex, OutputJax: svg });
 
 export class MathView {
@@ -248,18 +196,13 @@ export class MathView {
       this.dom.classList.remove('empty-math');
     }
 
-    const node = html.convert(argv._[0] || texString, {
-      display: !argv.inline,
-      em: argv.em,
-      ex: argv.ex,
-      containerWidth: argv.width,
+    const node = html.convert(texString || '', {
+      em: 16,
+      ex: 8,
+      containerWidth: 700,
     });
 
-    let output = argv.container
-      ? adaptor.outerHTML(node)
-      : adaptor.innerHTML(node);
-
-    this._mathRenderElt.innerHTML = output;
+    this._mathRenderElt.innerHTML = adaptor.innerHTML(node);
   }
   // == Inner Editor ================================== //
   dispatchInner(tr) {

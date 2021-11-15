@@ -382,6 +382,7 @@ export default css`
 
   math-display {
     display: block;
+    text-align: center;
   }
 
   math-display .math-render {

@@ -14,15 +14,89 @@ import { collapseMathCmd } from './helpers/collapse-math-cmd';
 import { mathjax } from 'mathjax-full/js/mathjax';
 import { TeX } from 'mathjax-full/js/input/tex.js';
 import { SVG } from 'mathjax-full/js/output/svg';
-// const { liteAdaptor } = require('mathjax-full/js/adaptors/liteAdaptor.js');
+import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
 import { browserAdaptor } from 'mathjax-full/js/adaptors/browserAdaptor';
 import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html';
+import { AssistiveMmlHandler } from 'mathjax-full/js/a11y/assistive-mml.js';
+
+import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
 import { STATE } from 'mathjax-full/js/core/MathItem';
-const adaptor = browserAdaptor();
-RegisterHTMLHandler(adaptor);
-const texhtml = new TeX({});
-const svg = new SVG({ fontCache: 'none' });
-const markErrors = [STATE.TYPESET + 1, null];
+
+//
+//  Minimal CSS needed for stand-alone image
+//
+const CSS = [
+  'svg a{fill:blue;stroke:blue}',
+  '[data-mml-node="merror"]>g{fill:red;stroke:red}',
+  '[data-mml-node="merror"]>rect[data-background]{fill:yellow;stroke:none}',
+  '[data-frame],[data-line]{stroke-width:70px;fill:none}',
+  '.mjx-dashed{stroke-dasharray:140}',
+  '.mjx-dotted{stroke-linecap:round;stroke-dasharray:0,140}',
+  'use[data-c]{stroke-width:3px}',
+].join('');
+
+//
+//  Get the command-line arguments
+//
+var argv = require('yargs')
+  .demand(0)
+  .strict()
+  .usage('$0 [options] "math" > file.svg')
+  .options({
+    inline: {
+      boolean: true,
+      describe: 'process as inline math',
+    },
+    em: {
+      default: 16,
+      describe: 'em-size in pixels',
+    },
+    ex: {
+      default: 8,
+      describe: 'ex-size in pixels',
+    },
+    width: {
+      default: 80 * 16,
+      describe: 'width of container in pixels',
+    },
+    packages: {
+      default: AllPackages.sort().join(', '),
+      describe: 'the packages to use, e.g. "base, ams"',
+    },
+    styles: {
+      boolean: true,
+      default: true,
+      describe: 'include css styles for stand-alone image',
+    },
+    container: {
+      boolean: true,
+      describe: 'include <mjx-container> element',
+    },
+    css: {
+      boolean: true,
+      describe: 'output the required CSS rather than the SVG itself',
+    },
+    fontCache: {
+      boolean: true,
+      default: true,
+      describe: 'whether to use a local font cache or not',
+    },
+    assistiveMml: {
+      boolean: true,
+      default: false,
+      describe: 'whether to include assistive MathML output',
+    },
+  }).argv;
+
+//
+//  Create DOM adaptor and register it for HTML documents
+//
+const adaptor = liteAdaptor();
+const handler = RegisterHTMLHandler(adaptor);
+if (argv.assistiveMml) AssistiveMmlHandler(handler);
+const tex = new TeX({ packages: argv.packages.split(/\s*,\s*/) });
+const svg = new SVG({ fontCache: argv.fontCache ? 'local' : 'none' });
+const html = mathjax.document('', { InputJax: tex, OutputJax: svg });
 
 export class MathView {
   // == Lifecycle ===================================== //
@@ -173,39 +247,19 @@ export class MathView {
     } else {
       this.dom.classList.remove('empty-math');
     }
-    // render katex, but fail gracefully
-    // try {
-    //   katex.render(texString, this._mathRenderElt, this._katexOptions);
-    //   this._mathRenderElt.classList.remove('parse-error');
-    //   this.dom.setAttribute('title', '');
-    // } catch (err) {
-    //   if (err instanceof ParseError) {
-    //     console.error(err);
-    //     this._mathRenderElt.classList.add('parse-error');
-    //     this.dom.setAttribute('title', err.toString());
-    //   } else {
-    //     throw err;
-    //   }
-    // }
 
-    const latex_html = mathjax.document('', {
-      InputJax: texhtml,
-      OutputJax: svg,
-      renderActions: {},
+    const node = html.convert(argv._[0] || texString, {
+      display: !argv.inline,
+      em: argv.em,
+      ex: argv.ex,
+      containerWidth: argv.width,
     });
 
-    let html = latex_html;
-    const math = texString;
-    const display = true;
-    // const metrics = svg.getMetricsFor(node, ture);
-    const outerHTML = adaptor.outerHTML(
-      html.convert(math, {
-        display,
-      }),
-    );
-    console.log(html);
+    let output = argv.container
+      ? adaptor.outerHTML(node)
+      : adaptor.innerHTML(node);
 
-    this._mathRenderElt.innerHTML = outerHTML;
+    this._mathRenderElt.innerHTML = output;
   }
   // == Inner Editor ================================== //
   dispatchInner(tr) {

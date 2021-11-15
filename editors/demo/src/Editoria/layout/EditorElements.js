@@ -386,6 +386,7 @@ export default css`
 
   math-display .math-render {
     display: block;
+    text-align: center;
   }
 
   math-display.ProseMirror-selectednode {
@@ -402,10 +403,6 @@ export default css`
     content: '$$';
     text-align: left;
     color: #b0b0b0;
-  }
-
-  math-display .katex-display {
-    margin: 0;
   }
 
   /* -- Selection Plugin ---------------------------------- */

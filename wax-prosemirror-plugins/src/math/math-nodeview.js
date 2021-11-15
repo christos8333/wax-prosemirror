@@ -8,9 +8,43 @@ import {
   chainCommands,
   deleteSelection,
 } from 'prosemirror-commands';
-// katex
-import katex, { ParseError } from 'katex';
 import { collapseMathCmd } from './helpers/collapse-math-cmd';
+// mathjax
+
+import { mathjax } from 'mathjax-full/js/mathjax';
+import { TeX } from 'mathjax-full/js/input/tex.js';
+import { SVG } from 'mathjax-full/js/output/svg';
+import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
+import { browserAdaptor } from 'mathjax-full/js/adaptors/browserAdaptor';
+import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html';
+import { AssistiveMmlHandler } from 'mathjax-full/js/a11y/assistive-mml.js';
+
+import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
+import { STATE } from 'mathjax-full/js/core/MathItem';
+
+//
+//  Minimal CSS needed for stand-alone image
+//
+const CSS = [
+  'svg a{fill:blue;stroke:blue}',
+  '[data-mml-node="merror"]>g{fill:red;stroke:red}',
+  '[data-mml-node="merror"]>rect[data-background]{fill:yellow;stroke:none}',
+  '[data-frame],[data-line]{stroke-width:70px;fill:none}',
+  '.mjx-dashed{stroke-dasharray:140}',
+  '.mjx-dotted{stroke-linecap:round;stroke-dasharray:0,140}',
+  'use[data-c]{stroke-width:3px}',
+].join('');
+
+//
+//  Create DOM adaptor and register it for HTML documents
+//
+const packages = AllPackages.sort().join(', ');
+const adaptor = liteAdaptor();
+const handler = RegisterHTMLHandler(adaptor);
+// if (argv.assistiveMml) AssistiveMmlHandler(handler);
+const tex = new TeX({ packages: packages.split(/\s*,\s*/) });
+const svg = new SVG({ fontCache: 'none' });
+const html = mathjax.document('', { InputJax: tex, OutputJax: svg });
 
 export class MathView {
   // == Lifecycle ===================================== //
@@ -161,20 +195,14 @@ export class MathView {
     } else {
       this.dom.classList.remove('empty-math');
     }
-    // render katex, but fail gracefully
-    try {
-      katex.render(texString, this._mathRenderElt, this._katexOptions);
-      this._mathRenderElt.classList.remove('parse-error');
-      this.dom.setAttribute('title', '');
-    } catch (err) {
-      if (err instanceof ParseError) {
-        console.error(err);
-        this._mathRenderElt.classList.add('parse-error');
-        this.dom.setAttribute('title', err.toString());
-      } else {
-        throw err;
-      }
-    }
+
+    const node = html.convert(texString || '', {
+      em: 16,
+      ex: 8,
+      containerWidth: 700,
+    });
+
+    this._mathRenderElt.innerHTML = adaptor.innerHTML(node);
   }
   // == Inner Editor ================================== //
   dispatchInner(tr) {

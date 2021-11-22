@@ -11,7 +11,7 @@ const createEmptyParagraph = (context, newAnswerId) => {
       ),
     );
     if (context.view[newAnswerId].dispatch) {
-      let type = context.view.main.state.schema.nodes.paragraph;
+      const type = context.view.main.state.schema.nodes.paragraph;
       context.view[newAnswerId].dispatch(
         context.view[newAnswerId].state.tr.insert(0, type.create()),
       );

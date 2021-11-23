@@ -62,7 +62,18 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
   }
 
   get active() {
-    return state => {};
+    return state => {
+      let type = '';
+      const predicate = node =>
+        node.type === state.config.schema.nodes.multiple_choice_single_correct;
+      for (let i = state.selection.$from.depth; i > 0; i--) {
+        const node = state.selection.$from.node(i);
+        if (predicate(node)) {
+          type = 'multipleSingle';
+        }
+      }
+      return type;
+    };
   }
 
   select = (state, activeView) => {

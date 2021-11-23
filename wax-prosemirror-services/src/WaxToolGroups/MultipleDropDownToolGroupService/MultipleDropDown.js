@@ -64,25 +64,37 @@ class MultipleDropDown extends ToolGroup {
     const { state } = view;
 
     const dropDownOptions = [
-      { label: 'Multiple Choice ', value: '0', item: this._tools[0] },
       {
-        label: 'Multiple Choice (single correct)  ',
+        label: 'Multiple Choice',
+        value: '0',
+        item: this._tools[0],
+        type: 'multiple',
+      },
+      {
+        label: 'Multiple Choice (single correct)',
         value: '1',
         item: this._tools[1],
+        type: 'multipleSingle',
       },
-      { label: 'True/False ', value: '2', item: this._tools[0] },
       {
-        label: 'True/False (single correct) ',
+        label: 'True/False',
+        value: '2',
+        item: this._tools[0],
+        type: 'trueFalse',
+      },
+      {
+        label: 'True/False (single correct)',
         value: '3',
         item: this._tools[0],
+        type: 'trueFalseSingle',
       },
     ];
 
     const isDisabled = this._tools[0].select(state, activeView);
     let found = '';
-    dropDownOptions.forEach((item, i) => {
-      if (item.item.select(state, activeView) === false) {
-        found = item.item.label;
+    dropDownOptions.forEach((option, i) => {
+      if (option.item.active(main.state) === option.type) {
+        found = option.label;
       }
     });
 

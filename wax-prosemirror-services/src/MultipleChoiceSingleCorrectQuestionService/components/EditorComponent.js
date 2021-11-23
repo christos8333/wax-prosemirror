@@ -82,8 +82,6 @@ const EditorComponent = ({ node, view, getPos }) => {
     ...plugins,
   ]);
 
-  const { activeViewId } = context;
-
   useEffect(() => {
     questionView = new EditorView(
       {
@@ -100,11 +98,10 @@ const EditorComponent = ({ node, view, getPos }) => {
         disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
-            context.view[activeViewId].dispatch(
-              context.view[activeViewId].state.tr.setSelection(
-                TextSelection.between(
-                  context.view[activeViewId].state.selection.$anchor,
-                  context.view[activeViewId].state.selection.$head,
+            context.view.main.dispatch(
+              context.view.main.state.tr.setSelection(
+                new TextSelection(
+                  context.view.main.state.tr.doc.resolve(getPos() + 2),
                 ),
               ),
             );

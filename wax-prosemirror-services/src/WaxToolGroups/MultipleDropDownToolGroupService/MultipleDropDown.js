@@ -11,9 +11,13 @@ import ToolGroup from '../../lib/ToolGroup';
 @injectable()
 class MultipleDropDown extends ToolGroup {
   tools = [];
-  constructor(@inject('MultipleChoiceQuestion') multipleChoiceQuestion) {
+  constructor(
+    @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
+    @inject('MultipleChoiceSingleCorrectQuestion')
+    multipleChoiceSingleCorrectQuestion,
+  ) {
     super();
-    this.tools = [multipleChoiceQuestion];
+    this.tools = [multipleChoiceQuestion, multipleChoiceSingleCorrectQuestion];
   }
 
   renderTools(view) {
@@ -64,7 +68,7 @@ class MultipleDropDown extends ToolGroup {
       {
         label: 'Multiple Choice (single correct)  ',
         value: '1',
-        item: this._tools[0],
+        item: this._tools[1],
       },
       { label: 'True/False ', value: '2', item: this._tools[0] },
       {

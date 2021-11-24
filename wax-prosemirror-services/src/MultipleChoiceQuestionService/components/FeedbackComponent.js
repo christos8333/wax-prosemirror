@@ -47,7 +47,7 @@ export default ({ node, view, getPos }) => {
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(
-          TextSelection.create(context.view.main.state.tr.doc, 0),
+          TextSelection.create(context.view.main.state.tr.doc, null),
         ),
       );
     }
@@ -81,6 +81,12 @@ export default ({ node, view, getPos }) => {
     );
   };
 
+  const handleOnPaste = e => {
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedData = clipboardData.getData('Text');
+    setFeedBack(pastedData);
+  };
+
   return (
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
@@ -88,6 +94,7 @@ export default ({ node, view, getPos }) => {
         onBlur={saveFeedBack}
         onChange={feedBackInput}
         onFocus={onFocus}
+        onPaste={e => handleOnPaste(e)}
         onKeyDown={handleKeyDown}
         placeholder="Insert feedback"
         ref={feedBackRef}

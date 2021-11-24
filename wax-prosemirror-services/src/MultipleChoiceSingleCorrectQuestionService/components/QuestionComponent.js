@@ -122,8 +122,12 @@ export default ({ node, view, getPos }) => {
 
   const getIsDisabled = () => {
     context.view.main.state.doc.descendants((editorNode, index) => {
-      if (editorNode.type.name === 'multiple_choice_single_correct') {
-        console.log(editorNode);
+      if (editorNode.type.name === 'multiple_choice_single_correct_container') {
+        editorNode.content.content.forEach(element => {
+          if (element.attrs.correct) {
+            console.log(element);
+          }
+        });
       }
     });
   };
@@ -139,8 +143,8 @@ export default ({ node, view, getPos }) => {
           <QuestionNunber />
           <SwitchComponent
             getPos={getPos}
-            node={node}
             isDisabled={getIsDisabled()}
+            node={node}
           />
         </InfoRow>
         <QuestionWrapper>

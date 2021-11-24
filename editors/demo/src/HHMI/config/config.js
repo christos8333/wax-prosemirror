@@ -21,7 +21,6 @@ import {
   EditorInfoToolGroupServices,
   BottomInfoService,
   MultipleChoiceQuestionService,
-  MultipleChoiceSingleCorrectQuestionService,
   MultipleChoiceToolGroupService,
   FillTheGapQuestionService,
   FillTheGapToolGroupService,
@@ -69,7 +68,6 @@ export default {
   ],
 
   services: [
-    new MultipleChoiceSingleCorrectQuestionService(),
     new FillTheGapQuestionService(),
     new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),

@@ -68,32 +68,28 @@ class MultipleDropDown extends ToolGroup {
         label: 'Multiple Choice',
         value: '0',
         item: this._tools[0],
-        type: 'multiple',
       },
       {
         label: 'Multiple Choice (single correct)',
         value: '1',
         item: this._tools[1],
-        type: 'multipleSingle',
       },
-      {
-        label: 'True/False',
-        value: '2',
-        item: this._tools[0],
-        type: 'trueFalse',
-      },
-      {
-        label: 'True/False (single correct)',
-        value: '3',
-        item: this._tools[0],
-        type: 'trueFalseSingle',
-      },
+      // {
+      //   label: 'True/False',
+      //   value: '2',
+      //   item: this._tools[0],
+      // },
+      // {
+      //   label: 'True/False (single correct)',
+      //   value: '3',
+      //   item: this._tools[0],
+      // },
     ];
 
     const isDisabled = this._tools[0].select(state, activeView);
     let found = '';
     dropDownOptions.forEach((option, i) => {
-      if (option.item.active(main.state) === option.type) {
+      if (option.item.active(main.state)) {
         found = option.label;
       }
     });

@@ -102,7 +102,7 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'multiple_choice') {
+    if (node.node.type.name === 'multiple_choice_single_correct') {
       multipleChoiceNodes.push(node);
     }
   });

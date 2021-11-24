@@ -92,7 +92,7 @@ export default ({ node, view, getPos }) => {
   const addOption = nodeId => {
     const newAnswerId = uuidv4();
     context.view.main.state.doc.descendants((editorNode, index) => {
-      if (editorNode.type.name === 'multiple_choice') {
+      if (editorNode.type.name === 'multiple_choice_single_correct') {
         if (editorNode.attrs.id === nodeId) {
           context.view.main.dispatch(
             context.view.main.state.tr.setSelection(
@@ -104,7 +104,7 @@ export default ({ node, view, getPos }) => {
             ),
           );
 
-          const answerOption = context.view.main.state.config.schema.nodes.multiple_choice.create(
+          const answerOption = context.view.main.state.config.schema.nodes.multiple_choice_single_correct.create(
             { id: newAnswerId },
             Fragment.empty,
           );
@@ -120,6 +120,14 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const getIsDisabled = () => {
+    context.view.main.state.doc.descendants((editorNode, index) => {
+      if (editorNode.type.name === 'multiple_choice_single_correct') {
+        console.log(editorNode);
+      }
+    });
+  };
+
   const readOnly = !isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
@@ -129,7 +137,11 @@ export default ({ node, view, getPos }) => {
       <QuestionControlsWrapper>
         <InfoRow>
           <QuestionNunber />
-          <SwitchComponent getPos={getPos} node={node} />
+          <SwitchComponent
+            getPos={getPos}
+            node={node}
+            isDisabled={getIsDisabled()}
+          />
         </InfoRow>
         <QuestionWrapper>
           <QuestionData>

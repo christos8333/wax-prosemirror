@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -67,7 +67,7 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'multiple_choice') {
+    if (node.node.type.name === 'multiple_choice_single_correct') {
       multipleChoiceNodes.push(node);
     }
   });

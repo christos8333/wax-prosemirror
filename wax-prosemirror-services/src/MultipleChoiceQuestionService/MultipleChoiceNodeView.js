@@ -45,4 +45,12 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
 
     return true;
   }
+
+  stopEvent(event) {
+    if (event.target.type === 'text') {
+      return true;
+    }
+    const innerView = this.context.view[this.node.attrs.id];
+    return innerView && innerView.dom.contains(event.target);
+  }
 }

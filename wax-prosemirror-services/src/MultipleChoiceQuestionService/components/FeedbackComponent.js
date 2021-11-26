@@ -81,12 +81,6 @@ export default ({ node, view, getPos }) => {
     );
   };
 
-  const handleOnPaste = e => {
-    const clipboardData = e.clipboardData || window.clipboardData;
-    const pastedData = clipboardData.getData('Text');
-    setFeedBack(pastedData);
-  };
-
   return (
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
@@ -94,7 +88,6 @@ export default ({ node, view, getPos }) => {
         onBlur={saveFeedBack}
         onChange={feedBackInput}
         onFocus={onFocus}
-        onPaste={e => handleOnPaste(e)}
         onKeyDown={handleKeyDown}
         placeholder="Insert feedback"
         ref={feedBackRef}

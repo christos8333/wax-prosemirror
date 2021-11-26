@@ -77,9 +77,6 @@ const WaxView = forwardRef((props, ref) => {
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
             },
-            handlePaste: (view, event, slice) => {
-              if (view.state.selection.from === null) return true;
-            },
           },
         );
 

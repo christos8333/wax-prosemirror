@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import helpers from '../../MultipleChoiceQuestionService/helpers/helpers';
 import EditorComponent from './EditorComponent';
 import SwitchComponent from './SwitchComponent';
-import FeedbackComponent from './FeedbackComponent';
+import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 import Button from './Button';
 
 const Wrapper = styled.div`

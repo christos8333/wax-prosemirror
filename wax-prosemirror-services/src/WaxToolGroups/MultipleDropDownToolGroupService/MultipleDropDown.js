@@ -15,9 +15,14 @@ class MultipleDropDown extends ToolGroup {
     @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
     @inject('MultipleChoiceSingleCorrectQuestion')
     multipleChoiceSingleCorrectQuestion,
+    @inject('TrueFalseQuestion') trueFalseQuestion,
   ) {
     super();
-    this.tools = [multipleChoiceQuestion, multipleChoiceSingleCorrectQuestion];
+    this.tools = [
+      multipleChoiceQuestion,
+      multipleChoiceSingleCorrectQuestion,
+      trueFalseQuestion,
+    ];
   }
 
   renderTools(view) {
@@ -74,11 +79,11 @@ class MultipleDropDown extends ToolGroup {
         value: '1',
         item: this._tools[1],
       },
-      // {
-      //   label: 'True/False',
-      //   value: '2',
-      //   item: this._tools[0],
-      // },
+      {
+        label: 'True/False',
+        value: '2',
+        item: this._tools[2],
+      },
       // {
       //   label: 'True/False (single correct)',
       //   value: '3',

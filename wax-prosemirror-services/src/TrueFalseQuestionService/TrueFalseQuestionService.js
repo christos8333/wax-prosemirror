@@ -1,8 +1,8 @@
 import Service from '../Service';
 import TrueFalseQuestion from './TrueFalseQuestion';
-// import multipleChoiceSingleCorrectNode from './schema/multipleChoiceSingleCorrectNode';
-// import multipleChoiceSingleCorrectContainerNode from './schema/multipleChoiceSingleCorrectContainerNode';
-// import QuestionComponent from './components/QuestionComponent';
+import trueFalseNode from './schema/trueFalseNode';
+import trueFalseContainerNode from './schema/trueFalseContainerNode';
+import QuestionComponent from './components/QuestionComponent';
 import TrueFalseNodeView from './TrueFalseNodeView';
 
 class TrueFalseQuestionService extends Service {
@@ -11,19 +11,19 @@ class TrueFalseQuestionService extends Service {
     const createNode = this.container.get('CreateNode');
     const addPortal = this.container.get('AddPortal');
 
-    // createNode({
-    //   multiple_choice_single_correct: multipleChoiceSingleCorrectNode,
-    // });
+    createNode({
+      true_false_container: trueFalseContainerNode,
+    });
 
-    // createNode({
-    //   multiple_choice_single_correct_container: multipleChoiceSingleCorrectContainerNode,
-    // });
+    createNode({
+      true_false: trueFalseNode,
+    });
 
-    // addPortal({
-    //   nodeView: TrueFalseNodeView,
-    //   component: QuestionComponent,
-    //   context: this.app,
-    // });
+    addPortal({
+      nodeView: TrueFalseNodeView,
+      component: QuestionComponent,
+      context: this.app,
+    });
   }
 }
 

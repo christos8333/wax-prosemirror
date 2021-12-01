@@ -2,7 +2,7 @@ const multipleChoiceSingleCorrectContainerNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'multiple-choice-single-correct' },
-    singleCorrect: { default: true },
+    correctId: { default: '' },
   },
   group: 'block questions',
   atom: true,
@@ -16,7 +16,7 @@ const multipleChoiceSingleCorrectContainerNode = {
         return {
           id: dom.dataset.id,
           class: dom.getAttribute('class'),
-          singleCorrect: dom.getAttribute('singleCorrect'),
+          correctId: dom.getAttribute('singleCorrect'),
         };
       },
     },

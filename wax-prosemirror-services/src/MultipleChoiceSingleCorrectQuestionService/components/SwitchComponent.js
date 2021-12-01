@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
-import Switch from './Switch';
+import Switch from '../../MultipleChoiceQuestionService/components/Switch';
 
 const StyledSwitch = styled(Switch)`
   display: flex;
@@ -38,15 +38,21 @@ const CustomSwitch = ({ node, getPos }) => {
 
   const handleChange = () => {
     setChecked(!checked);
-    const allNodes = getNodes(context.view.main);
-    allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
-        context.view.main.dispatch(
-          context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-            ...singleNode.node.attrs,
-            correct: !checked,
-          }),
-        );
+
+    context.view.main.state.doc.descendants((editorNode, index) => {
+      if (editorNode.type.name === 'multiple_choice_single_correct_container') {
+        editorNode.content.content.forEach(element => {
+          if (element.attrs.id === node.attrs.id) {
+            context.view.main.dispatch(
+              context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+                ...element.attrs,
+                correct: !checked,
+              }),
+            );
+          } else {
+            console.log('in else');
+          }
+        });
       }
     });
   };

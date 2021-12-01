@@ -7,10 +7,10 @@ import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import helpers from '../../MultipleChoiceQuestionService/helpers/helpers';
-import EditorComponent from './EditorComponent';
-import SwitchComponent from './SwitchComponent';
+import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
-import Button from './Button';
+import Button from '../../MultipleChoiceQuestionService/components/Button';
+import SwitchComponent from './SwitchComponent';
 
 const Wrapper = styled.div`
   display: flex;
@@ -120,18 +120,6 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  const getIsDisabled = () => {
-    context.view.main.state.doc.descendants((editorNode, index) => {
-      if (editorNode.type.name === 'multiple_choice_single_correct_container') {
-        editorNode.content.content.forEach(element => {
-          if (element.attrs.correct) {
-            console.log(element);
-          }
-        });
-      }
-    });
-  };
-
   const readOnly = !isEditable;
   const showAddIcon = true;
   const showRemoveIcon = true;
@@ -141,11 +129,7 @@ export default ({ node, view, getPos }) => {
       <QuestionControlsWrapper>
         <InfoRow>
           <QuestionNunber />
-          <SwitchComponent
-            getPos={getPos}
-            isDisabled={getIsDisabled()}
-            node={node}
-          />
+          <SwitchComponent getPos={getPos} node={node} />
         </InfoRow>
         <QuestionWrapper>
           <QuestionData>

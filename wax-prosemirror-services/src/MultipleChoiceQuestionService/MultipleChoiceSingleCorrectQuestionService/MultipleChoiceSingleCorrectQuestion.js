@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { Fragment } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { wrapIn } from 'prosemirror-commands';
-import ToolBarBtn from '../MultipleChoiceQuestionService/components/ToolBarBtn';
-import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
-import Tools from '../lib/Tools';
+import ToolBarBtn from '../components/ToolBarBtn';
+import helpers from '../helpers/helpers';
+import Tools from '../../lib/Tools';
 
 const checkifEmpty = view => {
   const { state } = view;

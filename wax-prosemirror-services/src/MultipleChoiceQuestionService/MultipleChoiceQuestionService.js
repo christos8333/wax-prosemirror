@@ -4,7 +4,7 @@ import multipleChoiceNode from './schema/multipleChoiceNode';
 import multipleChoiceContainerNode from './schema/multipleChoiceContainerNode';
 import QuestionComponent from './components/QuestionComponent';
 import MultipleChoiceNodeView from './MultipleChoiceNodeView';
-import MultipleChoiceSingleCorrectQuestionService from '../MultipleChoiceSingleCorrectQuestionService/MultipleChoiceSingleCorrectQuestionService';
+import MultipleChoiceSingleCorrectQuestionService from './MultipleChoiceSingleCorrectQuestionService/MultipleChoiceSingleCorrectQuestionService';
 import TrueFalseQuestionService from './TrueFalseQuestionService/TrueFalseQuestionService';
 
 class MultipleChoiceQuestionService extends Service {

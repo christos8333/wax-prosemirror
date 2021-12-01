@@ -1,4 +1,4 @@
-import AbstractNodeView from '../PortalService/AbstractNodeView';
+import AbstractNodeView from '../../PortalService/AbstractNodeView';
 
 export default class MultipleChoiceSingleCorrectNodeView extends AbstractNodeView {
   constructor(

@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
-import Switch from '../../MultipleChoiceQuestionService/components/Switch';
+import Switch from '../../components/Switch';
 
 const StyledSwitch = styled(Switch)`
   display: flex;

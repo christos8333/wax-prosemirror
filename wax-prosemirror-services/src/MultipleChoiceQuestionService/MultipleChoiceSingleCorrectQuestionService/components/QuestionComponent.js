@@ -6,10 +6,10 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
-import helpers from '../../MultipleChoiceQuestionService/helpers/helpers';
-import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
-import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
-import Button from '../../MultipleChoiceQuestionService/components/Button';
+import helpers from '../../helpers/helpers';
+import EditorComponent from '../../components/EditorComponent';
+import FeedbackComponent from '../../components/FeedbackComponent';
+import Button from '../../components/Button';
 import SwitchComponent from './SwitchComponent';
 
 const Wrapper = styled.div`

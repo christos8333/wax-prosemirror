@@ -325,7 +325,8 @@ export default css`
   /* -- Multiple Choice ---------------------------------- */
 
   .multiple-choice,
-  .multiple-choice-single-correct {
+  .multiple-choice-single-correct,
+  .true-false {
     border: 3px solid #f5f5f7;
     counter-reset: question-item-multiple;
     margin: 38px;
@@ -334,7 +335,6 @@ export default css`
 
     &:before {
       bottom: 25px;
-      content: 'Answer Group ' counter(multiple-question) '.';
       counter-increment: multiple-question;
       position: relative;
       right: 20px;
@@ -343,6 +343,32 @@ export default css`
     .ProseMirror {
       box-shadow: none;
       padding: 5px 5px 0 5px;
+    }
+  }
+
+  .multiple-choice {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question) ' (multiple choice)';
+    }
+  }
+
+  .multiple-choice-single-correct {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question)
+        ' (multiple choice single correct)';
+    }
+  }
+
+  .true-false {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question) ' (true/false)';
+    }
+  }
+
+  .true-false-single-correct {
+    &:before {
+      content: 'Answer Group ' counter(multiple-question)
+        ' (true/false single correct)';
     }
   }
 

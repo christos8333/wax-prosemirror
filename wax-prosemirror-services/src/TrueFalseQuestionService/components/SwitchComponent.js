@@ -54,11 +54,11 @@ const CustomSwitch = ({ node, getPos }) => {
   return (
     <StyledSwitch
       checked={checked}
-      checkedChildren="YES"
-      label="Correct?"
+      checkedChildren="True"
+      label="True/false?"
       labelPosition="left"
       onChange={handleChange}
-      unCheckedChildren="NO"
+      unCheckedChildren="False"
     />
   );
 };
@@ -67,7 +67,7 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'multiple_choice_single_correct') {
+    if (node.node.type.name === 'true_false') {
       multipleChoiceNodes.push(node);
     }
   });

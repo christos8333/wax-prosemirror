@@ -137,11 +137,8 @@ const WaxView = forwardRef((props, ref) => {
     if (targetFormat === 'JSON') {
       if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
         props.onChange(state.doc.toJSON());
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-        props.onChange(state.doc.content);
-    }
+    } else if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
+      props.onChange(state.doc.content);
   };
 
   const editor = (

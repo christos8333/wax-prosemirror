@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { CopyPasteCommentPlugin } from 'wax-prosemirror-plugins';
 
 const FeedBack = styled.div`
   color: black;
@@ -34,9 +33,7 @@ export default ({ node, view, getPos }) => {
     const allNodes = getNodes(context.view.main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
-        if (!typing) {
-          setFeedBack(singleNode.node.attrs.feedback);
-        } else if (context.transaction.meta.inputType === 'Redo') {
+        if (!typing || context.transaction.meta.inputType === 'Redo') {
           setFeedBack(singleNode.node.attrs.feedback);
         }
         if (!isFirstRun) {
@@ -107,7 +104,12 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'multiple_choice') {
+    if (
+      node.node.type.name === 'multiple_choice' ||
+      node.node.type.name === 'multiple_choice_single_correct' ||
+      node.node.type.name === 'true_false' ||
+      node.node.type.name === 'true_false_single_correct'
+    ) {
       multipleChoiceNodes.push(node);
     }
   });

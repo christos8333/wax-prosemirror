@@ -104,7 +104,7 @@ export default ({ node, view, getPos }) => {
             ),
           );
 
-          const answerOption = context.view.main.state.config.schema.nodes.multiple_choice.create(
+          const answerOption = context.view.main.state.config.schema.nodes.true_false.create(
             { id: newAnswerId },
             Fragment.empty,
           );

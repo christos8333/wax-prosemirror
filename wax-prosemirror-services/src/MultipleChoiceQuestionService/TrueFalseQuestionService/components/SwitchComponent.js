@@ -26,23 +26,26 @@ const StyledSwitch = styled(Switch)`
 const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
+  const {
+    view: { main },
+  } = context;
 
   useEffect(() => {
-    const allNodes = getNodes(context.view.main);
+    const allNodes = getNodes(main);
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
         setChecked(singNode.node.attrs.correct);
       }
     });
-  }, [getNodes(context.view.main)]);
+  }, [getNodes(main)]);
 
   const handleChange = () => {
     setChecked(!checked);
-    const allNodes = getNodes(context.view.main);
+    const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
-        context.view.main.dispatch(
-          context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
+        main.dispatch(
+          main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
             correct: !checked,
           }),

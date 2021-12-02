@@ -4,15 +4,13 @@ import { WaxContext } from 'wax-prosemirror-core';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const SaveButton = ({ view = {}, item }) => {
-  const { icon, label, onlyOnMain, select, title } = item;
+  const { icon, label, select, title } = item;
 
   const {
     view: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);
-
-  if (onlyOnMain) view = main;
 
   const { state } = view;
 
@@ -57,7 +55,9 @@ const SaveButton = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={iconTodisplay}
         label={label}
-        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
+        onMouseDown={e =>
+          handleMouseDown(e, main.view.state, main.view.dispatch)
+        }
         title={title}
       />
     ),

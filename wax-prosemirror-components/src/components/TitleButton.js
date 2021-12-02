@@ -5,7 +5,7 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../ui/buttons/MenuButton';
 
 const TitleButton = ({ view = {}, item }) => {
-  const { active, icon, label, onlyOnMain, run, select, title } = item;
+  const { active, icon, label, run, select, title } = item;
 
   const {
     app,
@@ -13,8 +13,6 @@ const TitleButton = ({ view = {}, item }) => {
     activeViewId,
     activeView,
   } = useContext(WaxContext);
-
-  if (onlyOnMain) view = main;
 
   const { dispatch, state } = view;
 

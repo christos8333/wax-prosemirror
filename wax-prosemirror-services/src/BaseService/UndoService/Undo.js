@@ -1,5 +1,8 @@
+import React from 'react';
+import { isEmpty } from 'lodash';
 import { undo } from 'prosemirror-history';
 import { injectable } from 'inversify';
+import { UndoRedoButton } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
 export default
@@ -7,7 +10,6 @@ export default
 class Undo extends Tools {
   title = 'Undo';
   icon = 'undo';
-  onlyOnMain = true;
   name = 'Undo';
 
   get run() {
@@ -22,5 +24,13 @@ class Undo extends Tools {
 
   select(state) {
     return undo(state);
+  }
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+    // eslint-disable-next-line no-underscore-dangle
+    return this._isDisplayed ? (
+      <UndoRedoButton item={this.toJSON()} key="Undo" view={view} />
+    ) : null;
   }
 }

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { CopyPasteCommentPlugin } from 'wax-prosemirror-plugins';
 
 const FeedBack = styled.div`
   color: black;
@@ -31,12 +32,16 @@ export default ({ node, view, getPos }) => {
 
   useEffect(() => {
     const allNodes = getNodes(context.view.main);
-    allNodes.forEach(singNode => {
-      if (singNode.node.attrs.id === node.attrs.id) {
-        if (!typing) setFeedBack(singNode.node.attrs.feedback);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        if (!typing) {
+          setFeedBack(singleNode.node.attrs.feedback);
+        } else if (context.transaction.meta.inputType === 'Redo') {
+          setFeedBack(singleNode.node.attrs.feedback);
+        }
         if (!isFirstRun) {
-          if (singNode.node.attrs.feedback === '')
-            setFeedBack(singNode.node.attrs.feedback);
+          if (singleNode.node.attrs.feedback === '')
+            setFeedBack(singleNode.node.attrs.feedback);
         }
       }
     });

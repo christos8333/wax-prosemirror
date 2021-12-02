@@ -126,6 +126,9 @@ const WaxView = forwardRef((props, ref) => {
       main don't keep updating the view ,as this is
       the central point of each transaction
       */
+
+    context.setTransaction(transaction);
+
     if (!transaction.getMeta('outsideView')) {
       context.updateView(
         {

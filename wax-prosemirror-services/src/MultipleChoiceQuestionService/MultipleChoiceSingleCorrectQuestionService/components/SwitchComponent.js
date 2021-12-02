@@ -39,8 +39,9 @@ const CustomSwitch = ({ node, getPos }) => {
   const handleChange = () => {
     setChecked(!checked);
 
-    context.view.main.state.doc.descendants((editorNode, index) => {
+    context.view.main.state.doc.descendants((editorNode, pos) => {
       if (editorNode.type.name === 'multiple_choice_single_correct_container') {
+        console.log(editorNode, pos);
         editorNode.content.content.forEach(element => {
           if (element.attrs.id === node.attrs.id) {
             context.view.main.dispatch(
@@ -49,8 +50,18 @@ const CustomSwitch = ({ node, getPos }) => {
                 correct: !checked,
               }),
             );
-          } else {
-            console.log('in else');
+          } else if (element.attrs.correct) {
+            console.log(element);
+            context.view.main.dispatch(
+              context.view.main.state.tr.setNodeMarkup(
+                getPos() + 4,
+                undefined,
+                {
+                  ...element.attrs,
+                  correct: false,
+                },
+              ),
+            );
           }
         });
       }

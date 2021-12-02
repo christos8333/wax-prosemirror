@@ -16,7 +16,7 @@ const multipleChoiceSingleCorrectContainerNode = {
         return {
           id: dom.dataset.id,
           class: dom.getAttribute('class'),
-          correctId: dom.getAttribute('singleCorrect'),
+          correctId: dom.getAttribute('correctId'),
         };
       },
     },

@@ -6,13 +6,11 @@ const multipleChoiceSingleCorrectNode = {
     id: { default: uuidv4() },
     correct: { default: false },
     feedback: { default: '' },
-    singleCorrect: { default: true },
   },
   group: 'block questions',
   content: 'block*',
   defining: true,
 
-  // atom: true,
   parseDOM: [
     {
       tag: 'div.multiple-choice-option-single-correct',
@@ -22,7 +20,6 @@ const multipleChoiceSingleCorrectNode = {
           class: dom.getAttribute('class'),
           correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
           feedback: dom.getAttribute('feedback'),
-          singleCorrect: dom.getAttribute('singleCorrect'),
         };
       },
     },

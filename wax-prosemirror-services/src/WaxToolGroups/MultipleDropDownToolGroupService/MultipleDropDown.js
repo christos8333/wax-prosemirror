@@ -99,6 +99,10 @@ class MultipleDropDown extends ToolGroup {
       }
     });
 
+    const onChange = option => {
+      this._tools[option.value].run(main, context);
+    };
+
     const MultipleDropDown = useMemo(
       () => (
         <Wrapper key={uuidv4()}>
@@ -106,9 +110,7 @@ class MultipleDropDown extends ToolGroup {
             value={found}
             key={uuidv4()}
             options={dropDownOptions}
-            onChange={option => {
-              this._tools[option.value].run(view, main, context);
-            }}
+            onChange={option => onChange(option)}
             placeholder="Multiple Question Types"
             select={isDisabled}
           />

@@ -55,9 +55,9 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
   label = 'Multiple Choice Single Correct';
 
   get run() {
-    return (view, main, context) => {
+    return (view, context) => {
       checkifEmpty(view);
-      createOption(main, context);
+      createOption(view, context);
     };
   }
 

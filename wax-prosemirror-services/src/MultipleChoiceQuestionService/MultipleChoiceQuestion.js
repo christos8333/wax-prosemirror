@@ -55,9 +55,9 @@ class MultipleChoiceQuestion extends Tools {
   label = 'Multiple Choice';
 
   get run() {
-    return (view, main, context) => {
+    return (view, context) => {
       checkifEmpty(view);
-      createOption(main, context);
+      createOption(view, context);
     };
   }
 

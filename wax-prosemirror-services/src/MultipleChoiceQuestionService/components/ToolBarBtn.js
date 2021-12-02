@@ -13,15 +13,12 @@ const StyledButton = styled(MenuButton)`
 `;
 
 const ToolBarBtn = ({ view = {}, item }) => {
-  const { active, icon, label, onlyOnMain, run, select, title } = item;
+  const { icon, label, select, title } = item;
   const context = useContext(WaxContext);
   const {
     view: { main },
-    activeViewId,
     activeView,
   } = useContext(WaxContext);
-
-  if (onlyOnMain) view = main;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -29,28 +26,24 @@ const ToolBarBtn = ({ view = {}, item }) => {
 
   const { state } = view;
 
-  const isActive = !!(
-    active(state, activeViewId) && select(state, activeViewId)
-  );
-
   let isDisabled = !select(state, activeView);
   if (!isEditable) isDisabled = true;
 
   const ToolBarBtnComponent = useMemo(
     () => (
       <StyledButton
-        active={isActive || false}
+        active={false}
         disabled={isDisabled}
         iconName={icon}
         label={label}
         onMouseDown={e => {
           e.preventDefault();
-          item.run(view, main, context);
+          item.run(context.view.main, context);
         }}
         title={title}
       />
     ),
-    [isActive, isDisabled],
+    [isDisabled],
   );
 
   return ToolBarBtnComponent;

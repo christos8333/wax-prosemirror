@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
@@ -99,20 +99,25 @@ class MultipleDropDown extends ToolGroup {
       }
     });
 
-    return (
-      <Wrapper key={uuidv4()}>
-        <DropdownStyled
-          value={found}
-          key={uuidv4()}
-          options={dropDownOptions}
-          onChange={option => {
-            this._tools[option.value].run(view, main, context);
-          }}
-          placeholder="Multiple Question Types"
-          select={isDisabled}
-        />
-      </Wrapper>
+    const MultipleDropDown = useMemo(
+      () => (
+        <Wrapper key={uuidv4()}>
+          <DropdownStyled
+            value={found}
+            key={uuidv4()}
+            options={dropDownOptions}
+            onChange={option => {
+              this._tools[option.value].run(view, main, context);
+            }}
+            placeholder="Multiple Question Types"
+            select={isDisabled}
+          />
+        </Wrapper>
+      ),
+      [isDisabled],
     );
+
+    return MultipleDropDown;
   }
 }
 

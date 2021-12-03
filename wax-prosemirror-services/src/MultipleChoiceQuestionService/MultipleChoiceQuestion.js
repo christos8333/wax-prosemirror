@@ -10,14 +10,6 @@ import helpers from './helpers/helpers';
 import Tools from '../lib/Tools';
 import ToolBarBtn from './components/ToolBarBtn';
 
-const checkifEmpty = view => {
-  const { state } = view;
-  const { from, to } = state.selection;
-  state.doc.nodesBetween(from, to, (node, pos) => {
-    if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
-  });
-};
-
 const createOption = (main, context) => {
   const { state, dispatch } = main;
   /* Create Wrapping */
@@ -41,9 +33,6 @@ const createOption = (main, context) => {
     Fragment.empty,
   );
   dispatch(main.state.tr.replaceSelectionWith(firstOption));
-  setTimeout(() => {
-    helpers.createEmptyParagraph(context, firstOption.attrs.id);
-  }, 50);
 
   /* create Second Option */
   const secondOption = main.state.config.schema.nodes.multiple_choice.create(
@@ -51,8 +40,10 @@ const createOption = (main, context) => {
     Fragment.empty,
   );
   dispatch(main.state.tr.replaceSelectionWith(secondOption));
+
   setTimeout(() => {
     helpers.createEmptyParagraph(context, secondOption.attrs.id);
+    helpers.createEmptyParagraph(context, firstOption.attrs.id);
   }, 50);
 };
 
@@ -65,7 +56,7 @@ class MultipleChoiceQuestion extends Tools {
 
   get run() {
     return (view, context) => {
-      checkifEmpty(view);
+      helpers.checkifEmpty(view);
       createOption(view, context);
     };
   }

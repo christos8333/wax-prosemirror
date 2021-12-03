@@ -7,7 +7,7 @@ const trueFalseContainerNode = {
   atom: true,
   selectable: true,
   draggable: true,
-  content: 'true_false+',
+  content: 'block+',
   parseDOM: [
     {
       tag: 'div.true-false',

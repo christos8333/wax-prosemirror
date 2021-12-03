@@ -35,15 +35,24 @@ const createOption = (main, context) => {
     ),
   );
 
-  /* create Second Option */
-  const newAnswerId = uuidv4();
-  const answerOption = main.state.config.schema.nodes.multiple_choice_single_correct.create(
-    { id: newAnswerId },
+  /* create First Option */
+  const firstOption = main.state.config.schema.nodes.multiple_choice_single_correct.create(
+    { id: uuidv4() },
     Fragment.empty,
   );
-  dispatch(main.state.tr.replaceSelectionWith(answerOption));
+  dispatch(main.state.tr.replaceSelectionWith(firstOption));
   setTimeout(() => {
-    helpers.createEmptyParagraph(context, newAnswerId);
+    helpers.createEmptyParagraph(context, firstOption.attrs.id);
+  }, 50);
+
+  /* create Second Option */
+  const secondOption = main.state.config.schema.nodes.multiple_choice_single_correct.create(
+    { id: uuidv4() },
+    Fragment.empty,
+  );
+  dispatch(main.state.tr.replaceSelectionWith(secondOption));
+  setTimeout(() => {
+    helpers.createEmptyParagraph(context, secondOption.attrs.id);
   }, 50);
 };
 

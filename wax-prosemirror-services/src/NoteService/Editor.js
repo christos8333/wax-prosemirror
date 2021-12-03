@@ -56,7 +56,7 @@ export default ({ node, view }) => {
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
-            if (noteView.hasFocus()) noteView.focus();
+            // if (noteView.hasFocus()) noteView.focus();
           },
         },
         handleTextInput: (editorView, from, to, text) => {
@@ -108,6 +108,10 @@ export default ({ node, view }) => {
     setTimeout(() => {
       if (clickInNote) context.updateView({}, noteId);
       clickInNote = false;
+      if (typing) {
+        context.updateView({}, noteId);
+        typing = false;
+      }
       if (noteView.state.selection.from !== noteView.state.selection.to)
         context.updateView({}, noteId);
     }, 20);

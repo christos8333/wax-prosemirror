@@ -5,6 +5,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
 import Switch from '../../components/Switch';
+import { NodeSelection } from 'prosemirror-state';
 
 const StyledSwitch = styled(Switch)`
   display: flex;
@@ -33,30 +34,48 @@ const CustomSwitch = ({ node, getPos }) => {
 
   const handleChange = () => {
     setChecked(!checked);
-    const { tr } = main.state;
+    main.dispatch(
+      main.state.tr.setSelection(
+        NodeSelection.create(main.state.doc, getPos()),
+      ),
+    );
+    const parentContainer = findParentOfType(
+      main.state,
+      main.state.config.schema.nodes.multiple_choice_single_correct_container,
+    );
+    let parentPosition = 0;
+
     main.state.doc.descendants((parentNode, parentPos) => {
-      if (parentNode.type.name === 'multiple_choice_single_correct_container') {
-        parentNode.descendants((element, position) => {
-          if (
-            element.type.name === 'multiple_choice_single_correct' &&
-            element.attrs.id === node.attrs.id
-          ) {
-            tr.setNodeMarkup(getPos(), undefined, {
-              ...element.attrs,
-              correct: !checked,
-            });
-          } else if (
-            element.type.name === 'multiple_choice_single_correct' &&
-            element.attrs.correct
-          ) {
-            tr.setNodeMarkup(parentPos + position + 1, undefined, {
-              ...element.attrs,
-              correct: false,
-            });
-          }
+      if (
+        parentNode.type.name === 'multiple_choice_single_correct_container' &&
+        parentNode.attrs.id === parentContainer.attrs.id
+      ) {
+        parentPosition = parentPos;
+      }
+    });
+
+    const { tr } = main.state;
+
+    parentContainer.descendants((element, position) => {
+      if (
+        element.type.name === 'multiple_choice_single_correct' &&
+        element.attrs.id === node.attrs.id
+      ) {
+        tr.setNodeMarkup(getPos(), undefined, {
+          ...element.attrs,
+          correct: !checked,
+        });
+      } else if (
+        element.type.name === 'multiple_choice_single_correct' &&
+        element.attrs.correct
+      ) {
+        tr.setNodeMarkup(parentPosition + position + 1, undefined, {
+          ...element.attrs,
+          correct: false,
         });
       }
     });
+
     main.dispatch(tr);
   };
 
@@ -84,3 +103,15 @@ const getNodes = view => {
 };
 
 export default CustomSwitch;
+
+const findParentOfType = (state, nodeType) => {
+  let nodeFound = '';
+  const predicate = node => node.type === nodeType;
+  for (let i = state.selection.$from.depth; i > 0; i -= 1) {
+    const node = state.selection.$from.node(i);
+    if (predicate(node)) {
+      nodeFound = node;
+    }
+  }
+  return nodeFound;
+};

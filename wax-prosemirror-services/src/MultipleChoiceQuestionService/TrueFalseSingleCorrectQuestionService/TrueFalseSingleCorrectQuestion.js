@@ -9,17 +9,17 @@ import Tools from '../../lib/Tools';
 
 @injectable()
 class MultipleChoiceSingleCorrectQuestion extends Tools {
-  title = 'Add Multiple Choice Single Correct Question';
+  title = 'Add True False Single Correct Question';
   icon = 'multipleChoice';
-  name = 'Multiple Choice Single Correct';
-  label = 'Multiple Choice Single Correct';
+  name = 'True False Single Correct';
+  label = 'True False Single Correct';
 
   get run() {
     return (view, context) => {
       helpers.createOptions(
         view,
         context,
-        view.state.config.schema.nodes.multiple_choice_single_correct,
+        view.state.config.schema.nodes.true_false_single_correct,
       );
     };
   }
@@ -28,7 +28,7 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
     return state => {
       return Commands.isParentOfType(
         state,
-        state.config.schema.nodes.multiple_choice_single_correct,
+        state.config.schema.nodes.true_false_single_correct,
       );
     };
   }

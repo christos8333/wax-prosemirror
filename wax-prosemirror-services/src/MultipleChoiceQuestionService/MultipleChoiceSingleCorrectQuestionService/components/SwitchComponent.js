@@ -33,29 +33,31 @@ const CustomSwitch = ({ node, getPos }) => {
 
   const handleChange = () => {
     setChecked(!checked);
-
-    main.state.doc.descendants((editorNode, pos) => {
-      if (editorNode.type.name === 'multiple_choice_single_correct_container') {
-        editorNode.content.content.forEach(element => {
-          if (element.attrs.id === node.attrs.id) {
-            main.dispatch(
-              main.state.tr.setNodeMarkup(getPos(), undefined, {
-                ...element.attrs,
-                correct: !checked,
-              }),
-            );
-          } else if (element.attrs.correct) {
-            // console.log(element);
-            // main.dispatch(
-            //   main.state.tr.setNodeMarkup(getPos() + 4, undefined, {
-            //     ...element.attrs,
-            //     correct: false,
-            //   }),
-            // );
+    const { tr } = main.state;
+    main.state.doc.descendants((parentNode, parentPos) => {
+      if (parentNode.type.name === 'multiple_choice_single_correct_container') {
+        parentNode.descendants((element, position) => {
+          if (
+            element.type.name === 'multiple_choice_single_correct' &&
+            element.attrs.id === node.attrs.id
+          ) {
+            tr.setNodeMarkup(getPos(), undefined, {
+              ...element.attrs,
+              correct: !checked,
+            });
+          } else if (
+            element.type.name === 'multiple_choice_single_correct' &&
+            element.attrs.correct
+          ) {
+            tr.setNodeMarkup(parentPos + position + 1, undefined, {
+              ...element.attrs,
+              correct: false,
+            });
           }
         });
       }
     });
+    main.dispatch(tr);
   };
 
   return (

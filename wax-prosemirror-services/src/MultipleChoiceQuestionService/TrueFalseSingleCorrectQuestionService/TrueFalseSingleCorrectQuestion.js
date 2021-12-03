@@ -8,7 +8,7 @@ import helpers from '../helpers/helpers';
 import Tools from '../../lib/Tools';
 
 @injectable()
-class MultipleChoiceSingleCorrectQuestion extends Tools {
+class TrueFalseSingleCorrectQuestion extends Tools {
   title = 'Add True False Single Correct Question';
   icon = 'multipleChoice';
   name = 'True False Single Correct';
@@ -20,6 +20,7 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
         view,
         context,
         view.state.config.schema.nodes.true_false_single_correct,
+        view.state.config.schema.nodes.true_false_single_correct_container,
       );
     };
   }
@@ -62,4 +63,4 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
   }
 }
 
-export default MultipleChoiceSingleCorrectQuestion;
+export default TrueFalseSingleCorrectQuestion;

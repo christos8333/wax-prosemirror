@@ -20,6 +20,7 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
         view,
         context,
         view.state.config.schema.nodes.multiple_choice_single_correct,
+        view.state.config.schema.nodes.multiple_choice_single_correct_container,
       );
     };
   }

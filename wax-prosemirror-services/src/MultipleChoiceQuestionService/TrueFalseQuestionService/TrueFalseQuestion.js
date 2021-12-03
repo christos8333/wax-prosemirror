@@ -23,6 +23,7 @@ class MultipleChoiceQuestion extends Tools {
         view,
         context,
         view.state.config.schema.nodes.true_false,
+        view.state.config.schema.nodes.true_false_container,
       );
     };
   }

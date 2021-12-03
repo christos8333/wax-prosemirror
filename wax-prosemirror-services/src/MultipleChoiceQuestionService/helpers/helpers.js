@@ -46,14 +46,14 @@ const checkifEmpty = view => {
   }
 };
 
-const createOptions = (main, context, type) => {
+const createOptions = (main, context, type, parentType) => {
   checkifEmpty(main);
   const { state, dispatch } = main;
   /* Create Wrapping */
   const { $from, $to } = state.selection;
   const range = $from.blockRange($to);
 
-  wrapIn(state.config.schema.nodes.multiple_choice_container, {
+  wrapIn(parentType, {
     id: uuidv4(),
   })(state, dispatch);
 

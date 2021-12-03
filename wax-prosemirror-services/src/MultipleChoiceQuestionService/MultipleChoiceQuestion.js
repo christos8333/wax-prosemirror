@@ -3,49 +3,9 @@ import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
-import { Fragment } from 'prosemirror-model';
-import { TextSelection } from 'prosemirror-state';
-import { wrapIn } from 'prosemirror-commands';
 import helpers from './helpers/helpers';
-import Tools from '../lib/Tools';
 import ToolBarBtn from './components/ToolBarBtn';
-
-const createOption = (main, context) => {
-  const { state, dispatch } = main;
-  /* Create Wrapping */
-  const { $from, $to } = state.selection;
-  const range = $from.blockRange($to);
-
-  wrapIn(state.config.schema.nodes.multiple_choice_container, {
-    id: uuidv4(),
-  })(state, dispatch);
-
-  /* set New Selection */
-  dispatch(
-    main.state.tr.setSelection(
-      new TextSelection(main.state.tr.doc.resolve(range.$to.pos)),
-    ),
-  );
-
-  /* create First Option */
-  const firstOption = main.state.config.schema.nodes.multiple_choice.create(
-    { id: uuidv4() },
-    Fragment.empty,
-  );
-  dispatch(main.state.tr.replaceSelectionWith(firstOption));
-
-  /* create Second Option */
-  const secondOption = main.state.config.schema.nodes.multiple_choice.create(
-    { id: uuidv4() },
-    Fragment.empty,
-  );
-  dispatch(main.state.tr.replaceSelectionWith(secondOption));
-
-  setTimeout(() => {
-    helpers.createEmptyParagraph(context, secondOption.attrs.id);
-    helpers.createEmptyParagraph(context, firstOption.attrs.id);
-  }, 50);
-};
+import Tools from '../lib/Tools';
 
 @injectable()
 class MultipleChoiceQuestion extends Tools {
@@ -56,8 +16,11 @@ class MultipleChoiceQuestion extends Tools {
 
   get run() {
     return (view, context) => {
-      helpers.checkifEmpty(view);
-      createOption(view, context);
+      helpers.createOptions(
+        view,
+        context,
+        view.state.config.schema.nodes.multiple_choice,
+      );
     };
   }
 

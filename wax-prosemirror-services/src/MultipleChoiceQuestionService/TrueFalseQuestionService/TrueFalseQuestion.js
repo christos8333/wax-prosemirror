@@ -10,43 +10,6 @@ import ToolBarBtn from '../components/ToolBarBtn';
 import helpers from '../helpers/helpers';
 import Tools from '../../lib/Tools';
 
-const createOption = (main, context) => {
-  const { state, dispatch } = main;
-
-  /* Create Wrapping */
-  const { $from, $to } = state.selection;
-  const range = $from.blockRange($to);
-
-  wrapIn(state.config.schema.nodes.true_false_container, {
-    id: uuidv4(),
-  })(state, dispatch);
-
-  /* set New Selection */
-  dispatch(
-    main.state.tr.setSelection(
-      new TextSelection(main.state.tr.doc.resolve(range.$to.pos)),
-    ),
-  );
-
-  /* create First Option */
-  const firstOption = main.state.config.schema.nodes.true_false.create(
-    { id: uuidv4() },
-    Fragment.empty,
-  );
-  dispatch(main.state.tr.replaceSelectionWith(firstOption));
-
-  /* create Second Option */
-  const secondOption = main.state.config.schema.nodes.true_false.create(
-    { id: uuidv4() },
-    Fragment.empty,
-  );
-  dispatch(main.state.tr.replaceSelectionWith(secondOption));
-  setTimeout(() => {
-    helpers.createEmptyParagraph(context, secondOption.attrs.id);
-    helpers.createEmptyParagraph(context, firstOption.attrs.id);
-  }, 50);
-};
-
 @injectable()
 class MultipleChoiceQuestion extends Tools {
   title = 'Add True False Question';
@@ -56,8 +19,11 @@ class MultipleChoiceQuestion extends Tools {
 
   get run() {
     return (view, context) => {
-      helpers.checkifEmpty(view);
-      createOption(view, context);
+      helpers.createOptions(
+        view,
+        context,
+        view.state.config.schema.nodes.true_false,
+      );
     };
   }
 

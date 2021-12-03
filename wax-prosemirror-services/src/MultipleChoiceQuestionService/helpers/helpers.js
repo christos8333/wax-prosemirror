@@ -1,5 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
 import { Commands } from 'wax-prosemirror-utilities';
+import { Fragment } from 'prosemirror-model';
+import { wrapIn } from 'prosemirror-commands';
 
 const createEmptyParagraph = (context, newAnswerId) => {
   if (context.view[newAnswerId]) {
@@ -43,7 +46,40 @@ const checkifEmpty = view => {
   }
 };
 
+const createOptions = (main, context, type) => {
+  checkifEmpty(main);
+  const { state, dispatch } = main;
+  /* Create Wrapping */
+  const { $from, $to } = state.selection;
+  const range = $from.blockRange($to);
+
+  wrapIn(state.config.schema.nodes.multiple_choice_container, {
+    id: uuidv4(),
+  })(state, dispatch);
+
+  /* set New Selection */
+  dispatch(
+    main.state.tr.setSelection(
+      new TextSelection(main.state.tr.doc.resolve(range.$to.pos)),
+    ),
+  );
+
+  /* create First Option */
+  const firstOption = type.create({ id: uuidv4() }, Fragment.empty);
+  dispatch(main.state.tr.replaceSelectionWith(firstOption));
+
+  /* create Second Option */
+  const secondOption = type.create({ id: uuidv4() }, Fragment.empty);
+  dispatch(main.state.tr.replaceSelectionWith(secondOption));
+
+  setTimeout(() => {
+    createEmptyParagraph(context, secondOption.attrs.id);
+    createEmptyParagraph(context, firstOption.attrs.id);
+  }, 50);
+};
+
 export default {
   createEmptyParagraph,
   checkifEmpty,
+  createOptions,
 };

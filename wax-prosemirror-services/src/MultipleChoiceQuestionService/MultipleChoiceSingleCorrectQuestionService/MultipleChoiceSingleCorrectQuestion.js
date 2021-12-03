@@ -56,8 +56,11 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
 
   get run() {
     return (view, context) => {
-      helpers.checkifEmpty(view);
-      createOption(view, context);
+      helpers.createOptions(
+        view,
+        context,
+        view.state.config.schema.nodes.multiple_choice_single_correct,
+      );
     };
   }
 

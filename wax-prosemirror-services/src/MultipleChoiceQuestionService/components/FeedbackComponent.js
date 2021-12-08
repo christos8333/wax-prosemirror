@@ -31,12 +31,14 @@ export default ({ node, view, getPos }) => {
 
   useEffect(() => {
     const allNodes = getNodes(context.view.main);
-    allNodes.forEach(singNode => {
-      if (singNode.node.attrs.id === node.attrs.id) {
-        if (!typing) setFeedBack(singNode.node.attrs.feedback);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        if (!typing || context.transaction.meta.inputType === 'Redo') {
+          setFeedBack(singleNode.node.attrs.feedback);
+        }
         if (!isFirstRun) {
-          if (singNode.node.attrs.feedback === '')
-            setFeedBack(singNode.node.attrs.feedback);
+          if (singleNode.node.attrs.feedback === '')
+            setFeedBack(singleNode.node.attrs.feedback);
         }
       }
     });
@@ -47,7 +49,7 @@ export default ({ node, view, getPos }) => {
     if (e.key === 'Backspace') {
       context.view.main.dispatch(
         context.view.main.state.tr.setSelection(
-          TextSelection.create(context.view.main.state.tr.doc, 0),
+          TextSelection.create(context.view.main.state.tr.doc, null),
         ),
       );
     }
@@ -102,7 +104,12 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'multiple_choice') {
+    if (
+      node.node.type.name === 'multiple_choice' ||
+      node.node.type.name === 'multiple_choice_single_correct' ||
+      node.node.type.name === 'true_false' ||
+      node.node.type.name === 'true_false_single_correct'
+    ) {
       multipleChoiceNodes.push(node);
     }
   });

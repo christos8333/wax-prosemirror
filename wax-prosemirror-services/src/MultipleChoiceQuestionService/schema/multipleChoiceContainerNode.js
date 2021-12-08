@@ -7,7 +7,7 @@ const multipleChoiceContainerNode = {
   atom: true,
   selectable: true,
   draggable: true,
-  content: 'multiple_choice+',
+  content: 'block+',
   parseDOM: [
     {
       tag: 'div.multiple-choice',

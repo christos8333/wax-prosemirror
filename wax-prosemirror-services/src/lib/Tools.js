@@ -10,7 +10,6 @@ class Tools {
   title = 'title';
   _isDisplayed = true;
   _isHiddenInToolGroup = false;
-  onlyOnMain = false;
   config = {};
   pmplugins = {};
   name = 'name';
@@ -48,7 +47,6 @@ class Tools {
       run: this.run,
       enable: this.enable,
       select: this.select,
-      onlyOnMain: this.onlyOnMain,
       id: this.id,
     };
   }

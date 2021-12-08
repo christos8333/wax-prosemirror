@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,9 +11,18 @@ import ToolGroup from '../../lib/ToolGroup';
 @injectable()
 class MultipleDropDown extends ToolGroup {
   tools = [];
-  constructor(@inject('MultipleChoiceQuestion') multipleChoiceQuestion) {
+  constructor(
+    @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
+    @inject('MultipleChoiceSingleCorrectQuestion')
+    multipleChoiceSingleCorrectQuestion,
+    @inject('TrueFalseQuestion') trueFalseQuestion,
+  ) {
     super();
-    this.tools = [multipleChoiceQuestion];
+    this.tools = [
+      multipleChoiceQuestion,
+      multipleChoiceSingleCorrectQuestion,
+      trueFalseQuestion,
+    ];
   }
 
   renderTools(view) {
@@ -60,42 +69,57 @@ class MultipleDropDown extends ToolGroup {
     const { state } = view;
 
     const dropDownOptions = [
-      { label: 'Multiple Choice ', value: '0', item: this._tools[0] },
       {
-        label: 'Multiple Choice (single correct)  ',
+        label: 'Multiple Choice',
+        value: '0',
+        item: this._tools[0],
+      },
+      {
+        label: 'Multiple Choice (single correct)',
         value: '1',
-        item: this._tools[0],
+        item: this._tools[1],
       },
-      { label: 'True/False ', value: '2', item: this._tools[0] },
       {
-        label: 'True/False (single correct) ',
-        value: '3',
-        item: this._tools[0],
+        label: 'True/False',
+        value: '2',
+        item: this._tools[2],
       },
+      // {
+      //   label: 'True/False (single correct)',
+      //   value: '3',
+      //   item: this._tools[0],
+      // },
     ];
 
     const isDisabled = this._tools[0].select(state, activeView);
     let found = '';
-    dropDownOptions.forEach((item, i) => {
-      if (item.item.select(state, activeView) === false) {
-        found = item.item.label;
+    dropDownOptions.forEach((option, i) => {
+      if (option.item.active(main.state)) {
+        found = option.label;
       }
     });
 
-    return (
-      <Wrapper key={uuidv4()}>
-        <DropdownStyled
-          value={found}
-          key={uuidv4()}
-          options={dropDownOptions}
-          onChange={option => {
-            this._tools[option.value].run(view, main, context);
-          }}
-          placeholder="Multiple Question Types"
-          select={isDisabled}
-        />
-      </Wrapper>
+    const onChange = option => {
+      this._tools[option.value].run(main, context);
+    };
+
+    const MultipleDropDown = useMemo(
+      () => (
+        <Wrapper key={uuidv4()}>
+          <DropdownStyled
+            value={found}
+            key={uuidv4()}
+            options={dropDownOptions}
+            onChange={option => onChange(option)}
+            placeholder="Multiple Question Types"
+            select={isDisabled}
+          />
+        </Wrapper>
+      ),
+      [isDisabled],
     );
+
+    return MultipleDropDown;
   }
 }
 

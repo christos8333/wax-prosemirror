@@ -1,5 +1,6 @@
 export { default as Overlay } from './src/components/Overlay';
 export { default as Button } from './src/components/Button';
+export { default as UndoRedoButton } from './src/components/UndoRedoButton';
 export { default as MenuButton } from './src/ui/buttons/MenuButton';
 export { default as icons } from './src/icons/icons';
 export { default as TableDropDown } from './src/components/tables/TableDropDown';

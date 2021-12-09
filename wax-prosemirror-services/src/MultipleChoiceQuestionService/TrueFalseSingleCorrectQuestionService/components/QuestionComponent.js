@@ -92,7 +92,7 @@ export default ({ node, view, getPos }) => {
   const addOption = nodeId => {
     const newAnswerId = uuidv4();
     context.view.main.state.doc.descendants((editorNode, index) => {
-      if (editorNode.type.name === 'multiple_choice_single_correct') {
+      if (editorNode.type.name === 'true_false_single_correct') {
         if (editorNode.attrs.id === nodeId) {
           context.view.main.dispatch(
             context.view.main.state.tr.setSelection(
@@ -104,7 +104,7 @@ export default ({ node, view, getPos }) => {
             ),
           );
 
-          const answerOption = context.view.main.state.config.schema.nodes.multiple_choice_single_correct.create(
+          const answerOption = context.view.main.state.config.schema.nodes.true_false_single_correct.create(
             { id: newAnswerId },
             Fragment.empty,
           );

@@ -69,7 +69,6 @@ class MultipleDropDown extends ToolGroup {
       view: { main },
     } = context;
     const { state } = view;
-    console.log(this._tools);
     const dropDownOptions = [
       {
         label: 'Multiple Choice',

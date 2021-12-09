@@ -11,7 +11,7 @@ import helpers from '../helpers/helpers';
 import Tools from '../../lib/Tools';
 
 @injectable()
-class MultipleChoiceQuestion extends Tools {
+class TrueFalseQuestion extends Tools {
   title = 'Add True False Question';
   icon = 'multipleChoice';
   name = 'TrueFalse';
@@ -66,4 +66,4 @@ class MultipleChoiceQuestion extends Tools {
   }
 }
 
-export default MultipleChoiceQuestion;
+export default TrueFalseQuestion;

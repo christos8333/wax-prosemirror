@@ -16,12 +16,14 @@ class MultipleDropDown extends ToolGroup {
     @inject('MultipleChoiceSingleCorrectQuestion')
     multipleChoiceSingleCorrectQuestion,
     @inject('TrueFalseQuestion') trueFalseQuestion,
+    @inject('TrueFalseSingleCorrectQuestion') trueFalseSingleCorrectQuestion,
   ) {
     super();
     this.tools = [
       multipleChoiceQuestion,
       multipleChoiceSingleCorrectQuestion,
       trueFalseQuestion,
+      trueFalseSingleCorrectQuestion,
     ];
   }
 
@@ -67,7 +69,7 @@ class MultipleDropDown extends ToolGroup {
       view: { main },
     } = context;
     const { state } = view;
-
+    console.log(this._tools);
     const dropDownOptions = [
       {
         label: 'Multiple Choice',
@@ -84,11 +86,11 @@ class MultipleDropDown extends ToolGroup {
         value: '2',
         item: this._tools[2],
       },
-      // {
-      //   label: 'True/False (single correct)',
-      //   value: '3',
-      //   item: this._tools[0],
-      // },
+      {
+        label: 'True/False (single correct)',
+        value: '3',
+        item: this._tools[3],
+      },
     ];
 
     const isDisabled = this._tools[0].select(state, activeView);

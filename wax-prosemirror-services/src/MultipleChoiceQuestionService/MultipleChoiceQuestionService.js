@@ -6,6 +6,7 @@ import QuestionComponent from './components/QuestionComponent';
 import MultipleChoiceNodeView from './MultipleChoiceNodeView';
 import MultipleChoiceSingleCorrectQuestionService from './MultipleChoiceSingleCorrectQuestionService/MultipleChoiceSingleCorrectQuestionService';
 import TrueFalseQuestionService from './TrueFalseQuestionService/TrueFalseQuestionService';
+import TrueFalseSingleCorrectQuestionService from './TrueFalseSingleCorrectQuestionService/TrueFalseSingleCorrectQuestionService';
 
 class MultipleChoiceQuestionService extends Service {
   register() {
@@ -31,6 +32,7 @@ class MultipleChoiceQuestionService extends Service {
   dependencies = [
     new MultipleChoiceSingleCorrectQuestionService(),
     new TrueFalseQuestionService(),
+    new TrueFalseSingleCorrectQuestionService(),
   ];
 }
 

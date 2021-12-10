@@ -83,13 +83,22 @@ export default ({ node, view }) => {
 
   const dispatchTransaction = transaction => {
     const { user } = view.props;
+
     const TrackChange = context.app.config.get(
       'config.EnableTrackChangeService',
     );
 
-    const tr = TrackChange.enabled
-      ? trackedTransaction(transaction, noteView.state, user, 'notes', noteId)
-      : transaction;
+    let tr = transaction;
+
+    if (TrackChange && TrackChange.enabled) {
+      tr = trackedTransaction(
+        transaction,
+        noteView.state,
+        user,
+        'notes',
+        noteId,
+      );
+    }
 
     const { state, transactions } = noteView.state.applyTransaction(tr);
     noteView.updateState(state);

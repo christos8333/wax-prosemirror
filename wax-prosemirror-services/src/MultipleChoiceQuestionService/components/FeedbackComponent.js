@@ -24,7 +24,7 @@ const FeedBackInput = styled.input`
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
-  const [feedBack, setFeedBack] = useState('');
+  const [feedBack, setFeedBack] = useState(' ');
   const [isFirstRun, setFirstRun] = useState(true);
   const [typing, setTyping] = useState(false);
   const feedBackRef = useRef(null);

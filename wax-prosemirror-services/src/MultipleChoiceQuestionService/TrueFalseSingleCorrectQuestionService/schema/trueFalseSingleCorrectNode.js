@@ -13,7 +13,7 @@ const trueFalseSingleCorrectNode = {
 
   parseDOM: [
     {
-      tag: 'true-false-single-correct-option',
+      tag: 'div.true-false-single-correct-option',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),

@@ -3,15 +3,12 @@ import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
-import { Fragment } from 'prosemirror-model';
-import { TextSelection } from 'prosemirror-state';
-import { wrapIn } from 'prosemirror-commands';
 import ToolBarBtn from '../components/ToolBarBtn';
 import helpers from '../helpers/helpers';
 import Tools from '../../lib/Tools';
 
 @injectable()
-class MultipleChoiceQuestion extends Tools {
+class TrueFalseQuestion extends Tools {
   title = 'Add True False Question';
   icon = 'multipleChoice';
   name = 'TrueFalse';
@@ -66,4 +63,4 @@ class MultipleChoiceQuestion extends Tools {
   }
 }
 
-export default MultipleChoiceQuestion;
+export default TrueFalseQuestion;

@@ -41,13 +41,13 @@ const CustomSwitch = ({ node, getPos }) => {
     );
     const parentContainer = findParentOfType(
       main.state,
-      main.state.config.schema.nodes.multiple_choice_single_correct_container,
+      main.state.config.schema.nodes.true_false_single_correct_container,
     );
     let parentPosition = 0;
 
     main.state.doc.descendants((parentNode, parentPos) => {
       if (
-        parentNode.type.name === 'multiple_choice_single_correct_container' &&
+        parentNode.type.name === 'true_false_single_correct_container' &&
         parentNode.attrs.id === parentContainer.attrs.id
       ) {
         parentPosition = parentPos;
@@ -58,7 +58,7 @@ const CustomSwitch = ({ node, getPos }) => {
 
     parentContainer.descendants((element, position) => {
       if (
-        element.type.name === 'multiple_choice_single_correct' &&
+        element.type.name === 'true_false_single_correct' &&
         element.attrs.id === node.attrs.id
       ) {
         tr.setNodeMarkup(getPos(), undefined, {
@@ -66,7 +66,7 @@ const CustomSwitch = ({ node, getPos }) => {
           correct: !checked,
         });
       } else if (
-        element.type.name === 'multiple_choice_single_correct' &&
+        element.type.name === 'true_false_single_correct' &&
         element.attrs.correct
       ) {
         tr.setNodeMarkup(parentPosition + position + 1, undefined, {
@@ -95,7 +95,7 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const multipleChoiceNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'multiple_choice_single_correct') {
+    if (node.node.type.name === 'true_false_single_correct') {
       multipleChoiceNodes.push(node);
     }
   });

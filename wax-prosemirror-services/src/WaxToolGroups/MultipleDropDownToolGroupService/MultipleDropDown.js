@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useEffect, useState } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
@@ -66,9 +66,13 @@ class MultipleDropDown extends ToolGroup {
 
     const {
       activeView,
+      activeViewId,
       view: { main },
     } = context;
     const { state } = view;
+
+    const [label, setLabel] = useState(null);
+
     const dropDownOptions = [
       {
         label: 'Multiple Choice',
@@ -92,13 +96,15 @@ class MultipleDropDown extends ToolGroup {
       },
     ];
 
+    useEffect(() => {
+      dropDownOptions.forEach((option, i) => {
+        if (option.item.active(main.state)) {
+          setLabel(option.label);
+        }
+      });
+    }, [activeViewId]);
+
     const isDisabled = this._tools[0].select(state, activeView);
-    let found = '';
-    dropDownOptions.forEach((option, i) => {
-      if (option.item.active(main.state)) {
-        found = option.label;
-      }
-    });
 
     const onChange = option => {
       this._tools[option.value].run(main, context);
@@ -108,7 +114,7 @@ class MultipleDropDown extends ToolGroup {
       () => (
         <Wrapper key={uuidv4()}>
           <DropdownStyled
-            value={found}
+            value={label}
             key={uuidv4()}
             options={dropDownOptions}
             onChange={option => onChange(option)}
@@ -117,7 +123,7 @@ class MultipleDropDown extends ToolGroup {
           />
         </Wrapper>
       ),
-      [isDisabled],
+      [isDisabled, label],
     );
 
     return MultipleDropDown;

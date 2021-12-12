@@ -126,7 +126,6 @@ const WaxView = forwardRef((props, ref) => {
       main don't keep updating the view ,as this is
       the central point of each transaction
       */
-
     context.setTransaction(transaction);
 
     if (!transaction.getMeta('outsideView')) {
@@ -137,11 +136,12 @@ const WaxView = forwardRef((props, ref) => {
         'main',
       );
     }
-    if (targetFormat === 'JSON') {
-      if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-        props.onChange(state.doc.toJSON());
-    } else if (view.state.doc !== previousDoc || tr.getMeta('forceUpdate'))
-      props.onChange(state.doc.content);
+
+    const docContent =
+      targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
+
+    if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
+      props.onChange(docContent);
   };
 
   const editor = (

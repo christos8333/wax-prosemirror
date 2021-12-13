@@ -8,9 +8,11 @@ class MultipleChoice extends ToolGroup {
     @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
     @inject('MultipleChoiceSingleCorrectQuestion')
     multipleChoiceSingleCorrectQuestion,
+    @inject('EssayQuestion')
+    essayQuestion,
   ) {
     super();
-    this.tools = [multipleChoiceQuestion, multipleChoiceSingleCorrectQuestion];
+    this.tools = [multipleChoiceQuestion, essayQuestion];
   }
 }
 

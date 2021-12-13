@@ -48,7 +48,7 @@ export { default as MultipleChoiceQuestionService } from './src/MultipleChoiceQu
 export { default as MultipleChoiceSingleCorrectQuestionService } from './src/MultipleChoiceQuestionService/MultipleChoiceSingleCorrectQuestionService/MultipleChoiceSingleCorrectQuestionService';
 export { default as TrueFalseQuestionService } from './src/MultipleChoiceQuestionService/TrueFalseQuestionService/TrueFalseQuestionService';
 export { default as FillTheGapQuestionService } from './src/FillTheGapQuestionService/FillTheGapQuestionService';
-
+export { default as EssayService } from './src/EssayService/EssayService';
 /*
 ToolGroups
 */

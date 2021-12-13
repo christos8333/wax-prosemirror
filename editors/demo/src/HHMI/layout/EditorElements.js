@@ -392,4 +392,24 @@ export default css`
       width: 30px;
     }
   }
+
+  /* -- Essay ---------------------------------- */
+
+  .essay {
+    border: 3px solid #f5f5f7;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    padding: 3px;
+
+    &:before {
+      background-color: #fff;
+      bottom: 22px;
+      color: #535e76;
+      content: 'Essay';
+      height: 10px;
+      left: -1px;
+      position: relative;
+      width: 30px;
+    }
+  }
 `;

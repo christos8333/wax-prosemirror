@@ -1,24 +1,27 @@
-import Service from "../../Service";
-import { wrapInList } from "prosemirror-schema-list";
-import { orderedListNode } from "wax-prosemirror-schema";
-import OrderedList from "./OrderedList";
+import Service from '../../Service';
+import { wrapInList } from 'prosemirror-schema-list';
+import { orderedListNode } from 'wax-prosemirror-schema';
+import OrderedList from './OrderedList';
 
 class OrderedListService extends Service {
+  name = 'OrderedListService';
   boot() {
-    const shortCuts = this.container.get("ShortCuts");
+    const shortCuts = this.container.get('ShortCuts');
     // shortCuts.addShortCut({
     //   "Shift-Ctrl-9": wrapInList(this.schema.nodes.orderedlist)
     // });
   }
 
   register() {
-    this.container.bind("OrderedList").to(OrderedList);
-    const createNode = this.container.get("CreateNode");
+    this.container.bind('OrderedList').toDynamicValue(() => {
+      return new OrderedList(this.config);
+    });
+    const createNode = this.container.get('CreateNode');
     createNode(
       {
-        orderedlist: orderedListNode
+        orderedlist: orderedListNode,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

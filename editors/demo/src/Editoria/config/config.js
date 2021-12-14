@@ -115,6 +115,9 @@ export default {
   ],
 
   // CommentsService: { readOnly: true },
+  // OrderedListService: { subList: false },
+  // BulletListService: { subList: false },
+  // JoinUpService: { subList: false },
   SchemaService: DefaultSchema,
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],

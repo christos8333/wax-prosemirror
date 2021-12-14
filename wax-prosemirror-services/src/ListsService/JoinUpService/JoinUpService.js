@@ -1,11 +1,13 @@
-import Service from "../../Service";
-import JoinUp from "./JoinUp";
+import Service from '../../Service';
+import JoinUp from './JoinUp';
 
 class JoinUpService extends Service {
-  boot() {}
-
+  name = 'JoinUpService';
   register() {
-    this.container.bind("JoinUp").to(JoinUp);
+    // this.container.bind('JoinUp').to(JoinUp);
+    this.container.bind('JoinUp').toDynamicValue(() => {
+      return new JoinUp(this.config);
+    });
   }
 }
 

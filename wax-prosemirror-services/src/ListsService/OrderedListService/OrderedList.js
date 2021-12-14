@@ -24,12 +24,20 @@ class OrderedList extends Tools {
 
   select = (state, activeViewId, activeView) => {
     const {
-      selection: { from },
+      selection: { from, to },
     } = state;
+    let status = true;
+
+    if ('subList' in this.config && !this.config.subList) {
+      state.doc.nodesBetween(from, to, node => {
+        if (node.type.name === 'list_item') status = false;
+      });
+    }
+
     if (from === null) return false;
     const { disallowedTools } = activeView.props;
-    if (disallowedTools.includes('Lists')) return false;
-    return true;
+    if (disallowedTools.includes('Lists')) status = false;
+    return status;
   };
 
   get active() {

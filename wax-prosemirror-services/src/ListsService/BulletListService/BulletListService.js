@@ -4,6 +4,7 @@ import Service from '../../Service';
 import BulletList from './BulletList';
 
 class BulletListService extends Service {
+  name = 'BulletListService';
   boot() {
     const shortCuts = this.container.get('ShortCuts');
     // shortCuts.addShortCut({
@@ -12,7 +13,9 @@ class BulletListService extends Service {
   }
 
   register() {
-    this.container.bind('BulletList').to(BulletList);
+    this.container.bind('BulletList').toDynamicValue(() => {
+      return new BulletList(this.config);
+    });
     const createNode = this.container.get('CreateNode');
     createNode(
       {

@@ -12,7 +12,7 @@ class MultipleChoice extends ToolGroup {
     essayQuestion,
   ) {
     super();
-    this.tools = [multipleChoiceQuestion, essayQuestion];
+    this.tools = [essayQuestion];
   }
 }
 

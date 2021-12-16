@@ -27,7 +27,8 @@ export default class EssayNodeView extends AbstractNodeView {
   }
 
   stopEvent(event) {
-    if (event.target.type === 'text') {
+    console.log(event.target.type);
+    if (event.target.type === 'textarea') {
       return true;
     }
     const innerView = this.context.view[this.node.attrs.id];

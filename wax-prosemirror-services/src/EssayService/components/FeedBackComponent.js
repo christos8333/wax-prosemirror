@@ -5,7 +5,7 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { grid, th } from '@pubsweet/ui-toolkit';
 
 const FeedBack = styled.div`
   color: black;
@@ -16,15 +16,23 @@ const FeedBackLabel = styled.span`
   font-weight: 700;
 `;
 
-const FeedBackInput = styled.input`
-  border: none;
-  display: flex;
+const FeedBackTextArea = styled.textarea`
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-family: ${th('fontWriting')};
+  position: relative;
+  right: 5px;
   width: 100%;
+  min-height: 20px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
-  const [feedBack, setFeedBack] = useState(' ');
+  const [feedBack, setFeedBack] = useState('');
   const feedBackRef = useRef(null);
 
   useEffect(() => {}, []);
@@ -50,13 +58,15 @@ export default ({ node, view, getPos }) => {
   return (
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
-      <FeedBackInput
+      <FeedBackTextArea
+        cols="2"
         onBlur={saveFeedBack}
         onChange={feedBackInput}
         onFocus={onFocus}
         onKeyDown={handleKeyDown}
         placeholder="Insert feedback"
         ref={feedBackRef}
+        rows="2"
         type="text"
         value={feedBack}
       />

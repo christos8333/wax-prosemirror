@@ -128,7 +128,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
       questionId,
     );
-    if (questionView.hasFocus()) questionView.focus();
+    questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {

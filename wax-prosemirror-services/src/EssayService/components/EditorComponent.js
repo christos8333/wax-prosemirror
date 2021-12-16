@@ -45,6 +45,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
+  const { activeViewId } = context;
   let questionView;
   const questionId = node.attrs.id;
   const isEditable = context.view.main.props.editable(editable => {
@@ -98,21 +99,14 @@ const EditorComponent = ({ node, view, getPos }) => {
         disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
-            context.view.main.dispatch(
-              context.view.main.state.tr.setSelection(
-                new TextSelection(
-                  context.view.main.state.tr.doc.resolve(getPos() + 2),
+            context.view[activeViewId].dispatch(
+              context.view[activeViewId].state.tr.setSelection(
+                TextSelection.between(
+                  context.view[activeViewId].state.selection.$anchor,
+                  context.view[activeViewId].state.selection.$head,
                 ),
               ),
             );
-            // context.view[activeViewId].dispatch(
-            //   context.view[activeViewId].state.tr.setSelection(
-            //     TextSelection.between(
-            //       context.view[activeViewId].state.selection.$anchor,
-            //       context.view[activeViewId].state.selection.$head,
-            //     ),
-            //   ),
-            // );
             context.updateView({}, questionId);
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
@@ -134,7 +128,7 @@ const EditorComponent = ({ node, view, getPos }) => {
       },
       questionId,
     );
-    if (questionView.hasFocus()) questionView.focus();
+    questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {

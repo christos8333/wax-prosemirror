@@ -1,9 +1,9 @@
 const essayNode = {
   attrs: {
     class: { default: 'essay' },
+    id: { default: '' },
   },
   group: 'block questions',
-  atom: true,
   selectable: true,
   draggable: true,
   content: 'block+',

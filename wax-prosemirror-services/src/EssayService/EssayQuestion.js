@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
 import { wrapIn } from 'prosemirror-commands';
+import { v4 as uuidv4 } from 'uuid';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -11,7 +12,9 @@ class EssayQuestion extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.essay)(state, dispatch);
+      wrapIn(state.config.schema.nodes.essay, {
+        id: uuidv4(),
+      })(state, dispatch);
     };
   }
 

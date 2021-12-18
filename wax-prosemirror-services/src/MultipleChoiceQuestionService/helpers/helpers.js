@@ -2,16 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
 import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
-import { wrapIn } from 'prosemirror-commands';
-import {
-  joinPoint,
-  canJoin,
-  findWrapping,
-  liftTarget,
-  canSplit,
-  ReplaceAroundStep,
-} from 'prosemirror-transform';
-import { Selection } from 'prosemirror-state';
+import { findWrapping } from 'prosemirror-transform';
 
 const createEmptyParagraph = (context, newAnswerId) => {
   if (context.view[newAnswerId]) {

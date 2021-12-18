@@ -27,6 +27,7 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
     this.node = node;
     if (this.context.view[node.attrs.id]) {
       const { state } = this.context.view[node.attrs.id];
+      console.log(state);
       const start = node.content.findDiffStart(state.doc.content);
       if (start != null) {
         let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);

@@ -9,7 +9,6 @@ const questionNode = {
   content: 'block*',
   defining: true,
 
-  // atom: true,
   parseDOM: [
     {
       tag: 'div.multiple-choice-question',

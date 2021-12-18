@@ -46,13 +46,7 @@ const checkifEmpty = view => {
   }
 };
 
-const createOptions = (
-  main,
-  context,
-  parentType,
-  questionType,
-  answerTtype,
-) => {
+const createOptions = (main, context, parentType, questionType, answerType) => {
   checkifEmpty(main);
   const { state, dispatch } = main;
   /* Create Wrapping */
@@ -60,7 +54,7 @@ const createOptions = (
   const range = $from.blockRange($to);
   const { tr } = main.state;
 
-  const wrapping = range && findWrapping(range, parentType, { id: uuidv4 });
+  const wrapping = range && findWrapping(range, parentType, { id: uuidv4() });
   if (!wrapping) return false;
   tr.wrap(range, wrapping);
 
@@ -75,10 +69,10 @@ const createOptions = (
   const question = questionType.create({ id: uuidv4() }, Fragment.empty);
 
   /* create First Option */
-  const firstOption = answerTtype.create({ id: uuidv4() }, Fragment.empty);
+  const firstOption = answerType.create({ id: uuidv4() }, Fragment.empty);
 
   /* create Second Option */
-  const secondOption = answerTtype.create({ id: uuidv4() }, Fragment.empty);
+  const secondOption = answerType.create({ id: uuidv4() }, Fragment.empty);
   tr.replaceSelectionWith(question);
   tr.replaceSelectionWith(firstOption);
   tr.setSelection(TextSelection.create(tr.doc, newPos + 1));

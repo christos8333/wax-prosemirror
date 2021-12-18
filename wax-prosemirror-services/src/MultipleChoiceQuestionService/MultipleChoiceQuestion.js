@@ -19,8 +19,9 @@ class MultipleChoiceQuestion extends Tools {
       helpers.createOptions(
         view,
         context,
-        view.state.config.schema.nodes.multiple_choice,
         view.state.config.schema.nodes.multiple_choice_container,
+        view.state.config.schema.nodes.question_node_multiple,
+        view.state.config.schema.nodes.multiple_choice,
       );
     };
   }

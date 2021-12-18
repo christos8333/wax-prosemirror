@@ -1,6 +1,6 @@
 import AbstractNodeView from '../PortalService/AbstractNodeView';
 
-export default class MultipleChoiceNodeView extends AbstractNodeView {
+export default class QuestionNodeView extends AbstractNodeView {
   constructor(
     node,
     view,
@@ -19,7 +19,7 @@ export default class MultipleChoiceNodeView extends AbstractNodeView {
   }
 
   static name() {
-    return 'multiple_choice';
+    return 'question_node_multiple';
   }
 
   update(node) {

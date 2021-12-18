@@ -2,8 +2,11 @@ import Service from '../../Service';
 import MultipleChoiceSingleCorrectQuestion from './MultipleChoiceSingleCorrectQuestion';
 import multipleChoiceSingleCorrectNode from './schema/multipleChoiceSingleCorrectNode';
 import multipleChoiceSingleCorrectContainerNode from './schema/multipleChoiceSingleCorrectContainerNode';
-import QuestionComponent from './components/QuestionComponent';
+import questionSingleNode from './schema/questionSingleNode';
+import AnswerComponent from './components/AnswerComponent';
 import MultipleChoiceSingleCorrectNodeView from './MultipleChoiceSingleCorrectNodeView';
+import QuestionMultipleSingleNodeView from './QuestionMultipleSingleNodeView';
+import QuestionComponent from '../components/QuestionComponent';
 
 class MultipleChoiceSingleCorrectQuestionService extends Service {
   register() {
@@ -21,9 +24,19 @@ class MultipleChoiceSingleCorrectQuestionService extends Service {
       multiple_choice_single_correct_container: multipleChoiceSingleCorrectContainerNode,
     });
 
+    createNode({
+      question_node_multiple_single: questionSingleNode,
+    });
+
+    addPortal({
+      nodeView: QuestionMultipleSingleNodeView,
+      component: QuestionComponent,
+      context: this.app,
+    });
+
     addPortal({
       nodeView: MultipleChoiceSingleCorrectNodeView,
-      component: QuestionComponent,
+      component: AnswerComponent,
       context: this.app,
     });
   }

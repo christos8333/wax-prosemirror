@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
 import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
-import { wrapIn } from 'prosemirror-commands';
+import { findWrapping } from 'prosemirror-transform';
 
 const createEmptyParagraph = (context, newAnswerId) => {
   if (context.view[newAnswerId]) {
@@ -46,35 +46,49 @@ const checkifEmpty = view => {
   }
 };
 
-const createOptions = (main, context, type, parentType) => {
+const createOptions = (
+  main,
+  context,
+  parentType,
+  questionType,
+  answerTtype,
+) => {
   checkifEmpty(main);
   const { state, dispatch } = main;
   /* Create Wrapping */
   const { $from, $to } = state.selection;
   const range = $from.blockRange($to);
+  const { tr } = main.state;
 
-  wrapIn(parentType, {
-    id: uuidv4(),
-  })(state, dispatch);
+  const wrapping = range && findWrapping(range, parentType, { id: uuidv4 });
+  if (!wrapping) return false;
+  tr.wrap(range, wrapping);
 
-  /* set New Selection */
-  dispatch(
-    main.state.tr.setSelection(
-      new TextSelection(main.state.tr.doc.resolve(range.$to.pos)),
-    ),
-  );
+  const map = tr.mapping.maps[0];
+  let newPos = 0;
+  map.forEach((_from, _to, _newFrom, newTo) => {
+    newPos = newTo;
+  });
+
+  tr.setSelection(TextSelection.create(tr.doc, range.$to.pos));
+
+  const question = questionType.create({ id: uuidv4() }, Fragment.empty);
 
   /* create First Option */
-  const firstOption = type.create({ id: uuidv4() }, Fragment.empty);
-  dispatch(main.state.tr.replaceSelectionWith(firstOption));
+  const firstOption = answerTtype.create({ id: uuidv4() }, Fragment.empty);
 
   /* create Second Option */
-  const secondOption = type.create({ id: uuidv4() }, Fragment.empty);
-  dispatch(main.state.tr.replaceSelectionWith(secondOption));
+  const secondOption = answerTtype.create({ id: uuidv4() }, Fragment.empty);
+  tr.replaceSelectionWith(question);
+  tr.replaceSelectionWith(firstOption);
+  tr.setSelection(TextSelection.create(tr.doc, newPos + 1));
+  tr.replaceSelectionWith(secondOption);
+  dispatch(tr);
 
   setTimeout(() => {
-    createEmptyParagraph(context, secondOption.attrs.id);
     createEmptyParagraph(context, firstOption.attrs.id);
+    createEmptyParagraph(context, secondOption.attrs.id);
+    createEmptyParagraph(context, question.attrs.id);
   }, 50);
 };
 

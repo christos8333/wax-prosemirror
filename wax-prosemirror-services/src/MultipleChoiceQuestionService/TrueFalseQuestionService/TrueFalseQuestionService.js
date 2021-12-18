@@ -1,9 +1,12 @@
 import Service from '../../Service';
 import TrueFalseQuestion from './TrueFalseQuestion';
 import trueFalseNode from './schema/trueFalseNode';
+import questionTrueFalseNode from './schema/questionTrueFalseNode';
 import trueFalseContainerNode from './schema/trueFalseContainerNode';
-import QuestionComponent from './components/QuestionComponent';
+import AnswerComponent from './components/AnswerComponent';
 import TrueFalseNodeView from './TrueFalseNodeView';
+import QuestionTrueFalseNodeView from './QuestionTrueFalseNodeView';
+import QuestionComponent from '../components/QuestionComponent';
 
 class TrueFalseQuestionService extends Service {
   register() {
@@ -19,9 +22,19 @@ class TrueFalseQuestionService extends Service {
       true_false: trueFalseNode,
     });
 
+    createNode({
+      question_node_true_false: questionTrueFalseNode,
+    });
+
+    addPortal({
+      nodeView: QuestionTrueFalseNodeView,
+      component: QuestionComponent,
+      context: this.app,
+    });
+
     addPortal({
       nodeView: TrueFalseNodeView,
-      component: QuestionComponent,
+      component: AnswerComponent,
       context: this.app,
     });
   }

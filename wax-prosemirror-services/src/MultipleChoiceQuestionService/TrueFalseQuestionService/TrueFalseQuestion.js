@@ -19,8 +19,9 @@ class TrueFalseQuestion extends Tools {
       helpers.createOptions(
         view,
         context,
-        view.state.config.schema.nodes.true_false,
         view.state.config.schema.nodes.true_false_container,
+        view.state.config.schema.nodes.question_node_true_false,
+        view.state.config.schema.nodes.true_false,
       );
     };
   }

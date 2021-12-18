@@ -1,17 +1,18 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const questionNode = {
+const questionTrueFalseNode = {
   attrs: {
-    class: { default: 'multiple-choice-question' },
+    class: { default: 'true-false-question-single' },
     id: { default: uuidv4() },
   },
   group: 'block questions',
   content: 'block*',
   defining: true,
 
+  // atom: true,
   parseDOM: [
     {
-      tag: 'div.multiple-choice-question',
+      tag: 'div.true-false-question-single',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),
@@ -23,4 +24,4 @@ const questionNode = {
   toDOM: node => ['div', node.attrs, 0],
 };
 
-export default questionNode;
+export default questionTrueFalseNode;

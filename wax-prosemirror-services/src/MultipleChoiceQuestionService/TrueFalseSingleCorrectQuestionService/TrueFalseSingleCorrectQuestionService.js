@@ -2,8 +2,11 @@ import Service from '../../Service';
 import TrueFalseSingleCorrectQuestion from './TrueFalseSingleCorrectQuestion';
 import trueFalseSingleCorrectNode from './schema/trueFalseSingleCorrectNode';
 import trueFalseSingleCorrectContainerNode from './schema/trueFalseSingleCorrectContainerNode';
-import QuestionComponent from './components/QuestionComponent';
+import questionTrueFalseSingleNode from './schema/questionTrueFalseSingleNode';
+import AnswerComponent from './components/AnswerComponent';
 import TrueFalseSingleCorrectNodeView from './TrueFalseSingleCorrectNodeView';
+import QuestionTrueFalseSingleNodeView from './QuestionTrueFalseSingleNodeView';
+import QuestionComponent from '../components/QuestionComponent';
 
 class TrueFalseSingleCorrectQuestionService extends Service {
   register() {
@@ -21,9 +24,19 @@ class TrueFalseSingleCorrectQuestionService extends Service {
       true_false_single_correct_container: trueFalseSingleCorrectContainerNode,
     });
 
+    createNode({
+      question_node_true_false_single: questionTrueFalseSingleNode,
+    });
+
+    addPortal({
+      nodeView: QuestionTrueFalseSingleNodeView,
+      component: QuestionComponent,
+      context: this.app,
+    });
+
     addPortal({
       nodeView: TrueFalseSingleCorrectNodeView,
-      component: QuestionComponent,
+      component: AnswerComponent,
       context: this.app,
     });
   }

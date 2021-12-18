@@ -1,6 +1,6 @@
 import AbstractNodeView from '../../PortalService/AbstractNodeView';
 
-export default class QuestionTrueFalseNodeView extends AbstractNodeView {
+export default class QuestionTrueFalseSingleNodeView extends AbstractNodeView {
   constructor(
     node,
     view,
@@ -19,7 +19,7 @@ export default class QuestionTrueFalseNodeView extends AbstractNodeView {
   }
 
   static name() {
-    return 'question_node_true_false';
+    return 'question_node_true_false_single';
   }
 
   update(node) {

@@ -19,8 +19,9 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
       helpers.createOptions(
         view,
         context,
-        view.state.config.schema.nodes.multiple_choice_single_correct,
         view.state.config.schema.nodes.multiple_choice_single_correct_container,
+        view.state.config.schema.nodes.question_node_multiple_single,
+        view.state.config.schema.nodes.multiple_choice_single_correct,
       );
     };
   }

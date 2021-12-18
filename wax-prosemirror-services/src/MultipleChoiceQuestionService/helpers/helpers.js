@@ -95,8 +95,9 @@ const createOptions = (
   dispatch(tr);
 
   setTimeout(() => {
-    createEmptyParagraph(context, secondOption.attrs.id);
     createEmptyParagraph(context, firstOption.attrs.id);
+    createEmptyParagraph(context, secondOption.attrs.id);
+    createEmptyParagraph(context, question.attrs.id);
   }, 50);
 };
 

@@ -1,6 +1,8 @@
 import Service from '../Service';
 import EssayQuestion from './EssayQuestion';
-import essayNode from './schema/essayNode';
+import essayContainerNode from './schema/essayContainerNode';
+import essayQuestionNode from './schema/essayQuestionNode';
+import essayFeedBackNode from './schema/essayFeedBackNode';
 import EssayComponent from './components/EssayComponent';
 import EssayNodeView from './EssayNodeView';
 
@@ -11,7 +13,15 @@ class EssayService extends Service {
     const addPortal = this.container.get('AddPortal');
 
     createNode({
-      essay: essayNode,
+      essay_container: essayContainerNode,
+    });
+
+    createNode({
+      essay_question: essayQuestionNode,
+    });
+
+    createNode({
+      essay_feedback: essayFeedBackNode,
     });
 
     addPortal({

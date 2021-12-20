@@ -10,7 +10,8 @@ const multipleChoiceNode = {
   group: 'block questions',
   content: 'block*',
   defining: true,
-
+  // selectable: true,
+  // draggable: true,
   // atom: true,
   parseDOM: [
     {

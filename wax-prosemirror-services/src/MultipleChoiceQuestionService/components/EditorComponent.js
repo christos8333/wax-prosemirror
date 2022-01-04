@@ -101,7 +101,9 @@ const EditorComponent = ({ node, view, getPos }) => {
             context.view.main.dispatch(
               context.view.main.state.tr.setSelection(
                 new TextSelection(
-                  context.view.main.state.tr.doc.resolve(getPos() + 2),
+                  context.view.main.state.tr.doc.resolve(
+                    getPos() + 2 + context.view[questionId].state.selection.to,
+                  ),
                 ),
               ),
             );

@@ -114,16 +114,16 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, questionId);
-            context.view[questionId].dispatch(
-              context.view[questionId].state.tr
-                .setMeta('outsideView', questionId)
-                .setSelection(
-                  TextSelection.between(
-                    context.view[questionId].state.selection.$anchor,
-                    context.view[questionId].state.selection.$head,
+            context.view.main.dispatch(
+              context.view.main.state.tr.setSelection(
+                new TextSelection(
+                  context.view.main.state.tr.doc.resolve(
+                    getPos() + 2 + context.view[questionId].state.selection.to,
                   ),
                 ),
+              ),
             );
+            context.updateView({}, questionId);
 
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when

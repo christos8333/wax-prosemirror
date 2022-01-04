@@ -7,9 +7,14 @@ import { EditorView } from 'prosemirror-view';
 import { EditorState, TextSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
-import { baseKeymap } from 'prosemirror-commands';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
+import {
+  splitListItem,
+  liftListItem,
+  sinkListItem,
+} from 'prosemirror-schema-list';
 import Placeholder from '../plugins/placeholder';
 
 const EditorWrapper = styled.div`
@@ -40,7 +45,6 @@ const EditorWrapper = styled.div`
     }
   }
 `;
-
 const QuestionEditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
@@ -56,7 +60,11 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   const createKeyBindings = () => {
     const keys = getKeys();
     Object.keys(baseKeymap).forEach(key => {
-      keys[key] = baseKeymap[key];
+      if (keys[key]) {
+        keys[key] = chainCommands(keys[key], baseKeymap[key]);
+      } else {
+        keys[key] = baseKeymap[key];
+      }
     });
     return keys;
   };
@@ -65,6 +73,13 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-[': liftListItem(view.state.schema.nodes.list_item),
+      'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
+      Enter: () =>
+        splitListItem(questionView.state.schema.nodes.list_item)(
+          questionView.state,
+          questionView.dispatch,
+        ),
     };
   };
 
@@ -105,14 +120,6 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
                 ),
               ),
             );
-            // context.view[activeViewId].dispatch(
-            //   context.view[activeViewId].state.tr.setSelection(
-            //     TextSelection.between(
-            //       context.view[activeViewId].state.selection.$anchor,
-            //       context.view[activeViewId].state.selection.$head,
-            //     ),
-            //   ),
-            // );
             context.updateView({}, questionId);
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when

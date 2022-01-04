@@ -115,12 +115,14 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
           mousedown: () => {
             context.updateView({}, questionId);
             context.view[context.activeViewId].dispatch(
-              context.view[context.activeViewId].state.tr.setSelection(
-                TextSelection.between(
-                  context.view[context.activeViewId].state.selection.$anchor,
-                  context.view[context.activeViewId].state.selection.$head,
+              context.view[context.activeViewId].state.tr
+                .setMeta('outsideView', questionId)
+                .setSelection(
+                  TextSelection.between(
+                    context.view[context.activeViewId].state.selection.$anchor,
+                    context.view[context.activeViewId].state.selection.$head,
+                  ),
                 ),
-              ),
             );
 
             // Kludge to prevent issues due to the fact that the whole
@@ -147,20 +149,22 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   }, []);
 
   const dispatchTransaction = tr => {
+    context.updateView({}, questionId);
+    const outerTr = context.view.main.state.tr;
+    context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
-    context.updateView({}, questionId);
 
     if (!tr.getMeta('fromOutside')) {
-      const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
         const { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
-          outerTr.step(steps[j].map(offsetMap));
+          if (steps[j].map(offsetMap) !== null)
+            outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+        context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
     }
   };
 

@@ -114,13 +114,13 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, questionId);
-            context.view[context.activeViewId].dispatch(
-              context.view[context.activeViewId].state.tr
+            context.view[questionId].dispatch(
+              context.view[questionId].state.tr
                 .setMeta('outsideView', questionId)
                 .setSelection(
                   TextSelection.between(
-                    context.view[context.activeViewId].state.selection.$anchor,
-                    context.view[context.activeViewId].state.selection.$head,
+                    context.view[questionId].state.selection.$anchor,
+                    context.view[questionId].state.selection.$head,
                   ),
                 ),
             );
@@ -149,19 +149,19 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   }, []);
 
   const dispatchTransaction = tr => {
-    context.updateView({}, questionId);
     const outerTr = context.view.main.state.tr;
     context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
     const { state, transactions } = questionView.state.applyTransaction(tr);
+    context.updateView({}, questionId);
     questionView.updateState(state);
-
     if (!tr.getMeta('fromOutside')) {
       const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
         const { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
           if (steps[j].map(offsetMap) !== null)
-            outerTr.step(steps[j].map(offsetMap));
+            if (steps[j].map(offsetMap) !== null)
+              outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
         context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));

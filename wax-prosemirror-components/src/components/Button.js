@@ -16,7 +16,7 @@ const Button = ({ view = {}, item }) => {
     return editable;
   });
 
-  const { state, dispatch } = view;
+  const { state } = view;
 
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();

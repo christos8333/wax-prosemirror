@@ -113,14 +113,16 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
         disallowedTools: ['MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
-            context.view.main.dispatch(
-              context.view.main.state.tr.setSelection(
-                new TextSelection(
-                  context.view.main.state.tr.doc.resolve(getPos() + 2),
+            context.updateView({}, questionId);
+            context.view[context.activeViewId].dispatch(
+              context.view[context.activeViewId].state.tr.setSelection(
+                TextSelection.between(
+                  context.view[context.activeViewId].state.selection.$anchor,
+                  context.view[context.activeViewId].state.selection.$head,
                 ),
               ),
             );
-            context.updateView({}, questionId);
+
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.

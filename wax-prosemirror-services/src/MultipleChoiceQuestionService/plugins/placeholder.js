@@ -9,15 +9,11 @@ export default props => {
     props: {
       decorations: state => {
         const decorations = [];
-        const isList =
-          state.doc.content.content[0].type.name !== 'orderedlist' ||
-          state.doc.content.content[0].type.name !== 'bulletlist';
         const decorate = (node, pos) => {
           if (
             node.type.isBlock &&
             node.childCount === 0 &&
-            state.doc.content.childCount === 1 &&
-            !isList
+            state.doc.content.childCount === 1
           ) {
             decorations.push(
               Decoration.node(pos, pos + node.nodeSize, {

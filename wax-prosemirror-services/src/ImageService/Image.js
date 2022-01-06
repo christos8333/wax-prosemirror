@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
+import { WaxContext } from 'wax-prosemirror-core';
+
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
@@ -37,6 +39,8 @@ class Image extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
+    const context = useContext(WaxContext);
+    console.log(context.activeViewId);
     const upload = fileUpload(
       view,
       this.config.get('fileUpload'),

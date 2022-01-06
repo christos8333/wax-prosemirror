@@ -9,6 +9,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
+import { isEmpty } from 'lodash';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -127,8 +128,11 @@ const WaxView = forwardRef((props, ref) => {
       the central point of each transaction
       */
     context.setTransaction(transaction);
-
-    if (!transaction.getMeta('outsideView')) {
+    console.log(isEmpty(transaction.getMeta('imagePlaceHolder$')));
+    if (
+      !transaction.getMeta('outsideView') ||
+      isEmpty(transaction.getMeta('imagePlaceHolder$'))
+    ) {
       context.updateView(
         {
           main: view,

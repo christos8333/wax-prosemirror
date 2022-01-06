@@ -4,7 +4,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
@@ -69,17 +69,37 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
     return keys;
   };
 
+  const pressEnter = (state, dispatch) => {
+    if (state.selection.node && state.selection.node.type.name === 'image') {
+      const { $from, to } = state.selection;
+
+      const same = $from.sharedDepth(to);
+
+      const pos = $from.before(same);
+      dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+      return true;
+    }
+    // LISTS
+    if (splitListItem(state.schema.nodes.list_item)(state)) {
+      splitListItem(state.schema.nodes.list_item)(state, dispatch);
+      return true;
+    }
+
+    return false;
+  };
+
   const getKeys = () => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
       'Mod-[': liftListItem(view.state.schema.nodes.list_item),
       'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
-      Enter: () =>
-        splitListItem(questionView.state.schema.nodes.list_item)(
-          questionView.state,
-          questionView.dispatch,
-        ),
+      //   Enter: () =>
+      //     splitListItem(questionView.state.schema.nodes.list_item)(
+      //       questionView.state,
+      //       questionView.dispatch,
+      //     ),
+      Enter: pressEnter,
     };
   };
 

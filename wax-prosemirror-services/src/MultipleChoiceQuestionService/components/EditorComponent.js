@@ -99,9 +99,9 @@ const EditorComponent = ({ node, view, getPos }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.view.main.dispatch(
-              context.view.main.state
+              context.view.main.state.tr
                 .setMeta('outsideView', questionId)
-                .tr.setSelection(
+                .setSelection(
                   new TextSelection(
                     context.view.main.state.tr.doc.resolve(
                       getPos() +

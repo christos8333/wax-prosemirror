@@ -128,11 +128,8 @@ const WaxView = forwardRef((props, ref) => {
       the central point of each transaction
       */
     context.setTransaction(transaction);
-    console.log(isEmpty(transaction.getMeta('imagePlaceHolder$')));
-    if (
-      !transaction.getMeta('outsideView') ||
-      isEmpty(transaction.getMeta('imagePlaceHolder$'))
-    ) {
+
+    if (!transaction.getMeta('outsideView')) {
       context.updateView(
         {
           main: view,

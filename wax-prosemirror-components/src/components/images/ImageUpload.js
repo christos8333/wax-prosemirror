@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
 import MenuButton from '../../ui/buttons/MenuButton';
 import insertImage from './Upload';
@@ -12,17 +13,32 @@ const Wrapper = styled.div`
 `;
 
 const ImageUpload = ({ item, fileUpload, view }) => {
+  const context = useContext(WaxContext);
   const {
     app,
     activeView,
+    activeViewId,
     view: { main },
-  } = useContext(WaxContext);
+  } = context;
 
   const inputRef = useRef(null);
   const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
   const imageServiceConfig = app.config.get('config.ImageService');
 
   const handleMouseDown = () => {
+    if (activeViewId !== 'main') {
+      context.view.main.dispatch(
+        context.view.main.state.tr
+          .setMeta('outsideView', activeViewId)
+          .setSelection(
+            new TextSelection(
+              context.view.main.state.tr.doc.resolve(
+                4 + context.view[activeViewId].state.selection.to,
+              ),
+            ),
+          ),
+      );
+    }
     if (imageServiceConfig && imageServiceConfig.handleAssetManager) {
       insertThroughFileMAnager();
     } else {
@@ -51,7 +67,10 @@ const ImageUpload = ({ item, fileUpload, view }) => {
             active={false}
             disabled={isDisabled}
             iconName={item.icon}
-            onMouseDown={handleMouseDown}
+            onMouseDown={e => {
+              e.preventDefault();
+              handleMouseDown();
+            }}
             title="Upload Image"
           />
 

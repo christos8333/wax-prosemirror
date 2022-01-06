@@ -115,13 +115,17 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
           mousedown: () => {
             context.updateView({}, questionId);
             context.view.main.dispatch(
-              context.view.main.state.tr.setSelection(
-                new TextSelection(
-                  context.view.main.state.tr.doc.resolve(
-                    getPos() + 2 + context.view[questionId].state.selection.to,
+              context.view.main.state.tr
+                .setMeta('outsideView', questionId)
+                .setSelection(
+                  new TextSelection(
+                    context.view.main.state.tr.doc.resolve(
+                      getPos() +
+                        2 +
+                        context.view[questionId].state.selection.to,
+                    ),
                   ),
                 ),
-              ),
             );
             context.updateView({}, questionId);
 

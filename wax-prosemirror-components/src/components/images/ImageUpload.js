@@ -3,6 +3,7 @@ import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../../ui/buttons/MenuButton';
 import insertImage from './Upload';
 
@@ -27,13 +28,22 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
   const handleMouseDown = () => {
     if (activeViewId !== 'main') {
+      const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+      let nodeFound = '';
+      allNodes.forEach(node => {
+        if (node.node.attrs.id === activeViewId) {
+          nodeFound = node;
+        }
+      });
       context.view.main.dispatch(
         context.view.main.state.tr
           .setMeta('outsideView', activeViewId)
           .setSelection(
             new TextSelection(
               context.view.main.state.tr.doc.resolve(
-                4 + context.view[activeViewId].state.selection.to,
+                nodeFound.pos +
+                  2 +
+                  context.view[activeViewId].state.selection.to,
               ),
             ),
           ),

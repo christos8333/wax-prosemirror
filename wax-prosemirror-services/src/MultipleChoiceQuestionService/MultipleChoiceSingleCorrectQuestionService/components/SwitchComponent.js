@@ -3,9 +3,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { NodeSelection } from 'prosemirror-state';
 import styled from 'styled-components';
 import Switch from '../../components/Switch';
-import { NodeSelection } from 'prosemirror-state';
 
 const StyledSwitch = styled(Switch)`
   display: flex;

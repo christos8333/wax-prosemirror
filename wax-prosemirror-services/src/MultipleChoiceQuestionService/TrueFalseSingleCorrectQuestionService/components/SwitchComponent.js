@@ -39,7 +39,7 @@ const CustomSwitch = ({ node, getPos }) => {
         NodeSelection.create(main.state.doc, getPos()),
       ),
     );
-    const parentContainer = findParentOfType(
+    const parentContainer = DocumentHelpers.findParentOfType(
       main.state,
       main.state.config.schema.nodes.true_false_single_correct_container,
     );
@@ -103,15 +103,3 @@ const getNodes = view => {
 };
 
 export default CustomSwitch;
-
-const findParentOfType = (state, nodeType) => {
-  let nodeFound = '';
-  const predicate = node => node.type === nodeType;
-  for (let i = state.selection.$from.depth; i > 0; i -= 1) {
-    const node = state.selection.$from.node(i);
-    if (predicate(node)) {
-      nodeFound = node;
-    }
-  }
-  return nodeFound;
-};

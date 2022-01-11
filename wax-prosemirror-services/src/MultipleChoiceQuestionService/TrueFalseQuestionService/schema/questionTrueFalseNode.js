@@ -6,7 +6,7 @@ const questionTrueFalseNode = {
     id: { default: uuidv4() },
   },
   group: 'block questions',
-  content: 'block*',
+  content: 'block* list_item*',
   defining: true,
 
   // atom: true,

@@ -183,9 +183,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
       for (let i = 0; i < transactions.length; i++) {
         const { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
-          if (steps[j].map(offsetMap) !== null)
-            if (steps[j].map(offsetMap) !== null)
-              outerTr.step(steps[j].map(offsetMap));
+          outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
         context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));

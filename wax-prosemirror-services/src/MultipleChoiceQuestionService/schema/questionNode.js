@@ -6,7 +6,7 @@ const questionNode = {
     id: { default: uuidv4() },
   },
   group: 'block questions',
-  content: 'block* list_item*',
+  content: 'block* list_item?',
   defining: true,
 
   parseDOM: [

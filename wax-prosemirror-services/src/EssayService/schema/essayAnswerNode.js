@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const essayQuestionNode = {
+const essayAnswerNode = {
   attrs: {
-    class: { default: 'essay-question' },
+    class: { default: 'essay-answer' },
     id: { default: uuidv4() },
   },
   group: 'block questions',
@@ -11,7 +11,7 @@ const essayQuestionNode = {
 
   parseDOM: [
     {
-      tag: 'div.essay-question',
+      tag: 'div.essay-answer',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),
@@ -23,4 +23,4 @@ const essayQuestionNode = {
   toDOM: node => ['div', node.attrs, 0],
 };
 
-export default essayQuestionNode;
+export default essayAnswerNode;

@@ -4,7 +4,9 @@ import essayContainerNode from './schema/essayContainerNode';
 import essayQuestionNode from './schema/essayQuestionNode';
 import essayAnswerNode from './schema/essayAnswerNode';
 import EssayQuestionComponent from './components/EssayQuestionComponent';
-import EssayNodeView from './EssayNodeView';
+import EssayAnswerComponent from './components/EssayAnswerComponent';
+import EssayQuestionNodeView from './EssayQuestionNodeView';
+import EssayAnswerNodeView from './EssayAnswerNodeView';
 
 class EssayService extends Service {
   register() {
@@ -25,8 +27,14 @@ class EssayService extends Service {
     });
 
     addPortal({
-      nodeView: EssayNodeView,
+      nodeView: EssayQuestionNodeView,
       component: EssayQuestionComponent,
+      context: this.app,
+    });
+
+    addPortal({
+      nodeView: EssayAnswerNodeView,
+      component: EssayAnswerComponent,
       context: this.app,
     });
   }

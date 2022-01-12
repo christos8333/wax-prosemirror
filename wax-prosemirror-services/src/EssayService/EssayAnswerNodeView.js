@@ -1,6 +1,6 @@
 import AbstractNodeView from '../PortalService/AbstractNodeView';
 
-export default class EssayNodeView extends AbstractNodeView {
+export default class EssayAnswerNodeView extends AbstractNodeView {
   constructor(
     node,
     view,

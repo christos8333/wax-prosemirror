@@ -19,7 +19,7 @@ export default class EssayAnswerNodeView extends AbstractNodeView {
   }
 
   static name() {
-    return 'essay';
+    return 'essay_answer';
   }
 
   update(node) {

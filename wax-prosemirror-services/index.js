@@ -76,3 +76,4 @@ export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/C
 export { default as MultipleChoiceToolGroupService } from './src/WaxToolGroups/MultipleChoiceToolGroupService/MultipleChoiceToolGroupService';
 export { default as FillTheGapToolGroupService } from './src/WaxToolGroups/FillTheGapToolGroupService/FillTheGapToolGroupService';
 export { default as MultipleDropDownToolGroupService } from './src/WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';
+export { default as EssayToolGroupService } from './src/WaxToolGroups/EssayToolGroupService/EssayToolGroupService';

@@ -1,7 +1,21 @@
 import { injectable } from 'inversify';
-import { wrapIn } from 'prosemirror-commands';
 import { v4 as uuidv4 } from 'uuid';
+import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../lib/Tools';
+
+const checkifEmpty = view => {
+  const { state } = view;
+  const { from, to } = state.selection;
+  state.doc.nodesBetween(from, to, (node, pos) => {
+    if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
+  });
+  if (state.selection.constructor.name === 'GapCursor') {
+    Commands.simulateKey(view, 13, 'Enter');
+    setTimeout(() => {
+      view.focus();
+    });
+  }
+};
 
 @injectable()
 class EssayQuestion extends Tools {
@@ -12,9 +26,9 @@ class EssayQuestion extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.essay, {
-        id: uuidv4(),
-      })(state, dispatch);
+      console.log('essay');
+      //checkifEmpty(main);
+      //const { state, dispatch } = main;
     };
   }
 

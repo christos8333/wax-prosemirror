@@ -84,6 +84,8 @@ const createOptions = (main, context, parentType, questionType, answerType) => {
     createEmptyParagraph(context, secondOption.attrs.id);
     createEmptyParagraph(context, question.attrs.id);
   }, 50);
+
+  return true;
 };
 
 export default {

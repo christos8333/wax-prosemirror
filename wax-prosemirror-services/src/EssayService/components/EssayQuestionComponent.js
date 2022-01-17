@@ -4,13 +4,18 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
-import { baseKeymap } from 'prosemirror-commands';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
-import Placeholder from '../plugins/placeholder';
+import {
+  splitListItem,
+  liftListItem,
+  sinkListItem,
+} from 'prosemirror-schema-list';
+import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
 
 const EditorWrapper = styled.div`
   border: none;
@@ -40,12 +45,11 @@ const EditorWrapper = styled.div`
     }
   }
 `;
-
-const EditorComponent = ({ node, view, getPos }) => {
+const EssayQuestionComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
-  let questionView;
+  let essayQuestionView;
   const questionId = node.attrs.id;
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
@@ -56,15 +60,41 @@ const EditorComponent = ({ node, view, getPos }) => {
   const createKeyBindings = () => {
     const keys = getKeys();
     Object.keys(baseKeymap).forEach(key => {
-      keys[key] = baseKeymap[key];
+      if (keys[key]) {
+        keys[key] = chainCommands(keys[key], baseKeymap[key]);
+      } else {
+        keys[key] = baseKeymap[key];
+      }
     });
     return keys;
+  };
+
+  const pressEnter = (state, dispatch) => {
+    if (state.selection.node && state.selection.node.type.name === 'image') {
+      const { $from, to } = state.selection;
+
+      const same = $from.sharedDepth(to);
+
+      const pos = $from.before(same);
+      dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+      return true;
+    }
+    // LISTS
+    if (splitListItem(state.schema.nodes.list_item)(state)) {
+      splitListItem(state.schema.nodes.list_item)(state, dispatch);
+      return true;
+    }
+
+    return false;
   };
 
   const getKeys = () => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-[': liftListItem(view.state.schema.nodes.list_item),
+      'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
+      Enter: pressEnter,
     };
   };
 
@@ -78,12 +108,12 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your answer'),
+    createPlaceholder('Type your essay'),
     ...plugins,
   ]);
 
   useEffect(() => {
-    questionView = new EditorView(
+    essayQuestionView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -95,9 +125,10 @@ const EditorComponent = ({ node, view, getPos }) => {
         }),
         // This is the magic part
         dispatchTransaction,
-        disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
+        disallowedTools: ['MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
+            context.updateView({}, questionId);
             context.view.main.dispatch(
               context.view.main.state.tr
                 .setMeta('outsideView', questionId)
@@ -111,20 +142,16 @@ const EditorComponent = ({ node, view, getPos }) => {
                   ),
                 ),
             );
-            // context.view[activeViewId].dispatch(
-            //   context.view[activeViewId].state.tr.setSelection(
-            //     TextSelection.between(
-            //       context.view[activeViewId].state.selection.$anchor,
-            //       context.view[activeViewId].state.selection.$head,
-            //     ),
-            //   ),
-            // );
             context.updateView({}, questionId);
+
             // Kludge to prevent issues due to the fact that the whole
             // footnote is node-selected (and thus DOM-selected) when
             // the parent editor is focused.
-            if (questionView.hasFocus()) questionView.focus();
+            if (essayQuestionView.hasFocus()) essayQuestionView.focus();
           },
+        },
+        handleClickOn: () => {
+          context.updateView({}, questionId);
         },
 
         attributes: {
@@ -136,20 +163,22 @@ const EditorComponent = ({ node, view, getPos }) => {
     // Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: questionView,
+        [questionId]: essayQuestionView,
       },
       questionId,
     );
-    if (questionView.hasFocus()) questionView.focus();
+    if (essayQuestionView.hasFocus()) essayQuestionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
-    const { state, transactions } = questionView.state.applyTransaction(tr);
-    questionView.updateState(state);
+    const outerTr = context.view.main.state.tr;
+    context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
+    const { state, transactions } = essayQuestionView.state.applyTransaction(
+      tr,
+    );
     context.updateView({}, questionId);
-
+    essayQuestionView.updateState(state);
     if (!tr.getMeta('fromOutside')) {
-      const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
         const { steps } = transactions[i];
@@ -157,7 +186,7 @@ const EditorComponent = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+        context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
     }
   };
 
@@ -168,4 +197,4 @@ const EditorComponent = ({ node, view, getPos }) => {
   );
 };
 
-export default EditorComponent;
+export default EssayQuestionComponent;

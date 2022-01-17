@@ -14796,10 +14796,10 @@ prosemirror-schema-basic@^1.0.0:
   dependencies:
     prosemirror-model "^1.2.0"
 
-prosemirror-schema-list@1.1.4, prosemirror-schema-list@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/prosemirror-schema-list/-/prosemirror-schema-list-1.1.4.tgz#471f9caf2d2bed93641d2e490434c0d2d4330df1"
-  integrity sha512-pNTuZflacFOBlxrTcWSdWhjoB8BaucwfJVp/gJNxztOwaN3wQiC65axclXyplf6TKgXD/EkWfS/QAov3/Znadw==
+prosemirror-schema-list@1.1.6, prosemirror-schema-list@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/prosemirror-schema-list/-/prosemirror-schema-list-1.1.6.tgz#c3e13fe2f74750e4a53ff88d798dc0c4ccca6707"
+  integrity sha512-aFGEdaCWmJzouZ8DwedmvSsL50JpRkqhQ6tcpThwJONVVmCgI36LJHtoQ4VGZbusMavaBhXXr33zyD2IVsTlkw==
   dependencies:
     prosemirror-model "^1.0.0"
     prosemirror-transform "^1.0.0"

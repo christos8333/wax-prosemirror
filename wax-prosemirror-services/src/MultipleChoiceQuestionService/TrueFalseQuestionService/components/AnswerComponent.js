@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { TextSelection } from 'prosemirror-state';
+import { TextSelection, NodeSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
@@ -80,13 +81,23 @@ export default ({ node, view, getPos }) => {
   });
 
   const removeOption = () => {
-    main.state.doc.nodesBetween(getPos(), getPos() + 1, (sinlgeNode, pos) => {
-      if (sinlgeNode.attrs.id === node.attrs.id) {
-        main.dispatch(
-          main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
-        );
-      }
-    });
+    const answersCount = findAnswerCount();
+    if (answersCount.count >= 1) {
+      main.state.doc.nodesBetween(getPos(), getPos() + 1, (sinlgeNode, pos) => {
+        if (sinlgeNode.attrs.id === node.attrs.id) {
+          main.dispatch(
+            main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
+          );
+        }
+      });
+    } else {
+      main.dispatch(
+        main.state.tr.setSelection(
+          NodeSelection.create(main.state.doc, answersCount.parentPosition),
+        ),
+      );
+      main.dispatch(main.state.tr.deleteSelection());
+    }
   };
 
   const addOption = nodeId => {
@@ -120,9 +131,39 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const findAnswerCount = () => {
+    main.dispatch(
+      main.state.tr.setSelection(
+        NodeSelection.create(main.state.doc, getPos()),
+      ),
+    );
+    const parentContainer = DocumentHelpers.findParentOfType(
+      main.state,
+      main.state.config.schema.nodes.true_false_container,
+    );
+
+    let parentPosition = 0;
+
+    main.state.doc.descendants((parentNode, parentPos) => {
+      if (
+        parentNode.type.name === 'true_false_container' &&
+        parentNode.attrs.id === parentContainer.attrs.id
+      ) {
+        parentPosition = parentPos;
+      }
+    });
+
+    let count = -1;
+    parentContainer.descendants((element, position) => {
+      if (element.type.name === 'true_false') {
+        count += 1;
+      }
+    });
+
+    return { count, parentPosition, parentContainer };
+  };
+
   const readOnly = !isEditable;
-  const showAddIcon = true;
-  const showRemoveIcon = true;
 
   return (
     <Wrapper>
@@ -139,13 +180,13 @@ export default ({ node, view, getPos }) => {
         </QuestionWrapper>
       </QuestionControlsWrapper>
       <IconsWrapper>
-        {showAddIcon && !readOnly && (
+        {!readOnly && (
           <Button
             icon={<PlusSquareOutlined title="Add Option" />}
             onClick={() => addOption(node.attrs.id)}
           />
         )}
-        {showRemoveIcon && !readOnly && (
+        {!readOnly && (
           <Button
             icon={
               <DeleteOutlined onClick={removeOption} title="Delete Option" />

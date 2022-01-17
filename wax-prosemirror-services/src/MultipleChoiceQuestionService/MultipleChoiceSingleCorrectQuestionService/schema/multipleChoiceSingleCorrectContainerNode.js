@@ -10,7 +10,7 @@ const multipleChoiceSingleCorrectContainerNode = {
   atom: true,
   selectable: true,
   draggable: true,
-  content: 'block+',
+  content: 'block*',
   parseDOM: [
     {
       tag: 'div.multiple-choice-single-correct',

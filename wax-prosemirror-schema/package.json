@@ -13,7 +13,7 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
-    "prosemirror-schema-list": "^1.1.4",
+    "prosemirror-schema-list": "^1.1.6",
     "prosemirror-tables": "^1.1.1",
     "wax-prosemirror-utilities": "^0.2.3"
   }

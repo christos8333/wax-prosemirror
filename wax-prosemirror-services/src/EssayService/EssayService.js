@@ -1,8 +1,12 @@
 import Service from '../Service';
 import EssayQuestion from './EssayQuestion';
-import essayNode from './schema/essayNode';
-import EssayComponent from './components/EssayComponent';
-import EssayNodeView from './EssayNodeView';
+import essayContainerNode from './schema/essayContainerNode';
+import essayQuestionNode from './schema/essayQuestionNode';
+import essayAnswerNode from './schema/essayAnswerNode';
+import EssayQuestionComponent from './components/EssayQuestionComponent';
+import EssayAnswerComponent from './components/EssayAnswerComponent';
+import EssayQuestionNodeView from './EssayQuestionNodeView';
+import EssayAnswerNodeView from './EssayAnswerNodeView';
 
 class EssayService extends Service {
   register() {
@@ -11,12 +15,26 @@ class EssayService extends Service {
     const addPortal = this.container.get('AddPortal');
 
     createNode({
-      essay: essayNode,
+      essay_container: essayContainerNode,
+    });
+
+    createNode({
+      essay_question: essayQuestionNode,
+    });
+
+    createNode({
+      essay_answer: essayAnswerNode,
     });
 
     addPortal({
-      nodeView: EssayNodeView,
-      component: EssayComponent,
+      nodeView: EssayQuestionNodeView,
+      component: EssayQuestionComponent,
+      context: this.app,
+    });
+
+    addPortal({
+      nodeView: EssayAnswerNodeView,
+      component: EssayAnswerComponent,
       context: this.app,
     });
   }

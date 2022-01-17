@@ -3,9 +3,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { NodeSelection } from 'prosemirror-state';
 import styled from 'styled-components';
 import Switch from '../../components/Switch';
-import { NodeSelection } from 'prosemirror-state';
 
 const StyledSwitch = styled(Switch)`
   display: flex;
@@ -39,7 +39,7 @@ const CustomSwitch = ({ node, getPos }) => {
         NodeSelection.create(main.state.doc, getPos()),
       ),
     );
-    const parentContainer = findParentOfType(
+    const parentContainer = DocumentHelpers.findParentOfType(
       main.state,
       main.state.config.schema.nodes.multiple_choice_single_correct_container,
     );
@@ -103,15 +103,3 @@ const getNodes = view => {
 };
 
 export default CustomSwitch;
-
-const findParentOfType = (state, nodeType) => {
-  let nodeFound = '';
-  const predicate = node => node.type === nodeType;
-  for (let i = state.selection.$from.depth; i > 0; i -= 1) {
-    const node = state.selection.$from.node(i);
-    if (predicate(node)) {
-      nodeFound = node;
-    }
-  }
-  return nodeFound;
-};

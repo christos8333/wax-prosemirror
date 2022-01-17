@@ -256,6 +256,18 @@ const escapeRegExp = string => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
+const findParentOfType = (state, nodeType) => {
+  let nodeFound = '';
+  const predicate = node => node.type === nodeType;
+  for (let i = state.selection.$from.depth; i > 0; i -= 1) {
+    const node = state.selection.$from.node(i);
+    if (predicate(node)) {
+      nodeFound = node;
+    }
+  }
+  return nodeFound;
+};
+
 export default {
   findMark,
   findBlockNodes,
@@ -269,4 +281,5 @@ export default {
   getCommentsTracksCount,
   getTrackBlockNodesCount,
   findMatches,
+  findParentOfType,
 };

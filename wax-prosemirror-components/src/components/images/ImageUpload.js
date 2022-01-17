@@ -1,7 +1,9 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import MenuButton from '../../ui/buttons/MenuButton';
 import insertImage from './Upload';
 
@@ -12,17 +14,41 @@ const Wrapper = styled.div`
 `;
 
 const ImageUpload = ({ item, fileUpload, view }) => {
+  const context = useContext(WaxContext);
   const {
     app,
     activeView,
+    activeViewId,
     view: { main },
-  } = useContext(WaxContext);
+  } = context;
 
   const inputRef = useRef(null);
   const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
   const imageServiceConfig = app.config.get('config.ImageService');
 
   const handleMouseDown = () => {
+    if (activeViewId !== 'main') {
+      const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+      let nodeFound = '';
+      allNodes.forEach(node => {
+        if (node.node.attrs.id === activeViewId) {
+          nodeFound = node;
+        }
+      });
+      context.view.main.dispatch(
+        context.view.main.state.tr
+          .setMeta('outsideView', activeViewId)
+          .setSelection(
+            new TextSelection(
+              context.view.main.state.tr.doc.resolve(
+                nodeFound.pos +
+                  2 +
+                  context.view[activeViewId].state.selection.to,
+              ),
+            ),
+          ),
+      );
+    }
     if (imageServiceConfig && imageServiceConfig.handleAssetManager) {
       insertThroughFileMAnager();
     } else {
@@ -51,7 +77,10 @@ const ImageUpload = ({ item, fileUpload, view }) => {
             active={false}
             disabled={isDisabled}
             iconName={item.icon}
-            onMouseDown={handleMouseDown}
+            onMouseDown={e => {
+              e.preventDefault();
+              handleMouseDown();
+            }}
             title="Upload Image"
           />
 
@@ -64,7 +93,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
         </label>
       </Wrapper>
     ),
-    [isDisabled],
+    [isDisabled, activeViewId],
   );
 
   return ImageUploadComponent;

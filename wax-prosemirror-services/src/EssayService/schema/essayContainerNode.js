@@ -1,9 +1,10 @@
-const essayNode = {
+const essayContainerNode = {
   attrs: {
-    class: { default: 'essay' },
     id: { default: '' },
+    class: { default: 'essay' },
   },
   group: 'block questions',
+  atom: true,
   selectable: true,
   draggable: true,
   content: 'block+',
@@ -23,4 +24,4 @@ const essayNode = {
   },
 };
 
-export default essayNode;
+export default essayContainerNode;

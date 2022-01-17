@@ -9,6 +9,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
+import { isEmpty } from 'lodash';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';

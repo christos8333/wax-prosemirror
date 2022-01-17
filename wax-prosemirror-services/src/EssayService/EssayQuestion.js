@@ -1,6 +1,9 @@
+import React from 'react';
+import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { v4 as uuidv4 } from 'uuid';
 import { Commands } from 'wax-prosemirror-utilities';
+import ToolBarBtn from './components/ToolBarBtn';
 import Tools from '../lib/Tools';
 
 const checkifEmpty = view => {
@@ -25,9 +28,8 @@ class EssayQuestion extends Tools {
   label = 'Essay';
 
   get run() {
-    return (state, dispatch) => {
-      console.log('essay');
-      //checkifEmpty(main);
+    return (main, dispatch) => {
+      checkifEmpty(main);
       //const { state, dispatch } = main;
     };
   }
@@ -52,6 +54,14 @@ class EssayQuestion extends Tools {
 
   get enable() {
     return state => {};
+  }
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+    // eslint-disable-next-line no-underscore-dangle
+    return this._isDisplayed ? (
+      <ToolBarBtn item={this.toJSON()} key={uuidv4()} view={view} />
+    ) : null;
   }
 }
 

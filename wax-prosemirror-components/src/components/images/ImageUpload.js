@@ -93,7 +93,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
         </label>
       </Wrapper>
     ),
-    [isDisabled],
+    [isDisabled, activeViewId],
   );
 
   return ImageUploadComponent;

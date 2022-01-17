@@ -5,12 +5,12 @@ import MenuButton from '../ui/buttons/MenuButton';
 
 const Button = ({ view = {}, item }) => {
   const { active, icon, label, run, select, title } = item;
-
+  const context = useContext(WaxContext);
   const {
     view: { main },
     activeViewId,
     activeView,
-  } = useContext(WaxContext);
+  } = context;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -44,7 +44,7 @@ const Button = ({ view = {}, item }) => {
         title={title}
       />
     ),
-    [isActive, isDisabled],
+    [isActive, isDisabled, activeViewId],
   );
 
   return MenuButtonComponent;

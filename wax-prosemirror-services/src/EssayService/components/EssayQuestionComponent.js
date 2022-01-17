@@ -15,7 +15,7 @@ import {
   liftListItem,
   sinkListItem,
 } from 'prosemirror-schema-list';
-import Placeholder from '../plugins/placeholder';
+import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
 
 const EditorWrapper = styled.div`
   border: none;
@@ -149,6 +149,9 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
             // the parent editor is focused.
             if (essayQuestionView.hasFocus()) essayQuestionView.focus();
           },
+        },
+        handleClickOn: () => {
+          context.updateView({}, questionId);
         },
 
         attributes: {

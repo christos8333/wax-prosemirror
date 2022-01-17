@@ -96,10 +96,10 @@ class EssayQuestion extends Tools {
       tr.replaceSelectionWith(essayAnswer);
       dispatch(tr);
 
-      //  setTimeout(() => {
-      //    createEmptyParagraph(context, essayQuestion.attrs.id);
-      //    createEmptyParagraph(context, essayAnswer.attrs.id);
-      //  }, 50);
+      setTimeout(() => {
+        createEmptyParagraph(context, essayAnswer.attrs.id);
+        createEmptyParagraph(context, essayQuestion.attrs.id);
+      }, 50);
     };
   }
 

@@ -15,7 +15,7 @@ import {
   liftListItem,
   sinkListItem,
 } from 'prosemirror-schema-list';
-import Placeholder from '../plugins/placeholder';
+import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
 
 const EditorWrapper = styled.div`
   border: none;

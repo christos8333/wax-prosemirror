@@ -173,12 +173,12 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   }, []);
 
   const dispatchTransaction = tr => {
-    const outerTr = context.view.main.state.tr;
-    context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
     const { state, transactions } = questionView.state.applyTransaction(tr);
-    context.updateView({}, questionId);
     questionView.updateState(state);
+    context.updateView({}, questionId);
+
     if (!tr.getMeta('fromOutside')) {
+      const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
         const { steps } = transactions[i];
@@ -186,7 +186,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
+        view.dispatch(outerTr.setMeta('outsideView', questionId));
     }
   };
 

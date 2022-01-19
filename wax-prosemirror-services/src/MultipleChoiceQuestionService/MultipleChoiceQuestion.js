@@ -28,10 +28,19 @@ class MultipleChoiceQuestion extends Tools {
 
   get active() {
     return state => {
-      return Commands.isParentOfType(
-        state,
-        state.config.schema.nodes.multiple_choice,
-      );
+      if (
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.multiple_choice,
+        ) ||
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.question_node_multiple,
+        )
+      ) {
+        return true;
+      }
+      return false;
     };
   }
 

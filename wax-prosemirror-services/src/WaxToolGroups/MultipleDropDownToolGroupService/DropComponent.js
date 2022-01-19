@@ -73,9 +73,12 @@ const DropComponent = ({ title, view, tools }) => {
   ];
 
   useEffect(() => {
+    setLabel('Multiple Question Types');
     dropDownOptions.forEach((option, i) => {
       if (option.item.active(main.state)) {
-        setLabel(option.label);
+        setTimeout(() => {
+          setLabel(option.label);
+        });
       }
     });
   }, [activeViewId]);

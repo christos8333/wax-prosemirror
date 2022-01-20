@@ -28,10 +28,16 @@ class TrueFalseQuestion extends Tools {
 
   get active() {
     return state => {
-      return Commands.isParentOfType(
-        state,
-        state.config.schema.nodes.true_false,
-      );
+      if (
+        Commands.isParentOfType(state, state.config.schema.nodes.true_false) ||
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.question_node_true_false,
+        )
+      ) {
+        return true;
+      }
+      return false;
     };
   }
 

@@ -28,10 +28,19 @@ class MultipleChoiceSingleCorrectQuestion extends Tools {
 
   get active() {
     return state => {
-      return Commands.isParentOfType(
-        state,
-        state.config.schema.nodes.multiple_choice_single_correct,
-      );
+      if (
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.multiple_choice_single_correct,
+        ) ||
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.question_node_multiple_single,
+        )
+      ) {
+        return true;
+      }
+      return false;
     };
   }
 

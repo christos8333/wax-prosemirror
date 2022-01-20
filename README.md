@@ -9,20 +9,16 @@
 This library is being developed by [Cabbage Tree Labs] (https://www.cabbagetreelabs.org).
 Wax Editor is built on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-## [Demo of Editoria's Edtior.](http://wax-demo.coko.foundation/)
+## [Various Demos.](http://wax-demo.coko.foundation/)
 
 
 ## Get up and running
 
 Run a local version of the Editoria's editor
 
-1.  `git clone git@gitlab.coko.foundation:wax/wax-prosemirror.git`
+1.  `yarn with node >= 12`
 
-2.  `yarn with node >= 12`
-
-3.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
-
-4.  `yarn storybook` Will bring up storybook for components
+2.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 

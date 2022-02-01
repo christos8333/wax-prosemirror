@@ -282,7 +282,6 @@ const EditoriaLayout = ({ editor }) => {
                   </CommentTrackToolsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
-                <WaxOverlays />
               </WaxSurfaceScroll>
 
               {hasNotes && (
@@ -298,7 +297,7 @@ const EditoriaLayout = ({ editor }) => {
             </PanelGroup>
           </EditorArea>
         </Main>
-
+        <WaxOverlays />
         <WaxBottomRightInfo>
           <InfoContainer id="info-container">
             <BottomRightInfo />

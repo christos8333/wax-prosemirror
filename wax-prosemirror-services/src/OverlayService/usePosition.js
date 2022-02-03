@@ -33,8 +33,8 @@ export default options => {
     const WaxSurface = focusedView.dom.getBoundingClientRect();
     const start = focusedView.coordsAtPos(from);
     const end = focusedView.coordsAtPos(to);
-    const left = end.left - WaxSurface.left + 5;
-    const top = end.top - WaxSurface.top + 20;
+    const { left } = end;
+    const top = end.top + 20;
     return {
       top,
       left,

@@ -27,8 +27,15 @@ const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
   const {
+    view,
     view: { main },
   } = context;
+
+  const isEditable = view.main.props.editable(editable => {
+    return editable;
+  });
+
+  console.log(isEditable);
 
   useEffect(() => {
     const allNodes = getNodes(main);
@@ -56,7 +63,7 @@ const CustomSwitch = ({ node, getPos }) => {
 
   return (
     <StyledSwitch
-      checked={checked}
+      checked={isEditable ? checked : false}
       checkedChildren="YES"
       label="Correct?"
       labelPosition="left"

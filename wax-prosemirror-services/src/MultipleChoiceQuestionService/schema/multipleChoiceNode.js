@@ -5,6 +5,7 @@ const multipleChoiceNode = {
     class: { default: 'multiple-choice-option' },
     id: { default: uuidv4() },
     correct: { default: false },
+    correctAnswer: { default: false },
     feedback: { default: '' },
   },
   group: 'block questions',

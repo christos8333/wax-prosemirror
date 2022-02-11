@@ -36,6 +36,7 @@ const Wax = forwardRef((props, ref) => {
     autoFocus,
     browserSpellCheck,
     className,
+    customValues,
     debug,
     fileUpload,
     layout,
@@ -96,6 +97,7 @@ const Wax = forwardRef((props, ref) => {
         <WaxView
           autoFocus={autoFocus}
           browserSpellCheck={browserSpellCheck}
+          customValues={customValues}
           debug={debug}
           fileUpload={fileUpload}
           onChange={finalOnChange || (v => true)}

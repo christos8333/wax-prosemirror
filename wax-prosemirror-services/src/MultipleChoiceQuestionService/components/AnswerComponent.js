@@ -176,7 +176,9 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          <FeedbackComponent getPos={getPos} node={node} view={view} />
+          {!readOnly && (
+            <FeedbackComponent getPos={getPos} node={node} view={view} />
+          )}
         </QuestionWrapper>
       </QuestionControlsWrapper>
       <IconsWrapper>

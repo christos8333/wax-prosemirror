@@ -179,7 +179,7 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          {customProps.showFeedBack && (
+          {!(readOnly && !customProps.showFeedBack) && (
             <FeedbackComponent getPos={getPos} node={node} view={view} />
           )}
         </QuestionWrapper>

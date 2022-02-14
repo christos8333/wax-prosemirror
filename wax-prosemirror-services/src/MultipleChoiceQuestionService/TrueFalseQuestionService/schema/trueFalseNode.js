@@ -5,6 +5,7 @@ const trueFalseNode = {
     class: { default: 'true-false-option' },
     id: { default: uuidv4() },
     correct: { default: false },
+    answer: { default: false },
     feedback: { default: '' },
   },
   group: 'block questions',
@@ -19,6 +20,7 @@ const trueFalseNode = {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
+          answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
           feedback: dom.getAttribute('feedback'),
         };
       },

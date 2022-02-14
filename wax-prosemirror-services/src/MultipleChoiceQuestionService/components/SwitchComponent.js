@@ -62,7 +62,7 @@ const CustomSwitch = ({ node, getPos }) => {
           main.dispatch(
             main.state.tr.setNodeMarkup(getPos(), undefined, {
               ...singleNode.node.attrs,
-              correctAnswer: !checkedAnswerMode,
+              answer: !checkedAnswerMode,
             }),
           );
         }

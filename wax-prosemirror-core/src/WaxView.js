@@ -70,6 +70,7 @@ const WaxView = forwardRef((props, ref) => {
           { mount: node },
           {
             editable: () => !readonly,
+            customValues,
             state: EditorState.create(options),
             dispatchTransaction,
             disallowedTools: [],

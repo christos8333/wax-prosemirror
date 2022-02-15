@@ -26,9 +26,16 @@ const StyledSwitch = styled(Switch)`
 const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
+  const [checkedAnswerMode, setCheckedAnswerMode] = useState(false);
+
   const {
+    view,
     view: { main },
   } = context;
+
+  const isEditable = view.main.props.editable(editable => {
+    return editable;
+  });
 
   useEffect(() => {
     const allNodes = getNodes(main);
@@ -41,13 +48,17 @@ const CustomSwitch = ({ node, getPos }) => {
 
   const handleChange = () => {
     setChecked(!checked);
+    setCheckedAnswerMode(!checkedAnswerMode);
+    const key = isEditable ? 'correct' : 'answer';
+    const value = isEditable ? !checked : !checkedAnswerMode;
     const allNodes = getNodes(main);
+
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         main.dispatch(
           main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
-            correct: !checked,
+            [key]: value,
           }),
         );
       }
@@ -56,7 +67,7 @@ const CustomSwitch = ({ node, getPos }) => {
 
   return (
     <StyledSwitch
-      checked={checked}
+      checked={isEditable ? checked : checkedAnswerMode}
       checkedChildren="True"
       label="True/false?"
       labelPosition="left"

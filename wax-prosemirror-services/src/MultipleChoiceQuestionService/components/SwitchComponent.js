@@ -48,24 +48,18 @@ const CustomSwitch = ({ node, getPos }) => {
   const handleChange = () => {
     setChecked(!checked);
     setCheckedAnswerMode(!checkedAnswerMode);
+    const key = isEditable ? 'correct' : 'answer';
+    const value = isEditable ? !checked : !checkedAnswerMode;
     const allNodes = getNodes(main);
+
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
-        if (isEditable) {
-          main.dispatch(
-            main.state.tr.setNodeMarkup(getPos(), undefined, {
-              ...singleNode.node.attrs,
-              correct: !checked,
-            }),
-          );
-        } else {
-          main.dispatch(
-            main.state.tr.setNodeMarkup(getPos(), undefined, {
-              ...singleNode.node.attrs,
-              answer: !checkedAnswerMode,
-            }),
-          );
-        }
+        main.dispatch(
+          main.state.tr.setNodeMarkup(getPos(), undefined, {
+            ...singleNode.node.attrs,
+            [key]: value,
+          }),
+        );
       }
     });
   };

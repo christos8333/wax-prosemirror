@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
@@ -75,6 +76,8 @@ export default ({ node, view, getPos }) => {
   const {
     view: { main },
   } = context;
+
+  const customProps = context.view.main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -176,7 +179,9 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          <FeedbackComponent getPos={getPos} node={node} view={view} />
+          {!(readOnly && !customProps.showFeedBack) && (
+            <FeedbackComponent getPos={getPos} node={node} view={view} />
+          )}
         </QuestionWrapper>
       </QuestionControlsWrapper>
       <IconsWrapper>

@@ -77,6 +77,7 @@ const CustomSwitch = ({ node, getPos }) => {
     allNodes.forEach(singNode => {
       if (singNode.node.attrs.id === node.attrs.id) {
         setChecked(singNode.node.attrs.correct);
+        setCheckedAnswerMode(singNode.node.attrs.correct);
       }
     });
   }, [getNodes(main)]);

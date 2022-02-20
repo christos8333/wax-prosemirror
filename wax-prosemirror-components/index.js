@@ -3,6 +3,7 @@ export { default as Button } from './src/components/Button';
 export { default as UndoRedoButton } from './src/components/UndoRedoButton';
 export { default as MenuButton } from './src/ui/buttons/MenuButton';
 export { default as icons } from './src/icons/icons';
+export { default as Icon } from './src/helpers/Icon';
 export { default as TableDropDown } from './src/components/tables/TableDropDown';
 export { default as ImageUpload } from './src/components/images/ImageUpload';
 export { default as TitleButton } from './src/components/TitleButton';

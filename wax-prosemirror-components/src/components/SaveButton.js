@@ -16,7 +16,7 @@ const SaveButton = ({ view = {}, item }) => {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = () => {
     // view.props.onChange(state.doc.content);
     setIsSaving(true);
     setTimeout(() => {
@@ -55,9 +55,7 @@ const SaveButton = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={iconTodisplay}
         label={label}
-        onMouseDown={e =>
-          handleMouseDown(e, main.view.state, main.view.dispatch)
-        }
+        onMouseDown={handleMouseDown}
         title={title}
       />
     ),

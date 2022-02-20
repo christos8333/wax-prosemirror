@@ -9,7 +9,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
-import { isEmpty } from 'lodash';
+
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -29,6 +29,7 @@ const WaxView = forwardRef((props, ref) => {
   let view;
   const {
     browserSpellCheck,
+    customValues,
     readonly,
     debug,
     autoFocus,
@@ -69,6 +70,7 @@ const WaxView = forwardRef((props, ref) => {
           { mount: node },
           {
             editable: () => !readonly,
+            customValues,
             state: EditorState.create(options),
             dispatchTransaction,
             disallowedTools: [],
@@ -99,7 +101,7 @@ const WaxView = forwardRef((props, ref) => {
       }
       WaxEditorRef.current = node;
     },
-    [readonly],
+    [readonly, customValues],
   );
 
   useEffect(() => {
@@ -157,7 +159,7 @@ const WaxView = forwardRef((props, ref) => {
       props.children({
         editor,
       }),
-    [readonly],
+    [readonly, customValues],
   );
 });
 

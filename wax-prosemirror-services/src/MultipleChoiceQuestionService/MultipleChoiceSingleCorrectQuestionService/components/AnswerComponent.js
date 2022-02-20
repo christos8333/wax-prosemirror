@@ -76,6 +76,9 @@ export default ({ node, view, getPos }) => {
     view: { main },
   } = context;
 
+  // eslint-disable-next-line react/destructuring-assignment
+  const customProps = context.view.main.props.customValues;
+
   const isEditable = main.props.editable(editable => {
     return editable;
   });
@@ -176,7 +179,9 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          <FeedbackComponent getPos={getPos} node={node} view={view} />
+          {!(readOnly && !customProps.showFeedBack) && (
+            <FeedbackComponent getPos={getPos} node={node} view={view} />
+          )}
         </QuestionWrapper>
       </QuestionControlsWrapper>
       <IconsWrapper>

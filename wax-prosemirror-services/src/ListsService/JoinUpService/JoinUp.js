@@ -25,6 +25,9 @@ class JoinUp extends Tools {
       });
     }
 
+    if (from === null) return false;
+    const { disallowedTools } = activeView.props;
+    if (disallowedTools.includes('Lists')) status = false;
     return status;
   };
 

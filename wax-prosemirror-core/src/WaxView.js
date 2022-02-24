@@ -151,7 +151,7 @@ const WaxView = forwardRef((props, ref) => {
   const editor = (
     <>
       <div ref={setEditorRef} />
-      {context.activeViewId === 'main' && <WaxOverlays />}
+      {context.activeViewId === 'main' && <WaxOverlays group="main" />}
       <WaxPortals />
     </>
   );

@@ -68,7 +68,6 @@ const EditorContainer = styled.div`
 `;
 
 const TopBar = ComponentPlugin('topBar');
-const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const NcbiLayout = ({ editor }) => (
   <ThemeProvider theme={cokoTheme}>
@@ -83,7 +82,6 @@ const NcbiLayout = ({ editor }) => (
           </WaxSurfaceScroll>
         </EditorArea>
       </Main>
-      <WaxOverlays />
     </Wrapper>
   </ThemeProvider>
 );

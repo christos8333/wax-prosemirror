@@ -167,7 +167,9 @@ const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
   padding-bottom: ${grid(4)};
+  padding-left: ${grid(10)};
   height: 100%;
   width: 65%;
 `;

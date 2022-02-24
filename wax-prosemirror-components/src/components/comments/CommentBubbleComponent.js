@@ -20,8 +20,8 @@ const CommentBubbleComponent = ({
     const end = activeView.coordsAtPos(to);
     const difference = end.top - start.top;
     const left = WaxSurface.width - 20;
-    const top = end.top - difference / 2 - 5;
-    setPosition({ ...position, left });
+    const top = end.top - WaxSurface.top - difference / 2 - 5;
+    setPosition({ ...position, left, top });
   }, [position.left]);
 
   const createComment = event => {

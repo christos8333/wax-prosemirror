@@ -1,8 +1,7 @@
-import Service from '../Service';
 import { LinkComponent } from 'wax-prosemirror-components';
 import { linkMark } from 'wax-prosemirror-schema';
+import Service from '../Service';
 import LinkTool from './LinkTool';
-// import { OverlayService } from '../..';
 
 export default class LinkService extends Service {
   name = 'LinkService';
@@ -30,6 +29,4 @@ export default class LinkService extends Service {
       { toWaxSchema: true },
     );
   }
-
-  // dependencies = [new OverlayService()];
 }

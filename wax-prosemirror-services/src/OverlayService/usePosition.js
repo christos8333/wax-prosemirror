@@ -31,7 +31,6 @@ export default options => {
  */
   const calculatePosition = (focusedView, from, to) => {
     const WaxSurface = focusedView.dom.getBoundingClientRect();
-    const start = focusedView.coordsAtPos(from);
     const end = focusedView.coordsAtPos(to);
     const left = end.left - WaxSurface.left + 5;
     const top = end.top - WaxSurface.top + 20;

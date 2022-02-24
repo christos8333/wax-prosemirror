@@ -9,14 +9,16 @@ const NoteEditorContainerStyled = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
-  padding-left: ${grid(6)};
   position: relative;
   width: 100%;
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
+    line-height: 1.6;
     padding-left: ${grid(2)};
-    padding-right: ${grid(10)};
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 0;
   }
 `;
 
@@ -24,7 +26,6 @@ const NoteStyled = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
-  margin-top: 10px;
   width: 100%;
 
   &:focus {

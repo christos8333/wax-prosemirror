@@ -5,7 +5,9 @@ import styled from 'styled-components';
 const NoteNumberStyled = styled.div`
   display: flex;
   margin-right: 10px;
-  margin-top: 18px;
+  margin-top: 10px;
+  position: absolute;
+  left: -20px;
 
   &:after {
     content: counter(footnote-view) '.';

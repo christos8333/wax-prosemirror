@@ -16,10 +16,7 @@ export default class CommentsService extends Service {
     const layout = this.container.get('Layout');
     createOverlay(
       CommentBubbleComponent,
-      {
-        showComment: activeViewId => activeViewId === 'main',
-        group: 'main',
-      },
+      {},
       {
         markType: '',
         followCursor: false,

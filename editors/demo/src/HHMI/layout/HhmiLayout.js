@@ -82,7 +82,6 @@ const EditorContainer = styled.div`
 `;
 
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
-const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const HhmiLayout = ({ editor }) => {
   const { options } = useContext(WaxContext);
@@ -117,7 +116,6 @@ const HhmiLayout = ({ editor }) => {
             </WaxSurfaceScroll>
           </EditorArea>
         </Main>
-        <WaxOverlays />
       </Wrapper>
     </ThemeProvider>
   );

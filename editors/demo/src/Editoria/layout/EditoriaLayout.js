@@ -207,6 +207,7 @@ const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
 const EditoriaLayout = ({ editor }) => {
   const {
+    activeViewId,
     view: { main },
     options,
   } = useContext(WaxContext);
@@ -246,7 +247,7 @@ const EditoriaLayout = ({ editor }) => {
   );
 
   useEffect(() => {}, [delayedShowedNotes]);
-
+  console.log(activeViewId);
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
@@ -282,6 +283,7 @@ const EditoriaLayout = ({ editor }) => {
                   </CommentTrackToolsContainer>
                   <RightArea area="main" />
                 </CommentsContainer>
+                {activeViewId === 'main' && <WaxOverlays />}
               </WaxSurfaceScroll>
 
               {hasNotes && (
@@ -297,7 +299,6 @@ const EditoriaLayout = ({ editor }) => {
             </PanelGroup>
           </EditorArea>
         </Main>
-        <WaxOverlays />
         <WaxBottomRightInfo>
           <InfoContainer id="info-container">
             <BottomRightInfo />

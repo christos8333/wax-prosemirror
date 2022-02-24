@@ -12,18 +12,18 @@ class NoteService extends Service {
     const createOverlay = this.container.get('CreateOverlay');
     layout.addComponent('notesArea', NoteComponent);
 
-    createOverlay(
-      CommentBubbleComponent,
-      {
-        showComment: activeViewId => activeViewId !== 'main',
-        group: 'notes',
-      },
-      {
-        markType: '',
-        followCursor: false,
-        selection: true,
-      },
-    );
+    // createOverlay(
+    //   CommentBubbleComponent,
+    //   {
+    //     showComment: activeViewId => activeViewId !== 'main',
+    //     group: 'notes',
+    //   },
+    //   {
+    //     markType: '',
+    //     followCursor: false,
+    //     selection: true,
+    //   },
+    // );
   }
 
   register() {

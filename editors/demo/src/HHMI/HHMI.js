@@ -39,8 +39,10 @@ const t = `<p class="paragraph"></p>
 
 const Hhmi = () => {
   const [submited, isSubmited] = useState(false);
+  const [readOnly, isReadOnly] = useState(false);
   const submitQuestions = () => {
     isSubmited(true);
+    isReadOnly(true);
   };
 
   return (
@@ -52,7 +54,7 @@ const Hhmi = () => {
         customValues={{ showFeedBack: submited }}
         fileUpload={file => renderImage(file)}
         value={t}
-        // readonly
+        readonly={readOnly}
         layout={HhmiLayout}
         onChange={source => console.log(source)}
       />

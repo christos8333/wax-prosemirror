@@ -48,6 +48,9 @@ const DropComponent = ({ title, view, tools }) => {
   const { state } = view;
 
   const [label, setLabel] = useState(null);
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   const dropDownOptions = [
     {
@@ -83,7 +86,8 @@ const DropComponent = ({ title, view, tools }) => {
     });
   }, [activeViewId]);
 
-  const isDisabled = tools[0].select(state, activeView);
+  let isDisabled = tools[0].select(state, activeView);
+  if (!isEditable) isDisabled = false;
 
   const onChange = option => {
     tools[option.value].run(main, context);

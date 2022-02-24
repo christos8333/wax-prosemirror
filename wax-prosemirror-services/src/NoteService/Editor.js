@@ -9,20 +9,17 @@ import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
-import {
-  NoteEditorContainer,
-  CommentBubbleComponent,
-} from 'wax-prosemirror-components';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import { NoteEditorContainer } from 'wax-prosemirror-components';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
-
-import OverlayComponent from '../OverlayService/OverlayComponent';
 
 const NoteContainer = styled.div`
   display: flex;
   position: relative;
 `;
+
+const WaxOverlays = ComponentPlugin('waxOverlays');
 
 export default ({ node, view }) => {
   const editorRef = useRef();
@@ -35,15 +32,6 @@ export default ({ node, view }) => {
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
   });
-
-  const Test =
-    context.activeViewId === noteId
-      ? OverlayComponent(CommentBubbleComponent, {
-          markType: '',
-          followCursor: false,
-          selection: true,
-        })
-      : () => <></>;
 
   useEffect(() => {
     noteView = new EditorView(
@@ -209,7 +197,7 @@ export default ({ node, view }) => {
   return (
     <NoteContainer>
       {NoteEditorContainerComponent}
-      <Test />
+      {context.activeViewId === noteId && <WaxOverlays />}
     </NoteContainer>
   );
 };

@@ -167,7 +167,9 @@ const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
   padding-bottom: ${grid(4)};
+  padding-left: ${grid(10)};
   height: 100%;
   width: 65%;
 `;
@@ -202,7 +204,6 @@ const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
 const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
-const WaxOverlays = ComponentPlugin('waxOverlays');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
 const EditoriaLayout = ({ editor }) => {
@@ -297,7 +298,6 @@ const EditoriaLayout = ({ editor }) => {
             </PanelGroup>
           </EditorArea>
         </Main>
-        <WaxOverlays />
         <WaxBottomRightInfo>
           <InfoContainer id="info-container">
             <BottomRightInfo />

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const LinkWrapper = styled.div`
   display: inline-block;
-  width: 250px;
+  width: 150px;
   margin-right: 12px;
 
   ${override('Wax.LinkWrapper')}

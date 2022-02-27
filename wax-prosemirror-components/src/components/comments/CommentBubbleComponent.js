@@ -19,8 +19,8 @@ const CommentBubbleComponent = ({
     const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to);
     const difference = end.top - start.top;
-    const left = WaxSurface.width + WaxSurface.x - 20;
-    const top = end.top - difference / 2 - 5;
+    const left = WaxSurface.width - 20;
+    const top = end.top - WaxSurface.top - difference / 2 - 5;
     setPosition({ ...position, left, top });
   }, [position.left]);
 
@@ -59,8 +59,7 @@ const CommentBubbleComponent = ({
   };
 
   return (
-    isCommentAllowed() &&
-    showComment(activeViewId) && (
+    isCommentAllowed() && (
       <CommentBubble
         onClick={event => {
           createComment(event);

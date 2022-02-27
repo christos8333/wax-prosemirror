@@ -12,13 +12,11 @@ const defaultOverlay = {
 };
 
 export default options => {
-  const {
-    view: { main },
-    activeView,
-  } = useContext(WaxContext);
+  const { activeView } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
     position: 'absolute',
+    zIndex: 999,
     ...defaultOverlay,
   });
 
@@ -31,10 +29,9 @@ export default options => {
  */
   const calculatePosition = (focusedView, from, to) => {
     const WaxSurface = focusedView.dom.getBoundingClientRect();
-    const start = focusedView.coordsAtPos(from);
     const end = focusedView.coordsAtPos(to);
-    const { left } = end;
-    const top = end.top + 20;
+    const left = end.left - WaxSurface.left + 5;
+    const top = end.top - WaxSurface.top + 20;
     return {
       top,
       left,
@@ -108,6 +105,7 @@ export default options => {
   useLayoutEffect(() => {
     setPosition({
       position: 'absolute',
+      zIndex: 999,
       ...updatePosition(options.followCursor),
     });
   }, [JSON.stringify(updatePosition(options.followCursor))]);

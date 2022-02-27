@@ -22,6 +22,7 @@ import getDocContent from './helpers/GetDocContent';
 import './styles/styles.css';
 
 const WaxPortals = ComponentPlugin('waxPortals');
+const WaxOverlays = ComponentPlugin('waxOverlays');
 
 let previousDoc;
 
@@ -150,6 +151,7 @@ const WaxView = forwardRef((props, ref) => {
   const editor = (
     <>
       <div ref={setEditorRef} />
+      {context.activeViewId === 'main' && <WaxOverlays group="main" />}
       <WaxPortals />
     </>
   );
@@ -159,7 +161,7 @@ const WaxView = forwardRef((props, ref) => {
       props.children({
         editor,
       }),
-    [readonly, customValues],
+    [readonly, customValues, context.activeViewId],
   );
 });
 

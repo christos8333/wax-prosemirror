@@ -1,4 +1,9 @@
   /* -- Multiple Choice ---------------------------------- */
+
+.ProseMirror {
+  counter-reset: multiple-question;
+}
+
 .multiple-choice,
 .multiple-choice-single-correct,
 .true-false,

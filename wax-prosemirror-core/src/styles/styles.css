@@ -1,7 +1,12 @@
 /* Basic styles for proseMirror view and gapCursor */
 .ProseMirror {
+  background: #fff;
+  color: #111;
   font-feature-settings: 'liga' 0; /* the above doesn't seem to work in Edge */
+  font-family: 'Merriweather';
   font-variant-ligatures: none;
+  line-height: 1.6;
+  font-size: 14px;
   word-wrap: break-word;
   white-space: pre-wrap;
   white-space: break-spaces;
@@ -203,12 +208,6 @@ img.ProseMirror-separator {
     transform: rotate(40deg);
   }
 
-  /* Wax Selection Marker */
-    .ProseMirror .wax-selection-marker {
-    background-color: #C5D7FE;
-    opacity: 0.8;
-  }
-
   /* hr */ 
 
   hr {
@@ -224,3 +223,28 @@ img.ProseMirror-separator {
     background-color: silver;
     line-height: 2px;
   }
+
+    /* Wax Selection Marker */
+    .ProseMirror .wax-selection-marker {
+    background-color: #C5D7FE;
+    opacity: 0.8;
+  }
+
+  .ProseMirror p::selection,
+   .ProseMirror h1::selection,
+   .ProseMirror h2::selection,
+   .ProseMirror h3::selection,
+   .ProseMirror code::selection,
+   .ProseMirror span::selection,
+   .ProseMirror p span::selection,
+   .ProseMirror h1 span::selection,
+   .ProseMirror h2 span::selection,
+   .ProseMirror h3 span::selection,
+   .ProseMirror h4 span::selection,
+   .ProseMirror code span::selection,
+   .ProseMirror custom-tag-block::selection,
+   .ProseMirror custom-tag-inline::selection,
+    #notes-container div::selection {
+      background-color: transparent;
+      color: #000;
+    }

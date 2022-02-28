@@ -7,6 +7,7 @@ import { mathPlugin, mathSelectPlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
 import inlineInputRule from './InlineInputRule';
 import blockInputRule from './BlockInputRule';
+import './math.css';
 
 class MathService extends Service {
   name = 'MathService';

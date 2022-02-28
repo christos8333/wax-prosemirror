@@ -10,37 +10,37 @@
   padding-top: 0px;
 }
 
-.multiple-choice::before,
-.multiple-choice-single-correct::before,
-.true-false::before,
-.true-false-single-correct::before {
+.multiple-choice:before,
+.multiple-choice-single-correct:before,
+.true-false:before,
+.true-false-single-correct:before {
   bottom: 25px;
   counter-increment: multiple-question;
   position: relative;
   right: 20px;
 }
 
-.multiple-choice .ProseMirror,
-.multiple-choice-single-correct .ProseMirror,
-.true-false .ProseMirror,
-.true-false-single-correct .ProseMirror {
-  box-shadow: none!important;
-  padding: 5px 5px 0 5px!important;
+.ProseMirror .multiple-choice .ProseMirror,
+.ProseMirror .multiple-choice-single-correct .ProseMirror,
+.ProseMirror .true-false .ProseMirror,
+.ProseMirror .true-false-single-correct .ProseMirror {
+  box-shadow: none;
+  padding: 5px 5px 0 5px;
 }
 
 
-.multiple-choice::before {
+.multiple-choice:before {
   content: 'Answer Group ' counter(multiple-question) ' (multiple choice)';
 }
 
-.multiple-choice-single-correct::before {
+.multiple-choice-single-correct:before {
   content: 'Answer Group ' counter(multiple-question)' (multiple choice single correct)';
  }
 
-.true-false::before {
+.true-false:before {
   content: 'Answer Group ' counter(multiple-question) ' (true/false)';
 }
 
-.true-false-single-correct::before {
+.true-false-single-correct:before {
   content: 'Answer Group ' counter(multiple-question)' (true/false single correct)';
 }

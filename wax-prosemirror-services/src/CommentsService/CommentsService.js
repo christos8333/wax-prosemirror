@@ -2,6 +2,7 @@ import { commentMark } from 'wax-prosemirror-schema';
 import { RightArea, CommentBubbleComponent } from 'wax-prosemirror-components';
 import { CommentPlugin, CopyPasteCommentPlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
+import './comments.css';
 
 const PLUGIN_KEY = 'commentPlugin';
 

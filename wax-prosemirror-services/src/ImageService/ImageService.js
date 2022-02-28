@@ -6,6 +6,7 @@ import {
 import { PlaceHolderPlugin, captionPlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
 import Image from './Image';
+import './image.css';
 
 class ImageService extends Service {
   name = 'ImageService';
@@ -31,11 +32,12 @@ class ImageService extends Service {
       },
       { toWaxSchema: true },
     );
-    createNode({
-      figcaption: figureCaptionNode,
-    }
-    // ,
-    // { toWaxSchema: true },
+    createNode(
+      {
+        figcaption: figureCaptionNode,
+      },
+      // ,
+      // { toWaxSchema: true },
     );
   }
 }

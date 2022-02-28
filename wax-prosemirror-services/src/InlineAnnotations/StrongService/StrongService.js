@@ -1,7 +1,8 @@
-import Service from '../../Service';
 import { toggleMark } from 'prosemirror-commands';
 import { strongMark } from 'wax-prosemirror-schema';
+import Service from '../../Service';
 import Strong from './Strong';
+import './strong.css';
 
 class StrongService extends Service {
   boot() {

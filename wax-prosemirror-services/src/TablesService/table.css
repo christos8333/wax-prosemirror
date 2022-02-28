@@ -1,0 +1,55 @@
+/* Tables */
+
+  table {
+    border: 1px solid #eee;
+    border-collapse: initial;
+    border-spacing: 0;
+    border-width: 0 thin thin 0;
+    margin: 0;
+    overflow: hidden;
+    page-break-inside: avoid;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border: 1px solid #eee;
+    /*width: 200px;*/
+    padding: 2px 5px;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .tableWrapper {
+    overflow-x: auto;
+  }
+
+  .column-resize-handle {
+    background-color: #adf;
+    bottom: 0;
+    pointer-events: none;
+    position: absolute;
+    right: -2px;
+    top: 0;
+    width: 4px;
+    z-index: 20;
+  }
+
+  .ProseMirror.resize-cursor {
+    cursor: ew-resize;
+    cursor: col-resize;
+  }
+  /* Give selected cells a blue overlay */
+  .selectedCell:after {
+    background: rgba(200, 200, 255, 0.4);
+    bottom: 0;
+    content: '';
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }

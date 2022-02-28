@@ -1,0 +1,60 @@
+/*Track Changes*/
+
+  span.deletion {
+    text-decoration: line-through;
+    color: indianred;
+}
+
+.ProseMirror span.deletion footnote {
+      background: indianred;
+}
+
+span.insertion {
+    color: royalblue;
+}
+
+.ProseMirror span.insertion footnote {
+      background: royalblue;
+  }
+
+  .selected-insertion {
+    background-color: rgb(238, 251, 251);
+  }
+
+  .selected-deletion {
+    background: rgb(250, 240, 240);
+  }
+
+  .selected-format-change,
+  .selected-block-change {
+    background-color: #eefbfb;
+  }
+
+  .format-change {
+    border-bottom: 2px solid royalblue;
+  }
+
+  [data-track] {
+    position: relative;
+  }
+
+  [data-track]::before {
+    content: '';
+    position: absolute;
+    border-left: 2px solid royalblue;
+    left: -10px;
+    height: 100%;
+  }
+
+  .insertion .show-insertion {
+    color: black;
+  }
+
+  .deletion .hide-deletion {
+    display: none;
+  }
+
+  li[data-track]::before,
+  li [data-track]::before {
+    left: -5px;
+  }

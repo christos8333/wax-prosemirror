@@ -157,7 +157,6 @@ const NotesAreaContainer = styled.div`
   overflow-y: scroll;
   position: absolute;
   /* PM styles  for note content*/
-  ${EditorElements};
   .ProseMirror {
     display: inline;
   }

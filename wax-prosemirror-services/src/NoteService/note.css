@@ -1,0 +1,25 @@
+/* FootNote */
+
+.ProseMirror {
+  counter-reset: footnote;
+}
+
+.ProseMirror footnote {
+    font-variant-numeric: lining-nums proportional-nums;
+    display: inline-block;
+    text-align: center;
+    width: 17px;
+    height: 17px;
+    background: white;
+    border-bottom: 2px solid black;
+    color: black;
+    cursor: pointer;
+  }
+
+  .ProseMirror footnote::after {
+    content: counter(footnote);
+    position: relative;
+    bottom: 2px;
+    font-size: 16px;
+    counter-increment: footnote;
+  }

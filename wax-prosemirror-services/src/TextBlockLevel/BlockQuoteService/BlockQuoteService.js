@@ -1,15 +1,16 @@
-import Service from "../../Service";
-import { blockQuoteNode } from "wax-prosemirror-schema";
-import BlockQuote from "./BlockQuote";
+import { blockQuoteNode } from 'wax-prosemirror-schema';
+import Service from '../../Service';
+import BlockQuote from './BlockQuote';
+import './blockQuote.css';
 
 class BlockQuoteService extends Service {
-  boot() {}
+  name = 'BlockQuoteService';
 
   register() {
-    this.container.bind("BlockQuote").to(BlockQuote);
-    const createNode = this.container.get("CreateNode");
+    this.container.bind('BlockQuote').to(BlockQuote);
+    const createNode = this.container.get('CreateNode');
     createNode({
-      blockquote: blockQuoteNode
+      blockquote: blockQuoteNode,
     });
   }
 }

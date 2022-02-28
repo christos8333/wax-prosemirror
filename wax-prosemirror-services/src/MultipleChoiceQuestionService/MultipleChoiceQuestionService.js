@@ -10,6 +10,7 @@ import QuestionNodeView from './QuestionNodeView';
 import MultipleChoiceSingleCorrectQuestionService from './MultipleChoiceSingleCorrectQuestionService/MultipleChoiceSingleCorrectQuestionService';
 import TrueFalseQuestionService from './TrueFalseQuestionService/TrueFalseQuestionService';
 import TrueFalseSingleCorrectQuestionService from './TrueFalseSingleCorrectQuestionService/TrueFalseSingleCorrectQuestionService';
+import './multipleQuestionStyles.css';
 
 class MultipleChoiceQuestionService extends Service {
   register() {

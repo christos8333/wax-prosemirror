@@ -5,6 +5,7 @@ import fillTheGapNode from './schema/fillTheGapNode';
 import CreateGapService from './CreateGapService/CreateGapService';
 import FillTheGapNodeView from './FillTheGapNodeView';
 import GapComponent from './components/GapComponent';
+import './fillTheGap.css';
 
 class FillTheGapQuestionService extends Service {
   register() {

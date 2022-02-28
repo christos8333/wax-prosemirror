@@ -7,6 +7,7 @@ import EssayQuestionComponent from './components/EssayQuestionComponent';
 import EssayAnswerComponent from './components/EssayAnswerComponent';
 import EssayQuestionNodeView from './EssayQuestionNodeView';
 import EssayAnswerNodeView from './EssayAnswerNodeView';
+import './essay.css';
 
 class EssayService extends Service {
   register() {

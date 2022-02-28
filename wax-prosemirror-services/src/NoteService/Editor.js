@@ -19,7 +19,7 @@ const NoteContainer = styled.div`
   position: relative;
 `;
 
-const WaxOverlays = ComponentPlugin('waxOverlays');
+let WaxOverlays = () => true;
 
 export default ({ node, view }) => {
   const editorRef = useRef();
@@ -34,6 +34,7 @@ export default ({ node, view }) => {
   });
 
   useEffect(() => {
+    WaxOverlays = ComponentPlugin('waxOverlays');
     noteView = new EditorView(
       { mount: editorRef.current },
       {

@@ -91,27 +91,21 @@ const SpecialCharacter = styled.div`
   border: 1px solid ${th('colorPrimary')};
   border-radius: 50%;
   &:hover {
-    background: white;
+    background: ${th('colorPrimary')};
   }
   span {
     font-size: 16px;
     text-align: center;
     padding-top: 3px;
-    color: white;
+    color: ${th('colorPrimary')};
 
     &:hover {
-      color: ${th('colorPrimary')};
+      color: #fff;
     }
   }
     ${override('Wax.SpecialCharacterButton')}
 
 `;
-
-// const LastUsedComponent = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   height: 30px;
-// `;
 
 const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
@@ -191,11 +185,11 @@ const SpecialCharactersComponent = ({ close }) => {
     <Wrapper>
       <SearchInputContainer>
         <SearchInput
+          onChange={onChange}
+          placeholder="Search"
           ref={searchRef}
           type="text"
-          placeholder="Search"
           value={searchValue}
-          onChange={onChange}
         />
       </SearchInputContainer>
       <CharactersListComponent>{renderList()}</CharactersListComponent>

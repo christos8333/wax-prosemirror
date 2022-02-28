@@ -1,0 +1,46 @@
+  /* -- Multiple Choice ---------------------------------- */
+.multiple-choice,
+.multiple-choice-single-correct,
+.true-false,
+.true-false-single-correct {
+  border: 3px solid #f5f5f7;
+  counter-reset: question-item-multiple;
+  margin: 38px;
+  padding: 20px;
+  padding-top: 0px;
+}
+
+.multiple-choice::before,
+.multiple-choice-single-correct::before,
+.true-false::before,
+.true-false-single-correct::before {
+  bottom: 25px;
+  counter-increment: multiple-question;
+  position: relative;
+  right: 20px;
+}
+
+.multiple-choice .ProseMirror,
+.multiple-choice-single-correct .ProseMirror,
+.true-false .ProseMirror,
+.true-false-single-correct .ProseMirror {
+  box-shadow: none!important;
+  padding: 5px 5px 0 5px!important;
+}
+
+
+.multiple-choice::before {
+  content: 'Answer Group ' counter(multiple-question) ' (multiple choice)';
+}
+
+.multiple-choice-single-correct::before {
+  content: 'Answer Group ' counter(multiple-question)' (multiple choice single correct)';
+ }
+
+.true-false::before {
+  content: 'Answer Group ' counter(multiple-question) ' (true/false)';
+}
+
+.true-false-single-correct::before {
+  content: 'Answer Group ' counter(multiple-question)' (true/false single correct)';
+}

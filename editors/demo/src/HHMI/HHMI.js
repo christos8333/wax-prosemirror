@@ -16,9 +16,15 @@ const renderImage = file => {
   });
 };
 
+const ReadOnlyButton = styled.button`
+  position: absolute;
+  left: 550px;
+  top: 16px;
+`;
+
 const SubmitButton = styled.button`
   position: absolute;
-  left: 600px;
+  left: 650px;
   top: 16px;
 `;
 
@@ -40,6 +46,11 @@ const t = `<p class="paragraph"></p>
 const Hhmi = () => {
   const [submited, isSubmited] = useState(false);
   const [readOnly, isReadOnly] = useState(false);
+
+  const readOnlyQuestions = () => {
+    isReadOnly(true);
+  };
+
   const submitQuestions = () => {
     isSubmited(true);
     isReadOnly(true);
@@ -47,6 +58,7 @@ const Hhmi = () => {
 
   return (
     <>
+      <ReadOnlyButton onClick={readOnlyQuestions}>Read Only</ReadOnlyButton>
       <SubmitButton onClick={submitQuestions}>Submit</SubmitButton>
       <Wax
         config={config}

@@ -88,10 +88,10 @@ img.ProseMirror-separator {
 
 /* Read-Only */
 
-  div[contenteditable='false'] {
+  /* div[contenteditable='false'] {
     pointer-events: none;
     user-select: none;
-  }
+  } */
 
 
 /* placeholder */

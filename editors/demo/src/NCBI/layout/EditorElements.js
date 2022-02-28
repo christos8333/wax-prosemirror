@@ -33,33 +33,5 @@ export default css`
     code span::selection title::selection {
       background-color: transparent;
     }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  .ProseMirror .wax-selection-marker {
-    background-color: ${th('colorSelection')};
-  }
-
-  div[contenteditable='false'] {
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .ProseMirror title {
-    display: inline;
-    font-size: 14px;
-  }
-
-  ul,
-  ol {
-    padding-left: 30px;
-  }
-
-  sup,
-  sub {
-    line-height: 0;
   }
 `;

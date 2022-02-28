@@ -37,25 +37,4 @@ export default css`
       color: #000;
     }
   }
-
-  ul,
-  ol {
-    padding-left: 30px;
-  }
-
-  blockquote {
-    border-left: 3px solid #eee;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 1em;
-  }
-
-  sup,
-  sub {
-    line-height: 0;
-  }
-
-  strong {
-    font-weight: bold;
-  }
 `;

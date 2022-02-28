@@ -29,44 +29,10 @@ export default css`
     h4 span::selection,
     code span::selection,
     custom-tag-block::selection,
-    custom-tag-inline::selection {
+    custom-tag-inline::selection,
+    #notes-container div::selection {
       background-color: transparent;
       color: #000;
     }
-  }
-
-  hr {
-    padding: 2px 10px;
-    border: none;
-    margin: 1em 0;
-  }
-
-  hr:after {
-    content: '';
-    display: block;
-    height: 1px;
-    background-color: silver;
-    line-height: 2px;
-  }
-
-  ul,
-  ol {
-    padding-left: 30px;
-  }
-
-  blockquote {
-    padding-left: 1em;
-    border-left: 3px solid #eee;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  sup,
-  sub {
-    line-height: 0;
-  }
-
-  strong {
-    font-weight: bold;
   }
 `;

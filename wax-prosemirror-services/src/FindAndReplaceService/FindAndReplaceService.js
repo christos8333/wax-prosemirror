@@ -1,6 +1,7 @@
 import { FindAndReplacePlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
 import FindAndReplace from './FindAndReplace';
+import './findAndReplace.css';
 
 class FindAndReplaceService extends Service {
   name = 'FindAndReplaceService';

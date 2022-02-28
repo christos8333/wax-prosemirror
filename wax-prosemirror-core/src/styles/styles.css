@@ -1,5 +1,4 @@
 /* Basic styles for proseMirror view and gapCursor */
-
 .ProseMirror {
   font-feature-settings: 'liga' 0; /* the above doesn't seem to work in Edge */
   font-variant-ligatures: none;
@@ -7,6 +6,10 @@
   white-space: pre-wrap;
   white-space: break-spaces;
   -webkit-font-variant-ligatures: none;
+}
+
+.ProseMirror:focus {
+  outline: none;
 }
 
 .ProseMirror pre {
@@ -82,6 +85,13 @@ img.ProseMirror-separator {
 .ProseMirror-focused .ProseMirror-gapcursor {
   display: block;
 }
+
+/* Read-Only */
+
+  div[contenteditable='false'] {
+    pointer-events: none;
+    user-select: none;
+  }
 
 
 /* placeholder */

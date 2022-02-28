@@ -1,3 +1,8 @@
+  div[contenteditable='false'] .math-src {
+      pointer-events: none;
+      user-select: none;
+  }
+
 /* == Math Nodes ======================================== */
 
   .math-node {

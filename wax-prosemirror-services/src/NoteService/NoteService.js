@@ -2,6 +2,7 @@ import { footNoteNode } from 'wax-prosemirror-schema';
 import Service from '../Service';
 import Note from './Note';
 import NoteComponent from './NoteComponent';
+import './note.css';
 
 class NoteService extends Service {
   name = 'NoteService';

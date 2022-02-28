@@ -202,3 +202,9 @@ img.ProseMirror-separator {
   .transform-icon {
     transform: rotate(40deg);
   }
+
+  /* Wax Selection Marker */
+    .ProseMirror .wax-selection-marker {
+    background-color: #C5D7FE;
+    opacity: 0.8;
+  }

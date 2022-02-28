@@ -38,11 +38,6 @@ export default css`
     }
   }
 
-  .ProseMirror .wax-selection-marker {
-    background-color: ${th('colorSelection')};
-    opacity: 0.8;
-  }
-
   ul,
   ol {
     padding-left: 30px;
@@ -53,38 +48,6 @@ export default css`
     margin-left: 0;
     margin-right: 0;
     padding-left: 1em;
-  }
-
-  figure {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-    word-break: break-word;
-
-    img {
-      cursor: default;
-      height: auto;
-      max-width: 100%;
-      width: auto;
-    }
-
-    figcaption {
-      background: #e2ebff;
-      caption-side: bottom;
-      display: table-caption;
-      max-width: 100%;
-      min-height: 20px;
-      padding: 4px;
-      width: auto;
-
-      &:focus {
-        outline: none;
-      }
-      &:before {
-        content: 'Caption: ';
-        font-weight: bold;
-      }
-    }
   }
 
   sup,

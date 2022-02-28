@@ -13,7 +13,6 @@ const fontWriting = css`
 export default css`
   .ProseMirror {
     background: white;
-    counter-reset: footnote;
     line-height: 1.6;
     ${fontWriting}
 
@@ -34,31 +33,6 @@ export default css`
       background-color: transparent;
       color: #000;
     }
-  }
-
-  .ProseMirror .wax-selection-marker {
-    background-color: ${th('colorSelection')};
-    opacity: 0.8;
-  }
-
-  .ProseMirror footnote {
-    font-variant-numeric: lining-nums proportional-nums;
-    display: inline-block;
-    text-align: center;
-    width: 17px;
-    height: 17px;
-    background: white;
-    border-bottom: 2px solid black;
-    color: black;
-    cursor: pointer;
-  }
-
-  .ProseMirror footnote::after {
-    content: counter(footnote);
-    position: relative;
-    bottom: 2px;
-    font-size: 16px;
-    counter-increment: footnote;
   }
 
   hr {
@@ -85,38 +59,6 @@ export default css`
     border-left: 3px solid #eee;
     margin-left: 0;
     margin-right: 0;
-  }
-
-  figure {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-    word-break: break-word;
-
-    img {
-      cursor: default;
-      height: auto;
-      max-width: 100%;
-      width: auto;
-    }
-
-    figcaption {
-      background: #e2ebff;
-      caption-side: bottom;
-      display: table-caption;
-      max-width: 100%;
-      min-height: 20px;
-      padding: 4px;
-      width: auto;
-
-      &:focus {
-        outline: none;
-      }
-      &:before {
-        content: 'Caption: ';
-        font-weight: bold;
-      }
-    }
   }
 
   sup,

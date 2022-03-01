@@ -9,24 +9,21 @@ const WaxSelectionPlugin = new Plugin({
     init(config, instance) {
       return { deco: DecorationSet.empty };
     },
-    apply(transaction, state, prevEditorState, editorState) {
-      const sel = transaction.curSelection;
-
-      const decos = [
-        Decoration.inline(sel.$from.pos, sel.$to.pos, {
+    apply(tr, prev, previousState, newState) {
+      const { selection } = tr;
+      const createDecoration = DecorationSet.create(newState.doc, [
+        Decoration.inline(selection.$from.pos, selection.$to.pos, {
           class: 'wax-selection-marker',
         }),
-      ];
-      const deco = DecorationSet.create(editorState.doc, decos);
-      return { deco };
+      ]);
+      return { createDecoration };
     },
   },
   props: {
     decorations(state) {
-      if (state && this.getState(state)) {
-        return this.getState(state).deco;
-      }
-      return null;
+      const waxSelectionPluginState =
+        state && waxSelectionPlugin.getState(state);
+      return waxSelectionPluginState.createDecoration;
     },
   },
 });

@@ -230,21 +230,7 @@ img.ProseMirror-separator {
     opacity: 0.8;
   }
 
-  .ProseMirror p::selection,
-   .ProseMirror h1::selection,
-   .ProseMirror h2::selection,
-   .ProseMirror h3::selection,
-   .ProseMirror code::selection,
-   .ProseMirror span::selection,
-   .ProseMirror p span::selection,
-   .ProseMirror h1 span::selection,
-   .ProseMirror h2 span::selection,
-   .ProseMirror h3 span::selection,
-   .ProseMirror h4 span::selection,
-   .ProseMirror code span::selection,
-   .ProseMirror custom-tag-block::selection,
-   .ProseMirror custom-tag-inline::selection,
-    #notes-container div::selection {
-      background-color: transparent;
-      color: #000;
-    }
+ .ProseMirror *::selection{
+   background-color: #C5D7FE;
+  color: #000;
+}

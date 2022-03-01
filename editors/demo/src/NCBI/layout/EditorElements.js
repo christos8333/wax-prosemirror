@@ -10,4 +10,13 @@ const fontWriting = css`
   font-size: ${th('fontSizeBase')};
 `;
 
-export default css``;
+export default css`
+  .ProseMirror {
+    background: white;
+    counter-reset: footnote;
+    line-height: 12px;
+    width: 497px;
+    white-space: pre !important;
+    overflow-x: auto;
+  }
+`;

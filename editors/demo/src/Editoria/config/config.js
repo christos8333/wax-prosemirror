@@ -47,8 +47,6 @@ import {
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
-
 import invisibles, {
   space,
   hardBreak,
@@ -139,12 +137,7 @@ export default {
       reject: true,
     },
   },
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    invisibles([hardBreak()]),
-    WaxSelectionPlugin,
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

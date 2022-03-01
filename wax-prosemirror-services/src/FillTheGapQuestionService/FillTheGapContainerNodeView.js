@@ -1,6 +1,6 @@
 import AbstractNodeView from '../PortalService/AbstractNodeView';
 
-export default class FillTheGapNodeView extends AbstractNodeView {
+export default class FillTheGapContainerNodeView extends AbstractNodeView {
   constructor(
     node,
     view,
@@ -19,7 +19,7 @@ export default class FillTheGapNodeView extends AbstractNodeView {
   }
 
   static name() {
-    return 'fill_the_gap';
+    return 'fill_the_gap_container';
   }
 
   update(node) {

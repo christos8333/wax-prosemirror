@@ -18,7 +18,7 @@ import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
-import getDocContent from './helpers/GetDocContent';
+import helpers from './helpers/helpers';
 import './styles/styles.css';
 
 const WaxPortals = ComponentPlugin('waxPortals');
@@ -111,7 +111,7 @@ const WaxView = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getContent() {
-      return getDocContent(schema, serializer, targetFormat, context);
+      return helpers.getDocContent(schema, serializer, targetFormat, context);
     },
   }));
 

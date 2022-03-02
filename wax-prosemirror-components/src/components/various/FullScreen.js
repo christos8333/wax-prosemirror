@@ -15,7 +15,7 @@ const Button = ({ view = {}, item }) => {
 
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();
-    options.fullScreen = !options.fullScreen;
+    Object.assign(options, { fullScreen: !options.fullScreen });
     activeView.dispatch(
       activeView.state.tr.setSelection(
         TextSelection.between(

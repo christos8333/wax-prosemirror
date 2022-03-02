@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext } from './WaxContext';
@@ -80,6 +80,13 @@ const WaxView = forwardRef((props, ref) => {
             scrollThreshold: 200,
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
+            },
+            handleDOMEvents: {
+              blur: (editorView, event) => {
+                if (view && event.relatedTarget === null) {
+                  view.focus();
+                }
+              },
             },
           },
         );

@@ -125,6 +125,11 @@ const EditorComponent = ({ node, view, getPos }) => {
             // the parent editor is focused.
             if (questionView.hasFocus()) questionView.focus();
           },
+          blur: (editorView, event) => {
+            if (questionView && event.relatedTarget === null) {
+              questionView.focus();
+            }
+          },
         },
 
         attributes: {

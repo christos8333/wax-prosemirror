@@ -7,8 +7,8 @@ const multipleChoiceContainerNode = {
   },
   group: 'block questions',
   atom: true,
-  selectable: true,
-  draggable: true,
+  selectable: false,
+  draggable: false,
   content: 'block*',
   parseDOM: [
     {

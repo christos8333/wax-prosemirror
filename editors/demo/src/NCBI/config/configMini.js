@@ -8,7 +8,6 @@ import {
   BaseToolGroupService,
   LinkService,
 } from 'wax-prosemirror-services';
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 
 const config = {
   MenuService: [
@@ -29,7 +28,7 @@ const config = {
   ShortCutsService: {},
   LinkService: {},
   SchemaService: DefaultSchema,
-  PmPlugins: [WaxSelectionPlugin],
+  PmPlugins: [],
 
   services: [
     new InlineAnnotationsService(),

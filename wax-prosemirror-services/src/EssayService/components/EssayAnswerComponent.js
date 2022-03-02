@@ -149,6 +149,11 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
             // the parent editor is focused.
             if (essayAnswerView.hasFocus()) essayAnswerView.focus();
           },
+          blur: (editorView, event) => {
+            if (essayAnswerView && event.relatedTarget === null) {
+              essayAnswerView.focus();
+            }
+          },
         },
 
         attributes: {

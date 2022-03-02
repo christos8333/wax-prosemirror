@@ -20,6 +20,10 @@ const NoteEditorContainerStyled = styled.div`
     padding-bottom: 5px;
     margin-right: 0;
   }
+  *::selection {
+    background-color: #c5d7fe;
+    color: #000;
+  }
 `;
 
 const NoteStyled = styled.div`

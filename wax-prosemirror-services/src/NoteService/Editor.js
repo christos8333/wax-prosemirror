@@ -47,7 +47,7 @@ export default ({ node, view }) => {
         dispatchTransaction,
         disallowedTools: ['Tables', 'Images'],
         handleDOMEvents: {
-          blur: () => {
+          blur: (editorView, event) => {
             if (context.view[noteId]) {
               context.view[noteId].dispatch(
                 context.view[noteId].state.tr.setSelection(

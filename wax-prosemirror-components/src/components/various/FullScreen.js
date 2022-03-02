@@ -16,10 +16,12 @@ const Button = ({ view = {}, item }) => {
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();
     options.fullScreen = !options.fullScreen;
-    const { selection } = editorState;
     activeView.dispatch(
       activeView.state.tr.setSelection(
-        new TextSelection(activeView.state.tr.doc.resolve(selection.from)),
+        TextSelection.between(
+          activeView.state.selection.$anchor,
+          activeView.state.selection.$head,
+        ),
       ),
     );
     activeView.focus();

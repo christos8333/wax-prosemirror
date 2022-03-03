@@ -45,9 +45,7 @@ import {
   CustomTagService,
 } from 'wax-prosemirror-services';
 
-import { DefaultSchema } from 'wax-prosemirror-utilities';
-
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
+import { EditoriaSchema } from 'wax-prosemirror-utilities';
 
 import invisibles, {
   space,
@@ -118,7 +116,7 @@ export default {
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
-  SchemaService: DefaultSchema,
+  SchemaService: EditoriaSchema,
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
@@ -139,12 +137,7 @@ export default {
       reject: true,
     },
   },
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    invisibles([hardBreak()]),
-    WaxSelectionPlugin,
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

@@ -3,7 +3,9 @@ import FillTheGapQuestion from './FillTheGapQuestion';
 import fillTheGapContainerNode from './schema/fillTheGapContainerNode';
 import fillTheGapNode from './schema/fillTheGapNode';
 import CreateGapService from './CreateGapService/CreateGapService';
+import FillTheGapContainerNodeView from './FillTheGapContainerNodeView';
 import FillTheGapNodeView from './FillTheGapNodeView';
+import FillTheGapContainerComponent from './components/FillTheGapContainerComponent';
 import GapComponent from './components/GapComponent';
 import './fillTheGap.css';
 
@@ -19,6 +21,12 @@ class FillTheGapQuestionService extends Service {
 
     createNode({
       fill_the_gap: fillTheGapNode,
+    });
+
+    addPortal({
+      nodeView: FillTheGapContainerNodeView,
+      component: FillTheGapContainerComponent,
+      context: this.app,
     });
 
     addPortal({

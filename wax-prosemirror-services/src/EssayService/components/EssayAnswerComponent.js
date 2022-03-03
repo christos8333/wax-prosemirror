@@ -22,6 +22,8 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
+  opacity: ${props => (props.editable ? 1 : 0.4)};
+  cursor: ${props => (props.editable ? 'default' : 'not-allowed')};
 
   .ProseMirror {
     white-space: break-spaces;
@@ -118,7 +120,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
         mount: editorRef.current,
       },
       {
-        editable: () => isEditable,
+        editable: () => !isEditable,
         state: EditorState.create({
           doc: node,
           plugins: finalPlugins,
@@ -144,10 +146,12 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
             );
             context.updateView({}, questionId);
 
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
             if (essayAnswerView.hasFocus()) essayAnswerView.focus();
+          },
+          blur: (editorView, event) => {
+            if (essayAnswerView && event.relatedTarget === null) {
+              essayAnswerView.focus();
+            }
           },
         },
 
@@ -186,7 +190,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper>
+    <EditorWrapper editable={!isEditable}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

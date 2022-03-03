@@ -16,7 +16,7 @@ class CodeBlockTool extends Tools {
 
   select = (state, activeViewId, activeView) => {
     const { disallowedTools } = activeView.props;
-    if (disallowedTools.includes('codeBlock')) return false;
+    if (disallowedTools.includes('CodeBlock')) return false;
     return true;
   };
 

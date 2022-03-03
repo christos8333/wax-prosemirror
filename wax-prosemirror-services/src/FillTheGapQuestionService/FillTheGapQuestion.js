@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
 import { wrapIn } from 'prosemirror-commands';
+import { v4 as uuidv4 } from 'uuid';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -10,7 +11,9 @@ class FillTheGapQuestion extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.fill_the_gap_container)(state, dispatch);
+      wrapIn(state.config.schema.nodes.fill_the_gap_container, {
+        id: uuidv4(),
+      })(state, dispatch);
     };
   }
 
@@ -22,7 +25,7 @@ class FillTheGapQuestion extends Tools {
     const { disallowedTools } = activeView.props;
     let status = true;
     const { from, to } = state.selection;
-    if (from === null || disallowedTools.includes('Lists')) return false;
+    if (from === null || disallowedTools.includes('FillTheGap')) return false;
 
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.groups.includes('questions')) {

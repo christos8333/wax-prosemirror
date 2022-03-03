@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const questionNode = {
   attrs: {
     class: { default: 'multiple-choice-question' },
-    id: { default: uuidv4() },
+    id: { default: '' },
   },
   group: 'block questions',
   content: 'block*',

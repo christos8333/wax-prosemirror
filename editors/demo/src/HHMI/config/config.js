@@ -30,7 +30,6 @@ import {
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 
 export default {
@@ -41,6 +40,7 @@ export default {
         'Base',
         {
           name: 'Annotations',
+          exclude: ['LinkTool'],
           more: [
             'Superscript',
             'Subscript',
@@ -63,12 +63,7 @@ export default {
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
 
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    invisibles([hardBreak()]),
-    WaxSelectionPlugin,
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
     new FillTheGapQuestionService(),

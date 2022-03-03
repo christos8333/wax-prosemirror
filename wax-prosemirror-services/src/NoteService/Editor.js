@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import styled from 'styled-components';
@@ -45,9 +44,9 @@ export default ({ node, view }) => {
         }),
         // This is the magic part
         dispatchTransaction,
-        disallowedTools: ['Tables', 'Images'],
+        disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
         handleDOMEvents: {
-          blur: () => {
+          blur: (editorView, event) => {
             if (context.view[noteId]) {
               context.view[noteId].dispatch(
                 context.view[noteId].state.tr.setSelection(
@@ -62,9 +61,6 @@ export default ({ node, view }) => {
           mousedown: () => {
             context.updateView({}, noteId);
             clickInNote = true;
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
             // if (noteView.hasFocus()) noteView.focus();
           },
         },
@@ -147,7 +143,7 @@ export default ({ node, view }) => {
       const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(noteFound[0].pos + 1);
       for (let i = 0; i < transactions.length; i++) {
-        let { steps } = transactions[i];
+        const { steps } = transactions[i];
         for (let j = 0; j < steps.length; j++)
           outerTr.step(steps[j].map(offsetMap));
       }
@@ -169,7 +165,6 @@ export default ({ node, view }) => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
-      // 'Mod-u': () => Commands.markActive(noteView.state.config.schema.marks.underline)(noteView.state),
     };
   };
 

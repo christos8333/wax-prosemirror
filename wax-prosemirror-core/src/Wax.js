@@ -1,13 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState, forwardRef } from 'react';
-import { each } from 'lodash';
 import { DOMSerializer } from 'prosemirror-model';
-
+import { DefaultSchema } from 'wax-prosemirror-utilities';
 import WaxProvider from './WaxContext';
 import PortalProvider from './PortalContext';
 import Application from './Application';
-
 import WaxView from './WaxView';
+import helpers from './helpers/helpers';
 
 const serializer = schema => {
   const WaxSerializer = DOMSerializer.fromSchema(schema);
@@ -52,38 +51,15 @@ const Wax = forwardRef((props, ref) => {
   const WaxOnchange = onChange || (v => true);
 
   const finalOnChange = content => {
-    /* HACK  alter toDOM of footnote, because of how PM treats inline nodes
-      with content */
     const { schema } = application.schema;
-    const notes = [];
-    each(schema.nodes, node => {
-      if (node.groups.includes('notes')) notes.push(node);
-    });
-
-    if (notes.length > 0) {
-      notes.forEach(note => {
-        schema.nodes[note.name].spec.toDOM = node => {
-          // eslint-disable-next-line prefer-rest-params
-          if (node) return [note.name, node.attrs, 0];
-        };
-      });
-    }
-
+    helpers.alterNotesSchema(schema);
     if (targetFormat === 'JSON') {
       WaxOnchange(content);
     } else {
       const serialize = serializer(schema);
       WaxOnchange(serialize(content));
     }
-
-    if (notes.length > 0) {
-      notes.forEach(note => {
-        schema.nodes[note.name].spec.toDOM = node => {
-          // eslint-disable-next-line prefer-rest-params
-          if (node) return [note.name, node.attrs];
-        };
-      });
-    }
+    helpers.revertNotesSchema(schema);
   };
 
   const TrackChange = application.config.get('config.EnableTrackChangeService');
@@ -118,7 +94,7 @@ const Wax = forwardRef((props, ref) => {
 });
 
 Wax.defaultProps = {
-  config: { services: [] },
+  config: { SchemaService: DefaultSchema, services: [] },
 };
 
 export default Wax;

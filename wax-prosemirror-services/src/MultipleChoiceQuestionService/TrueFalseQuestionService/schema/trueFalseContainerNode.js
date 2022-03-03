@@ -13,7 +13,7 @@ const trueFalseContainerNode = {
       tag: 'div.true-false',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
         };
       },

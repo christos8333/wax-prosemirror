@@ -10,19 +10,10 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
-import Placeholder from '../plugins/placeholder';
 
 const EditorWrapper = styled.div`
-  border: none;
-  display: flex;
-  flex: 2 1 auto;
-  justify-content: left;
-
-  .ProseMirror {
-    white-space: break-spaces;
-    width: 100%;
-    word-wrap: break-word;
-
+  > .ProseMirror {
+    padding: 5px;
     &:focus {
       outline: none;
     }
@@ -45,7 +36,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
-  let questionView;
+  let gapContainerView;
   const questionId = node.attrs.id;
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
@@ -70,20 +61,10 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
 
-  // eslint-disable-next-line no-shadow
-  const createPlaceholder = placeholder => {
-    return Placeholder({
-      content: placeholder,
-    });
-  };
-
-  finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your answer'),
-    ...plugins,
-  ]);
+  finalPlugins = finalPlugins.concat([...plugins]);
 
   useEffect(() => {
-    questionView = new EditorView(
+    gapContainerView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -95,7 +76,14 @@ const EditorComponent = ({ node, view, getPos }) => {
         }),
         // This is the magic part
         dispatchTransaction,
-        disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
+        disallowedTools: [
+          'Images',
+          'Lists',
+          'lift',
+          'Tables',
+          'FillTheGap',
+          'MultipleChoice',
+        ],
         handleDOMEvents: {
           mousedown: () => {
             context.view.main.dispatch(
@@ -111,21 +99,8 @@ const EditorComponent = ({ node, view, getPos }) => {
                   ),
                 ),
             );
-            // context.view[activeViewId].dispatch(
-            //   context.view[activeViewId].state.tr.setSelection(
-            //     TextSelection.between(
-            //       context.view[activeViewId].state.selection.$anchor,
-            //       context.view[activeViewId].state.selection.$head,
-            //     ),
-            //   ),
-            // );
             context.updateView({}, questionId);
-            if (questionView.hasFocus()) questionView.focus();
-          },
-          blur: (editorView, event) => {
-            if (questionView && event.relatedTarget === null) {
-              questionView.focus();
-            }
+            if (gapContainerView.hasFocus()) gapContainerView.focus();
           },
         },
 
@@ -138,16 +113,16 @@ const EditorComponent = ({ node, view, getPos }) => {
     // Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: questionView,
+        [questionId]: gapContainerView,
       },
       questionId,
     );
-    if (questionView.hasFocus()) questionView.focus();
+    gapContainerView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
-    const { state, transactions } = questionView.state.applyTransaction(tr);
-    questionView.updateState(state);
+    const { state, transactions } = gapContainerView.state.applyTransaction(tr);
+    gapContainerView.updateState(state);
     context.updateView({}, questionId);
 
     if (!tr.getMeta('fromOutside')) {

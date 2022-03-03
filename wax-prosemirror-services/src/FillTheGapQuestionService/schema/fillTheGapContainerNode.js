@@ -2,17 +2,22 @@ const fillTheGapContainerNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'fill-the-gap' },
+    feedback: { default: '' },
   },
   group: 'block questions',
+  atom: true,
+  draggable: true,
+  selectable: true,
   defining: true,
-  content: 'block+',
+  content: 'paragraph+',
   parseDOM: [
     {
       tag: 'div.fill-the-gap',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
+          feedback: dom.getAttribute('feedback'),
         };
       },
     },

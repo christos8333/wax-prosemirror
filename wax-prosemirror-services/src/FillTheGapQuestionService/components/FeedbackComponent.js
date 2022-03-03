@@ -10,6 +10,7 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 const FeedBack = styled.div`
   color: black;
   margin-top: 10px;
+  padding: 10px;
 `;
 
 const FeedBackLabel = styled.span`
@@ -18,6 +19,7 @@ const FeedBackLabel = styled.span`
 
 const FeedBackInput = styled.input`
   border: none;
+  border-bottom: 1px solid black;
   display: flex;
   width: 100%;
 
@@ -69,18 +71,6 @@ export default ({ node, view, getPos }) => {
   };
 
   const saveFeedBack = () => {
-    const allNodes = getNodes(context.view.main);
-    allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
-        context.view.main.dispatch(
-          context.view.main.state.tr.setNodeMarkup(getPos(), undefined, {
-            ...singleNode.node.attrs,
-            feedback: feedBack,
-          }),
-        );
-        setFirstRun(false);
-      }
-    });
     return false;
   };
 
@@ -111,16 +101,10 @@ export default ({ node, view, getPos }) => {
 
 const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
-  const multipleChoiceNodes = [];
+  const fillTheGapNodes = [];
   allNodes.forEach(node => {
-    if (
-      node.node.type.name === 'multiple_choice' ||
-      node.node.type.name === 'multiple_choice_single_correct' ||
-      node.node.type.name === 'true_false' ||
-      node.node.type.name === 'true_false_single_correct'
-    ) {
-      multipleChoiceNodes.push(node);
-    }
+    if (node.node.type.name === 'fill_the_gap_container')
+      fillTheGapNodes.push(node);
   });
-  return multipleChoiceNodes;
+  return fillTheGapNodes;
 };

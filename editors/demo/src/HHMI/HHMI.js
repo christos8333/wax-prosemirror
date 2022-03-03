@@ -29,7 +29,7 @@ const SubmitButton = styled.button`
 `;
 
 const t = `<p class="paragraph"></p>
-<div id="" class="multiple-choice">
+<div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc323" class="multiple-choice">
    <div class="multiple-choice-question" id="38de8538-647a-489d-8474-f92d0d256c32">
       <p class="paragraph">question </p>
    </div>
@@ -40,8 +40,7 @@ const t = `<p class="paragraph"></p>
       <p class="paragraph">answer 2</p>
    </div>
 </div>
-<div id="" class="fill-the-gap"><p class="paragraph">some text with a <span id="e88faa82-ff79-4b5a-9aa5-cb10b4236e98" class="fill-the-gap">gap</span> and </p></div>
-`;
+<div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc02" class="fill-the-gap" feedback="some feedback"><p class="paragraph">first <span id="16ec8f33-db5b-4839-9567-8aa73b776bcf" class="fill-the-gap" anser="">answer1; answer2; answer3</span> second <span id="72f23a71-e774-4834-acba-f357afb6a243" class="fill-the-gap" anser="">answer 4; answer5;</span></p></div>`;
 
 const Hhmi = () => {
   const [submited, isSubmited] = useState(false);
@@ -68,7 +67,7 @@ const Hhmi = () => {
         value={t}
         readonly={readOnly}
         layout={HhmiLayout}
-        onChange={source => console.log(source)}
+        // onChange={source => console.log(source)}
       />
     </>
   );

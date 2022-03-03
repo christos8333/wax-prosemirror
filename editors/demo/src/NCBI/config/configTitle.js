@@ -6,8 +6,6 @@ import {
   LinkService,
 } from 'wax-prosemirror-services';
 
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
-
 const configTitle = {
   MenuService: [
     {
@@ -56,7 +54,7 @@ const configTitle = {
   RulesService: [],
   ShortCutsService: {},
 
-  PmPlugins: [WaxSelectionPlugin],
+  PmPlugins: [],
 
   services: [
     new InlineAnnotationsService(),

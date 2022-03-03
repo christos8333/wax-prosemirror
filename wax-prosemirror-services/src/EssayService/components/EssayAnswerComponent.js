@@ -22,6 +22,8 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
+  opacity: ${props => (props.editable ? 1 : 0.4)};
+  cursor: ${props => (props.editable ? 'default' : 'not-allowed')};
 
   .ProseMirror {
     white-space: break-spaces;
@@ -118,7 +120,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
         mount: editorRef.current,
       },
       {
-        editable: () => isEditable,
+        editable: () => !isEditable,
         state: EditorState.create({
           doc: node,
           plugins: finalPlugins,
@@ -191,7 +193,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper>
+    <EditorWrapper editable={!isEditable}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

@@ -22,8 +22,8 @@ const BlockLevelTools = props => {
         groups.map(group => (
           <BlockElementGroup
             groupName={group.groupName}
-            key={group.groupName}
             items={group.items}
+            key={group.groupName}
             view={view}
           />
         ))}

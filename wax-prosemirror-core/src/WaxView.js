@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 
 import applyDevTools from 'prosemirror-dev-tools';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext } from './WaxContext';

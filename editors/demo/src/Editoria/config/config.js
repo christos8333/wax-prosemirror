@@ -45,7 +45,7 @@ import {
   CustomTagService,
 } from 'wax-prosemirror-services';
 
-import { DefaultSchema } from 'wax-prosemirror-utilities';
+import { EditoriaSchema } from 'wax-prosemirror-utilities';
 
 import invisibles, {
   space,
@@ -116,7 +116,7 @@ export default {
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
-  SchemaService: DefaultSchema,
+  SchemaService: EditoriaSchema,
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},

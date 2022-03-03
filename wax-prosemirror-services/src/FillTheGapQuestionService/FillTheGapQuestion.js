@@ -25,7 +25,7 @@ class FillTheGapQuestion extends Tools {
     const { disallowedTools } = activeView.props;
     let status = true;
     const { from, to } = state.selection;
-    if (from === null || disallowedTools.includes('Lists')) return false;
+    if (from === null || disallowedTools.includes('FillTheGap')) return false;
 
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.groups.includes('questions')) {

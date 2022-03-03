@@ -111,7 +111,8 @@ class EssayQuestion extends Tools {
     let status = true;
     const { from, to } = state.selection;
 
-    if (from === null) return false;
+    const { disallowedTools } = activeView.props;
+    if (from === null || disallowedTools.includes('Essay')) status = false;
 
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.groups.includes('questions')) {

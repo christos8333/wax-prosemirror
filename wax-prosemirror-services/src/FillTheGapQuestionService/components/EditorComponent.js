@@ -92,16 +92,30 @@ const EditorComponent = ({ node, view, getPos }) => {
         }),
         // This is the magic part
         dispatchTransaction,
-        disallowedTools: ['Images', 'Lists', 'lift', 'Tables', 'FillTheGap'],
+        disallowedTools: [
+          'Images',
+          'Lists',
+          'lift',
+          'Tables',
+          'FillTheGap',
+          'Gap',
+          'MultipleChoice',
+          'Essay',
+        ],
         handleDOMEvents: {
           mousedown: () => {
-            context.view[activeViewId].dispatch(
-              context.view[activeViewId].state.tr.setSelection(
-                TextSelection.between(
-                  context.view[activeViewId].state.selection.$anchor,
-                  context.view[activeViewId].state.selection.$head,
+            context.view.main.dispatch(
+              context.view.main.state.tr
+                .setMeta('outsideView', questionId)
+                .setSelection(
+                  new TextSelection(
+                    context.view.main.state.tr.doc.resolve(
+                      getPos() +
+                        2 +
+                        context.view[questionId].state.selection.to,
+                    ),
+                  ),
                 ),
-              ),
             );
             context.updateView({}, questionId);
 

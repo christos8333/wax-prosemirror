@@ -26,14 +26,19 @@ class CreateGap extends Tools {
     };
   }
 
-  select = (state, activeViewId) => {
+  select = (state, activeViewId, activeView) => {
     let status = false;
     const { from, to } = state.selection;
+    const { disallowedTools } = activeView.props;
+
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.name === 'fill_the_gap_container') {
         status = true;
       }
     });
+
+    if (from === null || disallowedTools.includes('Gap')) status = false;
+
     return status;
   };
 

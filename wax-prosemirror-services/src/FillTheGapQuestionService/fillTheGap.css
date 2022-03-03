@@ -1,9 +1,13 @@
 /* fill The Gap */
 
+.fill-the-gap {
+}
+
 .ProseMirror .fill-the-gap .ProseMirror {
-  /* box-shadow: none; */
+  box-shadow: none;
+  border-bottom: 3px solid #F5F5F7;
   line-height: 2.2;
-  padding: 25px 5px 20px 5px;
+  padding: 25px 10px 20px 10px;
 }
 
 .ProseMirror .fill-the-gap span > .ProseMirror {

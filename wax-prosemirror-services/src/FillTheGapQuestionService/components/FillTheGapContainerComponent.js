@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -8,10 +9,12 @@ import FeedbackComponent from './FeedbackComponent';
 const FillTheGapContainer = styled.div`
   border: 3px solid #f5f5f7;
   margin-bottom: 30px;
-  padding: 3px;
 `;
+
 const FillTheGapWrapper = styled.div`
-  margin-bottom: 15px;
+  margin-bottom: ;
+  margin: 0px 38px 15px 38px;
+
   margin-top: 10px;
 `;
 

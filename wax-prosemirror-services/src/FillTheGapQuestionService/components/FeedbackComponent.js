@@ -10,6 +10,7 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 const FeedBack = styled.div`
   color: black;
   margin-top: 10px;
+  padding: 10px;
 `;
 
 const FeedBackLabel = styled.span`
@@ -17,9 +18,14 @@ const FeedBackLabel = styled.span`
 `;
 
 const FeedBackInput = styled.input`
-  // border: none;
+  border: none;
+  border-bottom: 1px solid black;
   display: flex;
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
 
   ::placeholder {
     color: rgb(170, 170, 170);

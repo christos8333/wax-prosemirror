@@ -21,6 +21,10 @@ const FeedBackInput = styled.input`
   display: flex;
   width: 100%;
 
+  &:focus {
+    outline: none;
+  }
+
   ::placeholder {
     color: rgb(170, 170, 170);
     font-style: italic;

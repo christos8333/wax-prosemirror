@@ -16,11 +16,10 @@ const EditorWrapper = styled.span`
   display: inline-flex;
 
   > .ProseMirror {
-    background: #a6a6a6 !important;
-    border: 1px solid #a6a6a6;
+    border-bottom: 1px solid #a6a6a6 !important;
     border-radius: 4px;
     box-shadow: none;
-    color: #fff !important;
+    color: #008000;
     display: inline;
     min-width: 50px;
     padding: 0px 2px 0px 2px !important;

@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const multipleChoiceNode = {
   attrs: {
     class: { default: 'multiple-choice-option' },
-    id: { default: uuidv4() },
+    id: { default: '' },
     correct: { default: false },
     answer: { default: false },
     feedback: { default: '' },

@@ -1,13 +1,13 @@
 const fillTheGapNode = {
+  attrs: {
+    id: { default: '' },
+    class: { default: 'fill-the-gap' },
+  },
   group: 'inline',
   content: 'text*',
   inline: true,
   atom: true,
   excludes: 'fill_the_gap',
-  attrs: {
-    id: { default: '' },
-    class: { default: 'fill-the-gap' },
-  },
   parseDOM: [
     {
       tag: 'span.fill-the-gap',

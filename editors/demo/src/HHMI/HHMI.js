@@ -68,7 +68,7 @@ const Hhmi = () => {
         value={t}
         readonly={readOnly}
         layout={HhmiLayout}
-        // onChange={source => console.log(source)}
+        onChange={source => console.log(source)}
       />
     </>
   );

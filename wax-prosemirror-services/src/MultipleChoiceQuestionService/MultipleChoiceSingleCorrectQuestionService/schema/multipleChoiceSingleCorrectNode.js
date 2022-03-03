@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const multipleChoiceSingleCorrectNode = {
   attrs: {
     class: { default: 'multiple-choice-option-single-correct' },
-    id: { default: uuidv4() },
+    id: { default: '' },
     correct: { default: false },
     answer: { default: false },
     feedback: { default: '' },

@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const multipleChoiceContainerNode = {
   attrs: {
-    id: { default: uuidv4() },
+    id: { default: '' },
     class: { default: 'multiple-choice' },
   },
   group: 'block questions',

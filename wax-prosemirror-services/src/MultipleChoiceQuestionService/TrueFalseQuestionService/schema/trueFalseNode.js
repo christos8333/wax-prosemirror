@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const trueFalseNode = {
   attrs: {
     class: { default: 'true-false-option' },
-    id: { default: uuidv4() },
+    id: { default: '' },
     correct: { default: false },
     answer: { default: false },
     feedback: { default: '' },

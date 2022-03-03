@@ -6,8 +6,9 @@ const fillTheGapContainerNode = {
     class: { default: 'fill-the-gap' },
   },
   group: 'block questions',
+  atom: true,
   defining: true,
-  content: 'block+',
+  content: 'paragraph+',
   parseDOM: [
     {
       tag: 'div.fill-the-gap',

@@ -67,8 +67,8 @@ const Hhmi = () => {
         fileUpload={file => renderImage(file)}
         value={t}
         readonly={readOnly}
-        // layout={HhmiLayout}
-        onChange={source => console.log(source)}
+        layout={HhmiLayout}
+        // onChange={source => console.log(source)}
       />
     </>
   );

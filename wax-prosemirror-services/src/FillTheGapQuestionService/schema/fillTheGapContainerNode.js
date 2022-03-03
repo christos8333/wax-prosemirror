@@ -1,12 +1,12 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const fillTheGapContainerNode = {
   attrs: {
-    id: { default: uuidv4() },
+    id: { default: '' },
     class: { default: 'fill-the-gap' },
   },
   group: 'block questions',
   atom: true,
+  draggable: true,
+  selectable: true,
   defining: true,
   content: 'paragraph+',
   parseDOM: [

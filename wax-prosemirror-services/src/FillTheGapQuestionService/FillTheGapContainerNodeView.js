@@ -53,14 +53,11 @@ export default class FillTheGapContainerNodeView extends AbstractNodeView {
     if (event.target.type === 'text') {
       return true;
     }
+
     return (
       this.context.view[this.node.attrs.id] !== undefined &&
       event.target !== undefined &&
       this.context.view[this.node.attrs.id].dom.contains(event.target)
     );
-  }
-
-  ignoreMutation() {
-    return true;
   }
 }

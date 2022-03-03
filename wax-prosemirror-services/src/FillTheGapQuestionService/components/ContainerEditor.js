@@ -32,6 +32,7 @@ const EditorWrapper = styled.span`
 `;
 
 const EditorComponent = ({ node, view, getPos }) => {
+  console.log(node);
   const editorRef = useRef();
 
   const context = useContext(WaxContext);

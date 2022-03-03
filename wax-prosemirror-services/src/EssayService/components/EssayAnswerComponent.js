@@ -146,9 +146,6 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
             );
             context.updateView({}, questionId);
 
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
             if (essayAnswerView.hasFocus()) essayAnswerView.focus();
           },
           blur: (editorView, event) => {

@@ -17,18 +17,37 @@ const FeedBackLabel = styled.span`
 `;
 
 const FeedBackInput = styled.input`
-  //   border: none;
+  // border: none;
   display: flex;
   width: 100%;
+
+  ::placeholder {
+    color: rgb(170, 170, 170);
+    font-style: italic;
+  }
 `;
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const [feedBack, setFeedBack] = useState(' ');
+  const [isFirstRun, setFirstRun] = useState(true);
   const [typing, setTyping] = useState(false);
   const feedBackRef = useRef(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const allNodes = getNodes(context.view.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        if (!typing || context.transaction.meta.inputType === 'Redo') {
+          setFeedBack(singleNode.node.attrs.feedback);
+        }
+        if (!isFirstRun) {
+          if (singleNode.node.attrs.feedback === '')
+            setFeedBack(singleNode.node.attrs.feedback);
+        }
+      }
+    });
+  }, [getNodes(context.view.main)]);
 
   const handleKeyDown = e => {
     setTyping(true);
@@ -72,4 +91,14 @@ export default ({ node, view, getPos }) => {
       />
     </FeedBack>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const fillTheGapNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'fill_the_gap_container')
+      fillTheGapNodes.push(node);
+  });
+  return fillTheGapNodes;
 };

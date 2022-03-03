@@ -11,8 +11,9 @@ import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 
-const EditorWrapper = styled.span`
+const EditorWrapper = styled.div`
   > .ProseMirror {
+    padding: 5px;
     &:focus {
       outline: none;
     }
@@ -62,8 +63,6 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   finalPlugins = finalPlugins.concat([...plugins]);
 
-  const { activeViewId } = context;
-
   useEffect(() => {
     gapContainerView = new EditorView(
       {
@@ -94,9 +93,6 @@ const EditorComponent = ({ node, view, getPos }) => {
                 ),
             );
             context.updateView({}, questionId);
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
             if (gapContainerView.hasFocus()) gapContainerView.focus();
           },
         },

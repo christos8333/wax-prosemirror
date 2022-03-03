@@ -20,6 +20,11 @@ const FeedBackInput = styled.input`
   border: none;
   display: flex;
   width: 100%;
+
+  ::placeholder {
+    color: rgb(170, 170, 170);
+    font-style: italic;
+  }
 `;
 
 export default ({ node, view, getPos }) => {

@@ -10,6 +10,7 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
+import InputComponent from './InputComponent';
 
 const EditorWrapper = styled.span`
   display: inline-flex;
@@ -103,9 +104,7 @@ const EditorComponent = ({ node, view, getPos }) => {
               ),
             );
             context.updateView({}, questionId);
-            // Kludge to prevent issues due to the fact that the whole
-            // footnote is node-selected (and thus DOM-selected) when
-            // the parent editor is focused.
+
             if (gapView.hasFocus()) gapView.focus();
           },
         },
@@ -145,9 +144,15 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper>
-      <div ref={editorRef} />
-    </EditorWrapper>
+    <>
+      {isEditable ? (
+        <EditorWrapper>
+          <div ref={editorRef} />
+        </EditorWrapper>
+      ) : (
+        <InputComponent getPos={getPos} node={node} view={view} />
+      )}
+    </>
   );
 };
 

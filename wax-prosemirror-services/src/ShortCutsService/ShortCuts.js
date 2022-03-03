@@ -44,6 +44,14 @@ const backSpaceShortCut = (state, dispatch, view) => {
   }
 
   state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+    if (node.type.name === 'fill_the_gap_container') {
+      const index = $from.index($from.depth);
+      const $beforePos = state.doc.resolve($from.posAtIndex(index - 1));
+      dispatch(state.tr.setSelection(new NodeSelection($beforePos)));
+    }
+  });
+
+  state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
     if (node.type.name === 'math_display') {
       const $start = state.tr.doc.resolve(state.tr.selection.$anchor.start());
       const $end = state.tr.doc.resolve(state.tr.selection.$anchor.end());

@@ -13,18 +13,6 @@ import { WaxContext } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.span`
   > .ProseMirror {
-    // background: #a6a6a6 !important;
-    // border: 1px solid #a6a6a6;
-    // border-radius: 4px;
-    // box-shadow: none;
-    // color: #fff !important;
-    // display: inline;
-    // min-width: 50px;
-    // padding: 0px 2px 0px 2px !important;
-    // white-space: break-spaces;
-    // width: auto;
-    // word-wrap: break-word;
-
     &:focus {
       outline: none;
     }

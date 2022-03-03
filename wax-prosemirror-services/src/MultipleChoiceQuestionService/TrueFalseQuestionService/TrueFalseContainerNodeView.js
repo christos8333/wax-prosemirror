@@ -1,6 +1,6 @@
-import AbstractNodeView from '../PortalService/AbstractNodeView';
+import AbstractNodeView from '../../PortalService/AbstractNodeView';
 
-export default class FillTheGapContainerNodeView extends AbstractNodeView {
+export default class TrueFalseContainerNodeView extends AbstractNodeView {
   constructor(
     node,
     view,
@@ -19,7 +19,7 @@ export default class FillTheGapContainerNodeView extends AbstractNodeView {
   }
 
   static name() {
-    return 'fill_the_gap_container';
+    return 'true_false_container';
   }
 
   update(node) {
@@ -45,22 +45,11 @@ export default class FillTheGapContainerNodeView extends AbstractNodeView {
     return true;
   }
 
-  selectNode() {
-    this.context.view[this.node.attrs.id].focus();
-  }
-
   stopEvent(event) {
     if (event.target.type === 'text') {
       return true;
     }
-    return (
-      this.context.view[this.node.attrs.id] !== undefined &&
-      event.target !== undefined &&
-      this.context.view[this.node.attrs.id].dom.contains(event.target)
-    );
-  }
-
-  ignoreMutation() {
-    return true;
+    const innerView = this.context.view[this.node.attrs.id];
+    return innerView && innerView.dom.contains(event.target);
   }
 }

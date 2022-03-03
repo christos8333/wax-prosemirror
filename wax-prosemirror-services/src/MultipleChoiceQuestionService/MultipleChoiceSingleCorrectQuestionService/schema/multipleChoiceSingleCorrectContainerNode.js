@@ -14,7 +14,7 @@ const multipleChoiceSingleCorrectContainerNode = {
       tag: 'div.multiple-choice-single-correct',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           correctId: dom.getAttribute('correctId'),
         };

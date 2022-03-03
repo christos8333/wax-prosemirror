@@ -11,7 +11,7 @@ const multipleChoiceContainerNode = {
       tag: 'div.multiple-choice',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
         };
       },

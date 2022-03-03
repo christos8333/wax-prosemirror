@@ -2,7 +2,6 @@ const fillTheGapContainerNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'fill-the-gap' },
-    answer: { default: false },
     feedback: { default: '' },
   },
   group: 'block questions',
@@ -16,9 +15,8 @@ const fillTheGapContainerNode = {
       tag: 'div.fill-the-gap',
       getAttrs(dom) {
         return {
-          id: dom.dataset.id,
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
-          answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
           feedback: dom.getAttribute('feedback'),
         };
       },

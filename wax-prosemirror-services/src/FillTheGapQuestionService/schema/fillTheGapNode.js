@@ -2,6 +2,7 @@ const fillTheGapNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'fill-the-gap' },
+    anser: { default: '' },
   },
   group: 'inline',
   content: 'text*',
@@ -15,6 +16,7 @@ const fillTheGapNode = {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
+          answer: dom.getAttribute('answer'),
         };
       },
     },

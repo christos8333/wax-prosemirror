@@ -1,7 +1,7 @@
 /* FootNote */
 
 .ProseMirror {
-  counter-reset: footnote;
+  counter-reset: footnote!important;
 }
 
 .ProseMirror footnote {

@@ -31,7 +31,7 @@ const FeedBackInput = styled.input`
   }
 `;
 
-export default ({ node, view, getPos }) => {
+export default ({ node, view, getPos, readOnly }) => {
   const context = useContext(WaxContext);
   const [feedBack, setFeedBack] = useState(' ');
   const [isFirstRun, setFirstRun] = useState(true);
@@ -96,6 +96,7 @@ export default ({ node, view, getPos }) => {
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
       <FeedBackInput
+        readOnly={readOnly}
         onBlur={saveFeedBack}
         onChange={feedBackInput}
         onFocus={onFocus}

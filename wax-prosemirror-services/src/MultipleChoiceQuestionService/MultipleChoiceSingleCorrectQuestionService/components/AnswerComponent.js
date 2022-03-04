@@ -180,7 +180,12 @@ export default ({ node, view, getPos }) => {
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
           {!(readOnly && !customProps.showFeedBack) && (
-            <FeedbackComponent getPos={getPos} node={node} view={view} />
+            <FeedbackComponent
+              getPos={getPos}
+              node={node}
+              readOnly={readOnly}
+              view={view}
+            />
           )}
         </QuestionWrapper>
       </QuestionControlsWrapper>

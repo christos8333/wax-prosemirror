@@ -42,7 +42,7 @@
     }
   },
   "resolutions": {
-    "prosemirror-model": "1.14.3",
+    "prosemirror-view": "1.23.7",
     "styled-components": "5.3.0"
   },
   "devDependencies": {

@@ -38,7 +38,12 @@ export default ({ node, view, getPos }) => {
       <FillTheGapContainer className="fill-the-gap">
         <ContainerEditor getPos={getPos} node={node} view={view} />
         {!(readOnly && !customProps.showFeedBack) && (
-          <FeedbackComponent getPos={getPos} node={node} view={view} />
+          <FeedbackComponent
+            getPos={getPos}
+            node={node}
+            readOnly={readOnly}
+            view={view}
+          />
         )}
       </FillTheGapContainer>
     </FillTheGapWrapper>

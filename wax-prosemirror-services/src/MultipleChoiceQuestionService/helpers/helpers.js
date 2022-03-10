@@ -79,11 +79,11 @@ const createOptions = (main, context, parentType, questionType, answerType) => {
   tr.replaceSelectionWith(secondOption);
   dispatch(tr);
 
-  setTimeout(() => {
-    createEmptyParagraph(context, firstOption.attrs.id);
-    createEmptyParagraph(context, secondOption.attrs.id);
-    createEmptyParagraph(context, question.attrs.id);
-  }, 50);
+  // setTimeout(() => {
+  //   createEmptyParagraph(context, firstOption.attrs.id);
+  //   createEmptyParagraph(context, secondOption.attrs.id);
+  //   createEmptyParagraph(context, question.attrs.id);
+  // }, 50);
 
   return true;
 };

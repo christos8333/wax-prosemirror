@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 const activeStyles = css`
   background: #535e76;
   color: #fff;
-  padding: 5px 15px 5px 15px;
+  padding: 10px 15px 10px 15px;
 `;
 
 const ProjectContainer = styled.div`
@@ -56,7 +56,7 @@ const ProjectButton = styled.button`
   color: #535e76;
   margin-right: 20px;
   background: #fff;
-  padding: 4px 14px 4px 14px;
+  padding: 10px 15px 10px 15px;
   ${props => props.isActive && activeStyles}
 `;
 

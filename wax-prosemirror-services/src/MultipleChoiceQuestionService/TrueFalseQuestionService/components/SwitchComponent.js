@@ -12,17 +12,25 @@ const StyledSwitch = styled(Switch)`
   display: flex;
   margin-left: auto;
 
-  span:nth-child(1) {
-    // bottom: 36px;
-    // display: flex;
-    // left: 4px;
-    // position: relative;
-    // width: 0px;
+    button {
+    width: 65px;
   }
 
-  .ant-switch-checked {
-    background-color: green;
+  .rc-switch-inner {
+    left: 25px;
+    font-size: 14px;
   }
+
+  .rc-switch-checked {
+    border: 1px solid #008000;
+    background-color: #008000;
+
+    .rc-switch-inner {
+      left: 6px;
+    }
+    :after {
+      left: 42px;
+   
 `;
 
 const AnswerContainer = styled.span`

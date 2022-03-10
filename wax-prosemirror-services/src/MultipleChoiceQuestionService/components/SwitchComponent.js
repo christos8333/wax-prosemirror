@@ -11,18 +11,6 @@ import Switch from './Switch';
 const StyledSwitch = styled(Switch)`
   display: flex;
   margin-left: auto;
-
-  span:nth-child(1) {
-    // bottom: 36px;
-    // display: flex;
-    // left: 4px;
-    // position: relative;
-    // width: 0px;
-  }
-
-  .ant-switch-checked {
-    background-color: green;
-  }
 `;
 
 const AnswerContainer = styled.span`
@@ -32,7 +20,8 @@ const AnswerContainer = styled.span`
 const Correct = styled.span`
   margin-right: 10px;
   span {
-   color: #008000;
+    color: #008000;
+  }
 `;
 
 const Answer = styled.span`

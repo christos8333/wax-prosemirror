@@ -13,9 +13,24 @@ const StyledSwitch = styled(Switch)`
   display: flex;
   margin-left: auto;
 
-  .ant-switch-checked {
-    background-color: green;
+    button {
+    width: 65px;
   }
+
+  .rc-switch-inner {
+    left: 25px;
+    font-size: 14px;
+  }
+
+  .rc-switch-checked {
+    border: 1px solid #008000;
+    background-color: #008000;
+
+    .rc-switch-inner {
+      left: 6px;
+    }
+    :after {
+      left: 42px;
 `;
 
 const AnswerContainer = styled.span`

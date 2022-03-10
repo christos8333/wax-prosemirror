@@ -32,6 +32,14 @@ const EditorWrapper = styled.div`
       outline: none;
     }
 
+    :empty::before {
+      content: 'Type your question';
+      color: #aaa;
+      float: left;
+      font-style: italic;
+      pointer-events: none;
+    }
+
     p.empty-node:first-child::before {
       content: attr(data-content);
     }

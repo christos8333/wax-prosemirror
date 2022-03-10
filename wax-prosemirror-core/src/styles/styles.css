@@ -143,14 +143,6 @@ img.ProseMirror-separator {
 
 /* -- Selection Plugin ---------------------------------- */
 
-  p::selection,
-  p > *::selection {
-    background-color: #c0c0c0;
-  }
-  .katex-html *::selection {
-    background-color: none !important;
-  }
-
   .math-node.math-select .math-render {
     background-color: #c0c0c0ff;
   }

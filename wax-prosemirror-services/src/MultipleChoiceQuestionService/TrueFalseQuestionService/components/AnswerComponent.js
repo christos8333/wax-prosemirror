@@ -5,13 +5,12 @@ import styled from 'styled-components';
 import { TextSelection, NodeSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { PlusSquareOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Icon } from 'wax-prosemirror-components';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import helpers from '../../helpers/helpers';
 import FeedbackComponent from '../../components/FeedbackComponent';
 import EditorComponent from '../../components/EditorComponent';
-import Button from '../../components/Button';
 import SwitchComponent from './SwitchComponent';
 
 const Wrapper = styled.div`
@@ -69,6 +68,17 @@ const QuestionData = styled.div`
   align-items: normal;
   display: flex;
   flex-direction: row;
+`;
+
+const ActionButton = styled.button`
+  background: transparent;
+  cursor: pointer;
+  margin-top: 16px;
+`;
+
+const StyledIconAction = styled(Icon)`
+  height: 24px;
+  width: 24px;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -191,17 +201,14 @@ export default ({ node, view, getPos }) => {
       </QuestionControlsWrapper>
       <IconsWrapper>
         {!readOnly && (
-          <Button
-            icon={<PlusSquareOutlined title="Add Option" />}
-            onClick={() => addOption(node.attrs.id)}
-          />
+          <ActionButton onClick={() => addOption(node.attrs.id)} type="button">
+            <StyledIconAction name="plusSquare" />
+          </ActionButton>
         )}
         {!readOnly && (
-          <Button
-            icon={
-              <DeleteOutlined onClick={removeOption} title="Delete Option" />
-            }
-          />
+          <ActionButton onClick={removeOption} type="button">
+            <StyledIconAction name="deleteOutlined" />
+          </ActionButton>
         )}
       </IconsWrapper>
     </Wrapper>

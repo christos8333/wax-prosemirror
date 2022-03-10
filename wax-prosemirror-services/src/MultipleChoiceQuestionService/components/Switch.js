@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Switch as AntSwitch } from 'antd';
+import Switch from 'rc-switch';
 
 import { grid } from '@pubsweet/ui-toolkit';
 
@@ -21,7 +22,7 @@ const Label = styled.span`
     `}
 `;
 
-const Switch = props => {
+const SwitchComponent = props => {
   const { className, label, labelPosition, ...rest } = props;
 
   return (
@@ -30,7 +31,7 @@ const Switch = props => {
         <Label labelPosition={labelPosition}>{label}</Label>
       )}
 
-      <AntSwitch {...rest} />
+      <Switch {...rest} />
 
       {label && labelPosition === 'right' && (
         <Label labelPosition={labelPosition}>{label}</Label>
@@ -39,14 +40,14 @@ const Switch = props => {
   );
 };
 
-Switch.propTypes = {
+SwitchComponent.propTypes = {
   label: PropTypes.string,
   labelPosition: PropTypes.string,
 };
 
-Switch.defaultProps = {
+SwitchComponent.defaultProps = {
   label: null,
   labelPosition: 'right',
 };
 
-export default Switch;
+export default SwitchComponent;

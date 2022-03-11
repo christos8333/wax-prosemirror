@@ -40,7 +40,7 @@ export default {
         'Base',
         {
           name: 'Annotations',
-          exclude: ['LinkTool'],
+          // exclude: ['LinkTool'],
           more: [
             'Superscript',
             'Subscript',

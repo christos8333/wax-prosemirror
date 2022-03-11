@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 import React, {
   useRef,
@@ -9,7 +10,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
-
+import styled from 'styled-components';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -20,6 +21,10 @@ import ComponentPlugin from './ComponentPlugin';
 import WaxOptions from './WaxOptions';
 import helpers from './helpers/helpers';
 import './styles/styles.css';
+
+const EditorContainer = styled.div`
+  position: relative;
+`;
 
 const WaxPortals = ComponentPlugin('waxPortals');
 const WaxOverlays = ComponentPlugin('waxOverlays');
@@ -156,11 +161,11 @@ const WaxView = forwardRef((props, ref) => {
   };
 
   const editor = (
-    <>
+    <EditorContainer>
       <div ref={setEditorRef} />
       {context.activeViewId === 'main' && <WaxOverlays group="main" />}
       <WaxPortals />
-    </>
+    </EditorContainer>
   );
 
   return useMemo(

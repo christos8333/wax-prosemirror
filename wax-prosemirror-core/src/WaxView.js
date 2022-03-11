@@ -23,6 +23,7 @@ import helpers from './helpers/helpers';
 import './styles/styles.css';
 
 const EditorContainer = styled.div`
+  height: 100%;
   position: relative;
 `;
 

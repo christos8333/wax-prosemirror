@@ -40,6 +40,10 @@ const EditorWrapper = styled.div`
       pointer-events: none;
     }
 
+    p:first-child {
+      margin: 0;
+    }
+
     p.empty-node:first-child::before {
       content: attr(data-content);
     }

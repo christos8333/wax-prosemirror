@@ -78,12 +78,12 @@ const createOptions = (main, context, parentType, questionType, answerType) => {
   tr.setSelection(TextSelection.create(tr.doc, newPos + 1));
   tr.replaceSelectionWith(secondOption);
   dispatch(tr);
-
-  // setTimeout(() => {
-  //   createEmptyParagraph(context, firstOption.attrs.id);
-  //   createEmptyParagraph(context, secondOption.attrs.id);
-  //   createEmptyParagraph(context, question.attrs.id);
-  // }, 50);
+  setTimeout(() => {
+    context.view[question.attrs.id].focus();
+    //   createEmptyParagraph(context, firstOption.attrs.id);
+    //   createEmptyParagraph(context, secondOption.attrs.id);
+    //   createEmptyParagraph(context, question.attrs.id);
+  }, 50);
 
   return true;
 };

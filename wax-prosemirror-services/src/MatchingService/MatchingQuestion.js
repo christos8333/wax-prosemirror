@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import Tools from '../../lib/Tools';
+import Tools from '../lib/Tools';
 
 @injectable()
 class MatchingQuestion extends Tools {

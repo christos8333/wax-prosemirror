@@ -4,57 +4,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { Icon } from 'wax-prosemirror-components';
-import styled from 'styled-components';
-import Switch from '../../components/Switch';
-
-const StyledSwitch = styled(Switch)`
-  display: flex;
-  margin-left: auto;
-
-  span:nth-child(1) {
-    // bottom: 36px;
-    // display: flex;
-    // left: 4px;
-    // position: relative;
-    // width: 0px;
-  }
-
-  .ant-switch-checked {
-    background-color: green;
-  }
-`;
-
-const AnswerContainer = styled.span`
-  margin-left: auto;
-`;
-
-const Correct = styled.span`
-  margin-right: 10px;
-  span {
-   color: #008000;
-`;
-
-const Answer = styled.span`
-  margin-right: 10px;
-  span {
-    color: ${props => (props.isCorrect ? ' #008000' : 'red')};
-  }
-`;
-
-const StyledIconCorrect = styled(Icon)`
-  fill: #008000;
-  pointer-events: none;
-  height: 24px;
-  width: 24px;
-`;
-
-const StyledIconWrong = styled(Icon)`
-  fill: red;
-  pointer-events: none;
-  height: 24px;
-  width: 24px;
-`;
+import TrueFalseSwitch from './TrueFalseSwitch';
 
 const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
@@ -101,35 +51,14 @@ const CustomSwitch = ({ node, getPos }) => {
     });
   };
 
-  if (customProps.showFeedBack) {
-    const correct = node.attrs.correct ? 'TRUE' : 'FALSE';
-    const answer = node.attrs.answer ? 'TRUE' : 'FALSE';
-    const isCorrect = node.attrs.correct === node.attrs.answer;
-
-    return (
-      <AnswerContainer>
-        <Correct>
-          Correct:
-          <span>{correct}</span>
-        </Correct>
-
-        <Answer isCorrect={isCorrect}>
-          Answer: <span>{answer}</span>
-        </Answer>
-        {isCorrect && <StyledIconCorrect name="done" />}
-        {!isCorrect && <StyledIconWrong name="close" />}
-      </AnswerContainer>
-    );
-  }
-
   return (
-    <StyledSwitch
-      checked={isEditable ? checked : checkedAnswerMode}
-      checkedChildren="True"
-      label="True/false?"
-      labelPosition="left"
-      onChange={handleChange}
-      unCheckedChildren="False"
+    <TrueFalseSwitch
+      checked={checked}
+      checkedAnswerMode={checkedAnswerMode}
+      customProps={customProps}
+      handleChange={handleChange}
+      isEditable={isEditable}
+      node={node}
     />
   );
 };

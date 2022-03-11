@@ -3,10 +3,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Switch from 'rc-switch';
-
 import { grid } from '@pubsweet/ui-toolkit';
 
-const Wrapper = styled.span``;
+const Wrapper = styled.span`
+  button {
+    width: 55px;
+  }
+
+  .rc-switch-inner {
+    left: 31px;
+  }
+
+  .rc-switch-checked {
+    border: 1px solid #008000;
+    background-color: #008000;
+
+    .rc-switch-inner {
+      left: 6px;
+    }
+    :after {
+      left: 33px;
+    }
+  }
+`;
 
 const Label = styled.span`
   ${props =>

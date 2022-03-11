@@ -36,7 +36,7 @@ const t = `<p class="paragraph"></p>
    <div class="multiple-choice-option" id="debb868e-bbfe-4ba2-bf93-c963153ff791" correct="false" answer="false" feedback="feedback 1">
       <p class="paragraph">answer 1</p>
    </div>
-   <div class="multiple-choice-option" id="810bcf10-4fcb-4d1e-9dab-ce35cbd28527" correct="true" answer="false" feedback="feedback 2">
+   <div class="multiple-choice-option" id="810bcf10-4fcb-4d1e-9dab-ce35cbd28527" correct="true" answer="true" feedback="feedback 2">
       <p class="paragraph">answer 2</p>
    </div>
 </div>

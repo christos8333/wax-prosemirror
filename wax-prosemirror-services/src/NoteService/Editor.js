@@ -27,7 +27,7 @@ export default ({ node, view }) => {
   let noteView;
   let clickInNote = false;
   let typing = false;
-  // eslint-disable-next-line react/destructuring-assignment
+
   const isEditable = context.view.main.props.editable(editable => {
     return editable;
   });

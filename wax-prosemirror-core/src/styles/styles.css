@@ -3,7 +3,7 @@
   background: #fff;
   color: #111;
   font-feature-settings: 'liga' 0; /* the above doesn't seem to work in Edge */
-  font-family: 'Merriweather';
+  font-family: 'Arial';
   font-variant-ligatures: none;
   line-height: 1.6;
   font-size: 14px;

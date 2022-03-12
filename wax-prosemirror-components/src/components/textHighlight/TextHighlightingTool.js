@@ -56,8 +56,13 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   ];
 
   const ref = useRef();
-  const { activeViewId, activeView, pmViews } = useContext(WaxContext);
-  const isEditable = pmViews.main.props.editable(editable => {
+  const {
+    activeViewId,
+    activeView,
+    pmViews: { main },
+  } = useContext(WaxContext);
+
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -107,7 +112,7 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
           disabled={isDisabled}
           style={{
             backgroundColor:
-              localStorage.getItem('lastBgColor') !== undefined
+              localStorage.getItem('lastBgColor') !== null
                 ? localStorage.getItem('lastBgColor')
                 : highlightDropDownOptions[0].name,
             opacity: isDisabled ? '0.6' : '1',

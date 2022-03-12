@@ -74,12 +74,12 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
 
   const {
     app,
-    view: { main },
+    pmViews: { main },
     activeView,
     activeViewId,
   } = useContext(WaxContext);
 
-  const { state, dispatch } = main;
+  const { state } = main;
   const { $from } = state.selection;
 
   const className = $from.parent.attrs.class ? $from.parent.attrs.class : '';

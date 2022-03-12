@@ -19,8 +19,8 @@ const ConnectedCommentStyled = styled.div`
 export default ({ comment, top, commentId, recalculateTops }) => {
   const context = useContext(WaxContext);
   const {
-    view,
-    view: {
+    pmViews,
+    pmViews: {
       main: {
         props: { user },
       },
@@ -36,9 +36,9 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   const viewId = comment.attrs.viewid;
   let allCommentsWithSameId = [];
 
-  if (view[viewId]) {
+  if (pmViews[viewId]) {
     allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-      view[viewId].state,
+      pmViews[viewId].state,
       comment,
     );
   }
@@ -94,7 +94,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const onClickBox = () => {
     if (isActive) {
-      view[viewId].focus();
+      pmViews[viewId].focus();
       return false;
     }
 
@@ -103,13 +103,13 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     const maxPos = maxBy(allCommentsWithSameId, 'pos');
     maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
 
-    view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(
-        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos)),
+    pmViews[viewId].dispatch(
+      pmViews[viewId].state.tr.setSelection(
+        new TextSelection(pmViews[viewId].state.tr.doc.resolve(maxPos.pos)),
       ),
     );
 
-    view[viewId].focus();
+    pmViews[viewId].focus();
     return true;
   };
 

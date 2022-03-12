@@ -103,7 +103,7 @@ const FindComponent = ({
   findNextMatch,
   findPreviousMatch,
 }) => {
-  const { app, view, activeViewId } = useContext(WaxContext);
+  const { app, pmViews, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
 
   const [searchValue, setSearchValue] = useState('');
@@ -116,7 +116,7 @@ const FindComponent = ({
 
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  each(view, (singleView, viewId) => {
+  each(pmViews, (singleView, viewId) => {
     allStates.push(singleView.state);
   });
 
@@ -142,10 +142,10 @@ const FindComponent = ({
       state: {
         selection: { from, to },
       },
-    } = view[activeViewId];
+    } = pmViews[activeViewId];
 
     const results = helpers.getAllResultsByView(
-      view,
+      pmViews,
       searchValue,
       matchCaseSearch,
     );
@@ -161,7 +161,7 @@ const FindComponent = ({
       }
     } else {
       if (resultsFrom.main) counterMatch = resultsFrom.main.length;
-      const notesIds = helpers.getNotesIds(view.main);
+      const notesIds = helpers.getNotesIds(pmViews.main);
 
       for (let i = 0; i < notesIds.length; i += 1) {
         if (resultsFrom[notesIds[i]] && activeViewId !== notesIds[i]) {
@@ -187,12 +187,12 @@ const FindComponent = ({
     findAndReplacePlugin.props.setSearchText(searchValue);
 
     findAndReplacePlugin.props.setSearchMatchCase(matchCaseSearch);
-    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+    counter = helpers.getMatchesByView(pmViews, searchValue, matchCaseSearch);
 
     setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
-      eachRight(view, (singleView, viewId) => {
+      eachRight(pmViews, (singleView, viewId) => {
         singleView.dispatch(singleView.state.tr);
       });
     }
@@ -200,7 +200,7 @@ const FindComponent = ({
 
   const closeFind = () => {
     findAndReplacePlugin.props.setSearchText('');
-    each(view, (singleView, viewId) => {
+    each(pmViews, (singleView, viewId) => {
       singleView.dispatch(singleView.state.tr);
     });
     close();

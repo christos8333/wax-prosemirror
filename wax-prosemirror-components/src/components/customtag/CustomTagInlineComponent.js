@@ -19,13 +19,14 @@ const CustomTagInlineComponent = ({ view: { state }, item }) => {
   );
 
   const {
-    view: { main },
+    pmViews: { main },
   } = useContext(WaxContext);
 
   let isDisabled = false;
   const isEditable = main.props.editable(editable => {
     return editable;
   });
+
   if (!isEditable) isDisabled = true;
 
   const onClickIcon = () => {

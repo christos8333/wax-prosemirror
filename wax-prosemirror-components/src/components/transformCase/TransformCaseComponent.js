@@ -43,8 +43,9 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
   const { icon, title, select } = item;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
-  const { activeViewId, activeView, view } = useContext(WaxContext);
-  const isEditable = view.main.props.editable(editable => {
+  const { activeViewId, activeView, pmViews } = useContext(WaxContext);
+
+  const isEditable = pmViews.main.props.editable(editable => {
     return editable;
   });
   let isDisabled = !select(state, activeViewId, activeView);

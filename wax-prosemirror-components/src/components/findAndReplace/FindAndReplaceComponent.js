@@ -10,7 +10,7 @@ let lastActiveViewId;
 let lastSelection;
 
 const FindAndReplaceComponent = ({ close }) => {
-  const { view, activeViewId } = useContext(WaxContext);
+  const { pmViews, activeViewId } = useContext(WaxContext);
   const [isExpanded, setExpanded] = useState(false);
   const [nonExpandedText, setNonExpandedText] = useState('');
   const [matchCaseOption, setMatchCaseOption] = useState(false);
@@ -27,8 +27,8 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   useEffect(() => {
-    if (view[activeViewId].state.selection.from !== 0) {
-      lastSelection = view[activeViewId].state.selection;
+    if (pmViews[activeViewId].state.selection.from !== 0) {
+      lastSelection = pmViews[activeViewId].state.selection;
       lastActiveViewId = activeViewId;
     }
   }, []);
@@ -36,10 +36,10 @@ const FindAndReplaceComponent = ({ close }) => {
   const nextInNotes = (notesIds, results, findViewWithMatches) => {
     for (let i = 0; i < notesIds.length; i += 1) {
       if (results[notesIds[i]].length > 0 && notesIds[i] !== lastActiveViewId) {
-        helpers.clearViewSelection(view, lastActiveViewId);
-        helpers.moveToMatch(view, notesIds[i], results, 0);
+        helpers.clearViewSelection(pmViews, lastActiveViewId);
+        helpers.moveToMatch(pmViews, notesIds[i], results, 0);
         lastActiveViewId = findViewWithMatches;
-        lastSelection = view[lastActiveViewId].state.selection;
+        lastSelection = pmViews[lastActiveViewId].state.selection;
 
         break;
       }
@@ -47,40 +47,42 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   const findNextMatch = (searchValue, matchCaseSearch) => {
-    if (!view[activeViewId].focused) view[activeViewId].focus();
+    if (!pmViews[activeViewId].focused) pmViews[activeViewId].focus();
     const counter = helpers.getMatchesByView(
-      view,
+      pmViews,
       searchValue,
       matchCaseSearch,
     );
     if (counter === 0) return;
 
     lastActiveViewId = activeViewId;
-    lastSelection = view[activeViewId].state.selection;
+    lastSelection = pmViews[activeViewId].state.selection;
     const results = helpers.getAllResultsByView(
-      view,
+      pmViews,
       searchValue,
       matchCaseSearch,
     );
     const resultsFrom = helpers.getResultsFrom(results);
-    const notesIds = helpers.getNotesIds(view.main);
+    const notesIds = helpers.getNotesIds(pmViews.main);
 
     const findViewWithMatches = helpers.findViewWithMatchesForward(
       results,
-      view,
+      pmViews,
       lastActiveViewId,
     );
 
     /* if no matches are found on focused view */
     if (!resultsFrom[lastActiveViewId]) {
-      view[findViewWithMatches].dispatch(
-        view[findViewWithMatches].state.tr.setSelection(
-          new TextSelection(view[findViewWithMatches].state.tr.doc.resolve(0)),
+      pmViews[findViewWithMatches].dispatch(
+        pmViews[findViewWithMatches].state.tr.setSelection(
+          new TextSelection(
+            pmViews[findViewWithMatches].state.tr.doc.resolve(0),
+          ),
         ),
       );
-      view[findViewWithMatches].focus();
+      pmViews[findViewWithMatches].focus();
       lastActiveViewId = findViewWithMatches;
-      lastSelection = view[lastActiveViewId].state.selection;
+      lastSelection = pmViews[lastActiveViewId].state.selection;
     }
 
     const found = helpers.getClosestMatch(
@@ -91,14 +93,14 @@ const FindAndReplaceComponent = ({ close }) => {
     const position = resultsFrom[lastActiveViewId].indexOf(found);
     /* User selection lesser than found */
     if (lastSelection.from < found) {
-      helpers.moveToMatch(view, lastActiveViewId, results, position);
+      helpers.moveToMatch(pmViews, lastActiveViewId, results, position);
     }
     /* User selection greater than found move to next if not already at the end of results for the view */
     if (
       lastSelection.from >= found &&
       position < resultsFrom[lastActiveViewId].length - 1
     ) {
-      helpers.moveToMatch(view, lastActiveViewId, results, position + 1);
+      helpers.moveToMatch(pmViews, lastActiveViewId, results, position + 1);
     }
 
     /* Last result of the specific view. Move to next view */
@@ -115,10 +117,10 @@ const FindAndReplaceComponent = ({ close }) => {
       ) {
         setTimeout(() => {
           lastActiveViewId = findViewWithMatches;
-          lastSelection = view[lastActiveViewId].state.selection;
+          lastSelection = pmViews[lastActiveViewId].state.selection;
         }, 50);
-        helpers.moveToMatch(view, 'main', results, 0);
-        helpers.clearViewSelection(view, lastActiveViewId);
+        helpers.moveToMatch(pmViews, 'main', results, 0);
+        helpers.clearViewSelection(pmViews, lastActiveViewId);
       } else {
         nextInNotes(notesIds, results, findViewWithMatches);
       }
@@ -126,45 +128,45 @@ const FindAndReplaceComponent = ({ close }) => {
   };
 
   const findPreviousMatch = (searchValue, matchCaseSearch) => {
-    if (!view[activeViewId].focused) view[activeViewId].focus();
+    if (!pmViews[activeViewId].focused) pmViews[activeViewId].focus();
 
     const counter = helpers.getMatchesByView(
-      view,
+      pmViews,
       searchValue,
       matchCaseSearch,
     );
     if (counter === 0) return;
 
     lastActiveViewId = activeViewId;
-    lastSelection = view[activeViewId].state.selection;
+    lastSelection = pmViews[activeViewId].state.selection;
     const results = helpers.getAllResultsByView(
-      view,
+      pmViews,
       searchValue,
       matchCaseSearch,
     );
     const resultsFrom = helpers.getResultsFrom(results);
-    const notesIds = helpers.getNotesIds(view.main);
+    const notesIds = helpers.getNotesIds(pmViews.main);
 
     const findViewWithMatches = helpers.findViewWithMatchesBackWards(
       results,
-      view,
+      pmViews,
       lastActiveViewId,
     );
 
     /* if no matches are found on focused view */
     if (!resultsFrom[lastActiveViewId]) {
-      view[findViewWithMatches].dispatch(
-        view[findViewWithMatches].state.tr.setSelection(
+      pmViews[findViewWithMatches].dispatch(
+        pmViews[findViewWithMatches].state.tr.setSelection(
           new TextSelection(
-            view[findViewWithMatches].state.tr.doc.resolve(
-              view[findViewWithMatches].state.doc.content.size,
+            pmViews[findViewWithMatches].state.tr.doc.resolve(
+              pmViews[findViewWithMatches].state.doc.content.size,
             ),
           ),
         ),
       );
-      view[findViewWithMatches].focus();
+      pmViews[findViewWithMatches].focus();
       lastActiveViewId = findViewWithMatches;
-      lastSelection = view[lastActiveViewId].state.selection;
+      lastSelection = pmViews[lastActiveViewId].state.selection;
     }
 
     const found = helpers.getClosestMatch(
@@ -177,11 +179,11 @@ const FindAndReplaceComponent = ({ close }) => {
 
     /* User selection lesser than found */
     if (lastSelection.from > found) {
-      helpers.moveToMatch(view, lastActiveViewId, results, position);
+      helpers.moveToMatch(pmViews, lastActiveViewId, results, position);
     }
 
     if (lastSelection.from <= found && position !== 0) {
-      helpers.moveToMatch(view, lastActiveViewId, results, position - 1);
+      helpers.moveToMatch(pmViews, lastActiveViewId, results, position - 1);
     }
 
     if (lastSelection.from === found && position === 0) {
@@ -192,14 +194,14 @@ const FindAndReplaceComponent = ({ close }) => {
             notesIds[i] !== lastActiveViewId
           ) {
             helpers.moveToMatch(
-              view,
+              pmViews,
               notesIds[i],
               results,
               results[notesIds[i]].length - 1,
             );
-            lastSelection = view[activeViewId].state.selection;
+            lastSelection = pmViews[activeViewId].state.selection;
             lastActiveViewId = activeViewId;
-            helpers.clearViewSelection(view, lastActiveViewId);
+            helpers.clearViewSelection(pmViews, lastActiveViewId);
             break;
           }
         }
@@ -213,14 +215,14 @@ const FindAndReplaceComponent = ({ close }) => {
             notesIds[i] !== lastActiveViewId
           ) {
             helpers.moveToMatch(
-              view,
+              pmViews,
               notesIds[i],
               results,
               results[notesIds[i]].length - 1,
             );
-            lastSelection = view[activeViewId].state.selection;
+            lastSelection = pmViews[activeViewId].state.selection;
             lastActiveViewId = activeViewId;
-            helpers.clearViewSelection(view, lastActiveViewId);
+            helpers.clearViewSelection(pmViews, lastActiveViewId);
             break;
           } else {
             console.log('go to main', lastActiveViewId);

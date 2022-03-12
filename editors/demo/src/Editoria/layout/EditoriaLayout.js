@@ -207,7 +207,7 @@ const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
 const EditoriaLayout = ({ editor }) => {
   const {
-    view: { main },
+    pmViews: { main },
     options,
   } = useContext(WaxContext);
 

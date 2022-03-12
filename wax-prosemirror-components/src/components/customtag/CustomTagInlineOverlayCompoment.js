@@ -91,7 +91,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
 
   const {
     app,
-    view: { main },
+    pmViews: { main },
   } = useContext(WaxContext);
   const { state, dispatch } = main;
   const {

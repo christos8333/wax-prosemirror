@@ -21,7 +21,7 @@ const DropWrapper = styled.div`
 
 const CreateTable = ({ view = {}, item }) => {
   const {
-    view: { main },
+    pmViews: { main },
     activeView,
   } = useContext(WaxContext);
 

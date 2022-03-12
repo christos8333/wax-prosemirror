@@ -19,7 +19,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
     app,
     activeView,
     activeViewId,
-    view: { main },
+    pmViews: { main },
   } = context;
 
   const inputRef = useRef(null);

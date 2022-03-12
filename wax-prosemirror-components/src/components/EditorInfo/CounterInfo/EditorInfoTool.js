@@ -96,7 +96,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
   const ref = useRef();
   const {
     activeView,
-    view: { main },
+    pmViews: { main },
   } = useContext(WaxContext);
   const allBlockNodes = DocumentHelpers.findBlockNodes(main.state.doc);
   const InlineNodes = DocumentHelpers.findInlineNodes(main.state.doc);

@@ -12,6 +12,7 @@ const CommentBubbleComponent = ({
 }) => {
   const { activeView, activeViewId } = useContext(WaxContext);
   const { state, dispatch } = activeView;
+
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const { selection } = activeView.state;

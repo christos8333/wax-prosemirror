@@ -7,7 +7,7 @@ const UndoRedoButton = ({ view = {}, item }) => {
   const { active, icon, label, run, select, title } = item;
 
   const {
-    view: { main },
+    pmViews: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);

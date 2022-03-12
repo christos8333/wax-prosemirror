@@ -9,11 +9,12 @@ import BoxList from './BoxList';
 
 export default ({ area }) => {
   const {
-    view,
-    view: { main },
+    pmViews,
+    pmViews: { main },
     app,
     activeView,
   } = useContext(WaxContext);
+
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
@@ -147,7 +148,7 @@ export default ({ area }) => {
   };
 
   useDeepCompareEffect(() => {
-    setMarksNodes(updateMarks(view));
+    setMarksNodes(updateMarks(pmViews));
     if (isFirstRun) {
       setTimeout(() => {
         setPosition(setTops());
@@ -156,16 +157,16 @@ export default ({ area }) => {
     } else {
       setPosition(setTops());
     }
-  }, [updateMarks(view), setTops()]);
+  }, [updateMarks(pmViews), setTops()]);
 
   const CommentTrackComponent = useMemo(
     () => (
       <BoxList
-        commentsTracks={marksNodes[area] || []}
         area={area}
-        view={main}
+        commentsTracks={marksNodes[area] || []}
         position={position}
         recalculateTops={recalculateTops}
+        view={main}
       />
     ),
     [marksNodes[area] || [], position],
@@ -173,17 +174,17 @@ export default ({ area }) => {
   return <>{CommentTrackComponent}</>;
 };
 
-const updateMarks = view => {
-  if (view.main) {
+const updateMarks = views => {
+  if (views.main) {
     const allInlineNodes = [];
 
-    Object.keys(view).forEach(eachView => {
+    Object.keys(views).forEach(eachView => {
       allInlineNodes.push(
-        ...DocumentHelpers.findInlineNodes(view[eachView].state.doc),
+        ...DocumentHelpers.findInlineNodes(views[eachView].state.doc),
       );
     });
 
-    const allBlockNodes = DocumentHelpers.findBlockNodes(view.main.state.doc);
+    const allBlockNodes = DocumentHelpers.findBlockNodes(views.main.state.doc);
     const finalMarks = [];
     const finalNodes = [];
 

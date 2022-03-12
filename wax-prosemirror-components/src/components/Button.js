@@ -7,7 +7,7 @@ const Button = ({ view = {}, item }) => {
   const { active, icon, label, run, select, title } = item;
   const context = useContext(WaxContext);
   const {
-    view: { main },
+    pmViews: { main },
     activeViewId,
     activeView,
   } = context;

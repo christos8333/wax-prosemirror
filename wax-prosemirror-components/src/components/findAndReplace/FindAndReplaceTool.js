@@ -28,7 +28,7 @@ const DropWrapper = styled.div`
 
 const FindAndReplaceTool = ({ view = {}, item }) => {
   const {
-    view: { main },
+    pmViews: { main },
   } = useContext(WaxContext);
 
   const { icon, title } = item;

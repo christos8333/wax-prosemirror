@@ -144,7 +144,7 @@ const ExpandedFindAndReplaceComponent = ({
   nonExpandedText,
   setMatchCaseValue,
 }) => {
-  const { app, view, activeViewId } = useContext(WaxContext);
+  const { app, pmViews, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);
@@ -156,7 +156,7 @@ const ExpandedFindAndReplaceComponent = ({
 
   const allStates = [];
 
-  each(view, (singleView, viewId) => {
+  each(pmViews, (singleView, viewId) => {
     allStates.push(singleView.state);
   });
 
@@ -174,7 +174,7 @@ const ExpandedFindAndReplaceComponent = ({
   useEffect(() => {
     searchDocument();
     let counter = 0;
-    counter = helpers.getMatchesByView(view, searchValue, matchCaseSearch);
+    counter = helpers.getMatchesByView(pmViews, searchValue, matchCaseSearch);
     setCounterSearches(counter);
   }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
@@ -186,10 +186,10 @@ const ExpandedFindAndReplaceComponent = ({
       state: {
         selection: { from, to },
       },
-    } = view[activeViewId];
+    } = pmViews[activeViewId];
 
     const results = helpers.getAllResultsByView(
-      view,
+      pmViews,
       searchValue,
       matchCaseSearch,
     );
@@ -206,7 +206,7 @@ const ExpandedFindAndReplaceComponent = ({
       }
     } else {
       if (resultsFrom.main) counterMatch = resultsFrom.main.length;
-      const notesIds = helpers.getNotesIds(view.main);
+      const notesIds = helpers.getNotesIds(pmViews.main);
 
       for (let i = 0; i < notesIds.length; i += 1) {
         if (resultsFrom[notesIds[i]] && activeViewId !== notesIds[i]) {
@@ -236,7 +236,7 @@ const ExpandedFindAndReplaceComponent = ({
     // setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
-      eachRight(view, (singleView, viewId) => {
+      eachRight(pmViews, (singleView, viewId) => {
         singleView.dispatch(singleView.state.tr);
       });
     }
@@ -249,15 +249,15 @@ const ExpandedFindAndReplaceComponent = ({
   const replace = () => {
     if (match.length === 1) {
       const { from, to } = match[0];
-      view[activeViewId].dispatch(
-        view[activeViewId].state.tr.insertText(replaceValue, from, to),
+      pmViews[activeViewId].dispatch(
+        pmViews[activeViewId].state.tr.insertText(replaceValue, from, to),
       );
       findNextMatch(searchValue, matchCaseOption);
     }
   };
 
   const replaceAll = () => {
-    each(view, (singleView, viewId) => {
+    each(pmViews, (singleView, viewId) => {
       const results = DocumentHelpers.findMatches(
         singleView.state.doc,
         searchValue,
@@ -275,7 +275,7 @@ const ExpandedFindAndReplaceComponent = ({
 
   const closeFind = () => {
     findAndReplacePlugin.props.setSearchText('');
-    each(view, (singleView, viewId) => {
+    each(pmViews, (singleView, viewId) => {
       singleView.dispatch(singleView.state.tr);
     });
     close();
@@ -300,8 +300,8 @@ const ExpandedFindAndReplaceComponent = ({
 
       <InputWrapper>
         <FindReplaceInput
-          onChange={onChangeSearchInput}
           id="search-input"
+          onChange={onChangeSearchInput}
           placeholder="Something is this doc"
           ref={searchRef}
           type="text"

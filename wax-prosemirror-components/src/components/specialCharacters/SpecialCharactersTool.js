@@ -21,7 +21,7 @@ const DropWrapper = styled.div`
 
 const SpecialCharactersTool = ({ view = {}, item }) => {
   const {
-    view: { main },
+    pmViews: { main },
   } = useContext(WaxContext);
 
   const { icon, title } = item;

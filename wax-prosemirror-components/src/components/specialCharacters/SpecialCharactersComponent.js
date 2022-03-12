@@ -11,7 +11,6 @@ import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { filter, groupBy, debounce } from 'lodash';
-import CharactersList from './CharactersList';
 
 const Wrapper = styled.div`
   width: 400px;
@@ -109,9 +108,11 @@ const SpecialCharacter = styled.div`
 
 const SpecialCharactersComponent = ({ close }) => {
   const searchRef = useRef(null);
-  const { activeView } = useContext(WaxContext);
+  const { activeView, app } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
   const [isFirstRun, setFirstRun] = useState(true);
+
+  const CharactersList = app.config.get('config.SpecialCharactersService');
 
   const [specialCharactersList, setSpecialCharactersList] = useState(
     CharactersList,

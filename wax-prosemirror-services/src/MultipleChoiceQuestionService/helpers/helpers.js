@@ -5,30 +5,30 @@ import { Fragment } from 'prosemirror-model';
 import { findWrapping } from 'prosemirror-transform';
 
 const createEmptyParagraph = (context, newAnswerId) => {
-  if (context.view[newAnswerId]) {
-    context.view[newAnswerId].dispatch(
-      context.view[newAnswerId].state.tr.setSelection(
+  if (context.pmViews[newAnswerId]) {
+    context.pmViews[newAnswerId].dispatch(
+      context.pmViews[newAnswerId].state.tr.setSelection(
         TextSelection.between(
-          context.view[newAnswerId].state.selection.$anchor,
-          context.view[newAnswerId].state.selection.$head,
+          context.pmViews[newAnswerId].state.selection.$anchor,
+          context.pmViews[newAnswerId].state.selection.$head,
         ),
       ),
     );
-    if (context.view[newAnswerId].dispatch) {
-      const type = context.view.main.state.schema.nodes.paragraph;
-      context.view[newAnswerId].dispatch(
-        context.view[newAnswerId].state.tr.insert(0, type.create()),
+    if (context.pmViews[newAnswerId].dispatch) {
+      const type = context.pmViews.main.state.schema.nodes.paragraph;
+      context.pmViews[newAnswerId].dispatch(
+        context.pmViews[newAnswerId].state.tr.insert(0, type.create()),
       );
     }
-    context.view[newAnswerId].dispatch(
-      context.view[newAnswerId].state.tr.setSelection(
+    context.pmViews[newAnswerId].dispatch(
+      context.pmViews[newAnswerId].state.tr.setSelection(
         TextSelection.between(
-          context.view[newAnswerId].state.selection.$anchor,
-          context.view[newAnswerId].state.selection.$head,
+          context.pmViews[newAnswerId].state.selection.$anchor,
+          context.pmViews[newAnswerId].state.selection.$head,
         ),
       ),
     );
-    context.view[newAnswerId].focus();
+    context.pmViews[newAnswerId].focus();
   }
 };
 
@@ -79,7 +79,7 @@ const createOptions = (main, context, parentType, questionType, answerType) => {
   tr.replaceSelectionWith(secondOption);
   dispatch(tr);
   setTimeout(() => {
-    context.view[question.attrs.id].focus();
+    context.pmViews[question.attrs.id].focus();
     //   createEmptyParagraph(context, firstOption.attrs.id);
     //   createEmptyParagraph(context, secondOption.attrs.id);
     //   createEmptyParagraph(context, question.attrs.id);

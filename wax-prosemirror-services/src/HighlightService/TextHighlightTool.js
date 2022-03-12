@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { injectable } from 'inversify';
 import { TextHighlightingTool } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
@@ -13,7 +14,7 @@ class TextHighlightTool extends Tools {
 
   select = (state, activeViewId, activeView) => {
     //  return !activeView.state.selection.empty;
-    return window.getSelection().toString().trim().length == 0 ? false : true;
+    return window.getSelection().toString().trim().length !== 0;
   };
 
   get run() {
@@ -21,7 +22,6 @@ class TextHighlightTool extends Tools {
       const {
         selection: { $from, $to },
       } = state;
-
       const css = `background: linear-gradient(
                     to bottom,
                     transparent 0,
@@ -32,7 +32,7 @@ class TextHighlightTool extends Tools {
                     transparent 100%
                   )`;
 
-      color === 'transparent;'
+      color === 'transparent'
         ? dispatch(
             state.tr.removeMark(
               $from.pos,
@@ -53,7 +53,7 @@ class TextHighlightTool extends Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
     return this._isDisplayed ? (
-      <TextHighlightingTool key={uuidv4()} item={this.toJSON()} view={view} />
+      <TextHighlightingTool item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 }

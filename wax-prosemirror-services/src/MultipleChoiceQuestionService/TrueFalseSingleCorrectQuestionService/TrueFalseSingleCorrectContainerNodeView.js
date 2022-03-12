@@ -1,6 +1,6 @@
-import AbstractNodeView from '../../PortalService/AbstractNodeView';
+import QuestionsNodeView from '../../lib/helpers/QuestionsNodeView';
 
-export default class TrueFalseSingleCorrectContainerNodeView extends AbstractNodeView {
+export default class TrueFalseSingleCorrectContainerNodeView extends QuestionsNodeView {
   constructor(
     node,
     view,
@@ -22,34 +22,11 @@ export default class TrueFalseSingleCorrectContainerNodeView extends AbstractNod
     return 'true_false_single_correct_container';
   }
 
-  update(node) {
-    this.node = node;
-    if (this.context.view[node.attrs.id]) {
-      const { state } = this.context.view[node.attrs.id];
-      const start = node.content.findDiffStart(state.doc.content);
-      if (start != null) {
-        let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
-        const overlap = start - Math.min(endA, endB);
-        if (overlap > 0) {
-          endA += overlap;
-          endB += overlap;
-        }
-        this.context.view[node.attrs.id].dispatch(
-          state.tr
-            .replace(start, endB, node.slice(start, endA))
-            .setMeta('fromOutside', true),
-        );
-      }
-    }
-
-    return true;
-  }
-
   stopEvent(event) {
     if (event.target.type === 'text') {
       return true;
     }
-    const innerView = this.context.view[this.node.attrs.id];
+    const innerView = this.context.pmViews[this.node.attrs.id];
     return innerView && innerView.dom.contains(event.target);
   }
 }

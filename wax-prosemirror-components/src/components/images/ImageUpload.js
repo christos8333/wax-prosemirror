@@ -19,7 +19,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
     app,
     activeView,
     activeViewId,
-    view: { main },
+    pmViews: { main },
   } = context;
 
   const inputRef = useRef(null);
@@ -35,15 +35,15 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           nodeFound = node;
         }
       });
-      context.view.main.dispatch(
-        context.view.main.state.tr
+      main.dispatch(
+        main.state.tr
           .setMeta('outsideView', activeViewId)
           .setSelection(
             new TextSelection(
-              context.view.main.state.tr.doc.resolve(
+              main.state.tr.doc.resolve(
                 nodeFound.pos +
                   2 +
-                  context.view[activeViewId].state.selection.to,
+                  context.pmViews[activeViewId].state.selection.to,
               ),
             ),
           ),

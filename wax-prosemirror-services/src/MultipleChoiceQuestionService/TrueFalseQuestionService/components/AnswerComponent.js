@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
@@ -84,10 +83,10 @@ const StyledIconAction = styled(Icon)`
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
-    view: { main },
+    pmViews: { main },
   } = context;
 
-  const customProps = context.view.main.props.customValues;
+  const customProps = main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -115,26 +114,22 @@ export default ({ node, view, getPos }) => {
 
   const addOption = nodeId => {
     const newAnswerId = uuidv4();
-    context.view.main.state.doc.descendants((editorNode, index) => {
+    main.state.doc.descendants((editorNode, index) => {
       if (editorNode.type.name === 'true_false') {
         if (editorNode.attrs.id === nodeId) {
-          context.view.main.dispatch(
-            context.view.main.state.tr.setSelection(
+          main.dispatch(
+            main.state.tr.setSelection(
               new TextSelection(
-                context.view.main.state.tr.doc.resolve(
-                  editorNode.nodeSize + index,
-                ),
+                main.state.tr.doc.resolve(editorNode.nodeSize + index),
               ),
             ),
           );
 
-          const answerOption = context.view.main.state.config.schema.nodes.true_false.create(
+          const answerOption = main.state.config.schema.nodes.true_false.create(
             { id: newAnswerId },
             Fragment.empty,
           );
-          context.view.main.dispatch(
-            context.view.main.state.tr.replaceSelectionWith(answerOption),
-          );
+          main.dispatch(main.state.tr.replaceSelectionWith(answerOption));
           // create Empty Paragraph
           setTimeout(() => {
             helpers.createEmptyParagraph(context, newAnswerId);

@@ -24,30 +24,32 @@ const checkifEmpty = view => {
 };
 
 const createEmptyParagraph = (context, newAnswerId) => {
-  if (context.view[newAnswerId]) {
-    context.view[newAnswerId].dispatch(
-      context.view[newAnswerId].state.tr.setSelection(
+  const { pmViews } = context;
+
+  if (pmViews[newAnswerId]) {
+    pmViews[newAnswerId].dispatch(
+      pmViews[newAnswerId].state.tr.setSelection(
         TextSelection.between(
-          context.view[newAnswerId].state.selection.$anchor,
-          context.view[newAnswerId].state.selection.$head,
+          pmViews[newAnswerId].state.selection.$anchor,
+          pmViews[newAnswerId].state.selection.$head,
         ),
       ),
     );
-    if (context.view[newAnswerId].dispatch) {
-      const type = context.view.main.state.schema.nodes.paragraph;
-      context.view[newAnswerId].dispatch(
-        context.view[newAnswerId].state.tr.insert(0, type.create()),
+    if (pmViews[newAnswerId].dispatch) {
+      const type = pmViews.main.state.schema.nodes.paragraph;
+      pmViews[newAnswerId].dispatch(
+        pmViews[newAnswerId].state.tr.insert(0, type.create()),
       );
     }
-    context.view[newAnswerId].dispatch(
-      context.view[newAnswerId].state.tr.setSelection(
+    pmViews[newAnswerId].dispatch(
+      pmViews[newAnswerId].state.tr.setSelection(
         TextSelection.between(
-          context.view[newAnswerId].state.selection.$anchor,
-          context.view[newAnswerId].state.selection.$head,
+          pmViews[newAnswerId].state.selection.$anchor,
+          pmViews[newAnswerId].state.selection.$head,
         ),
       ),
     );
-    context.view[newAnswerId].focus();
+    pmViews[newAnswerId].focus();
   }
 };
 

@@ -56,8 +56,13 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   ];
 
   const ref = useRef();
-  const { activeViewId, activeView, view } = useContext(WaxContext);
-  const isEditable = view.main.props.editable(editable => {
+  const {
+    activeViewId,
+    activeView,
+    pmViews: { main },
+  } = useContext(WaxContext);
+
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -69,13 +74,13 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
     Object.keys(highlightDropDownOptions).forEach(key => {
       lists.push(
         <Highlighter
+          data-style={highlightDropDownOptions[key].value}
+          key={uuidv4()}
           onMouseDown={e =>
             handleMouseDown(e, highlightDropDownOptions[key].value)
           }
-          key={uuidv4()}
-          title={highlightDropDownOptions[key].name}
-          data-style={highlightDropDownOptions[key].value}
           style={{ backgroundColor: highlightDropDownOptions[key].value }}
+          title={highlightDropDownOptions[key].name}
         />,
       );
     });
@@ -102,12 +107,12 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
 
   const MenuButtonComponent = useMemo(
     () => (
-      <Wrapper ref={ref} onDoubleClick={handleDblClk}>
+      <Wrapper onDoubleClick={handleDblClk} ref={ref}>
         <div
           disabled={isDisabled}
           style={{
             backgroundColor:
-              localStorage.getItem('lastBgColor') != undefined
+              localStorage.getItem('lastBgColor') !== null
                 ? localStorage.getItem('lastBgColor')
                 : highlightDropDownOptions[0].name,
             opacity: isDisabled ? '0.6' : '1',
@@ -126,12 +131,12 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
         {isOpen && (
           <DropWrapper>
             <TextHighlightComponent
-              key={uuidv4()}
-              item={item}
-              view={(dispatch, state)}
               close={() => {
                 setIsOpen(false);
               }}
+              item={item}
+              key={uuidv4()}
+              view={(dispatch, state)}
             >
               {renderList()}
             </TextHighlightComponent>

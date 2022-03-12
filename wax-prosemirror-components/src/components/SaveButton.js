@@ -7,7 +7,7 @@ const SaveButton = ({ view = {}, item }) => {
   const { icon, label, select, title } = item;
 
   const {
-    view: { main },
+    pmViews: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);

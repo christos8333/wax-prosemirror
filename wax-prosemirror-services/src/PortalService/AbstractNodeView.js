@@ -36,7 +36,7 @@ export default class AbstractNodeView {
   }
 
   stopEvent(event) {
-    const innerView = this.context.view[this.node.attrs.id];
+    const innerView = this.context.pmViews[this.node.attrs.id];
     return innerView && innerView.dom.contains(event.target);
   }
 

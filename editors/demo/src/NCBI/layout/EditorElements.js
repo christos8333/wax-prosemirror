@@ -14,8 +14,9 @@ export default css`
   .ProseMirror {
     background: white;
     line-height: 12px;
-    width: 497px;
+    width: 492px;
     white-space: pre !important;
     overflow-x: auto;
+    ${fontWriting}
   }
 `;

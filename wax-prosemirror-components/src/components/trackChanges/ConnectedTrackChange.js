@@ -20,7 +20,7 @@ const ConnectedTrackChangeStyled = styled.div`
 
 export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const context = useContext(WaxContext);
-  const { app, activeView, view } = context;
+  const { app, activeView, pmViews } = context;
   const user = app.config.get('user');
   const [isActive, setIsActive] = useState(false);
   const { state, dispatch } = activeView;
@@ -41,30 +41,32 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     if (viewId !== 'main') context.updateView({}, viewId);
 
     const allTracksWithSameId = DocumentHelpers.findAllMarksWithSameId(
-      view[viewId].state,
+      pmViews[viewId].state,
       trackData,
     );
     const maxPos = maxBy(allTracksWithSameId, 'pos');
     maxPos.pos += last(allTracksWithSameId).node.nodeSize;
 
-    view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(
-        new TextSelection(view[viewId].state.tr.doc.resolve(maxPos.pos - 1)),
+    pmViews[viewId].dispatch(
+      pmViews[viewId].state.tr.setSelection(
+        new TextSelection(pmViews[viewId].state.tr.doc.resolve(maxPos.pos - 1)),
       ),
     );
 
-    view[viewId].focus();
+    pmViews[viewId].focus();
     return true;
   };
 
   const focusOnBlcock = trackData => {
-    view[viewId].dispatch(
-      view[viewId].state.tr.setSelection(
-        new TextSelection(view[viewId].state.tr.doc.resolve(trackData.pos + 1)),
+    pmViews[viewId].dispatch(
+      pmViews[viewId].state.tr.setSelection(
+        new TextSelection(
+          pmViews[viewId].state.tr.doc.resolve(trackData.pos + 1),
+        ),
       ),
     );
 
-    view[viewId].focus();
+    pmViews[viewId].focus();
     return true;
   };
 
@@ -80,13 +82,13 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const onClickAccept = () => {
     const acceptConfig = app.config.get('config.AcceptTrackChangeService');
     acceptTrackChange(state, dispatch, user, activeTrackChange, acceptConfig);
-    view[viewId].focus();
+    pmViews[viewId].focus();
   };
 
   const onClickReject = () => {
     const rejectConfig = app.config.get('config.RejectTrackChangeService');
     rejectTrackChange(state, dispatch, user, activeTrackChange, rejectConfig);
-    view[viewId].focus();
+    pmViews[viewId].focus();
   };
 
   const MemorizedTrackChange = useMemo(

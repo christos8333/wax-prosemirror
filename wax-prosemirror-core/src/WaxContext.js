@@ -3,7 +3,7 @@
 import React, { useContext, useState } from 'react';
 
 export const WaxContext = React.createContext({
-  view: {},
+  pmViews: {},
   activeView: {},
   activeViewId: null,
   app: null,
@@ -15,7 +15,7 @@ export const WaxContext = React.createContext({
 export default props => {
   const [context, setContext] = useState({
     app: props.app,
-    view: props.view || {},
+    pmViews: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
     options: { fullScreen: false },
@@ -27,14 +27,14 @@ export default props => {
       Object.assign(context.options, option);
     },
     removeView: deletedView => {
-      delete context.view[deletedView];
+      delete context.pmViews[deletedView];
     },
     updateView: (newView, activeViewId) => {
-      const view = Object.assign(context.view, newView);
-      const activeView = view[activeViewId || context.activeViewId];
+      const pmViews = Object.assign(context.pmViews, newView);
+      const activeView = pmViews[activeViewId || context.activeViewId];
       setContext({
         ...context,
-        view,
+        pmViews,
         activeView,
         activeViewId: activeViewId || context.activeViewId,
       });

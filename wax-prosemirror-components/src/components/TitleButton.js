@@ -9,7 +9,7 @@ const TitleButton = ({ view = {}, item }) => {
 
   const {
     app,
-    view: { main },
+    pmViews: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);

@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -21,10 +20,10 @@ const FillTheGapWrapper = styled.div`
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
-    view: { main },
+    pmViews: { main },
   } = context;
 
-  const customProps = context.view.main.props.customValues;
+  const customProps = main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
     return editable;

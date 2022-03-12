@@ -27,8 +27,14 @@ export default ({ node, view }) => {
   let noteView;
   let clickInNote = false;
   let typing = false;
-  // eslint-disable-next-line react/destructuring-assignment
-  const isEditable = context.view.main.props.editable(editable => {
+
+  const {
+    activeViewId,
+    pmViews,
+    pmViews: { main },
+  } = context;
+
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -47,12 +53,10 @@ export default ({ node, view }) => {
         disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
         handleDOMEvents: {
           blur: (editorView, event) => {
-            if (context.view[noteId]) {
-              context.view[noteId].dispatch(
-                context.view[noteId].state.tr.setSelection(
-                  new TextSelection(
-                    context.view[noteId].state.tr.doc.resolve(0),
-                  ),
+            if (pmViews[noteId]) {
+              pmViews[noteId].dispatch(
+                pmViews[noteId].state.tr.setSelection(
+                  new TextSelection(pmViews[noteId].state.tr.doc.resolve(0)),
                 ),
               );
             }
@@ -81,8 +85,8 @@ export default ({ node, view }) => {
       },
       noteId,
     );
-    if (context.view[noteId]) {
-      context.view[noteId].focus();
+    if (pmViews[noteId]) {
+      pmViews[noteId].focus();
     }
   }, []);
 
@@ -168,8 +172,8 @@ export default ({ node, view }) => {
     };
   };
 
-  if (context.view[noteId]) {
-    const { state } = context.view[noteId];
+  if (pmViews[noteId]) {
+    const { state } = pmViews[noteId];
     const start = node.content.findDiffStart(state.doc.content);
     if (start != null) {
       let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -178,7 +182,7 @@ export default ({ node, view }) => {
         endA += overlap;
         endB += overlap;
       }
-      context.view[noteId].dispatch(
+      pmViews[noteId].dispatch(
         state.tr
           .replace(start, endB, node.slice(start, endA))
           .setMeta('fromOutside', true),
@@ -193,7 +197,7 @@ export default ({ node, view }) => {
   return (
     <NoteContainer>
       {NoteEditorContainerComponent}
-      {context.activeViewId === noteId && <WaxOverlays group="notes" />}
+      {activeViewId === noteId && <WaxOverlays group="notes" />}
     </NoteContainer>
   );
 };

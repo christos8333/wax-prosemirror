@@ -80,11 +80,11 @@ const dropDownOptions = [
 ];
 
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
-  const { app, activeView, view } = useContext(WaxContext);
+  const { app, activeView, pmViews } = useContext(WaxContext);
   const enableService = app.config.get('config.EnableTrackChangeService');
   const isDisabled = enableService.toggle;
 
-  const isEditable = view.main.props.editable(editable => {
+  const isEditable = pmViews.main.props.editable(editable => {
     return editable;
   });
 

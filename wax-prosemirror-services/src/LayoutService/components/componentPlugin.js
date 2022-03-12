@@ -1,6 +1,12 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-shadow */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { useInjection } from 'wax-prosemirror-core';
 
+// eslint-disable-next-line no-unused-vars
 class UpdateView extends Component {
   constructor(props) {
     super(props);

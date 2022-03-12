@@ -24,8 +24,8 @@ export default class FillTheGapNodeView extends AbstractNodeView {
 
   update(node) {
     this.node = node;
-    if (this.context.view[node.attrs.id]) {
-      const { state } = this.context.view[node.attrs.id];
+    if (this.context.pmViews[node.attrs.id]) {
+      const { state } = this.context.pmViews[node.attrs.id];
       const start = node.content.findDiffStart(state.doc.content);
       if (start != null) {
         let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -34,7 +34,7 @@ export default class FillTheGapNodeView extends AbstractNodeView {
           endA += overlap;
           endB += overlap;
         }
-        this.context.view[node.attrs.id].dispatch(
+        this.context.pmViews[node.attrs.id].dispatch(
           state.tr
             .replace(start, endB, node.slice(start, endA))
             .setMeta('fromOutside', true),
@@ -46,18 +46,14 @@ export default class FillTheGapNodeView extends AbstractNodeView {
   }
 
   selectNode() {
-    this.context.view[this.node.attrs.id].focus();
+    this.context.pmViews[this.node.attrs.id].focus();
   }
 
   stopEvent(event) {
     return (
-      this.context.view[this.node.attrs.id] !== undefined &&
+      this.context.pmViews[this.node.attrs.id] !== undefined &&
       event.target !== undefined &&
-      this.context.view[this.node.attrs.id].dom.contains(event.target)
+      this.context.pmViews[this.node.attrs.id].dom.contains(event.target)
     );
-  }
-
-  ignoreMutation() {
-    return true;
   }
 }

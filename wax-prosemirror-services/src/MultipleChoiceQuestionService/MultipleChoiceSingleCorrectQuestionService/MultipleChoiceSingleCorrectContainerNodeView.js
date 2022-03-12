@@ -24,8 +24,8 @@ export default class MultipleChoiceSingleCorrectContainerNodeView extends Abstra
 
   update(node) {
     this.node = node;
-    if (this.context.view[node.attrs.id]) {
-      const { state } = this.context.view[node.attrs.id];
+    if (this.context.pmViews[node.attrs.id]) {
+      const { state } = this.context.pmViews[node.attrs.id];
       const start = node.content.findDiffStart(state.doc.content);
       if (start != null) {
         let { a: endA, b: endB } = node.content.findDiffEnd(state.doc.content);
@@ -34,7 +34,7 @@ export default class MultipleChoiceSingleCorrectContainerNodeView extends Abstra
           endA += overlap;
           endB += overlap;
         }
-        this.context.view[node.attrs.id].dispatch(
+        this.context.pmViews[node.attrs.id].dispatch(
           state.tr
             .replace(start, endB, node.slice(start, endA))
             .setMeta('fromOutside', true),
@@ -49,7 +49,7 @@ export default class MultipleChoiceSingleCorrectContainerNodeView extends Abstra
     if (event.target.type === 'text') {
       return true;
     }
-    const innerView = this.context.view[this.node.attrs.id];
+    const innerView = this.context.pmViews[this.node.attrs.id];
     return innerView && innerView.dom.contains(event.target);
   }
 }

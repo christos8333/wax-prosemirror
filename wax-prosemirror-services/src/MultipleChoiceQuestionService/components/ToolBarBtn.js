@@ -16,7 +16,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
   const { icon, label, select, title } = item;
   const context = useContext(WaxContext);
   const {
-    view: { main },
+    pmViews: { main },
     activeView,
   } = useContext(WaxContext);
 
@@ -38,7 +38,7 @@ const ToolBarBtn = ({ view = {}, item }) => {
         label={label}
         onMouseDown={e => {
           e.preventDefault();
-          item.run(context.view.main, context);
+          item.run(main, context);
         }}
         title={title}
       />

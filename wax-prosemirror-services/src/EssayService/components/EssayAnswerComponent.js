@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useEffect } from 'react';
@@ -51,9 +50,13 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
+  const {
+    app,
+    pmViews: { main },
+  } = context;
   let essayAnswerView;
   const questionId = node.attrs.id;
-  const isEditable = context.view.main.props.editable(editable => {
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -100,7 +103,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
@@ -131,15 +134,15 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
         handleDOMEvents: {
           mousedown: () => {
             context.updateView({}, questionId);
-            context.view.main.dispatch(
-              context.view.main.state.tr
+            main.dispatch(
+              main.state.tr
                 .setMeta('outsideView', questionId)
                 .setSelection(
                   new TextSelection(
-                    context.view.main.state.tr.doc.resolve(
+                    main.state.tr.doc.resolve(
                       getPos() +
                         2 +
-                        context.view[questionId].state.selection.to,
+                        context.pmViews[questionId].state.selection.to,
                     ),
                   ),
                 ),
@@ -172,8 +175,8 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   }, []);
 
   const dispatchTransaction = tr => {
-    const outerTr = context.view.main.state.tr;
-    context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
+    const outerTr = main.state.tr;
+    main.dispatch(outerTr.setMeta('outsideView', questionId));
     const { state, transactions } = essayAnswerView.state.applyTransaction(tr);
     context.updateView({}, questionId);
     essayAnswerView.updateState(state);
@@ -185,7 +188,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        context.view.main.dispatch(outerTr.setMeta('outsideView', questionId));
+        main.dispatch(outerTr.setMeta('outsideView', questionId));
     }
   };
 

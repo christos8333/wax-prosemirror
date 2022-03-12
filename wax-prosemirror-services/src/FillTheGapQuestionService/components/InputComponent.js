@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useState, useEffect } from 'react';
@@ -21,6 +20,10 @@ const AnswerInput = styled.input`
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
+  const {
+    pmViews: { main },
+  } = context;
+
   const [answer, setAnswer] = useState(' ');
   const [typing, setTyping] = useState(false);
   const answerRef = useRef(null);
@@ -30,9 +33,9 @@ export default ({ node, view, getPos }) => {
   const handleKeyDown = e => {
     setTyping(true);
     if (e.key === 'Backspace') {
-      context.view.main.dispatch(
-        context.view.main.state.tr.setSelection(
-          TextSelection.create(context.view.main.state.tr.doc, null),
+      main.dispatch(
+        main.state.tr.setSelection(
+          TextSelection.create(main.state.tr.doc, null),
         ),
       );
     }
@@ -47,10 +50,8 @@ export default ({ node, view, getPos }) => {
   };
 
   const onFocus = () => {
-    context.view.main.dispatch(
-      context.view.main.state.tr.setSelection(
-        TextSelection.create(context.view.main.state.tr.doc, null),
-      ),
+    main.dispatch(
+      main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
     );
   };
 

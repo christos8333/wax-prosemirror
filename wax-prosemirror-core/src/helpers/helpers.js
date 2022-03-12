@@ -35,10 +35,10 @@ const getDocContent = (schema, serializer, targetFormat, context) => {
   let content = '';
   alterNotesSchema(schema);
   if (targetFormat === 'JSON') {
-    content = context.app.context.view.main.state.doc.content;
+    content = context.app.context.pmViews.main.state.doc.content;
   } else {
     const serialize = serializer(schema);
-    content = serialize(context.app.context.view.main.state.doc.content);
+    content = serialize(context.app.context.pmViews.main.state.doc.content);
   }
   revertNotesSchema(content);
 

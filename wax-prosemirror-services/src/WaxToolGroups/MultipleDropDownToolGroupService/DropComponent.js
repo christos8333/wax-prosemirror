@@ -43,7 +43,7 @@ const DropComponent = ({ title, view, tools }) => {
   const {
     activeView,
     activeViewId,
-    view: { main },
+    pmViews: { main },
   } = context;
   const { state } = view;
 

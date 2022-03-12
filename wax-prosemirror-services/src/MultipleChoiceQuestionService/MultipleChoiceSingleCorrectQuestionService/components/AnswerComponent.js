@@ -83,11 +83,11 @@ const StyledIconAction = styled(Icon)`
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
-    view: { main },
+    pmViews: { main },
   } = context;
 
   // eslint-disable-next-line react/destructuring-assignment
-  const customProps = context.view.main.props.customValues;
+  const customProps = main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -115,26 +115,22 @@ export default ({ node, view, getPos }) => {
 
   const addOption = nodeId => {
     const newAnswerId = uuidv4();
-    context.view.main.state.doc.descendants((editorNode, index) => {
+    main.state.doc.descendants((editorNode, index) => {
       if (editorNode.type.name === 'multiple_choice_single_correct') {
         if (editorNode.attrs.id === nodeId) {
-          context.view.main.dispatch(
-            context.view.main.state.tr.setSelection(
+          main.dispatch(
+            main.state.tr.setSelection(
               new TextSelection(
-                context.view.main.state.tr.doc.resolve(
-                  editorNode.nodeSize + index,
-                ),
+                main.state.tr.doc.resolve(editorNode.nodeSize + index),
               ),
             ),
           );
 
-          const answerOption = context.view.main.state.config.schema.nodes.multiple_choice_single_correct.create(
+          const answerOption = main.state.config.schema.nodes.multiple_choice_single_correct.create(
             { id: newAnswerId },
             Fragment.empty,
           );
-          context.view.main.dispatch(
-            context.view.main.state.tr.replaceSelectionWith(answerOption),
-          );
+          main.dispatch(main.state.tr.replaceSelectionWith(answerOption));
           // create Empty Paragraph
           setTimeout(() => {
             helpers.createEmptyParagraph(context, newAnswerId);

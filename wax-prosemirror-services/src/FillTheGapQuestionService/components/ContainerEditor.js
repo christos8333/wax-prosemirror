@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useEffect } from 'react';
@@ -36,9 +35,14 @@ const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
+  const {
+    app,
+    pmViews: { main },
+  } = context;
+
   let gapContainerView;
   const questionId = node.attrs.id;
-  const isEditable = context.view.main.props.editable(editable => {
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
@@ -59,7 +63,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...context.app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   finalPlugins = finalPlugins.concat([...plugins]);
 
@@ -86,15 +90,15 @@ const EditorComponent = ({ node, view, getPos }) => {
         ],
         handleDOMEvents: {
           mousedown: () => {
-            context.view.main.dispatch(
-              context.view.main.state.tr
+            main.dispatch(
+              main.state.tr
                 .setMeta('outsideView', questionId)
                 .setSelection(
                   new TextSelection(
-                    context.view.main.state.tr.doc.resolve(
+                    main.state.tr.doc.resolve(
                       getPos() +
                         2 +
-                        context.view[questionId].state.selection.to,
+                        context.pmViews[questionId].state.selection.to,
                     ),
                   ),
                 ),

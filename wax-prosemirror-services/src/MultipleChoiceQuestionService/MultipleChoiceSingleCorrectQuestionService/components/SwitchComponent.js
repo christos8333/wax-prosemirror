@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useState, useContext, useEffect } from 'react';
@@ -12,15 +11,14 @@ const CustomSwitch = ({ node, getPos }) => {
   const [checked, setChecked] = useState(false);
   const [checkedAnswerMode, setCheckedAnswerMode] = useState(false);
   const {
-    view,
-    view: { main },
+    pmViews: { main },
   } = context;
 
-  const isEditable = view.main.props.editable(editable => {
+  const isEditable = main.props.editable(editable => {
     return editable;
   });
 
-  const customProps = context.view.main.props.customValues;
+  const customProps = main.props.customValues;
 
   useEffect(() => {
     const allNodes = getNodes(main);

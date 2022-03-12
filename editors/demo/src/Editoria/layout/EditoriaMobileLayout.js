@@ -152,7 +152,7 @@ const InfoContainer = styled.div`
   right: 21px;
   z-index: 1;
 `;
-const InfoArea = styled.div``;
+
 let surfaceHeight = 500;
 let notesHeight = 150;
 
@@ -178,7 +178,7 @@ const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
 const EditoriaLayout = ({ editor }) => {
   const {
-    view: { main },
+    pmViews: { main },
   } = useContext(WaxContext);
 
   const notes = main && getNotes(main);

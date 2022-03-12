@@ -189,13 +189,13 @@ const TrackChangeOptionsComponent = ({
 }) => {
   const [isShownTrack, setIsShownTrack] = useState(false);
   const menuItems = groups[0].items;
-  const { app, view, activeView, activeViewId } = useContext(WaxContext);
-  const { state } = view;
+  const { app, pmViews, activeView, activeViewId } = useContext(WaxContext);
+  const { state } = activeView;
   const user = app.config.get('user');
   const hideShowPlugin = app.PmPlugins.get('hideShowPlugin');
-  const inlineTracks = getInlineTracks(view.main).length;
-  const blockTracks = getTrackBlockNodes(view.main).length;
-  const comments = getComments(view.main).length;
+  const inlineTracks = getInlineTracks(pmViews.main).length;
+  const blockTracks = getTrackBlockNodes(pmViews.main).length;
+  const comments = getComments(pmViews.main).length;
 
   const renderTools = () => {
     const tools = [];
@@ -223,7 +223,7 @@ const TrackChangeOptionsComponent = ({
               if (menuItem.name === 'ShowHideTrackChange') {
                 setShowHidden(!showHiddenValue);
                 hideShowPlugin.props.setHideShow(showHiddenValue);
-                each(view, (singleView, viewId) => {
+                each(pmViews, (singleView, viewId) => {
                   singleView.dispatch(singleView.state.tr);
                 });
                 return false;

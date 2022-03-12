@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useRef, useState, useEffect } from 'react';
@@ -35,13 +34,16 @@ const FeedBackInput = styled.input`
 
 export default ({ node, view, getPos, readOnly }) => {
   const context = useContext(WaxContext);
+  const {
+    pmViews: { main },
+  } = context;
   const [feedBack, setFeedBack] = useState(' ');
   const [isFirstRun, setFirstRun] = useState(true);
   const [typing, setTyping] = useState(false);
   const feedBackRef = useRef(null);
 
   useEffect(() => {
-    const allNodes = getNodes(context.view.main);
+    const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         if (!typing || context.transaction.meta.inputType === 'Redo') {
@@ -53,14 +55,14 @@ export default ({ node, view, getPos, readOnly }) => {
         }
       }
     });
-  }, [getNodes(context.view.main)]);
+  }, [getNodes(main)]);
 
   const handleKeyDown = e => {
     setTyping(true);
     if (e.key === 'Backspace') {
-      context.view.main.dispatch(
-        context.view.main.state.tr.setSelection(
-          TextSelection.create(context.view.main.state.tr.doc, null),
+      main.dispatch(
+        main.state.tr.setSelection(
+          TextSelection.create(main.state.tr.doc, null),
         ),
       );
     }
@@ -75,10 +77,8 @@ export default ({ node, view, getPos, readOnly }) => {
   };
 
   const onFocus = () => {
-    context.view.main.dispatch(
-      context.view.main.state.tr.setSelection(
-        TextSelection.create(context.view.main.state.tr.doc, null),
-      ),
+    main.dispatch(
+      main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
     );
   };
 

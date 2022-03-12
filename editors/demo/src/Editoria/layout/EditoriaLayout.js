@@ -171,6 +171,7 @@ const NotesContainer = styled.div`
   padding-left: ${grid(10)};
   height: 100%;
   width: 65%;
+  ${EditorElements};
 `;
 const WaxBottomRightInfo = styled.div``;
 const InfoContainer = styled.div`

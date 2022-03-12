@@ -53,6 +53,8 @@ import invisibles, {
   paragraph,
 } from '@guardian/prosemirror-invisibles';
 
+import CharactersList from './CharactersList';
+
 // const updateTitle = title => {
 //   console.log(title);
 // };
@@ -116,6 +118,7 @@ export default {
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
+  SpecialCharactersService: CharactersList,
   SchemaService: EditoriaSchema,
   TitleService: { updateTitle },
   RulesService: [emDash, ellipsis],

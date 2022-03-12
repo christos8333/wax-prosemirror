@@ -3,7 +3,7 @@
 import React, { useContext, useState } from 'react';
 
 export const WaxContext = React.createContext({
-  view: {},
+  pmViews: {},
   activeView: {},
   activeViewId: null,
   app: null,

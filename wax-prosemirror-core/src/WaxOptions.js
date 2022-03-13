@@ -16,8 +16,7 @@ const parser = schema => {
 export default ({ placeholder, targetFormat, value, schema, plugins }) => {
   let finalPlugins = [];
 
-  // eslint-disable-next-line no-shadow
-  const createPlaceholder = placeholder => {
+  const createPlaceholder = () => {
     return Placeholder({ content: placeholder });
   };
 
@@ -27,6 +26,7 @@ export default ({ placeholder, targetFormat, value, schema, plugins }) => {
   ]);
 
   const WaxOptions = {
+    doc: {},
     schema,
     plugins: finalPlugins,
   };

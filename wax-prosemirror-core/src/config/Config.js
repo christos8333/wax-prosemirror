@@ -1,8 +1,9 @@
 import { set, get, isArrayLikeObject } from 'lodash';
 import { injectable, inject } from 'inversify';
 
+export default
 @injectable()
-export default class Config {
+class Config {
   _config = {};
   constructor(@inject('config') config) {
     this._config = config;

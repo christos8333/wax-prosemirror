@@ -1,12 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 import { injectable } from 'inversify';
 import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 
-export default
 @injectable()
-class ToolGroup {
+export default class ToolGroup {
   _config = {};
   title = '';
   _tools = [];
@@ -30,6 +30,7 @@ class ToolGroup {
         } else {
           tool.hideTool();
         }
+        return true;
       });
     } else {
       this._tools.map(tool => {
@@ -69,10 +70,10 @@ class ToolGroup {
       () => (
         <ToolGroupComponent
           key={uuidv4()}
-          view={view}
-          tools={this._tools}
-          title={this.title}
           name={name}
+          title={this.title}
+          tools={this._tools}
+          view={view}
         />
       ),
       [],

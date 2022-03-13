@@ -5,9 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { TrackChangeEnable } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class EnableTrackChange extends Tools {
+export default class EnableTrackChange extends Tools {
   title = 'Toggle Track Changes';
   label = 'Track Changes';
   name = 'EnableTrackChange';

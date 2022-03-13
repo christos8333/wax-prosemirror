@@ -3,6 +3,7 @@ const { eslint } = require('@coko/lint');
 eslint.parserOptions = {
   ecmaVersion: 6,
   ecmaFeatures: {
+    legacyDecorators: true,
     experimentalObjectRestSpread: true,
   },
 };

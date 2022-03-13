@@ -27,7 +27,8 @@ class MultipleDropDown extends ToolGroup {
   renderTools(view) {
     if (isEmpty(view)) return null;
     return (
-      <DropComponent key="Multipe Drop Down" view={view} tools={this._tools} />
+      // eslint-disable-next-line no-underscore-dangle
+      <DropComponent key="Multipe Drop Down" tools={this._tools} view={view} />
     );
   }
 }

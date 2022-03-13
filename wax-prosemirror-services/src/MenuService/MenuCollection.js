@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { injectable, multiInject } from 'inversify';
 
 @injectable()

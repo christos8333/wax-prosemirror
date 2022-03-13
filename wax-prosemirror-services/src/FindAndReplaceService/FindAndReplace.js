@@ -5,9 +5,8 @@ import { injectable } from 'inversify';
 import { FindAndReplaceTool } from 'wax-prosemirror-components';
 import Tools from '../lib/Tools';
 
-export default
 @injectable()
-class FindAndReplace extends Tools {
+export default class FindAndReplace extends Tools {
   title = 'Find And Replace';
   icon = 'findAndReplace';
   name = 'find';

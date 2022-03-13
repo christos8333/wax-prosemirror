@@ -1,8 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { TrackChangeOptionsTool } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
-import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import ToolGroup from '../../lib/ToolGroup';
 

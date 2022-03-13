@@ -5,9 +5,8 @@ import { LeftSideButton } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Paragraph extends Tools {
+export default class Paragraph extends Tools {
   title = 'Change to Paragraph';
   label = 'Paragraph';
   name = 'Paragraph';

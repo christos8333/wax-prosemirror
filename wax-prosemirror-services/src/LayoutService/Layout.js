@@ -1,6 +1,6 @@
-import { injectable } from "inversify";
-import DefaultLayout from "./DefaultLayout/DefaultLayout";
-import LayoutFactory from "./components/LayoutFactory";
+import { injectable } from 'inversify';
+import DefaultLayout from './DefaultLayout/DefaultLayout';
+import LayoutFactory from './components/LayoutFactory';
 
 @injectable()
 export default class Layout {
@@ -10,7 +10,7 @@ export default class Layout {
     if (!this.components[renderArea]) {
       this.createArea(renderArea);
     }
-    const size = this.components[renderArea].size;
+    const { size } = this.components[renderArea];
     this.components[renderArea].set(size + 1, { component, componentProps });
     return this;
   }
@@ -24,6 +24,7 @@ export default class Layout {
     this.components[area] = new Map();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getArray(iterator) {
     const components = [];
     iterator.forEach(component => components.push(component));

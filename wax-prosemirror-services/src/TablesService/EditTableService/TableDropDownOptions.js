@@ -7,9 +7,8 @@ import { TableDropDown } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class TableDropDownOptions extends Tools {
+export default class TableDropDownOptions extends Tools {
   title = 'Select Options';
   content = 'table';
   name = 'TableDropDownOptions';

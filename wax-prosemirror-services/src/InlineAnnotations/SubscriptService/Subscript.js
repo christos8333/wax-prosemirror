@@ -3,9 +3,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Subscript extends Tools {
+export default class Subscript extends Tools {
   title = 'Toggle subscript';
   icon = 'subscript';
   name = 'Subscript';

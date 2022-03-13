@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
 import { set, get, isArrayLikeObject } from 'lodash';
 import { injectable, inject } from 'inversify';
 
-export default
 @injectable()
-class Config {
+export default class Config {
   _config = {};
   constructor(@inject('config') config) {
     this._config = config;

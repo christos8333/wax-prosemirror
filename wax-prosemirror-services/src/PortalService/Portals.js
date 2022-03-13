@@ -1,8 +1,7 @@
 import { injectable } from 'inversify';
 
-export default
 @injectable()
-class Portals {
+export default class Portals {
   portals = [];
   addPortal(portal) {
     this.portals.push(portal);

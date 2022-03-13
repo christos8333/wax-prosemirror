@@ -3,9 +3,8 @@ import { injectable } from 'inversify';
 import Node from './Node';
 import Mark from './Mark';
 
-export default
 @injectable()
-class Schema {
+export default class Schema {
   _nodes = {};
   _marks = {};
   prosemirrorSchema = { nodes: {}, marks: {} };

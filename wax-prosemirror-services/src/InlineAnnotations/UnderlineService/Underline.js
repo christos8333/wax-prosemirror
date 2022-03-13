@@ -3,9 +3,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Underline extends Tools {
+export default class Underline extends Tools {
   title = 'Toggle underline';
   // content = icons.underline;
   icon = 'underline';

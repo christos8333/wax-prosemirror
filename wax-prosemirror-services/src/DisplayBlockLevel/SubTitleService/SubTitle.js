@@ -5,9 +5,8 @@ import { LeftSideButton } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class SubTitle extends Tools {
+export default class SubTitle extends Tools {
   title = 'Change to Subtitle';
   label = 'Subtitle';
   name = 'SubTitle';

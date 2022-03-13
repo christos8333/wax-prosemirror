@@ -2,7 +2,6 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { EditorShortCutsTool } from 'wax-prosemirror-components';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import Tools from '../../lib/Tools';
 
 @injectable()

@@ -6,9 +6,8 @@ import { injectable } from 'inversify';
 import { CreateTable } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Table extends Tools {
+export default class Table extends Tools {
   title = 'Insert table';
   icon = 'table';
   name = 'Table';

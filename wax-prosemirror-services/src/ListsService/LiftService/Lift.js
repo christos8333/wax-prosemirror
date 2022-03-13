@@ -2,9 +2,8 @@ import { lift } from 'prosemirror-commands';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Lift extends Tools {
+export default class Lift extends Tools {
   title = 'Lift out of enclosing block';
   icon = 'indentDecrease';
   name = 'Lift';

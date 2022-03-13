@@ -5,9 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { EditingSuggestingDropDown } from 'wax-prosemirror-components';
 import Tools from '../lib/Tools';
 
-export default
 @injectable()
-class EditingSuggesting extends Tools {
+export default class EditingSuggesting extends Tools {
   title = '';
   label = '';
   name = 'EditingSuggesting';

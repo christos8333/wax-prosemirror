@@ -3,9 +3,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class StrikeThrough extends Tools {
+export default class StrikeThrough extends Tools {
   title = 'Toggle strikethrough';
   icon = 'strikethrough';
   name = 'StrikeThrough';

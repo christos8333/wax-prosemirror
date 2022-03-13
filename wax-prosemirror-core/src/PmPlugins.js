@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import { injectable } from 'inversify';
+
 @injectable()
 export default class PmPlugins {
   _plugins = new Map();

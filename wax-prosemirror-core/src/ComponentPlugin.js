@@ -1,23 +1,7 @@
-import React, { Component } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/no-array-index-key */
+import React from 'react';
 import { useInjection } from './WaxContext';
-
-class UpdateView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      view: this.props.view,
-    };
-  }
-
-  updateView(view) {
-    this.setState(view);
-  }
-
-  render() {
-    return this.props.children({ view: this.state.view });
-  }
-}
 
 const ComponentPlugin = renderArea => layoutProps => {
   const { instance } = useInjection('Layout');

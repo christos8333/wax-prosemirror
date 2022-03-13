@@ -3,9 +3,8 @@ import { wrapInList } from 'prosemirror-schema-list';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class OrderedList extends Tools {
+export default class OrderedList extends Tools {
   title = 'Wrap in ordered list';
   icon = 'numberedList';
   name = 'OrderedList';

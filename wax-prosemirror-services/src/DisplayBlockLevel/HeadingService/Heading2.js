@@ -5,9 +5,8 @@ import { LeftSideButton } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Heading2 extends Tools {
+export default class Heading2 extends Tools {
   title = 'Change to heading level 2';
   label = 'Heading 2';
   name = 'Heading2';

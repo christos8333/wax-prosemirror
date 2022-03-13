@@ -4,9 +4,8 @@ import { injectable } from 'inversify';
 import { SaveButton, icons } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Save extends Tools {
+export default class Save extends Tools {
   title = 'Save changes';
   icon = 'save';
   name = 'Save';

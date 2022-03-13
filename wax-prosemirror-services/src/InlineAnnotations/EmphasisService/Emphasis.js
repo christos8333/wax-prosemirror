@@ -3,9 +3,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Emphasis extends Tools {
+export default class Emphasis extends Tools {
   title = 'Toggle emphasis';
   icon = 'italic';
   name = 'Emphasis';

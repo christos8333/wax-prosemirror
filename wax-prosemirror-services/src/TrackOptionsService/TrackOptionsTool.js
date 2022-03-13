@@ -5,9 +5,8 @@ import { injectable } from 'inversify';
 import { TrackChangeOptionsTool } from 'wax-prosemirror-components';
 import Tools from '../lib/Tools';
 
-export default
 @injectable()
-class SpecialCharacters extends Tools {
+export default class SpecialCharacters extends Tools {
   title = 'Track Changes Options';
   icon = 'more';
   name = 'trackchangeoptions';

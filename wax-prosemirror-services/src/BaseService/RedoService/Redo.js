@@ -5,9 +5,8 @@ import { injectable } from 'inversify';
 import { UndoRedoButton } from 'wax-prosemirror-components';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Redo extends Tools {
+export default class Redo extends Tools {
   title = 'Redo';
   icon = 'redo';
   name = 'Redo';

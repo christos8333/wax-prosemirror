@@ -3,9 +3,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Superscript extends Tools {
+export default class Superscript extends Tools {
   title = 'Toggle superscript';
   icon = 'superscript';
   name = 'Superscript';

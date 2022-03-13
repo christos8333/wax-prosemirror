@@ -3,9 +3,8 @@ import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import Tools from '../lib/Tools';
 
-export default
 @injectable()
-class Note extends Tools {
+export default class Note extends Tools {
   title = 'Insert Note';
   icon = 'note';
   name = 'Note';

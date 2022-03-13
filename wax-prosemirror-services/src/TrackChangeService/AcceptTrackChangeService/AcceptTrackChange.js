@@ -16,9 +16,8 @@ const checkFromConfig = (mark, user, config) => {
   return true;
 };
 
-export default
 @injectable()
-class AcceptTrackChange extends Tools {
+export default class AcceptTrackChange extends Tools {
   title = 'Accept Changes';
   label = 'Accept in selection';
   icon = 'acceptTrack';

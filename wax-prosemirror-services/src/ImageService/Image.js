@@ -8,9 +8,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../lib/Tools';
 import fileUpload from './fileUpload';
 
-export default
 @injectable()
-class Image extends Tools {
+export default class Image extends Tools {
   title = 'Insert image';
   icon = 'image';
   name = 'Image';

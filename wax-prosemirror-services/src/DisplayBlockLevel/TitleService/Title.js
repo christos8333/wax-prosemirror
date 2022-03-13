@@ -5,9 +5,8 @@ import { TitleButton } from 'wax-prosemirror-components';
 import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Title extends Tools {
+export default class Title extends Tools {
   title = 'Change to Title';
   label = 'Title (H1)';
   name = 'Title';

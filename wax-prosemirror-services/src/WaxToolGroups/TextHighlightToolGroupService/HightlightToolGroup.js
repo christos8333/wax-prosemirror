@@ -3,12 +3,11 @@ import ToolGroup from '../../lib/ToolGroup';
 
 @injectable()
 class HighlightToolGroup extends ToolGroup {
-    tools = [];
-    constructor(@inject('TextHighlightTool') texthighlight) {
-        
-        super();
-        this.tools = [texthighlight];
-      }
+  tools = [];
+  constructor(@inject('TextHighlightTool') texthighlight) {
+    super();
+    this.tools = [texthighlight];
+  }
 }
 
 export default HighlightToolGroup;

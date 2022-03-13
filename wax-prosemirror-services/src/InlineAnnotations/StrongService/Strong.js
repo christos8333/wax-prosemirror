@@ -3,9 +3,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import Tools from '../../lib/Tools';
 
-export default
 @injectable()
-class Strong extends Tools {
+export default class Strong extends Tools {
   title = 'Toggle strong';
   icon = 'bold';
   name = 'Strong';

@@ -4,9 +4,8 @@ import { injectable } from 'inversify';
 import { FullScreen } from 'wax-prosemirror-components';
 import Tools from '../lib/Tools';
 
-export default
 @injectable()
-class FullScreenTool extends Tools {
+export default class FullScreenTool extends Tools {
   title = 'full screen';
   icon = 'fullScreen';
   name = 'FullScreen';

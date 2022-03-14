@@ -36,7 +36,6 @@ import {
   CustomTagService,
 } from 'wax-prosemirror-services';
 
-import { WaxSelectionPlugin } from 'wax-prosemirror-plugins';
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 
 import invisibles, {
@@ -81,12 +80,7 @@ export default {
   TitleService: { updateTitle },
   EnableTrackChangeService: { enabled: false },
 
-  PmPlugins: [
-    columnResizing(),
-    tableEditing(),
-    invisibles([hardBreak()]),
-    WaxSelectionPlugin,
-  ],
+  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

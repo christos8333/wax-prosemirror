@@ -6,7 +6,7 @@ const fillTheGapContainerNode = {
   },
   group: 'block questions',
   atom: true,
-  draggable: true,
+  draggable: false,
   selectable: true,
   defining: true,
   content: 'paragraph+',

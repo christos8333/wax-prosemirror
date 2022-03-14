@@ -62,8 +62,6 @@ const Wax = forwardRef((props, ref) => {
     helpers.revertNotesSchema(schema);
   };
 
-  const TrackChange = application.config.get('config.EnableTrackChangeService');
-
   const Layout = application.container.get('Layout');
   if (layout) Layout.setLayout(layout);
   const WaxRender = Layout.layoutComponent;
@@ -82,7 +80,10 @@ const Wax = forwardRef((props, ref) => {
           ref={ref}
           serializer={serializer}
           targetFormat={targetFormat}
-          TrackChange={TrackChange}
+          TrackChange={
+            application.config.get('config.EnableTrackChangeService') ||
+            undefined
+          }
           user={user}
           value={value}
         >

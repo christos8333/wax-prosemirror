@@ -9,6 +9,7 @@ import {
 // TODO add through service.
 import inlineInputRule from '../MathService/InlineInputRule';
 import blockInputRule from '../MathService/BlockInputRule';
+import linkRule from '../LinkService/LinkInputRule';
 
 @injectable()
 class Rules {
@@ -33,6 +34,7 @@ class Rules {
     return [
       ...smartQuotes,
       // > blockquote
+      linkRule(this.schema.marks.link),
       wrappingInputRule(/^\s*>\s$/, this.schema.nodes.blockquote),
 
       // 1. ordered list

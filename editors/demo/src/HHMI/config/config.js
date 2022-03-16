@@ -27,6 +27,8 @@ import {
   MultipleDropDownToolGroupService,
   EssayService,
   EssayToolGroupService,
+  MatchingService,
+  MatchingToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -55,6 +57,7 @@ export default {
         'MultipleDropDown',
         'Essay',
         'FillTheGap',
+        'Matching',
         'FullScreen',
       ],
     },
@@ -66,6 +69,8 @@ export default {
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
+    new MatchingService(),
+    new MatchingToolGroupService(),
     new FillTheGapQuestionService(),
     new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),

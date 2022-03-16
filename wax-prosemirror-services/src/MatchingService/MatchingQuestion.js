@@ -3,9 +3,9 @@ import Tools from '../lib/Tools';
 
 @injectable()
 class MatchingQuestion extends Tools {
-  title = 'Change to Block Quote';
-  label = 'Block Quote';
-  name = 'BlockQuote';
+  title = 'Add Matching';
+  label = 'Matching';
+  name = 'Matching';
 
   get run() {
     return (state, dispatch) => {};

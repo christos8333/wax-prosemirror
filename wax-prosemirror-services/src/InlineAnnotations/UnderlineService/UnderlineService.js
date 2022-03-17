@@ -4,13 +4,9 @@ import Underline from './Underline';
 import Service from '../../Service';
 
 class UnderlineService extends Service {
-  boot() {
-    const shortCuts = this.container.get('ShortCuts');
-    shortCuts.addShortCut({ 'Mod-u': toggleMark(this.schema.marks.underline) });
-  }
-
   register() {
     this.container.bind('Underline').to(Underline);
+    const CreateShortCut = this.container.get('CreateShortCut');
     const createMark = this.container.get('CreateMark');
     createMark(
       {
@@ -18,6 +14,9 @@ class UnderlineService extends Service {
       },
       { toWaxSchema: true },
     );
+    CreateShortCut({
+      'Mod-u': toggleMark(this.schema.marks.underline),
+    });
   }
 }
 

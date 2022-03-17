@@ -48,7 +48,7 @@ const TopMenu = styled.div`
     margin-right: ${grid(5)};
   }
 
-  > div[data-name='FillTheGap'] {
+  > div[data-name='Matching'] {
     border-right: none;
   }
 `;

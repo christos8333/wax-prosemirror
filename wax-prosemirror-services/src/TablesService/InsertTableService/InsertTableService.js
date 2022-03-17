@@ -3,16 +3,9 @@ import Service from '../../Service';
 import Table from './Table';
 
 class InsertTableService extends Service {
-  boot() {
-    const shortCuts = this.container.get('ShortCuts');
-    shortCuts.addShortCut({
-      Tab: goToNextCell(1),
-      'Shift-Tab': goToNextCell(-1),
-    });
-  }
-
   register() {
     this.container.bind('Table').to(Table);
+    const CreateShortCut = this.container.get('CreateShortCut');
 
     // eslint-disable-next-line camelcase
     const { table, table_row, table_cell, table_header } = tableNodes({
@@ -32,6 +25,12 @@ class InsertTableService extends Service {
     });
     createNode({
       table_header,
+    });
+    CreateShortCut({
+      Tab: goToNextCell(1),
+    });
+    CreateShortCut({
+      'Shift-Tab': goToNextCell(-1),
     });
   }
 }

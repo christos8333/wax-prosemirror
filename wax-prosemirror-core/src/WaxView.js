@@ -56,6 +56,7 @@ const WaxView = forwardRef((props, ref) => {
 
   if (!mounted) {
     context.app.bootServices();
+    context.app.getShortCuts();
   }
 
   const setEditorRef = useCallback(

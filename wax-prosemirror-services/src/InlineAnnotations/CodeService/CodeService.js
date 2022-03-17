@@ -4,13 +4,10 @@ import Code from './Code';
 import Service from '../../Service';
 
 class CodeService extends Service {
-  boot() {
-    const shortCuts = this.container.get('ShortCuts');
-    shortCuts.addShortCut({ 'Mod-`': toggleMark(this.schema.marks.code) });
-  }
-
   register() {
     this.container.bind('Code').to(Code);
+    const CreateShortCut = this.container.get('CreateShortCut');
+
     const createMark = this.container.get('CreateMark');
     createMark(
       {
@@ -18,6 +15,10 @@ class CodeService extends Service {
       },
       { toWaxSchema: true },
     );
+
+    CreateShortCut({
+      'Mod-`': toggleMark(this.schema.marks.code),
+    });
   }
 }
 

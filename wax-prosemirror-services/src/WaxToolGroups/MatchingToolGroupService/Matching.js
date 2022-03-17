@@ -4,9 +4,9 @@ import ToolGroup from '../../lib/ToolGroup';
 @injectable()
 class Matching extends ToolGroup {
   tools = [];
-  constructor() {
+  constructor(@inject('MatchingQuestion') matchingQuestion) {
     super();
-    this.tools = [];
+    this.tools = [matchingQuestion];
   }
 }
 

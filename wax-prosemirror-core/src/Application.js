@@ -61,11 +61,17 @@ export default class Application {
     return this.schema.getSchema();
   }
 
+  getShortCuts() {
+    this.shortCuts = this.container.get('ShortCuts');
+    this.PmPlugins.add('shortcuts', this.shortCuts.createShortCuts());
+  }
+
   resetApp() {
     this.container = {};
     this.config = {};
     this.PmPlugins = {};
     this.schema = {};
+    this.shortCuts = {};
   }
 
   static create(config) {

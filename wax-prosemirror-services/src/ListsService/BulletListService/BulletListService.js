@@ -1,28 +1,30 @@
-// import { wrapInList } from 'prosemirror-schema-list';
 import { bulletListNode } from 'wax-prosemirror-schema';
 import Service from '../../Service';
 import BulletList from './BulletList';
 
 class BulletListService extends Service {
   name = 'BulletListService';
-  boot() {
-    const shortCuts = this.container.get('ShortCuts');
-    // shortCuts.addShortCut({
-    //   "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist)
-    // });
-  }
 
   register() {
+    const CreateShortCut = this.container.get('CreateShortCut');
+    const createNode = this.container.get('CreateNode');
+
     this.container.bind('BulletList').toDynamicValue(() => {
       return new BulletList(this.config);
     });
-    const createNode = this.container.get('CreateNode');
+
     createNode(
       {
         bulletlist: bulletListNode,
       },
       { toWaxSchema: true },
     );
+
+    CreateShortCut({
+      'Shift-Ctrl-8': (state, dispatch) => {
+        this.container.get('BulletList').run(state, dispatch);
+      },
+    });
   }
 }
 

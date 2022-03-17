@@ -3,12 +3,7 @@ import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 
-import {
-  wrapInList,
-  splitListItem,
-  liftListItem,
-  sinkListItem,
-} from 'prosemirror-schema-list';
+import { splitListItem } from 'prosemirror-schema-list';
 import { NodeSelection, TextSelection } from 'prosemirror-state';
 
 import {
@@ -112,31 +107,37 @@ const undoShortCut = (state, dispatch, view) =>
 const redoShortCut = (state, dispatch, view) =>
   redo(state, tr => dispatch(tr.setMeta('inputType', 'Redo')), view);
 
+const insertBreak = (state, dispatch) => {
+  const br = state.schema.nodes.hard_break.create();
+  dispatch(state.tr.replaceSelectionWith(br).scrollIntoView());
+  return true;
+};
+
+// const insertRule = (state, dispatch) => {
+//   const hr = this.schema.nodes.horizontal_rule.create();
+//   dispatch(state.tr.replaceSelectionWith(hr).scrollIntoView());
+//   return true;
+// }
+
+const getKeys = {
+  'Mod-z': undoShortCut,
+  'Shift-Mod-z': redoShortCut,
+  Backspace: backSpaceShortCut,
+  'Mod-y': redoShortCut,
+  Escape: selectParentNode,
+  'Mod-Enter': chainCommands(exitCode, insertBreak),
+  'Shift-Enter': chainCommands(exitCode, insertBreak),
+  'Ctrl-Enter': chainCommands(exitCode, insertBreak),
+  // 'Mod-_': this.insertRule,
+  Enter: pressEnter,
+};
+
 @injectable()
 export default class ShortCuts {
-  constructor() {
-    this.insertBreak = this.insertBreak.bind(this);
-    this.insertRule = this.insertRule.bind(this);
-    // this.PmPlugins = plugins;
-    // this.schema = schema;
-    this.keys = this.getKeys();
-  }
-
-  insertBreak(state, dispatch) {
-    const br = this.schema.nodes.hard_break.create();
-    dispatch(state.tr.replaceSelectionWith(br).scrollIntoView());
-    return true;
-  }
-
-  insertRule(state, dispatch) {
-    const hr = this.schema.nodes.horizontal_rule.create();
-    dispatch(state.tr.replaceSelectionWith(hr).scrollIntoView());
-    return true;
-  }
+  keys = getKeys;
 
   createShortCuts() {
-    this.shortCuts = keymap(this.createKeyBindings());
-    return this.shortCuts;
+    return keymap(this.createKeyBindings());
   }
 
   addShortCut(shortcut) {
@@ -152,24 +153,5 @@ export default class ShortCuts {
       }
     });
     return this.keys;
-  }
-
-  getKeys() {
-    return {
-      'Mod-z': undoShortCut,
-      'Shift-Mod-z': redoShortCut,
-      Backspace: backSpaceShortCut,
-      'Mod-y': redoShortCut,
-      Escape: selectParentNode,
-      'Mod-Enter': chainCommands(exitCode, this.insertBreak),
-      'Shift-Enter': chainCommands(exitCode, this.insertBreak),
-      'Ctrl-Enter': chainCommands(exitCode, this.insertBreak),
-      'Mod-_': this.insertRule,
-      // 'Mod-[': liftListItem(this.schema.nodes.list_item),
-      // 'Mod-]': sinkListItem(this.schema.nodes.list_item),
-      Enter: pressEnter,
-      // 'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
-      // 'Shift-Ctrl-9': wrapInList(this.schema.nodes.orderedlist),
-    };
   }
 }

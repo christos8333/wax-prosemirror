@@ -63,7 +63,6 @@ export default class Application {
 
   getShortCuts() {
     this.shortCuts = this.container.get('ShortCuts');
-    console.log(this.shortCuts);
     this.PmPlugins.add('shortcuts', this.shortCuts.createShortCuts());
   }
 

@@ -1,18 +1,18 @@
-import Service from "../../Service";
-import { liftListItem, sinkListItem } from "prosemirror-schema-list";
-import Lift from "./Lift";
+import { liftListItem, sinkListItem } from 'prosemirror-schema-list';
+import Service from '../../Service';
+import Lift from './Lift';
 
 class LiftService extends Service {
   boot() {
-    const shortCuts = this.container.get("ShortCuts");
-    // shortCuts.addShortCut({
-    //   "Mod-[": liftListItem(this.schema.nodes.list_item),
-    //   "Mod-]": sinkListItem(this.schema.nodes.list_item)
-    // });
+    const shortCuts = this.container.get('ShortCuts');
+    shortCuts.addShortCut({
+      'Mod-[': liftListItem(this.schema.nodes.list_item),
+      'Mod-]': sinkListItem(this.schema.nodes.list_item),
+    });
   }
 
   register() {
-    this.container.bind("Lift").to(Lift);
+    this.container.bind('Lift').to(Lift);
   }
 }
 

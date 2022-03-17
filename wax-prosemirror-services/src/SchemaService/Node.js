@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { isPlainObject } from 'lodash';
 import ParseRule from './ParseRule';
 import Middleware from '../lib/Middleware';
@@ -55,7 +56,7 @@ export default class Node {
   }
 
   toJSON() {
-    const importer = this.importer;
+    const { importer } = this;
 
     return {
       atom: this.atom,

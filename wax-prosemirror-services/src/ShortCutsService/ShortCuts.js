@@ -113,12 +113,12 @@ const redoShortCut = (state, dispatch, view) =>
   redo(state, tr => dispatch(tr.setMeta('inputType', 'Redo')), view);
 
 @injectable()
-class ShortCuts {
-  constructor(plugins, schema) {
+export default class ShortCuts {
+  constructor() {
     this.insertBreak = this.insertBreak.bind(this);
     this.insertRule = this.insertRule.bind(this);
-    this.PmPlugins = plugins;
-    this.schema = schema;
+    // this.PmPlugins = plugins;
+    // this.schema = schema;
     this.keys = this.getKeys();
   }
 
@@ -135,13 +135,12 @@ class ShortCuts {
   }
 
   createShortCuts() {
-    const shortCuts = keymap(this.createKeyBindings());
-    this.PmPlugins.add('shortcuts', shortCuts);
+    this.shortCuts = keymap(this.createKeyBindings());
+    return this.shortCuts;
   }
 
   addShortCut(shortcut) {
     Object.assign(this.keys, shortcut);
-    this.createShortCuts();
   }
 
   createKeyBindings() {
@@ -166,13 +165,11 @@ class ShortCuts {
       'Shift-Enter': chainCommands(exitCode, this.insertBreak),
       'Ctrl-Enter': chainCommands(exitCode, this.insertBreak),
       'Mod-_': this.insertRule,
-      'Mod-[': liftListItem(this.schema.nodes.list_item),
-      'Mod-]': sinkListItem(this.schema.nodes.list_item),
+      // 'Mod-[': liftListItem(this.schema.nodes.list_item),
+      // 'Mod-]': sinkListItem(this.schema.nodes.list_item),
       Enter: pressEnter,
-      'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
-      'Shift-Ctrl-9': wrapInList(this.schema.nodes.orderedlist),
+      // 'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
+      // 'Shift-Ctrl-9': wrapInList(this.schema.nodes.orderedlist),
     };
   }
 }
-
-export default ShortCuts;

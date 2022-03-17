@@ -1,4 +1,4 @@
-// import { wrapInList } from 'prosemirror-schema-list';
+import { wrapInList } from 'prosemirror-schema-list';
 import { bulletListNode } from 'wax-prosemirror-schema';
 import Service from '../../Service';
 import BulletList from './BulletList';
@@ -7,9 +7,9 @@ class BulletListService extends Service {
   name = 'BulletListService';
   boot() {
     const shortCuts = this.container.get('ShortCuts');
-    // shortCuts.addShortCut({
-    //   "Shift-Ctrl-8": wrapInList(this.schema.nodes.bulletlist)
-    // });
+    shortCuts.addShortCut({
+      'Shift-Ctrl-8': wrapInList(this.schema.nodes.bulletlist),
+    });
   }
 
   register() {

@@ -2,6 +2,7 @@ import Service from '../Service';
 import MatchingQuestion from './MatchingQuestion';
 import matchingContainerNode from './schema/matchingContainerNode';
 import MatchingContainerNodeView from './MatchingContainerNodeView';
+import MatchingContainerComponent from './components/MatchingContainerComponent';
 
 class MatchingService extends Service {
   name = 'MatchingService';
@@ -15,11 +16,11 @@ class MatchingService extends Service {
       matching_container: matchingContainerNode,
     });
 
-    // addPortal({
-    //   nodeView: MatchingContainerNodeView,
-    //   component: QuestionComponent,
-    //   context: this.app,
-    // });
+    addPortal({
+      nodeView: MatchingContainerNodeView,
+      component: MatchingContainerComponent,
+      context: this.app,
+    });
   }
 }
 

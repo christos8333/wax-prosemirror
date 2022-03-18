@@ -9,6 +9,7 @@ export default class LinkService extends Service {
 
   boot() {
     const createOverlay = this.container.get('CreateOverlay');
+    const createRule = this.container.get('CreateRule');
     createOverlay(
       LinkComponent,
       {},
@@ -18,11 +19,11 @@ export default class LinkService extends Service {
         selection: false,
       },
     );
+    // createRule([linkRule(this.schema.marks.link)]);
   }
 
   register() {
     this.container.bind('Link').to(LinkTool);
-    const createRule = this.container.get('CreateRule');
     const createMark = this.container.get('CreateMark');
     createMark(
       {
@@ -30,6 +31,5 @@ export default class LinkService extends Service {
       },
       { toWaxSchema: true },
     );
-    createRule([linkRule(this.schema.marks.link)]);
   }
 }

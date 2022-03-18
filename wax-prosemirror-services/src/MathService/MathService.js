@@ -15,12 +15,16 @@ class MathService extends Service {
   boot() {
     this.app.PmPlugins.add('mathplugin', mathPlugin);
     this.app.PmPlugins.add('mathselectplugin', mathSelectPlugin);
+    const createRule = this.container.get('CreateRule');
+    createRule([
+      blockInputRule(/^\$\$\s+$/, this.schema.nodes.math_display),
+      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, this.schema.nodes.math_inline),
+    ]);
   }
 
   register() {
     const createNode = this.container.get('CreateNode');
     const createMark = this.container.get('CreateMark');
-    const createRule = this.container.get('CreateRule');
 
     createNode({
       math_display: mathDisplayNode,
@@ -31,10 +35,6 @@ class MathService extends Service {
     createMark({
       math_select: mathSelectMark,
     });
-    createRule([
-      blockInputRule(/^\$\$\s+$/, this.schema.nodes.math_display),
-      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, this.schema.nodes.math_inline),
-    ]);
   }
 }
 

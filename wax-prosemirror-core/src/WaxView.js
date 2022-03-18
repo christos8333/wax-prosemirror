@@ -6,7 +6,6 @@ import React, {
   useCallback,
   useMemo,
   useEffect,
-  useState,
   forwardRef,
   useImperativeHandle,
 } from 'react';
@@ -46,18 +45,12 @@ const WaxView = forwardRef((props, ref) => {
   } = props;
 
   const WaxEditorRef = useRef();
-  const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
   context.app.setContext({ ...context, createPortal });
 
   const schema = context.app.getSchema();
-
-  if (!mounted) {
-    context.app.bootServices();
-    context.app.getShortCuts();
-  }
 
   const setEditorRef = useCallback(
     // eslint-disable-next-line consistent-return
@@ -68,6 +61,9 @@ const WaxView = forwardRef((props, ref) => {
         // clean up the unmount if you need to.
       }
       if (node) {
+        context.app.bootServices();
+        context.app.getShortCuts();
+
         const options = WaxOptions({
           ...props,
           schema,
@@ -98,8 +94,6 @@ const WaxView = forwardRef((props, ref) => {
             },
           },
         );
-
-        setMounted(true);
 
         context.updateView(
           {

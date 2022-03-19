@@ -33,7 +33,6 @@ export default props => {
     },
     props: {
       handleKeyDown(view, event) {
-        console.log(props);
         if (event.key === 'Enter' && !event.shiftKey) {
           if (view.state.doc.content.size <= 2) {
             return true;

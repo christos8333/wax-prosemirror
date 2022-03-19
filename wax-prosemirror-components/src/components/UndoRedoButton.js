@@ -10,8 +10,9 @@ const UndoRedoButton = ({ view = {}, item }) => {
     pmViews: { main },
     activeViewId,
     activeView,
+    options,
   } = useContext(WaxContext);
-
+  console.log(useContext(WaxContext).options);
   const isEditable = main.props.editable(editable => {
     return editable;
   });
@@ -30,6 +31,7 @@ const UndoRedoButton = ({ view = {}, item }) => {
 
   let isDisabled = !select(state, activeViewId, activeView);
   if (!isEditable) isDisabled = true;
+  if (options.resetHistory) isDisabled = true;
 
   const UndoRedoButtonComponent = useMemo(
     () => (
@@ -42,7 +44,7 @@ const UndoRedoButton = ({ view = {}, item }) => {
         title={title}
       />
     ),
-    [isActive, isDisabled],
+    [isActive, isDisabled, useContext(WaxContext).options],
   );
 
   return UndoRedoButtonComponent;

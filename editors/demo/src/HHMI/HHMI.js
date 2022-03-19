@@ -64,7 +64,7 @@ const Hhmi = () => {
         autoFocus
         customValues={{ showFeedBack: submited }}
         fileUpload={file => renderImage(file)}
-        value={t}
+        // value={t}
         readonly={readOnly}
         layout={HhmiLayout}
         // onChange={source => console.log(source)}

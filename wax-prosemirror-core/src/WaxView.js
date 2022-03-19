@@ -82,6 +82,7 @@ const WaxView = forwardRef((props, ref) => {
             state: EditorState.create(options),
             dispatchTransaction,
             disallowedTools: [],
+            options,
             user,
             scrollMargin: 200,
             scrollThreshold: 200,

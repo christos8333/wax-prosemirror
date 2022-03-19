@@ -29,10 +29,15 @@ import {
   EssayToolGroupService,
   MatchingService,
   MatchingToolGroupService,
+  ChatService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
+
+const getContent = source => {
+  console.log('editor content', source);
+};
 
 export default {
   MenuService: [
@@ -63,12 +68,14 @@ export default {
     },
   ],
 
+  ChatService: { getContent },
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
+    new ChatService(),
     new MatchingService(),
     new MatchingToolGroupService(),
     new FillTheGapQuestionService(),

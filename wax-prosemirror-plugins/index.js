@@ -11,3 +11,4 @@ export { default as mathSelectPlugin } from './src/math/math-select';
 export { default as FindAndReplacePlugin } from './src/findAndReplace/FindAndReplacePlugin';
 export { default as PlaceHolderPlugin } from './src/images/placeHolderPlugin';
 export { default as captionPlugin } from './src/images/captionPlugin';
+export { default as ChatPlugin } from './src/ChatPlugin';

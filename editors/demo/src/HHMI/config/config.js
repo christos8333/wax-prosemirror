@@ -68,14 +68,14 @@ export default {
     },
   ],
 
-  ChatService: { getContent },
+  // ChatService: { getContent },
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
-    new ChatService(),
+    // new ChatService(),
     new MatchingService(),
     new MatchingToolGroupService(),
     new FillTheGapQuestionService(),

@@ -10,7 +10,6 @@ const UndoRedoButton = ({ view = {}, item }) => {
     pmViews: { main },
     activeViewId,
     activeView,
-    options,
   } = useContext(WaxContext);
 
   const isEditable = main.props.editable(editable => {

@@ -97,7 +97,7 @@ const EditorComponent = ({ node, view, getPos }) => {
           doc: node,
           plugins: finalPlugins,
         }),
-        // This is the magic part
+
         dispatchTransaction,
         disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
         handleDOMEvents: {

@@ -53,13 +53,7 @@ const WaxView = forwardRef((props, ref) => {
   const schema = context.app.getSchema();
 
   const setEditorRef = useCallback(
-    // eslint-disable-next-line consistent-return
     node => {
-      if (WaxEditorRef.current) {
-        // this is where you do cleanup if you have to. the WaxEditorRef.current will
-        // still point to the old ref, the old node. so you have some time here to
-        // clean up the unmount if you need to.
-      }
       if (node) {
         context.app.bootServices();
         context.app.getShortCuts();
@@ -102,14 +96,15 @@ const WaxView = forwardRef((props, ref) => {
           'main',
         );
         if (debug) applyDevTools(view);
-        if (autoFocus)
+        if (autoFocus && view)
           setTimeout(() => {
-            if (view) view.focus();
+            view.focus();
           }, 1000);
 
         return () => view.destroy();
       }
       WaxEditorRef.current = node;
+      return true;
     },
     [readonly, customValues],
   );

@@ -29,7 +29,7 @@ import {
   EssayToolGroupService,
   MatchingService,
   MatchingToolGroupService,
-  ChatService,
+  EnterService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-utilities';
@@ -68,14 +68,14 @@ export default {
     },
   ],
 
-  ChatService: { getContentOnEnter },
+  EnterService: { getContentOnEnter },
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
-    // new ChatService(),
+    new EnterService(),
     new MatchingService(),
     new MatchingToolGroupService(),
     new FillTheGapQuestionService(),

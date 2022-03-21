@@ -50,7 +50,7 @@ export { default as TrueFalseQuestionService } from './src/MultipleChoiceQuestio
 export { default as FillTheGapQuestionService } from './src/FillTheGapQuestionService/FillTheGapQuestionService';
 export { default as EssayService } from './src/EssayService/EssayService';
 export { default as MatchingService } from './src/MatchingService/MatchingService';
-export { default as ChatService } from './src/ChatService/ChatService';
+export { default as EnterService } from './src/EnterService/EnterService';
 /*
 ToolGroups
 */

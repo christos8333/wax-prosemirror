@@ -2,7 +2,7 @@ import { EditorState, Plugin, PluginKey } from 'prosemirror-state';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DOMSerializer, DOMParser } from 'prosemirror-model';
 
-const chatPlugin = new PluginKey('chatPlugin');
+const getContentOnEnterPlugin = new PluginKey('getContentOnEnterPlugin');
 
 const serializer = schema => {
   const WaxSerializer = DOMSerializer.fromSchema(schema);
@@ -26,7 +26,7 @@ const parser = schema => {
 
 export default props => {
   return new Plugin({
-    key: chatPlugin,
+    key: getContentOnEnterPlugin,
     state: {
       init: (_, state) => {},
       apply(tr, prev, _, newState) {},

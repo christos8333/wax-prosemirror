@@ -33,26 +33,38 @@ export default props => {
     },
     props: {
       handleKeyDown(view, event) {
+        let isList = false;
         if (event.key === 'Enter' && !event.shiftKey) {
           if (view.state.doc.content.size <= 2) {
             return true;
           }
-          const WaxOptions = {
-            doc: {},
-            schema: view.props.options.schema,
-            plugins: view.props.options.plugins,
-          };
-          const parse = parser(view.props.options.schema);
-          WaxOptions.doc = parse('');
+          const {
+            selection: { from, to },
+          } = view.state;
 
-          const serialize = serializer(view.props.options.schema);
-          props.getContent(serialize(view.state.doc.content));
+          view.state.doc.nodesBetween(from, to, node => {
+            if (node.type.name === 'list_item') isList = true;
+          });
 
-          view.updateState(EditorState.create(WaxOptions));
-          if (view.dispatch) {
-            view.state.tr.setMeta('addToHistory', false);
+          if (!isList) {
+            const serialize = serializer(view.props.options.schema);
+            props.getContentOnEnter(serialize(view.state.doc.content));
+
+            const WaxOptions = {
+              doc: {},
+              schema: view.props.options.schema,
+              plugins: view.props.options.plugins,
+            };
+
+            const parse = parser(view.props.options.schema);
+            WaxOptions.doc = parse('');
+            view.updateState(EditorState.create(WaxOptions));
+
+            if (view.dispatch) {
+              view.state.tr.setMeta('addToHistory', false);
+            }
+            return true;
           }
-          return true;
         }
         return false;
       },

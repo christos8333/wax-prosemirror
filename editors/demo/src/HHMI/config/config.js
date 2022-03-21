@@ -35,7 +35,7 @@ import {
 import { DefaultSchema } from 'wax-prosemirror-utilities';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 
-const getContent = source => {
+const getContentOnEnter = source => {
   console.log('editor content', source);
 };
 
@@ -68,7 +68,7 @@ export default {
     },
   ],
 
-  // ChatService: { getContent },
+  ChatService: { getContentOnEnter },
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
 

@@ -70,7 +70,7 @@ const Editors = () => {
       case 'ncbi':
         return <NCBI />;
       default:
-        return <HHMI />;
+        return <Editoria />;
     }
   };
 

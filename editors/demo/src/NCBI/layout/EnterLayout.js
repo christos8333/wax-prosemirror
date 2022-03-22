@@ -62,6 +62,7 @@ const EditorContainer = styled.div`
 
   .ProseMirror {
     border-top: none;
+    line-height: 1.6em;
     margin-right: ${grid(1)};
     padding: ${grid(1)};
   }

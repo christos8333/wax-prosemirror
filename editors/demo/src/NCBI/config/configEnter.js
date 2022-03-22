@@ -10,11 +10,13 @@ import {
   EnterService,
 } from 'wax-prosemirror-services';
 
-const getContentOnEnter = source => {
-  console.log('editor content', source);
-};
+import invisibles, {
+  space,
+  hardBreak,
+  paragraph,
+} from '@guardian/prosemirror-invisibles';
 
-const config = {
+const configEnter = getContent => ({
   MenuService: [
     {
       templateArea: 'topBar',
@@ -36,8 +38,12 @@ const config = {
   ShortCutsService: {},
   LinkService: {},
   SchemaService: DefaultSchema,
-  PmPlugins: [],
-  EnterService: { getContentOnEnter },
+  PmPlugins: [invisibles([hardBreak()])],
+  EnterService: {
+    getContentOnEnter: source => {
+      getContent(source);
+    },
+  },
 
   services: [
     new EnterService(),
@@ -49,6 +55,6 @@ const config = {
     new ListsService(),
     new BaseToolGroupService(),
   ],
-};
+});
 
-export default config;
+export default configEnter;

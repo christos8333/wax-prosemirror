@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Wax } from 'wax-prosemirror-core';
 import styled from 'styled-components';
@@ -35,6 +35,14 @@ const TitleEditor = styled.div`
   width: 80px;
 `;
 
+const TitleEditorExport = styled.div`
+  background: #fff;
+  height: 20px;
+  position: relative;
+  top: 2px;
+  width: 120px;
+`;
+
 const ThirdEditorWrapper = styled.div`
   margin-top: 30px;
   display: flex;
@@ -48,11 +56,20 @@ const ThirdEditor = styled.div`
 `;
 
 const ContentArea = styled.div`
-  height: 250px;
+  height: 200px;
   border: 1px solid black;
+  overflow-y: auto;
 `;
 
+let a = '';
+
 const Ncbi = () => {
+  const [content, setContent] = useState('');
+
+  const getContent = source => {
+    setContent(savedContent => `${savedContent} ${source}`);
+  };
+
   return (
     <Wrapper>
       <FirstTwoWrapper>
@@ -78,13 +95,13 @@ const Ncbi = () => {
       </FirstTwoWrapper>
       <ThirdEditorWrapper>
         <ThirdEditor>
-          <ContentArea></ContentArea>
+          <TitleEditorExport>Export On Enter</TitleEditorExport>
+          <ContentArea dangerouslySetInnerHTML={{ __html: content }} />
           <Wax
-            config={configEnter}
+            config={configEnter(getContent)}
             autoFocus
-            value=""
             layout={EnterLayout}
-            placeholder="Start Typing ..."
+            placeholder="Start Typing and press enter..."
           />
         </ThirdEditor>
       </ThirdEditorWrapper>

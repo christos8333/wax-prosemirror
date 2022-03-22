@@ -3,10 +3,17 @@ import React from 'react';
 import { Wax } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 
-import { NcbiLayout, NcbiMiniLayout } from './layout';
-import { configTitle, configMini } from './config';
+import { NcbiLayout, NcbiMiniLayout, EnterLayout } from './layout';
+import { configTitle, configMini, configEnter } from './config';
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  width: 100%;
+`;
+
+const FirstTwoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -28,10 +35,27 @@ const TitleEditor = styled.div`
   width: 80px;
 `;
 
+const ThirdEditorWrapper = styled.div`
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const ThirdEditor = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ContentArea = styled.div`
+  height: 250px;
+  border: 1px solid black;
+`;
+
 const Ncbi = () => {
   return (
-    <>
-      <Wrapper>
+    <Wrapper>
+      <FirstTwoWrapper>
         <FirstEditor>
           <TitleEditor>Basic Editor</TitleEditor>
 
@@ -51,8 +75,20 @@ const Ncbi = () => {
             layout={NcbiLayout}
           />
         </SecondEditor>
-      </Wrapper>
-    </>
+      </FirstTwoWrapper>
+      <ThirdEditorWrapper>
+        <ThirdEditor>
+          <ContentArea></ContentArea>
+          <Wax
+            config={configEnter}
+            autoFocus
+            value=""
+            layout={EnterLayout}
+            placeholder="Start Typing ..."
+          />
+        </ThirdEditor>
+      </ThirdEditorWrapper>
+    </Wrapper>
   );
 };
 

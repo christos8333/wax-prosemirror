@@ -59,9 +59,8 @@ export default props => {
             const parse = parser(view.props.options.schema);
             WaxOptions.doc = parse('');
             view.updateState(EditorState.create(WaxOptions));
-
             if (view.dispatch) {
-              view.state.tr.setMeta('addToHistory', false);
+              view.dispatch(view.state.tr.setMeta('addToHistory', false));
             }
             return true;
           }

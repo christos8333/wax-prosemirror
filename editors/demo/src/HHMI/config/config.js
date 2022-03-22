@@ -75,7 +75,7 @@ export default {
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
 
   services: [
-    new EnterService(),
+    // new EnterService(),
     new MatchingService(),
     new MatchingToolGroupService(),
     new FillTheGapQuestionService(),

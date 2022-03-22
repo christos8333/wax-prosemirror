@@ -67,7 +67,7 @@ const TrueFalseSwitch = ({
   checked,
   checkedAnswerMode,
 }) => {
-  if (customProps.showFeedBack) {
+  if (customProps && customProps.showFeedBack) {
     const correct = node.attrs.correct ? 'TRUE' : 'FALSE';
     const answer = node.attrs.answer ? 'TRUE' : 'FALSE';
     const isCorrect = node.attrs.correct === node.attrs.answer;

@@ -6,7 +6,6 @@ import React, {
   useCallback,
   useMemo,
   useEffect,
-  useState,
   forwardRef,
   useImperativeHandle,
 } from 'react';
@@ -46,7 +45,6 @@ const WaxView = forwardRef((props, ref) => {
   } = props;
 
   const WaxEditorRef = useRef();
-  const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
@@ -54,20 +52,12 @@ const WaxView = forwardRef((props, ref) => {
 
   const schema = context.app.getSchema();
 
-  if (!mounted) {
-    context.app.bootServices();
-    context.app.getShortCuts();
-  }
-
   const setEditorRef = useCallback(
-    // eslint-disable-next-line consistent-return
     node => {
-      if (WaxEditorRef.current) {
-        // this is where you do cleanup if you have to. the WaxEditorRef.current will
-        // still point to the old ref, the old node. so you have some time here to
-        // clean up the unmount if you need to.
-      }
       if (node) {
+        context.app.bootServices();
+        context.app.getShortCuts();
+
         const options = WaxOptions({
           ...props,
           schema,
@@ -99,8 +89,6 @@ const WaxView = forwardRef((props, ref) => {
           },
         );
 
-        setMounted(true);
-
         context.updateView(
           {
             main: view,
@@ -108,14 +96,15 @@ const WaxView = forwardRef((props, ref) => {
           'main',
         );
         if (debug) applyDevTools(view);
-        if (autoFocus)
+        if (autoFocus && view)
           setTimeout(() => {
-            if (view) view.focus();
+            view.focus();
           }, 1000);
 
         return () => view.destroy();
       }
       WaxEditorRef.current = node;
+      return true;
     },
     [readonly, customValues],
   );

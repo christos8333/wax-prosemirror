@@ -48,7 +48,6 @@ export default ({ node, view }) => {
           doc: node,
           plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
         }),
-        // This is the magic part
         dispatchTransaction,
         disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
         handleDOMEvents: {

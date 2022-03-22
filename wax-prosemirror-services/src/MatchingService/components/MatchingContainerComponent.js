@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
 
@@ -10,10 +11,38 @@ const MatchingContainer = styled.div`
 `;
 
 const MatchingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-bottom: ;
   margin: 0px 38px 15px 38px;
-
   margin-top: 10px;
+`;
+
+const QuestionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const LeftArea = styled.div`
+  display: flex;
+`;
+const RightArea = styled.div`
+  display: flex;
+`;
+const CreateOptions = styled.div`
+  display: flex;
+  margin-top: 10px;
+  border: 1px solid black;
+`;
+
+const ActionButton = styled.button`
+  border: none;
+  background: transparent;
+  cursor: pointer;
+`;
+
+const StyledIconAction = styled(Icon)`
+  height: 24px;
+  width: 24px;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -30,10 +59,33 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
 
+  const addOption = () => {};
+
   return (
     <MatchingWrapper>
       <span>Matching</span>
       <MatchingContainer className="matching">
+        <QuestionWrapper>
+          <LeftArea>
+            <input type="text"></input>
+            {!readOnly && (
+              <ActionButton
+                onClick={() => addOption(node.attrs.id)}
+                type="button"
+              >
+                <StyledIconAction name="plusSquare" />
+              </ActionButton>
+            )}
+          </LeftArea>
+          <RightArea>Right</RightArea>
+        </QuestionWrapper>
+        <QuestionWrapper>
+          <LeftArea>
+            <input type="text"></input>
+          </LeftArea>
+          <RightArea>Right</RightArea>
+        </QuestionWrapper>
+        <CreateOptions>Options</CreateOptions>
         {!(readOnly && !customProps.showFeedBack) && (
           <FeedbackComponent
             getPos={getPos}

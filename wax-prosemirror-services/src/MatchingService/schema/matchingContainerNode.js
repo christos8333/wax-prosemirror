@@ -2,6 +2,7 @@ const matchingContainerNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'matching-container' },
+    questions: { default: { question: [], answer: '' } },
   },
   group: 'block questions',
   atom: true,

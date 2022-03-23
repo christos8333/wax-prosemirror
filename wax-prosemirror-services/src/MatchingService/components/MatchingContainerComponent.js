@@ -45,6 +45,14 @@ const StyledIconAction = styled(Icon)`
   width: 24px;
 `;
 
+const OptionArea = styled.div`
+  display: flex;
+`;
+
+const AddOption = styled.div`
+  display: flex;
+`;
+
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
@@ -85,7 +93,12 @@ export default ({ node, view, getPos }) => {
           </LeftArea>
           <RightArea>Right</RightArea>
         </QuestionWrapper>
-        <CreateOptions>Options</CreateOptions>
+        <CreateOptions>
+          <OptionArea>Options Area</OptionArea>
+          <AddOption>
+            <input type="text"></input>
+          </AddOption>
+        </CreateOptions>
         {!(readOnly && !customProps.showFeedBack) && (
           <FeedbackComponent
             getPos={getPos}

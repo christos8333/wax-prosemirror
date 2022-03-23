@@ -51,15 +51,13 @@ export default props => {
           if (!isList) {
             const serialize = serializer(schema);
             props.getContentOnEnter(serialize(content));
-
+            const parse = parser(schema);
             const WaxOptions = {
-              doc: {},
+              doc: parse(''),
               schema,
               plugins,
             };
 
-            const parse = parser(schema);
-            WaxOptions.doc = parse('');
             view.updateState(EditorState.create(WaxOptions));
             if (view.dispatch) {
               view.dispatch(view.state.tr.setMeta('addToHistory', false));

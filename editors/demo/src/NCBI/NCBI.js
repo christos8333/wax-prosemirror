@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Wax } from 'wax-prosemirror-core';
 import styled from 'styled-components';

@@ -128,7 +128,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
           doc: node,
           plugins: finalPlugins,
         }),
-        // This is the magic part
+
         dispatchTransaction,
         disallowedTools: ['MultipleChoice'],
         handleDOMEvents: {

@@ -6,13 +6,7 @@ const blockInputRule = (pattern, nodeType, getAttrs) => {
   return new InputRule(pattern, (state, match, start, end) => {
     let $start = state.doc.resolve(start);
     let attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
-    console.log(
-      !$start
-        .node(-1)
-        .canReplaceWith($start.index(-1), $start.indexAfter(-1), nodeType),
-      nodeType,
-      $start.node(-1),
-    );
+
     if (
       !$start
         .node(-1)

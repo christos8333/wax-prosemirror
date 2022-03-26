@@ -7,14 +7,13 @@ export default class RulesService extends Service {
   boot() {
     const configRules = this.app.config.get('config.RulesService');
     const createRule = this.container.get('CreateRule');
-    // if (configRules) createRule(configRules);
+    if (configRules) createRule(configRules);
   }
 
   register() {
     this.container.bind('Rules').to(Rules).inSingletonScope();
     this.container.bind('CreateRule').toFactory(context => {
       return rule => {
-        console.log(rule);
         const ruleInstance = context.container.get('Rules');
         ruleInstance.addRule(rule);
       };

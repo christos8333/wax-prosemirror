@@ -10,6 +10,9 @@ export default class LinkService extends Service {
   boot() {
     const createOverlay = this.container.get('CreateOverlay');
     const createRule = this.container.get('CreateRule');
+    const {
+      schema: { schema },
+    } = this.app;
     createOverlay(
       LinkComponent,
       {},
@@ -19,7 +22,7 @@ export default class LinkService extends Service {
         selection: false,
       },
     );
-    // createRule([linkRule(this.schema.marks.link)]);
+    createRule([linkRule(schema.marks.link)]);
   }
 
   register() {

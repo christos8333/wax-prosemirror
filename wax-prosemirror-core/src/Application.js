@@ -77,7 +77,7 @@ export default class Application {
     this.PmPlugins = {};
     this.schema = {};
     this.shortCuts = {};
-    this.rules = [];
+    this.rules = {};
   }
 
   static create(config) {

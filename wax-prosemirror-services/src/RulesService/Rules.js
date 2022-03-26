@@ -1,10 +1,5 @@
 import { injectable } from 'inversify';
-import {
-  inputRules,
-  wrappingInputRule,
-  textblockTypeInputRule,
-  smartQuotes,
-} from 'prosemirror-inputrules';
+import { inputRules, smartQuotes } from 'prosemirror-inputrules';
 
 const defaultRules = [
   ...smartQuotes,
@@ -38,7 +33,6 @@ class Rules {
   extendedRules = defaultRules;
   addRule(rule) {
     this.extendedRules.push(...rule);
-    // this.extendedRules = defaultRules.concat(...rule);
   }
 
   createRules() {

@@ -16,9 +16,13 @@ class MathService extends Service {
     this.app.PmPlugins.add('mathplugin', mathPlugin);
     this.app.PmPlugins.add('mathselectplugin', mathSelectPlugin);
     const createRule = this.container.get('CreateRule');
+    const {
+      schema: { schema },
+    } = this.app;
+
     createRule([
-      blockInputRule(/^\$\$\s+$/, this.schema.nodes.math_display),
-      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, this.schema.nodes.math_inline),
+      blockInputRule(/^\$\$\s+$/, schema.nodes.math_display),
+      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, schema.nodes.math_inline),
     ]);
   }
 

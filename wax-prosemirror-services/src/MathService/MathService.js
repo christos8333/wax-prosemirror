@@ -15,19 +15,21 @@ class MathService extends Service {
   boot() {
     this.app.PmPlugins.add('mathplugin', mathPlugin);
     this.app.PmPlugins.add('mathselectplugin', mathSelectPlugin);
+    const createRule = this.container.get('CreateRule');
+    const {
+      schema: { schema },
+    } = this.app;
 
-    const schema = this.container.get('Schema');
-    const rules = this.container.get('Rules');
-    const newRules = [
-      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, schema.schema.nodes.math_inline),
-      blockInputRule(/^\$\$\s+$/, schema.schema.nodes.math_display),
-    ];
-    // rules.addRule(newRules);
+    createRule([
+      blockInputRule(/^\$\$\s+$/, schema.nodes.math_display),
+      inlineInputRule(/(?!\\)\$(.+)(?!\\)\$/, schema.nodes.math_inline),
+    ]);
   }
 
   register() {
     const createNode = this.container.get('CreateNode');
     const createMark = this.container.get('CreateMark');
+
     createNode({
       math_display: mathDisplayNode,
     });

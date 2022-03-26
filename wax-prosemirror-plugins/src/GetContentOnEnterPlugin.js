@@ -40,6 +40,8 @@ export default props => {
           }
           const {
             selection: { from, to },
+            config: { schema, plugins },
+            doc: { content },
           } = view.state;
 
           view.state.doc.nodesBetween(from, to, node => {
@@ -47,17 +49,15 @@ export default props => {
           });
 
           if (!isList) {
-            const serialize = serializer(view.props.options.schema);
-            props.getContentOnEnter(serialize(view.state.doc.content));
-
+            const serialize = serializer(schema);
+            props.getContentOnEnter(serialize(content));
+            const parse = parser(schema);
             const WaxOptions = {
-              doc: {},
-              schema: view.props.options.schema,
-              plugins: view.props.options.plugins,
+              doc: parse(''),
+              schema,
+              plugins,
             };
 
-            const parse = parser(view.props.options.schema);
-            WaxOptions.doc = parse('');
             view.updateState(EditorState.create(WaxOptions));
             if (view.dispatch) {
               view.dispatch(view.state.tr.setMeta('addToHistory', false));

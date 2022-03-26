@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, {
   useRef,
+  useState,
   useContext,
   useCallback,
   useMemo,
@@ -45,6 +46,7 @@ const WaxView = forwardRef((props, ref) => {
   } = props;
 
   const WaxEditorRef = useRef();
+  const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
@@ -52,13 +54,15 @@ const WaxView = forwardRef((props, ref) => {
 
   const schema = context.app.getSchema();
 
+  if (!mounted) {
+    context.app.bootServices();
+    context.app.getShortCuts();
+    context.app.getRules();
+  }
+
   const setEditorRef = useCallback(
     node => {
       if (node) {
-        context.app.bootServices();
-        context.app.getShortCuts();
-        context.app.getRules();
-
         const options = WaxOptions({
           ...props,
           schema,
@@ -73,7 +77,6 @@ const WaxView = forwardRef((props, ref) => {
             state: EditorState.create(options),
             dispatchTransaction,
             disallowedTools: [],
-            options,
             user,
             scrollMargin: 200,
             scrollThreshold: 200,
@@ -89,6 +92,8 @@ const WaxView = forwardRef((props, ref) => {
             },
           },
         );
+
+        setMounted(true);
 
         context.updateView(
           {

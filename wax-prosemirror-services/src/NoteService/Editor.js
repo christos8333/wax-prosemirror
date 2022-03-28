@@ -196,7 +196,7 @@ export default ({ node, view }) => {
   return (
     <NoteContainer>
       {NoteEditorContainerComponent}
-      {activeViewId === noteId && <WaxOverlays group="notes" />}
+      <WaxOverlays activeViewId={noteId} group="notes" />
     </NoteContainer>
   );
 };

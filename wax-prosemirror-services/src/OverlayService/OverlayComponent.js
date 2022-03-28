@@ -1,9 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
+import { WaxContext } from 'wax-prosemirror-core';
+
 import { Overlay } from 'wax-prosemirror-components';
 import usePosition from './usePosition';
 
 export default (Component, markType) => props => {
+  const context = useContext(WaxContext);
   const [position, setPosition, mark] = usePosition(markType);
   const component = useMemo(
     () => (
@@ -14,9 +17,13 @@ export default (Component, markType) => props => {
         {...props}
       />
     ),
-    [JSON.stringify(mark), position],
+    [JSON.stringify(mark), position, context.activeViewId],
   );
   const visible = !!position.left;
 
-  return <Overlay position={position}>{visible && component}</Overlay>;
+  return (
+    <Overlay position={position}>
+      {props.activeViewId === context.activeViewId && visible && component}
+    </Overlay>
+  );
 };

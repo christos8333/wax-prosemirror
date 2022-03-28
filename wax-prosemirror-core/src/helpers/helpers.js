@@ -40,7 +40,7 @@ const getDocContent = (schema, serializer, targetFormat, context) => {
     const serialize = serializer(schema);
     content = serialize(context.app.context.pmViews.main.state.doc.content);
   }
-  revertNotesSchema(content);
+  revertNotesSchema(schema);
 
   return content;
 };

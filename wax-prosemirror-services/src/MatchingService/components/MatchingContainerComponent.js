@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
@@ -24,10 +24,26 @@ const QuestionWrapper = styled.div`
 `;
 const LeftArea = styled.div`
   display: flex;
+  flex-dierection: row;
 `;
 const RightArea = styled.div`
   display: flex;
 `;
+
+const InputsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  input {
+    margin-bottom: 10px;
+  }
+`;
+
+const FirstOption = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const CreateOptions = styled.div`
   display: flex;
   margin-top: 10px;
@@ -58,6 +74,8 @@ export default ({ node, view, getPos }) => {
   const {
     pmViews: { main },
   } = context;
+  const [inputList, setInputList] = useState([]);
+  const addAnswerRef = useRef(null);
 
   const customProps = main.props.customValues;
 
@@ -67,7 +85,20 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
 
-  const addOption = () => {};
+  const Input = () => {
+    return (
+      <input
+        placeholder="Your answer here"
+        ref={addAnswerRef}
+        type="text"
+        value=""
+      />
+    );
+  };
+
+  const addOption = event => {
+    setInputList(inputList.concat(<Input key={inputList.length} />));
+  };
 
   return (
     <MatchingWrapper>
@@ -75,21 +106,20 @@ export default ({ node, view, getPos }) => {
       <MatchingContainer className="matching">
         <QuestionWrapper>
           <LeftArea>
-            <input type="text"></input>
-            {!readOnly && (
-              <ActionButton
-                onClick={() => addOption(node.attrs.id)}
-                type="button"
-              >
-                <StyledIconAction name="plusSquare" />
-              </ActionButton>
-            )}
-          </LeftArea>
-          <RightArea>Right</RightArea>
-        </QuestionWrapper>
-        <QuestionWrapper>
-          <LeftArea>
-            <input type="text"></input>
+            <InputsContainer>
+              <FirstOption>
+                {Input()}
+                {!readOnly && (
+                  <ActionButton
+                    onClick={() => addOption(node.attrs.id)}
+                    type="button"
+                  >
+                    <StyledIconAction name="plusSquare" />
+                  </ActionButton>
+                )}
+              </FirstOption>
+              {inputList}
+            </InputsContainer>
           </LeftArea>
           <RightArea>Right</RightArea>
         </QuestionWrapper>

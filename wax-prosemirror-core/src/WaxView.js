@@ -54,15 +54,15 @@ const WaxView = forwardRef((props, ref) => {
 
   const schema = context.app.getSchema();
 
-  if (!mounted) {
-    context.app.bootServices();
-    context.app.getShortCuts();
-    context.app.getRules();
-  }
-
   const setEditorRef = useCallback(
     node => {
       if (node) {
+        if (!mounted) {
+          context.app.bootServices();
+          context.app.getShortCuts();
+          context.app.getRules();
+        }
+
         const options = WaxOptions({
           ...props,
           schema,

@@ -5,7 +5,7 @@ import matchingOptionNode from './schema/matchingOptionNode';
 import MatchingContainerNodeView from './MatchingContainerNodeView';
 import MatchingOptionNodeView from './MatchingOptionNodeView';
 import MatchingContainerComponent from './components/MatchingContainerComponent';
-import MatchingOptionComponent from './MatchingOptionComponent';
+import MatchingOptionComponent from './components/MatchingOptionComponent';
 
 class MatchingService extends Service {
   name = 'MatchingService';

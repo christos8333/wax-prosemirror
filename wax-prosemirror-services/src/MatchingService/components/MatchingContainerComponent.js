@@ -4,6 +4,7 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
+import ContainerEditor from './ContainerEditor';
 
 const MatchingContainer = styled.div`
   border: 3px solid #f5f5f7;
@@ -108,7 +109,7 @@ export default ({ node, view, getPos }) => {
           <LeftArea>
             <InputsContainer>
               <FirstOption>
-                {Input()}
+                <ContainerEditor getPos={getPos} node={node} view={view} />
                 {!readOnly && (
                   <ActionButton
                     onClick={() => addOption(node.attrs.id)}

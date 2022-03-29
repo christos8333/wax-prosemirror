@@ -31,7 +31,7 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const EditorComponent = ({ node, view, getPos }) => {
+const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -148,4 +148,4 @@ const EditorComponent = ({ node, view, getPos }) => {
   );
 };
 
-export default EditorComponent;
+export default ContainerEditor;

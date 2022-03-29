@@ -3,30 +3,15 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
-import { keymap } from 'prosemirror-keymap';
-import { baseKeymap } from 'prosemirror-commands';
-import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
   > .ProseMirror {
-    padding: 5px;
+    padding: 0px;
     &:focus {
       outline: none;
-    }
-
-    p.empty-node:first-child::before {
-      content: attr(data-content);
-    }
-
-    .empty-node::before {
-      color: rgb(170, 170, 170);
-      float: left;
-      font-style: italic;
-      height: 0px;
-      pointer-events: none;
     }
   }
 `;

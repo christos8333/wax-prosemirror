@@ -110,7 +110,13 @@ const EditorComponent = ({ node, view, getPos }) => {
           plugins: finalPlugins,
         }),
         dispatchTransaction,
-        disallowedTools: ['Images', 'Lists', 'lift', 'MultipleChoice'],
+        disallowedTools: [
+          'Images',
+          'Lists',
+          'lift',
+          'MultipleChoice',
+          'Tables',
+        ],
         handleDOMEvents: {
           mousedown: () => {
             main.dispatch(

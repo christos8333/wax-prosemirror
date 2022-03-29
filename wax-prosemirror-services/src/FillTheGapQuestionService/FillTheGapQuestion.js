@@ -1,7 +1,8 @@
 import { injectable } from 'inversify';
-import { wrapIn } from 'prosemirror-commands';
+import { findWrapping } from 'prosemirror-transform';
 import { v4 as uuidv4 } from 'uuid';
 import Tools from '../lib/Tools';
+import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()
 class FillTheGapQuestion extends Tools {
@@ -10,10 +11,20 @@ class FillTheGapQuestion extends Tools {
   name = 'Fill The Gap';
 
   get run() {
-    return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.fill_the_gap_container, {
-        id: uuidv4(),
-      })(state, dispatch);
+    return (state, dispatch, view) => {
+      helpers.checkifEmpty(view);
+      const { $from, $to } = view.state.selection;
+      const range = $from.blockRange($to);
+      const { tr } = view.state;
+
+      const wrapping =
+        range &&
+        findWrapping(range, state.config.schema.nodes.fill_the_gap_container, {
+          id: uuidv4(),
+        });
+      if (!wrapping) return false;
+      tr.wrap(range, wrapping);
+      dispatch(tr);
     };
   }
 

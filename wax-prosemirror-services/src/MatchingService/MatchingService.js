@@ -1,8 +1,11 @@
 import Service from '../Service';
 import MatchingQuestion from './MatchingQuestion';
 import matchingContainerNode from './schema/matchingContainerNode';
+import matchingOptionNode from './schema/matchingOptionNode';
 import MatchingContainerNodeView from './MatchingContainerNodeView';
+import MatchingOptionNodeView from './MatchingOptionNodeView';
 import MatchingContainerComponent from './components/MatchingContainerComponent';
+import MatchingOptionComponent from './MatchingOptionComponent';
 
 class MatchingService extends Service {
   name = 'MatchingService';
@@ -16,9 +19,19 @@ class MatchingService extends Service {
       matching_container: matchingContainerNode,
     });
 
+    createNode({
+      matching_option: matchingOptionNode,
+    });
+
     addPortal({
       nodeView: MatchingContainerNodeView,
       component: MatchingContainerComponent,
+      context: this.app,
+    });
+
+    addPortal({
+      nodeView: MatchingOptionNodeView,
+      component: MatchingOptionComponent,
       context: this.app,
     });
   }

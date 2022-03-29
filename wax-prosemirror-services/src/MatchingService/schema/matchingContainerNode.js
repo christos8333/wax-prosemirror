@@ -7,6 +7,8 @@ const matchingContainerNode = {
   },
   group: 'block questions',
   atom: true,
+  selectable: false,
+  draggable: false,
   content: 'block*',
   parseDOM: [
     {

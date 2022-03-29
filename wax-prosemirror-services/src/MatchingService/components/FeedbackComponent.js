@@ -9,7 +9,6 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 const FeedBack = styled.div`
   color: black;
   margin-top: 10px;
-  padding: 10px;
 `;
 
 const FeedBackLabel = styled.span`
@@ -37,7 +36,7 @@ export default ({ node, view, getPos, readOnly }) => {
   const {
     pmViews: { main },
   } = context;
-  const [feedBack, setFeedBack] = useState(' ');
+  const [feedBack, setFeedBack] = useState('');
   const [isFirstRun, setFirstRun] = useState(true);
   const [typing, setTyping] = useState(false);
   const feedBackRef = useRef(null);

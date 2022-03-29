@@ -8,16 +8,10 @@ import { StepMap } from 'prosemirror-transform';
 import { WaxContext } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
-  width: 70% !important;
   > .ProseMirror {
-    padding: 0px !important;
-    box-shadow: none !important;
-    width: 100% !important;
+    padding: 0px;
     &:focus {
       outline: none;
-    }
-    p {
-      margin: 0;
     }
   }
 `;

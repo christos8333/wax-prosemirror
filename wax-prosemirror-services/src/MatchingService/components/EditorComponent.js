@@ -16,12 +16,15 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
+  width: 100%;
 
   > .ProseMirror {
     white-space: break-spaces;
-    width: 100%;
+    width: 100% !important;
     word-wrap: break-word;
     padding: 0 !important;
+    border-bottom: 1px solid black;
+    box-shadow: none !important;
 
     &:focus {
       outline: none;

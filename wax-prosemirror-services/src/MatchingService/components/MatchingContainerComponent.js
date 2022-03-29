@@ -5,56 +5,49 @@ import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
 import ContainerEditor from './ContainerEditor';
-
-const MatchingContainer = styled.div`
-  border: 3px solid #f5f5f7;
-  margin-bottom: 30px;
-`;
+import DropDownComponent from './DropDownComponent';
 
 const MatchingWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ;
   margin: 0px 38px 15px 38px;
   margin-top: 10px;
+`;
+
+const MatchingContainer = styled.div`
+  border: 3px solid #f5f5f7;
+  margin-bottom: 30px;
+  padding: 10px;
 `;
 
 const QuestionWrapper = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const LeftArea = styled.div`
-  display: flex;
-  flex-dierection: row;
-`;
-const RightArea = styled.div`
-  display: flex;
-`;
 
 const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  input {
-    margin-bottom: 10px;
-  }
+  width: 100%;
 `;
 
-const FirstOption = styled.div`
+const Option = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
 `;
 
 const CreateOptions = styled.div`
   display: flex;
-  margin-top: 10px;
   border: 1px solid black;
 `;
 
 const ActionButton = styled.button`
+  height: 24px;
   border: none;
   background: transparent;
   cursor: pointer;
+  padding-left: 0;
 `;
 
 const StyledIconAction = styled(Icon)`
@@ -106,23 +99,33 @@ export default ({ node, view, getPos }) => {
       <span>Matching</span>
       <MatchingContainer className="matching">
         <QuestionWrapper>
-          <LeftArea>
-            <InputsContainer>
-              <FirstOption>
-                <ContainerEditor getPos={getPos} node={node} view={view} />
-                {!readOnly && (
-                  <ActionButton
-                    onClick={() => addOption(node.attrs.id)}
-                    type="button"
-                  >
-                    <StyledIconAction name="plusSquare" />
-                  </ActionButton>
-                )}
-              </FirstOption>
-              {inputList}
-            </InputsContainer>
-          </LeftArea>
-          <RightArea>Right</RightArea>
+          <InputsContainer>
+            <Option>
+              {!readOnly && (
+                <ActionButton
+                  onClick={() => addOption(node.attrs.id)}
+                  type="button"
+                >
+                  <StyledIconAction name="plusSquare" />
+                </ActionButton>
+              )}
+              <ContainerEditor getPos={getPos} node={node} view={view} />
+              <DropDownComponent />
+            </Option>
+            <Option>
+              {!readOnly && (
+                <ActionButton
+                  onClick={() => addOption(node.attrs.id)}
+                  type="button"
+                >
+                  <StyledIconAction name="plusSquare" />
+                </ActionButton>
+              )}
+              <ContainerEditor getPos={getPos} node={node} view={view} />
+              <DropDownComponent />
+            </Option>
+            {inputList}
+          </InputsContainer>
         </QuestionWrapper>
         <CreateOptions>
           <OptionArea>Options Area</OptionArea>

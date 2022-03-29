@@ -17,17 +17,18 @@ const EditorWrapper = styled.div`
   flex: 2 1 auto;
   justify-content: left;
 
-  .ProseMirror {
+  > .ProseMirror {
     white-space: break-spaces;
     width: 100%;
     word-wrap: break-word;
+    padding: 0 !important;
 
     &:focus {
       outline: none;
     }
 
     :empty::before {
-      content: 'Type your answer';
+      content: 'Type your text';
       color: #aaa;
       float: left;
       font-style: italic;

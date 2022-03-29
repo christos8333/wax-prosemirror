@@ -4,10 +4,11 @@ const matchingOptionNode = {
     id: { default: '' },
     correct: { default: false },
     answer: { default: false },
-    feedback: { default: '' },
   },
-  group: 'block questions',
-  content: 'block*',
+  group: 'inline questions',
+  content: 'text*',
+  inline: true,
+  atom: true,
   defining: true,
   parseDOM: [
     {
@@ -18,7 +19,6 @@ const matchingOptionNode = {
           class: dom.getAttribute('class'),
           correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
           answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
-          feedback: dom.getAttribute('feedback'),
         };
       },
     },

@@ -2,7 +2,8 @@ const matchingContainerNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'matching-container' },
-    questions: { default: { question: [], answer: '' } },
+    answers: { default: [] },
+    feedback: { default: '' },
   },
   group: 'block questions',
   atom: true,
@@ -14,6 +15,7 @@ const matchingContainerNode = {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
+          feedback: dom.getAttribute('feedback'),
         };
       },
     },

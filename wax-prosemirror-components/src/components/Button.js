@@ -18,9 +18,9 @@ const Button = ({ view = {}, item }) => {
 
   const { state } = view;
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = e => {
     e.preventDefault();
-    run(editorState, editorDispatch);
+    run(activeView.state, activeView.dispatch, activeView);
   };
 
   const isActive = !!(
@@ -38,9 +38,7 @@ const Button = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={e =>
-          handleMouseDown(e, activeView.state, activeView.dispatch)
-        }
+        onMouseDown={e => handleMouseDown(e)}
         title={title}
       />
     ),

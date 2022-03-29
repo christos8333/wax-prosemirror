@@ -105,7 +105,9 @@ const WaxView = forwardRef((props, ref) => {
         if (autoFocus && view)
           setTimeout(() => {
             view.focus();
-          }, 1000);
+            view.state.tr.insertText('', 0);
+            view.dispatch(view.state.tr);
+          }, 500);
 
         return () => view.destroy();
       }

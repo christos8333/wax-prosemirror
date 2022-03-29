@@ -37,11 +37,6 @@ const Option = styled.div`
   width: 100%;
 `;
 
-const CreateOptions = styled.div`
-  display: flex;
-  border: 1px solid black;
-`;
-
 const ActionButton = styled.button`
   height: 24px;
   border: none;
@@ -55,8 +50,16 @@ const StyledIconAction = styled(Icon)`
   width: 24px;
 `;
 
+const CreateOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+`;
+
 const OptionArea = styled.div`
   display: flex;
+  flex-direction: row;
+  width: 100%;
 `;
 
 const AddOption = styled.div`
@@ -68,8 +71,8 @@ export default ({ node, view, getPos }) => {
   const {
     pmViews: { main },
   } = context;
-  const [inputList, setInputList] = useState([]);
-  const addAnswerRef = useRef(null);
+  const [options, setOptions] = useState([]);
+  const addOptionRef = useRef(null);
 
   const customProps = main.props.customValues;
 
@@ -79,21 +82,15 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
 
-  const Input = () => {
-    return (
-      <input
-        placeholder="Your answer here"
-        ref={addAnswerRef}
-        type="text"
-        value=""
-      />
-    );
-  };
-
   const addOption = event => {
-    setInputList(inputList.concat(<Input key={inputList.length} />));
+    // if (options.length === 0) {
+    //   setOptions(options.push(addOptionRef.current.value));
+    // } else {
+    // }
+    setOptions(prevOptions => [...prevOptions, addOptionRef.current.value]);
   };
 
+  const addAnswer = event => {};
   return (
     <MatchingWrapper>
       <span>Matching</span>
@@ -103,7 +100,7 @@ export default ({ node, view, getPos }) => {
             <Option>
               {!readOnly && (
                 <ActionButton
-                  onClick={() => addOption(node.attrs.id)}
+                  onClick={() => addAnswer(node.attrs.id)}
                   type="button"
                 >
                   <StyledIconAction name="plusSquare" />
@@ -112,27 +109,19 @@ export default ({ node, view, getPos }) => {
               <ContainerEditor getPos={getPos} node={node} view={view} />
               <DropDownComponent />
             </Option>
-            <Option>
-              {!readOnly && (
-                <ActionButton
-                  onClick={() => addOption(node.attrs.id)}
-                  type="button"
-                >
-                  <StyledIconAction name="plusSquare" />
-                </ActionButton>
-              )}
-              <ContainerEditor getPos={getPos} node={node} view={view} />
-              <DropDownComponent />
-            </Option>
-            {inputList}
           </InputsContainer>
         </QuestionWrapper>
-        <CreateOptions>
-          <OptionArea>Options Area</OptionArea>
-          <AddOption>
-            <input type="text"></input>
-          </AddOption>
-        </CreateOptions>
+        {!readOnly && (
+          <CreateOptions>
+            <OptionArea>Options: {options}</OptionArea>
+            <AddOption>
+              <input placeholder="Add Option" ref={addOptionRef} type="text" />
+              <button onClick={addOption} type="button">
+                Add
+              </button>
+            </AddOption>
+          </CreateOptions>
+        )}
         {!(readOnly && !customProps.showFeedBack) && (
           <FeedbackComponent
             getPos={getPos}

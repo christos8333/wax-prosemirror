@@ -18,6 +18,10 @@ const EditorWrapper = styled.div`
     }
     p {
       margin: 0;
+
+      br {
+        display: none;
+      }
     }
   }
 `;

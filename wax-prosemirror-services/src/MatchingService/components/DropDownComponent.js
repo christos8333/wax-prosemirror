@@ -28,12 +28,12 @@ const DropdownStyled = styled(Dropdown)`
   }
 
   .Dropdown-menu {
-    width: 122%;
+    width: 102%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     .Dropdown-option {
-      width: 120%;
+      width: 100%;
     }
   }
 `;
@@ -74,9 +74,9 @@ const DropComponent = ({ options }) => {
           key={uuidv4()}
           onChange={option => onChange(option)}
           options={dropDownOptions}
-          placeholder="Choose Option"
+          placeholder="Select option"
           select
-          value="test"
+          value="Select option"
         />
       </Wrapper>
     ),

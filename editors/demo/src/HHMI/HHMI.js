@@ -29,19 +29,7 @@ const SubmitButton = styled.button`
 `;
 
 const t = `<p class="paragraph"></p>
-<div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc323" class="multiple-choice">
-   <div class="multiple-choice-question" id="38de8538-647a-489d-8474-f92d0d256c32">
-      <p class="paragraph">question </p>
-   </div>
-   <div class="multiple-choice-option" id="debb868e-bbfe-4ba2-bf93-c963153ff791" correct="false" answer="false" feedback="feedback 1">
-      <p class="paragraph">answer 1</p>
-   </div>
-   <div class="multiple-choice-option" id="810bcf10-4fcb-4d1e-9dab-ce35cbd28527" correct="true" answer="true" feedback="feedback 2">
-      <p class="paragraph">answer 2</p>
-   </div>
-</div>
-<div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc02" class="fill-the-gap" feedback="some feedback"><p class="paragraph">first <span id="16ec8f33-db5b-4839-9567-8aa73b776bcf" class="fill-the-gap" anser="">answer1; answer2; answer3</span> second <span id="72f23a71-e774-4834-acba-f357afb6a243" class="fill-the-gap" anser="">answer 4; answer5;</span></p></div>`;
-
+<div id="1c3b3bc9-8a82-4fae-9f00-5f3a2605d891" class="matching-container" answers="" feedback=""><p class="paragraph"><div class="matching-option" id="5677a6df-7211-481f-b0d7-94565c87bdbd" correct="false" answer="false"></div></p><p class="paragraph"></p></div><p class="paragraph">s</p><div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc323" class="multiple-choice"><div class="multiple-choice-question" id="38de8538-647a-489d-8474-f92d0d256c32"><p class="paragraph">question</p></div><div class="multiple-choice-option" id="debb868e-bbfe-4ba2-bf93-c963153ff791" correct="false" answer="false" feedback="feedback 1"><p class="paragraph">answer 1</p></div><div class="multiple-choice-option" id="810bcf10-4fcb-4d1e-9dab-ce35cbd28527" correct="true" answer="true" feedback="feedback 2"><p class="paragraph">answer 2</p></div></div><div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc02" class="fill-the-gap" feedback="some feedback"><p class="paragraph">first <span id="16ec8f33-db5b-4839-9567-8aa73b776bcf" class="fill-the-gap" anser="">answer1; answer2; answer3</span> second <span id="72f23a71-e774-4834-acba-f357afb6a243" class="fill-the-gap" anser="">answer 4; answer5;</span></p></div>`;
 const Hhmi = () => {
   const [submited, isSubmited] = useState(false);
   const [readOnly, isReadOnly] = useState(false);

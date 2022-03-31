@@ -156,7 +156,7 @@ export default ({ node, view, getPos }) => {
 
   const addOption = () => {
     if (addOptionRef.current.value.trim() === '') return;
-    const obj = { label: addOptionRef.current.value, key: uuidv4() };
+    const obj = { label: addOptionRef.current.value, value: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
     setAddingOption(true);
     setTimeout(() => {
@@ -176,8 +176,8 @@ export default ({ node, view, getPos }) => {
     }
   };
 
-  const removeOption = key => {
-    setOptions(options.filter(option => option.key !== key));
+  const removeOption = value => {
+    setOptions(options.filter(option => option.value !== value));
     setAddingOption(true);
     setTimeout(() => {
       setAddingOption(false);
@@ -212,11 +212,11 @@ export default ({ node, view, getPos }) => {
                   <li>Options: </li>
                   {options.map((option, index) => {
                     return (
-                      <li key={option.key}>
+                      <li key={option.value}>
                         <span>
                           {option.label} &nbsp;
                           <ActionButton
-                            onClick={() => removeOption(option.key)}
+                            onClick={() => removeOption(option.value)}
                             type="button"
                           >
                             <StyledIconAction name="deleteOutlined" />

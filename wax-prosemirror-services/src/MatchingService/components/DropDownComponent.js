@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useContext, useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
+import { find } from 'lodash';
 import { ReactDropDownStyles } from 'wax-prosemirror-components';
 import Dropdown from 'react-dropdown';
 import { v4 as uuidv4 } from 'uuid';
@@ -40,12 +40,18 @@ const DropdownStyled = styled(Dropdown)`
 `;
 
 const DropComponent = ({ getPos, node, view }) => {
-  const context = useContext(WaxContext);
-  const {
-    pmViews: { main },
-  } = context;
+  const [selectedOption, setSelectedOption] = useState(undefined);
 
-  const onChange = option => {};
+  const onChange = option => {
+    setSelectedOption(option);
+  };
+
+  useEffect(() => {
+    const value = selectedOption ? selectedOption.value : '';
+    const found = find(node.attrs.options, { value });
+
+    if (!found) setSelectedOption(undefined);
+  }, [node.attrs.options]);
 
   const MultipleDropDown = useMemo(
     () => (
@@ -56,11 +62,13 @@ const DropComponent = ({ getPos, node, view }) => {
           options={node.attrs.options}
           placeholder="Select option"
           select
-          value="Select option"
+          value={
+            selectedOption === 'undedfined' ? 'Select Option' : selectedOption
+          }
         />
       </Wrapper>
     ),
-    [node.attrs.options],
+    [node.attrs.options, selectedOption],
   );
 
   return MultipleDropDown;

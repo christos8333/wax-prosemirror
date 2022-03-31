@@ -152,7 +152,7 @@ export default ({ node, view, getPos }) => {
         );
       }
     });
-  }, [options, context]);
+  }, [options, JSON.stringify(context.pmViews.main.state)]);
 
   const addOption = () => {
     if (addOptionRef.current.value.trim() === '') return;

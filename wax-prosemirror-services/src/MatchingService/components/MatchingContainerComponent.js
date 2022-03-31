@@ -156,6 +156,7 @@ export default ({ node, view, getPos }) => {
       setAddingOption(false);
     });
     setOptionText('');
+    addOptionRef.current.focus();
   };
 
   const updateOptionText = () => {

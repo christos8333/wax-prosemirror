@@ -88,8 +88,6 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  const options = [];
-
   return (
     <Option>
       {!readOnly && (

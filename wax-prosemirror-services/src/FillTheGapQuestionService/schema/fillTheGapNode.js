@@ -2,7 +2,7 @@ const fillTheGapNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'fill-the-gap' },
-    anser: { default: '' },
+    answer: { default: '' },
   },
   group: 'inline',
   content: 'text*',

@@ -2,7 +2,7 @@ const matchingContainerNode = {
   attrs: {
     id: { default: '' },
     class: { default: 'matching-container' },
-    answers: { default: [] },
+    options: { default: [] },
     feedback: { default: '' },
   },
   group: 'block questions',
@@ -18,12 +18,22 @@ const matchingContainerNode = {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           feedback: dom.getAttribute('feedback'),
+          options: JSON.parse(dom.getAttribute('options')),
         };
       },
     },
   ],
   toDOM(node) {
-    return ['div', node.attrs, 0];
+    return [
+      'div',
+      {
+        id: node.attrs.id,
+        class: node.attrs.class,
+        options: JSON.stringify(node.attrs.options),
+        feedback: node.attrs.feedback,
+      },
+      0,
+    ];
   },
 };
 

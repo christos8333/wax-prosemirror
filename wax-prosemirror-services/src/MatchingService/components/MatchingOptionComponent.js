@@ -7,6 +7,27 @@ import styled from 'styled-components';
 import { Icon } from 'wax-prosemirror-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorComponent from './EditorComponent';
+import DropDownComponent from './DropDownComponent';
+
+const Option = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 10px;
+`;
+
+const ButtonsContainer = styled.div`
+  width: 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const DropDownContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
 
 const ActionButton = styled.button`
   height: 24px;
@@ -34,7 +55,6 @@ export default ({ node, view, getPos }) => {
   const readOnly = !isEditable;
 
   const addAnswer = () => {
-    console.log(node);
     const nodeId = node.attrs.id;
     const newAnswerId = uuidv4();
     main.state.doc.descendants((editorNode, index) => {
@@ -58,14 +78,36 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const removeAnswer = () => {
+    main.state.doc.descendants((sinlgeNode, pos) => {
+      if (sinlgeNode.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr.deleteRange(pos, pos + sinlgeNode.nodeSize),
+        );
+      }
+    });
+  };
+
+  const options = [];
+
   return (
-    <>
+    <Option>
       {!readOnly && (
-        <ActionButton onClick={addAnswer} type="button">
-          <StyledIconAction name="plusSquare" />
-        </ActionButton>
+        <ButtonsContainer>
+          <ActionButton onClick={addAnswer} type="button">
+            <StyledIconAction name="plusSquare" />
+          </ActionButton>
+          {!node.attrs.isfirst && (
+            <ActionButton onClick={removeAnswer} type="button">
+              <StyledIconAction name="deleteOutlined" />
+            </ActionButton>
+          )}
+        </ButtonsContainer>
       )}
       <EditorComponent getPos={getPos} node={node} view={view} />
-    </>
+      <DropDownContainer>
+        <DropDownComponent options={options} />
+      </DropDownContainer>
+    </Option>
   );
 };

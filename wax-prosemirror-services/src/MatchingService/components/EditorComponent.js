@@ -14,16 +14,16 @@ import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder
 const EditorWrapper = styled.div`
   border: none;
   display: flex;
-  flex: 2 1 auto;
-  justify-content: left;
-  width: 100%;
+  width: 68%;
 
   > .ProseMirror {
     white-space: break-spaces;
     width: 100% !important;
+    min-height: 25px !important;
     word-wrap: break-word;
-    padding: 0 !important;
-    border-bottom: 1px solid black;
+    padding: 4px !important;
+    border: 12px solid #f4f4f7;
+    border-radius: 12px;
     box-shadow: none !important;
 
     &:focus {

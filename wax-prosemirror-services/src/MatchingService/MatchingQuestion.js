@@ -36,7 +36,7 @@ class MatchingQuestion extends Tools {
 
       tr.setSelection(TextSelection.create(tr.doc, range.$to.pos));
       const option = state.config.schema.nodes.matching_option.create(
-        { id: uuidv4() },
+        { id: uuidv4(), isfirst: true },
         Fragment.empty,
       );
 

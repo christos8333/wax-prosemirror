@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 const DropdownStyled = styled(Dropdown)`
   display: inline-flex;
   cursor: not-allowed;
+  margin-left: auto;
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? 'default' : 'none')};
   .Dropdown-control {
@@ -81,7 +82,7 @@ const DropComponent = ({ options }) => {
         />
       </Wrapper>
     ),
-    [options],
+    [],
   );
 
   return MultipleDropDown;

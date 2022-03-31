@@ -8,7 +8,9 @@ import { StepMap } from 'prosemirror-transform';
 import { WaxContext } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
-  width: 70% !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
   > .ProseMirror {
     padding: 0px !important;
     box-shadow: none !important;

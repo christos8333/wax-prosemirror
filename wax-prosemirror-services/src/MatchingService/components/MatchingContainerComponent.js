@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
 import ContainerEditor from './ContainerEditor';
-import DropDownComponent from './DropDownComponent';
 
 const MatchingWrapper = styled.div`
   display: flex;
@@ -22,17 +22,6 @@ const MatchingContainer = styled.div`
 `;
 
 const QuestionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const InputsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const Option = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -91,6 +80,36 @@ const OptionArea = styled.div`
 
 const AddOption = styled.div`
   display: flex;
+  input {
+    border: none;
+    border-bottom: 1px solid black;
+    &:focus {
+      outline: none;
+    }
+
+    ::placeholder {
+      color: rgb(170, 170, 170);
+      font-style: italic;
+    }
+  }
+  button {
+    border: 1px solid #535e76;
+    cursor: pointer;
+    color: #535e76;
+    margin-left: 20px;
+    background: #fff;
+    padding: 4px 8px 4px 8px;
+    &:hover {
+      border: 1px solid #535e76;
+      cursor: pointer;
+      color: #535e76;
+      margin-right: 20px;
+      background: #fff;
+      background: #535e76;
+      color: #fff;
+      padding: 4px 8px 4px 8px;
+    }
+  }
 `;
 
 export default ({ node, view, getPos }) => {
@@ -98,7 +117,8 @@ export default ({ node, view, getPos }) => {
   const {
     pmViews: { main },
   } = context;
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState(node.attrs.options);
+  const [addingOption, setAddingOption] = useState(false);
   const addOptionRef = useRef(null);
 
   const customProps = main.props.customValues;
@@ -113,10 +133,33 @@ export default ({ node, view, getPos }) => {
     if (addOptionRef.current.value.trim() === '') return;
     const obj = { label: addOptionRef.current.value, key: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
+    setAddingOption(true);
+    setTimeout(() => {
+      setAddingOption(false);
+    });
   };
+
+  useEffect(() => {
+    const allNodes = getNodes(main);
+    if (!addingOption) return;
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr.setNodeMarkup(getPos(), undefined, {
+            ...singleNode.node.attrs,
+            options,
+          }),
+        );
+      }
+    });
+  }, [options]);
 
   const removeOption = key => {
     setOptions(options.filter(option => option.key !== key));
+    setAddingOption(true);
+    setTimeout(() => {
+      setAddingOption(false);
+    });
   };
 
   return (
@@ -124,38 +167,40 @@ export default ({ node, view, getPos }) => {
       <span>Matching</span>
       <MatchingContainer className="matching">
         <QuestionWrapper>
-          <InputsContainer>
-            <Option>
-              <ContainerEditor getPos={getPos} node={node} view={view} />
-              <DropDownComponent options={options} />
-            </Option>
-          </InputsContainer>
+          <ContainerEditor getPos={getPos} node={node} view={view} />
         </QuestionWrapper>
         {!readOnly && (
           <CreateOptions>
             <OptionArea>
-              <ul>
-                {options.map((option, index) => {
-                  return (
-                    <li key={option.key}>
-                      <span>
-                        {option.label} &nbsp;
-                        <ActionButton
-                          onClick={() => removeOption(option.key)}
-                          type="button"
-                        >
-                          <StyledIconAction name="deleteOutlined" />
-                        </ActionButton>
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
+              {options.length > 0 && (
+                <ul>
+                  <li>Options: </li>
+                  {options.map((option, index) => {
+                    return (
+                      <li key={option.key}>
+                        <span>
+                          {option.label} &nbsp;
+                          <ActionButton
+                            onClick={() => removeOption(option.key)}
+                            type="button"
+                          >
+                            <StyledIconAction name="deleteOutlined" />
+                          </ActionButton>
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </OptionArea>
             <AddOption>
-              <input placeholder="Add Option" ref={addOptionRef} type="text" />
+              <input
+                placeholder="Type an option ..."
+                ref={addOptionRef}
+                type="text"
+              />
               <button onClick={addOption} type="button">
-                Add
+                Add Option
               </button>
             </AddOption>
           </CreateOptions>
@@ -171,4 +216,15 @@ export default ({ node, view, getPos }) => {
       </MatchingContainer>
     </MatchingWrapper>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const matchingContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'matching_container') {
+      matchingContainerNodes.push(node);
+    }
+  });
+  return matchingContainerNodes;
 };

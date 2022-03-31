@@ -45,27 +45,6 @@ const DropComponent = ({ getPos, node, view }) => {
     pmViews: { main },
   } = context;
 
-  const dropDownOptions = [
-    {
-      label: 'Option 1',
-      value: '0',
-    },
-    {
-      label: 'Long Option 2',
-      value: '1',
-    },
-    {
-      label: 'Option 3',
-      value: '2',
-    },
-    {
-      label: 'Option 4',
-      value: '3',
-    },
-  ];
-
-  useEffect(() => {}, []);
-
   const onChange = option => {};
 
   const MultipleDropDown = useMemo(
@@ -74,14 +53,14 @@ const DropComponent = ({ getPos, node, view }) => {
         <DropdownStyled
           key={uuidv4()}
           onChange={option => onChange(option)}
-          options={[]}
+          options={node.attrs.options}
           placeholder="Select option"
           select
           value="Select option"
         />
       </Wrapper>
     ),
-    [],
+    [node.attrs.options],
   );
 
   return MultipleDropDown;

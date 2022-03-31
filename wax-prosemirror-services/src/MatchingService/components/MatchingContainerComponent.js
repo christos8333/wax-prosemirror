@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -117,7 +118,9 @@ export default ({ node, view, getPos }) => {
   const {
     pmViews: { main },
   } = context;
+
   const [options, setOptions] = useState(node.attrs.options);
+
   const [optionText, setOptionText] = useState('');
   const [addingOption, setAddingOption] = useState(false);
   const addOptionRef = useRef(null);
@@ -132,6 +135,10 @@ export default ({ node, view, getPos }) => {
 
   useEffect(() => {
     const allNodes = getNodes(main);
+
+    /*TEMP TO SAVE NODE OPTIONS TODO: SAVE IN CONTEXT OPTIONS*/
+    saveInChildOptions(allNodes);
+
     if (!addingOption) return;
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
@@ -145,7 +152,7 @@ export default ({ node, view, getPos }) => {
         );
       }
     });
-  }, [options]);
+  }, [options, context]);
 
   const addOption = () => {
     if (addOptionRef.current.value.trim() === '') return;
@@ -174,6 +181,19 @@ export default ({ node, view, getPos }) => {
     setAddingOption(true);
     setTimeout(() => {
       setAddingOption(false);
+    });
+  };
+
+  const saveInChildOptions = allNodes => {
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        singleNode.node.content.content.forEach(parentNodes => {
+          parentNodes.forEach(optionNode => {
+            if (optionNode.type.name === 'matching_option')
+              optionNode.attrs.options = options;
+          });
+        });
+      }
     });
   };
 

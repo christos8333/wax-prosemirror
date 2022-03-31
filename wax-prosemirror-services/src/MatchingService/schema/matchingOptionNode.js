@@ -5,6 +5,7 @@ const matchingOptionNode = {
     isfirst: { default: false },
     correct: { default: false },
     answer: { default: false },
+    options: { default: [] },
   },
   group: 'inline questions',
   content: 'text*',

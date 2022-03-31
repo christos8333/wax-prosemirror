@@ -19,6 +19,7 @@ export default class QuestionsNodeView extends AbstractNodeView {
   }
 
   update(node) {
+    // if (!node.sameMarkup(this.node)) return false;
     this.node = node;
     if (this.context.pmViews[node.attrs.id]) {
       const { state } = this.context.pmViews[node.attrs.id];

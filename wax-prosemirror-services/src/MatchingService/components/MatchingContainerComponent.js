@@ -110,6 +110,7 @@ export default ({ node, view, getPos }) => {
   const readOnly = !isEditable;
 
   const addOption = () => {
+    if (addOptionRef.current.value.trim() === '') return;
     const obj = { label: addOptionRef.current.value, key: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
   };
@@ -118,8 +119,6 @@ export default ({ node, view, getPos }) => {
     setOptions(options.filter(option => option.key !== key));
   };
 
-  const addAnswer = () => {};
-
   return (
     <MatchingWrapper>
       <span>Matching</span>
@@ -127,14 +126,6 @@ export default ({ node, view, getPos }) => {
         <QuestionWrapper>
           <InputsContainer>
             <Option>
-              {!readOnly && (
-                <ActionButton
-                  onClick={() => addAnswer(node.attrs.id)}
-                  type="button"
-                >
-                  <StyledIconAction name="plusSquare" />
-                </ActionButton>
-              )}
               <ContainerEditor getPos={getPos} node={node} view={view} />
               <DropDownComponent options={options} />
             </Option>
@@ -143,7 +134,6 @@ export default ({ node, view, getPos }) => {
         {!readOnly && (
           <CreateOptions>
             <OptionArea>
-              Options:
               <ul>
                 {options.map((option, index) => {
                   return (

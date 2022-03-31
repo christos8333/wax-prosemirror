@@ -131,9 +131,9 @@ export default ({ node, view, getPos }) => {
           );
           main.dispatch(main.state.tr.replaceSelectionWith(answerOption));
           // create Empty Paragraph
-          setTimeout(() => {
-            helpers.createEmptyParagraph(context, newAnswerId);
-          }, 120);
+          // setTimeout(() => {
+          //   helpers.createEmptyParagraph(context, newAnswerId);
+          // }, 120);
         }
       }
     });

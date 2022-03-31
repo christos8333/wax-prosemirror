@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
@@ -53,13 +54,39 @@ const StyledIconAction = styled(Icon)`
 const CreateOptions = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding-bottom: 10px;
 `;
 
 const OptionArea = styled.div`
   display: flex;
-  flex-direction: row;
   width: 100%;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    li {
+      list-style-type: none;
+      padding-right: 7px;
+      padding-bottom: 7px;
+
+      span {
+        background: #535e76;
+        color: white;
+        padding: 3px 3px 3px 10px;
+        border-radius: 12px;
+      }
+      buttton {
+      }
+      svg {
+        fill: white;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
 `;
 
 const AddOption = styled.div`
@@ -82,15 +109,17 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
 
-  const addOption = event => {
-    // if (options.length === 0) {
-    //   setOptions(options.push(addOptionRef.current.value));
-    // } else {
-    // }
-    setOptions(prevOptions => [...prevOptions, addOptionRef.current.value]);
+  const addOption = () => {
+    const obj = { label: addOptionRef.current.value, key: uuidv4() };
+    setOptions(prevOptions => [...prevOptions, obj]);
   };
 
-  const addAnswer = event => {};
+  const removeOption = key => {
+    setOptions(options.filter(option => option.key !== key));
+  };
+
+  const addAnswer = () => {};
+
   return (
     <MatchingWrapper>
       <span>Matching</span>
@@ -107,13 +136,32 @@ export default ({ node, view, getPos }) => {
                 </ActionButton>
               )}
               <ContainerEditor getPos={getPos} node={node} view={view} />
-              <DropDownComponent />
+              <DropDownComponent options={options} />
             </Option>
           </InputsContainer>
         </QuestionWrapper>
         {!readOnly && (
           <CreateOptions>
-            <OptionArea>Options: {options}</OptionArea>
+            <OptionArea>
+              Options:
+              <ul>
+                {options.map((option, index) => {
+                  return (
+                    <li key={option.key}>
+                      <span>
+                        {option.label} &nbsp;
+                        <ActionButton
+                          onClick={() => removeOption(option.key)}
+                          type="button"
+                        >
+                          <StyledIconAction name="deleteOutlined" />
+                        </ActionButton>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </OptionArea>
             <AddOption>
               <input placeholder="Add Option" ref={addOptionRef} type="text" />
               <button onClick={addOption} type="button">

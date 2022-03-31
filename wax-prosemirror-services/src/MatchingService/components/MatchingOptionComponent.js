@@ -106,7 +106,7 @@ export default ({ node, view, getPos }) => {
       )}
       <EditorComponent getPos={getPos} node={node} view={view} />
       <DropDownContainer>
-        <DropDownComponent options={options} />
+        <DropDownComponent getPos={getPos} node={node} view={view} />
       </DropDownContainer>
     </Option>
   );

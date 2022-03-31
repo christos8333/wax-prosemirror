@@ -118,6 +118,7 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
   const [options, setOptions] = useState(node.attrs.options);
+  const [optionText, setOptionText] = useState('');
   const [addingOption, setAddingOption] = useState(false);
   const addOptionRef = useRef(null);
 
@@ -129,6 +130,23 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
 
+  useEffect(() => {
+    const allNodes = getNodes(main);
+    if (!addingOption) return;
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr
+            .setMeta('addToHistory', false)
+            .setNodeMarkup(getPos(), undefined, {
+              ...singleNode.node.attrs,
+              options,
+            }),
+        );
+      }
+    });
+  }, [options]);
+
   const addOption = () => {
     if (addOptionRef.current.value.trim() === '') return;
     const obj = { label: addOptionRef.current.value, key: uuidv4() };
@@ -137,22 +155,18 @@ export default ({ node, view, getPos }) => {
     setTimeout(() => {
       setAddingOption(false);
     });
+    setOptionText('');
   };
 
-  useEffect(() => {
-    const allNodes = getNodes(main);
-    if (!addingOption) return;
-    allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
-        main.dispatch(
-          main.state.tr.setNodeMarkup(getPos(), undefined, {
-            ...singleNode.node.attrs,
-            options,
-          }),
-        );
-      }
-    });
-  }, [options]);
+  const updateOptionText = () => {
+    setOptionText(addOptionRef.current.value);
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === 'Enter' || event.which === 13) {
+      addOption();
+    }
+  };
 
   const removeOption = key => {
     setOptions(options.filter(option => option.key !== key));
@@ -195,9 +209,12 @@ export default ({ node, view, getPos }) => {
             </OptionArea>
             <AddOption>
               <input
+                onChange={updateOptionText}
+                onKeyPress={handleKeyDown}
                 placeholder="Type an option ..."
                 ref={addOptionRef}
                 type="text"
+                value={optionText}
               />
               <button onClick={addOption} type="button">
                 Add Option

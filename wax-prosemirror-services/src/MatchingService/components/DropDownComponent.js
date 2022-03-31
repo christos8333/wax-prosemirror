@@ -39,8 +39,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const DropComponent = ({ options }) => {
-  console.log(options);
+const DropComponent = ({ getPos, node, view }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
@@ -75,7 +74,7 @@ const DropComponent = ({ options }) => {
         <DropdownStyled
           key={uuidv4()}
           onChange={option => onChange(option)}
-          options={options}
+          options={[]}
           placeholder="Select option"
           select
           value="Select option"

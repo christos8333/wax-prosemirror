@@ -1,8 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useContext, useMemo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { find } from 'lodash';
 import { ReactDropDownStyles } from 'wax-prosemirror-components';
+import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import Dropdown from 'react-dropdown';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -42,15 +44,36 @@ const DropdownStyled = styled(Dropdown)`
 const DropComponent = ({ getPos, node, view }) => {
   const [selectedOption, setSelectedOption] = useState(undefined);
 
+  const context = useContext(WaxContext);
+  const {
+    pmViews: { main },
+  } = context;
+
   const onChange = option => {
     setSelectedOption(option);
+
+    const allNodes = getNodes(main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr
+            .setMeta('addToHistory', false)
+            .setNodeMarkup(getPos() + 3, undefined, {
+              ...singleNode.attrs,
+              answer: option,
+            }),
+        );
+      }
+    });
   };
 
   useEffect(() => {
     const value = selectedOption ? selectedOption.value : '';
     const found = find(node.attrs.options, { value });
 
-    if (!found) setSelectedOption(undefined);
+    if (!found) {
+      setSelectedOption(undefined);
+    }
   }, [node.attrs.options]);
 
   const MultipleDropDown = useMemo(
@@ -75,3 +98,18 @@ const DropComponent = ({ getPos, node, view }) => {
 };
 
 export default DropComponent;
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const matchingOptions = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'paragraph') {
+      console.log(node);
+      node.node.content.content.forEach(optionNode => {
+        if (optionNode.type.name === 'matching_option')
+          matchingOptions.push(optionNode);
+      });
+    }
+  });
+  return matchingOptions;
+};

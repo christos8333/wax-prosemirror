@@ -3,8 +3,7 @@ const matchingOptionNode = {
     class: { default: 'matching-option' },
     id: { default: '' },
     isfirst: { default: false },
-    correct: { default: false },
-    answer: { default: false },
+    answer: { default: {} },
     options: { default: [] },
   },
   group: 'inline questions',
@@ -20,13 +19,24 @@ const matchingOptionNode = {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           isfirst: JSON.parse(dom.getAttribute('isfirst').toLowerCase()),
-          correct: JSON.parse(dom.getAttribute('correct').toLowerCase()),
           answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
         };
       },
     },
   ],
-  toDOM: node => ['div', node.attrs, 0],
+  toDOM(node) {
+    return [
+      'div',
+      {
+        id: node.attrs.id,
+        class: node.attrs.class,
+        isfirst: node.attrs.isfirst,
+        answer: JSON.stringify(node.attrs.answer),
+        feedback: node.attrs.feedback,
+      },
+      0,
+    ];
+  },
 };
 
 export default matchingOptionNode;

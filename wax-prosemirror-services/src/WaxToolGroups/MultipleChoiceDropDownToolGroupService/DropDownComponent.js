@@ -38,7 +38,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const DropComponent = ({ title, view, tools }) => {
+const DropDownComponent = ({ title, view, tools }) => {
   const context = useContext(WaxContext);
   const {
     activeView,
@@ -112,4 +112,4 @@ const DropComponent = ({ title, view, tools }) => {
   return MultipleDropDown;
 };
 
-export default DropComponent;
+export default DropDownComponent;

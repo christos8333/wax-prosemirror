@@ -80,3 +80,4 @@ export { default as FillTheGapToolGroupService } from './src/WaxToolGroups/FillT
 export { default as MultipleChoiceDropDownToolGroupService } from './src/WaxToolGroups/MultipleChoiceDropDownToolGroupService/MultipleChoiceDropDownToolGroupService';
 export { default as EssayToolGroupService } from './src/WaxToolGroups/EssayToolGroupService/EssayToolGroupService';
 export { default as MatchingToolGroupService } from './src/WaxToolGroups/MatchingToolGroupService/MatchingToolGroupService';
+export { default as MultipleDropDownToolGroupService } from './src/WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';

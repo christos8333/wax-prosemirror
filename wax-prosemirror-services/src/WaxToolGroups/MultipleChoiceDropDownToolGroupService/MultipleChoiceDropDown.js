@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import ToolGroup from '../../lib/ToolGroup';
-import DropComponent from './DropComponent';
+import DropDownComponent from './DropDownComponent';
 
 @injectable()
 class MultipleChoiceDropDown extends ToolGroup {
@@ -28,7 +28,7 @@ class MultipleChoiceDropDown extends ToolGroup {
     if (isEmpty(view)) return null;
     return (
       // eslint-disable-next-line no-underscore-dangle
-      <DropComponent key="Multipe Drop Down" tools={this._tools} view={view} />
+      <DropDownComponent key={uuidv4()} tools={this._tools} view={view} />
     );
   }
 }

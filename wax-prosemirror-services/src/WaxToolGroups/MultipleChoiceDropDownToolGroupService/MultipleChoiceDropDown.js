@@ -6,7 +6,7 @@ import ToolGroup from '../../lib/ToolGroup';
 import DropComponent from './DropComponent';
 
 @injectable()
-class MultipleDropDown extends ToolGroup {
+class MultipleChoiceDropDown extends ToolGroup {
   tools = [];
   constructor(
     @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
@@ -33,4 +33,4 @@ class MultipleDropDown extends ToolGroup {
   }
 }
 
-export default MultipleDropDown;
+export default MultipleChoiceDropDown;

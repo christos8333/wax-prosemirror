@@ -1,6 +1,7 @@
 import Service from '../Service';
 import MultipleDropDownQuestion from './MultipleDropDownQuestion';
 import MultipleDropDownContainerNodeView from './MultipleDropDownContainerNodeView';
+import CreateDropDownService from './CreateDropDownService/CreateDropDownService';
 
 class MultipleDropDownService extends Service {
   name = 'MultipleDropDownService';
@@ -12,6 +13,8 @@ class MultipleDropDownService extends Service {
     const createNode = this.container.get('CreateNode');
     const addPortal = this.container.get('AddPortal');
   }
+
+  dependencies = [new CreateDropDownService()];
 }
 
 export default MultipleDropDownService;

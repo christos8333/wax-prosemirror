@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from './FeedbackComponent';
 
-const FillTheGapContainer = styled.div`
+const MultipleDropDownpContainer = styled.div`
   border: 3px solid #f5f5f7;
   margin-bottom: 30px;
 `;
 
-const FillTheGapWrapper = styled.div`
+const MultipleDropDownpWrapper = styled.div`
   margin-bottom: ;
   margin: 0px 38px 15px 38px;
 
@@ -32,9 +32,9 @@ export default ({ node, view, getPos }) => {
   const readOnly = !isEditable;
 
   return (
-    <FillTheGapWrapper>
+    <MultipleDropDownpWrapper>
       <span>Multiple Drop Down</span>
-      <FillTheGapContainer className="fill-the-gap">
+      <MultipleDropDownpContainer className="multiple-drop-down">
         <ContainerEditor getPos={getPos} node={node} view={view} />
         {!(readOnly && customProps && !customProps.showFeedBack) && (
           <FeedbackComponent
@@ -44,7 +44,7 @@ export default ({ node, view, getPos }) => {
             view={view}
           />
         )}
-      </FillTheGapContainer>
-    </FillTheGapWrapper>
+      </MultipleDropDownpContainer>
+    </MultipleDropDownpWrapper>
   );
 };

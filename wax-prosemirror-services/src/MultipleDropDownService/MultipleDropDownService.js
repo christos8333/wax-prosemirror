@@ -4,6 +4,7 @@ import MultipleDropDownContainerNodeView from './MultipleDropDownContainerNodeVi
 import multipleDropDownContainerNode from './schema/multipleDropDownContainerNode';
 import multipleDropDownOptionNode from './schema/multipleDropDownOptionNode';
 import CreateDropDownService from './CreateDropDownService/CreateDropDownService';
+import MultipleDropDownContainerComponent from './components/MultipleDropDownContainerComponent';
 
 class MultipleDropDownService extends Service {
   name = 'MultipleDropDownService';
@@ -21,6 +22,12 @@ class MultipleDropDownService extends Service {
 
     createNode({
       multiple_drop_down_option: multipleDropDownOptionNode,
+    });
+
+    addPortal({
+      nodeView: MultipleDropDownContainerNodeView,
+      component: MultipleDropDownContainerComponent,
+      context: this.app,
     });
   }
 

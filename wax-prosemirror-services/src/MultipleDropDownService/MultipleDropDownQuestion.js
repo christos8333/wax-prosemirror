@@ -5,7 +5,7 @@ import Tools from '../lib/Tools';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()
-class FillTheGapQuestion extends Tools {
+class MultipleDropDownQuestion extends Tools {
   title = 'Add Multiple Drop Down Question';
   icon = 'mulitpleDropDownQuestion';
   name = 'Multiple Drop Down';
@@ -56,4 +56,4 @@ class FillTheGapQuestion extends Tools {
   }
 }
 
-export default FillTheGapQuestion;
+export default MultipleDropDownQuestion;

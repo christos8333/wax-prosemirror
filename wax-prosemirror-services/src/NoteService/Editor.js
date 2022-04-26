@@ -29,7 +29,6 @@ export default ({ node, view }) => {
   let typing = false;
 
   const {
-    activeViewId,
     pmViews,
     pmViews: { main },
   } = context;

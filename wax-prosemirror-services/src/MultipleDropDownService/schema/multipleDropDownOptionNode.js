@@ -18,8 +18,8 @@ const multipleDropDownOptionNode = {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
-          isfirst: JSON.parse(dom.getAttribute('isfirst').toLowerCase()),
-          answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
+          // isfirst: JSON.parse(dom.getAttribute('isfirst').toLowerCase()),
+          // answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
         };
       },
     },
@@ -30,9 +30,8 @@ const multipleDropDownOptionNode = {
       {
         id: node.attrs.id,
         class: node.attrs.class,
-        isfirst: node.attrs.isfirst,
-        answer: JSON.stringify(node.attrs.answer),
-        feedback: node.attrs.feedback,
+        // isfirst: node.attrs.isfirst,
+        // answer: JSON.stringify(node.attrs.answer),
       },
       0,
     ];

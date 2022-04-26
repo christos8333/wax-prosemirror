@@ -5,16 +5,16 @@ import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from './FeedbackComponent';
 
-const MultipleDropDownpContainer = styled.div`
-  border: 3px solid #f5f5f7;
-  margin-bottom: 30px;
-`;
-
 const MultipleDropDownpWrapper = styled.div`
   margin-bottom: ;
   margin: 0px 38px 15px 38px;
 
   margin-top: 10px;
+`;
+
+const MultipleDropDownpContainer = styled.div`
+  border: 3px solid #f5f5f7;
+  margin-bottom: 30px;
 `;
 
 export default ({ node, view, getPos }) => {

@@ -8,9 +8,11 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
+  position: relative;
+
   > .ProseMirror {
     padding: 5px;
     &:focus {
@@ -30,6 +32,8 @@ const EditorWrapper = styled.div`
     }
   }
 `;
+
+let WaxOverlays = () => true;
 
 const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
@@ -68,6 +72,8 @@ const ContainerEditor = ({ node, view, getPos }) => {
   finalPlugins = finalPlugins.concat([...plugins]);
 
   useEffect(() => {
+    WaxOverlays = ComponentPlugin('waxOverlays');
+
     multipleDropDownContainerNodeView = new EditorView(
       {
         mount: editorRef.current,
@@ -148,6 +154,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
   return (
     <EditorWrapper>
       <div ref={editorRef} />
+      <WaxOverlays activeViewId={questionId} group="questions" />
     </EditorWrapper>
   );
 };

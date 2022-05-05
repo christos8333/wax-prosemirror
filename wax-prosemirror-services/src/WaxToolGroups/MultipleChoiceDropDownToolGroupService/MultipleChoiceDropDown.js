@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,10 +26,13 @@ class MultipleChoiceDropDown extends ToolGroup {
 
   renderTools(view) {
     if (isEmpty(view)) return null;
-    return (
-      // eslint-disable-next-line no-underscore-dangle
-      <DropDownComponent key={uuidv4()} tools={this._tools} view={view} />
+    const MultipleDropDown = useMemo(
+      () => (
+        <DropDownComponent key={uuidv4()} tools={this._tools} view={view} />
+      ),
+      [],
     );
+    return MultipleDropDown;
   }
 }
 

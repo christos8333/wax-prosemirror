@@ -92,22 +92,23 @@ const ContainerEditor = ({ node, view, getPos }) => {
           'Tables',
           'FillTheGap',
           'MultipleChoice',
+          'MultipleDropDown',
         ],
         handleDOMEvents: {
           mousedown: () => {
-            main.dispatch(
-              main.state.tr
-                .setMeta('outsideView', questionId)
-                .setSelection(
-                  new TextSelection(
-                    main.state.tr.doc.resolve(
-                      getPos() +
-                        2 +
-                        context.pmViews[questionId].state.selection.to,
-                    ),
-                  ),
-                ),
-            );
+            // main.dispatch(
+            //   main.state.tr
+            //     .setMeta('outsideView', questionId)
+            //     .setSelection(
+            //       new TextSelection(
+            //         main.state.tr.doc.resolve(
+            //           getPos() +
+            //             2 +
+            //             context.pmViews[questionId].state.selection.to,
+            //         ),
+            //       ),
+            //     ),
+            // );
             context.updateView({}, questionId);
             if (multipleDropDownContainerNodeView.hasFocus())
               multipleDropDownContainerNodeView.focus();

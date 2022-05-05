@@ -59,6 +59,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   const {
     app,
     pmViews: { main },
+    activeViewId,
   } = context;
   let questionView;
   const questionId = node.attrs.id;
@@ -118,9 +119,7 @@ const EditorComponent = ({ node, view, getPos }) => {
                 .setSelection(
                   new TextSelection(
                     main.state.tr.doc.resolve(
-                      getPos() +
-                        2 +
-                        context.pmViews[questionId].state.selection.to,
+                      getPos() + context.pmViews[questionId].state.selection.to,
                     ),
                   ),
                 ),

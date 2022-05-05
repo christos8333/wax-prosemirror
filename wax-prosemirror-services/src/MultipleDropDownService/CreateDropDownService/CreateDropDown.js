@@ -21,7 +21,20 @@ class CreateDropDown extends Tools {
   }
 
   select = (state, activeViewId, activeView) => {
-    return true;
+    let status = false;
+    const { from, to } = state.selection;
+    const { disallowedTools } = activeView.props;
+
+    state.doc.nodesBetween(from, to, (node, pos) => {
+      if (node.type.name === 'multiple_drop_down_container') {
+        status = true;
+      }
+    });
+
+    if (from === null || disallowedTools.includes('MultipleDropDown'))
+      status = false;
+
+    return status;
   };
 
   get active() {

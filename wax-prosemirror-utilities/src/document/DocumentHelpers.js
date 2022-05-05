@@ -27,6 +27,18 @@ const findMark = (state, PMmark, toArr = false) => {
   return markFound;
 };
 
+const findNode = (state, PMnode) => {
+  let nodeFound;
+  if (state.selection.node && state.selection.node.type.name === PMnode.name) {
+    nodeFound = {
+      from: state.selection.from,
+      to: state.selection.to,
+      node: state.selection.node,
+    };
+  }
+  return nodeFound;
+};
+
 const getCommentsTracksCount = main => {
   const marks = findInlineNodes(main.state.doc);
   const commentsTracksFormat = [];
@@ -270,6 +282,7 @@ const findParentOfType = (state, nodeType) => {
 
 export default {
   findMark,
+  findNode,
   findBlockNodes,
   findChildrenByType,
   findInlineNodes,

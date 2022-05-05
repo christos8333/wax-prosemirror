@@ -14,7 +14,8 @@ class CreateDropDownService extends Service {
       DropDownComponent,
       {},
       {
-        markType: 'multiple_drop_down_option',
+        nodeType: 'multiple_drop_down_option',
+        markType: '',
         followCursor: true,
         selection: false,
       },

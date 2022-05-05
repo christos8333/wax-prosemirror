@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';

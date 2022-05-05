@@ -22,11 +22,11 @@ class CreateDropDownService extends Service {
   }
 
   register() {
-    const CreateMark = this.container.get('CreateMark');
+    const CreateNode = this.container.get('CreateNode');
     const addPortal = this.container.get('AddPortal');
     this.container.bind('CreateDropDown').to(CreateDropDown);
 
-    CreateMark({
+    CreateNode({
       multiple_drop_down_option: multipleDropDownOptionNode,
     });
 

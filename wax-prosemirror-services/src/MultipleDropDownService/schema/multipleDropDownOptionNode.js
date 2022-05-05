@@ -2,9 +2,9 @@ const multipleDropDownOptionNode = {
   attrs: {
     class: { default: 'multiple-drop-down-option' },
     id: { default: '' },
-    isfirst: { default: false },
-    answer: { default: {} },
-    options: { default: [] },
+    // isfirst: { default: false },
+    // answer: { default: {} },
+    // options: { default: [] },
   },
   group: 'inline questions',
   content: 'text*',

@@ -130,6 +130,11 @@ export default ({ node, view, getPos }) => {
             Fragment.empty,
           );
           main.dispatch(main.state.tr.replaceSelectionWith(answerOption));
+
+          // create Empty Paragraph
+          setTimeout(() => {
+            helpers.createEmptyParagraph(context, newAnswerId);
+          }, 120);
         }
       }
     });

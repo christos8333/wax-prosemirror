@@ -68,6 +68,7 @@ export default options => {
       top,
       from,
       to,
+      node,
     };
   };
 

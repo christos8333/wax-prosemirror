@@ -144,8 +144,9 @@ const ContainerEditor = ({ node, view, getPos }) => {
         for (let j = 0; j < steps.length; j++)
           outerTr.step(steps[j].map(offsetMap));
       }
-      if (outerTr.docChanged)
+      if (outerTr.docChanged && !tr.getMeta('reject')) {
         view.dispatch(outerTr.setMeta('outsideView', questionId));
+      }
     }
   };
 

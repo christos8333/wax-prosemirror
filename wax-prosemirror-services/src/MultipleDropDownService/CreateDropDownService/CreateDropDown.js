@@ -15,7 +15,7 @@ class CreateDropDown extends Tools {
       const content = Fragment.empty;
       const { tr } = state;
       const createGap = state.config.schema.nodes.multiple_drop_down_option.create(
-        { id: uuidv4() },
+        { id: uuidv4(), options: [] },
         content,
       );
       tr.replaceSelectionWith(createGap);

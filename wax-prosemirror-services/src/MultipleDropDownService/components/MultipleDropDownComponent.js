@@ -2,13 +2,29 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const activeStylesContainer = css`
+  background: #535e76;
+  border-radis: 8px;
+`;
+
+const activeStylesSvg = css`
+  fill: white !important;
+`;
+
+const StyledIconActionContainer = styled.div`
+  display: inline-block;
+  padding: 2px;
+  ${props => props.isActive && activeStylesContainer}
+`;
 
 const StyledIconAction = styled(Icon)`
   height: 24px;
   width: 24px;
-  outline: 1px solid black;
   cursor: pointer;
+
+  ${props => props.isActive && activeStylesSvg}
 `;
 
 export default ({ node, view, getPos }) => {
@@ -30,14 +46,14 @@ export default ({ node, view, getPos }) => {
 
   useEffect(() => {
     setIsActive(false);
-    if (getPos() + 2 === posFrom) {
+    if (getPos() === posFrom) {
       setIsActive(true);
     }
   }, [posFrom]);
 
   return (
-    <>
+    <StyledIconActionContainer isActive={isActive}>
       <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
-    </>
+    </StyledIconActionContainer>
   );
 };

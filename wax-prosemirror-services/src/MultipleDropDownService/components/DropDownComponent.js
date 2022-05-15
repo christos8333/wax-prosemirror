@@ -128,7 +128,6 @@ export default ({ setPosition, position }) => {
   useEffect(() => {
     if (addOptionRef.current) addOptionRef.current.focus();
     if (!activeView.state.selection.node) return;
-
     const { tr } = activeView.state;
     if (previousNode.from !== currentNode.from) {
       tr.setNodeMarkup(position.from, undefined, {

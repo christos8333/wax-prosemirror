@@ -126,6 +126,7 @@ export default ({ setPosition, position }) => {
 
   useEffect(() => {
     if (addOptionRef.current) addOptionRef.current.focus();
+
     const allNodes = getNodes(main);
     if (!activeView.state.selection.node) return;
     allNodes.forEach(singleNode => {

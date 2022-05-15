@@ -127,6 +127,7 @@ export default ({ setPosition, position }) => {
 
   useEffect(() => {
     if (addOptionRef.current) addOptionRef.current.focus();
+    if (!activeView.state.selection.node) return;
 
     const { tr } = activeView.state;
     if (previousNode.from !== currentNode.from) {
@@ -143,11 +144,9 @@ export default ({ setPosition, position }) => {
     }
     previousNode = currentNode;
 
-    if (!activeView.state.selection.node) return;
-
     const resolvedPos = tr.doc.resolve(position.from);
     tr.setSelection(new NodeSelection(resolvedPos));
-    activeView.dispatch(tr);
+    activeView.dispatch(tr.setMeta('reject', true));
   }, [options, position.from]);
 
   const updateOptionText = () => {

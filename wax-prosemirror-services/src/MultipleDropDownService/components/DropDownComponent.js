@@ -4,12 +4,13 @@ import React, {
   useState,
   useRef,
   useLayoutEffect,
-  useMemo,
   useEffect,
 } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { Icon } from 'wax-prosemirror-components';
 
 const TriangleTop = styled.div`
   width: 0;
@@ -30,7 +31,18 @@ const DropDownComponent = styled.div`
   padding: 5px;
 `;
 
-const Options = styled.div``;
+const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  font-size: 11px;
+  overflow-y: auto;
+`;
+
+const Option = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 const AddOption = styled.div`
   display: flex;
@@ -38,7 +50,7 @@ const AddOption = styled.div`
   input {
     border: none;
     border-bottom: 1px solid black;
-    width: 100px;
+    width: 160px;
     &:focus {
       outline: none;
     }
@@ -46,6 +58,7 @@ const AddOption = styled.div`
     ::placeholder {
       color: rgb(170, 170, 170);
       font-style: italic;
+      font-size: 10px;
     }
   }
   button {
@@ -66,6 +79,15 @@ const AddOption = styled.div`
       padding: 4px 8px 4px 8px;
     }
   }
+`;
+
+const IconRemove = styled(Icon)`
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  left: 6px;
+  height: 10px;
+  width: 10px;
 `;
 
 export default ({ setPosition, position }) => {
@@ -104,7 +126,16 @@ export default ({ setPosition, position }) => {
 
   useEffect(() => {
     if (addOptionRef.current) addOptionRef.current.focus();
-  }, []);
+    const allNodes = getNodes(main);
+    if (!activeView.state.selection.node) return;
+    allNodes.forEach(singleNode => {
+      if (
+        singleNode.node.attrs.id === activeView.state.selection.node.attrs.id
+      ) {
+        activeView.state.selection.node.attrs.options = options;
+      }
+    });
+  }, [options]);
 
   const updateOptionText = () => {
     setOptionText(addOptionRef.current.value);
@@ -117,35 +148,69 @@ export default ({ setPosition, position }) => {
   };
 
   const addOption = () => {
-    console.log('text', addOptionRef.current.value);
     if (addOptionRef.current.value.trim() === '') return;
     const obj = { label: addOptionRef.current.value, value: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
-    setOptionText('');
+    setOptionText(' ');
+    setTimeout(() => {
+      setOptionText('');
+    });
     addOptionRef.current.focus();
   };
 
-  console.log(options);
+  const removeOption = id => {
+    setOptions(options.filter(option => option.value !== id));
+    setOptionText(' ');
+    setTimeout(() => {
+      setOptionText('');
+    });
+  };
 
   return (
     <>
       <TriangleTop />
       <DropDownComponent>
-        <Options>All Options</Options>
+        <Options>
+          {currentOptions.map(value => {
+            return (
+              <Option key={uuidv4()}>
+                <span>{value.label}</span>
+                <span
+                  aria-hidden="true"
+                  onClick={() => removeOption(value.value)}
+                  role="button"
+                >
+                  <IconRemove name="removeTag" />
+                </span>
+              </Option>
+            );
+          })}
+        </Options>
         <AddOption>
           <input
             onChange={updateOptionText}
             onKeyPress={handleKeyDown}
-            placeholder="Type an option ..."
+            placeholder="Type an option and press enter..."
             ref={addOptionRef}
             type="text"
             value={optionText}
           />
-          <button onMouseUp={addOption} type="button">
+          {/* <button onMouseUp={addOption} type="button">
             Add
-          </button>
+          </button> */}
         </AddOption>
       </DropDownComponent>
     </>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findInlineNodes(view.state.doc);
+  const multipleDropDownNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'multiple_drop_down_option') {
+      multipleDropDownNodes.push(node);
+    }
+  });
+  return multipleDropDownNodes;
 };

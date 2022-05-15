@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 
 const activeStylesContainer = css`
   background: #535e76;
-  border-radis: 8px;
+  border-radius: 2px;
 `;
 
 const activeStylesSvg = css`

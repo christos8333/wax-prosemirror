@@ -104,7 +104,6 @@ const getNodes = view => {
   const matchingOptions = [];
   allNodes.forEach(node => {
     if (node.node.type.name === 'paragraph') {
-      console.log(node);
       node.node.content.content.forEach(optionNode => {
         if (optionNode.type.name === 'matching_option')
           matchingOptions.push(optionNode);

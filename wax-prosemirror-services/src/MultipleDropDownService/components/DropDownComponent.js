@@ -1,5 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useState, useRef, useLayoutEffect } from 'react';
+import React, {
+  useContext,
+  useState,
+  useRef,
+  useLayoutEffect,
+  useMemo,
+  useEffect,
+} from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
@@ -74,22 +81,30 @@ export default ({ setPosition, position }) => {
     return editable;
   });
 
+  const currentOptions = activeView.state.selection.node
+    ? activeView.state.selection.node.attrs.options
+    : [];
+
   const readOnly = !isEditable;
 
-  const [options, setOptions] = useState();
+  const [options, setOptions] = useState(currentOptions);
 
   const [optionText, setOptionText] = useState('');
   const addOptionRef = useRef(null);
 
   useLayoutEffect(() => {
     const { selection } = activeView.state;
-    const { to } = selection;
+    const { from } = selection;
     const WaxSurface = activeView.dom.getBoundingClientRect();
-    const end = activeView.coordsAtPos(to);
-    const left = end.left - WaxSurface.left - 100;
-    const top = end.top - WaxSurface.top + 25;
+    const start = activeView.coordsAtPos(from);
+    const left = start.left - WaxSurface.left - 75;
+    const top = start.top - WaxSurface.top + 25;
     setPosition({ ...position, left, top });
   }, [position.left]);
+
+  useEffect(() => {
+    if (addOptionRef.current) addOptionRef.current.focus();
+  }, []);
 
   const updateOptionText = () => {
     setOptionText(addOptionRef.current.value);
@@ -102,12 +117,15 @@ export default ({ setPosition, position }) => {
   };
 
   const addOption = () => {
+    console.log('text', addOptionRef.current.value);
     if (addOptionRef.current.value.trim() === '') return;
     const obj = { label: addOptionRef.current.value, value: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
     setOptionText('');
     addOptionRef.current.focus();
   };
+
+  console.log(options);
 
   return (
     <>
@@ -123,7 +141,7 @@ export default ({ setPosition, position }) => {
             type="text"
             value={optionText}
           />
-          <button onClick={addOption} type="button">
+          <button onMouseUp={addOption} type="button">
             Add
           </button>
         </AddOption>

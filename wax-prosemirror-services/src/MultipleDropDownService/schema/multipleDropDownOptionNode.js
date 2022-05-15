@@ -2,9 +2,7 @@ const multipleDropDownOptionNode = {
   attrs: {
     class: { default: 'multiple-drop-down-option' },
     id: { default: '' },
-    // isfirst: { default: false },
-    // answer: { default: {} },
-    // options: { default: [] },
+    options: { default: [] },
   },
   group: 'inline questions',
   content: 'text*',
@@ -18,8 +16,7 @@ const multipleDropDownOptionNode = {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
-          // isfirst: JSON.parse(dom.getAttribute('isfirst').toLowerCase()),
-          // answer: JSON.parse(dom.getAttribute('answer').toLowerCase()),
+          options: JSON.parse(dom.getAttribute('options')),
         };
       },
     },
@@ -30,8 +27,7 @@ const multipleDropDownOptionNode = {
       {
         id: node.attrs.id,
         class: node.attrs.class,
-        // isfirst: node.attrs.isfirst,
-        // answer: JSON.stringify(node.attrs.answer),
+        options: JSON.stringify(node.attrs.options),
       },
       0,
     ];

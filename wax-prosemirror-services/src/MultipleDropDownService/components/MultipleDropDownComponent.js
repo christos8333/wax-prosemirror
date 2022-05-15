@@ -8,6 +8,7 @@ const StyledIconAction = styled(Icon)`
   height: 24px;
   width: 24px;
   outline: 1px solid black;
+  cursor: pointer;
 `;
 
 export default ({ node, view, getPos }) => {

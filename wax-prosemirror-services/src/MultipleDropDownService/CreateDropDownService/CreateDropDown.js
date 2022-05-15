@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
 import { Fragment } from 'prosemirror-model';
+import { NodeSelection } from 'prosemirror-state';
 import { v4 as uuidv4 } from 'uuid';
 import Tools from '../../lib/Tools';
 
@@ -12,11 +13,21 @@ class CreateDropDown extends Tools {
   get run() {
     return (state, dispatch) => {
       const content = Fragment.empty;
+      const { tr } = state;
       const createGap = state.config.schema.nodes.multiple_drop_down_option.create(
         { id: uuidv4() },
         content,
       );
-      dispatch(state.tr.replaceSelectionWith(createGap));
+      tr.replaceSelectionWith(createGap);
+      tr.insertText(' ');
+      const resolvedPos = tr.doc.resolve(
+        tr.selection.anchor -
+          1 -
+          (tr.selection.$anchor.nodeBefore.nodeSize + 1),
+      );
+
+      tr.setSelection(new NodeSelection(resolvedPos));
+      dispatch(tr);
     };
   }
 

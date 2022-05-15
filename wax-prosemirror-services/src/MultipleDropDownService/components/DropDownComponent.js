@@ -7,11 +7,11 @@ import React, {
   useEffect,
 } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { Icon } from 'wax-prosemirror-components';
 import { NodeSelection } from 'prosemirror-state';
+
 const TriangleTop = styled.div`
   width: 0;
   height: 0;
@@ -90,7 +90,7 @@ const IconRemove = styled(Icon)`
   width: 10px;
 `;
 
-let PreviousNode = '';
+let previousNode = '';
 
 export default ({ setPosition, position }) => {
   const context = useContext(WaxContext);
@@ -127,16 +127,28 @@ export default ({ setPosition, position }) => {
 
   useEffect(() => {
     if (addOptionRef.current) addOptionRef.current.focus();
+
     const { tr } = activeView.state;
-    tr.setNodeMarkup(position.from, undefined, {
-      ...currentNode.node.attrs,
-      options,
-    });
+    if (previousNode.from !== currentNode.from) {
+      tr.setNodeMarkup(position.from, undefined, {
+        ...currentNode.node.attrs,
+        options: currentNode.node.attrs.options,
+      });
+      setOptions(currentNode.node.attrs.options);
+    } else {
+      tr.setNodeMarkup(position.from, undefined, {
+        ...currentNode.node.attrs,
+        options,
+      });
+    }
+    previousNode = currentNode;
+
+    if (!activeView.state.selection.node) return;
 
     const resolvedPos = tr.doc.resolve(position.from);
     tr.setSelection(new NodeSelection(resolvedPos));
-    activeView.dispatch(tr.setMeta('reject', true));
-  }, [position.from]);
+    activeView.dispatch(tr);
+  }, [options, position.from]);
 
   const updateOptionText = () => {
     setOptionText(addOptionRef.current.value);
@@ -166,7 +178,7 @@ export default ({ setPosition, position }) => {
       <TriangleTop />
       <DropDownComponent>
         <Options>
-          {currentOptions.map(value => {
+          {options.map(value => {
             return (
               <Option key={uuidv4()}>
                 <span>{value.label}</span>

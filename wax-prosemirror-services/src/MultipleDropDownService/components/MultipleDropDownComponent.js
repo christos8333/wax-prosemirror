@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
 import styled, { css } from 'styled-components';
+import ReadOnlyDropDown from './ReadOnlyDropDown';
 
 const activeStylesContainer = css`
   background: #535e76;
@@ -51,9 +52,12 @@ export default ({ node, view, getPos }) => {
     }
   }, [posFrom]);
 
-  return (
-    <StyledIconActionContainer isActive={isActive}>
-      <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
-    </StyledIconActionContainer>
-  );
+  if (!(readOnly && customProps && !customProps.showFeedBack)) {
+    return (
+      <StyledIconActionContainer isActive={isActive}>
+        <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
+      </StyledIconActionContainer>
+    );
+  }
+  return <ReadOnlyDropDown options={node.attrs.options} />;
 };

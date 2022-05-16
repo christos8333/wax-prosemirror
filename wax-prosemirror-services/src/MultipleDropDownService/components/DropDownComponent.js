@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { Icon } from 'wax-prosemirror-components';
 import { NodeSelection } from 'prosemirror-state';
+import RadioButton from './RadioButton';
 
 const TriangleTop = styled.div`
   width: 0;
@@ -42,6 +43,7 @@ const Options = styled.div`
 const Option = styled.div`
   display: flex;
   flex-direction: row;
+  width: 96%;
 `;
 
 const AddOption = styled.div`
@@ -84,10 +86,10 @@ const AddOption = styled.div`
 const IconRemove = styled(Icon)`
   cursor: pointer;
   position: relative;
-  top: 4px;
+  top: 2px;
   left: 6px;
-  height: 10px;
-  width: 10px;
+  height: 16px;
+  width: 16px;
 `;
 
 let previousNode = '';
@@ -171,40 +173,44 @@ export default ({ setPosition, position }) => {
     setOptionText('');
   };
 
-  return (
-    <>
-      <TriangleTop />
-      <DropDownComponent>
-        <Options>
-          {options.map(value => {
-            return (
-              <Option key={uuidv4()}>
-                <span>{value.label}</span>
-                <span
-                  aria-hidden="true"
-                  onClick={() => removeOption(value.value)}
-                  role="button"
-                >
-                  <IconRemove name="removeTag" />
-                </span>
-              </Option>
-            );
-          })}
-        </Options>
-        <AddOption>
-          <input
-            onChange={updateOptionText}
-            onKeyPress={handleKeyDown}
-            placeholder="Type an option and press enter..."
-            ref={addOptionRef}
-            type="text"
-            value={optionText}
-          />
-          {/* <button onMouseUp={addOption} type="button">
+  if (!readOnly) {
+    return (
+      <>
+        <TriangleTop />
+        <DropDownComponent>
+          <Options>
+            {options.map(value => {
+              return (
+                <Option key={uuidv4()}>
+                  <RadioButton item={value} node={currentNode} />
+                  <span
+                    aria-hidden="true"
+                    onClick={() => removeOption(value.value)}
+                    role="button"
+                    style={{ marginLeft: 'auto' }}
+                  >
+                    <IconRemove name="deleteOutlined" />
+                  </span>
+                </Option>
+              );
+            })}
+          </Options>
+          <AddOption>
+            <input
+              onChange={updateOptionText}
+              onKeyPress={handleKeyDown}
+              placeholder="Type an option and press enter..."
+              ref={addOptionRef}
+              type="text"
+              value={optionText}
+            />
+            {/* <button onMouseUp={addOption} type="button">
             Add
           </button> */}
-        </AddOption>
-      </DropDownComponent>
-    </>
-  );
+          </AddOption>
+        </DropDownComponent>
+      </>
+    );
+  }
+  return null;
 };

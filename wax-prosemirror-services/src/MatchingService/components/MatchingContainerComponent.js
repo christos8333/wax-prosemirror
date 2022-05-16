@@ -1,43 +1,39 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
+import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
-
-const MatchingContainer = styled.div`
-  border: 3px solid #f5f5f7;
-  margin-bottom: 30px;
-`;
+import ContainerEditor from './ContainerEditor';
 
 const MatchingWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ;
   margin: 0px 38px 15px 38px;
   margin-top: 10px;
+`;
+
+const MatchingContainer = styled.div`
+  border: 3px solid #f5f5f7;
+  margin-bottom: 30px;
+  padding: 10px;
 `;
 
 const QuestionWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-const LeftArea = styled.div`
-  display: flex;
-`;
-const RightArea = styled.div`
-  display: flex;
-`;
-const CreateOptions = styled.div`
-  display: flex;
-  margin-top: 10px;
-  border: 1px solid black;
+  width: 100%;
 `;
 
 const ActionButton = styled.button`
+  height: 24px;
   border: none;
   background: transparent;
   cursor: pointer;
+  padding-left: 0;
 `;
 
 const StyledIconAction = styled(Icon)`
@@ -45,12 +41,76 @@ const StyledIconAction = styled(Icon)`
   width: 24px;
 `;
 
+const CreateOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+`;
+
 const OptionArea = styled.div`
   display: flex;
+  width: 100%;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    li {
+      list-style-type: none;
+      padding-right: 7px;
+      padding-bottom: 7px;
+
+      span {
+        background: #535e76;
+        color: white;
+        padding: 3px 3px 3px 10px;
+        border-radius: 12px;
+      }
+      buttton {
+      }
+      svg {
+        fill: white;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
 `;
 
 const AddOption = styled.div`
   display: flex;
+  input {
+    border: none;
+    border-bottom: 1px solid black;
+    &:focus {
+      outline: none;
+    }
+
+    ::placeholder {
+      color: rgb(170, 170, 170);
+      font-style: italic;
+    }
+  }
+  button {
+    border: 1px solid #535e76;
+    cursor: pointer;
+    color: #535e76;
+    margin-left: 20px;
+    background: #fff;
+    padding: 4px 8px 4px 8px;
+    &:hover {
+      border: 1px solid #535e76;
+      cursor: pointer;
+      color: #535e76;
+      margin-right: 20px;
+      background: #fff;
+      background: #535e76;
+      color: #fff;
+      padding: 4px 8px 4px 8px;
+    }
+  }
 `;
 
 export default ({ node, view, getPos }) => {
@@ -58,6 +118,12 @@ export default ({ node, view, getPos }) => {
   const {
     pmViews: { main },
   } = context;
+
+  const [options, setOptions] = useState(node.attrs.options);
+
+  const [optionText, setOptionText] = useState('');
+  const [addingOption, setAddingOption] = useState(false);
+  const addOptionRef = useRef(null);
 
   const customProps = main.props.customValues;
 
@@ -67,38 +133,116 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
 
-  const addOption = () => {};
+  useEffect(() => {
+    const allNodes = getNodes(main);
+
+    /*TEMP TO SAVE NODE OPTIONS TODO: SAVE IN CONTEXT OPTIONS*/
+    saveInChildOptions(allNodes);
+
+    if (!addingOption) return;
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr
+            .setMeta('addToHistory', false)
+            .setNodeMarkup(getPos(), undefined, {
+              ...singleNode.node.attrs,
+              options,
+            }),
+        );
+      }
+    });
+  }, [options, JSON.stringify(context.pmViews.main.state)]);
+
+  const addOption = () => {
+    if (addOptionRef.current.value.trim() === '') return;
+    const obj = { label: addOptionRef.current.value, value: uuidv4() };
+    setOptions(prevOptions => [...prevOptions, obj]);
+    setAddingOption(true);
+    setTimeout(() => {
+      setAddingOption(false);
+    });
+    setOptionText('');
+    addOptionRef.current.focus();
+  };
+
+  const updateOptionText = () => {
+    setOptionText(addOptionRef.current.value);
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === 'Enter' || event.which === 13) {
+      addOption();
+    }
+  };
+
+  const removeOption = value => {
+    setOptions(options.filter(option => option.value !== value));
+    setAddingOption(true);
+    setTimeout(() => {
+      setAddingOption(false);
+    });
+  };
+
+  const saveInChildOptions = allNodes => {
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        singleNode.node.content.content.forEach(parentNodes => {
+          parentNodes.forEach(optionNode => {
+            if (optionNode.type.name === 'matching_option')
+              optionNode.attrs.options = options;
+          });
+        });
+      }
+    });
+  };
 
   return (
     <MatchingWrapper>
       <span>Matching</span>
       <MatchingContainer className="matching">
         <QuestionWrapper>
-          <LeftArea>
-            <input type="text"></input>
-            {!readOnly && (
-              <ActionButton
-                onClick={() => addOption(node.attrs.id)}
-                type="button"
-              >
-                <StyledIconAction name="plusSquare" />
-              </ActionButton>
-            )}
-          </LeftArea>
-          <RightArea>Right</RightArea>
+          <ContainerEditor getPos={getPos} node={node} view={view} />
         </QuestionWrapper>
-        <QuestionWrapper>
-          <LeftArea>
-            <input type="text"></input>
-          </LeftArea>
-          <RightArea>Right</RightArea>
-        </QuestionWrapper>
-        <CreateOptions>
-          <OptionArea>Options Area</OptionArea>
-          <AddOption>
-            <input type="text"></input>
-          </AddOption>
-        </CreateOptions>
+        {!readOnly && (
+          <CreateOptions>
+            <OptionArea>
+              {options.length > 0 && (
+                <ul>
+                  <li>Options: </li>
+                  {options.map((option, index) => {
+                    return (
+                      <li key={option.value}>
+                        <span>
+                          {option.label} &nbsp;
+                          <ActionButton
+                            onClick={() => removeOption(option.value)}
+                            type="button"
+                          >
+                            <StyledIconAction name="deleteOutlined" />
+                          </ActionButton>
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </OptionArea>
+            <AddOption>
+              <input
+                onChange={updateOptionText}
+                onKeyPress={handleKeyDown}
+                placeholder="Type an option ..."
+                ref={addOptionRef}
+                type="text"
+                value={optionText}
+              />
+              <button onClick={addOption} type="button">
+                Add Option
+              </button>
+            </AddOption>
+          </CreateOptions>
+        )}
         {!(readOnly && !customProps.showFeedBack) && (
           <FeedbackComponent
             getPos={getPos}
@@ -110,4 +254,15 @@ export default ({ node, view, getPos }) => {
       </MatchingContainer>
     </MatchingWrapper>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const matchingContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'matching_container') {
+      matchingContainerNodes.push(node);
+    }
+  });
+  return matchingContainerNodes;
 };

@@ -51,6 +51,7 @@ export { default as FillTheGapQuestionService } from './src/FillTheGapQuestionSe
 export { default as EssayService } from './src/EssayService/EssayService';
 export { default as MatchingService } from './src/MatchingService/MatchingService';
 export { default as EnterService } from './src/EnterService/EnterService';
+export { default as MultipleDropDownService } from './src/MultipleDropDownService/MultipleDropDownService';
 /*
 ToolGroups
 */
@@ -75,8 +76,8 @@ export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/Tra
 export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
-export { default as MultipleChoiceToolGroupService } from './src/WaxToolGroups/MultipleChoiceToolGroupService/MultipleChoiceToolGroupService';
 export { default as FillTheGapToolGroupService } from './src/WaxToolGroups/FillTheGapToolGroupService/FillTheGapToolGroupService';
-export { default as MultipleDropDownToolGroupService } from './src/WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';
+export { default as MultipleChoiceDropDownToolGroupService } from './src/WaxToolGroups/MultipleChoiceDropDownToolGroupService/MultipleChoiceDropDownToolGroupService';
 export { default as EssayToolGroupService } from './src/WaxToolGroups/EssayToolGroupService/EssayToolGroupService';
 export { default as MatchingToolGroupService } from './src/WaxToolGroups/MatchingToolGroupService/MatchingToolGroupService';
+export { default as MultipleDropDownToolGroupService } from './src/WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';

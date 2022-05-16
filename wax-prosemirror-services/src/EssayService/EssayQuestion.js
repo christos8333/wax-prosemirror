@@ -56,9 +56,9 @@ const createEmptyParagraph = (context, newAnswerId) => {
 @injectable()
 class EssayQuestion extends Tools {
   title = 'Add Essay Question';
-  icon = '';
+  icon = 'essay';
   name = 'Essay';
-  label = 'Essay';
+  label = '';
 
   get run() {
     return (main, context) => {

@@ -7,10 +7,10 @@ import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import { Icon } from 'wax-prosemirror-components';
-import helpers from '../helpers/helpers';
 import EditorComponent from './EditorComponent';
 import SwitchComponent from './SwitchComponent';
 import FeedbackComponent from './FeedbackComponent';
+import helpers from '../helpers/helpers';
 
 const Wrapper = styled.div`
   display: flex;

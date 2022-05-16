@@ -452,4 +452,24 @@ export default {
       <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />{' '}
     </Svg>
   ),
+  essay: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Create Essay </title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+    </Svg>
+  ),
+  mulitpleDropDownQuestion: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Create Multiple DropDown Question</title>
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />{' '}
+    </Svg>
+  ),
+  mulitpleDropDown: ({ className }) => (
+    <Svg className={className} fill="none" viewBox="0 0 24 24">
+      <title> Create DropDown </title>
+      <path d="M17 5H20L18.5 7L17 5M3 2H21C22.11 2 23 2.9 23 4V8C23 9.11 22.11 10 21 10H16V20C16 21.11 15.11 22 14 22H3C1.9 22 1 21.11 1 20V4C1 2.9 1.9 2 3 2M3 4V8H14V4H3M21 8V4H16V8H21M3 20H14V10H3V20M5 12H12V14H5V12M5 16H12V18H5V16Z" />
+    </Svg>
+  ),
 };

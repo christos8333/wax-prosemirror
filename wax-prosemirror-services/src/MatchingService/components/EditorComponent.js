@@ -9,12 +9,37 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
+import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
 
 const EditorWrapper = styled.div`
+  border: none;
+  display: flex;
+  width: 68%;
+
   > .ProseMirror {
-    padding: 5px;
+    white-space: break-spaces;
+    width: 100% !important;
+    min-height: 25px !important;
+    word-wrap: break-word;
+    padding: 4px !important;
+    border: 12px solid #f4f4f7;
+    border-radius: 12px;
+    box-shadow: none !important;
+
     &:focus {
       outline: none;
+    }
+
+    :empty::before {
+      content: 'Type your text';
+      color: #aaa;
+      float: left;
+      font-style: italic;
+      pointer-events: none;
+    }
+
+    p:first-child {
+      margin: 0;
     }
 
     p.empty-node:first-child::before {
@@ -31,7 +56,7 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const ContainerEditor = ({ node, view, getPos }) => {
+const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -39,8 +64,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
     app,
     pmViews: { main },
   } = context;
-
-  let gapContainerView;
+  let questionView;
   const questionId = node.attrs.id;
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -65,10 +89,20 @@ const ContainerEditor = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
-  finalPlugins = finalPlugins.concat([...plugins]);
+  // eslint-disable-next-line no-shadow
+  const createPlaceholder = placeholder => {
+    return Placeholder({
+      content: placeholder,
+    });
+  };
+
+  finalPlugins = finalPlugins.concat([
+    createPlaceholder('Type your answer'),
+    ...plugins,
+  ]);
 
   useEffect(() => {
-    gapContainerView = new EditorView(
+    questionView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -83,9 +117,8 @@ const ContainerEditor = ({ node, view, getPos }) => {
           'Images',
           'Lists',
           'lift',
-          'Tables',
-          'FillTheGap',
           'MultipleChoice',
+          'Tables',
         ],
         handleDOMEvents: {
           mousedown: () => {
@@ -102,8 +135,14 @@ const ContainerEditor = ({ node, view, getPos }) => {
                   ),
                 ),
             );
+
             context.updateView({}, questionId);
-            if (gapContainerView.hasFocus()) gapContainerView.focus();
+            if (questionView.hasFocus()) questionView.focus();
+          },
+          blur: (editorView, event) => {
+            if (questionView && event.relatedTarget === null) {
+              questionView.focus();
+            }
           },
         },
 
@@ -116,16 +155,16 @@ const ContainerEditor = ({ node, view, getPos }) => {
     // Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: gapContainerView,
+        [questionId]: questionView,
       },
       questionId,
     );
-    gapContainerView.focus();
+    questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
-    const { state, transactions } = gapContainerView.state.applyTransaction(tr);
-    gapContainerView.updateState(state);
+    const { state, transactions } = questionView.state.applyTransaction(tr);
+    questionView.updateState(state);
     context.updateView({}, questionId);
 
     if (!tr.getMeta('fromOutside')) {
@@ -148,4 +187,4 @@ const ContainerEditor = ({ node, view, getPos }) => {
   );
 };
 
-export default ContainerEditor;
+export default EditorComponent;

@@ -19,6 +19,7 @@ export default class CommentsService extends Service {
       CommentBubbleComponent,
       {},
       {
+        nodeType: '',
         markType: '',
         followCursor: false,
         selection: true,

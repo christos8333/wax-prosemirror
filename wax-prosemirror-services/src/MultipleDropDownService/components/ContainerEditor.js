@@ -8,11 +8,13 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
+  position: relative;
+
   > .ProseMirror {
-    padding: 5px;
+    padding: 5px !important;
     &:focus {
       outline: none;
     }
@@ -31,6 +33,8 @@ const EditorWrapper = styled.div`
   }
 `;
 
+let WaxOverlays = () => true;
+
 const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
@@ -40,7 +44,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
-  let gapContainerView;
+  let multipleDropDownContainerNodeView;
   const questionId = node.attrs.id;
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -68,7 +72,9 @@ const ContainerEditor = ({ node, view, getPos }) => {
   finalPlugins = finalPlugins.concat([...plugins]);
 
   useEffect(() => {
-    gapContainerView = new EditorView(
+    WaxOverlays = ComponentPlugin('waxOverlays');
+
+    multipleDropDownContainerNodeView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -79,14 +85,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
           plugins: finalPlugins,
         }),
         dispatchTransaction,
-        disallowedTools: [
-          'Images',
-          'Lists',
-          'lift',
-          'Tables',
-          'FillTheGap',
-          'MultipleChoice',
-        ],
+        disallowedTools: ['Images', 'FillTheGap', 'MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
             main.dispatch(
@@ -95,15 +94,14 @@ const ContainerEditor = ({ node, view, getPos }) => {
                 .setSelection(
                   new TextSelection(
                     main.state.tr.doc.resolve(
-                      getPos() +
-                        2 +
-                        context.pmViews[questionId].state.selection.to,
+                      getPos() + context.pmViews[questionId].state.selection.to,
                     ),
                   ),
                 ),
             );
             context.updateView({}, questionId);
-            if (gapContainerView.hasFocus()) gapContainerView.focus();
+            if (multipleDropDownContainerNodeView.hasFocus())
+              multipleDropDownContainerNodeView.focus();
           },
         },
 
@@ -116,16 +114,19 @@ const ContainerEditor = ({ node, view, getPos }) => {
     // Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: gapContainerView,
+        [questionId]: multipleDropDownContainerNodeView,
       },
       questionId,
     );
-    gapContainerView.focus();
+    multipleDropDownContainerNodeView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
-    const { state, transactions } = gapContainerView.state.applyTransaction(tr);
-    gapContainerView.updateState(state);
+    const {
+      state,
+      transactions,
+    } = multipleDropDownContainerNodeView.state.applyTransaction(tr);
+    multipleDropDownContainerNodeView.updateState(state);
     context.updateView({}, questionId);
 
     if (!tr.getMeta('fromOutside')) {
@@ -136,14 +137,23 @@ const ContainerEditor = ({ node, view, getPos }) => {
         for (let j = 0; j < steps.length; j++)
           outerTr.step(steps[j].map(offsetMap));
       }
-      if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+      if (outerTr.docChanged) {
+        let history = true;
+        if (tr.getMeta('reject')) history = false;
+
+        view.dispatch(
+          outerTr
+            .setMeta('outsideView', questionId)
+            .setMeta('addToHistory', history),
+        );
+      }
     }
   };
 
   return (
     <EditorWrapper>
       <div ref={editorRef} />
+      <WaxOverlays activeViewId={questionId} group="questions" />
     </EditorWrapper>
   );
 };

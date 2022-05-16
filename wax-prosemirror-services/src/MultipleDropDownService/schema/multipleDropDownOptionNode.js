@@ -1,40 +1,40 @@
-const matchingContainerNode = {
+const multipleDropDownOptionNode = {
   attrs: {
+    class: { default: 'multiple-drop-down-option' },
     id: { default: '' },
-    class: { default: 'matching-container' },
     options: { default: [] },
-    feedback: { default: '' },
+    correct: { default: '' },
   },
-  group: 'block questions',
+  group: 'inline questions',
+  content: 'text*',
+  inline: true,
   atom: true,
-  selectable: false,
-  draggable: false,
-  content: 'block*',
+  defining: true,
   parseDOM: [
     {
-      tag: 'div.matching-container',
+      tag: 'span.multiple-drop-down-option',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
-          feedback: dom.getAttribute('feedback'),
           options: JSON.parse(dom.getAttribute('options')),
+          correct: dom.getAttribute('correct'),
         };
       },
     },
   ],
   toDOM(node) {
     return [
-      'div',
+      'span',
       {
         id: node.attrs.id,
         class: node.attrs.class,
         options: JSON.stringify(node.attrs.options),
-        feedback: node.attrs.feedback,
+        correct: node.attrs.correct,
       },
       0,
     ];
   },
 };
 
-export default matchingContainerNode;
+export default multipleDropDownOptionNode;

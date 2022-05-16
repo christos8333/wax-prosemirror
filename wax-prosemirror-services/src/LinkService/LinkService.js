@@ -17,6 +17,7 @@ export default class LinkService extends Service {
       LinkComponent,
       {},
       {
+        nodeType: '',
         markType: 'link',
         followCursor: false,
         selection: false,

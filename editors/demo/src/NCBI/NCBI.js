@@ -61,8 +61,6 @@ const ContentArea = styled.div`
   overflow-y: auto;
 `;
 
-let a = '';
-
 const Ncbi = () => {
   const [content, setContent] = useState('');
 

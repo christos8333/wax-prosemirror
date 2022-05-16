@@ -54,15 +54,15 @@ const WaxView = forwardRef((props, ref) => {
 
   const schema = context.app.getSchema();
 
-  if (!mounted) {
-    context.app.bootServices();
-    context.app.getShortCuts();
-    context.app.getRules();
-  }
-
   const setEditorRef = useCallback(
     node => {
       if (node) {
+        if (!mounted) {
+          context.app.bootServices();
+          context.app.getShortCuts();
+          context.app.getRules();
+        }
+
         const options = WaxOptions({
           ...props,
           schema,
@@ -105,7 +105,9 @@ const WaxView = forwardRef((props, ref) => {
         if (autoFocus && view)
           setTimeout(() => {
             view.focus();
-          }, 1000);
+            view.state.tr.insertText('', 0);
+            view.dispatch(view.state.tr);
+          }, 500);
 
         return () => view.destroy();
       }

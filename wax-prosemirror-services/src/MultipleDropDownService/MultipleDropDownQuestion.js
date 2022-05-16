@@ -5,10 +5,10 @@ import Tools from '../lib/Tools';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()
-class FillTheGapQuestion extends Tools {
-  title = 'Add Fill The Gap Question';
-  icon = 'gapQuestion';
-  name = 'Fill The Gap';
+class MultipleDropDownQuestion extends Tools {
+  title = 'Add Multiple Drop Down Question';
+  icon = 'mulitpleDropDownQuestion';
+  name = 'Multiple Drop Down';
 
   get run() {
     return (state, dispatch, view) => {
@@ -19,9 +19,13 @@ class FillTheGapQuestion extends Tools {
 
       const wrapping =
         range &&
-        findWrapping(range, state.config.schema.nodes.fill_the_gap_container, {
-          id: uuidv4(),
-        });
+        findWrapping(
+          range,
+          state.config.schema.nodes.multiple_drop_down_container,
+          {
+            id: uuidv4(),
+          },
+        );
       if (!wrapping) return false;
       tr.wrap(range, wrapping);
       dispatch(tr);
@@ -36,7 +40,8 @@ class FillTheGapQuestion extends Tools {
     const { disallowedTools } = activeView.props;
     let status = true;
     const { from, to } = state.selection;
-    if (from === null || disallowedTools.includes('FillTheGap')) return false;
+    if (from === null || disallowedTools.includes('MultipleDropDown'))
+      return false;
 
     state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.groups.includes('questions')) {
@@ -51,4 +56,4 @@ class FillTheGapQuestion extends Tools {
   }
 }
 
-export default FillTheGapQuestion;
+export default MultipleDropDownQuestion;

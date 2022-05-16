@@ -11,6 +11,7 @@ class CustomTagInlineService extends Service {
       CustomTagInlineOverlayComponent,
       {},
       {
+        nodeType: '',
         markType: 'customTagInline',
         followCursor: false,
         selection: true,

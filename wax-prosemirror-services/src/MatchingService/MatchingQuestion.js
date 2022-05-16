@@ -1,6 +1,9 @@
 import { injectable } from 'inversify';
-import { wrapIn } from 'prosemirror-commands';
+import { Fragment } from 'prosemirror-model';
+import { findWrapping } from 'prosemirror-transform';
+import { TextSelection } from 'prosemirror-state';
 import { v4 as uuidv4 } from 'uuid';
+import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -10,10 +13,35 @@ class MatchingQuestion extends Tools {
   name = 'Matching';
 
   get run() {
-    return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.matching_container, {
-        id: uuidv4(),
-      })(state, dispatch);
+    return (state, dispatch, view) => {
+      helpers.checkifEmpty(view);
+      /* Create Wrapping */
+      const { $from, $to } = view.state.selection;
+      const range = $from.blockRange($to);
+      const { tr } = view.state;
+
+      const wrapping =
+        range &&
+        findWrapping(range, state.config.schema.nodes.matching_container, {
+          id: uuidv4(),
+        });
+      if (!wrapping) return false;
+      tr.wrap(range, wrapping);
+
+      const map = tr.mapping.maps[0];
+      let newPos = 0;
+      map.forEach((_from, _to, _newFrom, newTo) => {
+        newPos = newTo;
+      });
+
+      tr.setSelection(TextSelection.create(tr.doc, range.$to.pos));
+      const option = state.config.schema.nodes.matching_option.create(
+        { id: uuidv4(), isfirst: true },
+        Fragment.empty,
+      );
+
+      tr.replaceSelectionWith(option);
+      dispatch(tr);
     };
   }
 

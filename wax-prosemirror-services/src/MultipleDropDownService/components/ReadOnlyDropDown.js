@@ -50,7 +50,11 @@ const DropComponent = ({ options }) => {
     pmViews: { main },
   } = context;
 
-  const onChange = option => {};
+  const customProps = main.props.customValues;
+
+  const onChange = option => {
+    console.log(option);
+  };
 
   useEffect(() => {}, []);
 

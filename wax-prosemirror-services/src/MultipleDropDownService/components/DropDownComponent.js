@@ -101,8 +101,6 @@ export default ({ setPosition, position }) => {
     pmViews: { main },
   } = context;
 
-  const customProps = main.props.customValues;
-
   const isEditable = main.props.editable(editable => {
     return editable;
   });
@@ -123,7 +121,7 @@ export default ({ setPosition, position }) => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
     const left = start.left - WaxSurface.left - 75;
-    const top = start.top - WaxSurface.top + 30;
+    const top = start.top - WaxSurface.top + 25;
     setPosition({ ...position, left, top });
   }, [position.left]);
 

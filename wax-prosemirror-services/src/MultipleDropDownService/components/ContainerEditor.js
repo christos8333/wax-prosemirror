@@ -14,7 +14,7 @@ const EditorWrapper = styled.div`
   position: relative;
 
   > .ProseMirror {
-    padding: 5px;
+    padding: 5px !important;
     &:focus {
       outline: none;
     }
@@ -85,14 +85,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
           plugins: finalPlugins,
         }),
         dispatchTransaction,
-        disallowedTools: [
-          'Images',
-          'Lists',
-          'lift',
-          'Tables',
-          'FillTheGap',
-          'MultipleChoice',
-        ],
+        disallowedTools: ['Images', 'FillTheGap', 'MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
             main.dispatch(

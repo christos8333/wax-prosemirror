@@ -8,6 +8,7 @@ const multipleDropDownContainerNode = {
   atom: true,
   selectable: false,
   draggable: false,
+  defining: true,
   content: 'block*',
   parseDOM: [
     {

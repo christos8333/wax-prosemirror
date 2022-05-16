@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { NodeSelection } from 'prosemirror-state';
 import styled from 'styled-components';
@@ -65,6 +65,7 @@ export default ({ item, node }) => {
 
   const onChange = () => {
     const { tr } = activeView.state;
+    setCorrectOption(item.value);
     tr.setNodeMarkup(node.from, undefined, {
       ...node.node.attrs,
       correct: item.value,
@@ -73,10 +74,6 @@ export default ({ item, node }) => {
     tr.setSelection(new NodeSelection(resolvedPos));
     activeView.dispatch(tr.setMeta('reject', true));
   };
-
-  useEffect(() => {
-    setCorrectOption(item.value);
-  }, [correctOption]);
 
   return (
     <CheckContainer>

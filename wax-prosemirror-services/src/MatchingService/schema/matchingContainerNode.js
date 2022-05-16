@@ -7,9 +7,9 @@ const matchingContainerNode = {
   },
   group: 'block questions',
   atom: true,
-  selectable: false,
+  selectable: true,
   draggable: false,
-  content: 'block*',
+  content: 'inline*',
   parseDOM: [
     {
       tag: 'div.matching-container',

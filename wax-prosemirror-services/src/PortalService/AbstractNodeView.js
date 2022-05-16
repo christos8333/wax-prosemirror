@@ -45,10 +45,10 @@ export default class AbstractNodeView {
   }
 
   selectNode() {
-    return true;
+    this.dom.classList.add('ProseMirror-selectednode');
   }
 
   deselectNode() {
-    return true;
+    this.dom.classList.remove('ProseMirror-selectednode');
   }
 }

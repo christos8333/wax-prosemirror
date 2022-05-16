@@ -6,7 +6,6 @@ const multipleDropDownOptionNode = {
     correct: { default: '' },
   },
   group: 'inline questions',
-  content: 'text*',
   inline: true,
   atom: true,
   defining: true,
@@ -32,7 +31,6 @@ const multipleDropDownOptionNode = {
         options: JSON.stringify(node.attrs.options),
         correct: node.attrs.correct,
       },
-      0,
     ];
   },
 };

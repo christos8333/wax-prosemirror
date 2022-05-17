@@ -62,18 +62,18 @@ const ProjectButton = styled.button`
 `;
 
 const Editors = () => {
-  const [project, setProject] = useState('editoria');
+  const [project, setProject] = useState('hhmi');
 
   const displayProject = () => {
     switch (project) {
-      case 'hhmi':
-        return <HHMI />;
+      case 'editoria':
+        return <Editoria />;
       case 'ncbi':
         return <NCBI />;
       case 'oen':
         return <OEN />;
       default:
-        return <Editoria />;
+        return <HHMI />;
     }
   };
 
@@ -84,16 +84,16 @@ const Editors = () => {
         <Projects>
           <span>Select Project:</span>
           <ProjectButton
-            isActive={project === 'editoria'}
-            onClick={() => setProject('editoria')}
-          >
-            Editoria
-          </ProjectButton>
-          <ProjectButton
             isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}
           >
             Widget Example
+          </ProjectButton>
+          <ProjectButton
+            isActive={project === 'editoria'}
+            onClick={() => setProject('editoria')}
+          >
+            Editoria
           </ProjectButton>
           <ProjectButton
             isActive={project === 'oen'}

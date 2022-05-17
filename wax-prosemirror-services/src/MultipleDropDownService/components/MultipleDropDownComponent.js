@@ -28,6 +28,14 @@ const StyledIconAction = styled(Icon)`
   ${props => props.isActive && activeStylesSvg}
 `;
 
+const CorrectAnswer = styled.span`
+  color: green;
+`;
+
+const Answer = styled.span`
+  color: green;
+`;
+
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
@@ -37,6 +45,9 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const [isActive, setIsActive] = useState(false);
+  const [correctAnswer, setCorrectAnswer] = useState(
+    node.attrs.options.find(option => option.value === node.attrs.correct),
+  );
   const customProps = main.props.customValues;
   const posFrom = pmViews[activeViewId].state.selection.from;
 
@@ -44,21 +55,36 @@ export default ({ node, view, getPos }) => {
     return editable;
   });
   const readOnly = !isEditable;
-
+  console.log(correctAnswer, node);
   useEffect(() => {
     setIsActive(false);
     if (getPos() === posFrom) {
       setIsActive(true);
     }
-  }, [posFrom]);
+  }, [posFrom, correctAnswer]);
 
-  if (!(readOnly && customProps && !customProps.showFeedBack)) {
-    return (
+  if (!readOnly)
+    return correctAnswer ? (
+      <span> {correctAnswer.label}</span>
+    ) : (
       <StyledIconActionContainer isActive={isActive}>
         <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
       </StyledIconActionContainer>
     );
+
+  if (!(readOnly && customProps && !customProps.showFeedBack)) {
+    const answer = node.attrs.options.find(
+      option => option.value === node.attrs.answer,
+    );
+
+    return (
+      <>
+        {correctAnswer && <CorrectAnswer>{correctAnswer.label}</CorrectAnswer>}
+        {answer && <Answer>{answer.label}</Answer>}
+      </>
+    );
   }
+
   return (
     <ReadOnlyDropDown
       getPos={getPos}

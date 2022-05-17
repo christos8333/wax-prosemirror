@@ -80,10 +80,10 @@ const Hhmi = () => {
         ref={editorRef}
         customValues={{ showFeedBack: submited }}
         fileUpload={file => renderImage(file)}
-        value={t}
+        value=""
         readonly={readOnly}
         layout={HhmiLayout}
-        onChange={source => console.log(source)}
+        // onChange={source => console.log(source)}
       />
     </>
   );

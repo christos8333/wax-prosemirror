@@ -9,7 +9,7 @@ const multipleDropDownContainerNode = {
   selectable: false,
   draggable: false,
   defining: true,
-  content: 'block*',
+  content: 'paragraph* bulletlist* orderedlist*',
   parseDOM: [
     {
       tag: 'div.multiple-drop-down-container',

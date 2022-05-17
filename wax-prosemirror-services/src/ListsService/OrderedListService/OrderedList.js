@@ -27,6 +27,9 @@ export default class OrderedList extends Tools {
     } = state;
     let status = true;
 
+    if (!wrapInList(state.config.schema.nodes.bulletlist)(activeView.state))
+      status = false;
+
     if ('subList' in this.config && !this.config.subList) {
       state.doc.nodesBetween(from, to, node => {
         if (node.type.name === 'list_item') status = false;

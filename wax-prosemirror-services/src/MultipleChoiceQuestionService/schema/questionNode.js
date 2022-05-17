@@ -4,7 +4,7 @@ const questionNode = {
     id: { default: '' },
   },
   group: 'block questions',
-  content: 'block*',
+  content: 'paragraph* bulletlist* orderedlist*',
   defining: true,
 
   parseDOM: [

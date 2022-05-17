@@ -42,7 +42,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const DropComponent = ({ options }) => {
+const DropComponent = ({ getPos, node, options }) => {
   const [selectedOption, setSelectedOption] = useState(undefined);
 
   const context = useContext(WaxContext);
@@ -53,7 +53,17 @@ const DropComponent = ({ options }) => {
   const customProps = main.props.customValues;
 
   const onChange = option => {
-    console.log(option);
+    const allNodes = getNodes(main);
+    const { tr } = main.state;
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        tr.setNodeMarkup(singleNode.pos, undefined, {
+          ...singleNode.node.attrs,
+          answer: option.value,
+        });
+      }
+    });
+    main.dispatch(tr);
   };
 
   useEffect(() => {}, []);
@@ -80,3 +90,7 @@ const DropComponent = ({ options }) => {
 };
 
 export default DropComponent;
+
+const getNodes = view => {
+  return DocumentHelpers.findInlineNodes(view.state.doc);
+};

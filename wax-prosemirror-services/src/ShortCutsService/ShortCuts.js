@@ -25,11 +25,8 @@ const backSpace = chainCommands(
 const backSpaceShortCut = (state, dispatch, view) => {
   const { $from, $to } = state.selection;
   const { nodeBefore } = $from;
-  if (!nodeBefore) {
-    return false;
-  }
 
-  if (nodeBefore.type.name === 'math_inline') {
+  if (nodeBefore && nodeBefore.type.name === 'math_inline') {
     const index = $from.index($from.depth);
     const $beforePos = state.doc.resolve($from.posAtIndex(index - 1));
 

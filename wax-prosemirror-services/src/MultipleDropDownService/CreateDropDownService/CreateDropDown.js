@@ -19,11 +19,8 @@ class CreateDropDown extends Tools {
         content,
       );
       tr.replaceSelectionWith(createGap);
-      tr.insertText(' ');
       const resolvedPos = tr.doc.resolve(
-        tr.selection.anchor -
-          1 -
-          (tr.selection.$anchor.nodeBefore.nodeSize + 1),
+        tr.selection.anchor - tr.selection.$anchor.nodeBefore.nodeSize,
       );
 
       tr.setSelection(new NodeSelection(resolvedPos));

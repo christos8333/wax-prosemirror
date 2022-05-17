@@ -28,6 +28,20 @@ const StyledIconAction = styled(Icon)`
   ${props => props.isActive && activeStylesSvg}
 `;
 
+const AnswerContainer = styled.div`
+  display: inline-block;
+  border-bottom: ${props =>
+    props.isCorrect ? '1px solid green;' : '1px solid red'};
+  border-top: ${props =>
+    props.isCorrect ? '1px solid green;' : '1px solid red'};
+  border-radius: 192px;
+  padding: 2px 4px 2px 4px;
+`;
+
+const CorrectAnswer = styled.span``;
+
+const Answer = styled.span``;
+
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
@@ -37,14 +51,15 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const [isActive, setIsActive] = useState(false);
+
   const customProps = main.props.customValues;
   const posFrom = pmViews[activeViewId].state.selection.from;
 
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-  const readOnly = !isEditable;
 
+  const readOnly = !isEditable;
   useEffect(() => {
     setIsActive(false);
     if (getPos() === posFrom) {
@@ -52,12 +67,39 @@ export default ({ node, view, getPos }) => {
     }
   }, [posFrom]);
 
-  if (!(readOnly && customProps && !customProps.showFeedBack)) {
+  if (!readOnly) {
     return (
       <StyledIconActionContainer isActive={isActive}>
         <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
       </StyledIconActionContainer>
     );
   }
-  return <ReadOnlyDropDown options={node.attrs.options} />;
+
+  if (!(readOnly && customProps && !customProps.showFeedBack)) {
+    const answer = node.attrs.options.find(
+      option => option.value === node.attrs.answer,
+    );
+
+    const correct = node.attrs.options.find(
+      option => option.value === node.attrs.correct,
+    );
+
+    const isCorrect = node.attrs.correct === node.attrs.answer;
+
+    return (
+      <AnswerContainer isCorrect={isCorrect}>
+        Correct:
+        {correct && <CorrectAnswer> {correct.label} | &nbsp;</CorrectAnswer>}
+        Answer: {answer && <Answer> {answer.label}</Answer>}
+      </AnswerContainer>
+    );
+  }
+
+  return (
+    <ReadOnlyDropDown
+      getPos={getPos}
+      node={node}
+      options={node.attrs.options}
+    />
+  );
 };

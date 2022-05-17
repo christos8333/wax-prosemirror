@@ -9,7 +9,7 @@ const matchingContainerNode = {
   atom: true,
   selectable: true,
   draggable: false,
-  content: 'inline*',
+  content: 'block*',
   parseDOM: [
     {
       tag: 'div.matching-container',

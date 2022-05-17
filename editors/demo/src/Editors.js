@@ -5,6 +5,7 @@ import { createGlobalStyle } from 'styled-components';
 import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
 import NCBI from './NCBI/NCBI';
+import OEN from './OEN/OEN';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -61,16 +62,18 @@ const ProjectButton = styled.button`
 `;
 
 const Editors = () => {
-  const [project, setProject] = useState('editoria');
+  const [project, setProject] = useState('hhmi');
 
   const displayProject = () => {
     switch (project) {
-      case 'hhmi':
-        return <HHMI />;
+      case 'editoria':
+        return <Editoria />;
       case 'ncbi':
         return <NCBI />;
+      case 'oen':
+        return <OEN />;
       default:
-        return <Editoria />;
+        return <HHMI />;
     }
   };
 
@@ -81,17 +84,23 @@ const Editors = () => {
         <Projects>
           <span>Select Project:</span>
           <ProjectButton
-            isActive={project === 'editoria'}
-            onClick={() => setProject('editoria')}
-          >
-            Editoria
-          </ProjectButton>
-          <ProjectButton
             isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}
           >
             Widget Example
           </ProjectButton>
+          <ProjectButton
+            isActive={project === 'editoria'}
+            onClick={() => setProject('editoria')}
+          >
+            Editoria
+          </ProjectButton>
+          {/* <ProjectButton
+            isActive={project === 'oen'}
+            onClick={() => setProject('oen')}
+          >
+            OEN
+          </ProjectButton> */}
           <ProjectButton
             isActive={project === 'ncbi'}
             onClick={() => setProject('ncbi')}

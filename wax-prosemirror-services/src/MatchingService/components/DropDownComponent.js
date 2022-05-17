@@ -53,14 +53,15 @@ const DropComponent = ({ getPos, node, view }) => {
     setSelectedOption(option);
 
     const allNodes = getNodes(main);
+    console.log(allNodes);
     allNodes.forEach(singleNode => {
-      if (singleNode.attrs.id === node.attrs.id) {
+      if (singleNode.node.attrs.id === node.attrs.id) {
         main.dispatch(
           main.state.tr
             .setMeta('addToHistory', false)
-            .setNodeMarkup(getPos() + 3, undefined, {
+            .setNodeMarkup(singleNode.pos, undefined, {
               ...singleNode.attrs,
-              answer: option,
+              correct: option.value,
             }),
         );
       }
@@ -100,15 +101,5 @@ const DropComponent = ({ getPos, node, view }) => {
 export default DropComponent;
 
 const getNodes = view => {
-  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
-  const matchingOptions = [];
-  allNodes.forEach(node => {
-    if (node.node.type.name === 'paragraph') {
-      node.node.content.content.forEach(optionNode => {
-        if (optionNode.type.name === 'matching_option')
-          matchingOptions.push(optionNode);
-      });
-    }
-  });
-  return matchingOptions;
+  return DocumentHelpers.findInlineNodes(view.state.doc);
 };

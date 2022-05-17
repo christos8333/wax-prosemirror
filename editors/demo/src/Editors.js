@@ -5,6 +5,7 @@ import { createGlobalStyle } from 'styled-components';
 import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
 import NCBI from './NCBI/NCBI';
+import OEN from './OEN/OEN';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -69,6 +70,8 @@ const Editors = () => {
         return <HHMI />;
       case 'ncbi':
         return <NCBI />;
+      case 'oen':
+        return <OEN />;
       default:
         return <Editoria />;
     }
@@ -91,6 +94,12 @@ const Editors = () => {
             onClick={() => setProject('hhmi')}
           >
             Widget Example
+          </ProjectButton>
+          <ProjectButton
+            isActive={project === 'oen'}
+            onClick={() => setProject('oen')}
+          >
+            OEN
           </ProjectButton>
           <ProjectButton
             isActive={project === 'ncbi'}

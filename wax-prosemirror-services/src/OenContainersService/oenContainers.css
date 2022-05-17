@@ -1,13 +1,10 @@
-.introduction, .outline, .objectives,
-.focus-questions {
+div[data-type="content_structure_element"] {
     border-left: 3px solid #f5f5f7;
     padding: 10px 10px 0 10px;
     
 }
 
-.introduction::before,
-.outline::before,
-.objectives::before {
+div[data-type="content_structure_element"]::before {
     border: 3px solid #f5f5f7;
     background-color: #f5f5f7;
     width: 100%;
@@ -24,4 +21,28 @@
 
 .objectives::before {
 content: 'Objectives Section';
+}
+
+.focus-questions::before {
+    content: 'Focus Questions Section';
+}
+
+.key-terms::before {
+    content: 'Key Terms Section';
+}
+
+.self-reflection-activities::before {
+    content: 'Self Reflection Activities Section';
+}
+
+.review-activity::before {
+    content: 'Review Activity Section';
+}
+
+.summary::before {
+    content: 'Summary Section';
+}
+
+.references::before {
+    content: 'References Section';
 }

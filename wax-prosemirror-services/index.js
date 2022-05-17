@@ -52,6 +52,8 @@ export { default as EssayService } from './src/EssayService/EssayService';
 export { default as MatchingService } from './src/MatchingService/MatchingService';
 export { default as EnterService } from './src/EnterService/EnterService';
 export { default as MultipleDropDownService } from './src/MultipleDropDownService/MultipleDropDownService';
+
+export { default as OenContainersService } from './src/OenContainersService/OenContainersService';
 /*
 ToolGroups
 */

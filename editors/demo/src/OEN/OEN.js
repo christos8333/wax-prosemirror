@@ -26,6 +26,9 @@ const user = {
   username: 'admin',
 };
 
+const val = `<div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
+              <div class="outline" data-type="content_structure_element"><p>outline</p></div> `;
+
 const Oen = () => {
   const editorRef = useRef();
 
@@ -36,7 +39,7 @@ const Oen = () => {
       autoFocus
       placeholder="Type Something..."
       fileUpload={file => renderImage(file)}
-      value=""
+      value={val}
       // readonly
       layout={OenLayout}
       // onChange={debounce(source => {

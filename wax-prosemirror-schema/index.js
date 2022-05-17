@@ -45,6 +45,7 @@ export { default as codeBlockNode } from './src/nodes/codeBlockNode';
 export { default as mathInlineNode } from './src/nodes/mathInlineNode';
 export { default as mathDisplayNode } from './src/nodes/mathDisplayNode';
 export { default as customBlockNode } from './src/nodes/customBlockNode';
+export { default as OenContainerNode } from './src/nodes/OenContainerNode';
 /*
 LIST OF TRACK CHANGES NODES
 */

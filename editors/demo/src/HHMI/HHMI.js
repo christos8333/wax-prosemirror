@@ -18,13 +18,13 @@ const renderImage = file => {
 
 const ReadOnlyButton = styled.button`
   position: absolute;
-  left: 550px;
+  left: 600px;
   top: 16px;
 `;
 
 const SubmitButton = styled.button`
   position: absolute;
-  left: 650px;
+  left: 700px;
   top: 16px;
 `;
 

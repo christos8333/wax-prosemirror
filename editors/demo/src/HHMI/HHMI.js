@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import { Wax } from 'wax-prosemirror-core';
@@ -68,6 +68,8 @@ const Hhmi = () => {
     isReadOnly(true);
   };
 
+  const editorRef = useRef();
+
   return (
     <>
       <ReadOnlyButton onClick={readOnlyQuestions}>Read Only</ReadOnlyButton>
@@ -75,12 +77,13 @@ const Hhmi = () => {
       <Wax
         config={config}
         autoFocus
+        ref={editorRef}
         customValues={{ showFeedBack: submited }}
         fileUpload={file => renderImage(file)}
         value={t}
         readonly={readOnly}
         layout={HhmiLayout}
-        // onChange={source => console.log(source)}
+        onChange={source => console.log(source)}
       />
     </>
   );

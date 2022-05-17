@@ -59,5 +59,11 @@ export default ({ node, view, getPos }) => {
       </StyledIconActionContainer>
     );
   }
-  return <ReadOnlyDropDown options={node.attrs.options} />;
+  return (
+    <ReadOnlyDropDown
+      getPos={getPos}
+      node={node}
+      options={node.attrs.options}
+    />
+  );
 };

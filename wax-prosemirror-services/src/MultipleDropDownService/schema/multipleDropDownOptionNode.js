@@ -4,6 +4,7 @@ const multipleDropDownOptionNode = {
     id: { default: '' },
     options: { default: [] },
     correct: { default: '' },
+    answer: { default: '' },
   },
   group: 'inline questions',
   inline: true,
@@ -18,6 +19,7 @@ const multipleDropDownOptionNode = {
           class: dom.getAttribute('class'),
           options: JSON.parse(dom.getAttribute('options')),
           correct: dom.getAttribute('correct'),
+          answer: dom.getAttribute('answer'),
         };
       },
     },
@@ -30,6 +32,7 @@ const multipleDropDownOptionNode = {
         class: node.attrs.class,
         options: JSON.stringify(node.attrs.options),
         correct: node.attrs.correct,
+        answer: node.attrs.answer,
       },
     ];
   },

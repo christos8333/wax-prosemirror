@@ -59,7 +59,7 @@ const DropComponent = ({ getPos, node, options }) => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         tr.setNodeMarkup(singleNode.pos, undefined, {
           ...singleNode.node.attrs,
-          correct: option.value,
+          answer: option.value,
         });
       }
     });

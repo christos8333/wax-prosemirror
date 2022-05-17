@@ -28,13 +28,19 @@ const StyledIconAction = styled(Icon)`
   ${props => props.isActive && activeStylesSvg}
 `;
 
-const CorrectAnswer = styled.span`
-  color: green;
+const AnswerContainer = styled.div`
+  display: inline-block;
+  border-bottom: ${props =>
+    props.isCorrect ? '1px solid green;' : '1px solid red'};
+  border-top: ${props =>
+    props.isCorrect ? '1px solid green;' : '1px solid red'};
+  border-radius: 192px;
+  padding: 2px 4px 2px 4px;
 `;
 
-const Answer = styled.span`
-  color: green;
-`;
+const CorrectAnswer = styled.span``;
+
+const Answer = styled.span``;
 
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
@@ -45,43 +51,47 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const [isActive, setIsActive] = useState(false);
-  const [correctAnswer, setCorrectAnswer] = useState(
-    node.attrs.options.find(option => option.value === node.attrs.correct),
-  );
+
   const customProps = main.props.customValues;
   const posFrom = pmViews[activeViewId].state.selection.from;
 
   const isEditable = main.props.editable(editable => {
     return editable;
   });
+
   const readOnly = !isEditable;
-  console.log(correctAnswer, node);
   useEffect(() => {
     setIsActive(false);
     if (getPos() === posFrom) {
       setIsActive(true);
     }
-  }, [posFrom, correctAnswer]);
+  }, [posFrom]);
 
-  if (!readOnly)
-    return correctAnswer ? (
-      <span> {correctAnswer.label}</span>
-    ) : (
+  if (!readOnly) {
+    return (
       <StyledIconActionContainer isActive={isActive}>
         <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
       </StyledIconActionContainer>
     );
+  }
 
   if (!(readOnly && customProps && !customProps.showFeedBack)) {
     const answer = node.attrs.options.find(
       option => option.value === node.attrs.answer,
     );
 
+    const correct = node.attrs.options.find(
+      option => option.value === node.attrs.correct,
+    );
+
+    const isCorrect = node.attrs.correct === node.attrs.answer;
+
     return (
-      <>
-        {correctAnswer && <CorrectAnswer>{correctAnswer.label}</CorrectAnswer>}
-        {answer && <Answer>{answer.label}</Answer>}
-      </>
+      <AnswerContainer isCorrect={isCorrect}>
+        Correct:
+        {correct && <CorrectAnswer> {correct.label} | &nbsp;</CorrectAnswer>}
+        Answer: {answer && <Answer> {answer.label}</Answer>}
+      </AnswerContainer>
     );
   }
 

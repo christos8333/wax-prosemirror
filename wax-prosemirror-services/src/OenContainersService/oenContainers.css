@@ -1,11 +1,13 @@
-.introduction, .outline {
+.introduction, .outline, .objectives,
+.focus-questions {
     border-left: 3px solid #f5f5f7;
     padding: 10px 10px 0 10px;
     
 }
 
 .introduction::before,
-.outline::before {
+.outline::before,
+.objectives::before {
     border: 3px solid #f5f5f7;
     background-color: #f5f5f7;
     width: 100%;
@@ -18,4 +20,8 @@
 
 .outline::before {
     content: 'Outline Section';
+}
+
+.objectives::before {
+content: 'Objectives Section';
 }

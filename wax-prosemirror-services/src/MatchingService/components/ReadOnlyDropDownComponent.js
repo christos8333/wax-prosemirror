@@ -41,7 +41,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const DropComponent = ({ getPos, node, view }) => {
+const ReadOnlyDropDownComponent = ({ getPos, node, view }) => {
   const [selectedOption, setSelectedOption] = useState(undefined);
 
   const context = useContext(WaxContext);
@@ -51,6 +51,7 @@ const DropComponent = ({ getPos, node, view }) => {
 
   const onChange = option => {
     setSelectedOption(option);
+
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
@@ -59,7 +60,7 @@ const DropComponent = ({ getPos, node, view }) => {
             .setMeta('addToHistory', false)
             .setNodeMarkup(singleNode.pos, undefined, {
               ...singleNode.node.attrs,
-              correct: option.value,
+              answer: option.value,
             }),
         );
       }
@@ -75,7 +76,7 @@ const DropComponent = ({ getPos, node, view }) => {
     }
   }, [node.attrs.options]);
 
-  const MultipleDropDown = useMemo(
+  const ReadOnlyMultipleDropDown = useMemo(
     () => (
       <Wrapper key={uuidv4()}>
         <DropdownStyled
@@ -93,10 +94,10 @@ const DropComponent = ({ getPos, node, view }) => {
     [node.attrs.options, selectedOption],
   );
 
-  return MultipleDropDown;
+  return ReadOnlyMultipleDropDown;
 };
 
-export default DropComponent;
+export default ReadOnlyDropDownComponent;
 
 const getNodes = view => {
   return DocumentHelpers.findInlineNodes(view.state.doc);

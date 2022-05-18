@@ -43,7 +43,7 @@ import {
   CustomTagInlineToolGroupService,
   CustomTagBlockToolGroupService,
   CustomTagService,
-  OenContainersService,
+  OENContainersService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-utilities';
@@ -153,7 +153,7 @@ export default {
   },
 
   services: [
-    new OenContainersService(),
+    new OENContainersService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

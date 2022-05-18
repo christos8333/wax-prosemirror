@@ -2,8 +2,8 @@ import { OenContainerNode } from 'wax-prosemirror-schema';
 import Service from '../Service';
 import './oenContainers.css';
 
-class OenContainersService extends Service {
-  name = 'OenContainersService';
+class OENContainersService extends Service {
+  name = 'OENContainersService';
 
   boot() {}
 
@@ -16,4 +16,4 @@ class OenContainersService extends Service {
   }
 }
 
-export default OenContainersService;
+export default OENContainersService;

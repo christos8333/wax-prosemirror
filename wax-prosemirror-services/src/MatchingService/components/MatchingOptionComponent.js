@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
 import { Fragment } from 'prosemirror-model';
@@ -41,6 +41,23 @@ const ActionButton = styled.button`
 const StyledIconAction = styled(Icon)`
   height: 24px;
   width: 24px;
+`;
+
+const AnswerContainer = styled.div`
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+const CorrectAnswer = styled.span`
+  span {
+    color: #008000;
+  }
+`;
+
+const Answer = styled.span`
+  span {
+    color: ${props => (props.isCorrect ? '#008000' : '#FF3030')};
+  }
 `;
 
 export default ({ node, view, getPos }) => {
@@ -90,6 +107,16 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const answer = node.attrs.options.find(
+    option => option.value === node.attrs.answer,
+  );
+
+  const correct = node.attrs.options.find(
+    option => option.value === node.attrs.correct,
+  );
+
+  const isCorrect = node.attrs.correct === node.attrs.answer;
+
   return (
     <Option>
       {!readOnly && (
@@ -115,7 +142,15 @@ export default ({ node, view, getPos }) => {
         )}
 
         {readOnly && customProps && customProps.showFeedBack && (
-          <span> Submit </span>
+          <AnswerContainer>
+            <CorrectAnswer>
+              Correct : &nbsp;{correct && <span>{correct.label} </span>}
+            </CorrectAnswer>
+            <Answer isCorrect={isCorrect}>
+              Answer : &nbsp;
+              {answer && <span>{answer.label} </span>}
+            </Answer>
+          </AnswerContainer>
         )}
       </DropDownContainer>
     </Option>

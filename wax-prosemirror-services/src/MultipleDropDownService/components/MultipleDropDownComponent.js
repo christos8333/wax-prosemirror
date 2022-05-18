@@ -31,9 +31,9 @@ const StyledIconAction = styled(Icon)`
 const AnswerContainer = styled.div`
   display: inline-block;
   border-bottom: ${props =>
-    props.isCorrect ? '1px solid green;' : '1px solid red'};
+    props.isCorrect ? '1px solid #008000;' : '1px solid #FF3030'};
   border-top: ${props =>
-    props.isCorrect ? '1px solid green;' : '1px solid red'};
+    props.isCorrect ? '1px solid #008000;' : '1px solid #FF3030'};
   border-radius: 192px;
   padding: 2px 4px 2px 4px;
 `;

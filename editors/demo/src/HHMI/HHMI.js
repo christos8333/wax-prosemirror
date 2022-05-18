@@ -59,12 +59,10 @@ const initialContent = `<p class="paragraph"></p>
    <p class="paragraph">first <span id="16ec8f33-db5b-4839-9567-8aa73b776bcf" class="fill-the-gap" answer="">answer1; answer2; answer3</span> second <span id="72f23a71-e774-4834-acba-f357afb6a243" class="fill-the-gap" answer="">answer 4; answer5;</span></p>
 </div>`;
 
-const val = `<p class="paragraph"></p><div id="9703faf4-523d-49b2-a719-3f4ecfff65b2" class="matching-container" options="[{&quot;label&quot;:&quot;dsdsd&quot;,&quot;value&quot;:&quot;633b428e-4fda-4b6d-a660-8e3f1f221391&quot;}]" feedback=""><p class="paragraph"><div id="60ccd550-7f65-4624-9e1e-eef7e4e68a73" class="matching-option" isfirst="true" answer="" correct="">dsdsdd</div></p><p class="paragraph"></p></div>`;
-
 const Hhmi = () => {
   const [submited, isSubmited] = useState(false);
   const [readOnly, isReadOnly] = useState(false);
-  const [content, setContent] = useState(val);
+  const [content, setContent] = useState(initialContent);
 
   const readOnlyQuestions = () => {
     setContent(editorRef.current.getContent());
@@ -92,7 +90,7 @@ const Hhmi = () => {
         value={content}
         readonly={readOnly}
         layout={HhmiLayout}
-        onChange={source => console.log(source)}
+        // onChange={source => console.log(source)}
       />
     </>
   );

@@ -35,7 +35,6 @@ const matchingOptionNode = {
         isfirst: node.attrs.isfirst,
         answer: node.attrs.answer,
         correct: node.attrs.correct,
-        feedback: node.attrs.feedback,
       },
       0,
     ];

@@ -51,7 +51,6 @@ const DropComponent = ({ getPos, node, view }) => {
 
   const onChange = option => {
     setSelectedOption(option);
-
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {

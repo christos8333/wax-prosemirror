@@ -53,6 +53,7 @@ export default ({ node, view, getPos }) => {
   });
 
   const readOnly = !isEditable;
+  const customProps = main.props.customValues;
 
   const addAnswer = () => {
     const nodeId = node.attrs.id;
@@ -104,7 +105,13 @@ export default ({ node, view, getPos }) => {
       )}
       <EditorComponent getPos={getPos} node={node} view={view} />
       <DropDownContainer>
-        <DropDownComponent getPos={getPos} node={node} view={view} />
+        {readOnly && customProps && customProps.showFeedBack && (
+          <span>Submit</span>
+        )}
+        {!readOnly && (
+          <DropDownComponent getPos={getPos} node={node} view={view} />
+        )}
+        {readOnly && !customProps.showFeedBack && <span> READ ONLY </span>}
       </DropDownContainer>
     </Option>
   );

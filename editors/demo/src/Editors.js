@@ -95,12 +95,12 @@ const Editors = () => {
           >
             Editoria
           </ProjectButton>
-          {/* <ProjectButton
+          <ProjectButton
             isActive={project === 'oen'}
             onClick={() => setProject('oen')}
           >
             OEN
-          </ProjectButton> */}
+          </ProjectButton>
           <ProjectButton
             isActive={project === 'ncbi'}
             onClick={() => setProject('ncbi')}

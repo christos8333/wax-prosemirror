@@ -35,14 +35,9 @@ const initialContent = `<p class="paragraph"></p>
 </div>
 <p class="paragraph"></p>
 <div id="2257aaf4-20cf-44ff-bd45-0e0a4561b764" class="matching-container" options="[{&quot;label&quot;:&quot;option 1&quot;,&quot;value&quot;:&quot;941cebeb-58bd-44c5-bf42-c78d20c23b7a&quot;},{&quot;label&quot;:&quot;option 2&quot;,&quot;value&quot;:&quot;ab2e7cfc-c700-4ba2-9ac3-3040974f67bf&quot;}]" feedback="">
-   <p class="paragraph"></p>
-   <p class="paragraph"></p>
-   <p class="paragraph"></p>
    <p class="paragraph">
-   <div id="2bf9d3ca-166d-4354-9ebf-5d0fc6e75d8d" class="matching-option" isfirst="true" answer="{}">some text</div>
-   <div id="902ce1df-14b0-4c1f-9d44-066bb85262b1" class="matching-option" isfirst="false" answer="{}">some more text</div>
+   <div id="2bf9d3ca-166d-4354-9ebf-5d0fc6e75d8d" class="matching-option" isfirst="true" answer="">some text</div>
    </p>
-   <p class="paragraph"></p>
 </div>
 <div id="d4fa43fc-3a92-4591-a8a4-e6271e42fc323" class="multiple-choice">
    <div class="multiple-choice-question" id="38de8538-647a-489d-8474-f92d0d256c32">
@@ -90,7 +85,7 @@ const Hhmi = () => {
         value={content}
         readonly={readOnly}
         layout={HhmiLayout}
-        // onChange={source => console.log(source)}
+        onChange={source => console.log(source)}
       />
     </>
   );

@@ -11,6 +11,32 @@ div[data-type="content_structure_element"]::before {
     display: block;
 }
 
+.section {
+    position: relative;
+    padding: 10px 10px 0 10px;
+    margin-top: 20px;
+    border: 3px solid #E2EBFF;
+}
+
+.section::before {
+    content: 'Section';
+    color: #c7d8fc;
+    font-weight: bold;
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    top: -25px;
+    left: -3px;
+}
+
+.ProseMirror>section.section:nth-of-type(1) {
+  margin-top: 0px;
+}
+
+.section>div:nth-of-type(1) {
+    padding-top: 0;
+}
+
 .introduction::before {
     content: 'Introduction Section';
 }
@@ -45,4 +71,20 @@ content: 'Objectives Section';
 
 .references::before {
     content: 'References Section';
+}
+
+.main-content::before {
+    content: 'Main Content Section';
+}
+
+.bibliography::before {
+    content: 'Bibliography Section';
+}
+
+.further-reading::before {
+    content: 'Further Reading Section';
+}
+
+.content-opener-image::before {
+    content: 'Content Opener Image Section';
 }

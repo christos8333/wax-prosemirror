@@ -26,8 +26,10 @@ const user = {
   username: 'admin',
 };
 
-const val = `<div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
-              <div class="outline" data-type="content_structure_element"><p>outline</p></div> `;
+const val = `<section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
+              <div class="outline" data-type="content_structure_element"><p>outline</p></div></section>
+              <section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
+              <div class="outline" data-type="content_structure_element"><p>outline</p></div></section>`;
 
 const Oen = () => {
   const editorRef = useRef();

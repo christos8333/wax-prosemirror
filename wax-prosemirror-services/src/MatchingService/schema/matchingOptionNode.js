@@ -8,7 +8,7 @@ const matchingOptionNode = {
     options: { default: [] },
   },
   group: 'inline questions',
-  content: 'text*',
+  content: 'inline*',
   inline: true,
   atom: true,
   defining: true,

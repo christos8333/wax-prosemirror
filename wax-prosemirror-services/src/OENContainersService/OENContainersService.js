@@ -1,14 +1,14 @@
 import { OenNodes } from 'wax-prosemirror-schema';
 import Service from '../Service';
+import OENContainersTool from './OENContainersTool';
 import './oenContainers.css';
 
 class OENContainersService extends Service {
   name = 'OENContainersService';
 
-  boot() {}
-
   register() {
     console.log(this.config);
+    this.container.bind('OENContainersTool').to(OENContainersTool);
     const createNode = this.container.get('CreateNode');
 
     Object.keys(OenNodes).forEach(node => {

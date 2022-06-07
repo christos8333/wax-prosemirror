@@ -8,6 +8,7 @@ class OENContainersService extends Service {
   boot() {}
 
   register() {
+    console.log(this.config);
     const createNode = this.container.get('CreateNode');
 
     Object.keys(OenNodes).forEach(node => {

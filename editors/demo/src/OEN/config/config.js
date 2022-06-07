@@ -23,7 +23,7 @@ import {
   CommentsService,
   CodeBlockService,
   CodeBlockToolGroupService,
-  DisplayTextToolGroupService,
+  // DisplayTextToolGroupService,
   MathService,
   FindAndReplaceService,
   EditingSuggestingService,
@@ -44,6 +44,7 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
   OENContainersService,
+  OENContainersToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-utilities';
@@ -103,7 +104,7 @@ export default {
     },
     {
       templateArea: 'leftSideBar',
-      toolGroups: ['DisplayText'],
+      toolGroups: ['OENTools'],
     },
     {
       templateArea: 'commentTrackToolBar',
@@ -119,6 +120,42 @@ export default {
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
+  OENContainersService: [
+    {
+      groupHeader: 'Core Elements',
+      items: [
+        {
+          displayName: 'Section',
+          headingLevel: 2,
+          nestedHeadingLevel: null,
+          className: 'section',
+        },
+        {
+          displayName: 'Section 1',
+          headingLevel: 2,
+          nestedHeadingLevel: null,
+          className: 'section-1',
+        },
+      ],
+    },
+    {
+      groupHeader: 'Core Elements 1',
+      items: [
+        {
+          displayName: 'Section 2-1',
+          headingLevel: 2,
+          nestedHeadingLevel: null,
+          className: 'section',
+        },
+        {
+          displayName: 'Section 2-2',
+          headingLevel: 2,
+          nestedHeadingLevel: null,
+          className: 'section-1',
+        },
+      ],
+    },
+  ],
   SpecialCharactersService: CharactersList,
   SchemaService: EditoriaSchema,
   TitleService: { updateTitle },
@@ -154,6 +191,7 @@ export default {
 
   services: [
     new OENContainersService(),
+    new OENContainersToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
@@ -177,7 +215,7 @@ export default {
     new CodeBlockService(),
     new CodeBlockToolGroupService(),
     new EditingSuggestingService(),
-    new DisplayTextToolGroupService(),
+    // new DisplayTextToolGroupService(),
     new MathService(),
     new FindAndReplaceService(),
     new TrackingAndEditingToolGroupService(),

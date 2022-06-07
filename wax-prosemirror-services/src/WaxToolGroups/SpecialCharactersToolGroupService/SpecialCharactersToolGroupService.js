@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Service from '../../Service';
 import SpecialCharacters from './SpecialCharacters';
 

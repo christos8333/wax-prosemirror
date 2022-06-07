@@ -13,7 +13,7 @@ const Empty = styled.div`
 `;
 
 @injectable()
-class DisplayText extends ToolGroup {
+class OENTools extends ToolGroup {
   tools = [];
   toolGroups = [];
 
@@ -71,4 +71,4 @@ class DisplayText extends ToolGroup {
   }
 }
 
-export default DisplayText;
+export default OENTools;

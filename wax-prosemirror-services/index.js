@@ -83,3 +83,4 @@ export { default as MultipleChoiceDropDownToolGroupService } from './src/WaxTool
 export { default as EssayToolGroupService } from './src/WaxToolGroups/EssayToolGroupService/EssayToolGroupService';
 export { default as MatchingToolGroupService } from './src/WaxToolGroups/MatchingToolGroupService/MatchingToolGroupService';
 export { default as MultipleDropDownToolGroupService } from './src/WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';
+export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';

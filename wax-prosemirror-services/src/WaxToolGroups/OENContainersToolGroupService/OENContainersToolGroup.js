@@ -6,7 +6,7 @@ import ToolGroup from '../../lib/ToolGroup';
 @injectable()
 class Display extends ToolGroup {
   tools = [];
-  title = (<LeftMenuTitle title="Display" />);
+  title = 'OEN Containers';
 
   constructor(@inject('OENContainersTool') OENContainersTool) {
     super();

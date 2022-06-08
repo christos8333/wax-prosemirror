@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
 import styled from 'styled-components';
 import CustomTagBlockComponent from '../../components/customtag/CustomTagBlockComponent';
+import OENToolGroup from '../../components/OEN/OENToolGroup';
 import BlockElement from './BlockElement';
 import Icon from '../../helpers/Icon';
 
@@ -39,13 +40,25 @@ const BlockElementGroup = ({ groupName, items, view }) => {
 
   return (
     <>
-      {groupName !== 'Custom Block' && (
+      {groupName !== 'Custom Block' && groupName !== 'OEN Containers' && (
         <>
           <GroupName>{groupName}</GroupName>
           <ListWrapper>
             {items &&
               items.map(item => (
                 <BlockElement item={item} key={item.name} view={view} />
+              ))}
+          </ListWrapper>
+        </>
+      )}
+
+      {groupName === 'OEN Containers' && (
+        <>
+          <GroupName>{groupName} </GroupName>
+          <ListWrapper>
+            {items &&
+              items.map(item => (
+                <OENToolGroup item={items[0]} key="oen" view={view} />
               ))}
           </ListWrapper>
         </>

@@ -44,6 +44,7 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
   OENContainersService,
+  OENLeftToolGroupService,
   OENContainersToolGroupService,
 } from 'wax-prosemirror-services';
 
@@ -190,8 +191,9 @@ export default {
   },
 
   services: [
-    new OENContainersService(),
     new OENContainersToolGroupService(),
+    new OENContainersService(),
+    new OENLeftToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

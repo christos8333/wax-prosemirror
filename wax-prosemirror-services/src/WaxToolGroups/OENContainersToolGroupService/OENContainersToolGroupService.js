@@ -1,9 +1,9 @@
 import Service from '../../Service';
-import OENTools from './OENTools';
+import OENContainersToolGroup from './OENContainersToolGroup';
 
 class OENContainersToolGroupService extends Service {
   register() {
-    this.container.bind('OENTools').to(OENTools);
+    this.container.bind('OENContainersToolGroup').to(OENContainersToolGroup);
   }
 }
 

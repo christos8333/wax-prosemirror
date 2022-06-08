@@ -25,7 +25,12 @@ export default class OENContainersTool extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
+    console.log('hereeee?', this.toJSON());
     // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? <span>tool</span> : null;
+    return this._isDisplayed ? (
+      <span item={this.toJSON()} view={view}>
+        tool
+      </span>
+    ) : null;
   }
 }

@@ -18,6 +18,7 @@ class OENTools extends ToolGroup {
   toolGroups = [];
 
   constructor(
+    @inject('OENContainersToolGroup') OENContainersToolGroup,
     @inject('Display') display,
     @inject('Text') text,
     @inject('CustomTagBlockToolGroup') blockTag,
@@ -26,14 +27,13 @@ class OENTools extends ToolGroup {
     this.toolGroups = [
       {
         name: 'TabA',
-        groups: [display, text, blockTag],
+        groups: [OENContainersToolGroup, display, text, blockTag],
       },
     ];
   }
 
   renderTools(view) {
     if (isEmpty(view)) return null;
-
     const first = {
       id: '1',
       title: 'block level tools',

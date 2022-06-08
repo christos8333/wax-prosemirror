@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
-import { BlockLevelTools, Tabs } from 'wax-prosemirror-components';
+import { OENBlockLevelTools, Tabs } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,13 +34,14 @@ class OENTools extends ToolGroup {
 
   renderTools(view) {
     if (isEmpty(view)) return null;
+    console.log(this._toolGroups[0]);
     const first = {
       id: '1',
       title: 'block level tools',
       icon: 'title',
       disabled: false,
       component: (
-        <BlockLevelTools
+        <OENBlockLevelTools
           groups={this._toolGroups[0].groups.map(group => ({
             groupName:
               group.title === 'Custom Block'

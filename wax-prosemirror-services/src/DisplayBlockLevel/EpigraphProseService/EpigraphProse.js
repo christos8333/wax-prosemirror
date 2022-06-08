@@ -44,7 +44,7 @@ export default class EpigraphProse extends Tools {
     if (isEmpty(view)) return null;
     // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <LeftSideButton item={this.toJSON()} key="BlockQuote" view={view} />
+      <LeftSideButton item={this.toJSON()} key="epigraphProse" view={view} />
     ) : null;
   }
 }

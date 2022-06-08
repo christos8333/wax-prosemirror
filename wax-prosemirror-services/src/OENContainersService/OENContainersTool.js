@@ -1,6 +1,7 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
+import { LeftSideButton } from 'wax-prosemirror-components';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -28,9 +29,7 @@ export default class OENContainersTool extends Tools {
     console.log('hereeee?', this.toJSON());
     // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <span item={this.toJSON()} view={view}>
-        tool
-      </span>
+      <LeftSideButton item={this.toJSON()} key="epigraphProse" view={view} />
     ) : null;
   }
 }

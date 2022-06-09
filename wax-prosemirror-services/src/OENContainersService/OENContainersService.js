@@ -11,7 +11,6 @@ class OENContainersService extends Service {
     const createNode = this.container.get('CreateNode');
 
     Object.keys(OenNodes).forEach(node => {
-      console.log(node);
       createNode({
         [node]: OenNodes[node],
       });

@@ -34,7 +34,6 @@ const StyledButton = styled(MenuButton)`
 `;
 
 const OENToolGroup = ({ item }) => {
-  console.log(item);
   const {
     app,
     pmViews: { main },
@@ -50,7 +49,8 @@ const OENToolGroup = ({ item }) => {
   if (!isEditable) isDisabled = true;
 
   const OENToolsConfig = app.config.get('config.OENContainersService');
-  console.log(OENToolsConfig);
+
+  const containersActive = item.active(main.state, OENToolsConfig);
 
   return useMemo(
     () => (
@@ -63,8 +63,8 @@ const OENToolGroup = ({ item }) => {
                 <OENToolWrapper key={uuidv4()}>
                   <Box key={uuidv4()} />
                   <StyledButton
-                    active={false}
-                    disabled={false}
+                    active={containersActive[tool.className] || false}
+                    disabled={isDisabled}
                     key={uuidv4()}
                     label={tool.displayName}
                     onMouseDown={() => {
@@ -86,7 +86,7 @@ const OENToolGroup = ({ item }) => {
         })}
       </>
     ),
-    [],
+    [isDisabled, containersActive],
   );
 };
 

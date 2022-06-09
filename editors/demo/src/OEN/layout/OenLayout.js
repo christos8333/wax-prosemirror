@@ -81,7 +81,7 @@ const SideMenu = styled.div`
   background: ${th('colorBackgroundToolBar')}
   border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   min-width: 250px;
-  height: calc(100% - 16px);
+  height: calc(100% - 32px);
 `;
 
 const EditorArea = styled.div`

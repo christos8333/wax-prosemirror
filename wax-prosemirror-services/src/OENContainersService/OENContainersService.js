@@ -7,7 +7,6 @@ class OENContainersService extends Service {
   name = 'OENContainersService';
 
   register() {
-    console.log(this.config);
     this.container.bind('OENContainersTool').to(OENContainersTool);
     const createNode = this.container.get('CreateNode');
 

@@ -53,15 +53,7 @@ const BlockElementGroup = ({ groupName, items, view }) => {
       )}
 
       {groupName === 'OEN Containers' && (
-        <>
-          <GroupName>{groupName} </GroupName>
-          <ListWrapper>
-            {items &&
-              items.map(item => (
-                <OENToolGroup item={items[0]} key="oen" view={view} />
-              ))}
-          </ListWrapper>
-        </>
+        <OENToolGroup item={items[0]} key="oen" view={view} />
       )}
 
       {groupName === 'Custom Block' && (

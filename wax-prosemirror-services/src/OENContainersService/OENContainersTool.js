@@ -5,7 +5,7 @@ import Tools from '../lib/Tools';
 export default class OENContainersTool extends Tools {
   title = '';
   icon = '';
-  name = '';
+  name = 'OENContainersTool';
 
   get run() {
     return () => true;

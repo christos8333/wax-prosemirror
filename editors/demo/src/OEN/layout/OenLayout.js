@@ -47,7 +47,7 @@ const Wrapper = styled.div`
 const Main = styled.div`
   display: flex;
   flex-grow: 1;
-  height: 100%;
+  height: calc(100% - 40px);
 `;
 
 const TopMenu = styled.div`
@@ -92,7 +92,7 @@ const WaxSurfaceScroll = styled.div`
   overflow-y: auto;
   display: flex;
   box-sizing: border-box;
-  height: 100%;
+  height: calc(100% - 32px);
   width: 100%;
   position: absolute;
   /* PM styles  for main content*/

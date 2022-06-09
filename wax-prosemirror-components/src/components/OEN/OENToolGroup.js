@@ -68,7 +68,14 @@ const OENToolGroup = ({ item }) => {
                     key={uuidv4()}
                     label={tool.displayName}
                     onMouseDown={() => {
-                      item.run(activeView.state, activeView.dispatch);
+                      item.run(
+                        activeView.state,
+                        activeView.dispatch,
+                        tool.className,
+                      );
+                      setTimeout(() => {
+                        main.focus();
+                      });
                     }}
                     title={tool.displayName}
                   />

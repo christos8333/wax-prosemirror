@@ -126,16 +126,22 @@ export default {
       groupHeader: 'Core Elements',
       items: [
         {
+          displayName: 'Learning Objectives',
+          headingLevel: 2,
+          nestedHeadingLevel: null,
+          className: 'learning-objectives',
+        },
+        {
           displayName: 'Section',
           headingLevel: 2,
           nestedHeadingLevel: null,
           className: 'section',
         },
         {
-          displayName: 'Section 1',
+          displayName: 'outline',
           headingLevel: 2,
           nestedHeadingLevel: null,
-          className: 'section-1',
+          className: 'outline',
         },
       ],
     },
@@ -143,16 +149,16 @@ export default {
       groupHeader: 'Core Elements 1',
       items: [
         {
-          displayName: 'Section 2-1',
+          displayName: 'Key Terms',
           headingLevel: 2,
           nestedHeadingLevel: null,
-          className: 'section',
+          className: 'key-terms',
         },
         {
-          displayName: 'Section 2-2',
+          displayName: 'Summary',
           headingLevel: 2,
           nestedHeadingLevel: null,
-          className: 'section-1',
+          className: 'summary',
         },
       ],
     },

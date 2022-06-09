@@ -45,8 +45,8 @@ div[data-type="content_structure_element"]::before {
     content: 'Outline Section';
 }
 
-.objectives::before {
-content: 'Objectives Section';
+.learning-objectives::before {
+content: 'Learning Objectives Section';
 }
 
 .focus-questions::before {

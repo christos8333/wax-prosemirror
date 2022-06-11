@@ -27,7 +27,7 @@ export default class OENContainersTool extends Tools {
   get active() {
     return (state, OENToolsConfig) => {
       const { from, to } = state.selection;
-      const a = {};
+      const tools = {};
       state.doc.nodesBetween(from, to, (node, pos) => {
         if (
           node.type.name === 'oen_container' ||
@@ -36,13 +36,13 @@ export default class OENContainersTool extends Tools {
           OENToolsConfig.forEach(groupTool => {
             groupTool.items.forEach(tool => {
               if (tool.className === node.attrs.class) {
-                a[tool.className] = true;
+                tools[tool.className] = true;
               }
             });
           });
         }
       });
-      return a;
+      return tools;
     };
   }
 }

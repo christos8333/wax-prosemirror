@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { wrapIn } from 'prosemirror-commands';
 import { v4 as uuidv4 } from 'uuid';
-import { liftTarget, findWrapping } from 'prosemirror-transform';
+import { liftTarget } from 'prosemirror-transform';
 import MenuButton from '../../ui/buttons/MenuButton';
 
 const activeStyles = css`
@@ -18,6 +18,7 @@ const GroupName = styled.div`
 
 const OENToolWrapper = styled.div`
   display: flex;
+  margin-bottom: 4px;
 `;
 
 const Box = styled.div`
@@ -32,6 +33,12 @@ const Box = styled.div`
 `;
 
 const StyledButton = styled(MenuButton)`
+  border-radius: 4px;
+  left: -33px;
+  margin-left: 4px;
+  padding-left: 25px;
+  position: relative;
+
   ${props => props.active && activeStyles}
 `;
 

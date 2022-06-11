@@ -11,14 +11,14 @@ div[data-type="content_structure_element"]::before {
     display: block;
 }
 
-.section {
+section {
     position: relative;
     padding: 10px 10px 0 10px;
     margin-top: 20px;
     border: 3px solid #E2EBFF;
 }
 
-.section::before {
+section::before {
     content: 'Section';
     color: #c7d8fc;
     font-weight: bold;
@@ -29,11 +29,11 @@ div[data-type="content_structure_element"]::before {
     left: -3px;
 }
 
-.ProseMirror>section.section:nth-of-type(1) {
+.ProseMirror>section:nth-of-type(1) {
   margin-top: 0px;
 }
 
-.section>div:nth-of-type(1) {
+section>div:nth-of-type(1) {
     padding-top: 0;
 }
 
@@ -71,10 +71,6 @@ content: 'Learning Objectives Section';
 
 .references::before {
     content: 'References Section';
-}
-
-.main-content::before {
-    content: 'Main Content Section';
 }
 
 .bibliography::before {

@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { wrapIn } from 'prosemirror-commands';
-import { Commands } from 'wax-prosemirror-utilities';
+import { NodeSelection } from 'prosemirror-state';
+import { Mapping, RemoveMarkStep, ReplaceStep } from 'prosemirror-transform';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -11,27 +12,50 @@ export default class OENContainersTool extends Tools {
 
   get run() {
     return (state, dispatch, className) => {
-      console.log(state.selection);
-      const node = className === 'section' ? 'oen_section' : 'oen_container';
+      const { from, to } = state.selection;
+      let isInOenContainer = false;
+      let OENContainer = '';
+      let position = 0;
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.type.name === 'oen_container') {
+          isInOenContainer = true;
+          OENContainer = node;
+          position = pos;
+          console.log(pos);
+        }
+      });
 
-      wrapIn(state.config.schema.nodes[node], { class: className })(
-        state,
-        dispatch,
-      );
+      if (isInOenContainer) {
+        const map = new Mapping();
+        const newNode = JSON.parse(JSON.stringify(OENContainer));
+        OENContainer.attrs.class = className;
+        console.log('replace', OENContainer);
+        newNode.attrs = {
+          ...newNode.attrs,
+          class: className,
+        };
+        console.log(newNode);
+        state.tr.setSelection(NodeSelection.create(state.doc, position));
+        state.tr.replaceSelectionWith(OENContainer);
+        // state.tr.setNodeMarkup(map.map(position), null, {
+        //   ...OENContainer.attrs,
+        //   class: className,
+        // });
+        dispatch(state.tr);
+      } else {
+        const node = className === 'section' ? 'oen_section' : 'oen_container';
 
-      console.log(className);
+        wrapIn(state.config.schema.nodes[node], { class: className })(
+          state,
+          dispatch,
+        );
+      }
     };
   }
 
   select = (state, activeViewId) => {
-    const { from, to } = state.selection;
-    let status = true;
-    state.doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'oen_container') {
-        status = false;
-      }
-    });
-    return status;
+    if (activeViewId !== 'main') return false;
+    return true;
   };
 
   get enable() {

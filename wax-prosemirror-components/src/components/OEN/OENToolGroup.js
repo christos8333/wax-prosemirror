@@ -73,9 +73,9 @@ const OENToolGroup = ({ item }) => {
                         activeView.dispatch,
                         tool.className,
                       );
-                      setTimeout(() => {
-                        main.focus();
-                      });
+                      // setTimeout(() => {
+                      //   main.focus();
+                      // });
                     }}
                     title={tool.displayName}
                   />

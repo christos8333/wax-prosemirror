@@ -10,38 +10,7 @@ export default class OENContainersTool extends Tools {
   name = 'OENContainersTool';
 
   get run() {
-    return (state, dispatch, className) => {
-      const { from, to } = state.selection;
-      let isInOenContainer = false;
-
-      state.doc.nodesBetween(from, to, (node, pos) => {
-        if (node.type.name === 'oen_container') {
-          isInOenContainer = true;
-        }
-      });
-
-      if (isInOenContainer) {
-        const { $from, $to } = state.selection;
-        const range = $from.blockRange($to);
-        const target = range && liftTarget(range);
-        if (target == null) return false;
-        dispatch(state.tr.lift(range, target));
-        // const wrapping =
-        //   range &&
-        //   findWrapping(range, state.config.schema.nodes.oen_container, {
-        //     class: className,
-        //   });
-        // if (!wrapping) return false;
-        // if (dispatch) dispatch(state.tr.wrap(range, wrapping).scrollIntoView());
-      } else {
-        const node = className === 'section' ? 'oen_section' : 'oen_container';
-
-        wrapIn(state.config.schema.nodes[node], { class: className })(
-          state,
-          dispatch,
-        );
-      }
-    };
+    return (state, dispatch, className) => {};
   }
 
   select = (state, activeViewId) => {

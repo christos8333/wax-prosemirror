@@ -44,9 +44,9 @@ const Oen = () => {
       value={val}
       // readonly
       layout={OenLayout}
-      onChange={debounce(source => {
-        console.log(JSON.stringify(source));
-      }, 200)}
+      // onChange={debounce(source => {
+      //   console.log(JSON.stringify(source));
+      // }, 200)}
       user={user}
     />
   );

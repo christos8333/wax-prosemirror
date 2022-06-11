@@ -1,7 +1,9 @@
 import React, { useContext, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
+import { wrapIn } from 'prosemirror-commands';
 import { v4 as uuidv4 } from 'uuid';
+import { liftTarget, findWrapping } from 'prosemirror-transform';
 import MenuButton from '../../ui/buttons/MenuButton';
 
 const activeStyles = css`
@@ -68,14 +70,55 @@ const OENToolGroup = ({ item }) => {
                     key={uuidv4()}
                     label={tool.displayName}
                     onMouseDown={() => {
-                      item.run(
-                        activeView.state,
-                        activeView.dispatch,
-                        tool.className,
-                      );
-                      // setTimeout(() => {
-                      //   main.focus();
-                      // });
+                      const { from, to } = main.state.selection;
+                      let isInOenContainer = false;
+
+                      main.state.doc.nodesBetween(from, to, (node, pos) => {
+                        if (node.type.name === 'oen_container') {
+                          isInOenContainer = true;
+                        }
+                      });
+
+                      if (isInOenContainer) {
+                        const range = main.state.selection.$from.blockRange(
+                          main.state.selection.$to,
+                        );
+                        const target = range && liftTarget(range);
+                        if (target == null) return false;
+                        main.dispatch(main.state.tr.lift(range, target));
+
+                        const newRange = main.state.selection.$from.blockRange(
+                          main.state.selection.$to,
+                        );
+                        const wrapping =
+                          newRange &&
+                          findWrapping(
+                            newRange,
+                            state.config.schema.nodes.oen_container,
+                            {
+                              class: tool.className,
+                            },
+                          );
+                        if (!wrapping) return false;
+                        main.dispatch(
+                          main.state.tr
+                            .wrap(newRange, wrapping)
+                            .scrollIntoView(),
+                        );
+                      } else {
+                        const node =
+                          tool.className === 'section'
+                            ? 'oen_section'
+                            : 'oen_container';
+
+                        wrapIn(main.state.config.schema.nodes[node], {
+                          class: tool.className,
+                        })(main.state, main.dispatch);
+                      }
+
+                      setTimeout(() => {
+                        main.focus();
+                      });
                     }}
                     title={tool.displayName}
                   />

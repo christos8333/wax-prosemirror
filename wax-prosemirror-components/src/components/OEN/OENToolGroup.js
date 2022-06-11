@@ -86,35 +86,15 @@ const OENToolGroup = ({ item }) => {
                         const target = range && liftTarget(range);
                         if (target == null) return false;
                         main.dispatch(main.state.tr.lift(range, target));
-
-                        const newRange = main.state.selection.$from.blockRange(
-                          main.state.selection.$to,
-                        );
-                        const wrapping =
-                          newRange &&
-                          findWrapping(
-                            newRange,
-                            state.config.schema.nodes.oen_container,
-                            {
-                              class: tool.className,
-                            },
-                          );
-                        if (!wrapping) return false;
-                        main.dispatch(
-                          main.state.tr
-                            .wrap(newRange, wrapping)
-                            .scrollIntoView(),
-                        );
-                      } else {
-                        const node =
-                          tool.className === 'section'
-                            ? 'oen_section'
-                            : 'oen_container';
-
-                        wrapIn(main.state.config.schema.nodes[node], {
-                          class: tool.className,
-                        })(main.state, main.dispatch);
                       }
+                      const node =
+                        tool.className === 'section'
+                          ? 'oen_section'
+                          : 'oen_container';
+
+                      wrapIn(main.state.config.schema.nodes[node], {
+                        class: tool.className,
+                      })(main.state, main.dispatch);
 
                       setTimeout(() => {
                         main.focus();

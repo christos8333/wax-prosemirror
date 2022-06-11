@@ -121,6 +121,7 @@ export default {
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
+
   OENContainersService: [
     {
       groupHeader: 'Core Elements',
@@ -139,7 +140,7 @@ export default {
         },
         {
           displayName: 'outline',
-          headingLevel: 2,
+          headingLevel: 3,
           nestedHeadingLevel: null,
           className: 'outline',
         },

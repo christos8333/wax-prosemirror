@@ -4,6 +4,7 @@ import { injectable } from 'inversify';
 import { TitleButton } from 'wax-prosemirror-components';
 import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
+import checkLevelFromConfig from '../HeadingService/checkLevelFromConfig';
 
 @injectable()
 export default class Title extends Tools {
@@ -30,6 +31,15 @@ export default class Title extends Tools {
     const {
       selection: { $from, $to },
     } = state;
+
+    if (this.config) {
+      const allowedLevel = checkLevelFromConfig(
+        state,
+        activeViewId,
+        this.config,
+      );
+      if (allowedLevel > 1) return false;
+    }
 
     const titleCounter = DocumentHelpers.findChildrenByType(
       state.doc,

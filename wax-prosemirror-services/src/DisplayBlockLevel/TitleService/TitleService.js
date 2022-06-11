@@ -3,10 +3,10 @@ import Service from '../../Service';
 import Title from './Title';
 
 class TitleService extends Service {
-  name = 'TitleService';
-
   register() {
-    this.container.bind('Title').to(Title);
+    this.container.bind('Title').toDynamicValue(() => {
+      return new Title(this.config.get('config.OENContainersService'));
+    });
     const createNode = this.container.get('CreateNode');
     createNode(
       {

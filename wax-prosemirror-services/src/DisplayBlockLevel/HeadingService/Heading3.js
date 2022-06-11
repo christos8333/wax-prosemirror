@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import { LeftSideButton } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
 import Tools from '../../lib/Tools';
+import checkLevelFromConfig from './checkLevelFromConfig';
 
 @injectable()
 export default class Heading3 extends Tools {
@@ -37,6 +38,15 @@ export default class Heading3 extends Tools {
 
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
+    if (this.config) {
+      const allowedLevel = checkLevelFromConfig(
+        state,
+        activeViewId,
+        this.config,
+      );
+      if (allowedLevel > 3) return false;
+    }
+
     return true;
   };
 

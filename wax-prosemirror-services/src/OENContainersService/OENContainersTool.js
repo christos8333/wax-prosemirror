@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import { wrapIn } from 'prosemirror-commands';
-import { NodeSelection } from 'prosemirror-state';
-import { Mapping, RemoveMarkStep, ReplaceStep } from 'prosemirror-transform';
+import { liftTarget, findWrapping } from 'prosemirror-transform';
 import Tools from '../lib/Tools';
 
 @injectable()
@@ -14,34 +13,26 @@ export default class OENContainersTool extends Tools {
     return (state, dispatch, className) => {
       const { from, to } = state.selection;
       let isInOenContainer = false;
-      let OENContainer = '';
-      let position = 0;
+
       state.doc.nodesBetween(from, to, (node, pos) => {
         if (node.type.name === 'oen_container') {
           isInOenContainer = true;
-          OENContainer = node;
-          position = pos;
-          console.log(pos);
         }
       });
 
       if (isInOenContainer) {
-        const map = new Mapping();
-        const newNode = JSON.parse(JSON.stringify(OENContainer));
-        OENContainer.attrs.class = className;
-        console.log('replace', OENContainer);
-        newNode.attrs = {
-          ...newNode.attrs,
-          class: className,
-        };
-        console.log(newNode);
-        state.tr.setSelection(NodeSelection.create(state.doc, position));
-        state.tr.replaceSelectionWith(OENContainer);
-        // state.tr.setNodeMarkup(map.map(position), null, {
-        //   ...OENContainer.attrs,
-        //   class: className,
-        // });
-        dispatch(state.tr);
+        const { $from, $to } = state.selection;
+        const range = $from.blockRange($to);
+        const target = range && liftTarget(range);
+        if (target == null) return false;
+        dispatch(state.tr.lift(range, target));
+        // const wrapping =
+        //   range &&
+        //   findWrapping(range, state.config.schema.nodes.oen_container, {
+        //     class: className,
+        //   });
+        // if (!wrapping) return false;
+        // if (dispatch) dispatch(state.tr.wrap(range, wrapping).scrollIntoView());
       } else {
         const node = className === 'section' ? 'oen_section' : 'oen_container';
 

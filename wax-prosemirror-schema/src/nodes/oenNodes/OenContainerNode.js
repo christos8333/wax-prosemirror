@@ -12,7 +12,7 @@ const OenContainerNode = {
       getAttrs(dom) {
         return {
           class: dom.getAttribute('class'),
-          type: dom.dataset.group,
+          type: dom.dataset.type,
         };
       },
     },

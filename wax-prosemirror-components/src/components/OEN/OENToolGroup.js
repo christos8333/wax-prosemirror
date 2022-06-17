@@ -94,10 +94,9 @@ const OENToolGroup = ({ item }) => {
                         if (target == null) return false;
                         main.dispatch(main.state.tr.lift(range, target));
                       }
-                      const node =
-                        tool.className === 'section'
-                          ? 'oen_section'
-                          : 'oen_container';
+                      const node = tool.isSection
+                        ? 'oen_section'
+                        : 'oen_container';
 
                       wrapIn(main.state.config.schema.nodes[node], {
                         class: tool.className,

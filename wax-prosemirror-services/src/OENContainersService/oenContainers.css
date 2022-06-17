@@ -11,14 +11,14 @@ div[data-type="content_structure_element"]::before {
     display: block;
 }
 
-section {
+.ProseMirror section {
     position: relative;
     padding: 10px 10px 0 10px;
     margin-top: 20px;
     border: 3px solid #E2EBFF;
 }
 
-section::before {
+.ProseMirror section::before {
     content: 'Section';
     color: #c7d8fc;
     font-weight: bold;
@@ -29,13 +29,13 @@ section::before {
     left: -3px;
 }
 
-.ProseMirror>section:nth-of-type(1) {
+/* .ProseMirror>section:nth-of-type(1) {
   margin-top: 0px;
 }
 
-section>div:nth-of-type(1) {
+.ProseMirror section>div:nth-of-type(1) {
     padding-top: 0;
-}
+} */
 
 .introduction::before {
     content: 'Introduction Section';

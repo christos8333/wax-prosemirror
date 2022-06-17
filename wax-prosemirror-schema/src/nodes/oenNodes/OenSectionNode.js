@@ -7,7 +7,7 @@ const OenSectionNode = {
   defining: true,
   parseDOM: [
     {
-      tag: 'section.section',
+      tag: 'section',
       getAttrs(dom) {
         return {
           class: dom.getAttribute('class'),

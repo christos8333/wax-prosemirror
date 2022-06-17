@@ -2,6 +2,7 @@
 import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import styled, { css } from 'styled-components';
+import { th, override } from '@pubsweet/ui-toolkit';
 import MenuButton from '../../ui/buttons/MenuButton';
 
 const activeStyles = css`
@@ -32,9 +33,11 @@ const LeftSideButton = ({ view = {}, item }) => {
     run(editorState, dispatch);
   };
 
-  const isActive = !!(
-    active(state, activeViewId) && select(state, activeViewId)
-  );
+  // const isActive = !!(
+  //   active(state, activeViewId) && select(state, activeViewId)
+  // );
+
+  const isActive = !!active(state, activeViewId);
 
   let isDisabled = !select(state, activeViewId, activeView);
   if (!isEditable) isDisabled = true;

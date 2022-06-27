@@ -19,6 +19,8 @@ class OENTools extends ToolGroup {
 
   constructor(
     @inject('OENContainersToolGroup') OENContainersToolGroup,
+    @inject('OENAsideShortToolGroup') OENAsideShortToolGroup,
+    @inject('OENAsideLongToolGroup') OENAsideLongToolGroup,
     @inject('Display') display,
     @inject('Text') text,
     @inject('CustomTagBlockToolGroup') blockTag,
@@ -27,7 +29,14 @@ class OENTools extends ToolGroup {
     this.toolGroups = [
       {
         name: 'TabA',
-        groups: [OENContainersToolGroup, display, text, blockTag],
+        groups: [
+          OENContainersToolGroup,
+          OENAsideShortToolGroup,
+          OENAsideLongToolGroup,
+          display,
+          text,
+          blockTag,
+        ],
       },
     ];
   }

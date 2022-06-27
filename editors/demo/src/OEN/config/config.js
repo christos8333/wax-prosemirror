@@ -46,6 +46,7 @@ import {
   OENContainersService,
   OENLeftToolGroupService,
   OENContainersToolGroupService,
+  OENAsideToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-utilities';

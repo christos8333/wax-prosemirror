@@ -1,6 +1,4 @@
 import { injectable } from 'inversify';
-import { wrapIn } from 'prosemirror-commands';
-import { liftTarget, findWrapping } from 'prosemirror-transform';
 import Tools from '../lib/Tools';
 
 @injectable()

@@ -8,9 +8,9 @@ class OENAsideLongToolGroup extends ToolGroup {
   tools = [];
   title = (<LeftMenuTitle title="Long Boxes" />);
 
-  constructor(@inject('OENAsideTool') OENAsideTool) {
+  constructor(@inject('OENAsideLongTool') OENAsideLongTool) {
     super();
-    this.tools = [OENAsideTool];
+    this.tools = [OENAsideLongTool];
   }
 }
 

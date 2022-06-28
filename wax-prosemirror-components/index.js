@@ -34,3 +34,4 @@ export { default as CustomTagInlineOverlayComponent } from './src/components/cus
 export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';
 export { default as SaveButton } from './src/components/SaveButton';
 export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyles';
+export { default as OENAsideButton } from './src/components/OEN/OENAsideButton';

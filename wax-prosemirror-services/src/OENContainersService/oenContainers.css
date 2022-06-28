@@ -1,10 +1,11 @@
-div[data-type="content_structure_element"] {
+div[data-type="content_structure_element"], 
+aside {
     border-left: 3px solid #f5f5f7;
     padding: 10px 10px 0 10px;
     
 }
 
-div[data-type="content_structure_element"]::before {
+div[data-type="content_structure_element"]::before, aside::before {
     border: 3px solid #f5f5f7;
     background-color: #f5f5f7;
     width: 100%;
@@ -13,6 +14,7 @@ div[data-type="content_structure_element"]::before {
 
 .ProseMirror section {
     position: relative;
+    display: block;
     padding: 10px 10px 0 10px;
     margin-top: 20px;
     border: 3px solid #E2EBFF;
@@ -21,9 +23,9 @@ div[data-type="content_structure_element"]::before {
 .ProseMirror section::before {
     content: 'Section';
     color: #c7d8fc;
+    height: 15px;
     font-weight: bold;
     position: absolute;
-    display: inline-block;
     bottom: 0;
     top: -25px;
     left: -3px;
@@ -83,4 +85,32 @@ content: 'Learning Objectives Section';
 
 .content-opener-image::before {
     content: 'Content Opener Image Section';
+}
+
+.note::before {
+    content: 'Note(short)';
+}
+
+.tip::before {
+    content: 'Tip(short)';
+}
+
+.warning::before {
+    content: 'Warning(short)';
+}
+
+.reminder::before {
+    content: 'Reminder(short)';
+}
+
+.case-study::before {
+    content: 'Case Study(long)';
+}
+
+.biography::before {
+    content: 'Biography(long)';
+}
+
+.worked-example::before {
+    content: 'Worked Example(long)';
 }

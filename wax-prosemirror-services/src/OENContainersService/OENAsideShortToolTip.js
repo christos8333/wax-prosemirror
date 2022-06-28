@@ -26,6 +26,19 @@ export default class OENAsideShortToolTip extends Tools {
     };
   }
 
+  get active() {
+    return state => {
+      const { from, to } = state.selection;
+      let active = false;
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.type.name === 'oen_aside') {
+          if (node.attrs.class.includes('tip')) active = true;
+        }
+      });
+      return active;
+    };
+  }
+
   renderTool(view) {
     if (isEmpty(view)) return null;
 

@@ -27,7 +27,16 @@ export default class OENAsideShortToolNote extends Tools {
   }
 
   get active() {
-    return (state, OENToolsConfig) => {};
+    return state => {
+      const { from, to } = state.selection;
+      let active = false;
+      state.doc.nodesBetween(from, to, (node, pos) => {
+        if (node.type.name === 'oen_aside') {
+          if (node.attrs.class.includes('note')) active = true;
+        }
+      });
+      return active;
+    };
   }
 
   renderTool(view) {

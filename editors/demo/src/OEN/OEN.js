@@ -25,7 +25,7 @@ const user = {
   username: 'admin',
 };
 
-const val = `<h3>33333</h3><aside class="tip"><p>hohoh</p></aside><section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
+const val = `<h3>33333</h3>><section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
               <div class="outline" data-type="content_structure_element"><p>outline</p></div></section>
               <section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
               <div class="outline" data-type="content_structure_element"><p>outline</p></div></section>`;

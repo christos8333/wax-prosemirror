@@ -8,9 +8,19 @@ class OENAsideShortToolGroup extends ToolGroup {
   tools = [];
   title = (<LeftMenuTitle title="Short Boxes" />);
 
-  constructor(@inject('OENAsideShortTool') OENAsideShortTool) {
+  constructor(
+    @inject('OENAsideShortToolNote') OENAsideShortToolNote,
+    @inject('OENAsideShortToolTip') OENAsideShortToolTip,
+    @inject('OENAsideShortToolWarning') OENAsideShortToolWarning,
+    @inject('OENAsideShortToolReminder') OENAsideShortToolReminder,
+  ) {
     super();
-    this.tools = [OENAsideShortTool];
+    this.tools = [
+      OENAsideShortToolNote,
+      OENAsideShortToolTip,
+      OENAsideShortToolWarning,
+      OENAsideShortToolReminder,
+    ];
   }
 }
 

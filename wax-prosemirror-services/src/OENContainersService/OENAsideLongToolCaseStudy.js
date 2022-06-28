@@ -2,10 +2,10 @@ import { injectable } from 'inversify';
 import Tools from '../lib/Tools';
 
 @injectable()
-export default class OENAsideShortTool extends Tools {
-  title = '';
-  icon = '';
-  name = 'OENAsideShortTool';
+export default class OENAsideLongToolCaseStudy extends Tools {
+  title = 'long';
+  label = 'Case Study';
+  name = 'OENAsideLongToolCaseStudy';
 
   get run() {
     return (state, dispatch, className) => {};

@@ -43,6 +43,7 @@ class OENTools extends ToolGroup {
 
   renderTools(view) {
     if (isEmpty(view)) return null;
+    console.log(this._toolGroups[0]);
     const first = {
       id: '1',
       title: 'block level tools',

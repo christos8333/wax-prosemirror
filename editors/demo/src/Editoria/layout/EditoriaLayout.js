@@ -47,7 +47,7 @@ const Wrapper = styled.div`
 const Main = styled.div`
   display: flex;
   flex-grow: 1;
-  height: calc(100% - 40px);
+  height: 100%;
 `;
 
 const TopMenu = styled.div`

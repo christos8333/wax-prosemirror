@@ -8,6 +8,7 @@ import OENAsideShortToolNote from './OENAsideShortToolNote';
 import OENAsideShortToolTip from './OENAsideShortToolTip';
 import OENAsideShortToolWarning from './OENAsideShortToolWarning';
 import OENAsideShortToolReminder from './OENAsideShortToolReminder';
+import PopulateHeadingsComponent from './PopulateHeadingsComponent';
 import './oenContainers.css';
 
 class OENContainersService extends Service {
@@ -43,6 +44,19 @@ class OENContainersService extends Service {
         [node]: OenNodes[node],
       });
     });
+
+    const createOverlay = this.container.get('CreateOverlay');
+
+    createOverlay(
+      PopulateHeadingsComponent,
+      {},
+      {
+        nodeType: 'oen_container',
+        markType: '',
+        followCursor: false,
+        selection: false,
+      },
+    );
   }
 }
 

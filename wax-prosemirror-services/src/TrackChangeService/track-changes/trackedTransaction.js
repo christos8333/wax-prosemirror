@@ -56,7 +56,7 @@ const trackedTransaction = (
   const map = new Mapping();
   const date = Math.floor(Date.now());
 
-  tr.steps.forEach(originalStep => {
+  tr.steps.forEach((originalStep, originalStepIndex) => {
     const step = originalStep.map(map);
     const { doc } = newTr;
     if (!step) return;
@@ -74,6 +74,8 @@ const trackedTransaction = (
           date,
           group,
           viewId,
+          originalStep,
+          originalStepIndex,
         );
         break;
       case ReplaceAroundStep:
@@ -88,6 +90,8 @@ const trackedTransaction = (
           date,
           group,
           viewId,
+          originalStep,
+          originalStepIndex,
         );
         break;
       case AddMarkStep:

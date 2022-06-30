@@ -14,6 +14,8 @@ const replaceAroundStep = (
   date,
   group,
   viewId,
+  originalStep,
+  originalStepIndex,
 ) => {
   if (step.from === step.gapFrom && step.to === step.gapTo) {
     // wrapped in something
@@ -21,9 +23,11 @@ const replaceAroundStep = (
     const from = step.getMap().map(step.from, -1);
     const to = step.getMap().map(step.gapFrom);
     markInsertion(newTr, from, to, user, date, group);
-  } else if (!step.slice.size) {
+  } else if (!step.slice.size || step.slice.content.content.length === 2) {
+    const invertStep = originalStep.invert(tr.docs[originalStepIndex]).map(map);
     // unwrapped from something
-    map.appendMap(step.invert(doc).getMap());
+    map.appendMap(invertStep.getMap());
+    // map.appendMap(step.invert(doc).getMap());
     map.appendMap(
       markDeletion(newTr, step.from, step.gapFrom, user, date, group),
     );

@@ -27,9 +27,14 @@ const findMark = (state, PMmark, toArr = false) => {
   return markFound;
 };
 
-const findNode = (state, PMnode) => {
+const findNode = (state, PMnode, parent = true) => {
   let nodeFound;
-  if (state.selection.node && state.selection.node.type.name === PMnode.name) {
+  if (parent) {
+    
+  } else if (
+    state.selection.node &&
+    state.selection.node.type.name === PMnode.name
+  ) {
     nodeFound = {
       from: state.selection.from,
       to: state.selection.to,

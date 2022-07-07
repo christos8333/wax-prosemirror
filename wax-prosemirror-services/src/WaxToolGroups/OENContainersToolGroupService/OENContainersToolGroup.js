@@ -1,10 +1,8 @@
-import React from 'react';
 import { injectable, inject } from 'inversify';
-import { LeftMenuTitle } from 'wax-prosemirror-components';
 import ToolGroup from '../../lib/ToolGroup';
 
 @injectable()
-class Display extends ToolGroup {
+class OENContainersToolGroup extends ToolGroup {
   tools = [];
   title = 'OEN Containers';
 
@@ -14,4 +12,4 @@ class Display extends ToolGroup {
   }
 }
 
-export default Display;
+export default OENContainersToolGroup;

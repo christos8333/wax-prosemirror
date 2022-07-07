@@ -81,7 +81,10 @@ const OENToolGroup = ({ item }) => {
                       let isInOenContainer = false;
 
                       main.state.doc.nodesBetween(from, to, (node, pos) => {
-                        if (node.type.name === 'oen_container') {
+                        if (
+                          node.type.name === 'oen_container' ||
+                          node.type.name === 'oen_aside'
+                        ) {
                           isInOenContainer = true;
                         }
                       });

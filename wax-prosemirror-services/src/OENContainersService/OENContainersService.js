@@ -52,6 +52,7 @@ class OENContainersService extends Service {
       {},
       {
         nodeType: 'oen_container',
+        findInParent: true,
         markType: '',
         followCursor: false,
         selection: false,

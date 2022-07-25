@@ -4,7 +4,6 @@ import { WaxContext } from 'wax-prosemirror-core';
 import { DOMParser } from 'prosemirror-model';
 import { ReplaceStep, ReplaceAroundStep } from 'prosemirror-transform';
 import { Selection } from 'prosemirror-state';
-import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import { Icon } from 'wax-prosemirror-components';
 
@@ -70,14 +69,21 @@ export default ({ setPosition, position }) => {
     setPosition({ ...position, left, top });
   }, [position.left]);
 
-  useEffect(() => {}, []);
-
   const generateHeadings = () => {
     const {
       tr,
       selection: { from, to },
+      doc,
     } = main.state;
     const parser = DOMParser.fromSchema(main.state.config.schema);
+
+    const allSections = [];
+
+    doc.descendants((editorNode, index) => {
+      if (Node.type.name === 'oen_section') {
+        allSections.push(editorNode);
+      }
+    });
 
     const content =
       '<h1>heading when i click note</h1><p>some text when i click note</p>';
@@ -88,6 +94,10 @@ export default ({ setPosition, position }) => {
   };
 
   if (!readOnly) {
-    return <button onClick={generateHeadings}>generate</button>;
+    return (
+      <button onClick={generateHeadings} type="button">
+        generate
+      </button>
+    );
   }
 };

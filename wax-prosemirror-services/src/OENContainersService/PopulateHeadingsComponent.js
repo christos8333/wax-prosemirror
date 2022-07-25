@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useLayoutEffect, useEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DOMParser } from 'prosemirror-model';
 import { ReplaceStep, ReplaceAroundStep } from 'prosemirror-transform';
@@ -7,13 +7,16 @@ import { Selection } from 'prosemirror-state';
 import styled from 'styled-components';
 import { Icon } from 'wax-prosemirror-components';
 
-const IconRemove = styled(Icon)`
+const StyledButton = styled.span`
+  cursor: pointer;
+`;
+
+const StyledIcon = styled(Icon)`
   cursor: pointer;
   position: relative;
-  top: 2px;
-  left: 6px;
-  height: 16px;
-  width: 16px;
+  height: 23px;
+  width: 23px;
+  bottom: 5px;
 `;
 
 const elementFromString = string => {
@@ -80,7 +83,7 @@ export default ({ setPosition, position }) => {
     const allSections = [];
 
     doc.descendants((editorNode, index) => {
-      if (Node.type.name === 'oen_section') {
+      if (editorNode.type.name === 'oen_section') {
         allSections.push(editorNode);
       }
     });
@@ -95,9 +98,9 @@ export default ({ setPosition, position }) => {
 
   if (!readOnly) {
     return (
-      <button onClick={generateHeadings} type="button">
-        generate
-      </button>
+      <StyledButton onClick={generateHeadings} type="button">
+        <StyledIcon name="refresh" />
+      </StyledButton>
     );
   }
 };

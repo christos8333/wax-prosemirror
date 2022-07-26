@@ -78,20 +78,35 @@ export default ({ setPosition, position }) => {
       selection: { from, to },
       doc,
     } = main.state;
-    const parser = DOMParser.fromSchema(main.state.config.schema);
 
-    const allSections = [];
+    const allSectionNodes = [];
 
     doc.descendants((editorNode, index) => {
       if (editorNode.type.name === 'oen_section') {
-        allSections.push(editorNode);
+        allSectionNodes.push(editorNode);
       }
     });
 
-    const content =
-      '<h1>heading when i click note</h1><p>some text when i click note</p>';
+    let sectionNode;
+    let sectionNodePosition;
+
+    main.state.doc.nodesBetween(from, to, (node, pos) => {
+      if (node.type.name === 'oen_container') {
+        sectionNode = node;
+        sectionNodePosition = pos;
+      }
+    });
+
+    let content = '';
+
+    const parser = DOMParser.fromSchema(main.state.config.schema);
     const parsedContent = parser.parse(elementFromString(content));
-    tr.replaceWith(from - 1, to - 1, parsedContent);
+
+    tr.replaceWith(
+      sectionNodePosition + 1,
+      sectionNodePosition + sectionNode.content.size,
+      parsedContent,
+    );
     selectionToInsertionEnd(tr, tr.steps.length - 1, -1);
     main.dispatch(tr);
   };

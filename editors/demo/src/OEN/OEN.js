@@ -26,7 +26,7 @@ const user = {
 };
 
 const val = `<h3>33333</h3><section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
-              <div class="outline" data-type="content_structure_element"><p>outline</p></div></section>
+              <div class="outline" data-type="content_structure_element"><h1>heading when i click note</h1><p>some text when i click note</p></div></section>
               <section class="section"><div class="introduction" data-type="content_structure_element"><p>Intro</p></div>
               <div class="outline" data-type="content_structure_element"><p>outline</p></div></section>`;
 

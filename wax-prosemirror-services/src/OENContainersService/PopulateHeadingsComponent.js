@@ -91,9 +91,9 @@ export default ({ setPosition, position }) => {
     allSectionNodes.forEach((node, index) => {
       node.content.content.forEach(contentNode => {
         if (contentNode.type.name === 'heading2') {
-          sectionHeadings[index] = [contentNode.textContent];
+          sectionHeadings[index] = contentNode.textContent;
         } else if (!sectionHeadings[index]) {
-          sectionHeadings[index] = ['untitled'];
+          sectionHeadings[index] = 'untitled';
         }
       });
     });
@@ -101,14 +101,20 @@ export default ({ setPosition, position }) => {
     let sectionNode;
     let sectionNodePosition;
 
+    let content = `<ul>`;
+
+    Object.keys(sectionHeadings).forEach(index => {
+      content += `<li>${sectionHeadings[index]}</li>`;
+    });
+
+    content += `</ul>`;
+
     main.state.doc.nodesBetween(from, to, (node, pos) => {
       if (node.type.name === 'oen_container') {
         sectionNode = node;
         sectionNodePosition = pos;
       }
     });
-
-    let content = '';
 
     const parser = DOMParser.fromSchema(main.state.config.schema);
     const parsedContent = parser.parse(elementFromString(content));

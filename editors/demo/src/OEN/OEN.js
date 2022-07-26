@@ -25,7 +25,7 @@ const user = {
   username: 'admin',
 };
 
-const val = `<p>first paragraph</p><section class=\"whatever\"><h2>Section 1 heading 2</h2><p class=\"paragraph\">normal text</p></section><section class=\"whatever\"><h2>Section 2 heading 2</h2><p class=\"paragraph\">normal text</p></section><section class=\"whatever\"><p class=\"paragraph\">dfsfsdfs</p><p class=\"paragraph\">normal text</p></section><section class=\"whatever\"><h2>Section 4 heading 2</h2><p class=\"paragraph\">normal text</p></section><p class=\"paragraph\">some text</p><div class=\"outline\" data-type=\"content_structure_element\"><p class=\"paragraph\"></p></div>`;
+const val = `<p>first paragraph</p><section class=\"whatever\"><h2>Section 1 heading 2</h2><p class=\"paragraph\">normal text</p></section><section class=\"whatever\"><h2>Section 2 heading 2</h2><p class=\"paragraph\">normal text</p></section><section class=\"whatever\"><p class=\"paragraph\">some normal text</p><p class=\"paragraph\">more normal text</p></section><section class=\"whatever\"><h2>Section 4 heading 2</h2><p class=\"paragraph\">normal text</p></section><p class=\"paragraph\">some text</p><div class=\"outline\" data-type=\"content_structure_element\"><p class=\"paragraph\"></p></div>`;
 
 const Oen = () => {
   const editorRef = useRef();
@@ -40,9 +40,9 @@ const Oen = () => {
       value={val}
       // readonly
       layout={OenLayout}
-      onChange={debounce(source => {
-        console.log(JSON.stringify(source));
-      }, 200)}
+      // onChange={debounce(source => {
+      //   console.log(JSON.stringify(source));
+      // }, 200)}
       user={user}
     />
   );

@@ -80,11 +80,22 @@ export default ({ setPosition, position }) => {
     } = main.state;
 
     const allSectionNodes = [];
+    const sectionHeadings = {};
 
     doc.descendants((editorNode, index) => {
       if (editorNode.type.name === 'oen_section') {
         allSectionNodes.push(editorNode);
       }
+    });
+
+    allSectionNodes.forEach((node, index) => {
+      node.content.content.forEach(contentNode => {
+        if (contentNode.type.name === 'heading2') {
+          sectionHeadings[index] = [contentNode.textContent];
+        } else if (!sectionHeadings[index]) {
+          sectionHeadings[index] = ['untitled'];
+        }
+      });
     });
 
     let sectionNode;

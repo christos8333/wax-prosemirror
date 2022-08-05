@@ -9,6 +9,7 @@ import CommentBox from '../../ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
+  transition: ${props => (props.active ? `all 1s` : `all 0.5s`)};
   position: absolute;
   width: 200px;
   @media (max-width: 600px) {

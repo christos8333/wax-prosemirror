@@ -21,7 +21,7 @@ export default options => {
   });
 
   let mark = {};
-  let node = {};
+  let node = '';
   /* Sets Default position at the end of the annotation. You
   can overwrite the default position in your component.
   Check: wax-prosemirror-components/src/components/comments/CommentBubbleComponent.js
@@ -53,11 +53,10 @@ export default options => {
   };
 
   const displayOnNode = (focusedView, overlayOptions) => {
-    const { nodeType, followCursor } = overlayOptions;
+    const { nodeType, followCursor, findInParent } = overlayOptions;
     const PMnode = focusedView.state.schema.nodes[nodeType];
 
-    node = DocumentHelpers.findNode(focusedView.state, PMnode);
-
+    node = DocumentHelpers.findNode(focusedView.state, PMnode, findInParent);
     if (!isObject(node)) return defaultOverlay;
     const { from, to } = followCursor ? focusedView.state.selection : node;
 

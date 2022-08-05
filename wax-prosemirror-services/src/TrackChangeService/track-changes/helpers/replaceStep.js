@@ -15,6 +15,8 @@ const replaceStep = (
   date,
   group,
   viewId,
+  originalStep,
+  originalStepIndex,
 ) => {
   const deletionMarkSchema = state.schema.marks.deletion;
   const deletionMark = DocumentHelpers.findMark(
@@ -32,7 +34,9 @@ const replaceStep = (
   );
 
   // We didn't apply the original step in its original place. We adjust the map accordingly.
-  map.appendMap(step.invert(doc).getMap());
+  const invertStep = originalStep.invert(tr.docs[originalStepIndex]).map(map);
+  map.appendMap(invertStep.getMap());
+  // map.appendMap(step.invert(doc).getMap());
   if (newStep) {
     const trTemp = state.apply(newTr).tr;
     if (trTemp.maybeStep(newStep).failed) {

@@ -73,6 +73,18 @@ export default ({ node, view, getPos, readOnly }) => {
   };
 
   const saveFeedBack = () => {
+    const allNodes = getNodes(main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr.setNodeMarkup(getPos(), undefined, {
+            ...singleNode.node.attrs,
+            feedback: feedBack,
+          }),
+        );
+        setFirstRun(false);
+      }
+    });
     return false;
   };
 

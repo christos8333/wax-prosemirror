@@ -72,6 +72,18 @@ export default ({ node, view, getPos, readOnly }) => {
   };
 
   const saveFeedBack = () => {
+    const allNodes = getNodes(main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr.setNodeMarkup(getPos(), undefined, {
+            ...singleNode.node.attrs,
+            feedback: feedBack,
+          }),
+        );
+        setFirstRun(false);
+      }
+    });
     return false;
   };
 
@@ -103,7 +115,7 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const fillTheGapNodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'fill_the_gap_container')
+    if (node.node.type.name === 'matching_container')
       fillTheGapNodes.push(node);
   });
   return fillTheGapNodes;

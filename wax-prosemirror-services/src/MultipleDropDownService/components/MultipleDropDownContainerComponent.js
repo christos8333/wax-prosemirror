@@ -6,9 +6,7 @@ import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from './FeedbackComponent';
 
 const MultipleDropDownpWrapper = styled.div`
-  margin-bottom: ;
   margin: 0px 38px 15px 38px;
-
   margin-top: 10px;
 `;
 
@@ -30,13 +28,14 @@ export default ({ node, view, getPos }) => {
   });
 
   const readOnly = !isEditable;
+  const { testMode } = customProps;
 
   return (
     <MultipleDropDownpWrapper>
       <span>Multiple Drop Down</span>
       <MultipleDropDownpContainer className="multiple-drop-down">
         <ContainerEditor getPos={getPos} node={node} view={view} />
-        {!(readOnly && customProps && !customProps.showFeedBack) && (
+        {!testMode && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

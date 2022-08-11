@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* stylelint-disable declaration-no-important */
 
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
@@ -147,9 +148,9 @@ const EditorComponent = ({ node, view, getPos }) => {
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(getPos() + 1);
-      for (let i = 0; i < transactions.length; i++) {
+      for (let i = 0; i < transactions.length; i += 1) {
         const { steps } = transactions[i];
-        for (let j = 0; j < steps.length; j++)
+        for (let j = 0; j < steps.length; j += 1)
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
@@ -159,7 +160,7 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   return (
     <>
-      {isEditable ? (
+      {isEditable || (!isEditable && !main.props.customValues.testMode) ? (
         <EditorWrapper>
           <div ref={editorRef} />
         </EditorWrapper>

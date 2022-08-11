@@ -29,10 +29,10 @@ const QuestionWrapper = styled.div`
 `;
 
 const ActionButton = styled.button`
-  height: 24px;
-  border: none;
   background: transparent;
+  border: none;
   cursor: pointer;
+  height: 24px;
   padding-left: 0;
 `;
 
@@ -53,27 +53,27 @@ const OptionArea = styled.div`
 
   ul {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
+
     li {
       list-style-type: none;
-      padding-right: 7px;
       padding-bottom: 7px;
+      padding-right: 7px;
 
       span {
         background: #535e76;
+        border-radius: 12px;
         color: white;
         padding: 3px 3px 3px 10px;
-        border-radius: 12px;
       }
-      buttton {
-      }
+
       svg {
         fill: white;
-        width: 16px;
         height: 16px;
+        width: 16px;
       }
     }
   }
@@ -81,9 +81,11 @@ const OptionArea = styled.div`
 
 const AddOption = styled.div`
   display: flex;
+
   input {
     border: none;
     border-bottom: 1px solid black;
+
     &:focus {
       outline: none;
     }
@@ -93,21 +95,21 @@ const AddOption = styled.div`
       font-style: italic;
     }
   }
+
   button {
-    border: 1px solid #535e76;
-    cursor: pointer;
-    color: #535e76;
-    margin-left: 20px;
     background: #fff;
+    border: 1px solid #535e76;
+    color: #535e76;
+    cursor: pointer;
+    margin-left: 20px;
     padding: 4px 8px 4px 8px;
+
     &:hover {
-      border: 1px solid #535e76;
-      cursor: pointer;
-      color: #535e76;
-      margin-right: 20px;
-      background: #fff;
       background: #535e76;
+      border: 1px solid #535e76;
       color: #fff;
+      cursor: pointer;
+      margin-right: 20px;
       padding: 4px 8px 4px 8px;
     }
   }
@@ -136,7 +138,7 @@ export default ({ node, view, getPos }) => {
   useEffect(() => {
     const allNodes = getNodes(main);
 
-    /*TEMP TO SAVE NODE OPTIONS TODO: SAVE IN CONTEXT OPTIONS*/
+    /* TEMP TO SAVE NODE OPTIONS TODO: SAVE IN CONTEXT OPTIONS */
     saveInChildOptions(allNodes);
 
     if (!addingOption) return;
@@ -190,6 +192,7 @@ export default ({ node, view, getPos }) => {
         singleNode.node.content.content.forEach(parentNodes => {
           parentNodes.forEach(optionNode => {
             if (optionNode.type.name === 'matching_option')
+              /* eslint-disable-next-line no-param-reassign */
               optionNode.attrs.options = options;
           });
         });
@@ -204,7 +207,8 @@ export default ({ node, view, getPos }) => {
         <QuestionWrapper>
           <ContainerEditor getPos={getPos} node={node} view={view} />
         </QuestionWrapper>
-        {!readOnly && (
+        {(!readOnly ||
+          (readOnly && !customProps.testMode && !customProps.showFeedBack)) && (
           <CreateOptions>
             <OptionArea>
               {options.length > 0 && (
@@ -215,12 +219,14 @@ export default ({ node, view, getPos }) => {
                       <li key={option.value}>
                         <span>
                           {option.label} &nbsp;
-                          <ActionButton
-                            onClick={() => removeOption(option.value)}
-                            type="button"
-                          >
-                            <StyledIconAction name="deleteOutlined" />
-                          </ActionButton>
+                          {!readOnly && (
+                            <ActionButton
+                              onClick={() => removeOption(option.value)}
+                              type="button"
+                            >
+                              <StyledIconAction name="deleteOutlined" />
+                            </ActionButton>
+                          )}
                         </span>
                       </li>
                     );
@@ -228,22 +234,26 @@ export default ({ node, view, getPos }) => {
                 </ul>
               )}
             </OptionArea>
-            <AddOption>
-              <input
-                onChange={updateOptionText}
-                onKeyPress={handleKeyDown}
-                placeholder="Type an option ..."
-                ref={addOptionRef}
-                type="text"
-                value={optionText}
-              />
-              <button onClick={addOption} type="button">
-                Add Option
-              </button>
-            </AddOption>
+
+            {!readOnly && (
+              <AddOption>
+                <input
+                  onChange={updateOptionText}
+                  onKeyPress={handleKeyDown}
+                  placeholder="Type an option ..."
+                  ref={addOptionRef}
+                  type="text"
+                  value={optionText}
+                />
+                <button onClick={addOption} type="button">
+                  Add Option
+                </button>
+              </AddOption>
+            )}
           </CreateOptions>
         )}
-        {!(readOnly && !customProps.showFeedBack) && (
+        {(!(readOnly && !customProps.showFeedBack) ||
+          (readOnly && !customProps.testMode && !customProps.showFeedBack)) && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

@@ -96,6 +96,7 @@ const Wax = forwardRef((props, ref) => {
 
 Wax.defaultProps = {
   config: { SchemaService: DefaultSchema, services: [] },
+  customValues: {},
 };
 
 export default Wax;

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
 import { Fragment } from 'prosemirror-model';
@@ -13,28 +13,28 @@ import ReadOnlyDropDownComponent from './ReadOnlyDropDownComponent';
 const Option = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   padding-bottom: 10px;
+  width: 100%;
 `;
 
 const ButtonsContainer = styled.div`
-  width: 7%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 7%;
 `;
 
 const DropDownContainer = styled.div`
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
 `;
 
 const ActionButton = styled.button`
-  height: 24px;
-  border: none;
   background: transparent;
+  border: none;
   cursor: pointer;
+  height: 24px;
   padding-left: 0;
 `;
 
@@ -44,9 +44,9 @@ const StyledIconAction = styled(Icon)`
 `;
 
 const AnswerContainer = styled.div`
-  margin-left: 10px;
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
 `;
 const CorrectAnswer = styled.span`
   span {
@@ -72,6 +72,7 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
   const customProps = main.props.customValues;
+  const { testMode, showFeedBack } = customProps;
 
   const addAnswer = () => {
     const nodeId = node.attrs.id;
@@ -133,15 +134,15 @@ export default ({ node, view, getPos }) => {
       )}
       <EditorComponent getPos={getPos} node={node} view={view} />
       <DropDownContainer>
-        {!readOnly && (
+        {(!readOnly || (readOnly && !testMode && !showFeedBack)) && (
           <DropDownComponent getPos={getPos} node={node} view={view} />
         )}
 
-        {readOnly && customProps && !customProps.showFeedBack && (
+        {readOnly && testMode && !showFeedBack && (
           <ReadOnlyDropDownComponent getPos={getPos} node={node} view={view} />
         )}
 
-        {readOnly && customProps && customProps.showFeedBack && (
+        {readOnly && showFeedBack && (
           <AnswerContainer>
             <CorrectAnswer>
               Correct : &nbsp;{correct && <span>{correct.label} </span>}

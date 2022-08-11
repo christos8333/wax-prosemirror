@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Wax } from 'wax-prosemirror-core';
 
@@ -16,16 +16,60 @@ const renderImage = file => {
   });
 };
 
-const ReadOnlyButton = styled.button`
-  position: absolute;
+const NormalButton = styled.button`
   left: 600px;
+  position: absolute;
   top: 16px;
+
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
+  ${props =>
+    props.isActive &&
+    css`
+      background-color: gray;
+      color: white;
+    `}
+`;
+
+const ReadOnlyButton = styled.button`
+  left: 670px;
+  position: absolute;
+  top: 16px;
+
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
+  ${props =>
+    props.isActive &&
+    css`
+      background-color: gray;
+      color: white;
+    `}
+`;
+
+const TestModeButton = styled.button`
+  left: 760px;
+  position: absolute;
+  top: 16px;
+
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
+  ${props =>
+    props.isActive &&
+    css`
+      background-color: gray;
+      color: white;
+    `}
 `;
 
 const SubmitButton = styled.button`
+  left: 850px;
   position: absolute;
-  left: 700px;
   top: 16px;
+
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
+  ${props =>
+    props.isActive &&
+    css`
+      background-color: gray;
+      color: white;
+    `}
 `;
 
 const initialContent = `<p class="paragraph"></p>
@@ -55,32 +99,64 @@ const initialContent = `<p class="paragraph"></p>
 </div>`;
 
 const Hhmi = () => {
-  const [submited, isSubmited] = useState(false);
+  const [submitted, isSubmitted] = useState(false);
   const [readOnly, isReadOnly] = useState(false);
+  const [testMode, isTestMode] = useState(false);
   const [content, setContent] = useState(initialContent);
 
-  const readOnlyQuestions = () => {
+  const normalQuestions = () => {
+    isReadOnly(false);
+    isTestMode(false);
+    isSubmitted(false);
     setContent(editorRef.current.getContent());
+  };
+
+  const readOnlyQuestions = () => {
     isReadOnly(true);
+    isTestMode(false);
+    isSubmitted(false);
+    setContent(editorRef.current.getContent());
+  };
+
+  const testModeQuestions = () => {
+    isReadOnly(true);
+    isTestMode(true);
+    isSubmitted(false);
+    setContent(editorRef.current.getContent());
   };
 
   const submitQuestions = () => {
-    setContent(editorRef.current.getContent());
-    isSubmited(true);
     isReadOnly(true);
+    isTestMode(false);
+    isSubmitted(true);
+    setContent(editorRef.current.getContent());
   };
 
   const editorRef = useRef();
 
   return (
     <>
-      <ReadOnlyButton onClick={readOnlyQuestions}>Read Only</ReadOnlyButton>
-      <SubmitButton onClick={submitQuestions}>Submit</SubmitButton>
+      <NormalButton isActive={!readOnly} onClick={normalQuestions}>
+        Normal
+      </NormalButton>
+      <ReadOnlyButton
+        isActive={readOnly && !submitted && !testMode}
+        onClick={readOnlyQuestions}
+      >
+        Read Only
+      </ReadOnlyButton>
+      <TestModeButton isActive={testMode} onClick={testModeQuestions}>
+        Test Mode
+      </TestModeButton>
+      <SubmitButton isActive={submitted} onClick={submitQuestions}>
+        Submit
+      </SubmitButton>
+
       <Wax
         config={config}
         autoFocus
         ref={editorRef}
-        customValues={{ showFeedBack: submited }}
+        customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
         value={content}
         readonly={readOnly}

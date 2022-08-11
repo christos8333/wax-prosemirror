@@ -12,11 +12,12 @@ const Wrapper = styled.div`
   ${ReactDropDownStyles};
 `;
 const DropdownStyled = styled(Dropdown)`
-  display: inline-flex;
   cursor: not-allowed;
+  display: inline-flex;
   margin-left: auto;
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? 'default' : 'none')};
+
   .Dropdown-control {
     border: none;
     padding: 8px 30px 8px 10px;
@@ -31,10 +32,11 @@ const DropdownStyled = styled(Dropdown)`
   }
 
   .Dropdown-menu {
-    width: 102%;
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    width: 102%;
+
     .Dropdown-option {
       width: 100%;
     }
@@ -85,7 +87,7 @@ const DropComponent = ({ getPos, node, view }) => {
           placeholder="Select option"
           select
           value={
-            selectedOption === 'undedfined' ? 'Select Option' : selectedOption
+            selectedOption === 'undefined' ? 'Select Option' : selectedOption
           }
         />
       </Wrapper>

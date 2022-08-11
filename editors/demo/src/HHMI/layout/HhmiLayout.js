@@ -59,22 +59,23 @@ const EditorArea = styled.div`
 `;
 
 const WaxSurfaceScroll = styled.div`
-  padding: 25px 25% 0 25%;
   box-sizing: border-box;
   display: flex;
   height: 100%;
   overflow-y: auto;
+  padding: 25px 25% 0 25%;
   position: relative;
   width: 100%;
 
   /* PM styles  for main content*/
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${EditorElements};
 `;
 
 const EditorContainer = styled.div`
   height: 100%;
-  width: 100%;
   position: relative;
+  width: 100%;
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;

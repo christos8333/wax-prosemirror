@@ -11,9 +11,7 @@ const FillTheGapContainer = styled.div`
 `;
 
 const FillTheGapWrapper = styled.div`
-  margin-bottom: ;
   margin: 0px 38px 15px 38px;
-
   margin-top: 10px;
 `;
 
@@ -24,6 +22,7 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const customProps = main.props.customValues;
+  const { testMode } = customProps;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -36,7 +35,8 @@ export default ({ node, view, getPos }) => {
       <span>Fill The Gap</span>
       <FillTheGapContainer className="fill-the-gap">
         <ContainerEditor getPos={getPos} node={node} view={view} />
-        {!(readOnly && customProps && !customProps.showFeedBack) && (
+
+        {!testMode && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

@@ -15,6 +15,7 @@ const AnswerContainer = styled.span`
 
 const Correct = styled.span`
   margin-right: 10px;
+
   span {
     color: #008000;
   }
@@ -22,6 +23,7 @@ const Correct = styled.span`
 
 const Answer = styled.span`
   margin-right: 10px;
+
   span {
     color: ${props => (props.isCorrect ? ' #008000' : 'red')};
   }
@@ -29,15 +31,15 @@ const Answer = styled.span`
 
 const StyledIconCorrect = styled(Icon)`
   fill: #008000;
-  pointer-events: none;
   height: 24px;
+  pointer-events: none;
   width: 24px;
 `;
 
 const StyledIconWrong = styled(Icon)`
   fill: red;
-  pointer-events: none;
   height: 24px;
+  pointer-events: none;
   width: 24px;
 `;
 const YesNoSwitch = ({
@@ -48,7 +50,9 @@ const YesNoSwitch = ({
   checked,
   checkedAnswerMode,
 }) => {
-  if (customProps && customProps.showFeedBack) {
+  const { testMode, showFeedBack } = customProps;
+
+  if (showFeedBack) {
     const correct = node.attrs.correct ? 'YES' : 'NO';
     const answer = node.attrs.answer ? 'YES' : 'NO';
     const isCorrect = node.attrs.correct === node.attrs.answer;
@@ -68,10 +72,14 @@ const YesNoSwitch = ({
       </AnswerContainer>
     );
   }
+
   return (
     <StyledSwitch
-      checked={isEditable ? checked : checkedAnswerMode}
+      checked={
+        isEditable || (!isEditable && !testMode) ? checked : checkedAnswerMode
+      }
       checkedChildren="YES"
+      disabled={!isEditable && !testMode}
       label="Correct?"
       labelPosition="left"
       onChange={handleChange}

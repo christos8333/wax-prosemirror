@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useContext, useMemo, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { find } from 'lodash';
 import { ReactDropDownStyles } from 'wax-prosemirror-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { DocumentHelpers } from 'wax-prosemirror-utilities';
@@ -51,6 +50,14 @@ const DropComponent = ({ getPos, node, options }) => {
   } = context;
 
   const customProps = main.props.customValues;
+  const { testMode } = customProps;
+
+  useEffect(() => {
+    const currentOption = node.attrs.options.filter(option => {
+      return option.value === node.attrs.correct;
+    });
+    if (!testMode && currentOption[0]) setSelectedOption(currentOption[0]);
+  }, []);
 
   const onChange = option => {
     const allNodes = getNodes(main);
@@ -66,12 +73,11 @@ const DropComponent = ({ getPos, node, options }) => {
     main.dispatch(tr);
   };
 
-  useEffect(() => {}, []);
-
   const MultipleDropDown = useMemo(
     () => (
       <Wrapper key={uuidv4()}>
         <DropdownStyled
+          disabled={!testMode}
           key={uuidv4()}
           onChange={option => onChange(option)}
           options={options}

@@ -41,7 +41,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const ReadOnlyDropDownComponent = ({ getPos, node, view }) => {
+const TestModeDropDownComponent = ({ getPos, node, view }) => {
   const [selectedOption, setSelectedOption] = useState(undefined);
 
   const context = useContext(WaxContext);
@@ -97,7 +97,7 @@ const ReadOnlyDropDownComponent = ({ getPos, node, view }) => {
   return ReadOnlyMultipleDropDown;
 };
 
-export default ReadOnlyDropDownComponent;
+export default TestModeDropDownComponent;
 
 const getNodes = view => {
   return DocumentHelpers.findInlineNodes(view.state.doc);

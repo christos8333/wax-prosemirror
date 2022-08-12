@@ -8,7 +8,7 @@ import { Icon } from 'wax-prosemirror-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import EditorComponent from './EditorComponent';
 import DropDownComponent from './DropDownComponent';
-import ReadOnlyDropDownComponent from './ReadOnlyDropDownComponent';
+import TestModeDropDownComponent from './TestModeDropDownComponent';
 
 const Option = styled.div`
   display: flex;
@@ -139,7 +139,7 @@ export default ({ node, view, getPos }) => {
         )}
 
         {readOnly && testMode && !showFeedBack && (
-          <ReadOnlyDropDownComponent getPos={getPos} node={node} view={view} />
+          <TestModeDropDownComponent getPos={getPos} node={node} view={view} />
         )}
 
         {readOnly && showFeedBack && (

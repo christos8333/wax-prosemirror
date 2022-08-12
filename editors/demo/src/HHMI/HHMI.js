@@ -99,40 +99,52 @@ const initialContent = `<p class="paragraph"></p>
 </div>`;
 
 const Hhmi = () => {
-  const [submitted, isSubmitted] = useState(false);
-  const [readOnly, isReadOnly] = useState(false);
-  const [testMode, isTestMode] = useState(false);
-  const [content, setContent] = useState(initialContent);
+  const [stateProps, setStateProps] = useState({
+    readOnly: false,
+    testMode: false,
+    submitted: false,
+    content: initialContent,
+  });
 
   const normalQuestions = () => {
-    isReadOnly(false);
-    isTestMode(false);
-    isSubmitted(false);
-    setContent(editorRef.current.getContent());
+    setStateProps({
+      readOnly: false,
+      testMode: false,
+      submitted: false,
+      content: editorRef.current.getContent(),
+    });
   };
 
   const readOnlyQuestions = () => {
-    isReadOnly(true);
-    isTestMode(false);
-    isSubmitted(false);
-    setContent(editorRef.current.getContent());
+    setStateProps({
+      readOnly: true,
+      testMode: false,
+      submitted: false,
+      content: editorRef.current.getContent(),
+    });
   };
 
   const testModeQuestions = () => {
-    isReadOnly(true);
-    isTestMode(true);
-    isSubmitted(false);
-    setContent(editorRef.current.getContent());
+    setStateProps({
+      readOnly: true,
+      testMode: true,
+      submitted: false,
+      content: editorRef.current.getContent(),
+    });
   };
 
   const submitQuestions = () => {
-    isReadOnly(true);
-    isTestMode(false);
-    isSubmitted(true);
-    setContent(editorRef.current.getContent());
+    setStateProps({
+      readOnly: true,
+      testMode: false,
+      submitted: true,
+      content: editorRef.current.getContent(),
+    });
   };
 
   const editorRef = useRef();
+
+  const { readOnly, testMode, submitted, content } = stateProps;
 
   return (
     <>
@@ -158,10 +170,10 @@ const Hhmi = () => {
         ref={editorRef}
         customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
-        // value={content}
+        value={content}
         readonly={readOnly}
         layout={HhmiLayout}
-        onChange={source => console.log(source)}
+        // onChange={source => console.log(source)}
       />
     </>
   );

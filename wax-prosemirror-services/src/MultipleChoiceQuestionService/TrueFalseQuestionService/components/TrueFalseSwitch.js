@@ -67,7 +67,9 @@ const TrueFalseSwitch = ({
   checked,
   checkedAnswerMode,
 }) => {
-  if (customProps && customProps.showFeedBack) {
+  const { testMode, showFeedBack } = customProps;
+
+  if (showFeedBack) {
     const correct = node.attrs.correct ? 'TRUE' : 'FALSE';
     const answer = node.attrs.answer ? 'TRUE' : 'FALSE';
     const isCorrect = node.attrs.correct === node.attrs.answer;
@@ -90,8 +92,11 @@ const TrueFalseSwitch = ({
 
   return (
     <StyledSwitch
-      checked={isEditable ? checked : checkedAnswerMode}
+      checked={
+        isEditable || (!isEditable && !testMode) ? checked : checkedAnswerMode
+      }
       checkedChildren="True"
+      disabled={!isEditable && !testMode}
       label="True/false?"
       labelPosition="left"
       onChange={handleChange}

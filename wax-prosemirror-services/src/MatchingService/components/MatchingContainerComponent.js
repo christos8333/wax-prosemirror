@@ -200,6 +200,8 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const { testMode } = customProps;
+
   return (
     <MatchingWrapper>
       <span>Matching</span>
@@ -252,8 +254,7 @@ export default ({ node, view, getPos }) => {
             )}
           </CreateOptions>
         )}
-        {(!(readOnly && !customProps.showFeedBack) ||
-          (readOnly && !customProps.testMode && !customProps.showFeedBack)) && (
+        {!testMode && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

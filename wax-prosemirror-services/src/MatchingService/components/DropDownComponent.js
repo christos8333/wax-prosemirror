@@ -44,7 +44,7 @@ const DropdownStyled = styled(Dropdown)`
 `;
 
 const DropComponent = ({ getPos, node, view }) => {
-  const [selectedOption, setSelectedOption] = useState(undefined);
+  const [selectedOption, setSelectedOption] = useState(node.attrs.correct);
 
   const context = useContext(WaxContext);
   const {
@@ -52,7 +52,6 @@ const DropComponent = ({ getPos, node, view }) => {
   } = context;
 
   const onChange = option => {
-    setSelectedOption(option);
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
@@ -68,14 +67,13 @@ const DropComponent = ({ getPos, node, view }) => {
     });
   };
 
-  useEffect(() => {
-    const value = selectedOption ? selectedOption.value : '';
-    const found = find(node.attrs.options, { value });
+  // useEffect(() => {
+  //   const found = find(node.attrs.options, { value: node.attrs.correct });
 
-    if (!found) {
-      setSelectedOption(undefined);
-    }
-  }, [node.attrs.options]);
+  //   if (found) {
+  //     setSelectedOption(found);
+  //   }
+  // }, [node.attrs.options]);
 
   const MultipleDropDown = useMemo(
     () => (

@@ -18,6 +18,7 @@ export default ({ setPosition, position }) => {
 
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
+    console.log(activeView.state.selection);
     const left = 300;
     const top = 500;
     setPosition({ ...position, left, top });

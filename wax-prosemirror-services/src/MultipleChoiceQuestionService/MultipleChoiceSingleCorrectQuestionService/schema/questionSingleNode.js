@@ -4,7 +4,7 @@ const questionSingleNode = {
     class: { default: 'multiple-choice-question-single' },
   },
   group: 'block questions',
-  content: 'paragraph* bulletlist* orderedlist*',
+  content: 'block+',
   defining: true,
 
   // atom: true,

@@ -4,7 +4,7 @@ const questionTrueFalseNode = {
     class: { default: 'true-false-question-single' },
   },
   group: 'block questions',
-  content: 'paragraph* bulletlist* orderedlist*',
+  content: 'block+',
   defining: true,
 
   // atom: true,

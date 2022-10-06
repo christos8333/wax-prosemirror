@@ -5,7 +5,7 @@ const multipleChoiceContainerNode = {
   },
   group: 'block questions',
   atom: true,
-  content: 'block*',
+  content: 'block+',
   parseDOM: [
     {
       tag: 'div.multiple-choice',

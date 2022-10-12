@@ -16,10 +16,14 @@ const renderImage = file => {
   });
 };
 
-const NormalButton = styled.button`
-  left: 600px;
+const ButtonContainer = styled.div`
   position: absolute;
+  right: 80px;
   top: 16px;
+`;
+
+const NormalButton = styled.button`
+  margin-right: 10px;
 
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
@@ -31,9 +35,7 @@ const NormalButton = styled.button`
 `;
 
 const ReadOnlyButton = styled.button`
-  left: 670px;
-  position: absolute;
-  top: 16px;
+  margin-right: 10px;
 
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
@@ -45,9 +47,7 @@ const ReadOnlyButton = styled.button`
 `;
 
 const TestModeButton = styled.button`
-  left: 760px;
-  position: absolute;
-  top: 16px;
+  margin-right: 10px;
 
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
@@ -59,10 +59,6 @@ const TestModeButton = styled.button`
 `;
 
 const SubmitButton = styled.button`
-  left: 850px;
-  position: absolute;
-  top: 16px;
-
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props =>
     props.isActive &&
@@ -148,22 +144,23 @@ const Hhmi = () => {
 
   return (
     <>
-      <NormalButton isActive={!readOnly} onClick={normalQuestions}>
-        Normal
-      </NormalButton>
-      <ReadOnlyButton
-        isActive={readOnly && !submitted && !testMode}
-        onClick={readOnlyQuestions}
-      >
-        Read Only
-      </ReadOnlyButton>
-      <TestModeButton isActive={testMode} onClick={testModeQuestions}>
-        Test Mode
-      </TestModeButton>
-      <SubmitButton isActive={submitted} onClick={submitQuestions}>
-        Submit
-      </SubmitButton>
-
+      <ButtonContainer>
+        <NormalButton isActive={!readOnly} onClick={normalQuestions}>
+          Normal
+        </NormalButton>
+        <ReadOnlyButton
+          isActive={readOnly && !submitted && !testMode}
+          onClick={readOnlyQuestions}
+        >
+          Read Only
+        </ReadOnlyButton>
+        <TestModeButton isActive={testMode} onClick={testModeQuestions}>
+          Test Mode
+        </TestModeButton>
+        <SubmitButton isActive={submitted} onClick={submitQuestions}>
+          Submit
+        </SubmitButton>
+      </ButtonContainer>
       <Wax
         config={config}
         autoFocus

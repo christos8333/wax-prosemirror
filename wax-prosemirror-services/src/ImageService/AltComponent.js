@@ -18,9 +18,12 @@ export default ({ setPosition, position }) => {
 
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
-    console.log(activeView.state.selection);
-    const left = 300;
-    const top = 500;
+    const { selection } = activeView.state;
+    const imageId = selection.node.attrs.id;
+    const image = document.querySelector(`[data-id='${imageId}']`);
+    const imagePosition = image.getBoundingClientRect();
+    const left = imagePosition.left - WaxSurface.left;
+    const top = imagePosition.bottom - WaxSurface.top + 10;
     setPosition({ ...position, left, top });
   }, [position.left]);
 

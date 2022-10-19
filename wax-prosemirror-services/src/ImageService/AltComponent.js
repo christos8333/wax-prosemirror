@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 
 export default ({ setPosition, position }) => {
+  const altRef = useRef(null);
+  const [altText, setAltText] = useState('');
   const context = useContext(WaxContext);
   const {
     activeView,
@@ -45,10 +47,36 @@ export default ({ setPosition, position }) => {
     const left = imagePosition.left - WaxSurface.left;
     const top = imagePosition.bottom - WaxSurface.top - 22;
     setPosition({ ...position, left, top });
-    console.log(position);
-  }, [position.left]);
+  }, [position.left, position.top]);
+
+  const altTextOnChange = () => {
+    const { selection } = activeView.state;
+    setAltText(altRef.current.value);
+    activeView.dispatch(
+      activeView.state.tr.setNodeMarkup(selection.from, undefined, {
+        ...selection.node.attrs,
+        alt: altRef.current.value,
+      }),
+    );
+  };
 
   if (!readOnly) {
-    return <StyledInputAlt placeholder="Alt Text" type="text" />;
+    return (
+      <StyledInputAlt
+        autoFocus="autoFocus"
+        key="alt"
+        onChange={altTextOnChange}
+        placeholder="Alt Text"
+        ref={altRef}
+        type="text"
+        value={
+          activeView.state.selection &&
+          activeView.state.selection.node &&
+          activeView.state.selection.node.attrs.alt !== ''
+            ? activeView.state.selection.node.attrs.alt
+            : altText
+        }
+      />
+    );
   }
 };

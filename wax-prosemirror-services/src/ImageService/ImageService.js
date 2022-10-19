@@ -7,6 +7,7 @@ import { PlaceHolderPlugin, captionPlugin } from 'wax-prosemirror-plugins';
 import Service from '../Service';
 import Image from './Image';
 import './image.css';
+import AltComponent from './AltComponent';
 
 class ImageService extends Service {
   name = 'ImageService';
@@ -22,6 +23,7 @@ class ImageService extends Service {
   register() {
     this.container.bind('Image').to(Image);
     const createNode = this.container.get('CreateNode');
+    const createOverlay = this.container.get('CreateOverlay');
     createNode({
       figure: figureNode,
     });
@@ -38,6 +40,18 @@ class ImageService extends Service {
       },
       // ,
       // { toWaxSchema: true },
+    );
+
+    createOverlay(
+      AltComponent,
+      {},
+      {
+        nodeType: 'image',
+        findInParent: false,
+        markType: '',
+        followCursor: false,
+        selection: false,
+      },
     );
   }
 }

@@ -2,8 +2,9 @@ import { SchemaHelpers } from 'wax-prosemirror-utilities';
 
 const image = {
   attrs: {
+    id: { default: '' },
     src: {},
-    alt: { default: null },
+    alt: { default: '' },
     title: { default: null },
     // track: { default: [] },
     fileid: { default: null },

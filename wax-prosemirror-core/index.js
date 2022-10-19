@@ -1,3 +1,4 @@
+export { default as Service } from './src/Service';
 export { WaxContext, useInjection } from './src/WaxContext';
 export { PortalContext } from './src/PortalContext';
 export { default as ComponentPlugin } from './src/ComponentPlugin';

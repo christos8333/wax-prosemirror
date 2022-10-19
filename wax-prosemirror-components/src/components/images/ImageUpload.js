@@ -42,7 +42,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
             new TextSelection(
               main.state.tr.doc.resolve(
                 nodeFound.pos +
-                  2 +
+                  1 +
                   context.pmViews[activeViewId].state.selection.to,
               ),
             ),

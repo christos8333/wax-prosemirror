@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const findPlaceholder = (state, id, placeholderPlugin) => {
   const decos = placeholderPlugin.getState(state);
   const found = decos.find(null, null, spec => spec.id === id);
@@ -39,6 +41,7 @@ export default (view, fileUpload, placeholderPlugin) => file => {
             // }),
             view.state.schema.nodes.image.create({
               src: url,
+              id: uuidv4(),
             }),
           )
           .setMeta(placeholderPlugin, { remove: { id } }),

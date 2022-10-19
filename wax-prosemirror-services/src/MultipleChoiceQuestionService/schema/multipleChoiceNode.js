@@ -7,7 +7,7 @@ const multipleChoiceNode = {
     feedback: { default: '' },
   },
   group: 'block questions',
-  content: 'block*',
+  content: 'block+',
   defining: true,
   parseDOM: [
     {

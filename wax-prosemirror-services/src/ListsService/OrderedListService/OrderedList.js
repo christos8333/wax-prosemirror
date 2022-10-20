@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { wrapInList } from 'prosemirror-schema-list';
 import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class OrderedList extends Tools {

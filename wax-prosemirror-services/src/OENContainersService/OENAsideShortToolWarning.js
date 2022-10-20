@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { OENAsideButton } from 'wax-prosemirror-components';
-import Tools from '../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class OENAsideShortToolWarning extends Tools {

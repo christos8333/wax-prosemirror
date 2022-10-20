@@ -4,7 +4,9 @@ import { injectable, inject } from 'inversify';
 import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
+import 'reflect-metadata';
 
+@injectable()
 class ToolGroup {
   _config = {};
   title = '';

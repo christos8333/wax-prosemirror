@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable, inject } from 'inversify';
 import { Button } from 'wax-prosemirror-components';
+import 'reflect-metadata';
 
 @injectable()
 class Tools {

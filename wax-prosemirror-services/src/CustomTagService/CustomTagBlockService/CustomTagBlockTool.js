@@ -1,5 +1,5 @@
 import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 class CustomTagBlockTool extends Tools {
   title = 'Custom Tag Block';

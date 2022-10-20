@@ -2,7 +2,7 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { EditorShortCutsTool } from 'wax-prosemirror-components';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 class ShortCutsInfoTool extends Tools {

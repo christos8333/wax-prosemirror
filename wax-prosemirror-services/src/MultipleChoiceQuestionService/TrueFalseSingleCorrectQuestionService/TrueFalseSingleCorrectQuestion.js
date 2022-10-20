@@ -3,9 +3,9 @@ import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
+import { Tools } from 'wax-prosemirror-core';
 import ToolBarBtn from '../components/ToolBarBtn';
 import helpers from '../helpers/helpers';
-import Tools from '../../lib/Tools';
 
 @injectable()
 class TrueFalseSingleCorrectQuestion extends Tools {

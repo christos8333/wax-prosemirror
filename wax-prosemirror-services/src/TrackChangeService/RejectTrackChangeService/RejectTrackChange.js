@@ -5,9 +5,9 @@ import {
   AddMarkStep,
 } from 'prosemirror-transform';
 import { Slice } from 'prosemirror-model';
+import { Tools } from 'wax-prosemirror-core';
 import { injectable } from 'inversify';
 import removeNode from '../track-changes/helpers/removeNode';
-import Tools from '../../lib/Tools';
 
 const checkFromConfig = (mark, user, config) => {
   if (mark.attrs.username === user.username && !config.own.reject) {

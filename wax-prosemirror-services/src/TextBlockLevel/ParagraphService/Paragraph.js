@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
 import { LeftSideButton } from 'wax-prosemirror-components';
 import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class Paragraph extends Tools {

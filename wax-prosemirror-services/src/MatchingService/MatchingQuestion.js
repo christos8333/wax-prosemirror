@@ -3,8 +3,8 @@ import { Fragment } from 'prosemirror-model';
 import { findWrapping } from 'prosemirror-transform';
 import { TextSelection } from 'prosemirror-state';
 import { v4 as uuidv4 } from 'uuid';
+import { Tools } from 'wax-prosemirror-core';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
-import Tools from '../lib/Tools';
 
 @injectable()
 class MatchingQuestion extends Tools {

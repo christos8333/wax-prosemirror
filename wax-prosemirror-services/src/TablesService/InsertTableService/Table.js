@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
 import { CreateTable } from 'wax-prosemirror-components';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class Table extends Tools {

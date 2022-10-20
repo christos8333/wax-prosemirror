@@ -6,8 +6,8 @@ import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { findWrapping } from 'prosemirror-transform';
+import { Tools } from 'wax-prosemirror-core';
 import ToolBarBtn from './components/ToolBarBtn';
-import Tools from '../lib/Tools';
 
 const checkifEmpty = view => {
   const { state } = view;

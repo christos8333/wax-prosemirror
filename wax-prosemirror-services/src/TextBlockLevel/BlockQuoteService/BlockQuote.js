@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 import { wrapIn } from 'prosemirror-commands';
 import { NodeSelection } from 'prosemirror-state';
 import { LeftSideButton } from 'wax-prosemirror-components';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 class BlockQuote extends Tools {

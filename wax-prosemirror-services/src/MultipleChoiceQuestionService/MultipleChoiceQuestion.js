@@ -3,9 +3,9 @@ import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { Commands } from 'wax-prosemirror-utilities';
 import { v4 as uuidv4 } from 'uuid';
+import { Tools } from 'wax-prosemirror-core';
 import helpers from './helpers/helpers';
 import ToolBarBtn from './components/ToolBarBtn';
-import Tools from '../lib/Tools';
 
 @injectable()
 class MultipleChoiceQuestion extends Tools {

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
-import Tools from '../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class Note extends Tools {

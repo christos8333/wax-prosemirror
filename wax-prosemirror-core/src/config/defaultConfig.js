@@ -1,13 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import {
-  SchemaService,
-  MenuService,
-  RulesService,
-  ShortCutsService,
-  LayoutService,
-  OverlayService,
-  PortalService,
-} from 'wax-prosemirror-services';
+import SchemaService from './defaultServices/SchemaService/SchemaService';
+import RulesService from './defaultServices/RulesService/RulesService';
+import ShortCutsService from './defaultServices/ShortCutsService/ShortCutsService';
+import LayoutService from './defaultServices/LayoutService/LayoutService';
+import PortalService from './defaultServices/PortalService/PortalService';
+import MenuService from './defaultServices/MenuService/MenuService';
+import OverlayService from './defaultServices/OverlayService/OverlayService';
 
 export default () => ({
   services: [

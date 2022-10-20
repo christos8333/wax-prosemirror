@@ -1,4 +1,4 @@
-import QuestionsNodeView from '../../lib/helpers/QuestionsNodeView';
+import { QuestionsNodeView } from 'wax-prosemirror-core';
 
 export default class TrueFalseContainerNodeView extends QuestionsNodeView {
   constructor(

@@ -1,4 +1,4 @@
-import AbstractNodeView from '../../PortalService/AbstractNodeView';
+import AbstractNodeView from '../../../config/defaultServices/PortalService/AbstractNodeView';
 
 export default class QuestionsNodeView extends AbstractNodeView {
   constructor(

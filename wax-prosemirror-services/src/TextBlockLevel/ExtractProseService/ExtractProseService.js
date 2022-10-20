@@ -1,18 +1,16 @@
-import Service from "../../Service";
-import { extractProseNode } from "wax-prosemirror-schema";
-import ExtractProse from "./ExtractProse";
+import { Service } from 'wax-prosemirror-core';
+import { extractProseNode } from 'wax-prosemirror-schema';
+import ExtractProse from './ExtractProse';
 
 class ExtractProseService extends Service {
-  boot() {}
-
   register() {
-    this.container.bind("ExtractProse").to(ExtractProse);
-    const createNode = this.container.get("CreateNode");
+    this.container.bind('ExtractProse').to(ExtractProse);
+    const createNode = this.container.get('CreateNode');
     createNode(
       {
-        extractProse: extractProseNode
+        extractProse: extractProseNode,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

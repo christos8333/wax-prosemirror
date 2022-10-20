@@ -1,5 +1,5 @@
+import { Service } from 'wax-prosemirror-core';
 import { FindAndReplacePlugin } from 'wax-prosemirror-plugins';
-import Service from '../Service';
 import FindAndReplace from './FindAndReplace';
 import './findAndReplace.css';
 

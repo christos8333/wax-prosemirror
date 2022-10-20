@@ -1,4 +1,4 @@
-import Service from '../Service';
+import { Service } from 'wax-prosemirror-core';
 import FillTheGapQuestion from './FillTheGapQuestion';
 import fillTheGapContainerNode from './schema/fillTheGapContainerNode';
 import fillTheGapNode from './schema/fillTheGapNode';

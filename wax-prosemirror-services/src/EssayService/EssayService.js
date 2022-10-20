@@ -1,4 +1,4 @@
-import Service from '../Service';
+import { Service } from 'wax-prosemirror-core';
 import EssayQuestion from './EssayQuestion';
 import essayContainerNode from './schema/essayContainerNode';
 import essayQuestionNode from './schema/essayQuestionNode';

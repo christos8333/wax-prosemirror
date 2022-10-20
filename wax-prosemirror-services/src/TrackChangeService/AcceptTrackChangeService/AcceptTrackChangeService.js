@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import AcceptTrackChange from './AcceptTrackChange';
 
 class AcceptTrackChangeService extends Service {

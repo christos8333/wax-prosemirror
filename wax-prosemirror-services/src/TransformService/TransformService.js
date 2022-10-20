@@ -1,5 +1,5 @@
+import { Service } from 'wax-prosemirror-core';
 import TransformTool from './TransformTool';
-import Service from '../Service';
 
 export default class TransformService extends Service {
   register() {

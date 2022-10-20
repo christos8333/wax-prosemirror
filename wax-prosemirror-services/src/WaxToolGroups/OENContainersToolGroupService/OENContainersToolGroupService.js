@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import OENContainersToolGroup from './OENContainersToolGroup';
 import OENAsideShortToolGroupService from '../OENAsideShortToolGroupService/OENAsideShortToolGroupService';
 import OENAsideLongToolGroupService from '../OENAsideLongToolGroupService/OENAsideLongToolGroupService';

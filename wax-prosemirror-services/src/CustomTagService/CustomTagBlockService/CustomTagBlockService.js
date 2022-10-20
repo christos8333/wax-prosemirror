@@ -1,6 +1,6 @@
+import { Service } from 'wax-prosemirror-core';
 import { customBlockNode } from 'wax-prosemirror-schema';
 import CustomTagBlockTool from './CustomTagBlockTool';
-import Service from '../../Service';
 
 class CustomTagBlockService extends Service {
   register() {

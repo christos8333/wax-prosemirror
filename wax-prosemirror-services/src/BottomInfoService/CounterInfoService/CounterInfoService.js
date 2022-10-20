@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import CounterInfoTool from './CounterInfoTool';
 
 export default class CounterInfoService extends Service {

@@ -1,4 +1,4 @@
-import Service from '../Service';
+import { Service } from 'wax-prosemirror-core';
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import multipleChoiceNode from './schema/multipleChoiceNode';
 import multipleChoiceContainerNode from './schema/multipleChoiceContainerNode';

@@ -1,10 +1,10 @@
+import { Service } from 'wax-prosemirror-core';
 import {
   imageNode,
   figureCaptionNode,
   figureNode,
 } from 'wax-prosemirror-schema';
 import { PlaceHolderPlugin, captionPlugin } from 'wax-prosemirror-plugins';
-import Service from '../Service';
 import Image from './Image';
 import './image.css';
 import AltComponent from './AltComponent';

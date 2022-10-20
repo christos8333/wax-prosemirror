@@ -1,5 +1,5 @@
+import { Service } from 'wax-prosemirror-core';
 import { bulletListNode } from 'wax-prosemirror-schema';
-import Service from '../../Service';
 import BulletList from './BulletList';
 
 class BulletListService extends Service {

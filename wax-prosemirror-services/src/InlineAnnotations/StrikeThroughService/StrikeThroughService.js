@@ -1,15 +1,16 @@
-import Service from "../../Service";
-import { strikethroughMark } from "wax-prosemirror-schema";
-import StrikeThrough from "./StrikeThrough";
+import { Service } from 'wax-prosemirror-core';
+import { strikethroughMark } from 'wax-prosemirror-schema';
+import StrikeThrough from './StrikeThrough';
+
 class StrikeThroughService extends Service {
   register() {
-    this.container.bind("StrikeThrough").to(StrikeThrough);
-    const createMark = this.container.get("CreateMark");
+    this.container.bind('StrikeThrough').to(StrikeThrough);
+    const createMark = this.container.get('CreateMark');
     createMark(
       {
-        strikethrough: strikethroughMark
+        strikethrough: strikethroughMark,
       },
-      { toWaxSchema: true }
+      { toWaxSchema: true },
     );
   }
 }

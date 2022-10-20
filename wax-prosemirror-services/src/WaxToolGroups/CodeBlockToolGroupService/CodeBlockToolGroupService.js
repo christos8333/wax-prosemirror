@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import CodeBlock from './CodeBlock';
 
 class CodeBlockToolGroupService extends Service {

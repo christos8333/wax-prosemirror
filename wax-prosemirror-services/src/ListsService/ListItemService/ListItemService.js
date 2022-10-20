@@ -1,5 +1,5 @@
+import { Service } from 'wax-prosemirror-core';
 import { listItemNode } from 'wax-prosemirror-schema';
-import Service from '../../Service';
 
 class ListItemService extends Service {
   register() {

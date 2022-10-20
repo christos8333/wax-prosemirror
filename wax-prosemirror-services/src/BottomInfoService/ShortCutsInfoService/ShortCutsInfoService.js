@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import ShortCutsInfoTool from './ShortCutsInfoTool';
 
 export default class ShortCutsInfoService extends Service {

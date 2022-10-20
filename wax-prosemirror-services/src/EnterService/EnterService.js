@@ -1,5 +1,5 @@
+import { Service } from 'wax-prosemirror-core';
 import { GetContentOnEnterPlugin } from 'wax-prosemirror-plugins';
-import Service from '../Service';
 
 class EnterService extends Service {
   name = 'EnterService';

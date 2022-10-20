@@ -1,11 +1,9 @@
-import Service from "../../Service";
-import Paragraph from "./Paragraph";
+import { Service } from 'wax-prosemirror-core';
+import Paragraph from './Paragraph';
 
 class ParagraphService extends Service {
-  boot() {}
-
   register() {
-    this.container.bind("Paragraph").to(Paragraph);
+    this.container.bind('Paragraph').to(Paragraph);
   }
 }
 

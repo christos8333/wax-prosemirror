@@ -1,6 +1,6 @@
+import { Service } from 'wax-prosemirror-core';
 import { highlightPlugin } from 'wax-prosemirror-plugins';
 import { codeBlockNode } from 'wax-prosemirror-schema';
-import Service from '../Service';
 import CodeBlockTool from './CodeBlockTool';
 import './highlightStyles.css';
 

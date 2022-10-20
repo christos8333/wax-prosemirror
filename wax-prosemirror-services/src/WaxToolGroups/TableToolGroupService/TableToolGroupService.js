@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import Tables from './Tables';
 
 class TableToolGroupService extends Service {

@@ -1,5 +1,5 @@
-import { omit } from "lodash";
-import Middleware from "../lib/Middleware";
+import { Middleware } from 'wax-prosemirror-core';
+import { omit } from 'lodash';
 
 export default class ParseRule {
   tag = null;
@@ -44,7 +44,7 @@ export default class ParseRule {
         exporter.go({ dom }, hook => {
           hooks = hook;
         });
-        return omit(hooks, ["dom"]);
+        return omit(hooks, ['dom']);
       };
     }
 

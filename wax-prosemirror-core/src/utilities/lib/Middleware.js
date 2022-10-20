@@ -2,14 +2,14 @@ export default class Middleware {
   constructor() {
     // Array prototype last
     if (!Array.prototype.last) {
-      Array.prototype.last = function() {
+      Array.prototype.last = function () {
         return this[this.length - 1];
       };
     }
 
     // Array prototype reduceOneRight
     if (!Array.prototype.reduceOneRight) {
-      Array.prototype.reduceOneRight = function() {
+      Array.prototype.reduceOneRight = function () {
         return this.slice(0, -1);
       };
     }
@@ -21,7 +21,7 @@ export default class Middleware {
         let _next = args.last();
         fn.apply(this, [
           ...args.reduceOneRight(),
-          _next.bind.apply(_next, [null, ...args.reduceOneRight()])
+          _next.bind.apply(_next, [null, ...args.reduceOneRight()]),
         ]);
       }))(this.go);
   }

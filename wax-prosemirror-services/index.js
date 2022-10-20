@@ -1,21 +1,21 @@
+/* Base Services move to core */
 export { default as LayoutService } from './src/LayoutService/LayoutService';
 export { default as PortalService } from './src/PortalService/PortalService';
 export { default as MenuService } from './src/MenuService/MenuService';
 export { default as OverlayService } from './src/OverlayService/OverlayService';
-export { default as ImageService } from './src/ImageService/ImageService';
 export { default as RulesService } from './src/RulesService/RulesService';
 export { default as SchemaService } from './src/SchemaService/SchemaService';
-
 export { default as ShortCutsService } from './src/ShortCutsService/ShortCutsService';
+export { default as AbstractNodeView } from './src/PortalService/AbstractNodeView';
 
 export { default as Tools } from './src/lib/Tools';
-export { default as AbstractNodeView } from './src/PortalService/AbstractNodeView';
 export { default as ToolGroup } from './src/lib/ToolGroup';
 
 /*
 All Elements services
 */
 export { default as BaseService } from './src/BaseService/BaseService';
+export { default as ImageService } from './src/ImageService/ImageService';
 export { default as InlineAnnotationsService } from './src/InlineAnnotations/InlineAnnotationsService';
 export { default as ListsService } from './src/ListsService/ListsService';
 export { default as TablesService } from './src/TablesService/TablesService';

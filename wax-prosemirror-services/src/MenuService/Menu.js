@@ -1,7 +1,6 @@
 import React, { useMemo, useContext } from 'react';
 import { injectable } from 'inversify';
-import { WaxContext } from 'wax-prosemirror-core';
-import ToolGroup from '../lib/ToolGroup';
+import { WaxContext, ToolGroup } from 'wax-prosemirror-core';
 import MenuWrapper from './MenuWrapper';
 
 @injectable()

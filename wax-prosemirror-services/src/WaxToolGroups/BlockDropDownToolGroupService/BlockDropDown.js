@@ -3,10 +3,9 @@ import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ToolGroup } from 'wax-prosemirror-core';
 import { ReactDropDownStyles } from 'wax-prosemirror-components';
 import Dropdown from 'react-dropdown';
-import ToolGroup from '../../lib/ToolGroup';
 
 @injectable()
 class BlockDropDown extends ToolGroup {

@@ -1,5 +1,5 @@
 import { injectable, inject } from 'inversify';
-import ToolGroup from '../../lib/ToolGroup';
+import { ToolGroup } from 'wax-prosemirror-core';
 
 @injectable()
 class Lists extends ToolGroup {

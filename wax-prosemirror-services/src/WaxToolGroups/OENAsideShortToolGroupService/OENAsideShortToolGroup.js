@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectable, inject } from 'inversify';
 import { LeftMenuTitle } from 'wax-prosemirror-components';
-import ToolGroup from '../../lib/ToolGroup';
+import { ToolGroup } from 'wax-prosemirror-core';
 
 @injectable()
 class OENAsideShortToolGroup extends ToolGroup {

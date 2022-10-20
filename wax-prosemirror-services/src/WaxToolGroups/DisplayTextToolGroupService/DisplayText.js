@@ -5,7 +5,7 @@ import { BlockLevelTools, Tabs } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import ToolGroup from '../../lib/ToolGroup';
+import { ToolGroup } from 'wax-prosemirror-core';
 
 const Empty = styled.div`
   background: khaki;

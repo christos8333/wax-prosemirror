@@ -15,10 +15,6 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-prosemirror-services/index',
       ),
-      'wax-prosemirror-plugins': path.resolve(
-        __dirname,
-        '../../wax-prosemirror-plugins/index',
-      ),
       'wax-prosemirror-schema': path.resolve(
         __dirname,
         '../../wax-prosemirror-schema/index',

@@ -39,7 +39,6 @@ export default {
     'lodash',
     'prosemirror-tables',
     'prosemirror-schema-list',
-    'wax-prosemirror-plugins',
     'prosemirror-model',
     'prosemirror-inputrules',
   ],

@@ -14,7 +14,6 @@
     "wax-prosemirror-core",
     "wax-prosemirror-schema",
     "wax-prosemirror-components",
-    "wax-prosemirror-utilities",
     "wax-prosemirror-plugins",
     "wax-prosemirror-services",
     "editors/*"

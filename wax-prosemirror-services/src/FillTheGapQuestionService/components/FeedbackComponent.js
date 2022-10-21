@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { TextSelection } from 'prosemirror-state';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
 
 const FeedBack = styled.div`
   color: black;

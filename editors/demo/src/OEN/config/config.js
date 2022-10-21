@@ -49,7 +49,7 @@ import {
   OENAsideToolGroupService,
 } from 'wax-prosemirror-services';
 
-import { EditoriaSchema } from 'wax-prosemirror-utilities';
+import { EditoriaSchema } from 'wax-prosemirror-core';
 
 import invisibles, {
   space,

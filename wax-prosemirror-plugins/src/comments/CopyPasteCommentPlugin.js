@@ -2,7 +2,7 @@
 import { forEach, each } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const copyPasteCommentPugin = new PluginKey('copyPasteCommentPugin');
 

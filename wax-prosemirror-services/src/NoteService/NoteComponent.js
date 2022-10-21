@@ -2,11 +2,10 @@
 import React, { useContext, useState, useMemo } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { differenceBy } from 'lodash';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import NoteEditor from './NoteEditor';
 
-export default ({ view: view }) => {
+export default ({ view }) => {
   if (typeof view === 'undefined') return null;
   const context = useContext(WaxContext);
 

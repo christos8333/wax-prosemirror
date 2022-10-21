@@ -1,8 +1,11 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ComponentPlugin,
+  DocumentHelpers,
+} from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
 import EditorElements from './EditorElements';

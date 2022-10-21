@@ -8,9 +8,12 @@ import { StepMap } from 'prosemirror-transform';
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ComponentPlugin,
+  DocumentHelpers,
+} from 'wax-prosemirror-core';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
 
 const NoteContainer = styled.div`

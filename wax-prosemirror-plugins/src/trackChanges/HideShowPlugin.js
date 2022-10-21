@@ -2,7 +2,7 @@
 
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const hideShowPlugin = new PluginKey('hideShowPlugin');
 

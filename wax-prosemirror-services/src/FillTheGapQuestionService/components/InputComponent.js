@@ -4,7 +4,6 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 
 const AnswerInput = styled.input`
   border: none;
@@ -25,13 +24,11 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const [answer, setAnswer] = useState(' ');
-  const [typing, setTyping] = useState(false);
   const answerRef = useRef(null);
 
   useEffect(() => {}, []);
 
   const handleKeyDown = e => {
-    setTyping(true);
     if (e.key === 'Backspace') {
       main.dispatch(
         main.state.tr.setSelection(

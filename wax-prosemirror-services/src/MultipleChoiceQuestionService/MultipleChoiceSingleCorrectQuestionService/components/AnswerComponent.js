@@ -2,8 +2,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TextSelection, NodeSelection } from 'prosemirror-state';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import { Icon } from 'wax-prosemirror-components';

@@ -1,4 +1,4 @@
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const findSelectedChanges = state => {
   const { selection } = state;

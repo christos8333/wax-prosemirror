@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useContext, useEffect } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import YesNoSwitch from './YesNoSwitch';
 
 const CustomSwitch = ({ node, getPos }) => {

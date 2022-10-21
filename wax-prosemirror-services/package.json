@@ -34,8 +34,7 @@
     "wax-prosemirror-components": "^0.5.13",
     "wax-prosemirror-core": "^0.5.13",
     "wax-prosemirror-plugins": "^0.5.13",
-    "wax-prosemirror-schema": "^0.5.13",
-    "wax-prosemirror-utilities": "^0.5.13"
+    "wax-prosemirror-schema": "^0.5.13"
   },
   "peerDependencies": {
     "react": "^16.13.1",

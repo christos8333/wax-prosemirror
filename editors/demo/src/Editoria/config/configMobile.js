@@ -36,7 +36,7 @@ import {
   CustomTagService,
 } from 'wax-prosemirror-services';
 
-import { DefaultSchema } from 'wax-prosemirror-utilities';
+import { DefaultSchema } from 'wax-prosemirror-core';
 
 import invisibles, {
   space,

@@ -3,8 +3,7 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import CommentBox from '../../ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`

@@ -1,7 +1,6 @@
 import { toggleMark } from 'prosemirror-commands';
-import { Commands } from 'wax-prosemirror-utilities';
 import { injectable } from 'inversify';
-import { Tools } from 'wax-prosemirror-core';
+import { Commands, Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class Underline extends Tools {

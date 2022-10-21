@@ -32,7 +32,7 @@ import {
   MultipleDropDownToolGroupService,
 } from 'wax-prosemirror-services';
 
-import { DefaultSchema } from 'wax-prosemirror-utilities';
+import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 
 export default {

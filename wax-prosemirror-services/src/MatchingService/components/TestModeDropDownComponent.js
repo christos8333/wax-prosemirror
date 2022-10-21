@@ -3,8 +3,7 @@ import React, { useContext, useMemo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { find } from 'lodash';
 import { ReactDropDownStyles } from 'wax-prosemirror-components';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import { v4 as uuidv4 } from 'uuid';
 

@@ -1,7 +1,7 @@
 import { useState, useContext, useLayoutEffect, useCallback } from 'react';
 import { isObject } from 'lodash';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext } from '../../../WaxContext';
+import DocumentHelpers from '../../../utilities/document/DocumentHelpers';
 
 const defaultOverlay = {
   left: null,

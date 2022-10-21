@@ -2,9 +2,8 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import { Icon } from 'wax-prosemirror-components';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
 import ContainerEditor from './ContainerEditor';

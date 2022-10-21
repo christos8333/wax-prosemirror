@@ -1,5 +1,5 @@
 import { ReplaceStep } from 'prosemirror-transform';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 import markDeletion from './markDeletion';
 import markInsertion from './markInsertion';

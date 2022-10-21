@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
 import { TableDropDown } from 'wax-prosemirror-components';
-import { Commands } from 'wax-prosemirror-utilities';
-import { Tools } from 'wax-prosemirror-core';
+import { Commands, Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class TableDropDownOptions extends Tools {

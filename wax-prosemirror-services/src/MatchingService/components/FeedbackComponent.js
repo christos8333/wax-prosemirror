@@ -2,8 +2,7 @@
 
 import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 
 const FeedBack = styled.div`
   color: black;

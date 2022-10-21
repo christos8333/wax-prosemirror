@@ -23,10 +23,6 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-prosemirror-schema/index',
       ),
-      'wax-prosemirror-utilities': path.resolve(
-        __dirname,
-        '../../wax-prosemirror-utilities/index',
-      ),
     },
   };
   config.module = {

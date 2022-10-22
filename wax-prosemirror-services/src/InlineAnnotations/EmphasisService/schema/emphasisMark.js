@@ -1,4 +1,4 @@
-const em = {
+const emphasisMark = {
   parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
   toDOM(hook, next) {
     hook.value = ['em', 0];
@@ -6,4 +6,4 @@ const em = {
   },
 };
 
-export default em;
+export default emphasisMark;

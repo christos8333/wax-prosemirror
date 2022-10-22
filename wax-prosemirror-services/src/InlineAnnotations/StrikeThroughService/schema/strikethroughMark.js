@@ -1,4 +1,4 @@
-const strikethrough = {
+const strikethroughMark = {
   attrs: {
     class: { default: 'strikethrough' },
     style: { default: 'text-decoration:line-through' },
@@ -23,4 +23,4 @@ const strikethrough = {
   },
 };
 
-export default strikethrough;
+export default strikethroughMark;

@@ -1,4 +1,4 @@
-const highlight = {
+const highlightMark = {
   attrs: {
     style: { default: null },
     class: { default: 'highlight' },
@@ -23,4 +23,4 @@ const highlight = {
   },
 };
 
-export default highlight;
+export default highlightMark;

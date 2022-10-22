@@ -1,4 +1,4 @@
-const link = {
+const linkMark = {
   attrs: {
     href: { default: null },
     rel: { default: '' },
@@ -29,4 +29,4 @@ const link = {
   },
 };
 
-export default link;
+export default linkMark;

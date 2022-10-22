@@ -1,4 +1,4 @@
-const smallcaps = {
+const smallcapsMark = {
   attrs: {
     class: { default: 'small-caps' },
   },
@@ -20,4 +20,4 @@ const smallcaps = {
   },
 };
 
-export default smallcaps;
+export default smallcapsMark;

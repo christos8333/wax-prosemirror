@@ -1,4 +1,4 @@
-const strong = {
+const strongMark = {
   parseDOM: [
     { tag: 'strong' },
     // This works around a Google Docs misbehavior where
@@ -15,4 +15,4 @@ const strong = {
   },
 };
 
-export default strong;
+export default strongMark;

@@ -1,4 +1,4 @@
-const customtagInline = {
+const customtagInlineMark = {
   attrs: {
     class: { default: null },
     tags: [],
@@ -32,4 +32,4 @@ const customtagInline = {
   },
 };
 
-export default customtagInline;
+export default customtagInlineMark;

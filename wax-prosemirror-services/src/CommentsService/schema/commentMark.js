@@ -1,4 +1,4 @@
-const comment = {
+const commentMark = {
   attrs: {
     class: { default: 'comment' },
     id: { default: '' },
@@ -38,4 +38,4 @@ const comment = {
   },
 };
 
-export default comment;
+export default commentMark;

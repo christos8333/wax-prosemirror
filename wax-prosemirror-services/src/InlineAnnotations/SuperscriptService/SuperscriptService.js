@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { superscriptMark } from 'wax-prosemirror-schema';
+import superscriptMark from './schema/superscriptMark';
 import Superscript from './Superscript';
 import './superscript.css';
 

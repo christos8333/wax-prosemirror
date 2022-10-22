@@ -1,4 +1,4 @@
-const underline = {
+const underlineMark = {
   parseDOM: [{ tag: 'u' }],
   toDOM: (hook, next) => {
     // eslint-disable-next-line no-param-reassign
@@ -7,4 +7,4 @@ const underline = {
   },
 };
 
-export default underline;
+export default underlineMark;

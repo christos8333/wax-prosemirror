@@ -1,14 +1,14 @@
-const subtitle = {
+const sourceNoteNode = {
   content: 'inline*',
   group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: 'cst' },
+    class: { default: 'source-note' },
   },
   parseDOM: [
     {
-      tag: 'p.cst',
+      tag: 'p.source-note',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
@@ -24,4 +24,4 @@ const subtitle = {
   },
 };
 
-export default subtitle;
+export default sourceNoteNode;

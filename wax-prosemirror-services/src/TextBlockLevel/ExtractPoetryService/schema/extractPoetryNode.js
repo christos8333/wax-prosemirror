@@ -1,14 +1,14 @@
-const author = {
+const extractPoetryNode = {
   content: 'inline*',
   group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: 'author' },
+    class: { default: 'extract-poetry' },
   },
   parseDOM: [
     {
-      tag: 'p.author',
+      tag: 'p.extract-poetry',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
@@ -24,4 +24,4 @@ const author = {
   },
 };
 
-export default author;
+export default extractPoetryNode;

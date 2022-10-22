@@ -1,14 +1,14 @@
-const epigraphPoetry = {
+const extractProseNode = {
   content: 'inline*',
   group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: 'epigraph-poetry' },
+    class: { default: 'extract-prose' },
   },
   parseDOM: [
     {
-      tag: 'p.epigraph-poetry',
+      tag: 'p.extract-prose',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
@@ -24,4 +24,4 @@ const epigraphPoetry = {
   },
 };
 
-export default epigraphPoetry;
+export default extractProseNode;

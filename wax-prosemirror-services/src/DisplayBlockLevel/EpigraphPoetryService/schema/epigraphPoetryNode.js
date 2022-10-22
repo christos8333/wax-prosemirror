@@ -1,14 +1,14 @@
-const sourceNote = {
+const epigraphPoetryNode = {
   content: 'inline*',
   group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: 'source-note' },
+    class: { default: 'epigraph-poetry' },
   },
   parseDOM: [
     {
-      tag: 'p.source-note',
+      tag: 'p.epigraph-poetry',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
@@ -24,4 +24,4 @@ const sourceNote = {
   },
 };
 
-export default sourceNote;
+export default epigraphPoetryNode;

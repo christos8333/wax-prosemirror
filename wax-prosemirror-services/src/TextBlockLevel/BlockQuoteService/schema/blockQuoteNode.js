@@ -1,4 +1,4 @@
-const blockquote = {
+const blockQuoteNode = {
   content: 'block+',
   group: 'block',
   defining: true,
@@ -8,4 +8,4 @@ const blockquote = {
   },
 };
 
-export default blockquote;
+export default blockQuoteNode;

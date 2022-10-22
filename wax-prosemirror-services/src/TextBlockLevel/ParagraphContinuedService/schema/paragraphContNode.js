@@ -1,14 +1,14 @@
-const extractProse = {
+const paragraphContNode = {
   content: 'inline*',
   group: 'block',
   priority: 0,
   defining: true,
   attrs: {
-    class: { default: 'extract-prose' },
+    class: { default: 'paragraph-cont' },
   },
   parseDOM: [
     {
-      tag: 'p.extract-prose',
+      tag: 'p.paragraph-cont',
       getAttrs(hook, next) {
         Object.assign(hook, {
           class: hook.dom.getAttribute('class'),
@@ -24,4 +24,4 @@ const extractProse = {
   },
 };
 
-export default extractProse;
+export default paragraphContNode;

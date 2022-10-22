@@ -1,4 +1,4 @@
-const title = {
+const titleNode = {
   attrs: {
     level: { default: 1 },
   },
@@ -19,4 +19,4 @@ const title = {
   },
 };
 
-export default title;
+export default titleNode;

@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { paragraphContNode } from 'wax-prosemirror-schema';
+import paragraphContNode from './schema/paragraphContNode';
 import ParagraphContinued from './ParagraphContinued';
 
 class ParagraphContinuedService extends Service {

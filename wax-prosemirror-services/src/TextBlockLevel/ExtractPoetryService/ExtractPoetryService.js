@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { extractPoetryNode } from 'wax-prosemirror-schema';
+import extractPoetryNode from './schema/extractPoetryNode';
 import ExtractPoetry from './ExtractPoetry';
 
 class ExtractPoetryService extends Service {

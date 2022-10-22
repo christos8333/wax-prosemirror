@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { subTitleNode } from 'wax-prosemirror-schema';
+import subTitleNode from './schema/subTitleNode';
 import SubTitle from './SubTitle';
 
 class SubTitleService extends Service {

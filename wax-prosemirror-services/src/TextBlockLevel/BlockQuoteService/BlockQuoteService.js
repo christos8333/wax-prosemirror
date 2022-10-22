@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { blockQuoteNode } from 'wax-prosemirror-schema';
+import blockQuoteNode from './schema/blockQuoteNode';
 import BlockQuote from './BlockQuote';
 import './blockQuote.css';
 

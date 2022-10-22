@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { sourceNoteNode } from 'wax-prosemirror-schema';
+import sourceNoteNode from './schema/sourceNoteNode';
 import SourceNote from './SourceNote';
 
 class SourceNoteService extends Service {

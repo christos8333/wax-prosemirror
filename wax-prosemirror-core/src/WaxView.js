@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { trackedTransaction } from 'wax-prosemirror-services';
+// import { trackedTransaction } from 'wax-prosemirror-services';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
@@ -130,10 +130,11 @@ const WaxView = forwardRef((props, ref) => {
 
   const dispatchTransaction = transaction => {
     const { TrackChange } = props;
-    const tr =
-      TrackChange && TrackChange.enabled
-        ? trackedTransaction(transaction, view.state, user)
-        : transaction;
+    const tr = transaction;
+    // const tr =
+    //   TrackChange && TrackChange.enabled
+    //     ? trackedTransaction(transaction, view.state, user)
+    //     : transaction;
 
     previousDoc = view.state.doc;
     const state = view.state.apply(tr);

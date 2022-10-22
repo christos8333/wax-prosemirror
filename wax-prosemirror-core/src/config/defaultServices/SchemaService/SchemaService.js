@@ -1,4 +1,4 @@
-import { Service } from 'wax-prosemirror-core';
+import Service from '../../../Service';
 import { each } from 'lodash';
 import Schema from './Schema';
 // import Node from './Node';

@@ -1,3 +1,6 @@
+/* Editor */
+export { default as Wax } from './src/Wax';
+
 /* Cotext & ComponentPlugin */
 export { WaxContext, useInjection } from './src/WaxContext';
 export { PortalContext } from './src/PortalContext';
@@ -25,6 +28,3 @@ export { default as RulesService } from './src/config/defaultServices/RulesServi
 export { default as SchemaService } from './src/config/defaultServices/SchemaService/SchemaService';
 export { default as ShortCutsService } from './src/config/defaultServices/ShortCutsService/ShortCutsService';
 export { default as QuestionsNodeView } from './src/utilities/lib/helpers/QuestionsNodeView';
-
-/* Editor */
-export { default as Wax } from './src/Wax';

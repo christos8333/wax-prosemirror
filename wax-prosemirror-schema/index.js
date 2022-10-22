@@ -1,9 +1,4 @@
 /*
-LIST OF TRACK CHANGES MARKS
-*/
-export { default as trackChangesMarks } from './src/marks/trackChangesMarks';
-
-/*
 LIST OF SUPPORTED NODES
 */
 export { default as authorNode } from './src/nodes/authorNode';
@@ -29,7 +24,3 @@ export { default as mathInlineNode } from './src/nodes/mathInlineNode';
 export { default as mathDisplayNode } from './src/nodes/mathDisplayNode';
 export { default as customBlockNode } from './src/nodes/customBlockNode';
 export { default as OenNodes } from './src/nodes/oenNodes';
-/*
-LIST OF TRACK CHANGES NODES
-*/
-export { default as trackChangesNodes } from './src/nodes/trackChangesNodes';

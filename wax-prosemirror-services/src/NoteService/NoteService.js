@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { footNoteNode } from 'wax-prosemirror-schema';
+import footNoteNode from './schema/footNoteNode';
 import Note from './Note';
 import NoteComponent from './NoteComponent';
 import './note.css';

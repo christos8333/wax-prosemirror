@@ -35,7 +35,6 @@ export default {
     'react',
     'react-dom',
     'react-dropdown',
-    'wax-prosemirror-schema',
     'lodash',
     'prosemirror-tables',
     'prosemirror-schema-list',

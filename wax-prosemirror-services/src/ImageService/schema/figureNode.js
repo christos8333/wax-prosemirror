@@ -1,4 +1,4 @@
-const figure = {
+const figureNode = {
   content: 'image* figcaption{0,1}',
   group: 'block',
   marks: '',
@@ -8,4 +8,4 @@ const figure = {
   },
 };
 
-export default figure;
+export default figureNode;

@@ -1,6 +1,6 @@
 import { SchemaHelpers } from 'wax-prosemirror-core';
 
-const bulletlist = {
+const bulletListNode = {
   group: 'block',
   content: 'list_item+',
   attrs: {
@@ -27,4 +27,4 @@ const bulletlist = {
   },
 };
 
-export default bulletlist;
+export default bulletListNode;

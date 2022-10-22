@@ -1,9 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import {
-  imageNode,
-  figureCaptionNode,
-  figureNode,
-} from 'wax-prosemirror-schema';
+import { imageNode, figureCaptionNode, figureNode } from './schema';
 import PlaceHolderPlugin from './plugins/placeHolderPlugin';
 import captionPlugin from './plugins/captionPlugin';
 import Image from './Image';

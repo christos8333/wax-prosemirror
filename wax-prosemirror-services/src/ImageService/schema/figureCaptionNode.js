@@ -1,4 +1,4 @@
-const figureCaption = {
+const figureCaptionNode = {
   content: 'inline*',
   group: 'figure',
   draggable: false,
@@ -21,4 +21,4 @@ const figureCaption = {
   ],
 };
 
-export default figureCaption;
+export default figureCaptionNode;

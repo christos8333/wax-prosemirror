@@ -1,6 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { mathDisplayNode, mathInlineNode } from 'wax-prosemirror-schema';
-import mathSelectMark from './schema/mathSelectMark';
+import { mathDisplayNode, mathInlineNode, mathSelectMark } from './schema';
 import mathPlugin from './plugins/math-plugin';
 import mathSelectPlugin from './plugins/math-select';
 import inlineInputRule from './InlineInputRule';

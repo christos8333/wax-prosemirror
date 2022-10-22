@@ -1,16 +1,20 @@
-/* eslint-disable camelcase */
 import { SchemaHelpers } from 'wax-prosemirror-core';
 
-const list_item = {
-  content: 'paragraph block*',
+const orderedListNode = {
+  group: 'block',
+  content: 'list_item+',
   attrs: {
+    order: { default: 1 },
     track: { default: [] },
   },
   parseDOM: [
     {
-      tag: 'li',
+      tag: 'ol',
       getAttrs(hook, next) {
         Object.assign(hook, {
+          order: hook.dom.hasAttribute('start')
+            ? +hook.dom.getAttribute('start')
+            : 1,
           track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
         });
         next();
@@ -19,13 +23,15 @@ const list_item = {
   ],
   toDOM(hook, next) {
     const attrs = {};
+    if (hook.node.attrs.order !== 1) {
+      attrs.start = hook.node.attrs.order;
+    }
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
     }
-    hook.value = ['li', attrs, 0];
+    hook.value = ['ol', attrs, 0];
     next();
   },
-  defining: true,
 };
 
-export default list_item;
+export default orderedListNode;

@@ -1,4 +1,4 @@
-const footnote = {
+const footNoteNode = {
   group: 'notes inline',
   content: 'inline*',
   inline: true,
@@ -21,4 +21,4 @@ const footnote = {
   ],
 };
 
-export default footnote;
+export default footNoteNode;

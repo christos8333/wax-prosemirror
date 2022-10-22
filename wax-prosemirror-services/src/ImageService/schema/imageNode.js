@@ -1,6 +1,6 @@
 // import { SchemaHelpers } from 'wax-prosemirror-core';
 
-const image = {
+const imageNode = {
   attrs: {
     id: { default: '' },
     src: {},
@@ -53,4 +53,4 @@ const image = {
   },
 };
 
-export default image;
+export default imageNode;

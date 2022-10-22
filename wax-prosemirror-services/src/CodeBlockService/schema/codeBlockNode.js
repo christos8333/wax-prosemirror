@@ -1,4 +1,4 @@
-const codeBlock = {
+const codeBlockNode = {
   content: 'text*',
   group: 'block',
   code: true,
@@ -21,4 +21,4 @@ const codeBlock = {
   },
 };
 
-export default codeBlock;
+export default codeBlockNode;

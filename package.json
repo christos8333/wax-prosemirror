@@ -12,7 +12,6 @@
   "main": "index.js",
   "workspaces": [
     "wax-prosemirror-core",
-    "wax-prosemirror-schema",
     "wax-prosemirror-components",
     "wax-prosemirror-services",
     "editors/*"

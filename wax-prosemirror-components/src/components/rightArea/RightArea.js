@@ -3,8 +3,7 @@ import { Mark } from 'prosemirror-model';
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy } from 'lodash';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
 
 export default ({ area }) => {

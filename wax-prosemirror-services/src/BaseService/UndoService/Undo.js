@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { undo } from 'prosemirror-history';
 import { injectable } from 'inversify';
 import { UndoRedoButton } from 'wax-prosemirror-components';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class Undo extends Tools {

@@ -1,5 +1,5 @@
 import { each } from 'lodash';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 import { TextSelection } from 'prosemirror-state';
 
 const getMatchesByView = (views, searchValue, matchCase) => {

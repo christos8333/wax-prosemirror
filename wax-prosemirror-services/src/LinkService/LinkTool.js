@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import { toggleMark } from 'prosemirror-commands';
-import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../lib/Tools';
+import { Commands, Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class LinkTool extends Tools {

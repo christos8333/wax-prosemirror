@@ -1,5 +1,5 @@
+import { Service } from 'wax-prosemirror-core';
 import { orderedListNode } from 'wax-prosemirror-schema';
-import Service from '../../Service';
 import OrderedList from './OrderedList';
 
 class OrderedListService extends Service {

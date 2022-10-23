@@ -1,8 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { each, eachRight } from 'lodash';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import Icon from '../../helpers/Icon';

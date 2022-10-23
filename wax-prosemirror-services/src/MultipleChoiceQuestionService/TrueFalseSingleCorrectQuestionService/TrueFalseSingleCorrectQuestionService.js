@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import TrueFalseSingleCorrectQuestion from './TrueFalseSingleCorrectQuestion';
 import trueFalseSingleCorrectNode from './schema/trueFalseSingleCorrectNode';
 import trueFalseSingleCorrectContainerNode from './schema/trueFalseSingleCorrectContainerNode';

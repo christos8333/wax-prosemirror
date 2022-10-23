@@ -1,7 +1,7 @@
+import { Service } from 'wax-prosemirror-core';
 import { toggleMark } from 'prosemirror-commands';
 import { underlineMark } from 'wax-prosemirror-schema';
 import Underline from './Underline';
-import Service from '../../Service';
 
 class UnderlineService extends Service {
   register() {

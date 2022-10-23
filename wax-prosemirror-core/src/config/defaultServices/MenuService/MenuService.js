@@ -1,10 +1,11 @@
+import { Service } from 'wax-prosemirror-core';
 import { isPlainObject, isFunction } from 'lodash';
-import Service from '../Service';
 import Menu from './Menu';
 import MenuCollection from './MenuCollection';
 
 class MenuService extends Service {
   name = 'MenuService';
+
   boot() {
     if (this.app.config.get('config.MenuService') === undefined) return false;
     const { menus } = this.container.get('MenuCollection');
@@ -23,7 +24,7 @@ class MenuService extends Service {
       });
     });
 
-    /*create MenuCollection of Menus */
+    /* create MenuCollection of Menus */
     this.container.bind('MenuCollection').to(MenuCollection).inSingletonScope();
 
     /* create factory of tools */

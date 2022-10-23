@@ -1,7 +1,7 @@
+import { Service } from 'wax-prosemirror-core';
 import { toggleMark } from 'prosemirror-commands';
 import { codeMark } from 'wax-prosemirror-schema';
 import Code from './Code';
-import Service from '../../Service';
 
 class CodeService extends Service {
   register() {

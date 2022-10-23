@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import ToolGroup from '../../lib/ToolGroup';
+import { ToolGroup } from 'wax-prosemirror-core';
 import DropDownComponent from './DropDownComponent';
 
 @injectable()

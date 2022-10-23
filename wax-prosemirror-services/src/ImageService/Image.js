@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { ImageUpload } from 'wax-prosemirror-components';
-import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../lib/Tools';
+import { Commands, Tools } from 'wax-prosemirror-core';
 import fileUpload from './fileUpload';
 
 @injectable()

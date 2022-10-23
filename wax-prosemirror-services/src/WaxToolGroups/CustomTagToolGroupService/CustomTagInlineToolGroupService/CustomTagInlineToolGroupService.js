@@ -1,10 +1,10 @@
-import Service from '../../../Service';
+import { Service } from 'wax-prosemirror-core';
 import CustomTagInlineToolGroup from './CustomTagInlineToolGroup';
 
 class CustomTagInlineToolGroupService extends Service {
-    register() {
-        this.container.bind('CustomTagInline').to(CustomTagInlineToolGroup);
-    }
+  register() {
+    this.container.bind('CustomTagInline').to(CustomTagInlineToolGroup);
+  }
 }
 
 export default CustomTagInlineToolGroupService;

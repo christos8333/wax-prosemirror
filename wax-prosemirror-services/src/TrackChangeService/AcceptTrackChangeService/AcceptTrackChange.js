@@ -1,8 +1,8 @@
 import { Mapping, RemoveMarkStep, ReplaceStep } from 'prosemirror-transform';
 import { Slice } from 'prosemirror-model';
 import { injectable } from 'inversify';
+import { Tools } from 'wax-prosemirror-core';
 import removeNode from '../track-changes/helpers/removeNode';
-import Tools from '../../lib/Tools';
 
 const checkFromConfig = (mark, user, config) => {
   if (mark.attrs.username === user.username && !config.own.accept) {

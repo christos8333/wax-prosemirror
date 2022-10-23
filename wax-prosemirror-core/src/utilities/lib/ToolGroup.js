@@ -1,12 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import { ToolGroupComponent, ToolGroups } from 'wax-prosemirror-components';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
+import 'reflect-metadata';
 
 @injectable()
-export default class ToolGroup {
+class ToolGroup {
   _config = {};
   title = '';
   _tools = [];
@@ -82,3 +83,5 @@ export default class ToolGroup {
     return MemorizedToolGroupComponent;
   }
 }
+
+export default ToolGroup;

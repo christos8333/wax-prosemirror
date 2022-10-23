@@ -1,6 +1,6 @@
 import { joinUp } from 'prosemirror-commands';
 import { injectable } from 'inversify';
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class JoinUp extends Tools {

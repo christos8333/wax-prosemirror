@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { EditingSuggestingDropDown } from 'wax-prosemirror-components';
-import Tools from '../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class EditingSuggesting extends Tools {

@@ -2,8 +2,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   background: #fff;

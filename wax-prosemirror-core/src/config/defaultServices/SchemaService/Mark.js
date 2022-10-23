@@ -1,18 +1,18 @@
 /* eslint-disable no-underscore-dangle */
+import { Middleware } from 'wax-prosemirror-core';
 import { isPlainObject } from 'lodash';
 import ParseRule from './ParseRule';
-import Middleware from '../lib/Middleware';
 
-export default class Node {
+export default class Mark {
   name = '';
   importer = {};
 
-  atom = false;
   inline = false;
-  isolating = false;
-  draggable = false;
   group = '';
   content = '';
+  draggable = false;
+  inclusive = true;
+  excludes = '';
   _attrs = {};
   _parseRules = [];
 
@@ -59,12 +59,12 @@ export default class Node {
     const { importer } = this;
 
     return {
-      atom: this.atom,
       inline: this.inline,
       group: this.group,
       content: this.content,
-      isolating: this.isolating,
       draggable: this.draggable,
+      inclusive: this.inclusive,
+      excludes: this.excludes,
       attrs: this._attrs,
       parseDOM: this._parseRules.map(rule => rule.combineRules()),
       toDOM: node => {

@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
 import { TrackChangeOptionsTool } from 'wax-prosemirror-components';
-import Tools from '../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 export default class SpecialCharacters extends Tools {

@@ -1,7 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState, forwardRef } from 'react';
 import { DOMSerializer } from 'prosemirror-model';
-import { DefaultSchema } from 'wax-prosemirror-utilities';
+import DefaultSchema from './utilities/schema/DefaultSchema';
 import WaxProvider from './WaxContext';
 import PortalProvider from './PortalContext';
 import Application from './Application';

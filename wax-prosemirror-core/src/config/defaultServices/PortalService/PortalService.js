@@ -1,4 +1,4 @@
-import Service from '../Service';
+import { Service } from 'wax-prosemirror-core';
 import PortalComponent from './components/PortalComponent';
 import PortalPlugin from './portalPlugin';
 import Portals from './Portals';

@@ -10,7 +10,7 @@ export default {
     {
       file: 'dist/index.js',
       format: 'cjs',
-      sourcemap: true,
+      sourcemap: false,
     },
   ],
   plugins: [
@@ -25,5 +25,5 @@ export default {
     commonjs(),
     terser(),
   ],
-  external: ['uuid', 'wax-prosemirror-utilities'],
+  external: ['uuid'],
 };

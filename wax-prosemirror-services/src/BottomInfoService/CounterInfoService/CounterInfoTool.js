@@ -2,8 +2,7 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { EditorInfoTool } from 'wax-prosemirror-components';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
-import Tools from '../../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 
 @injectable()
 class CounterInfoTool extends Tools {

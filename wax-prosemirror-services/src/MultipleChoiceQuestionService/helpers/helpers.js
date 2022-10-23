@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
-import { Commands } from 'wax-prosemirror-utilities';
+import { Commands } from 'wax-prosemirror-core';
 import { Fragment } from 'prosemirror-model';
 import { findWrapping } from 'prosemirror-transform';
 

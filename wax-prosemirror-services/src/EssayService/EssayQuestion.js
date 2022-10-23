@@ -2,12 +2,11 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { v4 as uuidv4 } from 'uuid';
-import { Commands } from 'wax-prosemirror-utilities';
 import { Fragment } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { findWrapping } from 'prosemirror-transform';
+import { Commands, Tools } from 'wax-prosemirror-core';
 import ToolBarBtn from './components/ToolBarBtn';
-import Tools from '../lib/Tools';
 
 const checkifEmpty = view => {
   const { state } = view;

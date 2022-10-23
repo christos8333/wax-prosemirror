@@ -1,9 +1,9 @@
+import { Service } from 'wax-prosemirror-core';
 import Heading2 from './Heading2';
 import Heading3 from './Heading3';
 import Heading4 from './Heading4';
 import Heading5 from './Heading5';
 import Heading6 from './Heading6';
-import Service from '../../Service';
 
 class HeadingService extends Service {
   register() {

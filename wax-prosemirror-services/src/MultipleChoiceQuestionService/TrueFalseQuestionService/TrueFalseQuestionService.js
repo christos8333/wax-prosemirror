@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import TrueFalseQuestion from './TrueFalseQuestion';
 import trueFalseNode from './schema/trueFalseNode';
 import questionTrueFalseNode from './schema/questionTrueFalseNode';

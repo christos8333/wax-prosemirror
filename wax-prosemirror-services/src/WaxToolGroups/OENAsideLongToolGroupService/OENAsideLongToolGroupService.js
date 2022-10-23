@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import OENAsideLongToolGroup from './OENAsideLongToolGroup';
 
 class OENAsideLongToolGroupService extends Service {

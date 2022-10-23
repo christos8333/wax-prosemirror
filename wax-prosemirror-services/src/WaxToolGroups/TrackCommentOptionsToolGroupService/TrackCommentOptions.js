@@ -4,7 +4,7 @@ import { injectable, inject } from 'inversify';
 import { TrackChangeOptionsTool } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import ToolGroup from '../../lib/ToolGroup';
+import { ToolGroup } from 'wax-prosemirror-core';
 
 @injectable()
 class TrackCommentOptions extends ToolGroup {

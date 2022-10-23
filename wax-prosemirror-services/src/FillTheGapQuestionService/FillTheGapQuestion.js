@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { findWrapping } from 'prosemirror-transform';
 import { v4 as uuidv4 } from 'uuid';
-import Tools from '../lib/Tools';
+import { Tools } from 'wax-prosemirror-core';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()

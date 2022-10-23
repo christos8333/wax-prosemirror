@@ -1,13 +1,8 @@
-/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { TransformCaseComponent } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
-import Tools from '../lib/Tools';
-// eslint-disable-next-line no-unused-vars
-import titleCase from './titleCase';
+import { DocumentHelpers, Tools } from 'wax-prosemirror-core';
 
 const upperLowerCase = (state, dispatch, casing) => {
   // grab the current transaction and selection

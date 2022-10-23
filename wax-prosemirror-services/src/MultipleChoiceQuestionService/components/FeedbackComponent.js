@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { TextSelection } from 'prosemirror-state';
-import { WaxContext } from 'wax-prosemirror-core';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 
 const FeedBack = styled.div`
   color: black;
@@ -36,42 +34,11 @@ export default ({ node, view, getPos, readOnly }) => {
     pmViews: { main },
   } = context;
 
-  const [feedBack, setFeedBack] = useState(' ');
-  const [isFirstRun, setFirstRun] = useState(true);
-  const [typing, setTyping] = useState(false);
+  const [feedBack, setFeedBack] = useState(node.attrs.feedback);
   const feedBackRef = useRef(null);
-
-  useEffect(() => {
-    const allNodes = getNodes(main);
-    allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
-        if (!typing || context.transaction.meta.inputType === 'Redo') {
-          setFeedBack(singleNode.node.attrs.feedback);
-        }
-        if (!isFirstRun) {
-          if (singleNode.node.attrs.feedback === '')
-            setFeedBack(singleNode.node.attrs.feedback);
-        }
-      }
-    });
-  }, [getNodes(main)]);
-
-  const handleKeyDown = e => {
-    setTyping(true);
-    if (e.key === 'Backspace') {
-      main.dispatch(
-        main.state.tr.setSelection(
-          TextSelection.create(main.state.tr.doc, null),
-        ),
-      );
-    }
-  };
 
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
-  };
-
-  const saveFeedBack = () => {
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
@@ -81,26 +48,17 @@ export default ({ node, view, getPos, readOnly }) => {
             feedback: feedBack,
           }),
         );
-        setFirstRun(false);
       }
     });
     return false;
-  };
-
-  const onFocus = () => {
-    main.dispatch(
-      main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
-    );
   };
 
   return (
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
       <FeedBackInput
-        onBlur={saveFeedBack}
+        autoFocus="autoFocus"
         onChange={feedBackInput}
-        onFocus={onFocus}
-        onKeyDown={handleKeyDown}
         placeholder="Insert feedback"
         readOnly={readOnly}
         ref={feedBackRef}

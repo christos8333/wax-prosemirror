@@ -1,10 +1,10 @@
+import { Service } from 'wax-prosemirror-core';
 import {
   mathDisplayNode,
   mathInlineNode,
   mathSelectMark,
 } from 'wax-prosemirror-schema';
 import { mathPlugin, mathSelectPlugin } from 'wax-prosemirror-plugins';
-import Service from '../Service';
 import inlineInputRule from './InlineInputRule';
 import blockInputRule from './BlockInputRule';
 import './math.css';

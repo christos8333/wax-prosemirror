@@ -1,11 +1,8 @@
 import { injectable } from 'inversify';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
-import { Commands, DocumentHelpers } from 'wax-prosemirror-utilities';
-
 import { splitListItem } from 'prosemirror-schema-list';
 import { NodeSelection, TextSelection } from 'prosemirror-state';
-
 import {
   baseKeymap,
   chainCommands,
@@ -15,6 +12,8 @@ import {
   selectNodeBackward,
   deleteSelection,
 } from 'prosemirror-commands';
+import Commands from '../../../utilities/commands/Commands';
+import DocumentHelpers from '../../../utilities/document/DocumentHelpers';
 
 const backSpace = chainCommands(
   deleteSelection,

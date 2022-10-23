@@ -1,4 +1,4 @@
-import Service from '../Service';
+import { Service } from 'wax-prosemirror-core';
 import OverlayComponent from './OverlayComponent';
 
 export default class OverlayService extends Service {

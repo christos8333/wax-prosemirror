@@ -7,7 +7,7 @@ import {
   Mapping,
 } from 'prosemirror-transform';
 
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 import replaceStep from './helpers/replaceStep';
 import replaceAroundStep from './helpers/replaceAroundStep';
 import addMarkStep from './helpers/addMarkStep';

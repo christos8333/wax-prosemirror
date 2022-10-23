@@ -2,8 +2,7 @@ import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
 import { LeftSideButton } from 'wax-prosemirror-components';
-import { Commands } from 'wax-prosemirror-utilities';
-import Tools from '../../lib/Tools';
+import { Commands, Tools } from 'wax-prosemirror-core';
 
 @injectable()
 class SourceNote extends Tools {

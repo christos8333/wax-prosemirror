@@ -1,9 +1,8 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import ShowHideTrackChange from './ShowHideTrackChange';
 
 class ShowHideTrackChangeService extends Service {
   name = 'ShowHideTrackChangeService';
-  // boot() {}
 
   register() {
     this.container.bind('ShowHideTrackChange').to(ShowHideTrackChange);

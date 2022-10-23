@@ -1,4 +1,4 @@
-import Service from '../Service';
+import { Service } from 'wax-prosemirror-core';
 import MultipleDropDownQuestion from './MultipleDropDownQuestion';
 import MultipleDropDownContainerNodeView from './MultipleDropDownContainerNodeView';
 import multipleDropDownContainerNode from './schema/multipleDropDownContainerNode';

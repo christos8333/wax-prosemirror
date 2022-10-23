@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import SpecialCharacters from './SpecialCharacters';
 
 class SpecialCharactersToolGroupService extends Service {

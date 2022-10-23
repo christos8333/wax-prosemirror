@@ -3,7 +3,7 @@
 import { minBy, maxBy, last } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const commentPlugin = new PluginKey('commentPlugin');
 

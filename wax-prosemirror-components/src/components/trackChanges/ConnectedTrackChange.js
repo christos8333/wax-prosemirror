@@ -1,8 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { DocumentHelpers } from 'wax-prosemirror-utilities';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import { last, maxBy } from 'lodash';
 import { TextSelection } from 'prosemirror-state';
 import TrackChangesBox from './TrackChangesBox';

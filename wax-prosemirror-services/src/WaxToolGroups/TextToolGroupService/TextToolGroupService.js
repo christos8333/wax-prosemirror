@@ -1,4 +1,4 @@
-import Service from '../../Service';
+import { Service } from 'wax-prosemirror-core';
 import Text from './Text';
 
 class TextToolGroupService extends Service {

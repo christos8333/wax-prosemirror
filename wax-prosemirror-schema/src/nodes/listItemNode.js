@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { SchemaHelpers } from 'wax-prosemirror-utilities';
+import { SchemaHelpers } from 'wax-prosemirror-core';
 
 const list_item = {
   content: 'paragraph block*',

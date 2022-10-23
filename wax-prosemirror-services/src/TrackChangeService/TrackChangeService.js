@@ -1,6 +1,7 @@
 import { Service } from 'wax-prosemirror-core';
 import { trackChangesMarks, trackChangesNodes } from 'wax-prosemirror-schema';
-import { TrackChangePlugin, HideShowPlugin } from 'wax-prosemirror-plugins';
+import TrackChangePlugin from './plugins/TrackChangePlugin';
+import HideShowPlugin from './plugins/HideShowPlugin';
 import TrackChangeServices from './index';
 import './trackChange.css';
 

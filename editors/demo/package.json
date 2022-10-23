@@ -16,7 +16,6 @@
     "typeface-vollkorn": "^0.0.54",
     "wax-prosemirror-components": "^0.5.13",
     "wax-prosemirror-core": "^0.5.13",
-    "wax-prosemirror-plugins": "^0.5.13",
     "wax-prosemirror-services": "^0.5.13"
   },
   "scripts": {

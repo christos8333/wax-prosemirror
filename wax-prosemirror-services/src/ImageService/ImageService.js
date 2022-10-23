@@ -4,7 +4,8 @@ import {
   figureCaptionNode,
   figureNode,
 } from 'wax-prosemirror-schema';
-import { PlaceHolderPlugin, captionPlugin } from 'wax-prosemirror-plugins';
+import PlaceHolderPlugin from './plugins/placeHolderPlugin';
+import captionPlugin from './plugins/captionPlugin';
 import Image from './Image';
 import './image.css';
 import AltComponent from './AltComponent';

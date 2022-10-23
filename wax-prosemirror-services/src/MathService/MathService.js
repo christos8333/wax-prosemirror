@@ -4,7 +4,8 @@ import {
   mathInlineNode,
   mathSelectMark,
 } from 'wax-prosemirror-schema';
-import { mathPlugin, mathSelectPlugin } from 'wax-prosemirror-plugins';
+import mathPlugin from './plugins/math-plugin';
+import mathSelectPlugin from './plugins/math-select';
 import inlineInputRule from './InlineInputRule';
 import blockInputRule from './BlockInputRule';
 import './math.css';

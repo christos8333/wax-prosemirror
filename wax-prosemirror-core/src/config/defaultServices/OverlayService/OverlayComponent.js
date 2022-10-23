@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo, useContext } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
-
 import { Overlay } from 'wax-prosemirror-components';
+import { WaxContext } from '../../../WaxContext';
 import usePosition from './usePosition';
 
 export default (Component, markType) => props => {

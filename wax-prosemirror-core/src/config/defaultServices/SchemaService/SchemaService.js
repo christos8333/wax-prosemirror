@@ -1,5 +1,5 @@
-import Service from '../../../Service';
 import { each } from 'lodash';
+import Service from '../../../Service';
 import Schema from './Schema';
 // import Node from './Node';
 // import Mark from './Mark';

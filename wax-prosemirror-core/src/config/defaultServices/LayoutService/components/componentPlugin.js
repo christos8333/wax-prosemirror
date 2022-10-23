@@ -4,7 +4,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { useInjection } from 'wax-prosemirror-core';
+import { useInjection } from '../../../../WaxContext';
 
 // eslint-disable-next-line no-unused-vars
 class UpdateView extends Component {

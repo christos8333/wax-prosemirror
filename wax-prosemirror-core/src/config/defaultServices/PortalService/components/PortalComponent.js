@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { PortalContext } from 'wax-prosemirror-core';
 import ReactDOM from 'react-dom';
-// import { isEmpty } from 'lodash';
+import { PortalContext } from '../../../../PortalContext';
 
 export default () => {
   const { portals } = useContext(PortalContext);

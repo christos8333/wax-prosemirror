@@ -1,6 +1,6 @@
 import { Service } from 'wax-prosemirror-core';
 import { CustomTagInlineOverlayComponent } from 'wax-prosemirror-components';
-import { customtagInlineMark } from 'wax-prosemirror-schema';
+import customtagInlineMark from './schema/customtagInlineMark';
 import CustomTagInlineTool from './CustomTagInlineTool';
 
 class CustomTagInlineService extends Service {

@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { highlightMark } from 'wax-prosemirror-schema';
+import highlightMark from './schema/highlightMark';
 import TextHighlightTool from './TextHighlightTool';
 
 export default class HighlightService extends Service {

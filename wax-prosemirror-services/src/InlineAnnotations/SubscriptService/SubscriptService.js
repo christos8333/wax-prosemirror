@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { subscriptMark } from 'wax-prosemirror-schema';
+import subscriptMark from './schema/subscriptMark';
 import Subscript from './Subscript';
 import './subscript.css';
 

@@ -1,6 +1,6 @@
 import { Service } from 'wax-prosemirror-core';
 import { toggleMark } from 'prosemirror-commands';
-import { emphasisMark } from 'wax-prosemirror-schema';
+import emphasisMark from './schema/emphasisMark';
 import Emphasis from './Emphasis';
 
 class EmphasisService extends Service {

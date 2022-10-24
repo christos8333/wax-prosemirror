@@ -1,6 +1,6 @@
 import { Service } from 'wax-prosemirror-core';
 import { LinkComponent } from 'wax-prosemirror-components';
-import { linkMark } from 'wax-prosemirror-schema';
+import linkMark from './schema/linkMark';
 import LinkTool from './LinkTool';
 import linkRule from './LinkInputRule';
 

@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { smallcapsMark } from 'wax-prosemirror-schema';
+import smallcapsMark from './schema/smallcapsMark';
 import SmallCaps from './SmallCaps';
 
 class SmallCapsService extends Service {

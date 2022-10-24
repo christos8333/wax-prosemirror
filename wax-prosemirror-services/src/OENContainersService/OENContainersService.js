@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { OenNodes } from 'wax-prosemirror-schema';
+import OenNodes from './schema';
 import OENContainersTool from './OENContainersTool';
 import OENAsideLongToolCaseStudy from './OENAsideLongToolCaseStudy';
 import OENAsideLongToolBiography from './OENAsideLongToolBiography';

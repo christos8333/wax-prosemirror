@@ -125,6 +125,7 @@ export default ({ node, view, getPos }) => {
   const [optionText, setOptionText] = useState('');
   const [addingOption, setAddingOption] = useState(false);
   const addOptionRef = useRef(null);
+  const addOptionBtnRef = useRef(null);
 
   const customProps = main.props.customValues;
 
@@ -133,6 +134,19 @@ export default ({ node, view, getPos }) => {
   });
 
   const readOnly = !isEditable;
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        addOptionBtnRef.current.click();
+      }
+    };
+    addOptionBtnRef.current.addEventListener('keydown', listener);
+    return () => {
+      addOptionBtnRef.current.removeEventListener('keydown', listener);
+    };
+  }, []);
 
   useEffect(() => {
     const allNodes = getNodes(main);
@@ -246,7 +260,7 @@ export default ({ node, view, getPos }) => {
                   type="text"
                   value={optionText}
                 />
-                <button onClick={addOption} type="button">
+                <button onClick={addOption} ref={addOptionBtnRef} type="button">
                   Add Option
                 </button>
               </AddOption>

@@ -1,5 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
-import { authorNode } from 'wax-prosemirror-schema';
+import authorNode from './schema/authorNode';
 import Author from './Author';
 
 class AuthorService extends Service {

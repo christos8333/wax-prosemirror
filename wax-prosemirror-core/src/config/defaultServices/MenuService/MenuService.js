@@ -1,4 +1,4 @@
-import { Service } from 'wax-prosemirror-core';
+import Service from '../../../Service';
 import { isPlainObject, isFunction } from 'lodash';
 import Menu from './Menu';
 import MenuCollection from './MenuCollection';

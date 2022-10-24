@@ -1,4 +1,4 @@
-import { Service } from 'wax-prosemirror-core';
+import Service from '../../../Service';
 import Layout from './Layout';
 
 export default class LayoutService extends Service {

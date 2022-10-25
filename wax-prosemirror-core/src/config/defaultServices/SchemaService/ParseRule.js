@@ -1,5 +1,5 @@
-import { Middleware } from 'wax-prosemirror-core';
 import { omit } from 'lodash';
+import Middleware from '../../../utilities/lib/Middleware';
 
 export default class ParseRule {
   tag = null;

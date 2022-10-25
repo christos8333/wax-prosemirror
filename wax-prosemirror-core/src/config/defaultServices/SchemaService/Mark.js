@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { Middleware } from 'wax-prosemirror-core';
 import { isPlainObject } from 'lodash';
+import Middleware from '../../../utilities/lib/Middleware';
 import ParseRule from './ParseRule';
 
 export default class Mark {

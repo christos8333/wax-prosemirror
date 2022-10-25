@@ -1,5 +1,6 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React from 'react';
 
-const DefaultLayout = ({ editor }) => <>{editor}</>
+const DefaultLayout = ({ editor }) => <>{editor}</>;
 
-export default DefaultLayout
+export default DefaultLayout;

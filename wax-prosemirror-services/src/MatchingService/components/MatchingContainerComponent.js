@@ -139,12 +139,14 @@ export default ({ node, view, getPos }) => {
     const listener = event => {
       if (event.code === 'Enter') {
         event.preventDefault();
-        addOptionBtnRef.current.click();
+        if (addOptionBtnRef.current) addOptionBtnRef.current.click();
       }
     };
-    addOptionBtnRef.current.addEventListener('keydown', listener);
+    if (addOptionBtnRef.current)
+      addOptionBtnRef.current.addEventListener('keydown', listener);
     return () => {
-      addOptionBtnRef.current.removeEventListener('keydown', listener);
+      if (addOptionBtnRef.current)
+        addOptionBtnRef.current.removeEventListener('keydown', listener);
     };
   }, []);
 

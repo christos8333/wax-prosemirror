@@ -69,7 +69,7 @@ const CustomSwitch = ({ node, getPos }) => {
         });
       } else if (
         element.type.name === 'true_false_single_correct' &&
-        element.attrs.correct
+        element.attrs[key]
       ) {
         tr.setNodeMarkup(parentPosition + position + 1, undefined, {
           ...element.attrs,

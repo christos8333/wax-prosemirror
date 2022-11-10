@@ -13,7 +13,6 @@ export { default as CommentsService } from './src/CommentsService/CommentsServic
 export { default as CodeBlockService } from './src/CodeBlockService/CodeBlockService';
 export { default as LinkService } from './src/LinkService/LinkService';
 export { default as TrackChangeService } from './src/TrackChangeService/TrackChangeService';
-export { default as trackedTransaction } from './src/TrackChangeService/track-changes/trackedTransaction';
 export { default as MathService } from './src/MathService/MathService';
 export { default as FindAndReplaceService } from './src/FindAndReplaceService/FindAndReplaceService';
 export { default as FullScreenService } from './src/FullScreenService/FullScreenService';

@@ -45,7 +45,7 @@ export default ({ node, view, getPos, readOnly }) => {
         main.dispatch(
           main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
-            feedback: feedBack,
+            feedback: feedBackRef.current.value,
           }),
         );
       }

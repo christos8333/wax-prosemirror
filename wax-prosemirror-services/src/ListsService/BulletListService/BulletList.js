@@ -41,6 +41,14 @@ export default class BulletList extends Tools {
     const { disallowedTools } = activeView.props;
     if (disallowedTools.includes('Lists')) status = false;
 
+    // Disable lists first in questions
+    if (
+      activeViewId !== 'main' &&
+      activeView.state.selection.$from.start(1) === 1
+    ) {
+      status = false;
+    }
+
     return status;
   };
 

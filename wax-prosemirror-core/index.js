@@ -29,3 +29,4 @@ export { default as SchemaService } from './src/config/defaultServices/SchemaSer
 export { default as ShortCutsService } from './src/config/defaultServices/ShortCutsService/ShortCutsService';
 
 export { default as QuestionsNodeView } from './src/utilities/lib/helpers/QuestionsNodeView';
+export { default as trackedTransaction } from './src/utilities/track-changes/trackedTransaction';

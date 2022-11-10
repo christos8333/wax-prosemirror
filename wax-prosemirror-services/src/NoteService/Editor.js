@@ -12,9 +12,9 @@ import {
   WaxContext,
   ComponentPlugin,
   DocumentHelpers,
+  trackedTransaction,
 } from 'wax-prosemirror-core';
 import { NoteEditorContainer } from 'wax-prosemirror-components';
-import trackedTransaction from '../TrackChangeService/track-changes/trackedTransaction';
 
 const NoteContainer = styled.div`
   display: flex;

@@ -8,6 +8,13 @@ eslint.parserOptions = {
   },
 };
 
+eslint.rules['no-unused-vars'] = ['error', { varsIgnorePattern: 'inject' }];
+
+eslint.rules['no-underscore-dangle'] = [
+  'error',
+  { allow: ['_tools', '_config'] },
+];
+
 eslint.rules['class-methods-use-this'] = [
   1,
   { exceptMethods: ['run', 'enable', 'active', 'select'] },

@@ -6,7 +6,7 @@ import { ToolGroup } from 'wax-prosemirror-core';
 import DropDownComponent from './DropDownComponent';
 
 @injectable()
-class MultipleChoiceDropDown extends ToolGroup {
+class QuestionsDropDown extends ToolGroup {
   tools = [];
   constructor(
     @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
@@ -14,6 +14,7 @@ class MultipleChoiceDropDown extends ToolGroup {
     multipleChoiceSingleCorrectQuestion,
     @inject('TrueFalseQuestion') trueFalseQuestion,
     @inject('TrueFalseSingleCorrectQuestion') trueFalseSingleCorrectQuestion,
+    @inject('MatchingQuestion') matchingQuestion,
   ) {
     super();
     this.tools = [
@@ -21,6 +22,7 @@ class MultipleChoiceDropDown extends ToolGroup {
       multipleChoiceSingleCorrectQuestion,
       trueFalseQuestion,
       trueFalseSingleCorrectQuestion,
+      matchingQuestion,
     ];
   }
 
@@ -36,4 +38,4 @@ class MultipleChoiceDropDown extends ToolGroup {
   }
 }
 
-export default MultipleChoiceDropDown;
+export default QuestionsDropDown;

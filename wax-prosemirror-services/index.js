@@ -63,9 +63,8 @@ export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGro
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
 export { default as FillTheGapToolGroupService } from './src/WaxToolGroups/FillTheGapToolGroupService/FillTheGapToolGroupService';
-export { default as MultipleChoiceDropDownToolGroupService } from './src/WaxToolGroups/MultipleChoiceDropDownToolGroupService/MultipleChoiceDropDownToolGroupService';
+export { default as QuestionsDropDownToolGroupService } from './src/WaxToolGroups/QuestionsDropDownToolGroupService/QuestionsDropDownToolGroupService';
 export { default as EssayToolGroupService } from './src/WaxToolGroups/EssayToolGroupService/EssayToolGroupService';
-export { default as MatchingToolGroupService } from './src/WaxToolGroups/MatchingToolGroupService/MatchingToolGroupService';
 export { default as MultipleDropDownToolGroupService } from './src/WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';
 export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
 export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';

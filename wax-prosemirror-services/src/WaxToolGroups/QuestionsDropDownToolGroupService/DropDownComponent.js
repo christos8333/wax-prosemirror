@@ -16,8 +16,7 @@ const DropdownStyled = styled(Dropdown)`
   pointer-events: ${props => (props.select ? 'default' : 'none')};
   .Dropdown-control {
     border: none;
-    padding-top: 12px;
-
+    padding: 12px 122px 8px 10px;
     &:hover {
       box-shadow: none;
     }
@@ -28,7 +27,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 
   .Dropdown-menu {
-    width: 102%;
+    width: 100.4%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -38,7 +37,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 `;
 
-const DropDownComponent = ({ title, view, tools }) => {
+const DropDownComponent = ({ view, tools }) => {
   const context = useContext(WaxContext);
   const {
     activeView,
@@ -51,37 +50,47 @@ const DropDownComponent = ({ title, view, tools }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-  console.log(tools);
+
   const dropDownOptions = [
     {
-      label: 'Multiple Choice',
+      label: '1. Multiple Choice',
       value: '0',
       item: tools[0],
     },
     {
-      label: 'Multiple Choice (single correct)',
+      label: '2. Multiple Choice (single correct)',
       value: '1',
       item: tools[1],
     },
     {
-      label: 'True/False',
+      label: '3. True/False',
       value: '2',
       item: tools[2],
     },
     {
-      label: 'True/False (single correct)',
+      label: '4. True/False (single correct)',
       value: '3',
       item: tools[3],
     },
     {
-      label: 'Matching',
+      label: '5. Matching',
       value: '4',
       item: tools[4],
     },
     {
-      label: 'Essay',
+      label: '6. Essay',
       value: '5',
       item: tools[5],
+    },
+    {
+      label: '7. Multiple DropDown',
+      value: '6',
+      item: tools[6],
+    },
+    {
+      label: '8. Fill The Gap',
+      value: '7',
+      item: tools[7],
     },
   ];
 

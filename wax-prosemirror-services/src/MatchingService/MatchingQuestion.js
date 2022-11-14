@@ -13,12 +13,14 @@ class MatchingQuestion extends Tools {
   name = 'Matching';
 
   get run() {
-    return (state, dispatch, view) => {
-      helpers.checkifEmpty(view);
+    return main => {
+      const { dispatch } = main;
+      const { state } = main;
+      helpers.checkifEmpty(main);
       /* Create Wrapping */
-      const { $from, $to } = view.state.selection;
+      const { $from, $to } = main.state.selection;
       const range = $from.blockRange($to);
-      const { tr } = view.state;
+      const { tr } = main.state;
 
       const wrapping =
         range &&
@@ -42,6 +44,7 @@ class MatchingQuestion extends Tools {
 
       tr.replaceSelectionWith(option);
       dispatch(tr);
+      return true;
     };
   }
 

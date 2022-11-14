@@ -51,7 +51,7 @@ const DropDownComponent = ({ title, view, tools }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-
+  console.log(tools);
   const dropDownOptions = [
     {
       label: 'Multiple Choice',
@@ -81,7 +81,7 @@ const DropDownComponent = ({ title, view, tools }) => {
   ];
 
   useEffect(() => {
-    setLabel('Multiple Question Types');
+    setLabel('Question Types');
     dropDownOptions.forEach((option, i) => {
       if (option.item.active(main.state)) {
         setTimeout(() => {
@@ -105,7 +105,7 @@ const DropDownComponent = ({ title, view, tools }) => {
           key={uuidv4()}
           onChange={option => onChange(option)}
           options={dropDownOptions}
-          placeholder="Multiple Question Types"
+          placeholder="Question Types"
           select={isDisabled}
           value={label}
         />

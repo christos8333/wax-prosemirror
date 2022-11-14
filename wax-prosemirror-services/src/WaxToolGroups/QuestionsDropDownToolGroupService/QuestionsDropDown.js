@@ -15,6 +15,7 @@ class QuestionsDropDown extends ToolGroup {
     @inject('TrueFalseQuestion') trueFalseQuestion,
     @inject('TrueFalseSingleCorrectQuestion') trueFalseSingleCorrectQuestion,
     @inject('MatchingQuestion') matchingQuestion,
+    @inject('EssayQuestion') essayQuestion,
   ) {
     super();
     this.tools = [
@@ -23,6 +24,7 @@ class QuestionsDropDown extends ToolGroup {
       trueFalseQuestion,
       trueFalseSingleCorrectQuestion,
       matchingQuestion,
+      essayQuestion,
     ];
   }
 

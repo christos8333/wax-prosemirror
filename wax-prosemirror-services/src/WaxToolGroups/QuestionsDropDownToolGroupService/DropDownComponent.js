@@ -78,6 +78,11 @@ const DropDownComponent = ({ title, view, tools }) => {
       value: '4',
       item: tools[4],
     },
+    {
+      label: 'Essay',
+      value: '5',
+      item: tools[5],
+    },
   ];
 
   useEffect(() => {

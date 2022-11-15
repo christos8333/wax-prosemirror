@@ -12,6 +12,12 @@ const FillTheGapContainer = styled.div`
 
 const FillTheGapContainerTool = styled.div`
   background: #f5f5f7;
+
+  span {
+    position: relative;
+    left: 5px;
+    top: 3px;
+  }
 `;
 
 const FillTheGapWrapper = styled.div`
@@ -41,6 +47,7 @@ export default ({ node, view, getPos }) => {
       <div>
         <span> Fill The Gap</span>
         <FillTheGapContainerTool>
+          <span> Insert Gap :</span>
           <FillTheGapTool />
         </FillTheGapContainerTool>
       </div>

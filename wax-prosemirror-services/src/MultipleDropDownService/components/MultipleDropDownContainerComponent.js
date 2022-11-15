@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from './FeedbackComponent';
@@ -8,6 +8,15 @@ import FeedbackComponent from './FeedbackComponent';
 const MultipleDropDownpWrapper = styled.div`
   margin: 0px 38px 15px 38px;
   margin-top: 10px;
+`;
+
+const MultipleDropDownContainerTool = styled.div`
+  background: #f5f5f7;
+  span {
+    position: relative;
+    left: 5px;
+    top: 3px;
+  }
 `;
 
 const MultipleDropDownpContainer = styled.div`
@@ -21,6 +30,8 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
+  const MultipleDropDown = ComponentPlugin('MultipleDropDown');
+
   const customProps = main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
@@ -32,7 +43,13 @@ export default ({ node, view, getPos }) => {
 
   return (
     <MultipleDropDownpWrapper>
-      <span>Multiple Drop Down</span>
+      <div>
+        <span>Multiple Drop Down</span>
+        <MultipleDropDownContainerTool>
+          <span> Insert Drop Down :</span>
+          <MultipleDropDown />
+        </MultipleDropDownContainerTool>
+      </div>
       <MultipleDropDownpContainer className="multiple-drop-down">
         <ContainerEditor getPos={getPos} node={node} view={view} />
         {!testMode && (

@@ -59,6 +59,10 @@ export default {
       templateArea: 'fillTheGap',
       toolGroups: ['FillTheGap'],
     },
+    {
+      templateArea: 'MultipleDropDown',
+      toolGroups: ['MultipleDropDown'],
+    },
   ],
 
   SchemaService: DefaultSchema,

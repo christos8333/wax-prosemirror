@@ -9,6 +9,7 @@ class CreateDropDown extends Tools {
   title = 'Create Drop Down';
   icon = 'mulitpleDropDown';
   name = 'Create_Drop_Down';
+  label = 'Insert Drop Down';
 
   get run() {
     return (state, dispatch) => {

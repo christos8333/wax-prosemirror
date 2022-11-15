@@ -8,6 +8,7 @@ class CreateGap extends Tools {
   title = 'Create Gap Option';
   icon = 'insertGap';
   name = 'Create Gap';
+  label = 'Create Gap';
 
   get run() {
     return (state, dispatch) => {

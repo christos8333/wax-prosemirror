@@ -11,10 +11,11 @@ const MultipleDropDownpWrapper = styled.div`
 `;
 
 const MultipleDropDownContainerTool = styled.div`
-  background: #f5f5f7;
+  border: 3px solid #f5f5f7;
+  border-bottom: none;
+
   span {
     position: relative;
-    left: 5px;
     top: 3px;
   }
 `;
@@ -46,7 +47,6 @@ export default ({ node, view, getPos }) => {
       <div>
         <span>Multiple Drop Down</span>
         <MultipleDropDownContainerTool>
-          <span> Insert Drop Down :</span>
           <MultipleDropDown />
         </MultipleDropDownContainerTool>
       </div>

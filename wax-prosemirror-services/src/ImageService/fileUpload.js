@@ -6,7 +6,7 @@ const findPlaceholder = (state, id, placeholderPlugin) => {
   return found.length ? found[0].from : null;
 };
 
-export default (view, fileUpload, placeholderPlugin) => (file, customAttrs) => {
+export default (view, fileUpload, placeholderPlugin) => file => {
   const { state } = view;
   // A fresh object to act as the ID for this upload
   const id = {};
@@ -20,8 +20,9 @@ export default (view, fileUpload, placeholderPlugin) => (file, customAttrs) => {
   });
 
   view.dispatch(tr);
+
   fileUpload(file).then(
-    url => {
+    (url, extraData = {}) => {
       const pos = findPlaceholder(view.state, id, placeholderPlugin);
       // If the content around the placeholder has been deleted, drop
       // the image
@@ -38,7 +39,7 @@ export default (view, fileUpload, placeholderPlugin) => (file, customAttrs) => {
             view.state.schema.nodes.image.create({
               src: url,
               id: uuidv4(),
-              customAttrs,
+              extraData,
             }),
           )
           .setMeta(placeholderPlugin, { remove: { id } }),

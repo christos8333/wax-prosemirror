@@ -2,9 +2,10 @@ import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
 import { wrapIn } from 'prosemirror-commands';
-import { NodeSelection } from 'prosemirror-state';
+import { NodeSelection, TextSelection } from 'prosemirror-state';
 import { LeftSideButton } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import { findWrapping } from 'prosemirror-transform';
 
 @injectable()
 class BlockQuote extends Tools {
@@ -14,7 +15,16 @@ class BlockQuote extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      wrapIn(state.config.schema.nodes.blockquote)(state, dispatch);
+      const selectionFrom = new TextSelection(state.doc.resolve(0));
+      const selectionTo = new TextSelection(
+        state.doc.resolve(state.doc.content.size),
+      );
+
+      const range = selectionFrom.$from.blockRange(selectionTo.$to);
+      const wrapping =
+        range && findWrapping(range, state.config.schema.nodes.blockquote, {});
+
+      dispatch(state.tr.wrap(range, wrapping).scrollIntoView());
     };
   }
 

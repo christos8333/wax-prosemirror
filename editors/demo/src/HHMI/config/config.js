@@ -55,6 +55,10 @@ export default {
         'FullScreen',
       ],
     },
+    {
+      templateArea: 'fillTheGap',
+      toolGroups: ['FillTheGap'],
+    },
   ],
 
   SchemaService: DefaultSchema,

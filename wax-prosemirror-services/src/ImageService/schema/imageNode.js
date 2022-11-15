@@ -1,4 +1,5 @@
 // import { SchemaHelpers } from 'wax-prosemirror-core';
+import { isEmpty } from 'lodash';
 
 const imageNode = {
   attrs: {
@@ -6,6 +7,7 @@ const imageNode = {
     src: {},
     alt: { default: '' },
     title: { default: null },
+    extraData: { default: {} },
     // track: { default: [] },
     fileid: { default: null },
   },
@@ -29,7 +31,6 @@ const imageNode = {
   ],
   toDOM(hook, next) {
     const attrs = {};
-
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       // attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
       attrs['data-id'] = hook.node.attrs.id;
@@ -38,6 +39,7 @@ const imageNode = {
     const { src, alt, title, id, track, fileid } = hook.node.attrs;
 
     // eslint-disable-next-line no-param-reassign
+    const { extraData } = hook.node.attrs;
     hook.value = [
       'img',
       {
@@ -47,8 +49,14 @@ const imageNode = {
         'data-id': id,
         // 'data-track': track,
         'data-fileid': fileid,
+        ...Object.keys(extraData).reduce((obj, key) => {
+          // eslint-disable-next-line no-param-reassign
+          obj[`data-${key}`] = extraData[key];
+          return obj;
+        }, {}),
       },
     ];
+
     next();
   },
 };

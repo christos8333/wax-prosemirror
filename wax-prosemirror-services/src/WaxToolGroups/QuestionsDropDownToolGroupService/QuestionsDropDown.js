@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
@@ -7,7 +6,7 @@ import { ToolGroup } from 'wax-prosemirror-core';
 import DropDownComponent from './DropDownComponent';
 
 @injectable()
-class MultipleChoiceDropDown extends ToolGroup {
+class QuestionsDropDown extends ToolGroup {
   tools = [];
   constructor(
     @inject('MultipleChoiceQuestion') multipleChoiceQuestion,
@@ -15,6 +14,10 @@ class MultipleChoiceDropDown extends ToolGroup {
     multipleChoiceSingleCorrectQuestion,
     @inject('TrueFalseQuestion') trueFalseQuestion,
     @inject('TrueFalseSingleCorrectQuestion') trueFalseSingleCorrectQuestion,
+    @inject('MatchingQuestion') matchingQuestion,
+    @inject('EssayQuestion') essayQuestion,
+    @inject('MultipleDropDownQuestion') MultipleDropDownQuestion,
+    @inject('FillTheGapQuestion') FillTheGapQuestion,
   ) {
     super();
     this.tools = [
@@ -22,6 +25,10 @@ class MultipleChoiceDropDown extends ToolGroup {
       multipleChoiceSingleCorrectQuestion,
       trueFalseQuestion,
       trueFalseSingleCorrectQuestion,
+      matchingQuestion,
+      essayQuestion,
+      MultipleDropDownQuestion,
+      FillTheGapQuestion,
     ];
   }
 
@@ -37,4 +44,4 @@ class MultipleChoiceDropDown extends ToolGroup {
   }
 }
 
-export default MultipleChoiceDropDown;
+export default QuestionsDropDown;

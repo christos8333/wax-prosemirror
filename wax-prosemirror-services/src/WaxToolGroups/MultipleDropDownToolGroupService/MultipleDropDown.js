@@ -4,12 +4,9 @@ import { ToolGroup } from 'wax-prosemirror-core';
 @injectable()
 class MultipleDropDown extends ToolGroup {
   tools = [];
-  constructor(
-    @inject('MultipleDropDownQuestion') MultipleDropDownQuestion,
-    @inject('CreateDropDown') CreateDropDown,
-  ) {
+  constructor(@inject('CreateDropDown') CreateDropDown) {
     super();
-    this.tools = [MultipleDropDownQuestion, CreateDropDown];
+    this.tools = [CreateDropDown];
   }
 }
 

@@ -8,6 +8,7 @@ class CreateGap extends Tools {
   title = 'Create Gap Option';
   icon = 'insertGap';
   name = 'Create Gap';
+  label = 'Create Gap';
 
   get run() {
     return (state, dispatch) => {
@@ -27,19 +28,10 @@ class CreateGap extends Tools {
   }
 
   select = (state, activeViewId, activeView) => {
-    let status = false;
-    const { from, to } = state.selection;
-    const { disallowedTools } = activeView.props;
+    if (activeView.props.type && activeView.props.type === 'filltheGapContaier')
+      return true;
 
-    state.doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'fill_the_gap_container') {
-        status = true;
-      }
-    });
-
-    if (from === null || disallowedTools.includes('Gap')) status = false;
-
-    return status;
+    return false;
   };
 
   get active() {

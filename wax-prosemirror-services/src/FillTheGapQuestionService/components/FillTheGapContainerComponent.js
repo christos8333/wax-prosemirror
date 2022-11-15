@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from './FeedbackComponent';
@@ -8,6 +8,16 @@ import FeedbackComponent from './FeedbackComponent';
 const FillTheGapContainer = styled.div`
   border: 3px solid #f5f5f7;
   margin-bottom: 30px;
+`;
+
+const FillTheGapContainerTool = styled.div`
+  border: 3px solid #f5f5f7;
+  border-bottom: none;
+
+  span {
+    position: relative;
+    top: 3px;
+  }
 `;
 
 const FillTheGapWrapper = styled.div`
@@ -21,6 +31,8 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
+  const FillTheGapTool = ComponentPlugin('fillTheGap');
+
   const customProps = main.props.customValues;
   const { testMode } = customProps;
 
@@ -32,7 +44,12 @@ export default ({ node, view, getPos }) => {
 
   return (
     <FillTheGapWrapper>
-      <span>Fill The Gap</span>
+      <div>
+        <span> Fill The Gap</span>
+        <FillTheGapContainerTool>
+          <FillTheGapTool />
+        </FillTheGapContainerTool>
+      </div>
       <FillTheGapContainer className="fill-the-gap">
         <ContainerEditor getPos={getPos} node={node} view={view} />
 

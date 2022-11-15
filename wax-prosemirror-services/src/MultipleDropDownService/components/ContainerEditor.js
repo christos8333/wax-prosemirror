@@ -122,6 +122,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
         }),
         dispatchTransaction,
         disallowedTools: ['Images', 'FillTheGap', 'MultipleChoice'],
+        type: 'MultipleDropDownContaier',
         handleDOMEvents: {
           mousedown: () => {
             main.dispatch(

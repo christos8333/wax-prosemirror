@@ -11,11 +11,13 @@ class FillTheGapQuestion extends Tools {
   name = 'Fill The Gap';
 
   get run() {
-    return (state, dispatch, view) => {
-      helpers.checkifEmpty(view);
-      const { $from, $to } = view.state.selection;
+    return main => {
+      const { dispatch } = main;
+      const { state } = main;
+      helpers.checkifEmpty(main);
+      const { $from, $to } = main.state.selection;
       const range = $from.blockRange($to);
-      const { tr } = view.state;
+      const { tr } = main.state;
 
       const wrapping =
         range &&

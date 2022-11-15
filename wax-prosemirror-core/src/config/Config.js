@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-underscore-dangle */
 import { set, get, isArrayLikeObject } from 'lodash';
 import { injectable, inject } from 'inversify';
 

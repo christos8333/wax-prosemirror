@@ -87,6 +87,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
           'FillTheGap',
           'MultipleChoice',
         ],
+        type: 'filltheGapContaier',
         handleDOMEvents: {
           mousedown: () => {
             main.dispatch(

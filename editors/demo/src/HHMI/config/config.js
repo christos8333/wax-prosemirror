@@ -22,14 +22,10 @@ import {
   BottomInfoService,
   MultipleChoiceQuestionService,
   FillTheGapQuestionService,
-  FillTheGapToolGroupService,
-  MultipleChoiceDropDownToolGroupService,
+  QuestionsDropDownToolGroupService,
   EssayService,
-  EssayToolGroupService,
   MatchingService,
-  MatchingToolGroupService,
   MultipleDropDownService,
-  MultipleDropDownToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
@@ -55,13 +51,17 @@ export default {
         'Lists',
         'Images',
         'Tables',
-        'MultipleChoiceDropDown',
-        'Essay',
-        'FillTheGap',
-        'MultipleDropDown',
-        'Matching',
+        'QuestionsDropDown',
         'FullScreen',
       ],
+    },
+    {
+      templateArea: 'fillTheGap',
+      toolGroups: ['FillTheGap'],
+    },
+    {
+      templateArea: 'MultipleDropDown',
+      toolGroups: ['MultipleDropDown'],
     },
   ],
 
@@ -72,15 +72,11 @@ export default {
 
   services: [
     new MatchingService(),
-    new MatchingToolGroupService(),
     new FillTheGapQuestionService(),
-    new FillTheGapToolGroupService(),
     new MultipleChoiceQuestionService(),
-    new MultipleChoiceDropDownToolGroupService(),
+    new QuestionsDropDownToolGroupService(),
     new MultipleDropDownService(),
-    new MultipleDropDownToolGroupService(),
     new EssayService(),
-    new EssayToolGroupService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

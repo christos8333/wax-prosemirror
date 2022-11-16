@@ -53,42 +53,42 @@ const DropDownComponent = ({ view, tools }) => {
 
   const dropDownOptions = [
     {
-      label: '1. Multiple Choice',
+      label: 'Multiple Choice',
       value: '0',
       item: tools[0],
     },
     {
-      label: '2. Multiple Choice (single correct)',
+      label: 'Multiple Choice (single correct)',
       value: '1',
       item: tools[1],
     },
     {
-      label: '3. True/False',
+      label: 'True/False',
       value: '2',
       item: tools[2],
     },
     {
-      label: '4. True/False (single correct)',
+      label: 'True/False (single correct)',
       value: '3',
       item: tools[3],
     },
     {
-      label: '5. Matching',
+      label: 'Matching',
       value: '4',
       item: tools[4],
     },
     {
-      label: '6. Essay',
+      label: 'Essay',
       value: '5',
       item: tools[5],
     },
     {
-      label: '7. Multiple DropDown',
+      label: 'Multiple DropDown',
       value: '6',
       item: tools[6],
     },
     {
-      label: '8. Fill The Gap',
+      label: 'Fill The Gap',
       value: '7',
       item: tools[7],
     },

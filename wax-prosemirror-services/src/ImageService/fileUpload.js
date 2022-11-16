@@ -22,7 +22,14 @@ export default (view, fileUpload, placeholderPlugin) => file => {
   view.dispatch(tr);
 
   fileUpload(file).then(
-    (url, extraData = {}) => {
+    fileData => {
+      let url = fileData;
+      let extraData = {};
+      if (typeof fileData === 'object') {
+        url = fileData.url;
+        extraData = fileData.extraData;
+      }
+
       const pos = findPlaceholder(view.state, id, placeholderPlugin);
       // If the content around the placeholder has been deleted, drop
       // the image

@@ -20,7 +20,7 @@ const Button = ({ view = {}, item }) => {
 
   const handleMouseDown = e => {
     e.preventDefault();
-    run(activeView.state, activeView.dispatch, activeView);
+    run(activeView.state, activeView.dispatch, activeView, context);
   };
 
   const isActive = !!(

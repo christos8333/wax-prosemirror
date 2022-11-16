@@ -11,7 +11,7 @@ class CreateGap extends Tools {
   label = 'Create Gap';
 
   get run() {
-    return (state, dispatch) => {
+    return (state, dispatch, activeView, context) => {
       const { empty, $from, $to } = state.selection;
       let content = Fragment.empty;
       if (!empty && $from.sameParent($to) && $from.parent.inlineContent)
@@ -23,7 +23,11 @@ class CreateGap extends Tools {
         { id: uuidv4() },
         content,
       );
+
       dispatch(state.tr.replaceSelectionWith(createGap));
+      setTimeout(() => {
+        context.pmViews[createGap.attrs.id].focus();
+      }, 100);
     };
   }
 

@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
 import { ImageUpload } from 'wax-prosemirror-components';
-import { Commands, Tools } from 'wax-prosemirror-core';
+import { WaxContext, Commands, Tools } from 'wax-prosemirror-core';
 import fileUpload from './fileUpload';
 
 @injectable()
@@ -35,10 +35,12 @@ export default class Image extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
+    const context = useContext(WaxContext);
     const upload = fileUpload(
       view,
       this.config.get('fileUpload'),
       this.pmplugins.get('imagePlaceHolder'),
+      context,
     );
     return this._isDisplayed ? (
       <ImageUpload

@@ -6,7 +6,7 @@ const findPlaceholder = (state, id, placeholderPlugin) => {
   return found.length ? found[0].from : null;
 };
 
-export default (view, fileUpload, placeholderPlugin) => file => {
+export default (view, fileUpload, placeholderPlugin, context) => file => {
   const { state } = view;
   // A fresh object to act as the ID for this upload
   const id = {};
@@ -38,12 +38,12 @@ export default (view, fileUpload, placeholderPlugin) => file => {
       }
       // Otherwise, insert it at the placeholder's position, and remove
       // the placeholder
-      view.dispatch(
-        state.tr
+      context.pmViews.main.dispatch(
+        context.pmViews.main.state.tr
           .replaceWith(
             pos,
             pos,
-            view.state.schema.nodes.image.create({
+            context.pmViews.main.state.schema.nodes.image.create({
               src: url,
               id: uuidv4(),
               extraData,

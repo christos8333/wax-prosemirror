@@ -12,7 +12,7 @@ const renderImage = file => {
     reader.onload = () => accept(reader.result);
     reader.onerror = () => fail(reader.error);
     // Some extra delay to make the asynchronicity visible
-    setTimeout(() => reader.readAsDataURL(file), 150);
+    setTimeout(() => reader.readAsDataURL(file), 4150);
   });
 };
 

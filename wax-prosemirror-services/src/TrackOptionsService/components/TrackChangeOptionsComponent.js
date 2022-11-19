@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { each } from 'lodash';
 import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
-import { Icon } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -22,43 +21,43 @@ const TotalSuggestions = styled.div`
   color: #bdc2ca;
 `;
 
-const TotalComments = styled.div`
-  color: #bdc2ca;
-  padding-top: ${grid(2)};
-`;
+// const TotalComments = styled.div`
+//   color: #bdc2ca;
+//   padding-top: ${grid(2)};
+// `;
 
-const ShowComments = styled.div`
-  color: #bdc2ca;
-  display: flex;
-  flex-direction: row;
-  height: 25px;
-  padding-top: ${grid(2)};
+// const ShowComments = styled.div`
+//   color: #bdc2ca;
+//   display: flex;
+//   flex-direction: row;
+//   height: 25px;
+//   padding-top: ${grid(2)};
 
-  svg {
-    bottom: 14px;
-    cursor: not-allowed;
-    fill: #85adff;
-    height: 45px !important;
-    opacity: 0.6;
-    position: relative;
-    width: 45px !important;
-  }
-`;
+//   svg {
+//     bottom: 14px;
+//     cursor: not-allowed;
+//     fill: #85adff;
+//     height: 45px !important;
+//     opacity: 0.6;
+//     position: relative;
+//     width: 45px !important;
+//   }
+// `;
 
-const StyledToggleOn = styled(Icon)`
-  cursor: pointer;
-  height: 32px;
-  margin-left: auto;
-  width: 32px;
-`;
+// const StyledToggleOn = styled(Icon)`
+//   cursor: pointer;
+//   height: 32px;
+//   margin-left: auto;
+//   width: 32px;
+// `;
 
-const StyledIcon = styled(Icon)``;
+// const StyledIcon = styled(Icon)``;
 
-const StyledIconExpand = styled(Icon)`
-  bottom: 3px;
-  margin-left: auto;
-  position: relative;
-`;
+// const StyledIconExpand = styled(Icon)`
+//   bottom: 3px;
+//   margin-left: auto;
+//   position: relative;
+// `;
 
 const ToolsContainer = styled.div`
   display: flex;
@@ -74,62 +73,62 @@ const ToolsContainer = styled.div`
   }
 `;
 
-const AcceptRejectAll = styled.div`
-  border-bottom: 1px solid #ebebf0;
-  border-top: 1px solid #ebebf0;
-  margin-top: 5px;
-  padding: 2px 0px 2px 2px;
-`;
+// const AcceptRejectAll = styled.div`
+//   border-bottom: 1px solid #ebebf0;
+//   border-top: 1px solid #ebebf0;
+//   margin-top: 5px;
+//   padding: 2px 0px 2px 2px;
+// `;
 
-const AcceptRejectAllButton = styled.div`
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  padding-bottom: 3px;
-  padding-top: 8px;
-  text-align: start;
-  width: 100%;
+// const AcceptRejectAllButton = styled.div`
+//   background: none;
+//   border: none;
+//   cursor: pointer;
+//   display: flex;
+//   flex-direction: row;
+//   padding-bottom: 3px;
+//   padding-top: 8px;
+//   text-align: start;
+//   width: 100%;
 
-  &:hover {
-    background: #f0f5ff;
-  }
-`;
+//   &:hover {
+//     background: #f0f5ff;
+//   }
+// `;
 
-const AcceptRejectAllControls = styled.div`
-  background: #fff;
-  border-radius: 1.03093% / 8%;
-  bottom: 43px;
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
-    rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-  font-size: 14px;
-  padding: ${grid(2)};
-  position: absolute;
-  right: 190px;
-  transform-origin: 50% 50% 0px;
-  width: 209px;
-  z-index: 9999;
-`;
+// const AcceptRejectAllControls = styled.div`
+//   background: #fff;
+//   border-radius: 1.03093% / 8%;
+//   bottom: 43px;
+//   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px 0px,
+//     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+//   font-size: 14px;
+//   padding: ${grid(2)};
+//   position: absolute;
+//   right: 190px;
+//   transform-origin: 50% 50% 0px;
+//   width: 209px;
+//   z-index: 9999;
+// `;
 
-const AcceptRejectAllRow = styled.div`
-  background: none;
-  border: none;
-  padding-bottom: 3px;
-  padding-top: 8px;
-  text-align: start;
-  width: 100%;
-  opacity: 0.4;
-  cursor: not-allowed;
-  &:hover {
-    background: #f0f5ff;
-  }
+// const AcceptRejectAllRow = styled.div`
+//   background: none;
+//   border: none;
+//   padding-bottom: 3px;
+//   padding-top: 8px;
+//   text-align: start;
+//   width: 100%;
+//   opacity: 0.4;
+//   cursor: not-allowed;
+//   &:hover {
+//     background: #f0f5ff;
+//   }
 
-  svg {
-    bottom: 2px;
-    position: relative;
-  }
-`;
+//   svg {
+//     bottom: 2px;
+//     position: relative;
+//   }
+// `;
 
 const getInlineTracks = main => {
   const marks = DocumentHelpers.findInlineNodes(main.state.doc);

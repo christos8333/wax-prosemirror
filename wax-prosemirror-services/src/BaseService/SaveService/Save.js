@@ -1,8 +1,7 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
-import { Tools } from 'wax-prosemirror-core';
+import { Tools, icons } from 'wax-prosemirror-core';
 import SaveButton from './components/SaveButton';
 
 @injectable()

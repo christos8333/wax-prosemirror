@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
-import { icons } from 'wax-prosemirror-components';
 import { wrapInList } from 'prosemirror-schema-list';
-import { Commands, Tools } from 'wax-prosemirror-core';
+import { Commands, Tools, icons } from 'wax-prosemirror-core';
 
 @injectable()
 export default class BulletList extends Tools {

@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
 import { th, override } from '@pubsweet/ui-toolkit';
-
-import { icons } from 'wax-prosemirror-components';
+import icons from '../icons/icons';
 
 const disabledStyles = css`
   background: ${props =>

@@ -6,8 +6,8 @@ import {
   WaxContext,
   useOnClickOutside,
   MenuButton,
+  Icon,
 } from 'wax-prosemirror-core';
-import { Icon } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   font-size: 0;

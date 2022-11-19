@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
-import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
+import Icon from '../icons/Icon';
 import CustomTagBlockComponent from './CustomTagBlockComponent';
 import OENToolGroup from './OENToolGroup';
 import BlockElement from './BlockElement';

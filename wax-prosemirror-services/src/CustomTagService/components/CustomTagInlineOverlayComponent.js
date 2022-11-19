@@ -8,9 +8,8 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, Icon } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
-import { Icon } from 'wax-prosemirror-components';
 
 const IconRemove = styled(Icon)`
   cursor: pointer;

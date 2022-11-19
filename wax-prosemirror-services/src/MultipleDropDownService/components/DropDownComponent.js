@@ -6,10 +6,9 @@ import React, {
   useLayoutEffect,
   useEffect,
 } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, Icon } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { Icon } from 'wax-prosemirror-components';
 import { NodeSelection } from 'prosemirror-state';
 import RadioButton from './RadioButton';
 

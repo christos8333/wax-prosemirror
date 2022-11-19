@@ -4,8 +4,7 @@ import React, { useState, useRef, useContext, useEffect } from 'react';
 import { each, eachRight } from 'lodash';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import { WaxContext, useDebounce } from 'wax-prosemirror-core';
-import { Icon } from 'wax-prosemirror-components';
+import { WaxContext, useDebounce, Icon } from 'wax-prosemirror-core';
 import helpers from './helpers';
 
 const Wrapper = styled.div`

@@ -3,8 +3,8 @@ import React, { useState, useContext, useMemo, useRef } from 'react';
 import { WaxContext, useOnClickOutside } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import MenuButton from '../../ui/buttons/MenuButton';
-import InsertTableTool from '../../ui/tables/InsertTableTool';
+import { MenuButton } from 'wax-prosemirror-components';
+import InsertTableTool from './InsertTableTool';
 
 const Wrapper = styled.div`
   font-size: 0;

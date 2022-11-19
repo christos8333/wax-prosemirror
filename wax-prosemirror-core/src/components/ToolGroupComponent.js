@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
-import Dropdown from '../ui/buttons/Dropdown';
+import Dropdown from './buttons/Dropdown';
 
 const Wrapper = styled.div`
   align-items: center;

@@ -39,3 +39,5 @@ export { default as ReactDropDownStyles } from './src/components/helpers/ReactDr
 export { default as DateParser } from './src/components/helpers/DateParser';
 export { default as useDebounce } from './src/components/helpers/useDebounce';
 export { default as useOnClickOutside } from './src/components/helpers/useOnClickOutside';
+export { default as ToolGroupComponent } from './src/components/ToolGroupComponent';
+export { default as ToolGroups } from './src/components/ToolGroups';

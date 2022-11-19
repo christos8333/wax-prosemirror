@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { grid, override } from '@pubsweet/ui-toolkit';
-import MenuButton from './MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
 
 // font size 0 reason: https://stackoverflow.com/a/19212391
 const Wrapper = styled.div`

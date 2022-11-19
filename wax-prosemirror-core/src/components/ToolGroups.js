@@ -7,16 +7,11 @@ import ToolGroupComponent from './ToolGroupComponent';
 const ToolGroups = ({ toolGroups, view }) => {
   return toolGroups.map(toolGroup => {
     if (toolGroup._toolGroups.length > 0) {
+      // eslint-disable-next-line react/jsx-filename-extension
       return <ToolGroups toolGroups={toolGroup._toolGroups} view={view} />;
     }
     return (
-      <ToolGroupComponent
-        key={uuidv4()}
-        tools={toolGroup._tools}
-        view={view}
-        // title={this.title}
-        // name={name}
-      />
+      <ToolGroupComponent key={uuidv4()} tools={toolGroup._tools} view={view} />
     );
   });
 };

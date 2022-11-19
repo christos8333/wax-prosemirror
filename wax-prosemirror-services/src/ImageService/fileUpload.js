@@ -38,8 +38,8 @@ export default (view, fileUpload, placeholderPlugin, context) => file => {
       }
       // Otherwise, insert it at the placeholder's position, and remove
       // the placeholder
-      context.pmViews.main.dispatch(
-        context.pmViews.main.state.tr
+      context.pmViews[context.activeViewId].dispatch(
+        context.pmViews[context.activeViewId].state.tr
           .replaceWith(
             pos,
             pos,

@@ -1,10 +1,8 @@
-export { default as Overlay } from './src/components/Overlay';
 export { default as Button } from './src/components/Button';
 export { default as UndoRedoButton } from './src/components/UndoRedoButton';
 export { default as MenuButton } from './src/ui/buttons/MenuButton';
 export { default as icons } from './src/icons/icons';
 export { default as Icon } from './src/helpers/Icon';
-export { default as CheckBox } from './src/ui/inputs/CheckBox';
 export { default as TableDropDown } from './src/components/tables/TableDropDown';
 export { default as TitleButton } from './src/components/TitleButton';
 export { default as ToolGroupComponent } from './src/components/ToolGroupComponent';
@@ -35,3 +33,4 @@ export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyle
 export { default as OENAsideButton } from './src/components/OEN/OENAsideButton';
 
 export { default as useDebounce } from './src/helpers/useDebounce';
+export { default as CheckBox } from './src/ui/inputs/CheckBox';

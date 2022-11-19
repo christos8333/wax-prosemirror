@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { grid, th } from '@pubsweet/ui-toolkit';
-import { DateParser } from 'wax-prosemirror-components';
+import { DateParser } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div``;
 

@@ -21,4 +21,3 @@ export { default as CustomTagBlockComponent } from './src/components/customtag/C
 
 export { default as useDebounce } from './src/helpers/useDebounce';
 export { default as useOnClickOutside } from './src/helpers/useOnClickOutside';
-export { default as DateParser } from './src/helpers/DateParser';

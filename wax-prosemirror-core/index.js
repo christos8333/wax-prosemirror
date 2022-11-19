@@ -36,3 +36,4 @@ export { default as trackedTransaction } from './src/utilities/track-changes/tra
 export { default as LeftMenuTitle } from './src/components/LeftMenuTitle';
 export { default as LeftSideButton } from './src/components/LeftSideButton';
 export { default as ReactDropDownStyles } from './src/components/helpers/ReactDropDownStyles';
+export { default as DateParser } from './src/components/helpers/DateParser';

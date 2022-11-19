@@ -27,7 +27,6 @@ export { default as CustomTagInlineComponent } from './src/components/customtag/
 export { default as CustomTagInlineOverlayComponent } from './src/components/customtag/CustomTagInlineOverlayCompoment';
 export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';
 export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyles';
-export { default as OENAsideButton } from './src/components/OEN/OENAsideButton';
 
 export { default as useDebounce } from './src/helpers/useDebounce';
 export { default as CheckBox } from './src/ui/inputs/CheckBox';

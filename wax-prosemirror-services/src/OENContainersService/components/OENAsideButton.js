@@ -3,27 +3,26 @@ import React, { useContext, useMemo } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import { wrapIn } from 'prosemirror-commands';
 import { liftTarget } from 'prosemirror-transform';
-import MenuButton from '../../ui/buttons/MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
 
 const OENAsideButton = ({ view = {}, item, type }) => {
-  const { active, icon, label, run, select, title } = item;
+  const { active, icon, label, select, title } = item;
 
   const {
-    app,
     pmViews: { main },
     activeViewId,
     activeView,
   } = useContext(WaxContext);
 
-  const { dispatch, state } = view;
+  const { state } = view;
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = e => {
     e.preventDefault();
 
     const { from, to } = main.state.selection;
     let isInOenContainer = false;
 
-    main.state.doc.nodesBetween(from, to, (node, pos) => {
+    main.state.doc.nodesBetween(from, to, node => {
       if (node.type.name === 'oen_aside') {
         isInOenContainer = true;
       }
@@ -45,6 +44,7 @@ const OENAsideButton = ({ view = {}, item, type }) => {
     setTimeout(() => {
       main.focus();
     });
+    return true;
   };
 
   const isActive = !!active(state, activeViewId);
@@ -62,7 +62,7 @@ const OENAsideButton = ({ view = {}, item, type }) => {
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
+        onMouseDown={e => handleMouseDown(e)}
         title={title}
       />
     ),

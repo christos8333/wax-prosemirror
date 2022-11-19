@@ -14,7 +14,7 @@ import {
   DocumentHelpers,
   trackedTransaction,
 } from 'wax-prosemirror-core';
-import { NoteEditorContainer } from 'wax-prosemirror-components';
+import NoteEditorContainer from './components/NoteEditorContainer';
 
 const NoteContainer = styled.div`
   display: flex;

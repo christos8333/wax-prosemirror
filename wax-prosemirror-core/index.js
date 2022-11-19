@@ -41,3 +41,5 @@ export { default as useDebounce } from './src/components/helpers/useDebounce';
 export { default as useOnClickOutside } from './src/components/helpers/useOnClickOutside';
 export { default as ToolGroupComponent } from './src/components/ToolGroupComponent';
 export { default as ToolGroups } from './src/components/ToolGroups';
+export { default as BlockLevelTools } from './src/components/tabs/BlockLevelTools';
+export { default as Tabs } from './src/components/tabs/Tabs';

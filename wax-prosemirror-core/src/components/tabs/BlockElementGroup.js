@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
+import { Icon } from 'wax-prosemirror-components';
 import styled from 'styled-components';
 import CustomTagBlockComponent from './CustomTagBlockComponent';
 import OENToolGroup from './OENToolGroup';
 import BlockElement from './BlockElement';
-import Icon from '../../helpers/Icon';
 
 const GroupName = styled.div`
   font-size: 14px;

@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
 import { wrapIn } from 'prosemirror-commands';
 import { v4 as uuidv4 } from 'uuid';
 import { liftTarget } from 'prosemirror-transform';
-import MenuButton from '../buttons/MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
+import { WaxContext } from '../../WaxContext';
 
 const activeStyles = css`
   pointer-events: none;

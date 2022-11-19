@@ -14,7 +14,6 @@
     "typeface-fira-sans-condensed": "^0.0.54",
     "typeface-inter": "^1.1.13",
     "typeface-vollkorn": "^0.0.54",
-    "wax-prosemirror-components": "^0.6.5",
     "wax-prosemirror-core": "^0.6.5",
     "wax-prosemirror-services": "^0.6.5"
   },

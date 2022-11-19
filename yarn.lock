@@ -14599,10 +14599,10 @@ prosemirror-dev-tools@^2.1.1:
     react-json-tree "^0.11.0"
     unstated "^2.1.1"
 
-prosemirror-dropcursor@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/prosemirror-dropcursor/-/prosemirror-dropcursor-1.4.0.tgz#91a859d4ee79c99b1c0ba6ee61c093b195c0d9f0"
-  integrity sha512-6+YwTjmqDwlA/Dm+5wK67ezgqgjA/MhSDgaNxKUzH97SmeuWFXyLeDRxxOPZeSo7yTxcDGUCWTEjmQZsVBuMrQ==
+prosemirror-dropcursor@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/prosemirror-dropcursor/-/prosemirror-dropcursor-1.6.1.tgz#31f696172105f232bd17543ccf305e0f33e59d1d"
+  integrity sha512-LtyqQpkIknaT7NnZl3vDr3TpkNcG4ABvGRXx37XJ8tJNUGtcrZBh40A0344rDwlRTfUEmynQS/grUsoSWz+HgA==
   dependencies:
     prosemirror-state "^1.0.0"
     prosemirror-transform "^1.1.0"

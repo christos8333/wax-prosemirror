@@ -4,7 +4,7 @@ import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { ToolGroup } from 'wax-prosemirror-core';
-import TrackChangeOptionsTool from '../../CommentsService/components/ui/trackChanges/TrackChangeOptionsTool';
+import TrackChangeOptionsTool from '../../TrackOptionsService/components/TrackChangeOptionsTool';
 
 @injectable()
 class TrackCommentOptions extends ToolGroup {
@@ -26,12 +26,12 @@ class TrackCommentOptions extends ToolGroup {
     const MemorizedComponent = useMemo(
       () => (
         <TrackChangeOptionsTool
-          key={uuidv4()}
-          view={view}
           groups={this._toolGroups[0].groups.map(group => ({
             //   groupName: group.title.props.title,
             items: group._tools,
           }))}
+          key={uuidv4()}
+          view={view}
         />
       ),
       [],

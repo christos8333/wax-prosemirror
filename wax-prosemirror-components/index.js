@@ -22,5 +22,4 @@ export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyle
 
 export { default as useDebounce } from './src/helpers/useDebounce';
 export { default as useOnClickOutside } from './src/helpers/useOnClickOutside';
-export { default as CheckBox } from './src/ui/inputs/CheckBox';
 export { default as DateParser } from './src/helpers/DateParser';

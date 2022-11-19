@@ -4,7 +4,8 @@ import { each, eachRight } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
-import { Icon, CheckBox, useDebounce } from 'wax-prosemirror-components';
+import { Icon, useDebounce } from 'wax-prosemirror-components';
+import CheckBox from './CheckBox';
 import helpers from './helpers';
 
 const Wrapper = styled.div`

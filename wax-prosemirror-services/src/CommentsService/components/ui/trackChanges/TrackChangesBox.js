@@ -1,8 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import styled, { css } from 'styled-components';
-import DateParser from '../../helpers/DateParser';
-import Icon from '../../helpers/Icon';
+import { DateParser, Icon } from 'wax-prosemirror-components';
 
 const activeBorder = css`
   border-color: #bfc4cd;

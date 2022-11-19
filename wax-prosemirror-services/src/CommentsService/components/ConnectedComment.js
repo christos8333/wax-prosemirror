@@ -4,7 +4,7 @@ import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
-import CommentBox from '../../ui/comments/CommentBox';
+import CommentBox from './ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};

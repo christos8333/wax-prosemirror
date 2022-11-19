@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import { last, maxBy } from 'lodash';
 import { TextSelection } from 'prosemirror-state';
-import TrackChangesBox from './TrackChangesBox';
-import acceptTrackChange from './AcceptTrackChange';
-import rejectTrackChange from './RejectTrackChange';
+import TrackChangesBox from './ui/trackChanges/TrackChangesBox';
+import acceptTrackChange from './ui/trackChanges/AcceptTrackChange';
+import rejectTrackChange from './ui/trackChanges/RejectTrackChange';
 
 const ConnectedTrackChangeStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};

@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { each } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
-import MenuButton from '../../ui/buttons/MenuButton';
-import Icon from '../../helpers/Icon';
+import { MenuButton, Icon } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   background: #fff;

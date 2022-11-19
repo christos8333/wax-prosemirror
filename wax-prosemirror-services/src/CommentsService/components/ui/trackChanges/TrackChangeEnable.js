@@ -1,8 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useMemo } from 'react';
-import MenuButton from '../../ui/buttons/MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
 
-const HideShowTool = ({ view = {}, item, enabled }) => {
+const TrackChangeEnable = ({ view = {}, item, enabled }) => {
   const [isEnabled, setEnabled] = useState(enabled);
 
   const handleMouseDown = e => {
@@ -11,12 +11,12 @@ const HideShowTool = ({ view = {}, item, enabled }) => {
     item.run(view.state, view.dispatch);
   };
 
-  const HideShowToolComponent = useMemo(
+  const TrackChangeEnableComponent = useMemo(
     () => (
       <MenuButton
         active={isEnabled}
         disabled={item.enable && !item.enable(view.state)}
-        label="Hide/Show"
+        label="Track Changes"
         onMouseDown={e => handleMouseDown(e)}
         title={item.title}
       />
@@ -24,7 +24,7 @@ const HideShowTool = ({ view = {}, item, enabled }) => {
     [isEnabled],
   );
 
-  return HideShowToolComponent;
+  return TrackChangeEnableComponent;
 };
 
-export default HideShowTool;
+export default TrackChangeEnable;

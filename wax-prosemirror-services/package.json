@@ -36,7 +36,8 @@
     "uuid": "^7.0.3",
     "wax-prosemirror-components": "^0.6.5",
     "wax-prosemirror-core": "^0.6.5",
-     "@pubsweet/ui-toolkit": "^2.3.1"
+     "@pubsweet/ui-toolkit": "^2.3.1",
+     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
     "react": "^16.13.1",

@@ -4,6 +4,7 @@ export { default as UndoRedoButton } from './src/components/UndoRedoButton';
 export { default as MenuButton } from './src/ui/buttons/MenuButton';
 export { default as icons } from './src/icons/icons';
 export { default as Icon } from './src/helpers/Icon';
+export { default as CheckBox } from './src/ui/inputs/CheckBox';
 export { default as TableDropDown } from './src/components/tables/TableDropDown';
 export { default as ImageUpload } from './src/components/images/ImageUpload';
 export { default as TitleButton } from './src/components/TitleButton';
@@ -18,7 +19,6 @@ export { default as TrackChangeEnable } from './src/components/trackChanges/Trac
 export { default as CreateTable } from './src/components/tables/CreateTable';
 export { default as Tabs } from './src/ui/tabs/Tabs';
 export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';
-export { default as FindAndReplaceTool } from './src/components/findAndReplace/FindAndReplaceTool';
 export { default as FullScreen } from './src/components/various/FullScreen';
 export { default as LeftSideButton } from './src/components/various/LeftSideButton';
 export { default as SpecialCharactersTool } from './src/components/specialCharacters/SpecialCharactersTool';
@@ -35,3 +35,5 @@ export { default as CustomTagBlockComponent } from './src/components/customtag/C
 export { default as SaveButton } from './src/components/SaveButton';
 export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyles';
 export { default as OENAsideButton } from './src/components/OEN/OENAsideButton';
+
+export { default as useDebounce } from './src/helpers/useDebounce';

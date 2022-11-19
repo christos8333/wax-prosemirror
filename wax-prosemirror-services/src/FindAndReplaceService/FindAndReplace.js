@@ -2,8 +2,8 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
-import { FindAndReplaceTool } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import FindAndReplaceTool from './components/FindAndReplaceTool';
 
 @injectable()
 export default class FindAndReplace extends Tools {

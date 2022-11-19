@@ -1,10 +1,10 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import { each, eachRight } from 'lodash';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers, useDebounce } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
-import { Icon, useDebounce } from 'wax-prosemirror-components';
+import { Icon } from 'wax-prosemirror-components';
 import CheckBox from './CheckBox';
 import helpers from './helpers';
 

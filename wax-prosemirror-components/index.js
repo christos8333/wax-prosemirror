@@ -13,7 +13,6 @@ export { default as TrackChangeEnable } from './src/components/trackChanges/Trac
 export { default as CreateTable } from './src/components/tables/CreateTable';
 export { default as Tabs } from './src/ui/tabs/Tabs';
 export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';
-export { default as SpecialCharactersTool } from './src/components/specialCharacters/SpecialCharactersTool';
 export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
 export { default as EditorShortCutsTool } from './src/components/EditorInfo/EditorShortCutsTool';
 

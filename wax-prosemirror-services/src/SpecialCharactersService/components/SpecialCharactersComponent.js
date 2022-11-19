@@ -162,19 +162,17 @@ const SpecialCharactersComponent = ({ close }) => {
         <SpecialCharactersGroup key={key}>
           <GroupTitle> {key} </GroupTitle>
           <GroupCharacters>
-            {groupBy(specialCharactersList, 'group')[key].map(
-              (character, index) => {
-                return (
-                  <SpecialCharacter
-                    key={uuidv4()}
-                    onMouseDown={() => insertCharacter(character)}
-                    title={character.name}
-                  >
-                    <span>{character.unicode}</span>
-                  </SpecialCharacter>
-                );
-              },
-            )}
+            {groupBy(specialCharactersList, 'group')[key].map(character => {
+              return (
+                <SpecialCharacter
+                  key={uuidv4()}
+                  onMouseDown={() => insertCharacter(character)}
+                  title={character.name}
+                >
+                  <span>{character.unicode}</span>
+                </SpecialCharacter>
+              );
+            })}
           </GroupCharacters>
         </SpecialCharactersGroup>,
       );

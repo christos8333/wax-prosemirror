@@ -3,9 +3,9 @@
 import React, { useContext, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext } from 'wax-prosemirror-core';
-import MenuButton from '../../ui/buttons/MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
 
-const Button = ({ view = {}, item }) => {
+const FullScreenButton = ({ view = {}, item }) => {
   const { active, icon, label, select, title } = item;
   const context = useContext(WaxContext);
 
@@ -13,7 +13,7 @@ const Button = ({ view = {}, item }) => {
 
   const { state } = view;
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = e => {
     e.preventDefault();
     Object.assign(options, { fullScreen: !options.fullScreen });
     activeView.dispatch(
@@ -39,7 +39,7 @@ const Button = ({ view = {}, item }) => {
         disabled={false}
         iconName={usedIcon}
         label={label}
-        onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
+        onMouseDown={e => handleMouseDown(e)}
         title={title}
       />
     ),
@@ -49,4 +49,4 @@ const Button = ({ view = {}, item }) => {
   return MenuButtonComponent;
 };
 
-export default Button;
+export default FullScreenButton;

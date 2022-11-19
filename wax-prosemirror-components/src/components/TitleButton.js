@@ -21,7 +21,7 @@ const TitleButton = ({ view = {}, item }) => {
     true,
   );
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = (e, editorState) => {
     e.preventDefault();
     run(editorState, dispatch);
   };

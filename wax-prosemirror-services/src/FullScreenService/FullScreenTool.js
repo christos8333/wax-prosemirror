@@ -1,8 +1,8 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { FullScreen } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import FullScreenButton from './components/FullScreenButton';
 
 @injectable()
 export default class FullScreenTool extends Tools {
@@ -28,7 +28,7 @@ export default class FullScreenTool extends Tools {
     if (isEmpty(view)) return null;
     // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <FullScreen item={this.toJSON()} key="FullScreen" view={view} />
+      <FullScreenButton item={this.toJSON()} key="FullScreen" view={view} />
     ) : null;
   }
 }

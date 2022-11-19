@@ -12,7 +12,6 @@ export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';
 export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
 export { default as EditorShortCutsTool } from './src/components/EditorInfo/EditorShortCutsTool';
 
-export { default as EditingSuggestingDropDown } from './src/components/editingSuggesting/EditingSuggestingDropDown';
 export { default as CustomTagInlineComponent } from './src/components/customtag/CustomTagInlineComponent';
 export { default as CustomTagInlineOverlayComponent } from './src/components/customtag/CustomTagInlineOverlayCompoment';
 export { default as CustomTagBlockComponent } from './src/components/customtag/CustomTagBlockComponent';

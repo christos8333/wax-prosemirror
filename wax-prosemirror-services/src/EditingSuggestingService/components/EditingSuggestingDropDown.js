@@ -3,7 +3,7 @@ import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
-import Icon from '../../helpers/Icon';
+import { Icon } from 'wax-prosemirror-components';
 
 const Wrapper = styled.span`
   ${ReactDropDownStyles};
@@ -78,6 +78,7 @@ const dropDownOptions = [
   { label: <Suggesting />, value: 'suggesting' },
 ];
 
+// eslint-disable-next-line no-unused-vars
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
   const { app, activeView, pmViews } = useContext(WaxContext);
   const enableService = app.config.get('config.EnableTrackChangeService')
@@ -110,6 +111,7 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
     () => (
       <Wrapper>
         <DropdownStyled
+          // eslint-disable-next-line no-unused-vars
           onChange={option => {
             return enableDisableTrackChanges();
           }}

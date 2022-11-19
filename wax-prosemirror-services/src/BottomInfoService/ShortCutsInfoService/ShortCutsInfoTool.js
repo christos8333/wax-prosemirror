@@ -1,8 +1,8 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { EditorShortCutsTool } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import EditorShortCutsTool from './components/EditorShortCutsTool';
 
 @injectable()
 class ShortCutsInfoTool extends Tools {
@@ -14,7 +14,7 @@ class ShortCutsInfoTool extends Tools {
   }
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }

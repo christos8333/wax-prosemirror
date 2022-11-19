@@ -1,8 +1,8 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { TitleButton } from 'wax-prosemirror-components';
 import { Commands, DocumentHelpers, Tools } from 'wax-prosemirror-core';
+import TitleButton from './components/TitleButton';
 import checkLevelFromConfig from '../HeadingService/checkLevelFromConfig';
 
 @injectable()

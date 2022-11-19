@@ -2,7 +2,7 @@ import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import MenuButton from '../../ui/buttons/MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
 import { useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`

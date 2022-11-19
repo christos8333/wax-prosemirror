@@ -21,6 +21,12 @@ export default {
     babel({
       presets: ['react-app'],
       plugins: [
+        [
+          '@babel/plugin-transform-runtime',
+          {
+            regenerator: true,
+          },
+        ],
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         'babel-plugin-parameter-decorator',
       ],
@@ -40,5 +46,6 @@ export default {
     'prosemirror-schema-list',
     'prosemirror-model',
     'prosemirror-inputrules',
+    '@babel/runtime/regenerator',
   ],
 };

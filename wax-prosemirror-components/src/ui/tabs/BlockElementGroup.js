@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
 import styled from 'styled-components';
-import CustomTagBlockComponent from '../../components/customtag/CustomTagBlockComponent';
+import CustomTagBlockComponent from './CustomTagBlockComponent';
 import OENToolGroup from './OENToolGroup';
 import BlockElement from './BlockElement';
 import Icon from '../../helpers/Icon';

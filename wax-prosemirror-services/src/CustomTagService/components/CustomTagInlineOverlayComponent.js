@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { WaxContext } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
-import Icon from '../../helpers/Icon';
+import { Icon } from 'wax-prosemirror-components';
 
 const IconRemove = styled(Icon)`
   cursor: pointer;
@@ -80,7 +80,7 @@ const Item = styled.div`
 
 const initialArr = [];
 
-const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
+const CustomTagInlineOverlayComponent = ({ mark }) => {
   const ref = useRef(null);
 
   const [inputValue, setInputValue] = useState('');
@@ -111,7 +111,7 @@ const CustomTagInlineOverlayComponent = ({ mark, setPosition, position }) => {
   const [allTags, setAllTags] = useState(configTags);
 
   let image = false;
-  state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
+  state.doc.nodesBetween($from.pos, $to.pos, node => {
     if (node.type.name === 'image') {
       image = true;
     }

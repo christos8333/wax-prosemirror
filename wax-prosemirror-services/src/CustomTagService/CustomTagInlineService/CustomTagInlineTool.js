@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { CustomTagInlineComponent } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import CustomTagInlineComponent from '../components/CustomTagInlineComponent';
 
 class CustomTagInLineTool extends Tools {
   title = 'Custom Tag Inline';

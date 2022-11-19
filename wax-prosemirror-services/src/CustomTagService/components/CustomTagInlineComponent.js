@@ -1,8 +1,7 @@
 import React, { useMemo, useState, useContext } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-
-import MenuButton from '../../ui/buttons/MenuButton';
+import { WaxContext } from 'wax-prosemirror-core';
+import { MenuButton } from 'wax-prosemirror-components';
 
 const StyledButton = styled(MenuButton)`
   svg {

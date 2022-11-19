@@ -2,9 +2,8 @@
 import React, { useMemo, useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
-import ReactDropDownStyles from '../../helpers/ReactDropDownStyles';
 
 const Wrapper = styled.span`
   ${ReactDropDownStyles};

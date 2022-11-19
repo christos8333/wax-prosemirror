@@ -1,9 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
-import ReactDropDownStyles from '../../helpers/ReactDropDownStyles';
 import Icon from '../../helpers/Icon';
 
 const Wrapper = styled.span`

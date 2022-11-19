@@ -7,7 +7,6 @@ export { default as TableDropDown } from './src/components/tables/TableDropDown'
 export { default as TitleButton } from './src/components/TitleButton';
 export { default as ToolGroupComponent } from './src/components/ToolGroupComponent';
 export { default as ToolGroups } from './src/components/ToolGroups';
-export { default as LinkComponent } from './src/components/link/LinkComponent';
 export { default as CommentBubbleComponent } from './src/components/comments/CommentBubbleComponent';
 export { default as RightArea } from './src/components/rightArea/RightArea';
 export { default as TrackChangeEnable } from './src/components/trackChanges/TrackChangeEnable';

@@ -2,8 +2,8 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { redo } from 'prosemirror-history';
 import { injectable } from 'inversify';
-import { UndoRedoButton } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import UndoRedoButton from '../components/UndoRedoButton';
 
 @injectable()
 export default class Redo extends Tools {

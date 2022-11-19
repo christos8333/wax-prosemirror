@@ -34,3 +34,4 @@ export { default as trackedTransaction } from './src/utilities/track-changes/tra
 /* Components */
 
 export { default as LeftMenuTitle } from './src/components/LeftMenuTitle';
+export { default as LeftSideButton } from './src/components/LeftSideButton';

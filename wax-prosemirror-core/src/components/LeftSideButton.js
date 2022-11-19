@@ -1,9 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
 import styled, { css } from 'styled-components';
-import { th, override } from '@pubsweet/ui-toolkit';
-import MenuButton from '../../ui/buttons/MenuButton';
+import { WaxContext } from '../WaxContext';
+import { MenuButton } from 'wax-prosemirror-components';
 
 const activeStyles = css`
   pointer-events: none;
@@ -28,7 +27,7 @@ const LeftSideButton = ({ view = {}, item }) => {
 
   const { dispatch, state } = view;
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = (e, editorState) => {
     e.preventDefault();
     run(editorState, dispatch);
   };

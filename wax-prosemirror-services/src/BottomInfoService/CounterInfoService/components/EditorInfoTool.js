@@ -14,7 +14,7 @@ import {
   DocumentHelpers,
   useOnClickOutside,
 } from 'wax-prosemirror-core';
-import MenuButton from '../../../ui/buttons/MenuButton';
+import { MenuButton } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   font-size: 0;

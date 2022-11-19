@@ -6,7 +6,5 @@ export { default as Icon } from './src/helpers/Icon';
 export { default as ToolGroupComponent } from './src/components/ToolGroupComponent';
 export { default as ToolGroups } from './src/components/ToolGroups';
 
-export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
-
 export { default as Tabs } from './src/ui/tabs/Tabs';
 export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';

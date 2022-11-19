@@ -1,9 +1,9 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useRef, useMemo } from 'react';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import { MenuButton } from 'wax-prosemirror-components';
 import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
-import MenuButton from '../../ui/buttons/MenuButton';
 import insertImage from './Upload';
 
 const Wrapper = styled.div`

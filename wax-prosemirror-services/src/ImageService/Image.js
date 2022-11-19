@@ -3,8 +3,8 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { ImageUpload } from 'wax-prosemirror-components';
 import { WaxContext, Commands, Tools } from 'wax-prosemirror-core';
+import ImageUpload from './components/ImageUpload';
 import fileUpload from './fileUpload';
 
 @injectable()

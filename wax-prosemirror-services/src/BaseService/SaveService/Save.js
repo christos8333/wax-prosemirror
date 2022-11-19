@@ -1,8 +1,9 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { SaveButton, icons } from 'wax-prosemirror-components';
+import { icons } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import SaveButton from './components/SaveButton';
 
 @injectable()
 export default class Save extends Tools {
@@ -11,12 +12,6 @@ export default class Save extends Tools {
   name = 'Save';
   content = icons.save;
   name = 'Save';
-
-  get run() {
-    return (state, dispatch) => {
-      return true;
-    };
-  }
 
   renderTool(view) {
     if (isEmpty(view)) return null;

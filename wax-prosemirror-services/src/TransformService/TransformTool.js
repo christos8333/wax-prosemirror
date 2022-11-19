@@ -1,8 +1,8 @@
 import React from 'react';
-import { TransformCaseComponent } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { DocumentHelpers, Tools } from 'wax-prosemirror-core';
+import TransformCaseComponent from './components/TransformCaseComponent';
 
 const upperLowerCase = (state, dispatch, casing) => {
   // grab the current transaction and selection

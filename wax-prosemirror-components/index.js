@@ -15,7 +15,6 @@ export { default as CreateTable } from './src/components/tables/CreateTable';
 export { default as Tabs } from './src/ui/tabs/Tabs';
 export { default as BlockLevelTools } from './src/ui/tabs/BlockLevelTools';
 export { default as SpecialCharactersTool } from './src/components/specialCharacters/SpecialCharactersTool';
-export { default as TextHighlightingTool } from './src/components/textHighlight/TextHighlightingTool';
 export { default as EditorInfoTool } from './src/components/EditorInfo/CounterInfo/EditorInfoTool';
 export { default as EditorShortCutsTool } from './src/components/EditorInfo/EditorShortCutsTool';
 
@@ -28,4 +27,5 @@ export { default as CustomTagBlockComponent } from './src/components/customtag/C
 export { default as ReactDropDownStyles } from './src/helpers/ReactDropDownStyles';
 
 export { default as useDebounce } from './src/helpers/useDebounce';
+export { default as useOnClickOutside } from './src/helpers/useOnClickOutside';
 export { default as CheckBox } from './src/ui/inputs/CheckBox';

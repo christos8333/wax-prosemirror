@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
-import MenuButton from '../../ui/buttons/MenuButton';
-import useOnClickOutside from '../../helpers/useOnClickOutside';
+import { MenuButton, useOnClickOutside } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   font-size: 0;

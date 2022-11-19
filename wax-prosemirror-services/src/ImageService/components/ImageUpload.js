@@ -1,7 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useRef, useMemo } from 'react';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
-import { MenuButton } from 'wax-prosemirror-components';
+import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
 import insertImage from './Upload';

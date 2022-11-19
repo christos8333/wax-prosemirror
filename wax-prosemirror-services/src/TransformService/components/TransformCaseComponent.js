@@ -2,8 +2,12 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuid } from 'uuid';
-import { WaxContext, useOnClickOutside } from 'wax-prosemirror-core';
-import { MenuButton, Icon } from 'wax-prosemirror-components';
+import {
+  WaxContext,
+  useOnClickOutside,
+  MenuButton,
+} from 'wax-prosemirror-core';
+import { Icon } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   font-size: 0;

@@ -1,9 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import { wrapIn } from 'prosemirror-commands';
 import { liftTarget } from 'prosemirror-transform';
-import { MenuButton } from 'wax-prosemirror-components';
 
 const OENAsideButton = ({ view = {}, item, type }) => {
   const { active, icon, label, select, title } = item;

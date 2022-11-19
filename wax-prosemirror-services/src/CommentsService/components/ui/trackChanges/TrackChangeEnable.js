@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useMemo } from 'react';
-import { MenuButton } from 'wax-prosemirror-components';
+import { MenuButton } from 'wax-prosemirror-core';
 
 const TrackChangeEnable = ({ view = {}, item, enabled }) => {
   const [isEnabled, setEnabled] = useState(enabled);

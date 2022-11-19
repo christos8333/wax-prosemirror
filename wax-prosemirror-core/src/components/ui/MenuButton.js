@@ -4,9 +4,7 @@ import styled, { css } from 'styled-components';
 
 import { th, override } from '@pubsweet/ui-toolkit';
 
-// import Icon from '../../helpers/Icon';
-
-import icons from '../../icons/icons';
+import { icons } from 'wax-prosemirror-components';
 
 const disabledStyles = css`
   background: ${props =>

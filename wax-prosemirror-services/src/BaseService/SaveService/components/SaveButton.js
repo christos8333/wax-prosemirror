@@ -1,7 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useEffect, useState } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
-import { MenuButton } from 'wax-prosemirror-components';
+import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
 const SaveButton = ({ view = {}, item }) => {
   const { icon, label, select, title } = item;

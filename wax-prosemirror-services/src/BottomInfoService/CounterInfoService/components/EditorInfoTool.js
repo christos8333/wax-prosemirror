@@ -13,8 +13,8 @@ import {
   WaxContext,
   DocumentHelpers,
   useOnClickOutside,
+  MenuButton,
 } from 'wax-prosemirror-core';
-import { MenuButton } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   font-size: 0;

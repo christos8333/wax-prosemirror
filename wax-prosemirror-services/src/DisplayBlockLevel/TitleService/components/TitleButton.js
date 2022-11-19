@@ -1,7 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useEffect } from 'react';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
-import { MenuButton } from 'wax-prosemirror-components';
+import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 
 const TitleButton = ({ view = {}, item }) => {
   const { active, icon, label, run, select, title } = item;

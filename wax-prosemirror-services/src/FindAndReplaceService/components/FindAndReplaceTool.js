@@ -9,8 +9,7 @@ import React, {
 
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import { WaxContext } from 'wax-prosemirror-core';
-import { MenuButton } from 'wax-prosemirror-components';
+import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
 
 const Wrapper = styled.div`

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { wrapIn } from 'prosemirror-commands';
 import { v4 as uuidv4 } from 'uuid';
 import { liftTarget } from 'prosemirror-transform';
-import { MenuButton } from 'wax-prosemirror-components';
+import MenuButton from '../ui/MenuButton';
 import { WaxContext } from '../../WaxContext';
 
 const activeStyles = css`

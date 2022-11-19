@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import { MenuButton } from 'wax-prosemirror-components';
+import { MenuButton } from 'wax-prosemirror-core';
 import TrackChangeOptionsComponent from './TrackChangeOptionsComponent';
 
 const Wrapper = styled.div`

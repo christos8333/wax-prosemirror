@@ -1,9 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useContext, useMemo, useRef } from 'react';
-import { WaxContext, useOnClickOutside } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  useOnClickOutside,
+  MenuButton,
+} from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import { MenuButton } from 'wax-prosemirror-components';
 import InsertTableTool from './InsertTableTool';
 
 const Wrapper = styled.div`

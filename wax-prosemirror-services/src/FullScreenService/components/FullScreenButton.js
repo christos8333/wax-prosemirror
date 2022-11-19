@@ -2,8 +2,7 @@
 
 import React, { useContext, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
-import { WaxContext } from 'wax-prosemirror-core';
-import { MenuButton } from 'wax-prosemirror-components';
+import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
 const FullScreenButton = ({ view = {}, item }) => {
   const { active, icon, label, select, title } = item;

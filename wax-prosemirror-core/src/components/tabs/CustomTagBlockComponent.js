@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { MenuButton } from 'wax-prosemirror-components';
+import MenuButton from '../ui/MenuButton';
 import { WaxContext } from '../../WaxContext';
 
 const activeStyles = css`

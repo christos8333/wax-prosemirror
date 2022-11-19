@@ -4,8 +4,8 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { each } from 'lodash';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
-import { MenuButton, Icon } from 'wax-prosemirror-components';
+import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
+import { Icon } from 'wax-prosemirror-components';
 
 const Wrapper = styled.div`
   background: #fff;

@@ -1,7 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
-import MenuButton from '../ui/buttons/MenuButton';
+import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
 const UndoRedoButton = ({ view = {}, item }) => {
   const { active, icon, label, run, select, title } = item;

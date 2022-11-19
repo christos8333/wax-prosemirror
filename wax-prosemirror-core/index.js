@@ -43,3 +43,4 @@ export { default as ToolGroupComponent } from './src/components/ToolGroupCompone
 export { default as ToolGroups } from './src/components/ToolGroups';
 export { default as BlockLevelTools } from './src/components/tabs/BlockLevelTools';
 export { default as Tabs } from './src/components/tabs/Tabs';
+export { default as MenuButton } from './src/components/ui/MenuButton';

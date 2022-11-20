@@ -156,7 +156,6 @@ const WaxView = forwardRef((props, ref) => {
 
     const docContent =
       targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
-
     if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
       props.onChange(docContent);
   };

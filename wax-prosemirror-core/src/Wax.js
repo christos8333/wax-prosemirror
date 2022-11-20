@@ -52,14 +52,7 @@ const Wax = forwardRef((props, ref) => {
   const finalOnChange = content => {
     if (!onChange) return;
     const { schema } = application.schema;
-    helpers.alterNotesSchema(schema);
-    if (targetFormat === 'JSON') {
-      onChange(content);
-    } else {
-      const serialize = serializer(schema);
-      onChange(serialize(content));
-    }
-    helpers.revertNotesSchema(schema);
+    helpers.saveContent(content, onChange, schema, serializer, targetFormat);
   };
 
   const Layout = application.container.get('Layout');

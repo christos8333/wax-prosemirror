@@ -1,13 +1,12 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
 import { injectable } from 'inversify';
-import { EditorInfoTool } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import EditorInfoTool from './components/EditorInfoTool';
 
 @injectable()
 class CounterInfoTool extends Tools {
   title = 'Counter Info';
-  icon = 'highlight';
   name = 'CounterInfo';
 
   get run() {
@@ -15,7 +14,7 @@ class CounterInfoTool extends Tools {
   }
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
@@ -24,7 +23,7 @@ class CounterInfoTool extends Tools {
     if (isEmpty(view)) return null;
     // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <EditorInfoTool key="CounterInfo" item={this.toJSON()} view={view} />
+      <EditorInfoTool item={this.toJSON()} key="CounterInfo" view={view} />
     ) : null;
   }
 }

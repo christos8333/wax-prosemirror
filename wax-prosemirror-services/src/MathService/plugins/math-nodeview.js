@@ -15,12 +15,11 @@ import { mathjax } from 'mathjax-full/js/mathjax';
 import { TeX } from 'mathjax-full/js/input/tex.js';
 import { SVG } from 'mathjax-full/js/output/svg';
 import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
-import { browserAdaptor } from 'mathjax-full/js/adaptors/browserAdaptor';
 import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html';
-import { AssistiveMmlHandler } from 'mathjax-full/js/a11y/assistive-mml.js';
-
 import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
-import { STATE } from 'mathjax-full/js/core/MathItem';
+// import { browserAdaptor } from 'mathjax-full/js/adaptors/browserAdaptor';
+// import { AssistiveMmlHandler } from 'mathjax-full/js/a11y/assistive-mml.js';
+// import { STATE } from 'mathjax-full/js/core/MathItem';
 
 //
 //  Minimal CSS needed for stand-alone image

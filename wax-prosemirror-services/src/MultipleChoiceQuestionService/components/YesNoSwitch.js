@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from 'wax-prosemirror-components';
+import { Icon } from 'wax-prosemirror-core';
 import Switch from './Switch';
 
 const StyledSwitch = styled(Switch)`

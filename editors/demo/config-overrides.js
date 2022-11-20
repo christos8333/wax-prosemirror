@@ -3,10 +3,6 @@ module.exports = function override(config, env) {
   config.resolve = {
     symlinks: true,
     alias: {
-      'wax-prosemirror-components': path.resolve(
-        __dirname,
-        '../../wax-prosemirror-components/index',
-      ),
       'wax-prosemirror-core': path.resolve(
         __dirname,
         '../../wax-prosemirror-core/index',

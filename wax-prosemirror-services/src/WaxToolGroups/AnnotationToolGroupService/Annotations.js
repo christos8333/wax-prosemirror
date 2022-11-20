@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
-import { ToolGroupComponent } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { ToolGroup } from 'wax-prosemirror-core';
+import { ToolGroup, ToolGroupComponent } from 'wax-prosemirror-core';
 
 @injectable()
 class Annotations extends ToolGroup {

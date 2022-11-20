@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
-import { Icon } from 'wax-prosemirror-components';
+import { WaxContext, Icon } from 'wax-prosemirror-core';
 import styled, { css } from 'styled-components';
 import ReadOnlyDropDown from './ReadOnlyDropDown';
 

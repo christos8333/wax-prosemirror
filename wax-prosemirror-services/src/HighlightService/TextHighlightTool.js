@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { injectable } from 'inversify';
-import { TextHighlightingTool } from 'wax-prosemirror-components';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { Tools } from 'wax-prosemirror-core';
+import TextHighlightingTool from './components/TextHighlightingTool';
 
 @injectable()
 class TextHighlightTool extends Tools {

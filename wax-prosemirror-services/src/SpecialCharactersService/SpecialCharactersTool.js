@@ -2,20 +2,14 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
-import { SpecialCharactersTool } from 'wax-prosemirror-components';
 import { Tools } from 'wax-prosemirror-core';
+import SpecialCharactersTool from './components/SpecialCharactersTool';
 
 @injectable()
 export default class SpecialCharacters extends Tools {
   title = 'Special Characters';
   icon = 'specialCharacters';
   name = 'specialCharacters';
-
-  get run() {
-    return (state, dispatch) => {};
-  }
-
-  select = (state, activeViewId) => {};
 
   get enable() {
     return state => {
@@ -27,7 +21,7 @@ export default class SpecialCharacters extends Tools {
     if (isEmpty(view)) return null;
 
     return this._isDisplayed ? (
-      <SpecialCharactersTool key={uuidv4()} item={this.toJSON()} view={view} />
+      <SpecialCharactersTool item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 }

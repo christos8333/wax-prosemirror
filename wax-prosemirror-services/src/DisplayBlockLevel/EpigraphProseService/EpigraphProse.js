@@ -1,8 +1,7 @@
 import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
-import { LeftSideButton } from 'wax-prosemirror-components';
-import { Tools, Commands } from 'wax-prosemirror-core';
+import { Tools, Commands, LeftSideButton } from 'wax-prosemirror-core';
 
 @injectable()
 export default class EpigraphProse extends Tools {

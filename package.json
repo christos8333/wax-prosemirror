@@ -12,7 +12,6 @@
   "main": "index.js",
   "workspaces": [
     "wax-prosemirror-core",
-    "wax-prosemirror-components",
     "wax-prosemirror-services",
     "editors/*"
   ],
@@ -25,8 +24,7 @@
     "clean:root": "rm -rf node_modules",
     "cz": "git-cz",
     "editoria": "cd editors/demo && yarn start",
-    "reset": "yarn clean && yarn",
-    "storybook": "coko-storybook"
+    "reset": "yarn clean && yarn"
   },
   "husky": {
     "hooks": {
@@ -49,7 +47,6 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@coko/lint": "^1.1.0",
-    "@coko/storybook": "^0.1.1",
     "@rollup/plugin-commonjs": "^11.0.2",
     "babel-plugin-parameter-decorator": "1.0.12",
     "css-loader": "^0.28.11",

@@ -1,8 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { ReactDropDownStyles } from 'wax-prosemirror-components';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  DocumentHelpers,
+  ReactDropDownStyles,
+} from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import { v4 as uuidv4 } from 'uuid';
 

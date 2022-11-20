@@ -2,8 +2,8 @@ import React from 'react';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
-import { CreateTable } from 'wax-prosemirror-components';
 import { Commands, Tools } from 'wax-prosemirror-core';
+import CreateTable from '../components/CreateTable';
 
 @injectable()
 export default class Table extends Tools {
@@ -36,8 +36,9 @@ export default class Table extends Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
 
+    // eslint-disable-next-line no-underscore-dangle
     return this._isDisplayed ? (
-      <CreateTable key={uuidv4()} item={this.toJSON()} view={view} />
+      <CreateTable item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 }

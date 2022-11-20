@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useLayoutEffect } from 'react';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, Icon } from 'wax-prosemirror-core';
 import { DOMParser } from 'prosemirror-model';
 import { ReplaceStep, ReplaceAroundStep } from 'prosemirror-transform';
 import { Selection } from 'prosemirror-state';
 import styled from 'styled-components';
-import { Icon } from 'wax-prosemirror-components';
 
 const StyledButton = styled.span`
   cursor: pointer;

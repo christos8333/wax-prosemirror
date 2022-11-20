@@ -31,7 +31,7 @@ export { default as ShortCutsService } from './src/config/defaultServices/ShortC
 export { default as QuestionsNodeView } from './src/utilities/lib/helpers/QuestionsNodeView';
 export { default as trackedTransaction } from './src/utilities/track-changes/trackedTransaction';
 
-/* Components */
+/* Components TODO Remove from Core */
 
 export { default as LeftMenuTitle } from './src/components/LeftMenuTitle';
 export { default as LeftSideButton } from './src/components/LeftSideButton';

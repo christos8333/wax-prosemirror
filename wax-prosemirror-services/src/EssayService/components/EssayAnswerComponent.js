@@ -54,9 +54,10 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   } = context;
   let essayAnswerView;
   const questionId = node.attrs.id;
-  const isEditable = main.props.editable(editable => {
-    return editable;
-  });
+
+  const customProps = main.props.customValues;
+
+  const { testMode } = customProps;
 
   let finalPlugins = [];
 
@@ -120,7 +121,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
         mount: editorRef.current,
       },
       {
-        editable: () => !isEditable,
+        editable: () => testMode,
         state: EditorState.create({
           doc: node,
           plugins: finalPlugins,
@@ -190,7 +191,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper editable={!isEditable}>
+    <EditorWrapper editable={testMode}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

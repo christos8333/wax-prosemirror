@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable array-callback-return */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { each } from 'lodash';
@@ -160,31 +159,31 @@ const getTrackBlockNodes = main => {
   return trackBlockNodes;
 };
 
-const getComments = main => {
-  const comments = [];
-  const commentsNodes = DocumentHelpers.findChildrenByMark(
-    main.state.doc,
-    main.state.schema.marks.comment,
-    true,
-  );
-  commentsNodes.map(node => {
-    if (node.node.marks.length > 0) {
-      node.node.marks.filter(mark => {
-        if (mark.type.name === 'comment') {
-          comments.push(mark);
-        }
-      });
-    }
-  });
-  return [...new Set(comments.map(item => item.attrs.id))];
-};
+// const getComments = main => {
+//   const comments = [];
+//   const commentsNodes = DocumentHelpers.findChildrenByMark(
+//     main.state.doc,
+//     main.state.schema.marks.comment,
+//     true,
+//   );
+//   commentsNodes.map(node => {
+//     if (node.node.marks.length > 0) {
+//       node.node.marks.filter(mark => {
+//         if (mark.type.name === 'comment') {
+//           comments.push(mark);
+//         }
+//       });
+//     }
+//   });
+//   return [...new Set(comments.map(item => item.attrs.id))];
+// };
 
 const TrackChangeOptionsComponent = ({
   groups,
   setShowHidden,
   showHiddenValue,
 }) => {
-  const [isShownTrack, setIsShownTrack] = useState(false);
+  // const [isShownTrack, setIsShownTrack] = useState(false);
   const menuItems = groups[0].items;
   const { app, pmViews, activeView, activeViewId } = useContext(WaxContext);
   const { state } = activeView;
@@ -192,12 +191,12 @@ const TrackChangeOptionsComponent = ({
   const hideShowPlugin = app.PmPlugins.get('hideShowPlugin');
   const inlineTracks = getInlineTracks(pmViews.main).length;
   const blockTracks = getTrackBlockNodes(pmViews.main).length;
-  const comments = getComments(pmViews.main).length;
+  // const comments = getComments(pmViews.main).length;
 
   const renderTools = () => {
     const tools = [];
     tools.push(
-      menuItems.map((menuItem, index) => {
+      menuItems.map(menuItem => {
         const isActive = !!(
           menuItem.active(state, activeViewId) &&
           menuItem.select(state, activeViewId)
@@ -220,7 +219,7 @@ const TrackChangeOptionsComponent = ({
               if (menuItem.name === 'ShowHideTrackChange') {
                 setShowHidden(!showHiddenValue);
                 hideShowPlugin.props.setHideShow(showHiddenValue);
-                each(pmViews, (singleView, viewId) => {
+                each(pmViews, singleView => {
                   singleView.dispatch(singleView.state.tr);
                 });
                 return false;

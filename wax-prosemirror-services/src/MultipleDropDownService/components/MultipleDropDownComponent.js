@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import { WaxContext, Icon } from 'wax-prosemirror-core';
 import styled, { css } from 'styled-components';
@@ -41,7 +40,7 @@ const CorrectAnswer = styled.span``;
 
 const Answer = styled.span``;
 
-export default ({ node, view, getPos }) => {
+export default ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },

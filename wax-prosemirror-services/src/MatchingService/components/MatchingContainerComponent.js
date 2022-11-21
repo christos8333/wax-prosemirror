@@ -1,5 +1,4 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
@@ -230,7 +229,7 @@ export default ({ node, view, getPos }) => {
               {options.length > 0 && (
                 <ul>
                   <li>Options: </li>
-                  {options.map((option, index) => {
+                  {options.map(option => {
                     return (
                       <li key={option.value}>
                         <span>

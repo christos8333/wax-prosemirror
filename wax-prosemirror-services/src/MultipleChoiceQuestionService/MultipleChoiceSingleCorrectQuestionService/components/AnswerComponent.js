@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TextSelection, NodeSelection } from 'prosemirror-state';
@@ -84,7 +83,6 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
-  // eslint-disable-next-line react/destructuring-assignment
   const customProps = main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
@@ -162,7 +160,7 @@ export default ({ node, view, getPos }) => {
     });
 
     let count = -1;
-    parentContainer.descendants((element, position) => {
+    parentContainer.descendants(element => {
       if (element.type.name === 'multiple_choice_single_correct') {
         count += 1;
       }

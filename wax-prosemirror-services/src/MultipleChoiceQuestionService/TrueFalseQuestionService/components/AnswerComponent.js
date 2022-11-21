@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TextSelection, NodeSelection } from 'prosemirror-state';

@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useState, useContext, useEffect } from 'react';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import YesNoSwitch from './YesNoSwitch';
@@ -9,7 +7,6 @@ const CustomSwitch = ({ node, getPos }) => {
   const [checked, setChecked] = useState(false);
   const [checkedAnswerMode, setCheckedAnswerMode] = useState(false);
   const {
-    pmViews,
     pmViews: { main },
   } = context;
 

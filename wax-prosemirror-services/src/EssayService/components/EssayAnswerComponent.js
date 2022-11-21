@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';

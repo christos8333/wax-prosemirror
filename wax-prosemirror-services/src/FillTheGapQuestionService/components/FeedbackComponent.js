@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
@@ -30,7 +28,7 @@ const FeedBackInput = styled.input`
   }
 `;
 
-export default ({ node, view, getPos, readOnly }) => {
+export default ({ node, getPos, readOnly }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },

@@ -59,7 +59,7 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
     { id: 1, name: 'Upper Case', iconName: 'transformCase' },
     { id: 2, name: 'Lower Case', iconName: 'lowerCaseTransform' },
     { id: 3, name: 'Sentence Case', iconName: 'transformCase' },
-    { id: 4, name: 'Title Case', iconName: 'transformCase' },
+    // { id: 4, name: 'Title Case', iconName: 'transformCase' },
   ];
 
   const onClickTransform = (e, id) => {
@@ -73,9 +73,9 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
       case 3:
         item.run(activeView.state, activeView.dispatch, 'sentenceCase');
         break;
-      case 4:
-        item.run(activeView.state, activeView.dispatch, 'titleCase');
-        break;
+      // case 4:
+      //   item.run(activeView.state, activeView.dispatch, 'titleCase');
+      //   break;
       default:
         break;
     }

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import styled from 'styled-components';

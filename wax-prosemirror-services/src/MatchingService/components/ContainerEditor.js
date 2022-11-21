@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -28,7 +26,7 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const ContainerEditor = ({ node, view, getPos, isEditable, autoFocus }) => {
+const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);

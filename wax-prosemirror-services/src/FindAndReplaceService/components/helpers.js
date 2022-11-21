@@ -4,7 +4,7 @@ import { TextSelection } from 'prosemirror-state';
 
 const getMatchesByView = (views, searchValue, matchCase) => {
   let allResults = 0;
-  each(views, (singleView, viewId) => {
+  each(views, singleView => {
     const results = DocumentHelpers.findMatches(
       singleView.state.doc,
       searchValue,

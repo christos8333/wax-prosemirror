@@ -1,9 +1,9 @@
-import ExtractPoetryService from "./ExtractPoetryService/ExtractPoetryService";
-import ExtractProseService from "./ExtractProseService/ExtractProseService";
-import ParagraphContinuedService from "./ParagraphContinuedService/ParagraphContinuedService";
-import ParagraphService from "./ParagraphService/ParagraphService";
-import SourceNoteService from "./SourceNoteService/SourceNoteService";
-import BlockQuoteService from "./BlockQuoteService/BlockQuoteService";
+import ExtractPoetryService from './ExtractPoetryService/ExtractPoetryService';
+import ExtractProseService from './ExtractProseService/ExtractProseService';
+import ParagraphContinuedService from './ParagraphContinuedService/ParagraphContinuedService';
+import ParagraphService from './ParagraphService/ParagraphService';
+import SourceNoteService from './SourceNoteService/SourceNoteService';
+import BlockQuoteService from './BlockQuoteService/BlockQuoteService';
 
 export default [
   new ExtractPoetryService(),
@@ -11,5 +11,5 @@ export default [
   new ParagraphContinuedService(),
   new ParagraphService(),
   new SourceNoteService(),
-  new BlockQuoteService()
+  new BlockQuoteService(),
 ];

@@ -30,10 +30,6 @@ class FillTheGapQuestion extends Tools {
     };
   }
 
-  get active() {
-    return state => {};
-  }
-
   select = (state, activeViewId, activeView) => {
     const { disallowedTools } = activeView.props;
     let status = true;
@@ -47,10 +43,6 @@ class FillTheGapQuestion extends Tools {
     });
     return status;
   };
-
-  get enable() {
-    return state => {};
-  }
 }
 
 export default FillTheGapQuestion;

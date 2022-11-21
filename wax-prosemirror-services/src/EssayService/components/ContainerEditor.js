@@ -16,7 +16,7 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const ContainerEditor = ({ node, view, getPos, isEditable, autoFocus }) => {
+const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);

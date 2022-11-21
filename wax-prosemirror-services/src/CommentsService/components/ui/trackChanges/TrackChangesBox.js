@@ -84,7 +84,6 @@ const Icons = styled.div`
 `;
 
 const IconButton = props => {
-  // eslint-disable-next-line react/prop-types
   const { name, onClick } = props;
   const handleClick = e => {
     e.stopPropagation();

@@ -29,7 +29,7 @@ const highlightPlugin = (nodeTypes = ['code_block']) => {
         } = state;
         let codeBlock = false;
 
-        doc.nodesBetween($from.pos, $to.pos, (node, from) => {
+        doc.nodesBetween($from.pos, $to.pos, node => {
           if (node.type.name === 'code_block') {
             codeBlock = true;
           }

@@ -37,14 +37,6 @@ class CreateGap extends Tools {
 
     return false;
   };
-
-  get active() {
-    return state => {};
-  }
-
-  get enable() {
-    return state => {};
-  }
 }
 
 export default CreateGap;

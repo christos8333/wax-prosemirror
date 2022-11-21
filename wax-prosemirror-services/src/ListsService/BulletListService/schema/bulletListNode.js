@@ -22,6 +22,7 @@ const bulletListNode = {
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
     }
+    // eslint-disable-next-line no-param-reassign
     hook.value = ['ul', attrs, 0];
     next();
   },

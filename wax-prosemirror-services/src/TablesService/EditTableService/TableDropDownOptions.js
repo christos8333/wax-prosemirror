@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { injectable } from 'inversify';
@@ -30,7 +29,7 @@ export default class TableDropDownOptions extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <TableDropDown item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }

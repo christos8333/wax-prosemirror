@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
@@ -12,7 +11,7 @@ class TextHighlightTool extends Tools {
   icon = 'highlight';
   name = 'TextHighlightTool';
 
-  select = (state, activeViewId, activeView) => {
+  select = () => {
     //  return !activeView.state.selection.empty;
     return window.getSelection().toString().trim().length !== 0;
   };
@@ -52,7 +51,7 @@ class TextHighlightTool extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <TextHighlightingTool item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }

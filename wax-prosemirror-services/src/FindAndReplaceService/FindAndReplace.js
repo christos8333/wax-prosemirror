@@ -11,14 +11,8 @@ export default class FindAndReplace extends Tools {
   icon = 'findAndReplace';
   name = 'find';
 
-  get run() {
-    return (state, dispatch) => {};
-  }
-
-  select = (state, activeViewId) => {};
-
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
@@ -26,8 +20,8 @@ export default class FindAndReplace extends Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
 
-    return this._isDisplayed ? (
-      <FindAndReplaceTool key={uuidv4()} item={this.toJSON()} view={view} />
+    return this.isDisplayed() ? (
+      <FindAndReplaceTool item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 }

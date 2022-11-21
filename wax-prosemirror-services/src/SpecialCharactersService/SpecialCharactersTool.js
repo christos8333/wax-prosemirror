@@ -12,7 +12,7 @@ export default class SpecialCharacters extends Tools {
   name = 'specialCharacters';
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
@@ -20,7 +20,7 @@ export default class SpecialCharacters extends Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
 
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <SpecialCharactersTool item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }

@@ -14,20 +14,19 @@ export default class FullScreenTool extends Tools {
     return () => true;
   }
 
-  select = (state, activeViewId) => {
+  select = () => {
     return true;
   };
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <FullScreenButton item={this.toJSON()} key="FullScreen" view={view} />
     ) : null;
   }

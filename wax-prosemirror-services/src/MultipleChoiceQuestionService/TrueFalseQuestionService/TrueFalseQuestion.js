@@ -48,7 +48,7 @@ class TrueFalseQuestion extends Tools {
 
     if (from === null) return false;
 
-    state.doc.nodesBetween(from, to, (node, pos) => {
+    state.doc.nodesBetween(from, to, node => {
       if (node.type.groups.includes('questions')) {
         status = false;
       }
@@ -56,14 +56,9 @@ class TrueFalseQuestion extends Tools {
     return status;
   };
 
-  get enable() {
-    return state => {};
-  }
-
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <ToolBarBtn item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }

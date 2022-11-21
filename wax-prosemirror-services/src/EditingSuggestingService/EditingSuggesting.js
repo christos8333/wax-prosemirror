@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
@@ -13,21 +12,20 @@ export default class EditingSuggesting extends Tools {
   name = 'EditingSuggesting';
 
   get run() {
-    return state => {
+    return () => {
       return true;
     };
   }
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <EditingSuggestingDropDown
         enabled={this.config.enabled}
         item={this.toJSON()}

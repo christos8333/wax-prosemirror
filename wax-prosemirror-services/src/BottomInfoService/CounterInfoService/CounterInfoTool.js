@@ -21,8 +21,7 @@ class CounterInfoTool extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <EditorInfoTool item={this.toJSON()} key="CounterInfo" view={view} />
     ) : null;
   }

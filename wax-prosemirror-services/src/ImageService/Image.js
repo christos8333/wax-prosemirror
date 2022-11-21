@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
@@ -42,7 +41,7 @@ export default class Image extends Tools {
       this.pmplugins.get('imagePlaceHolder'),
       context,
     );
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <ImageUpload
         fileUpload={upload}
         item={this.toJSON()}

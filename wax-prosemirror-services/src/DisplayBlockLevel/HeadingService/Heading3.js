@@ -56,8 +56,7 @@ export default class Heading3 extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <LeftSideButton item={this.toJSON()} key="Heading3" view={view} />
     ) : null;
   }

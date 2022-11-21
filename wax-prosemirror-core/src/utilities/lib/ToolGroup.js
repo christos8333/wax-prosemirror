@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 import ToolGroups from '../../components/ToolGroups';
 import ToolGroupComponent from '../../components/ToolGroupComponent';
-import 'reflect-metadata';
 
 @injectable()
 class ToolGroup {

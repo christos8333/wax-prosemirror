@@ -1,5 +1,4 @@
 // import { SchemaHelpers } from 'wax-prosemirror-core';
-import { isEmpty } from 'lodash';
 
 const imageNode = {
   attrs: {

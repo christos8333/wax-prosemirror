@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useMemo } from 'react';
 import { injectable, inject } from 'inversify';
 import { isEmpty } from 'lodash';
@@ -49,6 +48,7 @@ class OENTools extends ToolGroup {
       disabled: false,
       component: (
         <BlockLevelTools
+          // eslint-disable-next-line no-underscore-dangle
           groups={this._toolGroups[0].groups.map(group => ({
             groupName:
               group.title === 'Custom Block' || group.title === 'OEN Containers'

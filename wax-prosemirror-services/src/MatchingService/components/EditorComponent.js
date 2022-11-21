@@ -87,7 +87,6 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
-  // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
     return Placeholder({
       content: placeholder,

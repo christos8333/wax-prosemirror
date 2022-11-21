@@ -1,5 +1,4 @@
 import { EditorState, Plugin, PluginKey } from 'prosemirror-state';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { DOMSerializer, DOMParser } from 'prosemirror-model';
 
 const getContentOnEnterPlugin = new PluginKey('getContentOnEnterPlugin');
@@ -28,8 +27,8 @@ export default props => {
   return new Plugin({
     key: getContentOnEnterPlugin,
     state: {
-      init: (_, state) => {},
-      apply(tr, prev, _, newState) {},
+      init: () => {},
+      apply() {},
     },
     props: {
       handleKeyDown(view, event) {

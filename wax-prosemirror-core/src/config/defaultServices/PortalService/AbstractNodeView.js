@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { v4 as uuidv4 } from 'uuid';
 
 export default class AbstractNodeView {
@@ -40,6 +39,7 @@ export default class AbstractNodeView {
     return innerView && innerView.dom.contains(event.target);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   ignoreMutation() {
     return true;
   }

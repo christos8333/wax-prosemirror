@@ -4,15 +4,7 @@
  * TO DO -- Implement a gdocs-style CSS only solution to dramatically cut back on renders
  */
 
-/* eslint-disable react/jsx-handler-names */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-find-dom-node */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-plusplus */
-/* eslint-disable prefer-template */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable max-classes-per-file */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable*/
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';

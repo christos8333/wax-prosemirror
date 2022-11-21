@@ -61,7 +61,6 @@ class TrueFalseSingleCorrectQuestion extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
     return this.isDisplayed() ? (
       <ToolBarBtn item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;

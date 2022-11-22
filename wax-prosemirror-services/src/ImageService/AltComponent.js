@@ -42,9 +42,11 @@ export default ({ setPosition, position }) => {
     if (!selection || !selection.node || !selection.node.attrs.id) return;
     const imageId = selection.node.attrs.id;
     const image = document.querySelector(`[data-id='${imageId}']`);
+    const figCaption = document.getElementsByTagName('figcaption')[0];
     const imagePosition = image.getBoundingClientRect();
+    const figCaptionPosition = figCaption.getBoundingClientRect().height - 5;
     const left = imagePosition.left - WaxSurface.left;
-    const top = imagePosition.bottom - WaxSurface.top - 22;
+    const top = imagePosition.bottom - WaxSurface.top - figCaptionPosition;
     setPosition({ ...position, left, top });
   }, [position.left, position.top]);
 

@@ -22,6 +22,13 @@ export default class MatchingContainerNodeView extends QuestionsNodeView {
     return 'matching_container';
   }
 
+  update(node) {
+    if (node.type.name === 'paragraph') {
+      if (!node.sameMarkup(this.node)) return false;
+    }
+    return super.update(node);
+  }
+
   stopEvent(event) {
     if (event.target.type === 'text') {
       return true;

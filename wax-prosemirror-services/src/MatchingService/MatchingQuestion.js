@@ -16,7 +16,7 @@ class MatchingQuestion extends Tools {
     return main => {
       const { dispatch } = main;
       const { state } = main;
-      helpers.checkifEmpty(main);
+      // helpers.checkifEmpty(main);
       /* Create Wrapping */
       const { $from, $to } = main.state.selection;
       const range = $from.blockRange($to);

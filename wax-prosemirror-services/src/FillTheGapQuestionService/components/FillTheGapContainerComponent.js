@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
-import FeedbackComponent from './FeedbackComponent';
+import FeedbackComponent from '../../MatchingService/components/FeedbackComponent';
 
 const FillTheGapContainer = styled.div`
   border: 3px solid #f5f5f7;

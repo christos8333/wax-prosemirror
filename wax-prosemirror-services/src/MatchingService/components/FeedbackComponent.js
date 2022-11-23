@@ -86,10 +86,14 @@ export default ({ node, getPos, readOnly }) => {
 
 const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
-  const fillTheGapNodes = [];
+  const nodes = [];
   allNodes.forEach(node => {
-    if (node.node.type.name === 'matching_container')
-      fillTheGapNodes.push(node);
+    if (
+      node.node.type.name === 'matching_container' ||
+      node.node.type.name === 'fill_the_gap_container' ||
+      node.node.type.name === 'multiple_drop_down_container'
+    )
+      nodes.push(node);
   });
-  return fillTheGapNodes;
+  return nodes;
 };

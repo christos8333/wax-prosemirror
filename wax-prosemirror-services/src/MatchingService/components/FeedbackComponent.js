@@ -32,7 +32,6 @@ export default ({ node, getPos, readOnly }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
-    activeView,
   } = context;
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
   const feedBackRef = useRef(null);
@@ -55,10 +54,8 @@ export default ({ node, getPos, readOnly }) => {
   };
 
   const setNullSelection = () => {
-    activeView.dispatch(
-      activeView.state.tr.setSelection(
-        TextSelection.create(activeView.state.tr.doc, null),
-      ),
+    main.dispatch(
+      main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
     );
   };
 

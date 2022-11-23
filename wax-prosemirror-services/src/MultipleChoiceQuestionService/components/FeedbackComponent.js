@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
@@ -31,7 +31,6 @@ export default ({ node, getPos, readOnly }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
-    activeView,
   } = context;
 
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
@@ -55,10 +54,8 @@ export default ({ node, getPos, readOnly }) => {
   };
 
   const setNullSelection = () => {
-    activeView.dispatch(
-      activeView.state.tr.setSelection(
-        TextSelection.create(activeView.state.tr.doc, null),
-      ),
+    main.dispatch(
+      main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
     );
   };
 

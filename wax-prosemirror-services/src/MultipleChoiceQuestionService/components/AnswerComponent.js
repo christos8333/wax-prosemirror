@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection, NodeSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
@@ -88,6 +88,38 @@ export default ({ node, view, getPos }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
+  const addOptionBtnRef = useRef(null);
+  const removeOptionBtnRef = useRef(null);
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        if (addOptionBtnRef.current) addOptionBtnRef.current.click();
+      }
+    };
+    if (addOptionBtnRef.current)
+      addOptionBtnRef.current.addEventListener('keydown', listener);
+    return () => {
+      if (addOptionBtnRef.current)
+        addOptionBtnRef.current.removeEventListener('keydown', listener);
+    };
+  }, []);
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        if (removeOptionBtnRef.current) removeOptionBtnRef.current.click();
+      }
+    };
+    if (removeOptionBtnRef.current)
+      removeOptionBtnRef.current.addEventListener('keydown', listener);
+    return () => {
+      if (removeOptionBtnRef.current)
+        removeOptionBtnRef.current.removeEventListener('keydown', listener);
+    };
+  }, []);
 
   const removeOption = () => {
     const answersCount = findAnswerCount();
@@ -194,12 +226,20 @@ export default ({ node, view, getPos }) => {
       </QuestionControlsWrapper>
       <IconsWrapper>
         {!readOnly && (
-          <ActionButton onClick={() => addOption(node.attrs.id)} type="button">
+          <ActionButton
+            onClick={() => addOption(node.attrs.id)}
+            ref={addOptionBtnRef}
+            type="button"
+          >
             <StyledIconAction name="plusSquare" />
           </ActionButton>
         )}
         {!readOnly && (
-          <ActionButton onClick={removeOption} type="button">
+          <ActionButton
+            onClick={removeOption}
+            ref={removeOptionBtnRef}
+            type="button"
+          >
             <StyledIconAction name="deleteOutlined" />
           </ActionButton>
         )}

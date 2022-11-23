@@ -2,6 +2,24 @@ import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 
+const StyledInputAlt = styled.input`
+  background: #e2ebff;
+  border: none;
+  box-sizing: border-box;
+  width: 240px;
+  min-height: 20px;
+  padding: 4px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: black;
+    font-weight: bold;
+  }
+`;
+
 export default ({ setPosition, position }) => {
   const altRef = useRef(null);
   const [altText, setAltText] = useState('');
@@ -17,32 +35,15 @@ export default ({ setPosition, position }) => {
 
   const readOnly = !isEditable;
 
-  const StyledInputAlt = styled.input`
-    background: #e2ebff;
-    border: none;
-    box-sizing: border-box;
-    width: 240px;
-    min-height: 20px;
-    padding: 4px;
-
-    &:focus {
-      outline: none;
-    }
-
-    &::placeholder {
-      color: black;
-      font-weight: bold;
-    }
-  `;
-
   useLayoutEffect(() => {
-    const WaxSurface = activeView.dom.getBoundingClientRect();
+    const WaxSurface = main.dom.getBoundingClientRect();
     const { selection } = activeView.state;
 
     if (!selection || !selection.node || !selection.node.attrs.id) return;
     const imageId = selection.node.attrs.id;
     const image = document.querySelector(`[data-id='${imageId}']`);
     const figCaption = document.getElementsByTagName('figcaption')[0];
+    if (!image) return;
     const imagePosition = image.getBoundingClientRect();
     const figCaptionPosition = figCaption.getBoundingClientRect().height - 5;
     const left = imagePosition.left - WaxSurface.left;

@@ -6,7 +6,7 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import {
   splitListItem,
   liftListItem,
@@ -54,6 +54,9 @@ const EditorWrapper = styled.div`
     }
   }
 `;
+
+let WaxOverlays = () => true;
+
 const QuestionEditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
@@ -130,6 +133,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   ]);
 
   useEffect(() => {
+    WaxOverlays = ComponentPlugin('waxOverlays');
     questionView = new EditorView(
       {
         mount: editorRef.current,
@@ -206,6 +210,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   return (
     <EditorWrapper>
       <div ref={editorRef} />
+      <WaxOverlays activeViewId={questionId} />
     </EditorWrapper>
   );
 };

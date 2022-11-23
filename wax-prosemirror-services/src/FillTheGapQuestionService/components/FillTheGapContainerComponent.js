@@ -45,9 +45,11 @@ export default ({ node, view, getPos }) => {
     <FillTheGapWrapper>
       <div>
         <span> Fill The Gap</span>
-        <FillTheGapContainerTool>
-          <FillTheGapTool />
-        </FillTheGapContainerTool>
+        {!testMode && !readOnly && (
+          <FillTheGapContainerTool>
+            <FillTheGapTool />
+          </FillTheGapContainerTool>
+        )}
       </div>
       <FillTheGapContainer className="fill-the-gap">
         <ContainerEditor getPos={getPos} node={node} view={view} />

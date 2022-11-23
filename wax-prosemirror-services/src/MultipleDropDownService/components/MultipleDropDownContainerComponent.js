@@ -45,9 +45,11 @@ export default ({ node, view, getPos }) => {
     <MultipleDropDownpWrapper>
       <div>
         <span>Multiple Drop Down</span>
-        <MultipleDropDownContainerTool>
-          <MultipleDropDown />
-        </MultipleDropDownContainerTool>
+        {!testMode && !readOnly && (
+          <MultipleDropDownContainerTool>
+            <MultipleDropDown />
+          </MultipleDropDownContainerTool>
+        )}
       </div>
       <MultipleDropDownpContainer className="multiple-drop-down">
         <ContainerEditor getPos={getPos} node={node} view={view} />

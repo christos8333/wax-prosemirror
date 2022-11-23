@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { TextSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 
 const FeedBack = styled.div`
@@ -30,6 +31,7 @@ export default ({ node, getPos, readOnly }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
+    activeView,
   } = context;
 
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
@@ -48,7 +50,22 @@ export default ({ node, getPos, readOnly }) => {
         );
       }
     });
+    setNullSelection();
     return false;
+  };
+
+  const setNullSelection = () => {
+    activeView.dispatch(
+      activeView.state.tr.setSelection(
+        TextSelection.create(activeView.state.tr.doc, null),
+      ),
+    );
+  };
+
+  const onFocus = () => {
+    setTimeout(() => {
+      setNullSelection();
+    }, 50);
   };
 
   return (
@@ -57,6 +74,7 @@ export default ({ node, getPos, readOnly }) => {
       <FeedBackInput
         autoFocus="autoFocus"
         onChange={feedBackInput}
+        onFocus={onFocus}
         placeholder="Insert feedback"
         readOnly={readOnly}
         ref={feedBackRef}

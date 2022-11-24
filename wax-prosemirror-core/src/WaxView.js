@@ -105,7 +105,7 @@ const WaxView = forwardRef((props, ref) => {
           if (autoFocus && view) {
             view.focus();
             view.state.tr.insertText('', 0);
-            view.dispatch(view.state.tr);
+            view.dispatch(view.state.tr.scrollIntoView());
           }
         }, 500);
 

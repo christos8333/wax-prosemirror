@@ -40,11 +40,12 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
   const { testMode } = customProps;
+  const { feedback } = node.attrs;
 
   return (
     <MultipleDropDownpWrapper>
       <div>
-        <span>Multiple Drop Down</span>
+        {/* <span>Multiple Drop Down</span> */}
         {!testMode && !readOnly && (
           <MultipleDropDownContainerTool>
             <MultipleDropDown />
@@ -53,7 +54,7 @@ export default ({ node, view, getPos }) => {
       </div>
       <MultipleDropDownpContainer className="multiple-drop-down">
         <ContainerEditor getPos={getPos} node={node} view={view} />
-        {!testMode && (
+        {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

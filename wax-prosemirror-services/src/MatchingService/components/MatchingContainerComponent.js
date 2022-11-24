@@ -214,10 +214,11 @@ export default ({ node, view, getPos }) => {
   };
 
   const { testMode } = customProps;
+  const { feedback } = node.attrs;
 
   return (
     <MatchingWrapper>
-      <span>Matching</span>
+      {/* <span>Matching</span> */}
       <MatchingContainer className="matching">
         <QuestionWrapper>
           <ContainerEditor getPos={getPos} node={node} view={view} />
@@ -267,7 +268,7 @@ export default ({ node, view, getPos }) => {
             )}
           </CreateOptions>
         )}
-        {!testMode && (
+        {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

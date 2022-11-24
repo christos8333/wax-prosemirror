@@ -40,11 +40,12 @@ export default ({ node, view, getPos }) => {
   });
 
   const readOnly = !isEditable;
+  const { feedback } = node.attrs;
 
   return (
     <FillTheGapWrapper>
       <div>
-        <span> Fill The Gap</span>
+        {/* <span> Fill The Gap</span> */}
         {!testMode && !readOnly && (
           <FillTheGapContainerTool>
             <FillTheGapTool />
@@ -54,7 +55,7 @@ export default ({ node, view, getPos }) => {
       <FillTheGapContainer className="fill-the-gap">
         <ContainerEditor getPos={getPos} node={node} view={view} />
 
-        {!testMode && (
+        {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

@@ -204,6 +204,7 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
   const { testMode } = customProps;
+  const { feedback } = node.attrs;
 
   return (
     <Wrapper>
@@ -216,7 +217,7 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          {!testMode && (
+          {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent
               getPos={getPos}
               node={node}

@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
+import useDynamicRefs from 'use-dynamic-refs';
 import styled from 'styled-components';
 import FeedbackComponent from './FeedbackComponent';
 import ContainerEditor from './ContainerEditor';
@@ -124,6 +125,7 @@ export default ({ node, view, getPos }) => {
   const [addingOption, setAddingOption] = useState(false);
   const addOptionRef = useRef(null);
   const addOptionBtnRef = useRef(null);
+  const [getRef, setRef] = useDynamicRefs();
 
   const customProps = main.props.customValues;
 
@@ -213,6 +215,31 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        options.forEach(option => {
+          if (document.activeElement === getRef(option.value).current) {
+            getRef(option.value).current.click();
+          }
+        });
+      }
+    };
+
+    options.forEach(option => {
+      if (getRef(option.value).current)
+        getRef(option.value).current.addEventListener('keydown', listener);
+    });
+
+    return () => {
+      options.forEach(option => {
+        if (getRef(option.value).current)
+          getRef(option.value).current.removeEventListener('keydown', listener);
+      });
+    };
+  }, [options]);
+
   const { testMode } = customProps;
   const { feedback } = node.attrs;
 
@@ -238,6 +265,7 @@ export default ({ node, view, getPos }) => {
                           {!readOnly && (
                             <ActionButton
                               onClick={() => removeOption(option.value)}
+                              ref={setRef(option.value)}
                               type="button"
                             >
                               <StyledIconAction name="deleteOutlined" />

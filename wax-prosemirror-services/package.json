@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "highlight.js": "^10.1.1",
+    "use-dynamic-refs": "^1.0.0",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "lodash": "^4.17.4",

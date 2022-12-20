@@ -67,11 +67,16 @@ export default ({ node, getPos, readOnly }) => {
       }
     });
     setNullSelection();
+    setHeight();
+    return false;
+  };
+
+  const setHeight = () => {
     const textarea = feedBackRef.current;
+    if (!textarea) return;
     const heightLimit = 200;
     textarea.style.height = '';
     textarea.style.height = `${Math.min(textarea.scrollHeight, heightLimit)}px`;
-    return false;
   };
 
   const setNullSelection = () => {
@@ -97,6 +102,7 @@ export default ({ node, getPos, readOnly }) => {
         readOnly={readOnly}
         ref={feedBackRef}
         rows="1"
+        style={{ height: setHeight() }}
         type="text"
         value={feedBack}
       />
@@ -112,7 +118,10 @@ const getNodes = view => {
       node.node.type.name === 'multiple_choice' ||
       node.node.type.name === 'multiple_choice_single_correct' ||
       node.node.type.name === 'true_false' ||
-      node.node.type.name === 'true_false_single_correct'
+      node.node.type.name === 'true_false_single_correct' ||
+      node.node.type.name === 'matching_container' ||
+      node.node.type.name === 'fill_the_gap_container' ||
+      node.node.type.name === 'multiple_drop_down_container'
     ) {
       multipleChoiceNodes.push(node);
     }

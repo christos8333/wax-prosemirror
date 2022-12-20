@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
@@ -12,10 +12,27 @@ const FeedBackLabel = styled.span`
   font-weight: 700;
 `;
 
-const FeedBackInput = styled.input`
+const FeedBackInput = styled.textarea`
   border: none;
   display: flex;
+  font-family: Fira Sans Condensed;
   width: 100%;
+  resize: vertical;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  background-attachment: local;
+  background-image: linear-gradient(to right, white 10px, transparent 10px),
+    linear-gradient(to left, white 10px, transparent 10px),
+    repeating-linear-gradient(
+      white,
+      white 30px,
+      #ccc 30px,
+      #ccc 31px,
+      white 31px
+    );
+  line-height: 31px;
+  padding: 8px 10px;
 
   &:focus {
     outline: none;
@@ -50,6 +67,10 @@ export default ({ node, getPos, readOnly }) => {
       }
     });
     setNullSelection();
+    const textarea = feedBackRef.current;
+    const heightLimit = 200;
+    textarea.style.height = '';
+    textarea.style.height = `${Math.min(textarea.scrollHeight, heightLimit)}px`;
     return false;
   };
 
@@ -75,6 +96,7 @@ export default ({ node, getPos, readOnly }) => {
         placeholder="Insert feedback"
         readOnly={readOnly}
         ref={feedBackRef}
+        rows="1"
         type="text"
         value={feedBack}
       />

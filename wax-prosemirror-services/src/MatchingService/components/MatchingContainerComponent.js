@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import useDynamicRefs from 'use-dynamic-refs';
 import styled from 'styled-components';
-import FeedbackComponent from './FeedbackComponent';
+import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 import ContainerEditor from './ContainerEditor';
 
 const MatchingWrapper = styled.div`

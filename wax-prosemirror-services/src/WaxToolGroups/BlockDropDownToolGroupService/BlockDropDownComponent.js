@@ -63,12 +63,6 @@ const BlockDropDownComponent = ({ view, tools }) => {
     { label: 'Block Quote', value: '13', item: tools[13] },
   ];
 
-  const isDisabled =
-    dropDownOptions[0].item.enable &&
-    dropDownOptions[0].item.enable(state) &&
-    dropDownOptions[0].item.select &&
-    dropDownOptions[0].item.select(state, activeViewId);
-
   useEffect(() => {
     setLabel('Block Level');
     dropDownOptions.forEach(option => {
@@ -90,12 +84,12 @@ const BlockDropDownComponent = ({ view, tools }) => {
           }}
           options={dropDownOptions}
           placeholder="Block Level"
-          select={isDisabled}
+          select
           value={label}
         />
       </Wrapper>
     ),
-    [isDisabled, label],
+    [label],
   );
 
   return MultipleDropDown;

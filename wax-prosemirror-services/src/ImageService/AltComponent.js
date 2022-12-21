@@ -25,6 +25,7 @@ export default ({ setPosition, position }) => {
   const [altText, setAltText] = useState('');
   const context = useContext(WaxContext);
   const {
+    app,
     activeView,
     pmViews: { main },
   } = context;
@@ -62,23 +63,24 @@ export default ({ setPosition, position }) => {
     );
   };
 
-  if (!readOnly) {
-    return (
-      <StyledInputAlt
-        autoFocus="autoFocus"
-        key="alt"
-        onChange={altTextOnChange}
-        placeholder="Alt Text"
-        ref={altRef}
-        type="text"
-        value={
-          activeView.state.selection &&
-          activeView.state.selection.node &&
-          activeView.state.selection.node.attrs.alt !== ''
-            ? activeView.state.selection.node.attrs.alt
-            : altText
-        }
-      />
-    );
-  }
+  const imageConfig = app.config.get('config.ImageService');
+  const showAlt = imageConfig && imageConfig.showAlt;
+
+  return !readOnly && showAlt ? (
+    <StyledInputAlt
+      autoFocus="autoFocus"
+      key="alt"
+      onChange={altTextOnChange}
+      placeholder="Alt Text"
+      ref={altRef}
+      type="text"
+      value={
+        activeView.state.selection &&
+        activeView.state.selection.node &&
+        activeView.state.selection.node.attrs.alt !== ''
+          ? activeView.state.selection.node.attrs.alt
+          : altText
+      }
+    />
+  ) : null;
 };

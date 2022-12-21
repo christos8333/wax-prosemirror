@@ -65,7 +65,6 @@ export default {
   RulesService: [emDash, ellipsis],
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
-  ImageService: { showAlt: false },
   services: [
     new MatchingService(),
     new FillTheGapQuestionService(),

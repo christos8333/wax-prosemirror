@@ -143,6 +143,7 @@ export default {
     },
   },
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  ImageService: { showAlt: true },
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

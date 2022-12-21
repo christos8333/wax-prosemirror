@@ -21,7 +21,7 @@ const DropWrapper = styled.div`
   position: absolute;
 `;
 
-const CreateTable = ({ view = {}, item }) => {
+const CreateTable = ({ item }) => {
   const {
     pmViews: { main },
     activeView,

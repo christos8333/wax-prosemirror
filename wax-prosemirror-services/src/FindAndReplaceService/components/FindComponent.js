@@ -190,7 +190,7 @@ const FindComponent = ({
     setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
-      eachRight(pmViews, (singleView, viewId) => {
+      eachRight(pmViews, singleView => {
         singleView.dispatch(singleView.state.tr);
       });
     }
@@ -198,7 +198,7 @@ const FindComponent = ({
 
   const closeFind = () => {
     findAndReplacePlugin.props.setSearchText('');
-    each(pmViews, (singleView, viewId) => {
+    each(pmViews, singleView => {
       singleView.dispatch(singleView.state.tr);
     });
     close();

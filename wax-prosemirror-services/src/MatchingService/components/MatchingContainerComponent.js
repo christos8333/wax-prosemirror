@@ -1,10 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
+import useDynamicRefs from 'use-dynamic-refs';
 import styled from 'styled-components';
-import FeedbackComponent from './FeedbackComponent';
+import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 import ContainerEditor from './ContainerEditor';
 
 const MatchingWrapper = styled.div`
@@ -125,6 +125,7 @@ export default ({ node, view, getPos }) => {
   const [addingOption, setAddingOption] = useState(false);
   const addOptionRef = useRef(null);
   const addOptionBtnRef = useRef(null);
+  const [getRef, setRef] = useDynamicRefs();
 
   const customProps = main.props.customValues;
 
@@ -214,11 +215,37 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        options.forEach(option => {
+          if (document.activeElement === getRef(option.value).current) {
+            getRef(option.value).current.click();
+          }
+        });
+      }
+    };
+
+    options.forEach(option => {
+      if (getRef(option.value).current)
+        getRef(option.value).current.addEventListener('keydown', listener);
+    });
+
+    return () => {
+      options.forEach(option => {
+        if (getRef(option.value).current)
+          getRef(option.value).current.removeEventListener('keydown', listener);
+      });
+    };
+  }, [options]);
+
   const { testMode } = customProps;
+  const { feedback } = node.attrs;
 
   return (
     <MatchingWrapper>
-      <span>Matching</span>
+      {/* <span>Matching</span> */}
       <MatchingContainer className="matching">
         <QuestionWrapper>
           <ContainerEditor getPos={getPos} node={node} view={view} />
@@ -230,7 +257,7 @@ export default ({ node, view, getPos }) => {
               {options.length > 0 && (
                 <ul>
                   <li>Options: </li>
-                  {options.map((option, index) => {
+                  {options.map(option => {
                     return (
                       <li key={option.value}>
                         <span>
@@ -238,6 +265,7 @@ export default ({ node, view, getPos }) => {
                           {!readOnly && (
                             <ActionButton
                               onClick={() => removeOption(option.value)}
+                              ref={setRef(option.value)}
                               type="button"
                             >
                               <StyledIconAction name="deleteOutlined" />
@@ -268,7 +296,7 @@ export default ({ node, view, getPos }) => {
             )}
           </CreateOptions>
         )}
-        {!testMode && (
+        {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

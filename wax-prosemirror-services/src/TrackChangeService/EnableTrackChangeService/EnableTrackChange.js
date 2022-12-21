@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { injectable } from 'inversify';
 import { isEmpty } from 'lodash';
@@ -13,21 +12,21 @@ export default class EnableTrackChange extends Tools {
   name = 'EnableTrackChange';
 
   get run() {
-    return state => {
+    return () => {
       this.config.enabled = !this.config.enabled;
       return true;
     };
   }
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <TrackChangeEnable
         enabled={this.config.enabled}
         item={this.toJSON()}

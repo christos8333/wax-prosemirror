@@ -14,8 +14,7 @@ export default class Save extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <SaveButton item={this.toJSON()} key="Save" view={view} />
     ) : null;
   }

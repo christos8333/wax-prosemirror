@@ -27,8 +27,7 @@ export default class Undo extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <UndoRedoButton item={this.toJSON()} key="Undo" view={view} />
     ) : null;
   }

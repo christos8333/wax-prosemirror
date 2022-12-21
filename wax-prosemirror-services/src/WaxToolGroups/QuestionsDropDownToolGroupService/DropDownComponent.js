@@ -94,8 +94,8 @@ const DropDownComponent = ({ view, tools }) => {
   ];
 
   useEffect(() => {
-    setLabel('Question Types');
-    dropDownOptions.forEach((option, i) => {
+    setLabel('Question Type');
+    dropDownOptions.forEach(option => {
       if (option.item.active(main.state)) {
         setTimeout(() => {
           setLabel(option.label);
@@ -118,7 +118,7 @@ const DropDownComponent = ({ view, tools }) => {
           key={uuidv4()}
           onChange={option => onChange(option)}
           options={dropDownOptions}
-          placeholder="Question Types"
+          placeholder="Question Type"
           select={isDisabled}
           value={label}
         />

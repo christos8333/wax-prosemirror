@@ -36,8 +36,7 @@ class Author extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <LeftSideButton item={this.toJSON()} key="BlockQuote" view={view} />
     ) : null;
   }

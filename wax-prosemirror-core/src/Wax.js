@@ -48,18 +48,11 @@ const Wax = forwardRef((props, ref) => {
   } = props;
 
   if (!application) return null;
-  const WaxOnchange = onChange || (v => true);
 
   const finalOnChange = content => {
+    if (!onChange) return;
     const { schema } = application.schema;
-    helpers.alterNotesSchema(schema);
-    if (targetFormat === 'JSON') {
-      WaxOnchange(content);
-    } else {
-      const serialize = serializer(schema);
-      WaxOnchange(serialize(content));
-    }
-    helpers.revertNotesSchema(schema);
+    helpers.saveContent(content, onChange, schema, serializer, targetFormat);
   };
 
   const Layout = application.container.get('Layout');
@@ -74,7 +67,7 @@ const Wax = forwardRef((props, ref) => {
           customValues={customValues}
           debug={debug}
           fileUpload={fileUpload}
-          onChange={finalOnChange || (v => true)}
+          onChange={finalOnChange || (() => true)}
           placeholder={placeholder}
           readonly={readonly}
           ref={ref}

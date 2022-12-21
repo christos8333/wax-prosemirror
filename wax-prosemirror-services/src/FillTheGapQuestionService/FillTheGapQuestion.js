@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { findWrapping } from 'prosemirror-transform';
 import { v4 as uuidv4 } from 'uuid';
-import { Tools } from 'wax-prosemirror-core';
+import { Commands, Tools } from 'wax-prosemirror-core';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()
@@ -31,7 +31,17 @@ class FillTheGapQuestion extends Tools {
   }
 
   get active() {
-    return state => {};
+    return state => {
+      if (
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.fill_the_gap_container,
+        )
+      ) {
+        return true;
+      }
+      return false;
+    };
   }
 
   select = (state, activeViewId, activeView) => {
@@ -47,10 +57,6 @@ class FillTheGapQuestion extends Tools {
     });
     return status;
   };
-
-  get enable() {
-    return state => {};
-  }
 }
 
 export default FillTheGapQuestion;

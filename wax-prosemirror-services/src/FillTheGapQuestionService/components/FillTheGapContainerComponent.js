@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
-import FeedbackComponent from './FeedbackComponent';
+import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 
 const FillTheGapContainer = styled.div`
   border: 3px solid #f5f5f7;
@@ -41,19 +40,22 @@ export default ({ node, view, getPos }) => {
   });
 
   const readOnly = !isEditable;
+  const { feedback } = node.attrs;
 
   return (
     <FillTheGapWrapper>
       <div>
-        <span> Fill The Gap</span>
-        <FillTheGapContainerTool>
-          <FillTheGapTool />
-        </FillTheGapContainerTool>
+        {/* <span> Fill The Gap</span> */}
+        {!testMode && !readOnly && (
+          <FillTheGapContainerTool>
+            <FillTheGapTool />
+          </FillTheGapContainerTool>
+        )}
       </div>
       <FillTheGapContainer className="fill-the-gap">
         <ContainerEditor getPos={getPos} node={node} view={view} />
 
-        {!testMode && (
+        {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

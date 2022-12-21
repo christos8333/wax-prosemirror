@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -56,9 +54,10 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   } = context;
   let essayAnswerView;
   const questionId = node.attrs.id;
-  const isEditable = main.props.editable(editable => {
-    return editable;
-  });
+
+  const customProps = main.props.customValues;
+
+  const { testMode } = customProps;
 
   let finalPlugins = [];
 
@@ -105,7 +104,6 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
-  // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
     return Placeholder({
       content: placeholder,
@@ -123,7 +121,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
         mount: editorRef.current,
       },
       {
-        editable: () => !isEditable,
+        editable: () => testMode,
         state: EditorState.create({
           doc: node,
           plugins: finalPlugins,
@@ -193,7 +191,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper editable={!isEditable}>
+    <EditorWrapper editable={testMode}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

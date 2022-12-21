@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
@@ -17,7 +15,7 @@ const AnswerInput = styled.input`
   }
 `;
 
-export default ({ node, view, getPos }) => {
+export default () => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },

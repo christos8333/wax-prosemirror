@@ -45,8 +45,18 @@ const getDocContent = (schema, serializer, targetFormat, context) => {
   return content;
 };
 
+const saveContent = (content, onChange, schema, serializer, targetFormat) => {
+  alterNotesSchema(schema);
+  if (targetFormat === 'JSON') {
+    onChange(content);
+  } else {
+    const serialize = serializer(schema);
+    onChange(serialize(content));
+  }
+  revertNotesSchema(schema);
+};
+
 export default {
-  alterNotesSchema,
   getDocContent,
-  revertNotesSchema,
+  saveContent,
 };

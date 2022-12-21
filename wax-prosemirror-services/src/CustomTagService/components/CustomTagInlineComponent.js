@@ -9,7 +9,7 @@ const StyledButton = styled(MenuButton)`
   }
 `;
 
-const CustomTagInlineComponent = ({ view: { state }, item }) => {
+const CustomTagInlineComponent = ({ item }) => {
   const { icon, title } = item;
   const localInline = JSON.parse(localStorage.getItem('isInline'));
   const [isOpen, setIsOpen] = useState(

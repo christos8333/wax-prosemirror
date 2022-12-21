@@ -158,7 +158,7 @@ const ExpandedFindAndReplaceComponent = ({
 
   const allStates = [];
 
-  each(pmViews, (singleView, viewId) => {
+  each(pmViews, singleView => {
     allStates.push(singleView.state);
   });
 

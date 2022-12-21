@@ -128,53 +128,53 @@ class TransformTool extends Tools {
           dispatch(tr);
           break;
         }
-        case 'titleCase':
-          state.doc.nodesBetween($from.pos, $to.pos, (node, position) => {
-            if (node.marks.length > 0) {
-              node.marks.forEach(item => {
-                marksAdd.push({
-                  name: item.type.name,
-                  type: item.type,
-                  pos: DocumentHelpers.findMark(state, item.type, true),
-                  attrs: item.attrs,
-                });
-              });
-            }
+        // case 'titleCase':
+        //   state.doc.nodesBetween($from.pos, $to.pos, (node, position) => {
+        //     if (node.marks.length > 0) {
+        //       node.marks.forEach(item => {
+        //         marksAdd.push({
+        //           name: item.type.name,
+        //           type: item.type,
+        //           pos: DocumentHelpers.findMark(state, item.type, true),
+        //           attrs: item.attrs,
+        //         });
+        //       });
+        //     }
 
-            if (node.type.name !== 'code_block') {
-              if (!node.isTextblock || $from.pos === $to.pos) return;
-              const startPosition = Math.max(position + 1, $from.pos);
-              const endPosition = Math.min(
-                position + node.nodeSize,
-                selection.to,
-              );
-              const substringFrom = Math.max(0, $from.pos - position - 1);
-              const substringTo = Math.max(0, selection.to - position - 1);
+        //     if (node.type.name !== 'code_block') {
+        //       if (!node.isTextblock || $from.pos === $to.pos) return;
+        //       const startPosition = Math.max(position + 1, $from.pos);
+        //       const endPosition = Math.min(
+        //         position + node.nodeSize,
+        //         selection.to,
+        //       );
+        //       const substringFrom = Math.max(0, $from.pos - position - 1);
+        //       const substringTo = Math.max(0, selection.to - position - 1);
 
-              const updatedText = node.textBetween(substringFrom, substringTo);
+        //       const updatedText = node.textBetween(substringFrom, substringTo);
 
-              if (updatedText.length > 0) {
-                const textNode = state.schema.text(updatedText.toTitleCase());
-                tr.replaceWith(startPosition, endPosition, textNode);
-              }
-            }
-          });
+        //       if (updatedText.length > 0) {
+        //         const textNode = state.schema.text(updatedText.toTitleCase());
+        //         tr.replaceWith(startPosition, endPosition, textNode);
+        //       }
+        //     }
+        //   });
 
-          marksAdd.forEach(item => {
-            if (item.name !== 'transform') {
-              item.pos.forEach(markPos => {
-                tr.addMark(
-                  markPos.from,
-                  markPos.to,
-                  item.type.create(item.attrs),
-                );
-              });
-            }
-          });
+        //   marksAdd.forEach(item => {
+        //     if (item.name !== 'transform') {
+        //       item.pos.forEach(markPos => {
+        //         tr.addMark(
+        //           markPos.from,
+        //           markPos.to,
+        //           item.type.create(item.attrs),
+        //         );
+        //       });
+        //     }
+        //   });
 
-          dispatch(tr);
+        //   dispatch(tr);
 
-          break;
+        //   break;
         default:
           break;
       }

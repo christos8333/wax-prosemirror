@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { TextSelection, NodeSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
@@ -84,12 +83,44 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
-  // eslint-disable-next-line react/destructuring-assignment
   const customProps = main.props.customValues;
 
   const isEditable = main.props.editable(editable => {
     return editable;
   });
+
+  const addOptionBtnRef = useRef(null);
+  const removeOptionBtnRef = useRef(null);
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        if (addOptionBtnRef.current) addOptionBtnRef.current.click();
+      }
+    };
+    if (addOptionBtnRef.current)
+      addOptionBtnRef.current.addEventListener('keydown', listener);
+    return () => {
+      if (addOptionBtnRef.current)
+        addOptionBtnRef.current.removeEventListener('keydown', listener);
+    };
+  }, []);
+
+  useEffect(() => {
+    const listener = event => {
+      if (event.code === 'Enter') {
+        event.preventDefault();
+        if (removeOptionBtnRef.current) removeOptionBtnRef.current.click();
+      }
+    };
+    if (removeOptionBtnRef.current)
+      removeOptionBtnRef.current.addEventListener('keydown', listener);
+    return () => {
+      if (removeOptionBtnRef.current)
+        removeOptionBtnRef.current.removeEventListener('keydown', listener);
+    };
+  }, []);
 
   const removeOption = () => {
     const answersCount = findAnswerCount();
@@ -162,7 +193,7 @@ export default ({ node, view, getPos }) => {
     });
 
     let count = -1;
-    parentContainer.descendants((element, position) => {
+    parentContainer.descendants(element => {
       if (element.type.name === 'multiple_choice_single_correct') {
         count += 1;
       }
@@ -173,6 +204,7 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
   const { testMode } = customProps;
+  const { feedback } = node.attrs;
 
   return (
     <Wrapper>
@@ -185,7 +217,7 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
-          {!testMode && (
+          {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent
               getPos={getPos}
               node={node}
@@ -197,12 +229,20 @@ export default ({ node, view, getPos }) => {
       </QuestionControlsWrapper>
       <IconsWrapper>
         {!readOnly && (
-          <ActionButton onClick={() => addOption(node.attrs.id)} type="button">
+          <ActionButton
+            onClick={() => addOption(node.attrs.id)}
+            ref={addOptionBtnRef}
+            type="button"
+          >
             <StyledIconAction name="plusSquare" />
           </ActionButton>
         )}
         {!readOnly && (
-          <ActionButton onClick={removeOption} type="button">
+          <ActionButton
+            onClick={removeOption}
+            ref={removeOptionBtnRef}
+            type="button"
+          >
             <StyledIconAction name="deleteOutlined" />
           </ActionButton>
         )}

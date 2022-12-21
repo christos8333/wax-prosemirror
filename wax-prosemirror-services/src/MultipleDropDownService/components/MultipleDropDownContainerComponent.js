@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
-import FeedbackComponent from './FeedbackComponent';
+import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 
 const MultipleDropDownpWrapper = styled.div`
   margin: 0px 38px 15px 38px;
@@ -41,18 +40,21 @@ export default ({ node, view, getPos }) => {
 
   const readOnly = !isEditable;
   const { testMode } = customProps;
+  const { feedback } = node.attrs;
 
   return (
     <MultipleDropDownpWrapper>
       <div>
-        <span>Multiple Drop Down</span>
-        <MultipleDropDownContainerTool>
-          <MultipleDropDown />
-        </MultipleDropDownContainerTool>
+        {/* <span>Multiple Drop Down</span> */}
+        {!testMode && !readOnly && (
+          <MultipleDropDownContainerTool>
+            <MultipleDropDown />
+          </MultipleDropDownContainerTool>
+        )}
       </div>
       <MultipleDropDownpContainer className="multiple-drop-down">
         <ContainerEditor getPos={getPos} node={node} view={view} />
-        {!testMode && (
+        {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
             node={node}

@@ -11,7 +11,7 @@ import ToolBarBtn from './components/ToolBarBtn';
 const checkifEmpty = view => {
   const { state } = view;
   const { from, to } = state.selection;
-  state.doc.nodesBetween(from, to, (node, pos) => {
+  state.doc.nodesBetween(from, to, node => {
     if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
   });
   if (state.selection.constructor.name === 'GapCursor') {
@@ -105,7 +105,14 @@ class EssayQuestion extends Tools {
   }
 
   get active() {
-    return state => {};
+    return state => {
+      if (
+        Commands.isParentOfType(state, state.config.schema.nodes.essay_question)
+      ) {
+        return true;
+      }
+      return false;
+    };
   }
 
   select = (state, activeView) => {
@@ -115,7 +122,7 @@ class EssayQuestion extends Tools {
     const { disallowedTools } = activeView.props;
     if (from === null || disallowedTools.includes('Essay')) status = false;
 
-    state.doc.nodesBetween(from, to, (node, pos) => {
+    state.doc.nodesBetween(from, to, node => {
       if (node.type.groups.includes('questions')) {
         status = false;
       }
@@ -123,14 +130,9 @@ class EssayQuestion extends Tools {
     return status;
   };
 
-  get enable() {
-    return state => {};
-  }
-
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <ToolBarBtn item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }

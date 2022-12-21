@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
@@ -55,7 +55,7 @@ class Tools {
     if (isEmpty(view)) return null;
 
     return this._isDisplayed ? (
-      <Button key={uuidv4()} item={this.toJSON()} view={view} />
+      <Button item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 

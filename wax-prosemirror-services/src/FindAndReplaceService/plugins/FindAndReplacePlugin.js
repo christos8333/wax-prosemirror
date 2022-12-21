@@ -7,11 +7,11 @@ const findAndReplacePlugin = new PluginKey('findAndReplacePlugin');
 let searchText = '';
 let matchCase = false;
 
-export default props => {
+export default () => {
   return new Plugin({
     key: findAndReplacePlugin,
     state: {
-      init: (_, state) => {
+      init: () => {
         return DecorationSet.empty;
       },
       apply(tr, prev, _, newState) {
@@ -26,7 +26,7 @@ export default props => {
           );
         }
         if (allMatches.length > 0) {
-          decorations = allMatches.map((result, index) => {
+          decorations = allMatches.map(result => {
             return Decoration.inline(result.from, result.to, {
               class: 'search-result',
             });
@@ -52,9 +52,9 @@ export default props => {
         matchCase = searchCase;
       },
     },
-    view(editorState) {
+    view() {
       return {
-        update: (view, previousState) => {},
+        update: () => {},
       };
     },
   });

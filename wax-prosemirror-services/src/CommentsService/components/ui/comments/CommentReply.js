@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
 import { grid, th } from '@pubsweet/ui-toolkit';
 
 const Wrapper = styled.div`

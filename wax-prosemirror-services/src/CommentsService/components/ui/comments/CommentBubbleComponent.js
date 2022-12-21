@@ -3,12 +3,7 @@ import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext, Commands, DocumentHelpers } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
 
-const CommentBubbleComponent = ({
-  setPosition,
-  position,
-  showComment,
-  group,
-}) => {
+const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const { activeView, activeViewId } = useContext(WaxContext);
   const { state, dispatch } = activeView;
 
@@ -38,7 +33,7 @@ const CommentBubbleComponent = ({
     state.doc.nodesBetween(
       state.selection.$from.pos,
       state.selection.$to.pos,
-      (node, from) => {
+      node => {
         if (
           node.type.name === 'math_display' ||
           node.type.name === 'math_inline' ||

@@ -25,7 +25,7 @@ export default class Heading4 extends Tools {
       if (activeViewId !== 'main') return false;
 
       const { from, to } = state.selection;
-      state.doc.nodesBetween(from, to, (node, pos) => {
+      state.doc.nodesBetween(from, to, node => {
         if (node.type.name === 'heading4') {
           isActive = true;
         }
@@ -56,8 +56,7 @@ export default class Heading4 extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <LeftSideButton item={this.toJSON()} key="Heading4" view={view} />
     ) : null;
   }

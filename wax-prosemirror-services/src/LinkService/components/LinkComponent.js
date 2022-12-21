@@ -60,7 +60,7 @@ const StyledButtonCancel = styled.button`
 
 `;
 
-const LinkComponent = ({ mark, setPosition, position }) => {
+const LinkComponent = ({ mark }) => {
   const href = mark ? mark.attrs.href : null;
   const linkMark = mark || null;
   const { activeView } = useContext(WaxContext);

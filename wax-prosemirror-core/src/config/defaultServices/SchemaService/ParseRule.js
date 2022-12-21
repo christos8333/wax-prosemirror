@@ -6,6 +6,7 @@ export default class ParseRule {
   style = null;
   exporter = null;
   defaultMiddleware = (hook, next) => {
+    // eslint-disable-next-line no-param-reassign
     hook = {};
     next();
   };

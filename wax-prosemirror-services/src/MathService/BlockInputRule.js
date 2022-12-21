@@ -1,11 +1,10 @@
-/* eslint-disable */
 import { InputRule } from 'prosemirror-inputrules';
 import { NodeSelection } from 'prosemirror-state';
 
 const blockInputRule = (pattern, nodeType, getAttrs) => {
   return new InputRule(pattern, (state, match, start, end) => {
-    let $start = state.doc.resolve(start);
-    let attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
+    const $start = state.doc.resolve(start);
+    const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
 
     if (
       !$start
@@ -14,7 +13,7 @@ const blockInputRule = (pattern, nodeType, getAttrs) => {
     )
       return null;
 
-    let tr = state.tr
+    const tr = state.tr
       .delete(start, end)
       .setBlockType(start, start, nodeType, attrs);
     return tr.setSelection(

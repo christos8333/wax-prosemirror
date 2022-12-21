@@ -27,7 +27,7 @@ export default class FillTheGapContainerNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
-    if (event.target.type === 'text') {
+    if (event.target.type === 'textarea') {
       return true;
     }
 

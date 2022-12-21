@@ -29,7 +29,7 @@
 }
 
 
-.multiple-choice:before {
+/* .multiple-choice:before {
   content: 'Multiple Choice' ;
 }
 
@@ -43,7 +43,7 @@
 
 .true-false-single-correct:before {
   content: 'True False Single Correct';
-}
+} */
 
 .rc-switch {
 	 position: relative;

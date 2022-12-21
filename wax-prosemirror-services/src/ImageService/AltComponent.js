@@ -1,13 +1,31 @@
-/* eslint-disable react/prop-types */
 import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
+
+const StyledInputAlt = styled.input`
+  background: #e2ebff;
+  border: none;
+  box-sizing: border-box;
+  width: 240px;
+  min-height: 20px;
+  padding: 4px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: black;
+    font-weight: bold;
+  }
+`;
 
 export default ({ setPosition, position }) => {
   const altRef = useRef(null);
   const [altText, setAltText] = useState('');
   const context = useContext(WaxContext);
   const {
+    app,
     activeView,
     pmViews: { main },
   } = context;
@@ -18,34 +36,19 @@ export default ({ setPosition, position }) => {
 
   const readOnly = !isEditable;
 
-  const StyledInputAlt = styled.input`
-    background: #e2ebff;
-    border: none;
-    box-sizing: border-box;
-    width: 240px;
-    min-height: 20px;
-    padding: 4px;
-
-    &:focus {
-      outline: none;
-    }
-
-    &::placeholder {
-      color: black;
-      font-weight: bold;
-    }
-  `;
-
   useLayoutEffect(() => {
-    const WaxSurface = activeView.dom.getBoundingClientRect();
+    const WaxSurface = main.dom.getBoundingClientRect();
     const { selection } = activeView.state;
 
     if (!selection || !selection.node || !selection.node.attrs.id) return;
     const imageId = selection.node.attrs.id;
     const image = document.querySelector(`[data-id='${imageId}']`);
+    const figCaption = document.getElementsByTagName('figcaption')[0];
+    if (!image) return;
     const imagePosition = image.getBoundingClientRect();
+    const figCaptionPosition = figCaption.getBoundingClientRect().height - 5;
     const left = imagePosition.left - WaxSurface.left;
-    const top = imagePosition.bottom - WaxSurface.top - 22;
+    const top = imagePosition.bottom - WaxSurface.top - figCaptionPosition;
     setPosition({ ...position, left, top });
   }, [position.left, position.top]);
 
@@ -60,23 +63,24 @@ export default ({ setPosition, position }) => {
     );
   };
 
-  if (!readOnly) {
-    return (
-      <StyledInputAlt
-        autoFocus="autoFocus"
-        key="alt"
-        onChange={altTextOnChange}
-        placeholder="Alt Text"
-        ref={altRef}
-        type="text"
-        value={
-          activeView.state.selection &&
-          activeView.state.selection.node &&
-          activeView.state.selection.node.attrs.alt !== ''
-            ? activeView.state.selection.node.attrs.alt
-            : altText
-        }
-      />
-    );
-  }
+  const imageConfig = app.config.get('config.ImageService');
+  const showAlt = imageConfig && imageConfig.showAlt;
+
+  return !readOnly && showAlt ? (
+    <StyledInputAlt
+      autoFocus="autoFocus"
+      key="alt"
+      onChange={altTextOnChange}
+      placeholder="Alt Text"
+      ref={altRef}
+      type="text"
+      value={
+        activeView.state.selection &&
+        activeView.state.selection.node &&
+        activeView.state.selection.node.attrs.alt !== ''
+          ? activeView.state.selection.node.attrs.alt
+          : altText
+      }
+    />
+  ) : null;
 };

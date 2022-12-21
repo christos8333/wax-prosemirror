@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { SchemaHelpers } from 'wax-prosemirror-core';
 
 const listItemNode = {
@@ -22,6 +21,7 @@ const listItemNode = {
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
     }
+    // eslint-disable-next-line no-param-reassign
     hook.value = ['li', attrs, 0];
     next();
   },

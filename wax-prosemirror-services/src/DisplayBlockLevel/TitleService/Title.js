@@ -64,9 +64,8 @@ export default class Title extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
-      <TitleButton key="Title" item={this.toJSON()} view={view} />
+    return this.isDisplayed() ? (
+      <TitleButton item={this.toJSON()} key="Title" view={view} />
     ) : null;
   }
 }

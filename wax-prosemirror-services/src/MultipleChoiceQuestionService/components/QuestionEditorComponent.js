@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -8,7 +6,7 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import {
   splitListItem,
   liftListItem,
@@ -56,6 +54,9 @@ const EditorWrapper = styled.div`
     }
   }
 `;
+
+let WaxOverlays = () => true;
+
 const QuestionEditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
@@ -120,7 +121,6 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
-  // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
     return Placeholder({
       content: placeholder,
@@ -133,6 +133,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   ]);
 
   useEffect(() => {
+    WaxOverlays = ComponentPlugin('waxOverlays');
     questionView = new EditorView(
       {
         mount: editorRef.current,
@@ -209,6 +210,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   return (
     <EditorWrapper>
       <div ref={editorRef} />
+      <WaxOverlays activeViewId={questionId} />
     </EditorWrapper>
   );
 };

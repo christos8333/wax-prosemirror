@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { findWrapping } from 'prosemirror-transform';
 import { v4 as uuidv4 } from 'uuid';
-import { Tools } from 'wax-prosemirror-core';
+import { Tools, Commands } from 'wax-prosemirror-core';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()
@@ -35,7 +35,17 @@ class MultipleDropDownQuestion extends Tools {
   }
 
   get active() {
-    return state => {};
+    return state => {
+      if (
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.multiple_drop_down_container,
+        )
+      ) {
+        return true;
+      }
+      return false;
+    };
   }
 
   select = (state, activeViewId, activeView) => {

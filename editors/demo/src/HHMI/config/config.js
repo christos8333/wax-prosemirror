@@ -16,10 +16,6 @@ import {
   MathService,
   FullScreenService,
   FullScreenToolGroupService,
-  SpecialCharactersService,
-  SpecialCharactersToolGroupService,
-  EditorInfoToolGroupServices,
-  BottomInfoService,
   MultipleChoiceQuestionService,
   FillTheGapQuestionService,
   QuestionsDropDownToolGroupService,
@@ -69,7 +65,6 @@ export default {
   RulesService: [emDash, ellipsis],
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
-
   services: [
     new MatchingService(),
     new FillTheGapQuestionService(),
@@ -92,9 +87,5 @@ export default {
     new MathService(),
     new FullScreenService(),
     new FullScreenToolGroupService(),
-    new SpecialCharactersService(),
-    new SpecialCharactersToolGroupService(),
-    new EditorInfoToolGroupServices(),
-    new BottomInfoService(),
   ],
 };

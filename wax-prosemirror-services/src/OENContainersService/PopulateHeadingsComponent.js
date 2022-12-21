@@ -81,7 +81,7 @@ export default ({ setPosition, position }) => {
     const allSectionNodes = [];
     const sectionHeadings = {};
 
-    doc.descendants((editorNode, index) => {
+    doc.descendants(editorNode => {
       if (editorNode.type.name === 'oen_section') {
         allSectionNodes.push(editorNode);
       }

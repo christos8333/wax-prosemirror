@@ -44,8 +44,9 @@ class MenuService extends Service {
             }
             tools.push(tl);
           } catch (error) {
+            const service = tool.name ? tool.name : tool;
             throw Error(
-              `Could not load Service ${tool.name}. Please configure service through config`,
+              `Could not load Service ${service}. Please configure service through config`,
             );
           }
         });

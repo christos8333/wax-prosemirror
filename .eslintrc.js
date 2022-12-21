@@ -31,6 +31,10 @@ eslint.rules['react/prop-types'] = [
       'onMouseDown',
       'onMouseEnter',
       'theme',
+      'node',
+      'view',
+      'getPos',
+      'readOnly',
     ],
   },
 ];

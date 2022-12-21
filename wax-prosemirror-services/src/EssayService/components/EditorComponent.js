@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -74,7 +72,6 @@ const EditorComponent = ({ node, view, getPos }) => {
 
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
-  // eslint-disable-next-line no-shadow
   const createPlaceholder = placeholder => {
     return Placeholder({
       content: placeholder,

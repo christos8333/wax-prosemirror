@@ -3,7 +3,7 @@ import { Fragment } from 'prosemirror-model';
 import { findWrapping } from 'prosemirror-transform';
 import { TextSelection } from 'prosemirror-state';
 import { v4 as uuidv4 } from 'uuid';
-import { Tools } from 'wax-prosemirror-core';
+import { Tools, Commands } from 'wax-prosemirror-core';
 import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 
 @injectable()
@@ -48,6 +48,20 @@ class MatchingQuestion extends Tools {
     };
   }
 
+  get active() {
+    return state => {
+      if (
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.matching_container,
+        )
+      ) {
+        return true;
+      }
+      return false;
+    };
+  }
+
   select = (state, activeViewId, activeView) => {
     const { disallowedTools } = activeView.props;
     let status = true;
@@ -61,13 +75,5 @@ class MatchingQuestion extends Tools {
     });
     return status;
   };
-
-  get active() {
-    return state => {};
-  }
-
-  get enable() {
-    return state => {};
-  }
 }
 export default MatchingQuestion;

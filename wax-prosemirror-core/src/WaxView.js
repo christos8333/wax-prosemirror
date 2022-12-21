@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/prop-types */
 import React, {
   useRef,
@@ -104,9 +103,9 @@ const WaxView = forwardRef((props, ref) => {
         if (debug) applyDevTools(view);
         setTimeout(() => {
           if (autoFocus && view) {
-            view.focus();
             view.state.tr.insertText('', 0);
-            view.dispatch(view.state.tr);
+            view.dispatch(view.state.tr.scrollIntoView());
+            view.focus();
           }
         }, 500);
 
@@ -156,7 +155,6 @@ const WaxView = forwardRef((props, ref) => {
 
     const docContent =
       targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
-
     if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
       props.onChange(docContent);
   };

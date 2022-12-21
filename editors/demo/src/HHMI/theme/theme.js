@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import 'typeface-fira-sans-condensed';
 import 'fontsource-merriweather';
 import 'typeface-vollkorn';

@@ -12,7 +12,7 @@ export default class SpecialCharacters extends Tools {
   name = 'trackchangeoptions';
 
   get enable() {
-    return state => {
+    return () => {
       return true;
     };
   }
@@ -20,8 +20,8 @@ export default class SpecialCharacters extends Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
 
-    return this._isDisplayed ? (
-      <TrackChangeOptionsTool key={uuidv4()} item={this.toJSON()} view={view} />
+    return this.isDisplayed() ? (
+      <TrackChangeOptionsTool item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }
 }

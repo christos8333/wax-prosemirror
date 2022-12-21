@@ -35,9 +35,7 @@ export default class Table extends Tools {
 
   renderTool(view) {
     if (isEmpty(view)) return null;
-
-    // eslint-disable-next-line no-underscore-dangle
-    return this._isDisplayed ? (
+    return this.isDisplayed() ? (
       <CreateTable item={this.toJSON()} key={uuidv4()} view={view} />
     ) : null;
   }

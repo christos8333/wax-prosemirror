@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-core",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.6.5",
+  "version": "0.7.0",
   "description": "Wax prosemirror core",
   "license": "MIT",
   "main": "dist/index.js",
@@ -14,10 +14,13 @@
     "build": "BABEL_ENV=production rollup -c"
   },
   "dependencies": {
+    "@pubsweet/ui-toolkit": "^2.3.1",
     "deepmerge": "^4.2.2",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "lodash": "^4.17.4",
+    "moment": "^2.29.0",
+    "prop-types": "^15.7.2",
     "prosemirror-commands": "1.2.1",
     "prosemirror-dev-tools": "^2.1.1",
     "prosemirror-dropcursor": "1.6.1",
@@ -32,10 +35,7 @@
     "prosemirror-view": "1.23.7",
     "reflect-metadata": "^0.1.13",
     "styled-components": "^5.3.0",
-    "uuid": "^7.0.3",
-    "moment": "^2.29.0",
-    "prop-types": "^15.7.2",
-    "@pubsweet/ui-toolkit": "^2.3.1"
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

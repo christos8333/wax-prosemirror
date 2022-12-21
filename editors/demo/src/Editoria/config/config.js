@@ -43,6 +43,7 @@ import {
   CustomTagInlineToolGroupService,
   CustomTagBlockToolGroupService,
   CustomTagService,
+  BlockDropDownToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -77,6 +78,7 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
+        'BlockDropDown',
         {
           name: 'Annotations',
           more: [
@@ -152,6 +154,7 @@ export default {
   },
 
   services: [
+    new BlockDropDownToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

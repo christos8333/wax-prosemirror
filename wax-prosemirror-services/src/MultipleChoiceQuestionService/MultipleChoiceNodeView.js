@@ -23,7 +23,6 @@ export default class MultipleChoiceNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
-    console.log(event.target.type);
     if (event.target.type === 'textarea') {
       return true;
     }

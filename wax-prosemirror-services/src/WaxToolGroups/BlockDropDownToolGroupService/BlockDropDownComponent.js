@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
@@ -40,11 +40,10 @@ const DropdownStyled = styled(Dropdown)`
 const BlockDropDownComponent = ({ view, tools }) => {
   const context = useContext(WaxContext);
   const {
-    activeView,
     activeViewId,
     pmViews: { main },
   } = context;
-
+  const [label, setLabel] = useState(null);
   const { dispatch, state } = view;
 
   const dropDownOptions = [
@@ -70,12 +69,16 @@ const BlockDropDownComponent = ({ view, tools }) => {
     dropDownOptions[0].item.select &&
     dropDownOptions[0].item.select(state, activeViewId);
 
-  let found = '';
-  dropDownOptions.forEach((item, i) => {
-    if (item.item.active(state, activeViewId) === true) {
-      found = item.item.label;
-    }
-  });
+  useEffect(() => {
+    setLabel('Block Level');
+    dropDownOptions.forEach(option => {
+      if (option.item.active(main.state, activeViewId)) {
+        setTimeout(() => {
+          setLabel(option.item.label);
+        });
+      }
+    });
+  }, [main.state.selection.$from.parent.type.name]);
 
   const MultipleDropDown = useMemo(
     () => (
@@ -88,11 +91,11 @@ const BlockDropDownComponent = ({ view, tools }) => {
           options={dropDownOptions}
           placeholder="Block Level"
           select={isDisabled}
-          value={found}
+          value={label}
         />
       </Wrapper>
     ),
-    [isDisabled],
+    [isDisabled, label],
   );
 
   return MultipleDropDown;

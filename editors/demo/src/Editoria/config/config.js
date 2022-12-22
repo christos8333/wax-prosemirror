@@ -78,7 +78,10 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
-        'BlockDropDown',
+        {
+          name: 'BlockDropDown',
+          exclude: ['ParagraphContinued'],
+        },
         {
           name: 'Annotations',
           more: [

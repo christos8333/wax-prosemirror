@@ -44,6 +44,7 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
   BlockDropDownToolGroupService,
+  FindAndReplaceToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -78,7 +79,10 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
-        'BlockDropDown',
+        {
+          name: 'BlockDropDown',
+          exclude: ['ParagraphContinued'],
+        },
         {
           name: 'Annotations',
           more: [
@@ -100,6 +104,7 @@ export default {
         'Tables',
         'TrackingAndEditing',
         'FullScreen',
+        'FindAndReplaceTool',
       ],
     },
     {
@@ -155,6 +160,7 @@ export default {
   },
 
   services: [
+    new FindAndReplaceToolGroupService(),
     new BlockDropDownToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),

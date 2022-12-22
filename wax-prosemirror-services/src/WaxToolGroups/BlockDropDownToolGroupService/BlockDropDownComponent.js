@@ -38,7 +38,6 @@ const DropdownStyled = styled(Dropdown)`
 
 // eslint-disable-next-line react/prop-types
 const BlockDropDownComponent = ({ view, tools }) => {
-  console.log(tools);
   const context = useContext(WaxContext);
   const {
     activeViewId,

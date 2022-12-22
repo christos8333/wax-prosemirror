@@ -65,3 +65,4 @@ export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/C
 export { default as QuestionsDropDownToolGroupService } from './src/WaxToolGroups/QuestionsDropDownToolGroupService/QuestionsDropDownToolGroupService';
 export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
 export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';
+export { default as FindAndReplaceToolGroupService } from './src/WaxToolGroups/FindAndReplaceToolGroupService/FindAndReplaceToolGroupService';

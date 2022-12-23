@@ -63,6 +63,7 @@ export default {
 
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
+  ImageService: { showAlt: true },
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [

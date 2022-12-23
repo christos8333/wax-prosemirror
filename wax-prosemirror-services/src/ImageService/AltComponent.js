@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
@@ -65,10 +66,14 @@ export default ({ setPosition, position }) => {
 
   const imageConfig = app.config.get('config.ImageService');
   const showAlt = imageConfig && imageConfig.showAlt;
+  const autoFocus =
+    activeView.state.selection &&
+    activeView.state.selection.node &&
+    activeView.state.selection.node.attrs.alt === '';
 
   return !readOnly && showAlt ? (
     <StyledInputAlt
-      autoFocus="autoFocus"
+      autoFocus={autoFocus}
       key="alt"
       onChange={altTextOnChange}
       placeholder="Alt Text"

@@ -80,10 +80,6 @@ export default {
       toolGroups: [
         'Base',
         {
-          name: 'BlockDropDown',
-          exclude: ['ParagraphContinued'],
-        },
-        {
           name: 'Annotations',
           more: [
             'Superscript',
@@ -104,7 +100,6 @@ export default {
         'Tables',
         'TrackingAndEditing',
         'FullScreen',
-        'FindAndReplaceTool',
       ],
     },
     {
@@ -160,8 +155,6 @@ export default {
   },
 
   services: [
-    new FindAndReplaceToolGroupService(),
-    new BlockDropDownToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

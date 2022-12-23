@@ -85,7 +85,7 @@ const SpecialCharacter = styled.div`
   min-width: 25px;
   height: 25px;
   display: inline-grid;
-  background: ${th('colorPrimary')}
+  background: white;
   cursor: pointer;
   border: 1px solid ${th('colorPrimary')};
   border-radius: 50%;
@@ -102,8 +102,7 @@ const SpecialCharacter = styled.div`
       color: #fff;
     }
   }
-    ${override('Wax.SpecialCharacterButton')}
-
+  ${override('Wax.SpecialCharacterButton')}
 `;
 
 const SpecialCharactersComponent = ({ close }) => {

@@ -38,6 +38,7 @@ export { default as EnterService } from './src/EnterService/EnterService';
 export { default as MultipleDropDownService } from './src/MultipleDropDownService/MultipleDropDownService';
 
 export { default as OENContainersService } from './src/OENContainersService/OENContainersService';
+export { default as YjsService } from './src/YjsService/YjsService';
 /*
 ToolGroups
 */

@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, override } from '@pubsweet/ui-toolkit';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
 
@@ -23,6 +23,7 @@ const DropWrapper = styled.div`
   margin-top: ${grid(1)};
   position: absolute;
   top: 32px;
+  ${override('Wax.FindReplaceWrapper')}
 `;
 
 const FindAndReplaceTool = ({ item }) => {

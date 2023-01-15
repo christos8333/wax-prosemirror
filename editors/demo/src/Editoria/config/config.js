@@ -43,8 +43,7 @@ import {
   CustomTagInlineToolGroupService,
   CustomTagBlockToolGroupService,
   CustomTagService,
-  BlockDropDownToolGroupService,
-  FindAndReplaceToolGroupService,
+  YjsService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -153,8 +152,14 @@ export default {
     ],
     // updateTags: saveTags,
   },
+  YjsService: {
+    // eslint-disable-next-line no-restricted-globals
+    connectionUrl: 'ws://localhost:4000',
+    docIdentifier: 'prosemirror-demo',
+  },
 
   services: [
+    new YjsService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

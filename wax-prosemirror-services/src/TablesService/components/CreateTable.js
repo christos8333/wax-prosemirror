@@ -6,7 +6,7 @@ import {
   MenuButton,
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, override } from '@pubsweet/ui-toolkit';
 import InsertTableTool from './InsertTableTool';
 
 const Wrapper = styled.div`
@@ -19,6 +19,8 @@ const DropWrapper = styled.div`
   background: white;
   margin-top: ${grid(1)};
   position: absolute;
+
+  ${override('Wax.CreateTableWrapper')}
 `;
 
 const CreateTable = ({ item }) => {

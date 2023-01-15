@@ -4,6 +4,7 @@ import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import { v4 as uuidv4 } from 'uuid';
 import CommentBox from './ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
@@ -73,15 +74,24 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     };
 
     comment.attrs.conversation.push(obj);
-
+    const id = uuidv4();
     allCommentsWithSameId.forEach(singleComment => {
-      dispatch(
-        tr
+      activeView.dispatch(
+        activeView.state.tr.removeMark(
+          singleComment.pos,
+          singleComment.pos + singleComment.node.nodeSize,
+          commentMark,
+        ),
+      );
+      activeView.dispatch(
+        activeView.state.tr
           .addMark(
             singleComment.pos,
-            singleComment.pos + singleComment.nodeSize,
+            singleComment.pos + singleComment.node.nodeSize,
             commentMark.create({
-              ...((comment && comment.attrs) || {}),
+              id,
+              group: comment.attrs.group,
+              viewid: comment.attrs.viewid,
               conversation: comment.attrs.conversation,
             }),
           )

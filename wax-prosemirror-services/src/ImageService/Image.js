@@ -33,8 +33,8 @@ export default class Image extends Tools {
   }
 
   renderTool(view) {
-    if (isEmpty(view)) return null;
     const context = useContext(WaxContext);
+    if (isEmpty(view)) return null;
     const upload = fileUpload(
       view,
       this.config.get('fileUpload'),

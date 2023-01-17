@@ -42,6 +42,8 @@ const WaxView = forwardRef((props, ref) => {
     user,
     targetFormat,
     serializer,
+    scrollMargin,
+    scrollThreshold,
   } = props;
 
   const WaxEditorRef = useRef();
@@ -77,8 +79,8 @@ const WaxView = forwardRef((props, ref) => {
             dispatchTransaction,
             disallowedTools: [],
             user,
-            scrollMargin: 200,
-            scrollThreshold: 200,
+            scrollMargin: scrollMargin || 200,
+            scrollThreshold: scrollThreshold || 200,
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
             },

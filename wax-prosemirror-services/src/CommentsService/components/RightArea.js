@@ -39,10 +39,11 @@ export default ({ area }) => {
     each(marksNodes[area], (markNode, pos) => {
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
-
+      let activeTrackChange = null;
       const activeComment = commentPlugin.getState(activeView.state).comment;
-      const activeTrackChange = trakChangePlugin.getState(activeView.state)
-        .trackChange;
+      if (trakChangePlugin)
+        activeTrackChange = trakChangePlugin.getState(activeView.state)
+          .trackChange;
 
       let isActive = false;
       if (

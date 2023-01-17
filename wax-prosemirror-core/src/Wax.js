@@ -45,6 +45,8 @@ const Wax = forwardRef((props, ref) => {
     user,
     onChange,
     targetFormat,
+    scrollMargin,
+    scrollThreshold,
   } = props;
 
   if (!application) return null;
@@ -71,6 +73,8 @@ const Wax = forwardRef((props, ref) => {
           placeholder={placeholder}
           readonly={readonly}
           ref={ref}
+          scrollMargin={scrollMargin}
+          scrollThreshold={scrollThreshold}
           serializer={serializer}
           targetFormat={targetFormat}
           TrackChange={

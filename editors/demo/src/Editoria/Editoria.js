@@ -57,6 +57,8 @@ const Editoria = () => {
           //   console.log(JSON.stringify(source));
           // }, 200)}
           user={user}
+          scrollMargin={200}
+          scrollThreshold={200}
         />
       </>
     ),

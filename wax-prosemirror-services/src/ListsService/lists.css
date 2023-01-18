@@ -5,7 +5,7 @@
     padding-left: 30px;
   }
 
-    ol {
+    /* ol {
       counter-reset: item
     }
   
@@ -22,4 +22,4 @@
     li:before {
       content: counters(item, ".") " ";
       counter-increment: item
-    }
+    } */

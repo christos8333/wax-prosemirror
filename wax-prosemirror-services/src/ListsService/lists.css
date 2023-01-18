@@ -4,3 +4,22 @@
   ol {
     padding-left: 30px;
   }
+
+    ol {
+      counter-reset: item
+    }
+  
+    li {
+      display: block;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    li p {
+      display: inline;
+    }
+  
+    li:before {
+      content: counters(item, ".") " ";
+      counter-increment: item
+    }

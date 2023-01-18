@@ -33,8 +33,9 @@ const cokoTheme = {
   fontTools: 'Inter',
 
   // font sizes
-  fontSizeBase: '14px',
   fontSizeBaseSmall: '12px',
+  fontSizeBase: '14px',
+  fontSizeBaseLarge: '16px',
   fontSizeHeading1: '40px',
   fontSizeHeading2: '36px',
   fontSizeHeading3: '28px',

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th, override } from '@pubsweet/ui-toolkit';
 
 const Wrapper = styled.div`
   background: ${th('colorBackgroundHue')};
@@ -17,17 +17,18 @@ const ReplyTextArea = styled.textarea`
   border: 3px solid ${th('colorBackgroundTabs')};
   font-family: ${th('fontWriting')};
   position: relative;
-  right: 5px;
   width: 100%;
 
   &:focus {
     outline: 1px solid ${th('colorPrimary')};
   }
+
+  ${override('Wax.CommentTextArea')}
 `;
 
 const ActionWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-top: 4px;
 `;
 
@@ -45,12 +46,15 @@ const Button = styled.button`
 
   ${props => props.primary && primary}
   ${props => props.disabled && `cursor: not-allowed; opacity: 0.3;`}
+
+  ${override('Wax.CommentButtons')}
 `;
 
 const ButtonGroup = styled.div`
   > button:not(:last-of-type) {
     margin-right: 8px;
   }
+  ${override('Wax.CommentButtonGroup')}
 `;
 
 const CommentReply = props => {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { grid, th } from '@pubsweet/ui-toolkit';
+import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { DateParser } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div``;
@@ -15,17 +15,23 @@ const Head = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: ${th('fontSizeBaseSmall')};
+  font-size: ${th('fontSizeBase')};
+
+  ${override('Wax.CommentName')}
 `;
 
 const Timestamp = styled.div`
   color: gray;
-  font-size: 14px;
+  font-size: ${th('fontSizeBaseSmall')};
+
+  ${override('Wax.CommentTimestamp')}
 `;
 
 const Content = styled.div`
   font-family: ${th('fontReading')};
-  font-size: 16px;
+  font-size: ${th('fontSizeBaseLarge')};
+
+  ${override('Wax.CommentContent')}
 `;
 
 const CommentItem = props => {

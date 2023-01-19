@@ -93,7 +93,6 @@ export default {
         'CustomTagInline',
         'Notes',
         'Lists',
-        'Images',
         'SpecialCharacters',
         'CodeBlock',
         'Tables',

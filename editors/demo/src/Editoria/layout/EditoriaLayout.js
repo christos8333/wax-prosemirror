@@ -1,4 +1,10 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import {

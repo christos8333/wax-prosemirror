@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { isEmpty } from 'lodash';
+import React from 'react';
 import { injectable } from 'inversify';
-import { WaxContext, Commands, Tools } from 'wax-prosemirror-core';
-import ImageUpload from './components/ImageUpload';
-import fileUpload from './fileUpload';
+import { Commands, Tools } from 'wax-prosemirror-core';
+import { v4 as uuidv4 } from 'uuid';
+
+import ImageUploadComponent from './components/ImageUploadComponent';
 
 @injectable()
 export default class Image extends Tools {
@@ -33,21 +32,15 @@ export default class Image extends Tools {
   }
 
   renderTool(view) {
-    const context = useContext(WaxContext);
-    if (isEmpty(view)) return null;
-    const upload = fileUpload(
-      view,
-      this.config.get('fileUpload'),
-      this.pmplugins.get('imagePlaceHolder'),
-      context,
-    );
-    return this.isDisplayed() ? (
-      <ImageUpload
-        fileUpload={upload}
-        item={this.toJSON()}
+    return (
+      <ImageUploadComponent
+        config={this.config}
+        displayed={this.isDisplayed()}
+        item={this}
         key={uuidv4()}
+        pmplugins={this.pmplugins}
         view={view}
       />
-    ) : null;
+    );
   }
 }

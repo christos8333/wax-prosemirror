@@ -150,16 +150,16 @@ export default {
       { label: 'custom-tag-label-3', tagType: 'block' },
       { label: 'label 2', tagType: 'block' },
     ],
-    // updateTags: saveTags,
+    updateTags: saveTags,
   },
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:4000',
-    docIdentifier: 'prosemirror-demo',
-  },
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:4000',
+  //   docIdentifier: 'prosemirror-demo',
+  // },
 
   services: [
-    new YjsService(),
+    // new YjsService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

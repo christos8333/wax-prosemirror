@@ -83,6 +83,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
           commentMark,
         ),
       );
+
       activeView.dispatch(
         activeView.state.tr
           .addMark(

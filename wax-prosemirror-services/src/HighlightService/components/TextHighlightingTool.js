@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useRef, useContext } from 'react';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import {
   WaxContext,
@@ -25,6 +25,8 @@ const DropWrapper = styled.div`
   position: absolute;
   top: 32px;
   width: max-content;
+
+  ${override('Wax.HighlightToolWrapper')}
 `;
 const TextHighlightComponent = styled.div`
   background: white;

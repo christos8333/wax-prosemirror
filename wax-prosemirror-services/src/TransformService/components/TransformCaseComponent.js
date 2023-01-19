@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuid } from 'uuid';
 import {
   WaxContext,
@@ -21,6 +21,8 @@ const DropWrapper = styled.div`
   position: absolute;
   top: 32px;
   width: max-content;
+
+  ${override('Wax.TransformToolWrapper')}
 `;
 const TextTransformCaseComponent = styled.div`
   background: white;

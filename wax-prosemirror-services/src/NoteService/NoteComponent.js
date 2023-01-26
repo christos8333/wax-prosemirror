@@ -6,19 +6,23 @@ import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import NoteEditor from './NoteEditor';
 
 export default ({ view }) => {
-  if (typeof view === 'undefined') return null;
   const context = useContext(WaxContext);
+  if (typeof view === 'undefined') return null;
+
+  const {
+    pmViews: { main },
+  } = context;
 
   const {
     state: { tr },
-  } = view;
+  } = main;
 
   const [notes, setNotes] = useState([]);
   const cleanUpNoteViews = () => {
-    if (view) {
+    if (main) {
       const currentNotes = DocumentHelpers.findChildrenByType(
-        view.state.doc,
-        view.state.schema.nodes.footnote,
+        main.state.doc,
+        main.state.schema.nodes.footnote,
         true,
       );
       if (notes.length > currentNotes.length) {
@@ -28,7 +32,7 @@ export default ({ view }) => {
         });
 
         tr.setMeta('notesChanged', true);
-        view.dispatch(tr);
+        main.dispatch(tr);
 
         // const newView = Object.keys(view).reduce((object, key) => {
         //   if (key !== difference[0].node.attrs.id) {
@@ -41,12 +45,12 @@ export default ({ view }) => {
   };
 
   useDeepCompareEffect(() => {
-    setNotes(updateNotes(view));
+    setNotes(updateNotes(context.pmViews.main));
     cleanUpNoteViews();
-  }, [updateNotes(view)]);
+  }, [updateNotes(main)]);
 
   const noteComponent = useMemo(
-    () => <NoteEditor notes={notes} view={view} />,
+    () => <NoteEditor notes={notes} view={main} />,
     [notes],
   );
   return <>{noteComponent}</>;

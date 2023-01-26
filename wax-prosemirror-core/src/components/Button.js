@@ -28,7 +28,11 @@ const Button = ({ view = {}, item }) => {
     select(state, activeViewId, activeView)
   );
 
-  let isDisabled = !select(state, activeViewId, activeView);
+  let isDisabled = !select(
+    context.activeView.state,
+    context.activeViewId,
+    context.activeView,
+  );
   if (!isEditable) isDisabled = true;
 
   const MenuButtonComponent = useMemo(

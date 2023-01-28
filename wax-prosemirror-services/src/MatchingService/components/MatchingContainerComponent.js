@@ -228,13 +228,13 @@ export default ({ node, view, getPos }) => {
     };
 
     options.forEach(option => {
-      if (getRef(option.value).current)
+      if (getRef(option.value) && getRef(option.value).current)
         getRef(option.value).current.addEventListener('keydown', listener);
     });
 
     return () => {
       options.forEach(option => {
-        if (getRef(option.value).current)
+        if (getRef(option.value) && getRef(option.value).current)
           getRef(option.value).current.removeEventListener('keydown', listener);
       });
     };

@@ -43,10 +43,12 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const highlightDropDownOptions = [
-    { name: 'yellow', value: '#ed0' },
-    { name: 'green', value: '#9d5' },
-    { name: 'yellow', value: '#4d8' },
-    { name: 'green', value: '#2cb' },
+    { name: 'yellow', value: '#F3E95C' },
+    { name: 'blue', value: '#7DE5DB' },
+    { name: 'green', value: '#C0EB96' },
+    { name: 'pink', value: '#F2C4D1' },
+    { name: 'orange', value: '#FFB56B' },
+    { name: 'red', value: '#FF8080' },
     { name: 'remove highlight', value: 'transparent' },
   ];
 

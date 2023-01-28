@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { th } from '@pubsweet/ui-toolkit';
+import { th, override } from '@pubsweet/ui-toolkit';
 
 import CommentItemList from './CommentItemList';
 import CommentReply from './CommentReply';
@@ -33,12 +33,16 @@ const Wrapper = styled.div`
   font-family: ${th('fontInterface')};
 
   ${props => !props.active && inactive}
+
+  ${override('Wax.CommentWrapper')}
 `;
 
 const Head = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 8px 16px 0;
+
+  ${override('Wax.CommentHead')}
 `;
 
 const Resolve = styled.button`
@@ -55,6 +59,8 @@ const Resolve = styled.button`
   }
 
   ${props => props.isReadOnly && inactiveButton}
+
+  ${override('Wax.CommentResolve')}
 `;
 
 const StyledReply = styled(CommentReply)`

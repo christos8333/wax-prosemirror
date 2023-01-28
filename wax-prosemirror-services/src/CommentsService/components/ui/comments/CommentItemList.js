@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clone, uniqueId } from 'lodash';
+import { override } from '@pubsweet/ui-toolkit';
+
 import CommentItem from './CommentItem';
 
 const Wrapper = styled.div`
@@ -10,6 +12,7 @@ const Wrapper = styled.div`
   > div:not(:last-of-type) {
     margin-bottom: 16px;
   }
+  ${override('Wax.CommentItemWrapper')}
 `;
 
 const More = styled.span`
@@ -19,6 +22,8 @@ const More = styled.span`
   /* cursor: default; */
   display: inline-block;
   padding: 4px 8px;
+
+  ${override('Wax.CommentMore')}
 `;
 
 const CommentItemList = props => {

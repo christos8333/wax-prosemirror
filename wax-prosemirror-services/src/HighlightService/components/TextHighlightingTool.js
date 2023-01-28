@@ -12,11 +12,6 @@ const Wrapper = styled.div`
   font-size: 0;
   position: relative;
   z-index: 2;
-
-  button,
-  button:hover {
-    background: transparent;
-  }
 `;
 
 const DropWrapper = styled.div`
@@ -48,14 +43,10 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const highlightDropDownOptions = [
-    { name: 'red', value: 'red' },
-    { name: 'Light blue', value: '#add8e6' },
-    { name: 'yellow', value: 'yellow' },
-    { name: 'green', value: '#90EE90' },
-    { name: 'gray', value: '#d3d3d3' },
-    { name: 'orange', value: 'orange' },
-    { name: 'brown', value: 'brown' },
-    { name: 'aquamarine', value: 'aquamarine' },
+    { name: 'yellow', value: '#ed0' },
+    { name: 'green', value: '#9d5' },
+    { name: 'yellow', value: '#4d8' },
+    { name: 'green', value: '#2cb' },
     { name: 'remove highlight', value: 'transparent' },
   ];
 
@@ -109,19 +100,17 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   let isDisabled = !select(state, activeViewId, activeView);
   if (!isEditable) isDisabled = true;
 
+  const line = document.getElementById('trait');
+  if (line)
+    line.style.fill =
+      localStorage.getItem('lastBgColor') !== null
+        ? localStorage.getItem('lastBgColor')
+        : highlightDropDownOptions[0].name;
+
   const MenuButtonComponent = useMemo(
     () => (
       <Wrapper onDoubleClick={handleDblClk} ref={ref}>
-        <div
-          disabled={isDisabled}
-          style={{
-            backgroundColor:
-              localStorage.getItem('lastBgColor') !== null
-                ? localStorage.getItem('lastBgColor')
-                : highlightDropDownOptions[0].name,
-            opacity: isDisabled ? '0.6' : '1',
-          }}
-        >
+        <div disabled={isDisabled}>
           <MenuButton
             active={isOpen}
             disabled={isDisabled}

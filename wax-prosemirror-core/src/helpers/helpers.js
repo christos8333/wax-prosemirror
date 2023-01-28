@@ -35,7 +35,10 @@ const getDocContent = (schema, serializer, targetFormat, context) => {
   let content = '';
   alterNotesSchema(schema);
   if (targetFormat === 'JSON') {
-    content = context.app.context.pmViews.main.state.doc.content.toJSON();
+    content = {
+      type: 'doc',
+      content: context.app.context.pmViews.main.state.doc.content.toJSON(),
+    };
   } else {
     const serialize = serializer(schema);
     content = serialize(context.app.context.pmViews.main.state.doc.content);

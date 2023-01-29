@@ -12,6 +12,8 @@ const Head = styled.div`
   flex-direction: column;
   font-size: 14px;
   margin-bottom: ${grid(2)};
+
+  ${override('Wax.CommentHead')}
 `;
 
 const Name = styled.div`

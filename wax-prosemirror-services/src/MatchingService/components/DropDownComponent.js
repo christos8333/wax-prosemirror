@@ -52,6 +52,10 @@ const DropComponent = ({ getPos, node, view }) => {
     pmViews: { main },
   } = context;
 
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
   const onChange = option => {
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
@@ -84,7 +88,7 @@ const DropComponent = ({ getPos, node, view }) => {
           onChange={option => onChange(option)}
           options={node.attrs.options}
           placeholder="Select option"
-          select
+          select={isEditable}
           value={
             selectedOption === 'undefined' ? 'Select Option' : selectedOption
           }

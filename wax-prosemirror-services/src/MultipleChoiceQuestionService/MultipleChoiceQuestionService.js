@@ -12,8 +12,16 @@ import MultipleChoiceSingleCorrectQuestionService from './MultipleChoiceSingleCo
 import TrueFalseQuestionService from './TrueFalseQuestionService/TrueFalseQuestionService';
 import TrueFalseSingleCorrectQuestionService from './TrueFalseSingleCorrectQuestionService/TrueFalseSingleCorrectQuestionService';
 import './multipleQuestionStyles.css';
+import MoveCursorPlugin from './plugins/MoveCursorPlugin';
 
 class MultipleChoiceQuestionService extends Service {
+  boot() {
+    this.app.PmPlugins.add(
+      'moveCursorPlugin',
+      MoveCursorPlugin('moveCursorPlugin'),
+    );
+  }
+
   register() {
     this.container.bind('MultipleChoiceQuestion').to(MultipleChoiceQuestion);
     const createNode = this.container.get('CreateNode');

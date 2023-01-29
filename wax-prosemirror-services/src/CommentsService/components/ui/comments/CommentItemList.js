@@ -51,6 +51,7 @@ const CommentItemList = props => {
     <Wrapper active={active} className={className}>
       {items.map(item => (
         <CommentItem
+          active={active}
           content={item.content}
           displayName={item.displayName}
           key={uniqueId('comment-item-')}

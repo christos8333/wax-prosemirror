@@ -37,11 +37,10 @@ const Content = styled.div`
 `;
 
 const CommentItem = props => {
-  const { className, content, displayName, timestamp } = props;
-
+  const { className, content, displayName, timestamp, active } = props;
   return (
-    <Wrapper className={className}>
-      <Head>
+    <Wrapper active={active} className={className}>
+      <Head active={active}>
         <Name>{displayName}</Name>
         <Timestamp>
           <DateParser timestamp={timestamp}>
@@ -51,12 +50,13 @@ const CommentItem = props => {
           </DateParser>
         </Timestamp>
       </Head>
-      <Content>{content}</Content>
+      <Content active={active}>{content}</Content>
     </Wrapper>
   );
 };
 
 CommentItem.propTypes = {
+  active: PropTypes.bool,
   /** Actual comment text */
   content: PropTypes.string.isRequired,
   /** Display name of user that made the comment */
@@ -65,6 +65,8 @@ CommentItem.propTypes = {
   timestamp: PropTypes.number.isRequired,
 };
 
-CommentItem.defaultProps = {};
+CommentItem.defaultProps = {
+  active: false,
+};
 
 export default CommentItem;

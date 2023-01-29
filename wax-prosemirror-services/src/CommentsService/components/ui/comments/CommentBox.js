@@ -42,7 +42,7 @@ const Head = styled.div`
   justify-content: flex-end;
   padding: 8px 16px 0;
 
-  ${override('Wax.CommentHead')}
+  ${override('Wax.CommentResolveWrapper')}
 `;
 
 const Resolve = styled.button`

@@ -13,7 +13,7 @@ const Head = styled.div`
   font-size: 14px;
   margin-bottom: ${grid(2)};
 
-  ${override('Wax.CommentHead')}
+  ${override('Wax.CommentInfoWrapper')}
 `;
 
 const Name = styled.div`

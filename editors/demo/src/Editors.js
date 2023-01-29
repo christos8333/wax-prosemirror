@@ -93,7 +93,7 @@ const Editors = () => {
             isActive={project === 'editoria'}
             onClick={() => setProject('editoria')}
           >
-            Editoria
+            Ketida
           </ProjectButton>
           <ProjectButton
             isActive={project === 'oen'}

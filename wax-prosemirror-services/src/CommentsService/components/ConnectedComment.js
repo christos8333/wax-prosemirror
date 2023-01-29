@@ -5,6 +5,7 @@ import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
+import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
@@ -15,6 +16,8 @@ const ConnectedCommentStyled = styled.div`
   @media (max-width: 600px) {
     margin-left: 15px;
   }
+
+  ${override('Wax.CommentOuterBox')}
 `;
 
 export default ({ comment, top, commentId, recalculateTops }) => {

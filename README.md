@@ -14,11 +14,11 @@ Wax Editor is built on top of the Prosemirror library. Check Prosemirror [websit
 
 ## Get up and running
 
-Run a local version of the Editoria's editor
+Run a local version of the demos
 
-1.  `yarn with node >= 12`
+1.  `yarn with node >= 14`
 
-2.  `yarn editoria` Will bring up a demo of the Editoria Ediitor
+2.  `yarn editoria` Will bring up a demos of different ediitors
 
 Scripts: `yarn` , `yarn clean`, `yarn reset`
 

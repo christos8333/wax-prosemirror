@@ -10,7 +10,8 @@ import CommentBox from './ui/comments/CommentBox';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
-  // transition: ${props => (props.active ? `all 1s` : `all 0.5s`)};
+  transition: ${props =>
+    props.active && props.length ? `none!important` : `all 1.3s`};
   position: absolute;
   width: 200px;
   @media (max-width: 600px) {
@@ -163,12 +164,13 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       }
     }, 400);
   };
-
+  console.log(isActive && comment.attrs.conversation.length === 0);
   const MemorizedComponent = useMemo(
     () => (
       <ConnectedCommentStyled
         active={isActive}
         data-box={commentId}
+        length={comment.attrs.conversation.length === 0}
         style={styles}
       >
         <CommentBox

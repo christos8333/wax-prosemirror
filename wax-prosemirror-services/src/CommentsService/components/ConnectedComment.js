@@ -164,7 +164,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       }
     }, 400);
   };
-  console.log(isActive && comment.attrs.conversation.length === 0);
+
   const MemorizedComponent = useMemo(
     () => (
       <ConnectedCommentStyled

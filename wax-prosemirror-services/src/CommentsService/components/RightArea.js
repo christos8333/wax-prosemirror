@@ -29,11 +29,13 @@ export default ({ area }) => {
     let boxHeight = 0;
     let top = 0;
     let WaxSurface = {};
+    let WaxSurfaceMarginTop = '';
     const allCommentsTop = [];
     let panelWrapper = {};
     let panelWrapperHeight = {};
     if (main) {
       WaxSurface = main.dom.getBoundingClientRect();
+      WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
     }
 
     each(marksNodes[area], (markNode, pos) => {
@@ -57,7 +59,9 @@ export default ({ area }) => {
         markNodeEl = document.querySelector(`[data-id="${id}"]`);
         if (markNodeEl)
           annotationTop =
-            markNodeEl.getBoundingClientRect().top - WaxSurface.top;
+            markNodeEl.getBoundingClientRect().top -
+            WaxSurface.top +
+            parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
       } else {
         // Notes
         panelWrapper = document.getElementsByClassName('panelWrapper');

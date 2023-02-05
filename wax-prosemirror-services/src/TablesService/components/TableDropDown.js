@@ -4,9 +4,17 @@ import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
 import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
+import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 
 const Wrapper = styled.span`
-  ${ReactDropDownStyles};
+  // ${ReactDropDownStyles};
+  div[role='menu'] {
+    visibility: hidden;
+  }
+
+  div[role='menu'].visible {
+    visibility: visible;
+  }
 `;
 
 const DropdownStyled = styled(Dropdown)`
@@ -55,6 +63,8 @@ const TableDropDown = ({ item }) => {
     { label: 'Toggle header cells', value: 'toggleHeaderCell' },
   ];
 
+  const { buttonProps, itemProps, isOpen = true } = useDropdownMenu(2);
+
   const { activeView } = useContext(WaxContext);
   const [selectedOption, setSelectedOption] = useState('');
   const appliedDropDownOptions = [];
@@ -67,6 +77,17 @@ const TableDropDown = ({ item }) => {
   const isDisabled = item.select(activeView.state);
 
   useEffect(() => {}, [selectedOption]);
+
+  return (
+    <Wrapper>
+      <div className={isOpen ? 'visible' : ''} role="menu">
+        <a {...dropDownOptions[0]} href="https://example.com">
+          Regular link
+        </a>
+        <a {...dropDownOptions[1]}>With click handler</a>
+      </div>
+    </Wrapper>
+  );
 
   const TableDropDownComponent = useMemo(
     () => (

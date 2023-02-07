@@ -57,7 +57,7 @@ content: 'Learning Objectives Section';
 }
 
 .key-terms::before {
-    content: 'Key Terms Section';
+    content: 'Key Terms List Section';
 }
 
 .self-reflection-activities::before {

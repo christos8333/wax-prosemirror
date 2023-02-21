@@ -6,45 +6,31 @@ import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
 
-const Wrapper = styled.span`
-  // ${ReactDropDownStyles};
-  div[role='menu'] {
-    visibility: hidden;
-  }
-
-  div[role='menu'].visible {
-    visibility: visible;
+const Wrapper = styled.div`
+  div {
+    z-index: 999;
+    position: absolute;
   }
 `;
 
-const DropdownStyled = styled(Dropdown)`
-  display: inline-flex;
-  opacity: ${props => (props.select ? 1 : 0.4)};
-  pointer-events: ${props => (props.select ? 'default' : 'none')};
-
-  .Dropdown-control {
-    border: none;
-    padding-top: 12px;
-
-    &:hover {
-      box-shadow: none;
-    }
-  }
-
-  .Dropdown-arrow {
-    top: 17px;
-  }
-
-  .Dropdown-menu {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    width: 120%;
-
-    .Dropdown-option {
-      width: 100%;
-    }
-  }
+const DropDownButton = styled.button`
+  -webkit-appearance: none;
+  appearance: none;
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 0.2rem;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  margin: auto;
+  outline: 0;
+  padding: 1rem 0;
+  position: relative;
+  transition: 0.2s 0.05s;
+  width: 10rem;
 `;
 
 const TableDropDown = ({ item }) => {
@@ -63,8 +49,8 @@ const TableDropDown = ({ item }) => {
     { label: 'Toggle header cells', value: 'toggleHeaderCell' },
   ];
 
-  const { buttonProps, itemProps, isOpen = true } = useDropdownMenu(2);
-
+  const { buttonProps, itemProps, isOpen, setIsOpen } = useDropdownMenu(2);
+  console.log(buttonProps, itemProps);
   const { activeView } = useContext(WaxContext);
   const [selectedOption, setSelectedOption] = useState('');
   const appliedDropDownOptions = [];
@@ -78,13 +64,29 @@ const TableDropDown = ({ item }) => {
 
   useEffect(() => {}, [selectedOption]);
 
+  const openCloseMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  console.log(isOpen);
   return (
     <Wrapper>
-      <div className={isOpen ? 'visible' : ''} role="menu">
-        <a {...dropDownOptions[0]} href="https://example.com">
-          Regular link
-        </a>
-        <a {...dropDownOptions[1]}>With click handler</a>
+      <DropDownButton
+        {...buttonProps}
+        id="menu-button"
+        type="button"
+        onClick={openCloseMenu}
+      >
+        Table Options
+      </DropDownButton>
+      <div role="menu" style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
+        {dropDownOptions.map(option => {
+          return (
+            <span key={option.value} role="menuitem" tabIndex="-1">
+              {option.label}
+            </span>
+          );
+        })}
       </div>
     </Wrapper>
   );

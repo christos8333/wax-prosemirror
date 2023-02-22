@@ -1,36 +1,45 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint react/prop-types: 0 */
 import React, { useMemo, useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
-import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
-import Dropdown from 'react-dropdown';
-import useDropdownMenu from 'react-accessible-dropdown-menu-hook';
+import { WaxContext } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
-  div {
-    z-index: 999;
-    position: absolute;
-  }
+  opacity: ${props => (props.disabled ? '0.4' : '1')};
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const DropDownButton = styled.button`
-  -webkit-appearance: none;
-  appearance: none;
-  background: #eee;
-  border: 1px solid #ddd;
-  border-radius: 0.2rem;
+  background: #fff;
+  border: none;
   color: #000;
-  cursor: pointer;
   display: flex;
-  font-size: 1.5rem;
-  font-weight: 300;
-  line-height: 1;
-  margin: auto;
-  outline: 0;
-  padding: 1rem 0;
   position: relative;
-  transition: 0.2s 0.05s;
-  width: 10rem;
+  width: 160px;
+`;
+
+const DropDownMenu = styled.div`
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
+  margin: 0.8rem auto auto;
+  position: fixed;
+  width: 170px;
+  z-index: 2;
+
+  span {
+    cursor: pointer;
+    padding: 4px 10px;
+  }
+
+  span:focus {
+    background: #f2f9fc;
+    outline: 2px solid #f2f9fc;
+  }
 `;
 
 const TableDropDown = ({ item }) => {
@@ -49,74 +58,133 @@ const TableDropDown = ({ item }) => {
     { label: 'Toggle header cells', value: 'toggleHeaderCell' },
   ];
 
-  const { buttonProps, itemProps, isOpen, setIsOpen } = useDropdownMenu(2);
-  console.log(buttonProps, itemProps);
   const { activeView } = useContext(WaxContext);
   const [selectedOption, setSelectedOption] = useState('');
-  const appliedDropDownOptions = [];
-
-  dropDownOptions.forEach(option => {
-    if (tablesFn[option.value](activeView.state)) {
-      appliedDropDownOptions.push(option);
-    }
-  });
-  const isDisabled = item.select(activeView.state);
+  const itemRefs = React.useRef([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const isDisabled = !item.select(activeView.state);
 
   useEffect(() => {}, [selectedOption]);
 
-  const openCloseMenu = () => {
-    setIsOpen(!isOpen);
+  const openCloseMenu = e => {
+    // e.preventDefault();
+
+    if (!isDisabled) setIsOpen(!isOpen);
   };
 
-  console.log(isOpen);
-  return (
-    <Wrapper>
-      <DropDownButton
-        {...buttonProps}
-        id="menu-button"
-        type="button"
-        onClick={openCloseMenu}
-      >
-        Table Options
-      </DropDownButton>
-      <div role="menu" style={{ visibility: isOpen ? 'visible' : 'hidden' }}>
-        {dropDownOptions.map(option => {
-          return (
-            <span key={option.value} role="menuitem" tabIndex="-1">
-              {option.label}
-            </span>
-          );
-        })}
-      </div>
-    </Wrapper>
-  );
+  const onKeyDown = (e, index) => {
+    // arrow down
+    if (e.keyCode === 40) {
+      if (index === itemRefs.current.length - 1) {
+        itemRefs.current[0].current.focus();
+      } else {
+        itemRefs.current[index + 1].current.focus();
+      }
+    }
+
+    // arrow up
+    if (e.keyCode === 38) {
+      if (index === 0) {
+        itemRefs.current[itemRefs.current.length - 1].current.focus();
+      } else {
+        itemRefs.current[index - 1].current.focus();
+      }
+    }
+
+    // enter
+    if (e.keyCode === 13) {
+      itemRefs.current[index].current.click();
+    }
+
+    // ESC
+    if (e.keyCode === 27) {
+      openCloseMenu();
+    }
+  };
 
   const TableDropDownComponent = useMemo(
     () => (
-      <Wrapper>
-        <DropdownStyled
-          onChange={option => {
-            item.run(
-              activeView.state,
-              activeView.dispatch,
-              tablesFn[option.value],
-            );
-            setSelectedOption(option.value);
-
-            setTimeout(() => {
-              activeView.focus();
-            });
+      <Wrapper disabled={isDisabled}>
+        <DropDownButton
+          aria-expanded={isOpen}
+          aria-haspopup
+          onKeyDown={e => {
+            if (e.keyCode === 40) {
+              itemRefs.current[0].current.focus();
+            }
           }}
-          options={appliedDropDownOptions}
-          placeholder="Table Options"
-          select={isDisabled}
-        />
+          onMouseDown={openCloseMenu}
+          tabIndex="0"
+          type="button"
+        >
+          Table Options
+        </DropDownButton>
+        <DropDownMenu
+          role="menu"
+          style={{ visibility: isOpen ? 'visible' : 'hidden' }}
+        >
+          {dropDownOptions.map((option, index) => {
+            itemRefs.current[index] =
+              itemRefs.current[index] || React.createRef();
+            return (
+              <span
+                key={option.value}
+                onClick={e => {
+                  item.run(
+                    activeView.state,
+                    activeView.dispatch,
+                    tablesFn[option.value],
+                  );
+                  setSelectedOption(option.value);
+
+                  setTimeout(() => {
+                    activeView.focus();
+                  });
+                  openCloseMenu(e);
+                }}
+                onKeyDown={e => onKeyDown(e, index)}
+                ref={itemRefs.current[index]}
+                role="menuitem"
+                tabIndex="-1"
+              >
+                {option.label}
+              </span>
+            );
+          })}
+        </DropDownMenu>
       </Wrapper>
     ),
-    [isDisabled, selectedOption, appliedDropDownOptions],
+    [isDisabled, isOpen, selectedOption],
   );
 
   return TableDropDownComponent;
+
+  // const TableDropDownComponent = useMemo(
+  //   () => (
+  //     <Wrapper>
+  //       <DropdownStyled
+  //         onChange={option => {
+  //           item.run(
+  //             activeView.state,
+  //             activeView.dispatch,
+  //             tablesFn[option.value],
+  //           );
+  //           setSelectedOption(option.value);
+
+  //           setTimeout(() => {
+  //             activeView.focus();
+  //           });
+  //         }}
+  //         options={appliedDropDownOptions}
+  //         placeholder="Table Options"
+  //         select={isDisabled}
+  //       />
+  //     </Wrapper>
+  //   ),
+  //   [isDisabled, selectedOption, appliedDropDownOptions],
+  // );
+
+  // return TableDropDownComponent;
 };
 
 export default TableDropDown;

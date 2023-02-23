@@ -1,9 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint react/prop-types: 0 */
-import React, { useMemo, useContext, useState, useEffect } from 'react';
+import React, {
+  useMemo,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  createRef,
+} from 'react';
 import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, Icon } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -14,9 +21,15 @@ const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
+  cursor: pointer;
   display: flex;
   position: relative;
   width: 160px;
+
+  span {
+    position: relative;
+    top: 2px;
+  }
 `;
 
 const DropDownMenu = styled.div`
@@ -26,7 +39,7 @@ const DropDownMenu = styled.div`
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
-  margin: 0.8rem auto auto;
+  margin: 10px auto auto;
   position: fixed;
   width: 170px;
   z-index: 2;
@@ -40,6 +53,12 @@ const DropDownMenu = styled.div`
     background: #f2f9fc;
     outline: 2px solid #f2f9fc;
   }
+`;
+
+const StyledIcon = styled(Icon)`
+  height: 18px;
+  width: 18px;
+  margin-left: auto;
 `;
 
 const TableDropDown = ({ item }) => {
@@ -59,16 +78,16 @@ const TableDropDown = ({ item }) => {
   ];
 
   const { activeView } = useContext(WaxContext);
-  const [selectedOption, setSelectedOption] = useState('');
-  const itemRefs = React.useRef([]);
+  const itemRefs = useRef([]);
   const [isOpen, setIsOpen] = useState(false);
   const isDisabled = !item.select(activeView.state);
 
-  useEffect(() => {}, [selectedOption]);
+  useEffect(() => {
+    if (isDisabled) setIsOpen(false);
+  }, [isDisabled]);
 
   const openCloseMenu = e => {
     // e.preventDefault();
-
     if (!isDisabled) setIsOpen(!isOpen);
   };
 
@@ -117,15 +136,14 @@ const TableDropDown = ({ item }) => {
           tabIndex="0"
           type="button"
         >
-          Table Options
+          <span>Table Options</span> <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
           role="menu"
           style={{ visibility: isOpen ? 'visible' : 'hidden' }}
         >
           {dropDownOptions.map((option, index) => {
-            itemRefs.current[index] =
-              itemRefs.current[index] || React.createRef();
+            itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (
               <span
                 key={option.value}
@@ -135,7 +153,6 @@ const TableDropDown = ({ item }) => {
                     activeView.dispatch,
                     tablesFn[option.value],
                   );
-                  setSelectedOption(option.value);
 
                   setTimeout(() => {
                     activeView.focus();
@@ -154,37 +171,10 @@ const TableDropDown = ({ item }) => {
         </DropDownMenu>
       </Wrapper>
     ),
-    [isDisabled, isOpen, selectedOption],
+    [isDisabled, isOpen],
   );
 
   return TableDropDownComponent;
-
-  // const TableDropDownComponent = useMemo(
-  //   () => (
-  //     <Wrapper>
-  //       <DropdownStyled
-  //         onChange={option => {
-  //           item.run(
-  //             activeView.state,
-  //             activeView.dispatch,
-  //             tablesFn[option.value],
-  //           );
-  //           setSelectedOption(option.value);
-
-  //           setTimeout(() => {
-  //             activeView.focus();
-  //           });
-  //         }}
-  //         options={appliedDropDownOptions}
-  //         placeholder="Table Options"
-  //         select={isDisabled}
-  //       />
-  //     </Wrapper>
-  //   ),
-  //   [isDisabled, selectedOption, appliedDropDownOptions],
-  // );
-
-  // return TableDropDownComponent;
 };
 
 export default TableDropDown;

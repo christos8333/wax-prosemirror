@@ -53,3 +53,8 @@
     top: 0;
     z-index: 2;
   }
+
+  fakecursor {
+    border-right: 1px solid black;
+    display: none;
+  }

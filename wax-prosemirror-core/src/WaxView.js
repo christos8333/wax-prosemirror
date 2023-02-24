@@ -86,9 +86,9 @@ const WaxView = forwardRef((props, ref) => {
             },
             handleDOMEvents: {
               blur: (editorView, event) => {
-                if (view && event.relatedTarget === null) {
-                  view.focus();
-                }
+                // if (view && event.relatedTarget === null) {
+                //   view.focus();
+                // }
               },
             },
           },

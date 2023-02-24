@@ -31,8 +31,19 @@ export default props => {
           return fakeCursorPluginState.createDecoration;
       },
       handleDOMEvents: {
-        focus: (view, _event) => {},
-        blur: (view, _event) => {},
+        focus: (view, event) => {
+          const fakeCursor = document.getElementsByTagName('fakecursor');
+          if (fakeCursor && fakeCursor[0]) fakeCursor[0].style.display = 'none';
+        },
+        blur: (view, event) => {
+          if (view && event.relatedTarget === null) {
+            view.focus();
+          } else {
+            const fakeCursor = document.getElementsByTagName('fakecursor');
+            if (fakeCursor && fakeCursor[0])
+              fakeCursor[0].style.display = 'inline';
+          }
+        },
       },
     },
   });

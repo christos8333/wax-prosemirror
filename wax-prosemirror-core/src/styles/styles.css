@@ -226,3 +226,8 @@ img.ProseMirror-separator {
    background-color: #C5D7FE;
   color: #000;
 }
+
+fakecursor {
+   border-right: 1px solid black;
+   display: none;
+  }

@@ -84,24 +84,6 @@ const WaxView = forwardRef((props, ref) => {
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
             },
-            handleDOMEvents: {
-              blur: (editorView, event) => {
-                if (view && event.relatedTarget === null) {
-                  view.focus();
-                } else {
-                  const fakeCursor = document.getElementsByTagName(
-                    'fakecursor',
-                  );
-                  if (fakeCursor && fakeCursor[0])
-                    fakeCursor[0].style.display = 'inline';
-                }
-              },
-              focus: (editorView, event) => {
-                const fakeCursor = document.getElementsByTagName('fakecursor');
-                if (fakeCursor && fakeCursor[0])
-                  fakeCursor[0].style.display = 'none';
-              },
-            },
           },
         );
 

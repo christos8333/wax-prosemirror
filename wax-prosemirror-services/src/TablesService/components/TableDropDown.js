@@ -40,13 +40,15 @@ const DropDownMenu = styled.div`
   border-radius: 0.25rem;
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
   margin: 10px auto auto;
-  position: fixed;
+  position: absolute;
   width: 170px;
+  max-height: 150px;
+  overflow-y: scroll;
   z-index: 2;
 
   span {
     cursor: pointer;
-    padding: 4px 10px;
+    padding: 8px 10px;
   }
 
   span:focus {
@@ -92,6 +94,7 @@ const TableDropDown = ({ item }) => {
   };
 
   const onKeyDown = (e, index) => {
+    e.preventDefault();
     // arrow down
     if (e.keyCode === 40) {
       if (index === itemRefs.current.length - 1) {
@@ -128,6 +131,7 @@ const TableDropDown = ({ item }) => {
           aria-expanded={isOpen}
           aria-haspopup
           onKeyDown={e => {
+            e.preventDefault();
             if (e.keyCode === 40) {
               itemRefs.current[0].current.focus();
             }

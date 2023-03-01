@@ -2,6 +2,7 @@ const OenAsideNode = {
   content: 'block+',
   group: 'block',
   attrs: {
+    id: { default: '' },
     class: { default: '' },
   },
   defining: true,
@@ -10,6 +11,7 @@ const OenAsideNode = {
       tag: 'aside',
       getAttrs(dom) {
         return {
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
         };
       },
@@ -19,6 +21,7 @@ const OenAsideNode = {
     return [
       'aside',
       {
+        id: node.attrs.id,
         class: node.attrs.class,
       },
       0,

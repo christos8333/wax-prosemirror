@@ -2,6 +2,7 @@ const OenSectionNode = {
   content: 'block+',
   group: 'block',
   attrs: {
+    id: { default: '' },
     class: { default: 'section' },
   },
   defining: true,
@@ -10,6 +11,7 @@ const OenSectionNode = {
       tag: 'section',
       getAttrs(dom) {
         return {
+          id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           type: dom.dataset.group,
         };

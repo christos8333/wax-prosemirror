@@ -1,6 +1,7 @@
 import { DecorationSet } from 'prosemirror-view';
 import { Plugin, PluginKey, NodeSelection } from 'prosemirror-state';
-
+import { Commands } from 'wax-prosemirror-core';
+var a = false;
 const captionPlugin = key =>
   new Plugin({
     key: new PluginKey(key),
@@ -29,6 +30,7 @@ const captionPlugin = key =>
             e.target.nodeName === 'IMG' &&
             e.target.parentNode.lastElementChild.nodeName !== 'FIGCAPTION'
           ) {
+            const imgDataId = e.target.getAttribute('data-id');
             let pos = view.posAtDOM(e.target);
             const id = {};
             const { tr } = view.state;
@@ -41,6 +43,7 @@ const captionPlugin = key =>
                   pos,
                   view.state.schema.nodes.figcaption.create({
                     class: 'decoration',
+                    id: imgDataId,
                   }),
                 )
                 .setMeta(captionPlugins, {

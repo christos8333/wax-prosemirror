@@ -112,16 +112,14 @@ const captionPlugin = key =>
           }
           // delete caption if figure is deleted
           if (e.key === 'Delete' || e.code === 'Backspace') {
-            const figcap = document.getElementsByTagName('figcaption');
-            const figcapLength = figcap.length;
+            const figCap = view.state.selection.$head.path;
+            if (figCap[6] && figCap[6].type.name === 'figcaption') {
+              const figCapEl = document.getElementById(figCap[6].attrs.id);
 
-            if (figcapLength) {
-              for (let i = 0; i < figcapLength; i += 1) {
-                if (
-                  figcap[i].parentElement.firstChild.tagName === 'FIGCAPTION'
-                ) {
-                  figcap[i].parentElement.remove();
-                }
+              if (
+                figCapEl.parentElement.firstChild.tagName === 'figCapElTION'
+              ) {
+                figCapEl.parentElement.remove();
               }
             }
           }

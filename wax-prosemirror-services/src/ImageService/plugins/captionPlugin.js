@@ -78,6 +78,9 @@ const captionPlugin = key =>
               view.state.selection.$head.path[6].type.name === 'figcaption'
             ) {
               counter += 1;
+              setTimeout(() => {
+                counter = 0;
+              }, 1500);
             }
 
             if (
@@ -95,13 +98,13 @@ const captionPlugin = key =>
                   }
                 },
               );
-              const figcap = document.getElementById(captionId);
+              const figCapEl = document.getElementById(captionId);
 
               view.dispatch(
                 view.state.tr.setSelection(
                   NodeSelection.create(
                     view.state.doc,
-                    view.posAtDOM(figcap.parentElement),
+                    view.posAtDOM(figCapEl.parentElement),
                   ),
                 ),
               );
@@ -116,9 +119,7 @@ const captionPlugin = key =>
             if (figCap[6] && figCap[6].type.name === 'figcaption') {
               const figCapEl = document.getElementById(figCap[6].attrs.id);
 
-              if (
-                figCapEl.parentElement.firstChild.tagName === 'figCapElTION'
-              ) {
+              if (figCapEl.parentElement.firstChild.tagName === 'FIGCAPTION') {
                 figCapEl.parentElement.remove();
               }
             }

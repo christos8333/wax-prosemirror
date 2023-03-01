@@ -33,6 +33,7 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
+  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -88,9 +89,12 @@ const TableDropDown = ({ item }) => {
     if (isDisabled) setIsOpen(false);
   }, [isDisabled]);
 
-  const openCloseMenu = e => {
-    // e.preventDefault();
+  const openCloseMenu = () => {
     if (!isDisabled) setIsOpen(!isOpen);
+    if (isOpen)
+      setTimeout(() => {
+        activeView.focus();
+      });
   };
 
   const onKeyDown = (e, index) => {
@@ -142,26 +146,20 @@ const TableDropDown = ({ item }) => {
         >
           <span>Table Options</span> <StyledIcon name="expand" />
         </DropDownButton>
-        <DropDownMenu
-          role="menu"
-          style={{ visibility: isOpen ? 'visible' : 'hidden' }}
-        >
+        <DropDownMenu isOpen={isOpen} role="menu">
           {dropDownOptions.map((option, index) => {
             itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (
               <span
                 key={option.value}
-                onClick={e => {
+                onClick={() => {
                   item.run(
                     activeView.state,
                     activeView.dispatch,
                     tablesFn[option.value],
                   );
 
-                  setTimeout(() => {
-                    activeView.focus();
-                  });
-                  openCloseMenu(e);
+                  openCloseMenu();
                 }}
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}

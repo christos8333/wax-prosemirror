@@ -1,5 +1,9 @@
 import { DecorationSet } from 'prosemirror-view';
 import { Plugin, PluginKey, NodeSelection } from 'prosemirror-state';
+import { Commands } from 'wax-prosemirror-core';
+
+let imgDataId = '';
+let counter = 0;
 
 const captionPlugin = key =>
   new Plugin({
@@ -29,6 +33,7 @@ const captionPlugin = key =>
             e.target.nodeName === 'IMG' &&
             e.target.parentNode.lastElementChild.nodeName !== 'FIGCAPTION'
           ) {
+            imgDataId = e.target.getAttribute('data-id');
             let pos = view.posAtDOM(e.target);
             const id = {};
             const { tr } = view.state;
@@ -41,6 +46,7 @@ const captionPlugin = key =>
                   pos,
                   view.state.schema.nodes.figcaption.create({
                     class: 'decoration',
+                    id: imgDataId,
                   }),
                 )
                 .setMeta(captionPlugins, {
@@ -48,25 +54,6 @@ const captionPlugin = key =>
                 }),
             );
           }
-          // else if (e.target.nodeName !== 'FIGCAPTION') {
-          //   const decorationelement = document.getElementsByTagName(
-          //     'figcaption',
-          //   );
-          //   const decorationLength = decorationelement.length;
-
-          //   if (decorationLength) {
-          //     for (let i = 0; i < decorationLength; i += 1) {
-          //       if (!decorationelement[i].textContent.length) {
-          //         decorationelement[i].remove();
-          //       } else if (
-          //         decorationelement[i].parentElement.firstChild.tagName ===
-          //         'FIGCAPTION'
-          //       ) {
-          //         decorationelement[i].parentElement.remove();
-          //       }
-          //     }
-          //   }
-          // }
 
           if (e.target.nodeName === 'IMG') {
             let pos = view.posAtDOM(e.target);
@@ -83,19 +70,57 @@ const captionPlugin = key =>
 
           return false;
         },
+
         keyup(view, e) {
+          if (e.key === 'Enter') {
+            if (
+              view.state.selection.$head.path[6] &&
+              view.state.selection.$head.path[6].type.name === 'figcaption'
+            ) {
+              counter += 1;
+              setTimeout(() => {
+                counter = 0;
+              }, 1500);
+            }
+
+            if (
+              view.state.selection.$head.path[6] &&
+              view.state.selection.$head.path[6].type.name === 'figcaption' &&
+              counter === 2
+            ) {
+              let captionId = '';
+              view.state.doc.nodesBetween(
+                view.state.selection.from,
+                view.state.selection.from,
+                node => {
+                  if (node.type.name === 'figcaption') {
+                    captionId = node.attrs.id;
+                  }
+                },
+              );
+              const figCapEl = document.getElementById(captionId);
+
+              view.dispatch(
+                view.state.tr.setSelection(
+                  NodeSelection.create(
+                    view.state.doc,
+                    view.posAtDOM(figCapEl.parentElement),
+                  ),
+                ),
+              );
+              Commands.simulateKey(view, 13, 'Enter');
+              Commands.simulateKey(view, 13, 'Enter');
+              counter = 0;
+            }
+          }
           // delete caption if figure is deleted
           if (e.key === 'Delete' || e.code === 'Backspace') {
-            const figcap = document.getElementsByTagName('figcaption');
-            const figcapLength = figcap.length;
+            const figCap = view.state.selection.$head.path;
+            if (figCap[6] && figCap[6].type.name === 'figcaption') {
+              const figCapEl = document.getElementById(figCap[6].attrs.id);
 
-            if (figcapLength) {
-              for (let i = 0; i < figcapLength; i += 1) {
-                if (
-                  figcap[i].parentElement.firstChild.tagName === 'FIGCAPTION'
-                ) {
-                  figcap[i].parentElement.remove();
-                }
+              if (figCapEl.parentElement.firstChild.tagName === 'FIGCAPTION') {
+                figCapEl.parentElement.remove();
               }
             }
           }

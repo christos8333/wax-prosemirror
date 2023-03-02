@@ -103,6 +103,7 @@ const OENToolGroup = ({ item }) => {
 
                       wrapIn(main.state.config.schema.nodes[node], {
                         class: tool.className,
+                        id: uuidv4(),
                       })(main.state, main.dispatch);
 
                       setTimeout(() => {

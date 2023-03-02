@@ -143,7 +143,7 @@ export default {
         },
         {
           displayName: 'outline',
-          headingLevel: 3,
+          headingLevel: 2,
           isSection: false,
           nestedHeadingLevel: 4,
           className: 'outline',

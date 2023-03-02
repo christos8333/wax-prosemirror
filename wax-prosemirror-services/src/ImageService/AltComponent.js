@@ -45,7 +45,7 @@ export default ({ setPosition, position }) => {
     const imageId = selection.node.attrs.id;
     const image = document.querySelector(`[data-id='${imageId}']`);
     const figCaption = document.getElementsByTagName('figcaption')[0];
-    if (!image) return;
+    if (!image || !figCaption) return;
     const imagePosition = image.getBoundingClientRect();
     const figCaptionPosition = figCaption.getBoundingClientRect().height - 5;
     const left = imagePosition.left - WaxSurface.left;

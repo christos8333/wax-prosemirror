@@ -3,6 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import { wrapIn } from 'prosemirror-commands';
 import { liftTarget } from 'prosemirror-transform';
+import { v4 as uuidv4 } from 'uuid';
 
 const OENAsideButton = ({ view = {}, item, type }) => {
   const { active, icon, label, select, title } = item;
@@ -38,6 +39,7 @@ const OENAsideButton = ({ view = {}, item, type }) => {
 
     wrapIn(main.state.config.schema.nodes.oen_aside, {
       class: type,
+      id: uuidv4(),
     })(main.state, main.dispatch);
 
     setTimeout(() => {

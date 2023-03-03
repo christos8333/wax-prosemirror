@@ -30,6 +30,10 @@ class TrueFalseSingleCorrectQuestion extends Tools {
       if (
         Commands.isParentOfType(
           state,
+          state.config.schema.nodes.true_false_single_correct_container,
+        ) ||
+        Commands.isParentOfType(
+          state,
           state.config.schema.nodes.true_false_single_correct,
         ) ||
         Commands.isParentOfType(

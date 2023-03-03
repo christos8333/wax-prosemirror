@@ -133,7 +133,6 @@ const DropDownComponent = ({ view, tools }) => {
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state)) {
         setLabel(option.label);
-        setTimeout(() => {});
       }
     });
   }, [activeViewId]);

@@ -32,7 +32,7 @@ class CreateDropDown extends Tools {
   select = (state, activeViewId, activeView) => {
     if (
       activeView.props.type &&
-      activeView.props.type === 'MultipleDropDownContaier'
+      activeView.props.type === 'MultipleDropDownContainer'
     )
       return true;
 

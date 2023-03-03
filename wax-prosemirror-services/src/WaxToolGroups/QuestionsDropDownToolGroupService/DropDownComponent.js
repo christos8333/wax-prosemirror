@@ -123,7 +123,7 @@ const DropDownComponent = ({ view, tools }) => {
   const [isOpen, setIsOpen] = useState(false);
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
 
-  const [label, setLabel] = useState(null);
+  const [label, setLabel] = useState('Question Type');
   const isEditable = main.props.editable(editable => {
     return editable;
   });
@@ -132,9 +132,8 @@ const DropDownComponent = ({ view, tools }) => {
     setLabel('Question Type');
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state)) {
-        setTimeout(() => {
-          setLabel(option.label);
-        });
+        setLabel(option.label);
+        setTimeout(() => {});
       }
     });
   }, [activeViewId]);
@@ -186,6 +185,11 @@ const DropDownComponent = ({ view, tools }) => {
     }
   };
 
+  const onChange = option => {
+    tools[option.value].run(main, context);
+    openCloseMenu();
+  };
+
   const MultipleDropDown = useMemo(
     () => (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
@@ -202,7 +206,7 @@ const DropDownComponent = ({ view, tools }) => {
           tabIndex="0"
           type="button"
         >
-          <span>Question type</span> <StyledIcon name="expand" />
+          <span>{label}</span> <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu isOpen={isOpen} role="menu">
           {dropDownOptions.map((option, index) => {
@@ -210,9 +214,7 @@ const DropDownComponent = ({ view, tools }) => {
             return (
               <span
                 key={option.value}
-                onClick={() => {
-                  openCloseMenu();
-                }}
+                onClick={() => onChange(option)}
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}
                 role="menuitem"
@@ -225,7 +227,7 @@ const DropDownComponent = ({ view, tools }) => {
         </DropDownMenu>
       </Wrapper>
     ),
-    [isDisabled, isOpen],
+    [isDisabled, isOpen, label],
   );
 
   return MultipleDropDown;

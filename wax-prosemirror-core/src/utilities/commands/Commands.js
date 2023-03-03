@@ -258,6 +258,7 @@ const isParentOfType = (state, nodeType) => {
   const predicate = node => node.type === nodeType;
   for (let i = state.selection.$from.depth; i > 0; i -= 1) {
     const node = state.selection.$from.node(i);
+    console.log(node);
     if (predicate(node)) {
       status = true;
     }

@@ -54,6 +54,10 @@ class MatchingQuestion extends Tools {
         Commands.isParentOfType(
           state,
           state.config.schema.nodes.matching_container,
+        ) ||
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.matching_option,
         )
       ) {
         return true;

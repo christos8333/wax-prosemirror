@@ -23,7 +23,11 @@ export default class MultipleChoiceContainerNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
-    if (event.target.type === 'text') {
+    if (
+      !event.target.type ||
+      event.target.type === 'button' ||
+      event.target.type === 'text'
+    ) {
       return true;
     }
     const innerView = this.context.pmViews[this.node.attrs.id];

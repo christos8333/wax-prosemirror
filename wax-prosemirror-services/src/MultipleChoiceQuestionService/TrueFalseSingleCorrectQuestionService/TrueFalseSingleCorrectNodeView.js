@@ -23,7 +23,12 @@ export default class TrueFalseSingleCorrectNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
-    if (event.target.type === 'textarea') {
+    console.log(event.target.type);
+    if (
+      !event.target.type ||
+      event.target.type === 'button' ||
+      event.target.type === 'textarea'
+    ) {
       return true;
     }
     const innerView = this.context.pmViews[this.node.attrs.id];

@@ -9,7 +9,7 @@ import React, {
   createRef,
 } from 'react';
 import styled from 'styled-components';
-import { WaxContext, Icon } from 'wax-prosemirror-core';
+import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -67,22 +67,6 @@ const StyledIcon = styled(Icon)`
 `;
 
 const DropDownComponent = ({ view, tools }) => {
-  const context = useContext(WaxContext);
-  const {
-    activeView,
-    activeViewId,
-    pmViews: { main },
-  } = context;
-  const { state } = view;
-
-  const itemRefs = useRef([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [label, setLabel] = useState(null);
-  const isEditable = main.props.editable(editable => {
-    return editable;
-  });
-
   const dropDownOptions = [
     {
       label: 'Multiple Choice',
@@ -125,6 +109,24 @@ const DropDownComponent = ({ view, tools }) => {
       item: tools[7],
     },
   ];
+
+  const context = useContext(WaxContext);
+  const {
+    activeView,
+    activeViewId,
+    pmViews: { main },
+  } = context;
+  const { state } = view;
+
+  const itemRefs = useRef([]);
+  const wrapperRef = useRef();
+  const [isOpen, setIsOpen] = useState(false);
+  useOnClickOutside(wrapperRef, () => setIsOpen(false));
+
+  const [label, setLabel] = useState(null);
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   useEffect(() => {
     setLabel('Question Type');
@@ -186,7 +188,7 @@ const DropDownComponent = ({ view, tools }) => {
 
   const MultipleDropDown = useMemo(
     () => (
-      <Wrapper disabled={isDisabled}>
+      <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
           aria-expanded={isOpen}
           aria-haspopup

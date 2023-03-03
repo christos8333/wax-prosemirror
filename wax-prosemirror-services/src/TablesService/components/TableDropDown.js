@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import * as tablesFn from 'prosemirror-tables';
-import { WaxContext, Icon } from 'wax-prosemirror-core';
+import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -81,8 +81,11 @@ const TableDropDown = ({ item }) => {
 
   const { activeView } = useContext(WaxContext);
   const itemRefs = useRef([]);
+  const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const isDisabled = !item.select(activeView.state);
+
+  useOnClickOutside(wrapperRef, () => setIsOpen(false));
 
   useEffect(() => {
     if (isDisabled) setIsOpen(false);
@@ -129,7 +132,7 @@ const TableDropDown = ({ item }) => {
 
   const TableDropDownComponent = useMemo(
     () => (
-      <Wrapper disabled={isDisabled}>
+      <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
           aria-expanded={isOpen}
           aria-haspopup

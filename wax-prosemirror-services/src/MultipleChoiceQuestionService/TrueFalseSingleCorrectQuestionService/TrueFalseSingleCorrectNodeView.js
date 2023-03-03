@@ -23,7 +23,6 @@ export default class TrueFalseSingleCorrectNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
-    console.log(event.target.type);
     if (
       !event.target.type ||
       event.target.type === 'button' ||

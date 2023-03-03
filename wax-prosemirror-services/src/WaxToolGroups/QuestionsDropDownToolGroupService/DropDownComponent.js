@@ -1,39 +1,69 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useContext, useMemo, useEffect, useState } from 'react';
+/* eslint react/prop-types: 0 */
+import React, {
+  useMemo,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  createRef,
+} from 'react';
 import styled from 'styled-components';
-import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
-import Dropdown from 'react-dropdown';
-import { v4 as uuidv4 } from 'uuid';
+import { WaxContext, Icon } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
-  ${ReactDropDownStyles};
+  opacity: ${props => (props.disabled ? '0.4' : '1')};
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
-const DropdownStyled = styled(Dropdown)`
-  display: inline-flex;
-  cursor: not-allowed;
-  opacity: ${props => (props.select ? 1 : 0.4)};
-  pointer-events: ${props => (props.select ? 'default' : 'none')};
-  .Dropdown-control {
-    border: none;
-    padding: 12px 122px 8px 10px;
-    &:hover {
-      box-shadow: none;
-    }
+
+const DropDownButton = styled.button`
+  background: #fff;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+  width: 215px;
+  height: 100%;
+
+  span {
+    position: relative;
+    top: 12px;
+  }
+`;
+
+const DropDownMenu = styled.div`
+  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
+  margin: 2px auto auto;
+  position: absolute;
+  width: 220px;
+  max-height: 150px;
+  overflow-y: scroll;
+  z-index: 2;
+
+  span {
+    cursor: pointer;
+    padding: 8px 10px;
   }
 
-  .Dropdown-arrow {
-    top: 17px;
+  span:focus {
+    background: #f2f9fc;
+    outline: 2px solid #f2f9fc;
   }
+`;
 
-  .Dropdown-menu {
-    width: 100.4%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    .Dropdown-option {
-      width: 100%;
-    }
-  }
+const StyledIcon = styled(Icon)`
+  height: 18px;
+  width: 18px;
+  margin-left: auto;
+  position: relative;
+  top: 10px;
 `;
 
 const DropDownComponent = ({ view, tools }) => {
@@ -44,6 +74,9 @@ const DropDownComponent = ({ view, tools }) => {
     pmViews: { main },
   } = context;
   const { state } = view;
+
+  const itemRefs = useRef([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [label, setLabel] = useState(null);
   const isEditable = main.props.editable(editable => {
@@ -104,27 +137,93 @@ const DropDownComponent = ({ view, tools }) => {
     });
   }, [activeViewId]);
 
-  let isDisabled = tools[0].select(state, activeView);
+  let isDisabled = !tools[0].select(state, activeView);
+
+  useEffect(() => {
+    if (isDisabled) setIsOpen(false);
+  }, [isDisabled]);
+
+  const openCloseMenu = () => {
+    if (!isDisabled) setIsOpen(!isOpen);
+    if (isOpen)
+      setTimeout(() => {
+        activeView.focus();
+      });
+  };
+
   if (!isEditable) isDisabled = false;
 
-  const onChange = option => {
-    tools[option.value].run(main, context);
+  const onKeyDown = (e, index) => {
+    e.preventDefault();
+    // arrow down
+    if (e.keyCode === 40) {
+      if (index === itemRefs.current.length - 1) {
+        itemRefs.current[0].current.focus();
+      } else {
+        itemRefs.current[index + 1].current.focus();
+      }
+    }
+
+    // arrow up
+    if (e.keyCode === 38) {
+      if (index === 0) {
+        itemRefs.current[itemRefs.current.length - 1].current.focus();
+      } else {
+        itemRefs.current[index - 1].current.focus();
+      }
+    }
+
+    // enter
+    if (e.keyCode === 13) {
+      itemRefs.current[index].current.click();
+    }
+
+    // ESC
+    if (e.keyCode === 27) {
+      openCloseMenu();
+    }
   };
 
   const MultipleDropDown = useMemo(
     () => (
-      <Wrapper key={uuidv4()}>
-        <DropdownStyled
-          key={uuidv4()}
-          onChange={option => onChange(option)}
-          options={dropDownOptions}
-          placeholder="Question Type"
-          select={isDisabled}
-          value={label}
-        />
+      <Wrapper disabled={isDisabled}>
+        <DropDownButton
+          aria-expanded={isOpen}
+          aria-haspopup
+          onKeyDown={e => {
+            e.preventDefault();
+            if (e.keyCode === 40) {
+              itemRefs.current[0].current.focus();
+            }
+          }}
+          onMouseDown={openCloseMenu}
+          tabIndex="0"
+          type="button"
+        >
+          <span>Question type</span> <StyledIcon name="expand" />
+        </DropDownButton>
+        <DropDownMenu isOpen={isOpen} role="menu">
+          {dropDownOptions.map((option, index) => {
+            itemRefs.current[index] = itemRefs.current[index] || createRef();
+            return (
+              <span
+                key={option.value}
+                onClick={() => {
+                  openCloseMenu();
+                }}
+                onKeyDown={e => onKeyDown(e, index)}
+                ref={itemRefs.current[index]}
+                role="menuitem"
+                tabIndex="-1"
+              >
+                {option.label}
+              </span>
+            );
+          })}
+        </DropDownMenu>
       </Wrapper>
     ),
-    [isDisabled, label],
+    [isDisabled, isOpen],
   );
 
   return MultipleDropDown;

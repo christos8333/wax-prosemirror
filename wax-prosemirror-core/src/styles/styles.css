@@ -230,7 +230,7 @@ img.ProseMirror-separator {
 fakecursor {
    position: absolute;
    border-right: 1px solid black;
-   display: none;
+   visibility: hidden;
    width: 1px;
    height: 19px;
    z-index: 999;

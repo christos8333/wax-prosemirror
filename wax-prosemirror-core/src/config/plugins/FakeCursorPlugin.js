@@ -33,7 +33,8 @@ export default props => {
       handleDOMEvents: {
         focus: (view, event) => {
           const fakeCursor = document.getElementsByTagName('fakecursor');
-          if (fakeCursor && fakeCursor[0]) fakeCursor[0].style.display = 'none';
+          if (fakeCursor && fakeCursor[0])
+            fakeCursor[0].style.visibility = 'hidden';
         },
         blur: (view, event) => {
           if (view && event.relatedTarget === null) {
@@ -41,7 +42,7 @@ export default props => {
           } else {
             const fakeCursor = document.getElementsByTagName('fakecursor');
             if (fakeCursor && fakeCursor[0])
-              fakeCursor[0].style.display = 'inline';
+              fakeCursor[0].style.visibility = 'visible';
           }
         },
       },

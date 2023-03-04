@@ -16,15 +16,13 @@ import {
   useOnClickOutside,
 } from 'wax-prosemirror-core';
 
-const Wrapper = styled.div`
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
-`;
+const Wrapper = styled.div``;
 
 const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: ${props => (props.disabled ? `not-allowed` : `pointer`)};
+  cursor: ${props => (props.disabled ? `cursor` : `pointer`)};
   display: flex;
   position: relative;
   width: 160px;

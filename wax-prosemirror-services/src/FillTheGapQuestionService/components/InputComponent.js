@@ -52,6 +52,7 @@ export default () => {
 
   return (
     <AnswerInput
+      aria-label="answer input"
       onBlur={saveAnswer}
       onChange={setAnswerInput}
       onFocus={onFocus}

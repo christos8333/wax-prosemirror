@@ -13,14 +13,13 @@ import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   position: relative;
   width: 215px;
@@ -195,6 +194,7 @@ const DropDownComponent = ({ view, tools }) => {
         <DropDownButton
           aria-expanded={isOpen}
           aria-haspopup
+          disabled={isDisabled}
           onKeyDown={e => {
             e.preventDefault();
             if (e.keyCode === 40) {

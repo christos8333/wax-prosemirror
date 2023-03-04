@@ -20,14 +20,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? `not-allowed` : `pointer`)};
   display: flex;
   position: relative;
   width: 160px;
@@ -86,7 +85,7 @@ const DropComponent = ({ getPos, node, view }) => {
     return editable;
   });
 
-  const isDisabled = false;
+  const isDisabled = !isEditable;
 
   const onChange = option => {
     const allNodes = getNodes(main);
@@ -163,6 +162,7 @@ const DropComponent = ({ getPos, node, view }) => {
         <DropDownButton
           aria-expanded={isOpen}
           aria-haspopup
+          disabled={isDisabled}
           onKeyDown={e => {
             e.preventDefault();
             if (e.keyCode === 40) {

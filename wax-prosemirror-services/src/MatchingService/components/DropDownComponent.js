@@ -103,6 +103,7 @@ const DropComponent = ({ getPos, node, view }) => {
       }
     });
     openCloseMenu();
+    setSelectedOption(option.value);
   };
 
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
@@ -150,8 +151,14 @@ const DropComponent = ({ getPos, node, view }) => {
     }
   };
 
-  const MultipleDropDown = useMemo(
-    () => (
+  const MultipleDropDown = useMemo(() => {
+    let selectedValue;
+    if (selectedOption) {
+      selectedValue = node.attrs.options.filter(option => {
+        return option.value === selectedOption;
+      });
+    }
+    return (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
           aria-expanded={isOpen}
@@ -166,7 +173,12 @@ const DropComponent = ({ getPos, node, view }) => {
           tabIndex="0"
           type="button"
         >
-          <span>Select Option</span> <StyledIcon name="expand" />
+          <span>
+            {selectedOption === null || !selectedOption
+              ? 'Select Option'
+              : selectedValue[0].label}
+          </span>
+          <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu isOpen={isOpen} role="menu">
           {node.attrs.options.map((option, index) => {
@@ -174,7 +186,7 @@ const DropComponent = ({ getPos, node, view }) => {
             return (
               <span
                 key={option.value}
-                onClick={onChange}
+                onClick={() => onChange(option)}
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}
                 role="menuitem"
@@ -186,9 +198,8 @@ const DropComponent = ({ getPos, node, view }) => {
           })}
         </DropDownMenu>
       </Wrapper>
-    ),
-    [node.attrs.options, selectedOption, isOpen],
-  );
+    );
+  }, [node.attrs.options, selectedOption, isOpen]);
 
   return MultipleDropDown;
 };

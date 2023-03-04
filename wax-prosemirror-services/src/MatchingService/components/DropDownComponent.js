@@ -15,8 +15,6 @@ import {
   Icon,
   useOnClickOutside,
 } from 'wax-prosemirror-core';
-import Dropdown from 'react-dropdown';
-import { v4 as uuidv4 } from 'uuid';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};

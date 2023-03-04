@@ -90,7 +90,6 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    FakeCursorPlugin(),
     createPlaceholder('Type your answer'),
     ...plugins,
   ]);

@@ -163,9 +163,11 @@ const DropComponent = ({ getPos, node, view }) => {
           aria-haspopup
           disabled={isDisabled}
           onKeyDown={e => {
-            e.preventDefault();
             if (e.keyCode === 40) {
               itemRefs.current[0].current.focus();
+            }
+            if (e.keyCode === 27) {
+              openCloseMenu();
             }
           }}
           onMouseDown={openCloseMenu}

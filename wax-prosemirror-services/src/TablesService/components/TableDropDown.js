@@ -141,6 +141,9 @@ const TableDropDown = ({ item }) => {
             if (e.keyCode === 40) {
               itemRefs.current[0].current.focus();
             }
+            if (e.keyCode === 27) {
+              openCloseMenu();
+            }
           }}
           onMouseDown={openCloseMenu}
           type="button"

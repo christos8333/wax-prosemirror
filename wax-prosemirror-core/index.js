@@ -47,3 +47,7 @@ export { default as MenuButton } from './src/components/ui/MenuButton';
 export { default as icons } from './src/components/icons/icons';
 export { default as Icon } from './src/components/icons/Icon';
 export { default as Button } from './src/components/Button';
+
+/* Plugins */
+
+export { default as FakeCursorPlugin } from './src/config/plugins/FakeCursorPlugin';

@@ -32,6 +32,7 @@ export default props => {
       },
       handleDOMEvents: {
         focus: (view, event) => {
+          event.preventDefault();
           const fakeCursor = document.getElementsByTagName('fakecursor');
           if (fakeCursor && fakeCursor[0]) {
             for (let i = 0; i < fakeCursor.length; i++) {
@@ -40,6 +41,7 @@ export default props => {
           }
         },
         blur: (view, event) => {
+          event.preventDefault();
           if (view && event.relatedTarget === null) {
             view.focus();
           } else {

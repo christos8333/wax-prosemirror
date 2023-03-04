@@ -6,7 +6,7 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, FakeCursorPlugin } from 'wax-prosemirror-core';
 import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
 
 const EditorWrapper = styled.div`
@@ -68,7 +68,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     return editable;
   });
 
-  let finalPlugins = [];
+  let finalPlugins = [FakeCursorPlugin()];
 
   const createKeyBindings = () => {
     const keys = getKeys();

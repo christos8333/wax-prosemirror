@@ -57,7 +57,6 @@ const EditorComponent = ({ node, view, getPos }) => {
   const {
     app,
     pmViews: { main },
-    activeViewId,
   } = context;
   let questionView;
   const questionId = node.attrs.id;
@@ -91,6 +90,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
+    FakeCursorPlugin(),
     createPlaceholder('Type your answer'),
     ...plugins,
   ]);

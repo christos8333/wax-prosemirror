@@ -228,10 +228,11 @@ img.ProseMirror-separator {
 }
 
 fakecursor {
-   position: absolute;
-   border-right: 1px solid black;
-   visibility: hidden;
-   width: 1px;
-   height: 19px;
-   z-index: 999;
+  display: inline-flex;
+  border-right: 1px solid black;
+  height: 19px;
+  position: absolute;
+  width: 1px;
+  visibility: hidden;
+  z-index: 999;
   }

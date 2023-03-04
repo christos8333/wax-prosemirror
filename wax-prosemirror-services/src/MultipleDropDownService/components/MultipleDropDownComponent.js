@@ -12,8 +12,8 @@ const activeStylesSvg = css`
   fill: white !important;
 `;
 
-const StyledIconActionContainer = styled.div`
-  display: inline-block;
+const StyledIconActionContainer = styled.span`
+  display: inline;
   padding: 2px;
   ${props => props.isActive && activeStylesContainer}
 `;

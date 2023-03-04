@@ -202,7 +202,6 @@ const DropDownComponent = ({ view, tools }) => {
             }
           }}
           onMouseDown={openCloseMenu}
-          tabIndex="0"
           type="button"
         >
           <span>{label}</span> <StyledIcon name="expand" />

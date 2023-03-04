@@ -115,7 +115,7 @@ const DropComponent = ({ getPos, node, view }) => {
       setTimeout(() => {
         console.log('here?', activeView);
         activeView.focus();
-      }, 100);
+      });
   };
 
   const onKeyDown = (e, index) => {
@@ -169,7 +169,6 @@ const DropComponent = ({ getPos, node, view }) => {
             }
           }}
           onMouseDown={openCloseMenu}
-          tabIndex="0"
           type="button"
         >
           {selectedOption === null || !selectedOption

@@ -143,7 +143,6 @@ const TableDropDown = ({ item }) => {
             }
           }}
           onMouseDown={openCloseMenu}
-          tabIndex="0"
           type="button"
         >
           <span>Table Options</span> <StyledIcon name="expand" />

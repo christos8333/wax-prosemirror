@@ -113,8 +113,9 @@ const DropComponent = ({ getPos, node, view }) => {
     if (!isDisabled) setIsOpen(!isOpen);
     if (isOpen)
       setTimeout(() => {
+        console.log('here?', activeView);
         activeView.focus();
-      });
+      }, 100);
   };
 
   const onKeyDown = (e, index) => {
@@ -171,11 +172,9 @@ const DropComponent = ({ getPos, node, view }) => {
           tabIndex="0"
           type="button"
         >
-          <span>
-            {selectedOption === null || !selectedOption
-              ? 'Select Option'
-              : selectedValue[0].label}
-          </span>
+          {selectedOption === null || !selectedOption
+            ? 'Select Option'
+            : selectedValue[0].label}
           <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu isOpen={isOpen} role="menu">

@@ -16,10 +16,10 @@ import MoveCursorPlugin from './plugins/MoveCursorPlugin';
 
 class MultipleChoiceQuestionService extends Service {
   boot() {
-    this.app.PmPlugins.add(
-      'moveCursorPlugin',
-      MoveCursorPlugin('moveCursorPlugin'),
-    );
+    // this.app.PmPlugins.add(
+    //   'moveCursorPlugin',
+    //   MoveCursorPlugin('moveCursorPlugin'),
+    // );
   }
 
   register() {

@@ -50,7 +50,7 @@ const DropDownMenu = styled.div`
   position: absolute;
   width: 170px;
   max-height: 150px;
-  overflow-y: scroll;
+  overflow-y: auto;
   z-index: 2;
 
   span {
@@ -166,7 +166,7 @@ const DropComponent = ({ getPos, node, view }) => {
           tabIndex="0"
           type="button"
         >
-          <span>Table Options</span> <StyledIcon name="expand" />
+          <span>Select Option</span> <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu isOpen={isOpen} role="menu">
           {node.attrs.options.map((option, index) => {
@@ -187,7 +187,7 @@ const DropComponent = ({ getPos, node, view }) => {
         </DropDownMenu>
       </Wrapper>
     ),
-    [node.attrs.options, selectedOption],
+    [node.attrs.options, selectedOption, isOpen],
   );
 
   return MultipleDropDown;

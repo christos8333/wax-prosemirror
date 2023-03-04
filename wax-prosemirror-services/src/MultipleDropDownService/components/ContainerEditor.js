@@ -104,7 +104,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   finalPlugins = finalPlugins.concat([...plugins]);
-
+  console.log(finalPlugins);
   useEffect(() => {
     WaxOverlays = ComponentPlugin('waxOverlays');
 

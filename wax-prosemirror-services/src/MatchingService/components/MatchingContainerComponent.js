@@ -269,7 +269,10 @@ export default ({ node, view, getPos }) => {
                               ref={setRef(option.value)}
                               type="button"
                             >
-                              <StyledIconAction name="deleteOutlined" />
+                              <StyledIconAction
+                                label={`delete ${option.label}`}
+                                name="deleteOutlined"
+                              />
                             </ActionButton>
                           )}
                         </span>

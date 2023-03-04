@@ -53,7 +53,7 @@ const SwitchComponent = props => {
         </Label>
       )}
 
-      <Switch onChange={onChange} {...rest} />
+      <Switch aria-label="Is it correct" onChange={onChange} {...rest} />
 
       {label && labelPosition === 'right' && (
         <Label labelPosition={labelPosition} onClick={onChange}>

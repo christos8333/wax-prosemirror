@@ -27,7 +27,7 @@ const Wrapper = styled.span`
   }
 `;
 
-const Label = styled.span`
+const Label = styled.label`
   ${props =>
     props.labelPosition === 'left' &&
     css`
@@ -39,21 +39,26 @@ const Label = styled.span`
     css`
       margin-left: ${grid(2)};
     `}
+    cursor: pointer;
 `;
 
 const SwitchComponent = props => {
-  const { className, label, labelPosition, ...rest } = props;
+  const { className, label, labelPosition, onChange, ...rest } = props;
 
   return (
     <Wrapper className={className}>
       {label && labelPosition === 'left' && (
-        <Label labelPosition={labelPosition}>{label}</Label>
+        <Label labelPosition={labelPosition} onClick={onChange}>
+          {label}
+        </Label>
       )}
 
-      <Switch {...rest} />
+      <Switch onChange={onChange} {...rest} />
 
       {label && labelPosition === 'right' && (
-        <Label labelPosition={labelPosition}>{label}</Label>
+        <Label labelPosition={labelPosition} onClick={onChange}>
+          {label}
+        </Label>
       )}
     </Wrapper>
   );
@@ -62,11 +67,13 @@ const SwitchComponent = props => {
 SwitchComponent.propTypes = {
   label: PropTypes.string,
   labelPosition: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 SwitchComponent.defaultProps = {
   label: null,
   labelPosition: 'right',
+  onChange: () => true,
 };
 
 export default SwitchComponent;

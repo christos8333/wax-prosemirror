@@ -12,6 +12,7 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import FakeCursorPlugin from '../plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
   position: relative;
@@ -53,7 +54,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
     return editable;
   });
 
-  let finalPlugins = [];
+  let finalPlugins = [FakeCursorPlugin()];
 
   const createKeyBindings = () => {
     const keys = getKeys();

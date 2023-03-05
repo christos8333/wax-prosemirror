@@ -8,6 +8,7 @@ import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext } from 'wax-prosemirror-core';
 import Placeholder from '../plugins/placeholder';
+import FakeCursorPlugin from '../../MultipleDropDownService/plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
   border: none;
@@ -64,7 +65,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     return editable;
   });
 
-  let finalPlugins = [];
+  let finalPlugins = [FakeCursorPlugin()];
 
   const createKeyBindings = () => {
     const keys = getKeys();

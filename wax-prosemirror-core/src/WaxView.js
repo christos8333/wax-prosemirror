@@ -10,7 +10,6 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import styled from 'styled-components';
-import applyDevTools from 'prosemirror-dev-tools';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import trackedTransaction from './utilities/track-changes/trackedTransaction';
@@ -37,7 +36,6 @@ const WaxView = forwardRef((props, ref) => {
     browserSpellCheck,
     customValues,
     readonly,
-    debug,
     autoFocus,
     user,
     targetFormat,
@@ -95,7 +93,6 @@ const WaxView = forwardRef((props, ref) => {
           },
           'main',
         );
-        if (debug) applyDevTools(view);
         setTimeout(() => {
           if (autoFocus && view) {
             view.state.tr.insertText('', 0);

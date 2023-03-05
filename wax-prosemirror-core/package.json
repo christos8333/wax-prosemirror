@@ -22,7 +22,6 @@
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
     "prosemirror-commands": "1.2.1",
-    "prosemirror-dev-tools": "^2.1.1",
     "prosemirror-dropcursor": "1.6.1",
     "prosemirror-gapcursor": "1.2.2",
     "prosemirror-history": "1.2.0",

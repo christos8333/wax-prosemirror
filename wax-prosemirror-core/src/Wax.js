@@ -36,7 +36,6 @@ const Wax = forwardRef((props, ref) => {
     browserSpellCheck,
     className,
     customValues,
-    debug,
     fileUpload,
     layout,
     placeholder,
@@ -67,7 +66,6 @@ const Wax = forwardRef((props, ref) => {
           autoFocus={autoFocus}
           browserSpellCheck={browserSpellCheck}
           customValues={customValues}
-          debug={debug}
           fileUpload={fileUpload}
           onChange={finalOnChange || (() => true)}
           placeholder={placeholder}

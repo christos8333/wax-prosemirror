@@ -1,6 +1,6 @@
 import { Service } from 'wax-prosemirror-core';
 import CreateGap from './CreateGap';
-import FillTheGapToolGroupService from '../../WaxToolGroups/FillTheGapToolGroupService/FillTheGapToolGroupService';
+import FillTheGapToolGroupService from '../FillTheGapToolGroupService/FillTheGapToolGroupService';
 
 class FillTheGapQuestionService extends Service {
   register() {

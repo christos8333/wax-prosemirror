@@ -12,5 +12,9 @@ const fontWriting = css`
 export default css`
   .ProseMirror {
     ${fontWriting}
+
+    .ProseMirror-separator {
+      display: none !important;
+    }
   }
 `;

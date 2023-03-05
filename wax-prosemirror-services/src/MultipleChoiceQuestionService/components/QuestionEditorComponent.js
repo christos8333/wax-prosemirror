@@ -13,6 +13,7 @@ import {
   sinkListItem,
 } from 'prosemirror-schema-list';
 import Placeholder from '../plugins/placeholder';
+import FakeCursorPlugin from '../../MultipleDropDownService/plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
   border: none;
@@ -71,7 +72,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
     return editable;
   });
 
-  let finalPlugins = [];
+  let finalPlugins = [FakeCursorPlugin()];
 
   const createKeyBindings = () => {
     const keys = getKeys();

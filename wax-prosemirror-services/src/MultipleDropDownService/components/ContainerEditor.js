@@ -12,6 +12,7 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import FakeCursorPlugin from '../plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
   position: relative;
@@ -53,7 +54,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
     return editable;
   });
 
-  let finalPlugins = [];
+  let finalPlugins = [FakeCursorPlugin()];
 
   const createKeyBindings = () => {
     const keys = getKeys();
@@ -104,7 +105,6 @@ const ContainerEditor = ({ node, view, getPos }) => {
   const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
 
   finalPlugins = finalPlugins.concat([...plugins]);
-
   useEffect(() => {
     WaxOverlays = ComponentPlugin('waxOverlays');
 
@@ -120,7 +120,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
         }),
         dispatchTransaction,
         disallowedTools: ['Images', 'FillTheGap', 'MultipleChoice'],
-        type: 'MultipleDropDownContaier',
+        type: 'MultipleDropDownContainer',
         handleDOMEvents: {
           mousedown: () => {
             main.dispatch(

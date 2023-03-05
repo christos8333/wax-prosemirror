@@ -264,11 +264,15 @@ export default ({ node, view, getPos }) => {
                           {option.label} &nbsp;
                           {!readOnly && (
                             <ActionButton
+                              aria-label={`delete ${option.label}`}
                               onClick={() => removeOption(option.value)}
                               ref={setRef(option.value)}
                               type="button"
                             >
-                              <StyledIconAction name="deleteOutlined" />
+                              <StyledIconAction
+                                label={`delete ${option.label}`}
+                                name="deleteOutlined"
+                              />
                             </ActionButton>
                           )}
                         </span>
@@ -289,7 +293,12 @@ export default ({ node, view, getPos }) => {
                   type="text"
                   value={optionText}
                 />
-                <button onClick={addOption} ref={addOptionBtnRef} type="button">
+                <button
+                  aria-label="add new option"
+                  onClick={addOption}
+                  ref={addOptionBtnRef}
+                  type="button"
+                >
                   Add Option
                 </button>
               </AddOption>

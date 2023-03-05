@@ -4,7 +4,7 @@ import multipleDropDownOptionNode from '../schema/multipleDropDownOptionNode';
 import MultipleDropDownNodeView from './MultipleDropDownNodeView';
 import MultipleDropDownComponent from '../components/MultipleDropDownComponent';
 import DropDownComponent from '../components/DropDownComponent';
-import MultipleDropDownToolGroupService from '../../WaxToolGroups/MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';
+import MultipleDropDownToolGroupService from '../MultipleDropDownToolGroupService/MultipleDropDownToolGroupService';
 
 class CreateDropDownService extends Service {
   name = 'CreateDropDownService';

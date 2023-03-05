@@ -91,6 +91,7 @@ const MenuButton = props => {
   return (
     <Wrapper
       active={active}
+      aria-pressed={active || false}
       className={className}
       disabled={disabled}
       onMouseDown={onMouseDown}

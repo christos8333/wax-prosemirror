@@ -228,6 +228,7 @@ export default ({ node, view, getPos }) => {
       <IconsWrapper>
         {!readOnly && (
           <ActionButton
+            aria-label="add new option"
             onClick={() => addOption(node.attrs.id)}
             ref={addOptionBtnRef}
             type="button"
@@ -237,6 +238,7 @@ export default ({ node, view, getPos }) => {
         )}
         {!readOnly && (
           <ActionButton
+            aria-label="delete this option"
             onClick={removeOption}
             ref={removeOptionBtnRef}
             type="button"

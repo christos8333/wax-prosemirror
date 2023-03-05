@@ -120,11 +120,19 @@ export default ({ node, view, getPos }) => {
     <Option>
       {!readOnly && (
         <ButtonsContainer>
-          <ActionButton onClick={addAnswer} type="button">
+          <ActionButton
+            aria-label="add new option"
+            onClick={addAnswer}
+            type="button"
+          >
             <StyledIconAction name="plusSquare" />
           </ActionButton>
           {!node.attrs.isfirst && (
-            <ActionButton onClick={removeAnswer} type="button">
+            <ActionButton
+              aria-label="delete this option"
+              onClick={removeAnswer}
+              type="button"
+            >
               <StyledIconAction name="deleteOutlined" />
             </ActionButton>
           )}

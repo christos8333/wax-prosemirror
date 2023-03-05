@@ -84,13 +84,6 @@ const WaxView = forwardRef((props, ref) => {
             attributes: {
               spellcheck: browserSpellCheck ? 'true' : 'false',
             },
-            handleDOMEvents: {
-              blur: (editorView, event) => {
-                if (view && event.relatedTarget === null) {
-                  view.focus();
-                }
-              },
-            },
           },
         );
 

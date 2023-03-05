@@ -95,7 +95,6 @@ export default ({ node, getPos, readOnly }) => {
     <FeedBack>
       <FeedBackLabel>Feedback</FeedBackLabel>
       <FeedBackInput
-        autoFocus="autoFocus"
         onChange={feedBackInput}
         onFocus={onFocus}
         placeholder="Insert feedback"

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 import React, {
   useRef,
@@ -104,7 +105,6 @@ const WaxView = forwardRef((props, ref) => {
         return () => view.destroy();
       }
       WaxEditorRef.current = node;
-      return true;
     },
     [readonly, customValues],
   );

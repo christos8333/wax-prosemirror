@@ -65,7 +65,7 @@ const StyledIcon = styled(Icon)`
   margin-left: auto;
 `;
 
-const DropComponent = ({ getPos, node, view }) => {
+const DropComponent = ({ getPos, node, view, uniqueId }) => {
   const [selectedOption, setSelectedOption] = useState(node.attrs.correct);
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
@@ -156,7 +156,7 @@ const DropComponent = ({ getPos, node, view }) => {
     return (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
-          aria-controls="options-list"
+          aria-controls={uniqueId}
           aria-expanded={isOpen}
           aria-haspopup
           disabled={isDisabled}
@@ -172,6 +172,7 @@ const DropComponent = ({ getPos, node, view }) => {
             }
           }}
           onMouseDown={openCloseMenu}
+          role="combobox"
           type="button"
         >
           {selectedOption === null || !selectedOption
@@ -181,7 +182,7 @@ const DropComponent = ({ getPos, node, view }) => {
         </DropDownButton>
         <DropDownMenu
           aria-label="Choose an option"
-          id="options-list"
+          id={uniqueId}
           isOpen={isOpen}
           role="listbox"
         >
@@ -189,11 +190,12 @@ const DropComponent = ({ getPos, node, view }) => {
             itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (
               <span
+                aria-selected={option.value === selectedOption}
                 key={option.value}
                 onClick={() => onChange(option)}
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}
-                role="menuitem"
+                role="option"
                 tabIndex="-1"
               >
                 {option.label}

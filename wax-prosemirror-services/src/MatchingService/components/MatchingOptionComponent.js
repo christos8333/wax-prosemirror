@@ -141,7 +141,12 @@ export default ({ node, view, getPos }) => {
       <EditorComponent getPos={getPos} node={node} view={view} />
       <DropDownContainer>
         {(!readOnly || (readOnly && !testMode && !showFeedBack)) && (
-          <DropDownComponent getPos={getPos} node={node} view={view} />
+          <DropDownComponent
+            getPos={getPos}
+            uniqueId={uuidv4()}
+            node={node}
+            view={view}
+          />
         )}
 
         {readOnly && testMode && !showFeedBack && (

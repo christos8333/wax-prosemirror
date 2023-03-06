@@ -143,8 +143,8 @@ export default ({ node, view, getPos }) => {
         {(!readOnly || (readOnly && !testMode && !showFeedBack)) && (
           <DropDownComponent
             getPos={getPos}
-            uniqueId={uuidv4()}
             node={node}
+            uniqueId={uuidv4()}
             view={view}
           />
         )}

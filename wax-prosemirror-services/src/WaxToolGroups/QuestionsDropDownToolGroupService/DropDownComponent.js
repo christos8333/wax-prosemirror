@@ -179,7 +179,7 @@ const DropDownComponent = ({ view, tools }) => {
 
     // ESC
     if (e.keyCode === 27) {
-      openCloseMenu();
+      setIsOpen(false);
     }
   };
 
@@ -192,16 +192,19 @@ const DropDownComponent = ({ view, tools }) => {
     () => (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
+          aria-controls="questions-list"
           aria-expanded={isOpen}
           aria-haspopup
           disabled={isDisabled}
           onKeyDown={e => {
-            e.preventDefault();
             if (e.keyCode === 40) {
               itemRefs.current[0].current.focus();
             }
             if (e.keyCode === 27) {
-              openCloseMenu();
+              setIsOpen(false);
+            }
+            if (e.keyCode === 13 || e.keyCode === 32) {
+              setIsOpen(true);
             }
           }}
           onMouseDown={openCloseMenu}
@@ -209,7 +212,12 @@ const DropDownComponent = ({ view, tools }) => {
         >
           <span>{label}</span> <StyledIcon name="expand" />
         </DropDownButton>
-        <DropDownMenu isOpen={isOpen} role="menu">
+        <DropDownMenu
+          aria-label="Choose a question type"
+          id="questions-list"
+          isOpen={isOpen}
+          role="menu"
+        >
           {dropDownOptions.map((option, index) => {
             itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (

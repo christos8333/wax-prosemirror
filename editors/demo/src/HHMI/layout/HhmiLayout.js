@@ -108,7 +108,7 @@ const HhmiLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
-        <TopMenu>
+        <TopMenu role="menu">
           <MainMenuToolBar />
         </TopMenu>
 

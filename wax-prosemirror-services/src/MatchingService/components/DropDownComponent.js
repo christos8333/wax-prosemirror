@@ -111,7 +111,6 @@ const DropComponent = ({ getPos, node, view }) => {
     if (!isDisabled) setIsOpen(!isOpen);
     if (isOpen)
       setTimeout(() => {
-        console.log('here?', activeView);
         activeView.focus();
       });
   };
@@ -143,7 +142,7 @@ const DropComponent = ({ getPos, node, view }) => {
 
     // ESC
     if (e.keyCode === 27) {
-      openCloseMenu();
+      setIsOpen(false);
     }
   };
 
@@ -157,6 +156,7 @@ const DropComponent = ({ getPos, node, view }) => {
     return (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
+          aria-controls="options-list"
           aria-expanded={isOpen}
           aria-haspopup
           disabled={isDisabled}
@@ -165,7 +165,10 @@ const DropComponent = ({ getPos, node, view }) => {
               itemRefs.current[0].current.focus();
             }
             if (e.keyCode === 27) {
-              openCloseMenu();
+              setIsOpen(false);
+            }
+            if (e.keyCode === 13 || e.keyCode === 32) {
+              setIsOpen(true);
             }
           }}
           onMouseDown={openCloseMenu}
@@ -176,7 +179,12 @@ const DropComponent = ({ getPos, node, view }) => {
             : selectedValue[0].label}
           <StyledIcon name="expand" />
         </DropDownButton>
-        <DropDownMenu isOpen={isOpen} role="menu">
+        <DropDownMenu
+          aria-label="Choose an option"
+          id="options-list"
+          isOpen={isOpen}
+          role="listbox"
+        >
           {node.attrs.options.map((option, index) => {
             itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const findPlaceholder = (state, id, placeholderPlugin) => {
   const decos = placeholderPlugin.getState(state);
   const found = decos.find(null, null, spec => spec.id === id);
@@ -30,6 +32,7 @@ const insertImage = (urls, view, placeholderPlugin) => {
           pos,
           pos,
           view.state.schema.nodes.image.create({
+            id: uuidv4(),
             src: urls[i].source,
             fileid: urls[i].id,
           }),

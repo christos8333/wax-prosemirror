@@ -11,14 +11,17 @@ export default props => {
       init: (_, state) => {},
       apply(tr, prev, _, newState) {
         let createDecoration;
+        const widget = document.createElement('fakecursor');
         if (newState.selection.from === newState.selection.to) {
-          const widget = document.createElement('fakecursor');
           createDecoration = DecorationSet.create(newState.doc, [
             Decoration.widget(newState.selection.from, widget, {
               key: 'fakecursor',
             }),
           ]);
         }
+        setTimeout(() => {
+          widget.setAttribute('contenteditable', true);
+        });
         return {
           createDecoration,
         };

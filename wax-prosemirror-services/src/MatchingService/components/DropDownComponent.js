@@ -22,7 +22,8 @@ const DropDownButton = styled.button`
   background: #fff;
   border: none;
   color: #000;
-  cursor: ${props => (props.disabled ? `cursor` : `pointer`)};
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${props => (props.disabled ? `0.4` : `1`)};
   display: flex;
   position: relative;
   width: 160px;
@@ -81,7 +82,8 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
     return editable;
   });
 
-  const isDisabled = !isEditable;
+  let isDisabled = !isEditable;
+  if (node.attrs.options.length === 0) isDisabled = true;
 
   const onChange = option => {
     const allNodes = getNodes(main);
@@ -117,8 +119,8 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
 
   const onKeyDown = (e, index) => {
     e.preventDefault();
-    // arrow down
     if (e.keyCode === 40) {
+      // arrow down
       if (index === itemRefs.current.length - 1) {
         itemRefs.current[0].current.focus();
       } else {
@@ -128,7 +130,10 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
 
     // arrow up
     if (e.keyCode === 38) {
-      if (index === 0) {
+      if (
+        index === 0 &&
+        itemRefs.current[itemRefs.current.length - 1].current
+      ) {
         itemRefs.current[itemRefs.current.length - 1].current.focus();
       } else {
         itemRefs.current[index - 1].current.focus();
@@ -162,6 +167,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
           disabled={isDisabled}
           onKeyDown={e => {
             if (e.keyCode === 40) {
+              if (!itemRefs.current[0].current) return;
               itemRefs.current[0].current.focus();
             }
             if (e.keyCode === 27) {
@@ -205,7 +211,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
         </DropDownMenu>
       </Wrapper>
     );
-  }, [node.attrs.options, selectedOption, isOpen]);
+  }, [node.attrs.options, selectedOption, isOpen, isDisabled]);
 
   return MultipleDropDown;
 };

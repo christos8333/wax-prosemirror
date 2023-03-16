@@ -23,7 +23,7 @@ export default class MultipleDropDownContainerNodeView extends QuestionsNodeView
   }
 
   stopEvent(event) {
-    if (event.target.type === 'textarea') {
+    if (event.target.type === 'textarea' || event.target.type === 'text') {
       return true;
     }
     const innerView = this.context.pmViews[this.node.attrs.id];

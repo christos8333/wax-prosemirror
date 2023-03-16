@@ -111,7 +111,7 @@ export default {
         'Lists',
         'Images',
         'Tables',
-        'AnyStyle',
+        'ExternalAPIContent',
         'QuestionsDropDown',
         'FullScreen',
       ],

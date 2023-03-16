@@ -1,6 +1,6 @@
 import { Service } from 'wax-prosemirror-core';
 import ExternalAPIContentTool from './ExternalAPIContentTool';
-import AnyStyleToolGroupService from './AnyStyleToolGroupService/AnyStyleToolGroupService';
+import ExternalAPIContentToolGroupService from './ExternalAPIContentToolGroupService/ExternalAPIContentToolGroupService';
 import ExternalAPIContentPlaceHolderPlugin from './plugins/ExternalAPIContentPlaceHolderPlugin';
 import './externalApiContent.css';
 
@@ -18,7 +18,7 @@ class ExternalAPIContentService extends Service {
     this.container.bind('ExternalAPIContentTool').to(ExternalAPIContentTool);
   }
 
-  dependencies = [new AnyStyleToolGroupService()];
+  dependencies = [new ExternalAPIContentToolGroupService()];
 }
 
 export default ExternalAPIContentService;

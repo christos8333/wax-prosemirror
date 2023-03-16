@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { ToolGroup } from 'wax-prosemirror-core';
 
 @injectable()
-class Anystyle extends ToolGroup {
+class ExternalAPIContent extends ToolGroup {
   tools = [];
   constructor(@inject('ExternalAPIContentTool') ExternalAPIContentTool) {
     super();
@@ -10,4 +10,4 @@ class Anystyle extends ToolGroup {
   }
 }
 
-export default Anystyle;
+export default ExternalAPIContent;

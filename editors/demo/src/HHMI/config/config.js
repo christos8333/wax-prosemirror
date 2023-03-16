@@ -22,12 +22,11 @@ import {
   EssayService,
   MatchingService,
   MultipleDropDownService,
-  AnyStyleService,
+  ExternalAPIContentService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
-const API_KEY = '';
 
 async function ExternalAPIContentTransformation(prompt) {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -125,7 +124,7 @@ export default {
       toolGroups: ['MultipleDropDown'],
     },
   ],
-  AnyStyleService: {
+  ExternalAPIContentService: {
     ExternalAPIContentTransformation: ExternalAPIContentTransformation,
   },
 
@@ -135,7 +134,7 @@ export default {
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [
-    new AnyStyleService(),
+    new ExternalAPIContentService(),
     new MatchingService(),
     new FillTheGapQuestionService(),
     new MultipleChoiceQuestionService(),

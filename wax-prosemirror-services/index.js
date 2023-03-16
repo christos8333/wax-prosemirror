@@ -39,7 +39,7 @@ export { default as MultipleDropDownService } from './src/MultipleDropDownServic
 
 export { default as OENContainersService } from './src/OENContainersService/OENContainersService';
 export { default as YjsService } from './src/YjsService/YjsService';
-export { default as AnyStyleService } from './src/AnyStyleService/AnyStyleService';
+export { default as ExternalAPIContentService } from './src/ExternalAPIContentService/ExternalAPIContentService';
 /*
 ToolGroups
 */

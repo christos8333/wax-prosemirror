@@ -15,7 +15,7 @@ const elementFromString = string => {
 
 export default (
   view,
-  AnyStyleTransformation,
+  ExternalAPIContentTransformation,
   placeholderPlugin,
   context,
 ) => data => {
@@ -33,7 +33,7 @@ export default (
 
   view.dispatch(tr);
 
-  AnyStyleTransformation(data).then(
+  ExternalAPIContentTransformation(data).then(
     text => {
       const pos = findPlaceholder(view.state, id, placeholderPlugin);
       // If the content around the placeholder has been deleted, drop

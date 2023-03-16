@@ -31,7 +31,8 @@ class AnyStyleTool extends Tools {
     const context = useContext(WaxContext);
     const anyStyle = replaceText(
       view,
-      this.config.get('config.AnyStyleService').AnyStyleTransformation,
+      this.config.get('config.AnyStyleService')
+        .ExternalAPIContentTransformation,
       this.pmplugins.get('anyStylePlaceHolder'),
       context,
     );

@@ -29,7 +29,7 @@ import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 const API_KEY = '';
 
-async function AnyStyleTransformation(prompt) {
+async function ExternalAPIContentTransformation(prompt) {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -62,7 +62,7 @@ async function AnyStyleTransformation(prompt) {
   return prompt;
 }
 
-// async function AnyStyleTransformation(prompt) {
+// async function ExternalAPIContentTransformation(prompt) {
 //   const response = await fetch('https://api.openai.com/v1/completions', {
 //     method: 'POST',
 //     headers: {
@@ -126,7 +126,7 @@ export default {
     },
   ],
   AnyStyleService: {
-    AnyStyleTransformation: AnyStyleTransformation,
+    ExternalAPIContentTransformation: ExternalAPIContentTransformation,
   },
 
   SchemaService: DefaultSchema,

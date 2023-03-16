@@ -16,15 +16,15 @@ class ExternalAPIContentTool extends Tools {
     return true;
   }
 
-  select = activeView => {
-    return true;
-  };
-
   get enable() {
     return state => {
-      return true;
+      return Commands.isOnSameTextBlock(state);
     };
   }
+
+  select = state => {
+    return Commands.isOnSameTextBlock(state);
+  };
 
   renderTool(view) {
     if (isEmpty(view)) return null;

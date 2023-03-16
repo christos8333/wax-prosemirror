@@ -7,7 +7,7 @@ import ExternalApiButton from './components/ExternalApiButton';
 import replaceText from './replaceText';
 
 @injectable()
-class AnyStyleTool extends Tools {
+class ExternalAPIContentTool extends Tools {
   title = 'ChatGPT';
   name = 'ChatGPT';
   label = 'ChatGPT';
@@ -29,7 +29,7 @@ class AnyStyleTool extends Tools {
   renderTool(view) {
     if (isEmpty(view)) return null;
     const context = useContext(WaxContext);
-    const anyStyle = replaceText(
+    const ExternalAPIContent = replaceText(
       view,
       this.config.get('config.ExternalAPIContentService')
         .ExternalAPIContentTransformation,
@@ -38,32 +38,13 @@ class AnyStyleTool extends Tools {
     );
     return this.isDisplayed() ? (
       <ExternalApiButton
-        anyStyle={anyStyle}
+        ExternalAPIContent={ExternalAPIContent}
         item={this.toJSON()}
         key={uuidv4()}
         view={view}
       />
     ) : null;
   }
-
-  //   renderTool(view) {
-  //     if (isEmpty(view)) return null;
-  //     const context = useContext(WaxContext);
-  //     const upload = fileUpload(
-  //       view,
-  //       this.config.get('fileUpload'),
-  //       this.pmplugins.get('imagePlaceHolder'),
-  //       context,
-  //     );
-  //     return this.isDisplayed() ? (
-  //       <ImageUpload
-  //         fileUpload={upload}
-  //         item={this.toJSON()}
-  //         key={uuidv4()}
-  //         view={view}
-  //       />
-  //     ) : null;
-  //   }
 }
 
-export default AnyStyleTool;
+export default ExternalAPIContentTool;

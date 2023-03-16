@@ -4,9 +4,9 @@ import { ToolGroup } from 'wax-prosemirror-core';
 @injectable()
 class Anystyle extends ToolGroup {
   tools = [];
-  constructor(@inject('AnyStyleTool') anyStyleTool) {
+  constructor(@inject('ExternalAPIContentTool') ExternalAPIContentTool) {
     super();
-    this.tools = [anyStyleTool];
+    this.tools = [ExternalAPIContentTool];
   }
 }
 

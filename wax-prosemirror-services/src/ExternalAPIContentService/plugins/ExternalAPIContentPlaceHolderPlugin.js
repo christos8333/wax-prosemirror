@@ -15,7 +15,7 @@ export default key =>
         // See if the transaction adds or removes any placeholders
         const action = tr.getMeta(this);
         if (action && action.add) {
-          const widget = document.createElement('placeholder-any-style');
+          const widget = document.createElement('placeholder-external-api');
           const deco = Decoration.widget(action.add.pos, widget, {
             id: action.add.id,
           });

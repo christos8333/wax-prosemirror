@@ -3,7 +3,7 @@ import React, { useContext, useMemo, useEffect } from 'react';
 import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 import { TextSelection } from 'prosemirror-state';
 
-const ExternalApiButton = ({ view = {}, item, anyStyle }) => {
+const ExternalApiButton = ({ view = {}, item, ExternalAPIContent }) => {
   const { active, icon, label, run, select, title } = item;
 
   const {
@@ -20,12 +20,11 @@ const ExternalApiButton = ({ view = {}, item, anyStyle }) => {
     const {
       selection: { $from, $to },
     } = editorState;
-    /* this is the content that we have to get from the selection */
     const textSelection = new TextSelection($from, $to);
 
     const content = textSelection.content();
 
-    anyStyle(content.content.content[0].textContent);
+    ExternalAPIContent(content.content.content[0].textContent);
   };
 
   useEffect(() => {}, []);

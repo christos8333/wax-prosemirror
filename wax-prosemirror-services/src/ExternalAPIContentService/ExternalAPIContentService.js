@@ -1,7 +1,7 @@
 import { Service } from 'wax-prosemirror-core';
 import AnyStyleTool from './AnyStyleTool';
 import AnyStyleToolGroupService from './AnyStyleToolGroupService/AnyStyleToolGroupService';
-import AnyStylePlaceHolderPlugin from './plugins/AnyStylePlaceHolderPlugin';
+import ExternalAPIContentPlaceHolderPlugin from './plugins/ExternalAPIContentPlaceHolderPlugin';
 import './anyStyle.css';
 
 class ExternalAPIContentService extends Service {
@@ -9,8 +9,8 @@ class ExternalAPIContentService extends Service {
 
   boot() {
     this.app.PmPlugins.add(
-      'anyStylePlaceHolder',
-      AnyStylePlaceHolderPlugin('anyStylePlaceHolder'),
+      'ExternalAPIContentPlaceHolder',
+      ExternalAPIContentPlaceHolderPlugin('ExternalAPIContentPlaceHolder'),
     );
   }
 

@@ -33,7 +33,7 @@ class AnyStyleTool extends Tools {
       view,
       this.config.get('config.ExternalAPIContentService')
         .ExternalAPIContentTransformation,
-      this.pmplugins.get('anyStylePlaceHolder'),
+      this.pmplugins.get('ExternalAPIContentPlaceHolder'),
       context,
     );
     return this.isDisplayed() ? (

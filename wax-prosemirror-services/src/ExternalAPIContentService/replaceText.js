@@ -1,5 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 import { DOMParser } from 'prosemirror-model';
+import { ReplaceStep, ReplaceAroundStep } from 'prosemirror-transform';
+import { Selection } from 'prosemirror-state';
 
 const findPlaceholder = (state, id, placeholderPlugin) => {
   const decos = placeholderPlugin.getState(state);
@@ -11,6 +12,30 @@ const elementFromString = string => {
   const wrappedValue = `<body>${string}</body>`;
 
   return new window.DOMParser().parseFromString(wrappedValue, 'text/html').body;
+};
+
+const selectionToInsertionEnd = (tr, startLen, bias) => {
+  const last = tr.steps.length - 1;
+
+  if (last < startLen) {
+    return;
+  }
+
+  const step = tr.steps[last];
+
+  if (!(step instanceof ReplaceStep || step instanceof ReplaceAroundStep)) {
+    return;
+  }
+
+  const map = tr.mapping.maps[last];
+  let end = 0;
+
+  map.forEach((_from, _to, _newFrom, newTo) => {
+    if (end === 0) {
+      end = newTo;
+    }
+  });
+  tr.setSelection(Selection.near(tr.doc.resolve(end), bias));
 };
 
 export default (
@@ -47,11 +72,20 @@ export default (
       const parsedContent = parser.parse(elementFromString(text));
       // Otherwise, insert it at the placeholder's position, and remove
       // the placeholder
-      context.pmViews[context.activeViewId].dispatch(
-        context.pmViews[context.activeViewId].state.tr
-          .replaceWith(pos, pos, parsedContent)
-          .setMeta(placeholderPlugin, { remove: { id } }),
-      );
+      // context.pmViews[context.activeViewId].dispatch(
+      //   context.pmViews[context.activeViewId].state.tr
+      //     .replaceWith(pos - 1, pos - 1, parsedContent)
+      //     .setMeta(placeholderPlugin, { remove: { id } }),
+      // );
+
+      const newTr = context.pmViews.main.state.tr;
+
+      newTr
+        .replaceWith(pos - 1, pos - 1, parsedContent)
+        .setMeta(placeholderPlugin, { remove: { id } });
+
+      selectionToInsertionEnd(newTr, newTr.steps.length - 1, 0);
+      context.pmViews.main.dispatch(newTr);
     },
 
     () => {

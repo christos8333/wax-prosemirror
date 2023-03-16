@@ -57,6 +57,9 @@ async function ExternalAPIContentTransformation(prompt) {
     return data.choices[0].message.content;
   } catch (e) {
     console.error(e);
+    alert(
+      'That model is currently overloaded with other requests. You can retry your request.',
+    );
   } finally {
   }
   return prompt;
@@ -72,7 +75,7 @@ async function ExternalAPIContentTransformation(prompt) {
 //     body: JSON.stringify({
 //       model: 'text-davinci-003',
 //       prompt: prompt,
-//       max_tokens: 400,
+//       max_tokens: 1400,
 //       n: 1,
 //       stop: null,
 //       temperature: 0.5,
@@ -86,9 +89,8 @@ async function ExternalAPIContentTransformation(prompt) {
 //   } catch (e) {
 //     console.error(e);
 //   } finally {
-//     console.log('We do cleanup here');
 //   }
-//   return 'Nothing found';
+//   return prompt;
 // }
 
 export default {

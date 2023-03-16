@@ -22,10 +22,74 @@ import {
   EssayService,
   MatchingService,
   MultipleDropDownService,
+  AnyStyleService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
+const API_KEY = '';
+
+async function AnyStyleTransformation(prompt) {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+      temperature: 0,
+      // max_tokens: 400,
+      // n: 1,
+      // stop: null,
+    }),
+  });
+
+  try {
+    const data = await response.json();
+    console.log(data);
+    return data.choices[0].message.content;
+  } catch (e) {
+    console.error(e);
+  } finally {
+  }
+  return prompt;
+}
+
+// async function AnyStyleTransformation(prompt) {
+//   const response = await fetch('https://api.openai.com/v1/completions', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${API_KEY}`,
+//     },
+//     body: JSON.stringify({
+//       model: 'text-davinci-003',
+//       prompt: prompt,
+//       max_tokens: 400,
+//       n: 1,
+//       stop: null,
+//       temperature: 0.5,
+//     }),
+//   });
+
+//   try {
+//     const data = await response.json();
+//     console.log(data);
+//     return data.choices[0].text.trim();
+//   } catch (e) {
+//     console.error(e);
+//   } finally {
+//     console.log('We do cleanup here');
+//   }
+//   return 'Nothing found';
+// }
 
 export default {
   MenuService: [
@@ -47,6 +111,7 @@ export default {
         'Lists',
         'Images',
         'Tables',
+        'AnyStyle',
         'QuestionsDropDown',
         'FullScreen',
       ],
@@ -60,6 +125,9 @@ export default {
       toolGroups: ['MultipleDropDown'],
     },
   ],
+  AnyStyleService: {
+    AnyStyleTransformation: AnyStyleTransformation,
+  },
 
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
@@ -67,6 +135,7 @@ export default {
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [
+    new AnyStyleService(),
     new MatchingService(),
     new FillTheGapQuestionService(),
     new MultipleChoiceQuestionService(),

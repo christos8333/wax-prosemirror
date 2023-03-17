@@ -27,7 +27,7 @@ import {
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
-const API_KEY = '';
+const API_KEY = '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';
 
 async function ExternalAPIContentTransformation(prompt) {
   const response = await fetch('https://api.openai.com/v1/chat/completions', {

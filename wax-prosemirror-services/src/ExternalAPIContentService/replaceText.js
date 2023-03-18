@@ -68,9 +68,12 @@ export default (
       const parser = DOMParser.fromSchema(
         context.pmViews.main.state.config.schema,
       );
-      const parsedContent = parser.parse(elementFromString(text), {
-        preserveWhitespace: 'full',
-      });
+      const parsedContent = parser.parse(
+        elementFromString(text.replace(/^\s+|\s+$/g, '')),
+        {
+          preserveWhitespace: 'full',
+        },
+      );
 
       const newTr = context.pmViews.main.state.tr;
 
@@ -78,7 +81,7 @@ export default (
         .replaceWith(pos - 1, pos - 1, parsedContent)
         .setMeta(placeholderPlugin, { remove: { id } });
 
-      selectionToInsertionEnd(newTr, newTr.steps.length - 1, 0);
+      selectionToInsertionEnd(newTr, newTr.steps.length - 1, 1);
       context.pmViews.main.dispatch(newTr);
     },
 

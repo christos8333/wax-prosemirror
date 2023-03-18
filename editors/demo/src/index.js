@@ -1,8 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import Editors from './Editors';
 import * as serviceWorker from './serviceWorker';
-ReactDOM.render(<Editors />, document.getElementById('root'));
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Editors />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

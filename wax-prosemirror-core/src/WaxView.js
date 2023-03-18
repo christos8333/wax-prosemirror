@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 import React, {
-  useRef,
   useState,
   useContext,
   useCallback,
@@ -45,7 +44,6 @@ const WaxView = forwardRef((props, ref) => {
     scrollThreshold,
   } = props;
 
-  const WaxEditorRef = useRef();
   const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
@@ -101,10 +99,8 @@ const WaxView = forwardRef((props, ref) => {
             view.focus();
           }
         }, 500);
-
-        return () => view.destroy();
       }
-      WaxEditorRef.current = node;
+      return node;
     },
     [readonly, customValues],
   );

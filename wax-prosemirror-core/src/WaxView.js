@@ -44,7 +44,6 @@ const WaxView = forwardRef((props, ref) => {
     scrollThreshold,
   } = props;
 
-  const [mounted, setMounted] = useState(false);
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
 
@@ -55,11 +54,9 @@ const WaxView = forwardRef((props, ref) => {
   const setEditorRef = useCallback(
     node => {
       if (node) {
-        if (!mounted) {
-          context.app.bootServices();
-          context.app.getShortCuts();
-          context.app.getRules();
-        }
+        context.app.bootServices();
+        context.app.getShortCuts();
+        context.app.getRules();
 
         const options = WaxOptions({
           ...props,
@@ -83,8 +80,6 @@ const WaxView = forwardRef((props, ref) => {
             },
           },
         );
-
-        setMounted(true);
 
         context.updateView(
           {

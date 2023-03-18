@@ -38,7 +38,7 @@
   },
   "resolutions": {
     "prosemirror-view": "1.23.7",
-    "styled-components": "5.3.0"
+    "styled-components": "5.3.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -60,7 +60,7 @@
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-import-css": "^3.0.2",
     "style-loader": "^0.23.1",
-    "styled-components": "^5.3.0",
+    "styled-components": "^5.3.1",
     "svg-inline-loader": "^0.8.0"
   }
 }

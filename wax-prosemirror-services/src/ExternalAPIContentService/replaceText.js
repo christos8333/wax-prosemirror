@@ -68,11 +68,15 @@ export default (
       const parser = DOMParser.fromSchema(
         context.pmViews.main.state.config.schema,
       );
+      const options =
+        text.includes('<ul>') || text.includes('ol')
+          ? {}
+          : {
+              preserveWhitespace: 'full',
+            };
       const parsedContent = parser.parse(
         elementFromString(text.replace(/^\s+|\s+$/g, '')),
-        {
-          preserveWhitespace: 'full',
-        },
+        options,
       );
 
       const newTr = context.pmViews.main.state.tr;

@@ -1,3 +1,8 @@
+placeholder-external-api {
+    display: inline-block;
+    width: 20px;
+}
+
 placeholder-external-api:before {
     position: relative;
     top: 3px;

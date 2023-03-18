@@ -61,8 +61,7 @@ export default (
   ExternalAPIContentTransformation(data).then(
     text => {
       const pos = findPlaceholder(view.state, id, placeholderPlugin);
-      // If the content around the placeholder has been deleted, drop
-      // the image
+
       if (pos == null) {
         return;
       }
@@ -72,13 +71,6 @@ export default (
       const parsedContent = parser.parse(elementFromString(text), {
         preserveWhitespace: 'full',
       });
-      // Otherwise, insert it at the placeholder's position, and remove
-      // the placeholder
-      // context.pmViews[context.activeViewId].dispatch(
-      //   context.pmViews[context.activeViewId].state.tr
-      //     .replaceWith(pos - 1, pos - 1, parsedContent)
-      //     .setMeta(placeholderPlugin, { remove: { id } }),
-      // );
 
       const newTr = context.pmViews.main.state.tr;
 

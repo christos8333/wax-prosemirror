@@ -69,7 +69,9 @@ export default (
       const parser = DOMParser.fromSchema(
         context.pmViews.main.state.config.schema,
       );
-      const parsedContent = parser.parse(elementFromString(text));
+      const parsedContent = parser.parse(elementFromString(text), {
+        preserveWhitespace: 'full',
+      });
       // Otherwise, insert it at the placeholder's position, and remove
       // the placeholder
       // context.pmViews[context.activeViewId].dispatch(

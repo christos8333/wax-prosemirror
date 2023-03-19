@@ -1,6 +1,6 @@
 {
   "name": "demo",
-  "version": "0.7.31",
+  "version": "0.7.32",
   "private": true,
   "dependencies": {
     "@guardian/prosemirror-invisibles": "^1.2.0",
@@ -14,8 +14,8 @@
     "typeface-fira-sans-condensed": "^0.0.54",
     "typeface-inter": "^1.1.13",
     "typeface-vollkorn": "^0.0.54",
-    "wax-prosemirror-core": "^0.7.31",
-    "wax-prosemirror-services": "^0.7.31"
+    "wax-prosemirror-core": "^0.7.32",
+    "wax-prosemirror-services": "^0.7.32"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -31,7 +31,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-   "resolutions": {
+  "resolutions": {
     "prosemirror-view": "1.23.7",
     "styled-components": "5.3.1"
   },

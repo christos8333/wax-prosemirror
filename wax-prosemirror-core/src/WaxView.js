@@ -7,6 +7,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useState,
 } from 'react';
 import styled from 'styled-components';
 import { EditorState } from 'prosemirror-state';
@@ -45,18 +46,18 @@ const WaxView = forwardRef((props, ref) => {
 
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
-
+  const [mounted, setMounted] = useState(false);
   context.app.setContext({ ...context, createPortal });
-
   const schema = context.app.getSchema();
 
   const setEditorRef = useCallback(
     node => {
       if (node) {
-        context.app.bootServices();
-        context.app.getShortCuts();
-        context.app.getRules();
-
+        if (!mounted) {
+          context.app.bootServices();
+          context.app.getShortCuts();
+          context.app.getRules();
+        }
         const options = WaxOptions({
           ...props,
           schema,
@@ -79,6 +80,8 @@ const WaxView = forwardRef((props, ref) => {
             },
           },
         );
+
+        setMounted(true);
 
         context.updateView(
           {

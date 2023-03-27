@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
 import { Selection, TextSelection } from 'prosemirror-state';
 import { Slice } from 'prosemirror-model';
 import { ReplaceStep, Mapping } from 'prosemirror-transform';
+import removeNode from './removeNode';
 
 const markDeletion = (tr, from, to, user, date, group, viewId) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
@@ -53,11 +55,15 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
         )
       ) {
         let removeStep;
+        if (node.isTextblock && node.nodeSize === 2) {
+          return removeNode(tr, node, pos, deletionMap);
+        }
         if (node.isTextblock && to < pos + node.nodeSize) {
           const selectionBefore = Selection.findFrom(tr.doc.resolve(pos), -1);
           if (selectionBefore instanceof TextSelection) {
             removeStep = new ReplaceStep(
-              deletionMap.map(selectionBefore.$anchor.pos),
+              // deletionMap.map(selectionBefore.$anchor.pos),
+              deletionMap.map(Math.min(to, pos + node.nodeSize)),
               deletionMap.map(to),
               Slice.empty,
             );

@@ -41,6 +41,7 @@ export default options => {
               node.attrs.track &&
               node.attrs.track.find(track => track.type === 'block_change')
             ) {
+              console.log('here?');
               let nodeSize = pos;
               node.descendants((childNode, childPos) => {
                 nodeSize += childNode.nodeSize;
@@ -61,6 +62,7 @@ export default options => {
           });
 
           if (insertion) {
+            console.log('inser');
             decos = decos.add(tr.doc, [
               decoType(insertion.from, insertion.to, {
                 class: 'selected-insertion',

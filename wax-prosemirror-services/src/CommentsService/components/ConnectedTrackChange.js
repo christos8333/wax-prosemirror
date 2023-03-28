@@ -26,6 +26,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   const viewId = trackChange.attrs
     ? trackChange.attrs.viewid
     : trackChange.node.attrs.viewid;
+
   const styles = {
     top: `${top}px`,
   };

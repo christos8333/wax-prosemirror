@@ -1,5 +1,7 @@
+/* eslint-disable prefer-object-spread */
 /* eslint-disable consistent-return */
 import { Selection, TextSelection } from 'prosemirror-state';
+import { v4 as uuidv4 } from 'uuid';
 import { Slice } from 'prosemirror-model';
 import { ReplaceStep, Mapping } from 'prosemirror-transform';
 import removeNode from './removeNode';
@@ -97,13 +99,19 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
           user: user.userId,
           username: user.username,
           style: `color: ${user.userColor.deletion};`,
-
-          // date
+          date,
+          group,
+          viewid: viewId,
         });
         tr.setNodeMarkup(
           deletionMap.map(pos),
           null,
-          Object.assign(node.attrs.track, { track }),
+          Object.assign({}, node.attrs, {
+            track,
+            group,
+            id: uuidv4(),
+          }),
+          // Object.assign(node.attrs.track, { track }),
           node.marks,
         );
       }

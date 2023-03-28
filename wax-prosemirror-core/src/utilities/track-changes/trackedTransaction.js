@@ -60,7 +60,6 @@ const trackedTransaction = (
     const step = originalStep.map(map);
     const { doc } = newTr;
     if (!step) return;
-
     switch (step.constructor) {
       case ReplaceStep:
         replaceStep(

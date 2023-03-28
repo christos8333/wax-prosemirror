@@ -21,7 +21,7 @@ const replaceAroundStep = (
     newTr.step(step);
     const from = step.getMap().map(step.from, -1);
     const to = step.getMap().map(step.gapFrom);
-    markInsertion(newTr, from, to, user, date, group);
+    markInsertion(newTr, from, to, user, date, group, viewId);
   } else if (!step.slice.size || step.slice.content.content.length === 2) {
     const invertStep = originalStep.invert(tr.docs[originalStepIndex]).map(map);
     // unwrapped from something

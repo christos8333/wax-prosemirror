@@ -44,7 +44,15 @@ const replaceStep = (
     }
     const mappedNewStepTo = newStep.getMap().map(newStep.to);
 
-    markInsertion(trTemp, newStep.from, mappedNewStepTo, user, date, group);
+    markInsertion(
+      trTemp,
+      newStep.from,
+      mappedNewStepTo,
+      user,
+      date,
+      group,
+      viewId,
+    );
     // We condense it down to a single replace step.
     const condensedStep = new ReplaceStep(
       newStep.from,

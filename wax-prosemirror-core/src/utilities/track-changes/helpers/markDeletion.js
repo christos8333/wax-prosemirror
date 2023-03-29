@@ -1,6 +1,10 @@
+/* eslint-disable prefer-object-spread */
+/* eslint-disable consistent-return */
 import { Selection, TextSelection } from 'prosemirror-state';
+import { v4 as uuidv4 } from 'uuid';
 import { Slice } from 'prosemirror-model';
 import { ReplaceStep, Mapping } from 'prosemirror-transform';
+import removeNode from './removeNode';
 
 const markDeletion = (tr, from, to, user, date, group, viewId) => {
   const deletionMark = tr.doc.type.schema.marks.deletion.create({
@@ -53,11 +57,15 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
         )
       ) {
         let removeStep;
+        if (node.isTextblock && node.nodeSize === 2) {
+          return removeNode(tr, node, pos, deletionMap);
+        }
         if (node.isTextblock && to < pos + node.nodeSize) {
           const selectionBefore = Selection.findFrom(tr.doc.resolve(pos), -1);
           if (selectionBefore instanceof TextSelection) {
             removeStep = new ReplaceStep(
-              deletionMap.map(selectionBefore.$anchor.pos),
+              // deletionMap.map(selectionBefore.$anchor.pos),
+              deletionMap.map(Math.min(to, pos + node.nodeSize)),
               deletionMap.map(to),
               Slice.empty,
             );
@@ -91,13 +99,19 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
           user: user.userId,
           username: user.username,
           style: `color: ${user.userColor.deletion};`,
-
-          // date
+          date,
+          group,
+          viewid: viewId,
         });
         tr.setNodeMarkup(
           deletionMap.map(pos),
           null,
-          Object.assign(node.attrs.track, { track }),
+          Object.assign({}, node.attrs, {
+            track,
+            group,
+            id: uuidv4(),
+          }),
+          // Object.assign(node.attrs.track, { track }),
           node.marks,
         );
       }

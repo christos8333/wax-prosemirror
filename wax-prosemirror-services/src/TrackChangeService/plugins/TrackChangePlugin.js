@@ -31,7 +31,6 @@ export default options => {
           const { insertion, deletion, formatChange } = findSelectedChanges(
             state,
           );
-
           const decoType = tr.selection.node
             ? Decoration.node
             : Decoration.inline;
@@ -39,7 +38,12 @@ export default options => {
           state.doc.nodesBetween(from, to, (node, pos) => {
             if (
               node.attrs.track &&
-              node.attrs.track.find(track => track.type === 'block_change')
+              node.attrs.track.find(
+                track =>
+                  track.type === 'block_change' ||
+                  track.type === 'insertion' ||
+                  track.type === 'deletion',
+              )
             ) {
               let nodeSize = pos;
               node.descendants((childNode, childPos) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 import { v4 as uuidv4 } from 'uuid';
 
 const markInsertion = (tr, from, to, user, date, group, viewId) => {
@@ -39,10 +40,12 @@ const markInsertion = (tr, from, to, user, date, group, viewId) => {
       tr.setNodeMarkup(
         pos,
         null,
+        // eslint-disable-next-line prefer-object-spread
         Object.assign({}, node.attrs, {
           track,
           group,
           id: uuidv4(),
+          viewid: viewId,
         }),
         node.marks,
       );

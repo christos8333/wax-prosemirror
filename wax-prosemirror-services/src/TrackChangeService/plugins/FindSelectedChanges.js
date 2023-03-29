@@ -41,6 +41,47 @@ const findSelectedChanges = state => {
         formatChangePos = selection.from;
       }
     }
+
+    /* TEMP */
+    state.doc.nodesBetween(selection.from, selection.to, (node, pos) => {
+      if (!insertionMark) {
+        insertionMark = node.attrs.track
+          ? node.attrs.track.find(trackAttr => trackAttr.type === 'insertion')
+          : node.marks.find(
+              mark => mark.type.name === 'insertion' && !mark.attrs.approved,
+            );
+        if (insertionMark) {
+          insertionPos = pos;
+          if (!node.isInline) {
+            insertionSize = node.nodeSize;
+          }
+        }
+      }
+      if (!deletionMark) {
+        deletionMark = node.attrs.track
+          ? node.attrs.track.find(trackAttr => trackAttr.type === 'deletion')
+          : node.marks.find(mark => mark.type.name === 'deletion');
+        if (deletionMark) {
+          deletionPos = pos;
+          if (!node.isInline) {
+            deletionSize = node.nodeSize;
+          }
+        }
+      }
+      if (!formatChangeMark) {
+        formatChangeMark = node.marks.find(
+          mark => mark.type.name === 'format_change',
+        );
+        if (formatChangeMark) {
+          formatChangePos = pos;
+          if (!node.isInline) {
+            formatChangeSize = node.nodeSize;
+          }
+        }
+      }
+      return false;
+    });
+    /* TILL HERE */
   } else {
     state.doc.nodesBetween(selection.from, selection.to, (node, pos) => {
       if (pos < selection.from) {
@@ -105,7 +146,7 @@ const findSelectedChanges = state => {
           'format_change',
         );
   }
+
   return selectedChanges;
 };
-
 export default findSelectedChanges;

@@ -44,6 +44,7 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
   YjsService,
+  disallowPasteImagesPlugin,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -70,6 +71,10 @@ const saveTags = tags => {
 
 const updateTrackStatus = status => {
   // console.log('status', status);
+};
+
+const onWarning = message => {
+  alert(message);
 };
 
 export default {
@@ -140,7 +145,16 @@ export default {
       reject: true,
     },
   },
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [
+    columnResizing(),
+    tableEditing(),
+    invisibles([hardBreak()]),
+    disallowPasteImagesPlugin(() =>
+      onWarning(
+        'Images are not allowed. Please upload them through filemanager',
+      ),
+    ),
+  ],
   ImageService: { showAlt: true },
   CustomTagService: {
     tags: [

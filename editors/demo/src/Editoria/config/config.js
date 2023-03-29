@@ -74,7 +74,7 @@ const updateTrackStatus = status => {
 };
 
 const onWarning = message => {
-  console.log(message);
+  alert(message);
 };
 
 export default {

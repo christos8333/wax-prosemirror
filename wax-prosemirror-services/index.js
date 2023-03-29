@@ -68,3 +68,7 @@ export { default as QuestionsDropDownToolGroupService } from './src/WaxToolGroup
 export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
 export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';
 export { default as FindAndReplaceToolGroupService } from './src/WaxToolGroups/FindAndReplaceToolGroupService/FindAndReplaceToolGroupService';
+
+/* Plugins */
+
+export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';

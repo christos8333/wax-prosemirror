@@ -2,6 +2,7 @@ import { Service } from 'wax-prosemirror-core';
 import { imageNode, figureCaptionNode, figureNode } from './schema';
 import PlaceHolderPlugin from './plugins/placeHolderPlugin';
 import captionPlugin from './plugins/captionPlugin';
+import disallowPasteImagesPlugin from './plugins/disallowPasteImagesPlugin';
 import Image from './Image';
 import './image.css';
 import AltComponent from './AltComponent';
@@ -10,6 +11,11 @@ class ImageService extends Service {
   name = 'ImageService';
 
   boot() {
+    // this.app.PmPlugins.add(
+    //   'disallowPasteImagesPlugin',
+    //   disallowPasteImagesPlugin('disallowPasteImagesPlugin', this.app.context),
+    // );
+
     this.app.PmPlugins.add(
       'imagePlaceHolder',
       PlaceHolderPlugin('imagePlaceHolder'),

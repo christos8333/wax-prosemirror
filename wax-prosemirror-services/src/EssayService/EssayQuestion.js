@@ -76,11 +76,11 @@ class EssayQuestion extends Tools {
       if (!wrapping) return false;
       tr.wrap(range, wrapping);
 
-      // const map = tr.mapping.maps[0];
-      // let newPos = 0;
-      // map.forEach((_from, _to, _newFrom, newTo) => {
-      //   newPos = newTo;
-      // });
+      const map = tr.mapping.maps[0];
+      let newPos = 0;
+      map.forEach((_from, _to, _newFrom, newTo) => {
+        newPos = newTo;
+      });
 
       tr.setSelection(TextSelection.create(tr.doc, range.$to.pos));
 
@@ -88,17 +88,26 @@ class EssayQuestion extends Tools {
         { id: uuidv4() },
         Fragment.empty,
       );
+      const essayPrompt = main.state.config.schema.nodes.essay_prompt.create(
+        { id: uuidv4() },
+        Fragment.empty,
+      );
+
       const essayAnswer = main.state.config.schema.nodes.essay_answer.create(
         { id: uuidv4() },
         Fragment.empty,
       );
 
       tr.replaceSelectionWith(essayQuestion);
+      tr.setSelection(TextSelection.create(tr.doc, newPos));
+      tr.replaceSelectionWith(essayPrompt);
+      tr.setSelection(TextSelection.create(tr.doc, newPos + 1));
       tr.replaceSelectionWith(essayAnswer);
       dispatch(tr);
 
       setTimeout(() => {
         createEmptyParagraph(context, essayAnswer.attrs.id);
+        createEmptyParagraph(context, essayPrompt.attrs.id);
         createEmptyParagraph(context, essayQuestion.attrs.id);
       }, 50);
     };

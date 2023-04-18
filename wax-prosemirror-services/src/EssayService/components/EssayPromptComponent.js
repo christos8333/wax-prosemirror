@@ -19,6 +19,7 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
+  display: ${props => (props.testMode ? 'none' : 'block')};
 
   .ProseMirror {
     white-space: break-spaces;
@@ -42,7 +43,7 @@ const EditorWrapper = styled.div`
     }
   }
 `;
-const EssayQuestionComponent = ({ node, view, getPos }) => {
+const EssayPromptComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -50,12 +51,16 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
     app,
     pmViews: { main },
   } = context;
-
-  let essayQuestionView;
+  let essayPromptView;
   const questionId = node.attrs.id;
+
   const isEditable = main.props.editable(editable => {
     return editable;
   });
+
+  const customProps = main.props.customValues;
+
+  const { testMode } = customProps;
 
   let finalPlugins = [];
 
@@ -109,12 +114,12 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your essay question'),
+    createPlaceholder('Provide response summary and rubric'),
     ...plugins,
   ]);
 
   useEffect(() => {
-    essayQuestionView = new EditorView(
+    essayPromptView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -145,16 +150,13 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
             );
             context.updateView({}, questionId);
 
-            if (essayQuestionView.hasFocus()) essayQuestionView.focus();
+            if (essayPromptView.hasFocus()) essayPromptView.focus();
           },
           blur: (editorView, event) => {
-            if (essayQuestionView && event.relatedTarget === null) {
-              essayQuestionView.focus();
+            if (essayPromptView && event.relatedTarget === null) {
+              essayPromptView.focus();
             }
           },
-        },
-        handleClickOn: () => {
-          context.updateView({}, questionId);
         },
 
         attributes: {
@@ -166,21 +168,19 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
     // Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: essayQuestionView,
+        [questionId]: essayPromptView,
       },
       questionId,
     );
-    if (essayQuestionView.hasFocus()) essayQuestionView.focus();
+    if (essayPromptView.hasFocus()) essayPromptView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
     const outerTr = main.state.tr;
     main.dispatch(outerTr.setMeta('outsideView', questionId));
-    const { state, transactions } = essayQuestionView.state.applyTransaction(
-      tr,
-    );
+    const { state, transactions } = essayPromptView.state.applyTransaction(tr);
     context.updateView({}, questionId);
-    essayQuestionView.updateState(state);
+    essayPromptView.updateState(state);
     if (!tr.getMeta('fromOutside')) {
       const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
@@ -194,10 +194,10 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper>
+    <EditorWrapper testMode={testMode}>
       <div ref={editorRef} />
     </EditorWrapper>
   );
 };
 
-export default EssayQuestionComponent;
+export default EssayPromptComponent;

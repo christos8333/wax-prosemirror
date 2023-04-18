@@ -19,8 +19,8 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
-  opacity: ${props => (props.editable ? 1 : 0.4)};
-  cursor: ${props => (props.editable ? 'default' : 'not-allowed')};
+  display: ${props =>
+    props.testMode || props.showFeedBack ? 'block' : 'none'};
 
   .ProseMirror {
     white-space: break-spaces;
@@ -57,7 +57,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
 
   const customProps = main.props.customValues;
 
-  const { testMode } = customProps;
+  const { testMode, showFeedBack } = customProps;
 
   let finalPlugins = [];
 
@@ -191,7 +191,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper editable={testMode}>
+    <EditorWrapper testMode={testMode} showFeedBack={showFeedBack}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

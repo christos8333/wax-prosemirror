@@ -1,11 +1,14 @@
 import { Service } from 'wax-prosemirror-core';
 import EssayQuestion from './EssayQuestion';
 import essayContainerNode from './schema/essayContainerNode';
+import essayPromptNode from './schema/essayPromptNode';
 import essayQuestionNode from './schema/essayQuestionNode';
 import essayAnswerNode from './schema/essayAnswerNode';
 import EssayQuestionComponent from './components/EssayQuestionComponent';
+import EssayPromptComponent from './components/EssayPromptComponent';
 import EssayAnswerComponent from './components/EssayAnswerComponent';
 import EssayQuestionNodeView from './EssayQuestionNodeView';
+import EssayPromptNodeView from './EssayPromptNodeView';
 import EssayAnswerNodeView from './EssayAnswerNodeView';
 import './essay.css';
 
@@ -24,12 +27,22 @@ class EssayService extends Service {
     });
 
     createNode({
+      essay_prompt: essayPromptNode,
+    });
+
+    createNode({
       essay_answer: essayAnswerNode,
     });
 
     addPortal({
       nodeView: EssayQuestionNodeView,
       component: EssayQuestionComponent,
+      context: this.app,
+    });
+
+    addPortal({
+      nodeView: EssayPromptNodeView,
+      component: EssayPromptComponent,
       context: this.app,
     });
 

@@ -19,8 +19,7 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
-  opacity: ${props => (props.editable ? 1 : 0.4)};
-  cursor: ${props => (props.editable ? 'default' : 'not-allowed')};
+  display: ${props => (props.testMode ? 'none' : 'block')};
 
   .ProseMirror {
     white-space: break-spaces;
@@ -54,6 +53,10 @@ const EssayPromptComponent = ({ node, view, getPos }) => {
   } = context;
   let essayPromptView;
   const questionId = node.attrs.id;
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   const customProps = main.props.customValues;
 
@@ -111,7 +114,7 @@ const EssayPromptComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your essay prompt'),
+    createPlaceholder('Type your essay sample answer'),
     ...plugins,
   ]);
 
@@ -121,7 +124,7 @@ const EssayPromptComponent = ({ node, view, getPos }) => {
         mount: editorRef.current,
       },
       {
-        editable: () => testMode,
+        editable: () => isEditable,
         state: EditorState.create({
           doc: node,
           plugins: finalPlugins,
@@ -191,7 +194,7 @@ const EssayPromptComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper editable={testMode}>
+    <EditorWrapper testMode={testMode}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

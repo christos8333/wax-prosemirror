@@ -114,7 +114,7 @@ const EssayPromptComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your essay sample answer'),
+    createPlaceholder('Provide response summary and rubric'),
     ...plugins,
   ]);
 

@@ -109,7 +109,7 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your essay'),
+    createPlaceholder('Type your essay question'),
     ...plugins,
   ]);
 

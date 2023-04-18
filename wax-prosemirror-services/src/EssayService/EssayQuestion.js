@@ -109,7 +109,7 @@ class EssayQuestion extends Tools {
         createEmptyParagraph(context, essayAnswer.attrs.id);
         createEmptyParagraph(context, essayPrompt.attrs.id);
         createEmptyParagraph(context, essayQuestion.attrs.id);
-      }, 50);
+      }, 150);
     };
   }
 

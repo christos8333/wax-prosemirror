@@ -37,12 +37,9 @@
     }
   },
   "resolutions": {
-    "prosemirror-view": "1.30.2",
-    "prosemirror-model": "1.19.0",
-    "prosemirror-state": "1.4.2",
-    "prosemirror-transform": "1.7.1",
     "styled-components": "5.3.1"
   },
+  
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",

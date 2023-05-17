@@ -44,7 +44,7 @@ const StyledIconWrong = styled(Icon)`
 `;
 const YesNoSwitch = ({
   customProps,
-  node,
+  node: { node },
   isEditable,
   handleChange,
   checked,
@@ -83,6 +83,7 @@ const YesNoSwitch = ({
       label="Correct?"
       labelPosition="left"
       onChange={handleChange}
+      text={node.textContent}
       unCheckedChildren="NO"
     />
   );

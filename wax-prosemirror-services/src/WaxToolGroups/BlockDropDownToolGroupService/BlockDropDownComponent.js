@@ -14,8 +14,9 @@ const DropdownStyled = styled(Dropdown)`
   opacity: ${props => (props.select ? 1 : 0.4)};
   pointer-events: ${props => (props.select ? 'default' : 'none')};
   .Dropdown-control {
+    width: 170px;
     border: none;
-    padding: 12px 122px 8px 10px;
+    padding: 12px 26px 8px 10px;
     &:hover {
       box-shadow: none;
     }
@@ -26,7 +27,7 @@ const DropdownStyled = styled(Dropdown)`
   }
 
   .Dropdown-menu {
-    width: 100.4%;
+    width: 102%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -88,7 +89,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
         />
       </Wrapper>
     ),
-    [label],
+    [label, main.state.selection.$from.parent.type.name],
   );
 
   return MultipleDropDown;

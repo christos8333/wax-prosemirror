@@ -47,7 +47,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
   const [label, setLabel] = useState(null);
 
   const dropDownOptions = [
-    { label: 'Title (H1)', value: '0', item: tools[0] },
+    // { label: 'Title (H1)', value: '0', item: tools[0] },
     // { label: 'author', value: '1', item: tools[1] },
     // { label: 'Subtitle', value: '2', item: tools[2] },
     // { label: 'Epigraph Prose', value: '3', item: tools[3] },
@@ -89,7 +89,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
         />
       </Wrapper>
     ),
-    [label, main.state.selection.$from.parent.type.name],
+    [label],
   );
 
   return MultipleDropDown;

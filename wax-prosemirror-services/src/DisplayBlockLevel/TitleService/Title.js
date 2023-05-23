@@ -13,17 +13,10 @@ export default class Title extends Tools {
 
   get run() {
     return (state, dispatch) => {
-      const titleNode = DocumentHelpers.findChildrenByType(
-        state.doc,
-        state.config.schema.nodes.title,
-        true,
+      Commands.setBlockType(state.config.schema.nodes.title, { level: 1 })(
+        state,
+        dispatch,
       );
-      if (!titleNode[0]) {
-        Commands.setBlockType(state.config.schema.nodes.title, { level: 1 })(
-          state,
-          dispatch,
-        );
-      }
     };
   }
 
@@ -37,7 +30,8 @@ export default class Title extends Tools {
     const {
       selection: { $from, $to },
     } = state;
-    if (this.config.get('config.OENContainersService')) {
+
+    if (this.config) {
       const allowedLevel = checkLevelFromConfig(
         state,
         activeViewId,

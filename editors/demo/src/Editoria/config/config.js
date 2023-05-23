@@ -46,6 +46,7 @@ import {
   YjsService,
   disallowPasteImagesPlugin,
   BlockDropDownToolGroupService,
+  TitleToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -85,6 +86,7 @@ export default {
       toolGroups: [
         'Base',
         'BlockDropDown',
+        'TitleTool',
         {
           name: 'Annotations',
           more: [
@@ -174,6 +176,7 @@ export default {
   // },
 
   services: [
+    new TitleToolGroupService(),
     // new YjsService(),
     new BlockDropDownToolGroupService(),
     new CustomTagService(),

@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-services",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Wax prosemirror services",
   "license": "MIT",
   "main": "dist/index.js",
@@ -37,7 +37,7 @@
     "use-deep-compare-effect": "^1.3.1",
     "use-dynamic-refs": "^1.0.0",
     "uuid": "^7.0.3",
-    "wax-prosemirror-core": "^0.8.3",
+    "wax-prosemirror-core": "^0.8.4",
     "y-prosemirror": "^1.2.0",
     "y-protocols": "^1.0.1",
     "y-webrtc": "^10.2.0",

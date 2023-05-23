@@ -6,6 +6,7 @@ const CustomSwitch = ({ node, getPos }) => {
   const context = useContext(WaxContext);
   const [checked, setChecked] = useState(false);
   const [checkedAnswerMode, setCheckedAnswerMode] = useState(false);
+
   const {
     pmViews: { main },
   } = context;
@@ -45,6 +46,17 @@ const CustomSwitch = ({ node, getPos }) => {
     });
   };
 
+  const getUpdatedNode = () => {
+    let nodeFound = node;
+    const allNodes = getNodes(main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        nodeFound = singNode;
+      }
+    });
+    return nodeFound;
+  };
+
   return (
     <YesNoSwitch
       checked={checked}
@@ -52,7 +64,7 @@ const CustomSwitch = ({ node, getPos }) => {
       customProps={customProps}
       handleChange={handleChange}
       isEditable={isEditable}
-      node={node}
+      node={getUpdatedNode()}
     />
   );
 };

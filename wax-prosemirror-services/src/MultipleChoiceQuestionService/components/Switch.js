@@ -43,7 +43,9 @@ const Label = styled.label`
 `;
 
 const SwitchComponent = props => {
-  const { className, label, labelPosition, onChange, ...rest } = props;
+  const { className, label, labelPosition, onChange, text, ...rest } = props;
+
+  const ariaLabel = `Is it correct ${text}`;
 
   return (
     <Wrapper className={className}>
@@ -53,7 +55,7 @@ const SwitchComponent = props => {
         </Label>
       )}
 
-      <Switch aria-label="Is it correct" onChange={onChange} {...rest} />
+      <Switch aria-label={ariaLabel} onChange={onChange} {...rest} />
 
       {label && labelPosition === 'right' && (
         <Label labelPosition={labelPosition} onClick={onChange}>

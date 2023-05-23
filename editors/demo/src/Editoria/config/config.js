@@ -45,6 +45,7 @@ import {
   CustomTagService,
   YjsService,
   disallowPasteImagesPlugin,
+  BlockDropDownToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -62,8 +63,8 @@ import CharactersList from './CharactersList';
 // };
 
 const updateTitle = debounce(title => {
-  // console.log(title);
-}, 3000);
+  console.log(title);
+}, 100);
 
 const saveTags = tags => {
   // console.log(tags);
@@ -83,6 +84,7 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
+        'BlockDropDown',
         {
           name: 'Annotations',
           more: [
@@ -105,10 +107,10 @@ export default {
         'FullScreen',
       ],
     },
-    {
-      templateArea: 'leftSideBar',
-      toolGroups: ['DisplayText'],
-    },
+    // {
+    //   templateArea: 'leftSideBar',
+    //   toolGroups: ['DisplayText'],
+    // },
     {
       templateArea: 'commentTrackToolBar',
       toolGroups: ['TrackCommentOptions'],
@@ -173,6 +175,7 @@ export default {
 
   services: [
     // new YjsService(),
+    new BlockDropDownToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
@@ -196,7 +199,7 @@ export default {
     new CodeBlockService(),
     new CodeBlockToolGroupService(),
     new EditingSuggestingService(),
-    new DisplayTextToolGroupService(),
+    // new DisplayTextToolGroupService(),
     new MathService(),
     new FindAndReplaceService(),
     new TrackingAndEditingToolGroupService(),

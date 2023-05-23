@@ -30,8 +30,9 @@ export default class Title extends Tools {
     const {
       selection: { $from, $to },
     } = state;
-
-    if (this.config) {
+    console.log(this.config);
+    if (this.config.get('config.OENContainersService')) {
+      console.log('here??');
       const allowedLevel = checkLevelFromConfig(
         state,
         activeViewId,

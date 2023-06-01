@@ -119,7 +119,10 @@ const captionPlugin = key =>
             if (figCap[6] && figCap[6].type.name === 'figcaption') {
               const figCapEl = document.getElementById(figCap[6].attrs.id);
 
-              if (figCapEl.parentElement.firstChild.tagName === 'FIGCAPTION') {
+              if (
+                figCapEl &&
+                figCapEl.parentElement.firstChild.tagName === 'FIGCAPTION'
+              ) {
                 figCapEl.parentElement.remove();
               }
             }

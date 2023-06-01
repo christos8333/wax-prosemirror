@@ -83,7 +83,7 @@ const YesNoSwitch = ({
       label="Correct?"
       labelPosition="left"
       onChange={handleChange}
-      text={node.textContent}
+      text={node?.textContent}
       unCheckedChildren="NO"
     />
   );

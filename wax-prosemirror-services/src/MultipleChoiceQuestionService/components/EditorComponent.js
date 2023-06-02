@@ -1,12 +1,17 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, TextSelection } from 'prosemirror-state';
+import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
-import { baseKeymap } from 'prosemirror-commands';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import {
+  splitListItem,
+  liftListItem,
+  sinkListItem,
+} from 'prosemirror-schema-list';
 import Placeholder from '../plugins/placeholder';
 import FakeCursorPlugin from '../../MultipleDropDownService/plugins/FakeCursorPlugin';
 
@@ -26,7 +31,7 @@ const EditorWrapper = styled.div`
     }
 
     :empty::before {
-      content: 'Type your answer';
+      content: 'Type your question';
       color: #aaa;
       float: left;
       font-style: italic;
@@ -50,9 +55,10 @@ const EditorWrapper = styled.div`
     }
   }
 `;
+
 let WaxOverlays = () => true;
 
-const EditorComponent = ({ node, view, getPos }) => {
+const QuestionEditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -71,15 +77,46 @@ const EditorComponent = ({ node, view, getPos }) => {
   const createKeyBindings = () => {
     const keys = getKeys();
     Object.keys(baseKeymap).forEach(key => {
-      keys[key] = baseKeymap[key];
+      if (keys[key]) {
+        keys[key] = chainCommands(keys[key], baseKeymap[key]);
+      } else {
+        keys[key] = baseKeymap[key];
+      }
     });
     return keys;
+  };
+
+  const pressEnter = (state, dispatch) => {
+    if (state.selection.node && state.selection.node.type.name === 'image') {
+      const { $from, to } = state.selection;
+
+      const same = $from.sharedDepth(to);
+
+      const pos = $from.before(same);
+      dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+      return true;
+    }
+    // LISTS
+    if (splitListItem(state.schema.nodes.list_item)(state)) {
+      splitListItem(state.schema.nodes.list_item)(state, dispatch);
+      return true;
+    }
+
+    return false;
   };
 
   const getKeys = () => {
     return {
       'Mod-z': () => undo(view.state, view.dispatch),
       'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-[': liftListItem(view.state.schema.nodes.list_item),
+      'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
+      //   Enter: () =>
+      //     splitListItem(questionView.state.schema.nodes.list_item)(
+      //       questionView.state,
+      //       questionView.dispatch,
+      //     ),
+      Enter: pressEnter,
     };
   };
 
@@ -92,7 +129,7 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your answer'),
+    createPlaceholder('Type your question'),
     ...plugins,
   ]);
 
@@ -109,16 +146,19 @@ const EditorComponent = ({ node, view, getPos }) => {
           plugins: finalPlugins,
         }),
         dispatchTransaction,
-        disallowedTools: ['Lists', 'lift', 'MultipleChoice'],
+        disallowedTools: ['MultipleChoice'],
         handleDOMEvents: {
           mousedown: () => {
+            context.updateView({}, questionId);
             main.dispatch(
               main.state.tr
                 .setMeta('outsideView', questionId)
                 .setSelection(
                   new TextSelection(
                     main.state.tr.doc.resolve(
-                      getPos() + context.pmViews[questionId].state.selection.to,
+                      getPos() +
+                        1 +
+                        context.pmViews[questionId].state.selection.to,
                     ),
                   ),
                 ),
@@ -131,7 +171,9 @@ const EditorComponent = ({ node, view, getPos }) => {
             //     ),
             //   ),
             // );
+
             context.updateView({}, questionId);
+
             if (questionView.hasFocus()) questionView.focus();
           },
           blur: (editorView, event) => {
@@ -183,4 +225,4 @@ const EditorComponent = ({ node, view, getPos }) => {
   );
 };
 
-export default EditorComponent;
+export default QuestionEditorComponent;

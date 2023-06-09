@@ -10,8 +10,8 @@ import ToolBarBtn from './components/ToolBarBtn';
 class MultipleChoiceQuestion extends Tools {
   title = 'Add Multiple Choice Question';
   icon = 'multipleChoice';
-  name = 'Multiple Choice';
-  label = 'Multiple Choice';
+  name = 'Multiple choice';
+  label = 'Multiple choice';
 
   get run() {
     return (view, context) => {

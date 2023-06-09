@@ -8,7 +8,7 @@ class CreateGap extends Tools {
   title = 'Create Gap Option';
   icon = 'insertGap';
   name = 'Create Gap';
-  label = 'Create Gap';
+  label = 'Insert answers';
 
   get run() {
     return (state, dispatch, activeView, context) => {

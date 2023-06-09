@@ -10,8 +10,8 @@ import helpers from '../helpers/helpers';
 class TrueFalseSingleCorrectQuestion extends Tools {
   title = 'Add True False Single Correct Question';
   icon = 'multipleChoice';
-  name = 'True False Single Correct';
-  label = 'True False Single Correct';
+  name = 'True False (single correct)';
+  label = 'True False (single correct)';
 
   get run() {
     return (view, context) => {

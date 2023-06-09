@@ -10,8 +10,8 @@ import helpers from '../helpers/helpers';
 class MultipleChoiceSingleCorrectQuestion extends Tools {
   title = 'Add Multiple Choice Single Correct Question';
   icon = 'multipleChoice';
-  name = 'Multiple Choice Single Correct';
-  label = 'Multiple Choice Single Correct';
+  name = 'Multiple choice (single correct)';
+  label = 'Multiple choice (single correct)';
 
   get run() {
     return (view, context) => {

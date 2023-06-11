@@ -202,6 +202,17 @@ export default ({ node, view, getPos }) => {
     return { count, parentPosition, parentContainer };
   };
 
+  const getUpdatedNode = () => {
+    let nodeFound = node;
+    const allNodes = getNodes(main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        nodeFound = singNode;
+      }
+    });
+    return nodeFound;
+  };
+
   const readOnly = !isEditable;
   const { testMode } = customProps;
   const { feedback } = node.attrs;
@@ -230,7 +241,9 @@ export default ({ node, view, getPos }) => {
       <IconsWrapper>
         {!readOnly && (
           <ActionButton
-            aria-label="add new option"
+            aria-label={`Add new option below ${
+              getUpdatedNode().node?.textContent
+            }`}
             onClick={() => addOption(node.attrs.id)}
             ref={addOptionBtnRef}
             type="button"
@@ -240,7 +253,9 @@ export default ({ node, view, getPos }) => {
         )}
         {!readOnly && (
           <ActionButton
-            aria-label="delete this option"
+            aria-label={`delete this option ${
+              getUpdatedNode().node?.textContent
+            }`}
             onClick={removeOption}
             ref={removeOptionBtnRef}
             type="button"
@@ -251,4 +266,15 @@ export default ({ node, view, getPos }) => {
       </IconsWrapper>
     </Wrapper>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const multipleChoiceNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'true_false_single_correct') {
+      multipleChoiceNodes.push(node);
+    }
+  });
+  return multipleChoiceNodes;
 };

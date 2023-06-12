@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
@@ -24,6 +24,16 @@ const FillTheGapWrapper = styled.div`
   margin-top: 10px;
 `;
 
+const StyledIconAction = styled(Icon)`
+  float: right;
+  position: relative;
+  top: 2px;
+  right: 4px;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+`;
+
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
@@ -42,6 +52,10 @@ export default ({ node, view, getPos }) => {
   const readOnly = !isEditable;
   const { feedback } = node.attrs;
 
+  const displayInfoMsg = () => {
+    console.log('click');
+  };
+
   return (
     <FillTheGapWrapper>
       <div>
@@ -49,6 +63,17 @@ export default ({ node, view, getPos }) => {
         {!testMode && !readOnly && (
           <FillTheGapContainerTool>
             <FillTheGapTool />
+            <span
+              onClick={displayInfoMsg}
+              onKeyPress={() => {}}
+              role="button"
+              tabIndex={0}
+            >
+              <StyledIconAction name="help" />
+            </span>
+            <span style={{ display: 'inline', position: 'absolute' }}>
+              enter answers seperated with a semi colon
+            </span>
           </FillTheGapContainerTool>
         )}
       </div>

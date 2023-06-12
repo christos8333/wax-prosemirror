@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { WaxContext, ComponentPlugin, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
@@ -13,7 +13,7 @@ const FillTheGapContainerTool = styled.div`
   border: 3px solid #f5f5f7;
   border-bottom: none;
 
-  span {
+  span:first-of-type {
     position: relative;
     top: 3px;
   }
@@ -25,13 +25,22 @@ const FillTheGapWrapper = styled.div`
 `;
 
 const StyledIconAction = styled(Icon)`
-  float: right;
   position: relative;
-  top: 2px;
   right: 4px;
   cursor: pointer;
   height: 24px;
   width: 24px;
+`;
+
+const InfoMsg = styled.div`
+  border-radius: 4px;
+  display: none;
+  background: #535e76;
+  color: #fff;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: relative;
+  top: 3px;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -40,6 +49,8 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
+  const infoMsgRef = useRef();
+  const [infoMsgIsOpen, setInfoMsgIsOpen] = useState(false);
   const FillTheGapTool = ComponentPlugin('fillTheGap');
 
   const customProps = main.props.customValues;
@@ -53,7 +64,13 @@ export default ({ node, view, getPos }) => {
   const { feedback } = node.attrs;
 
   const displayInfoMsg = () => {
-    console.log('click');
+    if (infoMsgRef.current && !infoMsgIsOpen)
+      infoMsgRef.current.style.display = 'inline';
+
+    if (infoMsgRef.current && infoMsgIsOpen)
+      infoMsgRef.current.style.display = 'none';
+
+    setInfoMsgIsOpen(!infoMsgIsOpen);
   };
 
   return (
@@ -71,9 +88,9 @@ export default ({ node, view, getPos }) => {
             >
               <StyledIconAction name="help" />
             </span>
-            <span style={{ display: 'inline', position: 'absolute' }}>
+            <InfoMsg ref={infoMsgRef}>
               enter answers seperated with a semi colon
-            </span>
+            </InfoMsg>
           </FillTheGapContainerTool>
         )}
       </div>

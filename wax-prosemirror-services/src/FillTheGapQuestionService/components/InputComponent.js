@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
-import { WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
 
 const AnswerInput = styled.input`
   border: none;
@@ -15,7 +15,7 @@ const AnswerInput = styled.input`
   }
 `;
 
-export default () => {
+export default ({ node }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
@@ -38,10 +38,17 @@ export default () => {
 
   const setAnswerInput = () => {
     setAnswer(answerRef.current.value);
-  };
-
-  const saveAnswer = () => {
-    return false;
+    const allNodes = getNodes(main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        main.dispatch(
+          main.state.tr.setNodeMarkup(singleNode.pos, undefined, {
+            ...singleNode.node.attrs,
+            answer: answerRef.current.value,
+          }),
+        );
+      }
+    });
   };
 
   const onFocus = () => {
@@ -53,7 +60,6 @@ export default () => {
   return (
     <AnswerInput
       aria-label="answer input"
-      onBlur={saveAnswer}
       onChange={setAnswerInput}
       onFocus={onFocus}
       onKeyDown={handleKeyDown}
@@ -62,4 +68,15 @@ export default () => {
       value={answer}
     />
   );
+};
+
+const getNodes = main => {
+  const allNodes = DocumentHelpers.findInlineNodes(main.state.doc);
+  const fillTheGapNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'fill_the_gap') {
+      fillTheGapNodes.push(node);
+    }
+  });
+  return fillTheGapNodes;
 };

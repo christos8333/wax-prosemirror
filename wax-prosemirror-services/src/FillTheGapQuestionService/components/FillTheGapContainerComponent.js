@@ -24,6 +24,10 @@ const FillTheGapWrapper = styled.div`
   margin-top: 10px;
 `;
 
+const StyledIconContainer = styled.span`
+  float: right;
+`;
+
 const StyledIconAction = styled(Icon)`
   position: relative;
   right: 4px;
@@ -33,14 +37,16 @@ const StyledIconAction = styled(Icon)`
 `;
 
 const InfoMsg = styled.div`
-  border-radius: 4px;
-  display: none;
   background: #535e76;
+  border-radius: 4px;
+  bottom: 30px;
   color: #fff;
+  display: none;
+  float: right;
+  left: 100px;
   padding-left: 4px;
   padding-right: 4px;
   position: relative;
-  top: 3px;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -80,14 +86,14 @@ export default ({ node, view, getPos }) => {
         {!testMode && !readOnly && (
           <FillTheGapContainerTool>
             <FillTheGapTool />
-            <span
+            <StyledIconContainer
               onClick={displayInfoMsg}
               onKeyPress={() => {}}
               role="button"
               tabIndex={0}
             >
               <StyledIconAction name="help" />
-            </span>
+            </StyledIconContainer>
             <InfoMsg ref={infoMsgRef}>
               enter answers seperated with a semi colon
             </InfoMsg>

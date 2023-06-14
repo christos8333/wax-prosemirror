@@ -32,7 +32,6 @@
     "not op_mini all"
   ],
   "resolutions": {
-    "prosemirror-view": "1.23.7",
     "styled-components": "5.3.1"
   },
   "devDependencies": {

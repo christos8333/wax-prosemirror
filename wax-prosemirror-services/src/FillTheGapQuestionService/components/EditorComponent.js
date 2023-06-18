@@ -50,6 +50,9 @@ const EditorComponent = ({ node, view, getPos }) => {
     app,
     pmViews: { main },
   } = context;
+
+  const { testMode, showFeedBack } = main.props.customValues;
+
   let gapView;
   const questionId = node.attrs.id;
   const isEditable = main.props.editable(editable => {
@@ -156,15 +159,15 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <>
-      {isEditable || (!isEditable && !main.props.customValues.testMode) ? (
-        <EditorWrapper>
-          <div ref={editorRef} />
-        </EditorWrapper>
-      ) : (
-        <InputComponent getPos={getPos} node={node} view={view} />
-      )}
-    </>
+    isEditable ||
+    (!isEditable && !testMode && !showFeedBack && (
+      <EditorWrapper>
+        <div ref={editorRef} />
+      </EditorWrapper>
+    )) ||
+    (showFeedBack && !testMode && <span>hello</span>) || (
+      <InputComponent getPos={getPos} node={node} view={view} />
+    )
   );
 };
 

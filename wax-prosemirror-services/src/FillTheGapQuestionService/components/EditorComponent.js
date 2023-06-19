@@ -42,6 +42,10 @@ const EditorWrapper = styled.span`
   }
 `;
 
+const StudentAnswer = styled.span``;
+
+const CorrectAnswers = styled.span``;
+
 const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
@@ -159,15 +163,22 @@ const EditorComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    isEditable ||
+    (isEditable && !testMode && !showFeedBack && (
+      <EditorWrapper>
+        <div ref={editorRef} />
+      </EditorWrapper>
+    )) ||
     (!isEditable && !testMode && !showFeedBack && (
       <EditorWrapper>
         <div ref={editorRef} />
       </EditorWrapper>
     )) ||
-    (showFeedBack && !testMode && <span>hello</span>) || (
-      <InputComponent getPos={getPos} node={node} view={view} />
-    )
+    (showFeedBack && !testMode && (
+      <>
+        <StudentAnswer>Answer: {node.attrs.answer}</StudentAnswer>
+        <CorrectAnswers>Possible Answers : </CorrectAnswers>
+      </>
+    )) || <InputComponent getPos={getPos} node={node} view={view} />
   );
 };
 

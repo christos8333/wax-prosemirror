@@ -21,7 +21,7 @@ export default ({ node }) => {
     pmViews: { main },
   } = context;
 
-  const [answer, setAnswer] = useState(' ');
+  const [answer, setAnswer] = useState('');
   const answerRef = useRef(null);
 
   useEffect(() => {}, []);

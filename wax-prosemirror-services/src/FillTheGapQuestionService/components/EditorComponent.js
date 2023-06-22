@@ -42,9 +42,15 @@ const EditorWrapper = styled.span`
   }
 `;
 
-const StudentAnswer = styled.span``;
+const StudentAnswer = styled.span`
+  border-bottom: 1px solid black;
+  margin-right: 5px;
+`;
 
-const CorrectAnswers = styled.span``;
+const CorrectAnswers = styled.span`
+  border-bottom: 1px solid green;
+  margin-right: 5px;
+`;
 
 const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
@@ -175,8 +181,8 @@ const EditorComponent = ({ node, view, getPos }) => {
     )) ||
     (showFeedBack && !testMode && (
       <>
-        <StudentAnswer>Answer: {node.attrs.answer}</StudentAnswer>
-        <CorrectAnswers>Possible Answers : </CorrectAnswers>
+        <StudentAnswer>{node.attrs.answer}</StudentAnswer>
+        <CorrectAnswers>{`(Aceepted Answers : ${node.textContent.replaceAll(';', ' -')})`}</CorrectAnswers>
       </>
     )) || <InputComponent getPos={getPos} node={node} view={view} />
   );

@@ -103,7 +103,7 @@ const DropDownComponent = ({ view, tools }) => {
       item: tools[6],
     },
     {
-      label: 'Fill The Gap',
+      label: 'Fill in the blank',
       value: '7',
       item: tools[7],
     },

@@ -45,6 +45,7 @@ const EditorWrapper = styled.span`
 const StudentAnswer = styled.span`
   border-bottom: 1px solid black;
   margin-right: 5px;
+  color: ${props => (props.isCorrect ? ' #008000' : 'red')};
 `;
 
 const CorrectAnswers = styled.span`
@@ -168,6 +169,15 @@ const EditorComponent = ({ node, view, getPos }) => {
     }
   };
 
+  let isCorrect = false;
+  if (
+    node.textContent
+      .split(';')
+      .find(element => element === node.attrs.answer.trim())
+  ) {
+    isCorrect = true;
+  }
+
   return (
     (isEditable && !testMode && !showFeedBack && (
       <EditorWrapper>
@@ -181,7 +191,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     )) ||
     (showFeedBack && !testMode && (
       <>
-        <StudentAnswer>{node.attrs.answer}</StudentAnswer>
+        <StudentAnswer isCorrect={isCorrect}>{node.attrs.answer}</StudentAnswer>
         <CorrectAnswers>{`(Aceepted Answers : ${node.textContent.replaceAll(';', ' -')})`}</CorrectAnswers>
       </>
     )) || <InputComponent getPos={getPos} node={node} view={view} />

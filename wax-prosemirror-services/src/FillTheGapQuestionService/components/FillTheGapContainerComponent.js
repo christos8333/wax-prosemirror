@@ -42,11 +42,26 @@ const InfoMsg = styled.div`
   bottom: 30px;
   color: #fff;
   display: none;
-  float: right;
   left: 100px;
   padding-left: 4px;
   padding-right: 4px;
   position: relative;
+`;
+
+const ActionButton = styled.button`
+  background: transparent;
+  cursor: pointer;
+  margin-top: 16px;
+  border: none;
+  position: relative;
+  bottom: 14px;
+  left: -11px;
+  float: right;
+`;
+
+const StyledIconActionRemove = styled(Icon)`
+  height: 24px;
+  width: 24px;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -79,6 +94,8 @@ export default ({ node, view, getPos }) => {
     setInfoMsgIsOpen(!infoMsgIsOpen);
   };
 
+  const removeQuestion = () => {};
+
   return (
     <FillTheGapWrapper>
       <div>
@@ -97,6 +114,13 @@ export default ({ node, view, getPos }) => {
             <InfoMsg ref={infoMsgRef}>
               enter answers seperated with a semi colon
             </InfoMsg>
+            <ActionButton
+              aria-label="delete this question"
+              onClick={removeQuestion}
+              type="button"
+            >
+              <StyledIconActionRemove name="deleteOutlined" />
+            </ActionButton>
           </FillTheGapContainerTool>
         )}
       </div>

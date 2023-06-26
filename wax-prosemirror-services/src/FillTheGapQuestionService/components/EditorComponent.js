@@ -192,7 +192,10 @@ const EditorComponent = ({ node, view, getPos }) => {
     (showFeedBack && !testMode && (
       <>
         <StudentAnswer isCorrect={isCorrect}>{node.attrs.answer}</StudentAnswer>
-        <CorrectAnswers>{`(Aceepted Answers : ${node.textContent.replaceAll(';', ' -')})`}</CorrectAnswers>
+        <CorrectAnswers>{`(Accepted Answers : ${node.textContent.replaceAll(
+          ';',
+          ' -',
+        )})`}</CorrectAnswers>
       </>
     )) || <InputComponent getPos={getPos} node={node} view={view} />
   );

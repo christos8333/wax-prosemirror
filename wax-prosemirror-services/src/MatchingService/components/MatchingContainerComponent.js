@@ -14,6 +14,11 @@ const MatchingWrapper = styled.div`
   margin-top: 10px;
 `;
 
+const MatchingContainerTool = styled.div`
+  border: 3px solid #f5f5f7;
+  border-bottom: none;
+`;
+
 const MatchingContainer = styled.div`
   border: 3px solid #f5f5f7;
   margin-bottom: 30px;
@@ -111,6 +116,22 @@ const AddOption = styled.div`
       padding: 4px 8px 4px 8px;
     }
   }
+`;
+
+const RemoveQuestionButton = styled.button`
+  background: transparent;
+  cursor: pointer;
+  margin-top: 6px;
+  border: none;
+  position: relative;
+  bottom: 2px;
+  left: -11px;
+  float: right;
+`;
+
+const StyledIconActionRemove = styled(Icon)`
+  height: 24px;
+  width: 24px;
 `;
 
 export default ({ node, view, getPos }) => {
@@ -243,9 +264,22 @@ export default ({ node, view, getPos }) => {
   const { testMode } = customProps;
   const { feedback } = node.attrs;
 
+  const removeQuestion = () => {};
+
   return (
     <MatchingWrapper>
       {/* <span>Matching</span> */}
+      {!testMode && !readOnly && (
+        <MatchingContainerTool>
+          <RemoveQuestionButton
+            aria-label="delete this question"
+            onClick={removeQuestion}
+            type="button"
+          >
+            <StyledIconActionRemove name="deleteOutlinedQuestion" />
+          </RemoveQuestionButton>
+        </MatchingContainerTool>
+      )}
       <MatchingContainer className="matching">
         <QuestionWrapper>
           <ContainerEditor getPos={getPos} node={node} view={view} />

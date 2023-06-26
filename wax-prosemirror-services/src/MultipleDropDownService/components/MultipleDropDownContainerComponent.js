@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
@@ -24,6 +24,22 @@ const MultipleDropDownpContainer = styled.div`
   margin-bottom: 30px;
 `;
 
+const ActionButton = styled.button`
+  background: transparent;
+  cursor: pointer;
+  margin-top: 16px;
+  border: none;
+  position: relative;
+  bottom: 14px;
+  left: -11px;
+  float: right;
+`;
+
+const StyledIconActionRemove = styled(Icon)`
+  height: 24px;
+  width: 24px;
+`;
+
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
@@ -42,6 +58,8 @@ export default ({ node, view, getPos }) => {
   const { testMode } = customProps;
   const { feedback } = node.attrs;
 
+  const removeQuestion = () => {};
+
   return (
     <MultipleDropDownpWrapper>
       <div>
@@ -49,6 +67,13 @@ export default ({ node, view, getPos }) => {
         {!testMode && !readOnly && (
           <MultipleDropDownContainerTool>
             <MultipleDropDown />
+            <ActionButton
+              aria-label="delete this question"
+              onClick={removeQuestion}
+              type="button"
+            >
+              <StyledIconActionRemove name="deleteOutlinedQuestion" />
+            </ActionButton>
           </MultipleDropDownContainerTool>
         )}
       </div>

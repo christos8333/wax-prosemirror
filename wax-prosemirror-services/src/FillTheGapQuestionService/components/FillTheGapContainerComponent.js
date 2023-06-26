@@ -119,7 +119,7 @@ export default ({ node, view, getPos }) => {
               onClick={removeQuestion}
               type="button"
             >
-              <StyledIconActionRemove name="deleteOutlined" />
+              <StyledIconActionRemove name="deleteOutlinedQuestion" />
             </ActionButton>
           </FillTheGapContainerTool>
         )}

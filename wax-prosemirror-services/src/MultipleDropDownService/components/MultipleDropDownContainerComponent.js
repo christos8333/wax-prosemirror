@@ -1,5 +1,10 @@
 import React, { useContext } from 'react';
-import { WaxContext, ComponentPlugin, Icon } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ComponentPlugin,
+  DocumentHelpers,
+  Icon,
+} from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
@@ -58,7 +63,20 @@ export default ({ node, view, getPos }) => {
   const { testMode } = customProps;
   const { feedback } = node.attrs;
 
-  const removeQuestion = () => {};
+  const removeQuestion = () => {
+    const allNodes = getNodes(context.pmViews.main);
+
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.delete(
+            singleNode.pos,
+            singleNode.pos + singleNode.node.nodeSize,
+          ),
+        );
+      }
+    });
+  };
 
   return (
     <MultipleDropDownpWrapper>
@@ -90,4 +108,15 @@ export default ({ node, view, getPos }) => {
       </MultipleDropDownpContainer>
     </MultipleDropDownpWrapper>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const multipleDropContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'multiple_drop_down_container') {
+      multipleDropContainerNodes.push(node);
+    }
+  });
+  return multipleDropContainerNodes;
 };

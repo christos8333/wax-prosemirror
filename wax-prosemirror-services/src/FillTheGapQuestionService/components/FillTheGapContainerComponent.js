@@ -1,5 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
-import { WaxContext, ComponentPlugin, Icon } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ComponentPlugin,
+  DocumentHelpers,
+  Icon,
+} from 'wax-prosemirror-core';
 import { th } from '@pubsweet/ui-toolkit';
 
 import styled from 'styled-components';
@@ -97,15 +102,18 @@ export default ({ node, view, getPos }) => {
   };
 
   const removeQuestion = () => {
-    const nodeFound = findNodes(context.pmViews.main.state, getPos(), node);
-    if (nodeFound) {
-      context.pmViews.main.dispatch(
-        context.pmViews.main.state.tr.delete(
-          getPos(),
-          getPos() + nodeFound.nodeSize,
-        ),
-      );
-    }
+    const allNodes = getNodes(context.pmViews.main);
+
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.delete(
+            singleNode.pos,
+            singleNode.pos + singleNode.node.nodeSize,
+          ),
+        );
+      }
+    });
   };
 
   return (
@@ -152,15 +160,13 @@ export default ({ node, view, getPos }) => {
   );
 };
 
-const findNodes = (state, pos, fillTheGapNode) => {
-  let nodeFound = '';
-  state.doc.nodesBetween(pos, pos + 2, (node, from) => {
-    if (
-      node.type.name === 'fill_the_gap_container' &&
-      node.attrs.id === fillTheGapNode.attrs.id
-    ) {
-      nodeFound = node;
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const fillTheGapContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'fill_the_gap_container') {
+      fillTheGapContainerNodes.push(node);
     }
   });
-  return nodeFound;
+  return fillTheGapContainerNodes;
 };

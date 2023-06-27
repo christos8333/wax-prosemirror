@@ -264,7 +264,20 @@ export default ({ node, view, getPos }) => {
   const { testMode } = customProps;
   const { feedback } = node.attrs;
 
-  const removeQuestion = () => {};
+  const removeQuestion = () => {
+    const allNodes = getNodes(context.pmViews.main);
+
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.delete(
+            singleNode.pos,
+            singleNode.pos + singleNode.node.nodeSize,
+          ),
+        );
+      }
+    });
+  };
 
   return (
     <MatchingWrapper>

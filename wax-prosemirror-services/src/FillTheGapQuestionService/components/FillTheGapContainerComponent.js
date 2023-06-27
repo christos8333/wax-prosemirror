@@ -1,5 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { WaxContext, ComponentPlugin, Icon } from 'wax-prosemirror-core';
+import { th } from '@pubsweet/ui-toolkit';
+
 import styled from 'styled-components';
 import ContainerEditor from './ContainerEditor';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
@@ -37,15 +39,15 @@ const StyledIconAction = styled(Icon)`
 `;
 
 const InfoMsg = styled.div`
-  background: #535e76;
+  background: ${th('colorPrimary')};
   border-radius: 4px;
-  bottom: 30px;
+  bottom: 32px;
   color: #fff;
   display: none;
-  left: 100px;
-  padding-left: 4px;
-  padding-right: 4px;
+  float: right;
+  padding: 4px;
   position: relative;
+  left: 60px;
 `;
 
 const ActionButton = styled.button`
@@ -94,7 +96,17 @@ export default ({ node, view, getPos }) => {
     setInfoMsgIsOpen(!infoMsgIsOpen);
   };
 
-  const removeQuestion = () => {};
+  const removeQuestion = () => {
+    const nodeFound = findNodes(context.pmViews.main.state, getPos(), node);
+    if (nodeFound) {
+      context.pmViews.main.dispatch(
+        context.pmViews.main.state.tr.delete(
+          getPos(),
+          getPos() + nodeFound.nodeSize,
+        ),
+      );
+    }
+  };
 
   return (
     <FillTheGapWrapper>
@@ -111,9 +123,6 @@ export default ({ node, view, getPos }) => {
             >
               <StyledIconAction name="help" />
             </StyledIconContainer>
-            <InfoMsg ref={infoMsgRef}>
-              enter answers seperated with a semi colon
-            </InfoMsg>
             <ActionButton
               aria-label="delete this question"
               onClick={removeQuestion}
@@ -121,6 +130,9 @@ export default ({ node, view, getPos }) => {
             >
               <StyledIconActionRemove name="deleteOutlinedQuestion" />
             </ActionButton>
+            <InfoMsg ref={infoMsgRef}>
+              enter answers seperated with a semi colon
+            </InfoMsg>
           </FillTheGapContainerTool>
         )}
       </div>
@@ -138,4 +150,17 @@ export default ({ node, view, getPos }) => {
       </FillTheGapContainer>
     </FillTheGapWrapper>
   );
+};
+
+const findNodes = (state, pos, fillTheGapNode) => {
+  let nodeFound = '';
+  state.doc.nodesBetween(pos, pos + 2, (node, from) => {
+    if (
+      node.type.name === 'fill_the_gap_container' &&
+      node.attrs.id === fillTheGapNode.attrs.id
+    ) {
+      nodeFound = node;
+    }
+  });
+  return nodeFound;
 };

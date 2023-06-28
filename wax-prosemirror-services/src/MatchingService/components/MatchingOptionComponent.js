@@ -150,7 +150,12 @@ export default ({ node, view, getPos }) => {
         )}
 
         {readOnly && testMode && !showFeedBack && (
-          <TestModeDropDownComponent getPos={getPos} node={node} view={view} />
+          <TestModeDropDownComponent
+            getPos={getPos}
+            node={node}
+            uniqueId={uuidv4()}
+            view={view}
+          />
         )}
 
         {readOnly && showFeedBack && (

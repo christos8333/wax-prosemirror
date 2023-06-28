@@ -23,7 +23,7 @@ export default class MatchingOptionNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
-    if (event.target.type === 'text') {
+    if (event.target.type === 'text' || event.target.type === 'button') {
       return true;
     }
     const innerView = this.context.pmViews[this.node.attrs.id];

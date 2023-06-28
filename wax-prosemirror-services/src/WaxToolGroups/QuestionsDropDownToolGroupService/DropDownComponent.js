@@ -150,7 +150,7 @@ const DropDownComponent = ({ view, tools }) => {
       });
   };
 
-  if (!isEditable) isDisabled = false;
+  if (!isEditable) isDisabled = true;
 
   const onKeyDown = (e, index) => {
     e.preventDefault();

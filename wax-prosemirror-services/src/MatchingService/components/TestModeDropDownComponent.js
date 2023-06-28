@@ -16,7 +16,6 @@ import {
   useOnClickOutside,
   Icon,
 } from 'wax-prosemirror-core';
-import { v4 as uuidv4 } from 'uuid';
 
 const Wrapper = styled.div``;
 

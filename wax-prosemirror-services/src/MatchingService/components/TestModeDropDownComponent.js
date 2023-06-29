@@ -76,7 +76,6 @@ const TestModeDropDownComponent = ({ getPos, node, view, uniqueId }) => {
   const context = useContext(WaxContext);
   const {
     pmViews: { main },
-    activeView,
   } = context;
 
   let isDisabled = false;

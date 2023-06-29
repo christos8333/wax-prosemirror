@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { WaxContext, Icon } from 'wax-prosemirror-core';
+import { v4 as uuidv4 } from 'uuid';
 import styled, { css } from 'styled-components';
 import ReadOnlyDropDown from './ReadOnlyDropDown';
 
@@ -93,11 +94,5 @@ export default ({ node, getPos }) => {
     );
   }
 
-  return (
-    <ReadOnlyDropDown
-      getPos={getPos}
-      node={node}
-      options={node.attrs.options}
-    />
-  );
+  return <ReadOnlyDropDown getPos={getPos} node={node} uniqueId={uuidv4()} />;
 };

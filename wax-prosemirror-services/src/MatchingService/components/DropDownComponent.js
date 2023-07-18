@@ -85,7 +85,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
   });
 
   let isDisabled = !isEditable;
-  if (allOptions.length === 0) isDisabled = true;
+  if (allOptions && allOptions.length === 0) isDisabled = true;
 
   const onChange = option => {
     const allNodes = getNodes(main);
@@ -109,9 +109,9 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
 
   useEffect(() => {
     const theNode = getMatchingNode(main, node);
-    setAllOptions(theNode.attrs.options);
-    setSelectedOption(theNode.attrs.correct);
-  }, [getMatchingNode(main, node).attrs.options]);
+    setAllOptions(theNode?.attrs?.options);
+    setSelectedOption(theNode?.attrs?.correct);
+  }, [getMatchingNode(main, node)?.attrs?.options]);
 
   useEffect(() => {
     if (isDisabled) setIsOpen(false);
@@ -200,22 +200,23 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
           isOpen={isOpen}
           role="listbox"
         >
-          {allOptions.map((option, index) => {
-            itemRefs.current[index] = itemRefs.current[index] || createRef();
-            return (
-              <span
-                aria-selected={option.value === selectedOption}
-                key={option.value}
-                onClick={() => onChange(option)}
-                onKeyDown={e => onKeyDown(e, index)}
-                ref={itemRefs.current[index]}
-                role="option"
-                tabIndex="-1"
-              >
-                {option.label}
-              </span>
-            );
-          })}
+          {allOptions &&
+            allOptions.map((option, index) => {
+              itemRefs.current[index] = itemRefs.current[index] || createRef();
+              return (
+                <span
+                  aria-selected={option.value === selectedOption}
+                  key={option.value}
+                  onClick={() => onChange(option)}
+                  onKeyDown={e => onKeyDown(e, index)}
+                  ref={itemRefs.current[index]}
+                  role="option"
+                  tabIndex="-1"
+                >
+                  {option.label}
+                </span>
+              );
+            })}
         </DropDownMenu>
       </Wrapper>
     );

@@ -81,7 +81,6 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-
   let isDisabled = !isEditable;
   if (node.attrs.options.length === 0) isDisabled = true;
 

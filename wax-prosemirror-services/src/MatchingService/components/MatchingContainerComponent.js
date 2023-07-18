@@ -220,6 +220,24 @@ export default ({ node, view, getPos }) => {
     setTimeout(() => {
       setAddingOption(false);
     });
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        singleNode.node.content.content.forEach(parentNodes => {
+          parentNodes.forEach(optionNode => {
+            if (optionNode.type.name === 'matching_option') {
+              /* eslint-disable-next-line no-param-reassign */
+              optionNode.attrs.options = options.filter(
+                option => option.value !== value,
+              );
+              if (optionNode.attrs.correct === value) {
+                optionNode.attrs.correct = '';
+              }
+            }
+          });
+        });
+      }
+    });
   };
 
   const saveInChildOptions = allNodes => {

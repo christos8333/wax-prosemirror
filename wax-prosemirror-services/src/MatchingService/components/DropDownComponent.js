@@ -68,6 +68,8 @@ const StyledIcon = styled(Icon)`
 
 const DropComponent = ({ getPos, node, view, uniqueId }) => {
   const [selectedOption, setSelectedOption] = useState(node.attrs.correct);
+  const [allOptions, setAllOptions] = useState(node.attrs.options);
+
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -81,8 +83,9 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
+
   let isDisabled = !isEditable;
-  if (node.attrs.options.length === 0) isDisabled = true;
+  if (allOptions.length === 0) isDisabled = true;
 
   const onChange = option => {
     const allNodes = getNodes(main);
@@ -103,6 +106,12 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
   };
 
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
+
+  useEffect(() => {
+    const theNode = getMatchingNode(main, node);
+    setAllOptions(theNode.attrs.options);
+    setSelectedOption(theNode.attrs.correct);
+  }, [getMatchingNode(main, node).attrs.options]);
 
   useEffect(() => {
     if (isDisabled) setIsOpen(false);
@@ -153,7 +162,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
   const MultipleDropDown = useMemo(() => {
     let selectedValue;
     if (selectedOption) {
-      selectedValue = node.attrs.options.filter(option => {
+      selectedValue = allOptions.filter(option => {
         return option.value === selectedOption;
       });
     }
@@ -182,7 +191,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
         >
           {selectedOption === null || !selectedOption
             ? 'Select Option'
-            : selectedValue[0].label}
+            : selectedValue[0]?.label}
           <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
@@ -191,7 +200,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
           isOpen={isOpen}
           role="listbox"
         >
-          {node.attrs.options.map((option, index) => {
+          {allOptions.map((option, index) => {
             itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (
               <span
@@ -210,7 +219,7 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
         </DropDownMenu>
       </Wrapper>
     );
-  }, [node.attrs.options, selectedOption, isOpen, isDisabled]);
+  }, [allOptions, selectedOption, isOpen, isDisabled]);
 
   return MultipleDropDown;
 };
@@ -218,5 +227,26 @@ const DropComponent = ({ getPos, node, view, uniqueId }) => {
 export default DropComponent;
 
 const getNodes = view => {
-  return DocumentHelpers.findInlineNodes(view.state.doc);
+  const allNodes = DocumentHelpers.findInlineNodes(view.state.doc);
+  const matchingOptionNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'matching_option') {
+      matchingOptionNodes.push(node);
+    }
+  });
+  return matchingOptionNodes;
+};
+
+const getMatchingNode = (view, node) => {
+  const allNodes = DocumentHelpers.findInlineNodes(view.state.doc);
+  let matchingNode = '';
+  allNodes.forEach(singleNode => {
+    if (
+      singleNode.node.type.name === 'matching_option' &&
+      singleNode.node.attrs.id === node.attrs.id
+    ) {
+      matchingNode = singleNode.node;
+    }
+  });
+  return matchingNode;
 };

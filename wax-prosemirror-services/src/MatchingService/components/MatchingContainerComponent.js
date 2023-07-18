@@ -220,18 +220,35 @@ export default ({ node, view, getPos }) => {
     setTimeout(() => {
       setAddingOption(false);
     });
+
     const allNodes = getNodes(context.pmViews.main);
+    // const allNodesOptions = getOptionsNodes(context.pmViews.main);
+    // console.log(allNodesOptions);
+
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         singleNode.node.content.content.forEach(parentNodes => {
           parentNodes.forEach(optionNode => {
             if (optionNode.type.name === 'matching_option') {
+              // setTimeout(() => {
+              //   context.pmViews.main.dispatch(
+              //     context.pmViews.main.state.tr
+              //       .setMeta('addToHistory', false)
+              //       .setNodeMarkup(allNodesOptions[0].pos, undefined, {
+              //         ...allNodesOptions[0].node.attrs,
+              //         options: options.filter(option => option.value !== value),
+              //         correct: '',
+              //       }),
+              //   );
+              //   console.log(allNodesOptions);
+              // });
+
               /* eslint-disable-next-line no-param-reassign */
               optionNode.attrs.options = options.filter(
                 option => option.value !== value,
               );
               if (optionNode.attrs.correct === value) {
-                optionNode.attrs.correct = '';
+                optionNode.attrs.correct = null;
               }
             }
           });
@@ -392,4 +409,15 @@ const getNodes = view => {
     }
   });
   return matchingContainerNodes;
+};
+
+const getOptionsNodes = view => {
+  const allNodes = DocumentHelpers.findInlineNodes(view.state.doc);
+  const matchingOptionNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'matching_option') {
+      matchingOptionNodes.push(node);
+    }
+  });
+  return matchingOptionNodes;
 };

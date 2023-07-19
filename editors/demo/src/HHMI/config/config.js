@@ -22,7 +22,7 @@ import {
   EssayService,
   MatchingService,
   MultipleDropDownService,
-  ExternalAPIContentService,
+  // ExternalAPIContentService,
 } from 'wax-prosemirror-services';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
@@ -113,7 +113,7 @@ export default {
         'Lists',
         'Images',
         'Tables',
-        'ExternalAPIContent',
+        // 'ExternalAPIContent',
         'QuestionsDropDown',
         'FullScreen',
       ],
@@ -127,9 +127,9 @@ export default {
       toolGroups: ['MultipleDropDown'],
     },
   ],
-  ExternalAPIContentService: {
-    ExternalAPIContentTransformation: ExternalAPIContentTransformation,
-  },
+  // ExternalAPIContentService: {
+  //   ExternalAPIContentTransformation: ExternalAPIContentTransformation,
+  // },
 
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
@@ -137,7 +137,7 @@ export default {
 
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [
-    new ExternalAPIContentService(),
+    // new ExternalAPIContentService(),
     new MatchingService(),
     new FillTheGapQuestionService(),
     new MultipleChoiceQuestionService(),

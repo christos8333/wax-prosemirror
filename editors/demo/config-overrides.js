@@ -11,6 +11,10 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-prosemirror-services/index',
       ),
+      'wax-questions-service': path.resolve(
+        __dirname,
+        '../../wax-questions-service/index',
+      ),
     },
   };
   config.module = {

@@ -16,12 +16,6 @@ import {
   MathService,
   FullScreenService,
   FullScreenToolGroupService,
-  MultipleChoiceQuestionService,
-  FillTheGapQuestionService,
-  QuestionsDropDownToolGroupService,
-  EssayService,
-  MatchingService,
-  MultipleDropDownService,
   // ExternalAPIContentService,
 } from 'wax-prosemirror-services';
 
@@ -114,18 +108,18 @@ export default {
         'Images',
         'Tables',
         // 'ExternalAPIContent',
-        'QuestionsDropDown',
+        // 'QuestionsDropDown',
         'FullScreen',
       ],
     },
-    {
-      templateArea: 'fillTheGap',
-      toolGroups: ['FillTheGap'],
-    },
-    {
-      templateArea: 'MultipleDropDown',
-      toolGroups: ['MultipleDropDown'],
-    },
+    // {
+    //   templateArea: 'fillTheGap',
+    //   toolGroups: ['FillTheGap'],
+    // },
+    // {
+    //   templateArea: 'MultipleDropDown',
+    //   toolGroups: ['MultipleDropDown'],
+    // },
   ],
   // ExternalAPIContentService: {
   //   ExternalAPIContentTransformation: ExternalAPIContentTransformation,
@@ -138,12 +132,6 @@ export default {
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [
     // new ExternalAPIContentService(),
-    new MatchingService(),
-    new FillTheGapQuestionService(),
-    new MultipleChoiceQuestionService(),
-    new QuestionsDropDownToolGroupService(),
-    new MultipleDropDownService(),
-    new EssayService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

@@ -14,38 +14,30 @@
 7 silly execute attempt
 8 silly runScriptInDir build [] wax-prosemirror-core
 9 silly getExecOpts { cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-core' }
-10 error build Errored while running script in 'wax-prosemirror-core'
-11 error execute callback with error
-12 error Error: Command failed: yarn run build
-12 error
-12 error ./index.js → dist/index.js...
-12 error Browserslist: caniuse-lite is outdated. Please run:
-12 error npx browserslist@latest --update-db
-12 error (!) Circular dependency
-12 error index.js -> src/Wax.js -> src/Application.js -> src/config/defaultConfig.js -> src/config/defaultServices/MenuService/MenuService.js -> src/config/defaultServices/MenuService/Menu.js -> src/utilities/lib/ToolGroup.js -> src/components/ToolGroups.js -> src/components/ToolGroupComponent.js -> src/components/ui/Dropdown.js -> src/components/ui/MenuButton.js -> index.js
-12 error [!] Error: 'default' is not exported by src/components/icons/icons.js, imported by index.js
-12 error https://rollupjs.org/guide/en/#error-name-is-not-exported-by-module
-12 error index.js (47:9)
-12 error 45: export { default as Tabs } from './src/components/tabs/Tabs';
-12 error 46: export { default as MenuButton } from './src/components/ui/MenuButton';
-12 error 47: export { default as icons } from './src/components/icons/icons';
-12 error              ^
-12 error 48: export { default as Icon } from './src/components/icons/Icon';
-12 error 49: export { default as Button } from './src/components/Button';
-12 error Error: 'default' is not exported by src/components/icons/icons.js, imported by index.js
-12 error     at error (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:5171:30)
-12 error     at Module.error (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:9603:16)
-12 error     at handleMissingExport (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:9525:28)
-12 error     at Module.getVariableForExportName (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:9768:24)
-12 error     at Module.traceVariable (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:9983:45)
-12 error     at ModuleScope.findVariable (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:8549:39)
-12 error     at FunctionScope.findVariable (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:2795:38)
-12 error     at ChildScope.findVariable (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:2795:38)
-12 error     at Identifier$1.bind (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:4152:40)
-12 error     at MemberExpression.bind (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:2880:23)
-12 error
-12 error error Command failed with exit code 1.
-12 error $ BABEL_ENV=production rollup -c
-12 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-12 error
-12 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/node_modules/execa/index.js:236:11
+10 silly runScriptInDir build [] wax-prosemirror-services
+11 silly getExecOpts {
+11 silly getExecOpts   cwd: '/home/chris/workspace/wax-prosemirror/wax-prosemirror-services'
+11 silly getExecOpts }
+12 error build Errored while running script in 'wax-prosemirror-services'
+13 error execute callback with error
+14 error Error: Command failed: yarn run build
+14 error
+14 error index.js → dist/index.js...
+14 error Browserslist: caniuse-lite is outdated. Please run:
+14 error npx browserslist@latest --update-db
+14 error [!] Error: Could not resolve './src/MultipleChoiceQuestionService/MultipleChoiceQuestionService' from index.js
+14 error Error: Could not resolve './src/MultipleChoiceQuestionService/MultipleChoiceQuestionService' from index.js
+14 error     at error (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:5171:30)
+14 error     at ModuleLoader.handleResolveId (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17864:24)
+14 error     at /home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17856:22
+14 error     at async Promise.all (index 26)
+14 error     at ModuleLoader.fetchStaticDependencies (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17854:34)
+14 error     at async Promise.all (index 0)
+14 error     at ModuleLoader.fetchModule (/home/chris/workspace/wax-prosemirror/node_modules/rollup/dist/shared/rollup.js:17831:9)
+14 error     at async Promise.all (index 0)
+14 error
+14 error error Command failed with exit code 1.
+14 error $ BABEL_ENV=production rollup -c
+14 error info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+14 error
+14 error     at /home/chris/workspace/wax-prosemirror/node_modules/lerna/node_modules/execa/index.js:236:11

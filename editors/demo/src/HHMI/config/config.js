@@ -19,6 +19,8 @@ import {
   // ExternalAPIContentService,
 } from 'wax-prosemirror-services';
 
+import { QuestionsService } from 'wax-questions-service';
+
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
 const API_KEY = '';
@@ -108,18 +110,18 @@ export default {
         'Images',
         'Tables',
         // 'ExternalAPIContent',
-        // 'QuestionsDropDown',
+        'QuestionsDropDown',
         'FullScreen',
       ],
     },
-    // {
-    //   templateArea: 'fillTheGap',
-    //   toolGroups: ['FillTheGap'],
-    // },
-    // {
-    //   templateArea: 'MultipleDropDown',
-    //   toolGroups: ['MultipleDropDown'],
-    // },
+    {
+      templateArea: 'fillTheGap',
+      toolGroups: ['FillTheGap'],
+    },
+    {
+      templateArea: 'MultipleDropDown',
+      toolGroups: ['MultipleDropDown'],
+    },
   ],
   // ExternalAPIContentService: {
   //   ExternalAPIContentTransformation: ExternalAPIContentTransformation,
@@ -132,6 +134,7 @@ export default {
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [
     // new ExternalAPIContentService(),
+    new QuestionsService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

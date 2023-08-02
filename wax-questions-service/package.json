@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@pubsweet/ui-toolkit": "^2.3.1",
+    "wax-prosemirror-core":"^0.8.8",
     "wax-prosemirror-services":"^0.8.8",
     "uuid": "^7.0.3"
   },

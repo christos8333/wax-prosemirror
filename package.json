@@ -13,6 +13,7 @@
   "workspaces": [
     "wax-prosemirror-core",
     "wax-prosemirror-services",
+    "wax-questions-service",
     "editors/*"
   ],
   "scripts": {

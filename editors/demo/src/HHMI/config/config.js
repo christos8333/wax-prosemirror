@@ -16,14 +16,10 @@ import {
   MathService,
   FullScreenService,
   FullScreenToolGroupService,
-  MultipleChoiceQuestionService,
-  FillTheGapQuestionService,
-  QuestionsDropDownToolGroupService,
-  EssayService,
-  MatchingService,
-  MultipleDropDownService,
   // ExternalAPIContentService,
 } from 'wax-prosemirror-services';
+
+import { QuestionsService } from 'wax-questions-service';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
@@ -138,12 +134,7 @@ export default {
   PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
   services: [
     // new ExternalAPIContentService(),
-    new MatchingService(),
-    new FillTheGapQuestionService(),
-    new MultipleChoiceQuestionService(),
-    new QuestionsDropDownToolGroupService(),
-    new MultipleDropDownService(),
-    new EssayService(),
+    new QuestionsService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),

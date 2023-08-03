@@ -1,4 +1,3 @@
-
 ## Wax questions package
 
 1. Multiple Choice and single correct variant
@@ -14,3 +13,39 @@
 6. Fill in the blank
 
 ## How to use
+
+### Editor's config
+
+```
+import { QuestionsService } from 'wax-questions-service';
+```
+
+### Tools
+
+```
+MenuService: [
+    {
+      templateArea: 'mainMenuToolBar',
+      toolGroups: [
+        'QuestionsDropDown',
+      ],
+    },
+    {
+      templateArea: 'fillTheGap',
+      toolGroups: ['FillTheGap'],
+    },
+    {
+      templateArea: 'MultipleDropDown',
+      toolGroups: ['MultipleDropDown'],
+    },
+  ],
+
+```
+
+### Start the Service
+
+```
+ services: [
+    new QuestionsService(),
+  ]
+```

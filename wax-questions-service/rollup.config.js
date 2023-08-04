@@ -39,13 +39,12 @@ export default {
   external: [
     'uuid',
     'react',
+    'rc-switch',
+    'use-dynamic-refs',
     'react-dom',
-    'react-dropdown',
     'lodash',
-    'prosemirror-tables',
     'prosemirror-schema-list',
     'prosemirror-model',
     'prosemirror-inputrules',
-    '@babel/runtime/regenerator',
   ],
 };

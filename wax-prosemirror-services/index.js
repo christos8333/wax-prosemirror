@@ -39,7 +39,6 @@ export { default as BaseToolGroupService } from './src/WaxToolGroups/BaseToolGro
 export { default as AnnotationToolGroupService } from './src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService';
 export { default as ListToolGroupService } from './src/WaxToolGroups/ListToolGroupService/ListToolGroupService';
 export { default as ImageToolGroupService } from './src/WaxToolGroups/ImageToolGroupService/ImageToolGroupService';
-export { default as TableToolGroupService } from './src/WaxToolGroups/TableToolGroupService/TableToolGroupService';
 export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayToolGroupService/DisplayToolGroupService';
 export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
 export { default as NoteToolGroupService } from './src/WaxToolGroups/NoteToolGroupService/NoteToolGroupService';

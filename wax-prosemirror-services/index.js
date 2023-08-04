@@ -58,7 +58,6 @@ export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
 export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
 export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';
-export { default as FindAndReplaceToolGroupService } from './src/WaxToolGroups/FindAndReplaceToolGroupService/FindAndReplaceToolGroupService';
 export { default as TitleToolGroupService } from './src/WaxToolGroups/TitleToolGroupService/TitleToolGroupService';
 /* Plugins */
 

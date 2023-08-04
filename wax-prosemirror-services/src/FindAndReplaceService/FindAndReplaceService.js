@@ -2,6 +2,7 @@ import { Service } from 'wax-prosemirror-core';
 import FindAndReplacePlugin from './plugins/FindAndReplacePlugin';
 import FindAndReplace from './FindAndReplace';
 import './findAndReplace.css';
+import FindAndReplaceToolGroupService from './FindAndReplaceToolGroupService/FindAndReplaceToolGroupService';
 
 class FindAndReplaceService extends Service {
   name = 'FindAndReplaceService';
@@ -16,5 +17,7 @@ class FindAndReplaceService extends Service {
   register() {
     this.container.bind('FindAndReplace').to(FindAndReplace);
   }
+
+  dependencies = [new FindAndReplaceToolGroupService()];
 }
 export default FindAndReplaceService;

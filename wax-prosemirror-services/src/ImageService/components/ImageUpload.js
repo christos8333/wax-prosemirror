@@ -83,6 +83,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           />
 
           <input
+            accept="image/*"
             id="file-upload"
             onChange={e => {
               fileUpload(e.target.files[0]);

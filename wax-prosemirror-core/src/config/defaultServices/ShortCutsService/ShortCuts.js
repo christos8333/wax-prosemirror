@@ -82,13 +82,8 @@ const pressEnter = (state, dispatch) => {
     );
     if (
       title.length === 1 &&
-      state.selection.from === title[0].node.nodeSize - 1
-    ) {
-      return false;
-    }
-    if (
-      title.length === 1 &&
-      state.selection.ranges[0].$from.parent.type.name === 'title'
+      state.selection.from >= title[0].pos - 1 &&
+      state.selection.from < title[0].pos + title[0].node.nodeSize - 1
     ) {
       return true;
     }

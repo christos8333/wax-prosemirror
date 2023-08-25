@@ -73,7 +73,7 @@ const FindAndReplaceTool = ({ item }) => {
       <Wrapper>
         <MenuButton
           active={isOpen}
-          // disabled={!isEditable}
+          disabled={false}
           iconName={icon}
           onMouseDown={() => {
             setIsOpen(!isOpen);

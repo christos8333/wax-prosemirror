@@ -155,6 +155,7 @@ const findAllMarksWithSameId = (state, mark) => {
       }
     });
   });
+  console.log(allMarksWithSameId);
   return allMarksWithSameId;
 };
 
@@ -249,7 +250,7 @@ export const findMatches = (doc, searchValue, matchCase) => {
   const mergedTextNodes = [];
   let index = 0;
 
-  allNodes.forEach((node, i) => {
+  allNodes.forEach(node => {
     if (node.node.isText) {
       if (mergedTextNodes[index]) {
         mergedTextNodes[index] = {

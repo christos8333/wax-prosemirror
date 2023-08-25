@@ -46,6 +46,10 @@ const BlockDropDownComponent = ({ view, tools }) => {
   } = context;
   const [label, setLabel] = useState(null);
 
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
   const dropDownOptions = [
     // { label: 'Title (H1)', value: '0', item: tools[0] },
     // { label: 'author', value: '1', item: tools[1] },
@@ -84,12 +88,12 @@ const BlockDropDownComponent = ({ view, tools }) => {
           }}
           options={dropDownOptions}
           placeholder="Block Level"
-          select
+          select={isEditable}
           value={label}
         />
       </Wrapper>
     ),
-    [label],
+    [label, isEditable],
   );
 
   return MultipleDropDown;

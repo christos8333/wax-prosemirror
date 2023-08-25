@@ -37,7 +37,7 @@ const markActive = type => state => {
 };
 
 const blockActive = (nodeType, attrs = {}) => {
-  return (state, dispatch) => {
+  return state => {
     const { from, to } = state.selection;
     let isActive = false;
     state.doc.nodesBetween(from, to, (node, pos) => {

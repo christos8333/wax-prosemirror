@@ -38,11 +38,9 @@ const FindAndReplaceTool = ({ item }) => {
   let styles = { right: '-190px' };
   const [style, setStyle] = useState(styles);
 
-  let isDisabled = false;
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-  if (!isEditable) isDisabled = true;
 
   const triggerFind = e => {
     if ((e.key === 70 || e.keyCode === 70) && (e.metaKey || e.ctrlKey)) {
@@ -75,7 +73,7 @@ const FindAndReplaceTool = ({ item }) => {
       <Wrapper>
         <MenuButton
           active={isOpen}
-          disabled={isDisabled}
+          // disabled={!isEditable}
           iconName={icon}
           onMouseDown={() => {
             setIsOpen(!isOpen);
@@ -94,7 +92,7 @@ const FindAndReplaceTool = ({ item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, style, isDisabled],
+    [isOpen, style, isEditable],
   );
 
   return MemorizedDropdown;

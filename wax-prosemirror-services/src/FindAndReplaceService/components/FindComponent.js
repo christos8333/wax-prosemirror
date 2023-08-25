@@ -77,7 +77,16 @@ const IconWrapper = styled.span`
   }
 `;
 
-const ExpandedWrapper = styled.div``;
+const ExpandedWrapper = styled.div`
+  pointer-events: ${props => (props.isDisabled ? 'none' : '')};
+`;
+
+const StyledIconMore = styled(Icon)`
+  cursor: ${props => (props.isDisabled ? 'not-allowed' : 'pointer')};
+  height: 24px;
+  opacity: ${props => (props.isDisabled ? '0.4' : '1')};
+  width: 24px;
+`;
 
 const Svg = styled.svg.attrs(() => ({
   version: '1.1',
@@ -101,8 +110,17 @@ const FindComponent = ({
   findNextMatch,
   findPreviousMatch,
 }) => {
-  const { app, pmViews, activeViewId } = useContext(WaxContext);
+  const {
+    app,
+    pmViews,
+    activeViewId,
+    pmViews: { main },
+  } = useContext(WaxContext);
   const searchRef = useRef(null);
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   const [searchValue, setSearchValue] = useState('');
   const [counterText, setCounterText] = useState('0 of 0');
@@ -114,7 +132,7 @@ const FindComponent = ({
 
   const debouncedSearchTerm = useDebounce(searchValue, 300);
 
-  each(pmViews, (singleView, viewId) => {
+  each(pmViews, singleView => {
     allStates.push(singleView.state);
   });
 
@@ -250,8 +268,8 @@ const FindComponent = ({
             <StyledIcon name="navigateNext" />
           </IconWrapper>
 
-          <ExpandedWrapper onClick={showExpanded}>
-            <StyledIcon name="more" />
+          <ExpandedWrapper isDisabled={!isEditable} onClick={showExpanded}>
+            <StyledIconMore isDisabled={!isEditable} name="more" />
           </ExpandedWrapper>
 
           <CloseWrapper onClick={closeFind}>

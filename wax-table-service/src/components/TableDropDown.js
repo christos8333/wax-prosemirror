@@ -8,8 +8,8 @@ import React, {
   createRef,
 } from 'react';
 import styled from 'styled-components';
-import * as tablesFn from 'prosemirror-tables';
 import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
+import * as tablesFn from '../tableSrc';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -41,7 +41,7 @@ const DropDownMenu = styled.div`
   margin: 10px auto auto;
   position: absolute;
   width: 170px;
-  max-height: 150px;
+  max-height: 180px;
   overflow-y: scroll;
   z-index: 2;
 
@@ -64,13 +64,15 @@ const StyledIcon = styled(Icon)`
 
 const TableDropDown = ({ item }) => {
   const dropDownOptions = [
+    { label: 'Delete table', value: 'deleteTable' },
+    { label: 'Add Caption', value: 'addCaption' },
+    { label: 'Delete Caption', value: 'deleteCaption' },
     { label: 'Add column before', value: 'addColumnBefore' },
     { label: 'Add column after', value: 'addColumnAfter' },
     { label: 'Delete column', value: 'deleteColumn' },
     { label: 'Insert row before', value: 'addRowBefore' },
     { label: 'Insert row after', value: 'addRowAfter' },
     { label: 'Delete row', value: 'deleteRow' },
-    { label: 'Delete table', value: 'deleteTable' },
     { label: 'Merge cells', value: 'mergeCells' },
     { label: 'Split cell', value: 'splitCell' },
     { label: 'Toggle header column', value: 'toggleHeaderColumn' },

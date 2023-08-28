@@ -1,6 +1,6 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import { debounce } from 'lodash';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
+
 import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
@@ -9,7 +9,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
   BaseService,
   BaseToolGroupService,
   DisplayBlockLevelService,
@@ -47,6 +46,7 @@ import {
   OENContainersToolGroupService,
   OENAsideToolGroupService,
 } from 'wax-prosemirror-services';
+import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
 
@@ -191,7 +191,7 @@ export default {
       reject: true,
     },
   },
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

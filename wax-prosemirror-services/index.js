@@ -5,7 +5,6 @@ export { default as BaseService } from './src/BaseService/BaseService';
 export { default as ImageService } from './src/ImageService/ImageService';
 export { default as InlineAnnotationsService } from './src/InlineAnnotations/InlineAnnotationsService';
 export { default as ListsService } from './src/ListsService/ListsService';
-export { default as TablesService } from './src/TablesService/TablesService';
 export { default as TextBlockLevelService } from './src/TextBlockLevel/TextBlockLevelService';
 export { default as DisplayBlockLevelService } from './src/DisplayBlockLevel/DisplayBlockLevelService';
 export { default as NoteService } from './src/NoteService/NoteService';

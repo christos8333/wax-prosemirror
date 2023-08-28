@@ -6,7 +6,6 @@
     "@guardian/prosemirror-invisibles": "^1.2.0",
     "@pubsweet/ui-toolkit": "^2.3.1",
     "fontsource-merriweather": "^3.0.9",
-    "prosemirror-tables": "1.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-panelgroup": "^1.0.10",
@@ -16,7 +15,8 @@
     "typeface-vollkorn": "^0.0.54",
     "wax-prosemirror-core": "^0.8.9",
     "wax-prosemirror-services": "^0.8.9",
-    "wax-questions-service": "^0.8.9"
+    "wax-questions-service": "^0.8.9",
+    "wax-table-service": "^0.8.9"
   },
   "scripts": {
     "start": "react-app-rewired start",

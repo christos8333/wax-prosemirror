@@ -96,8 +96,11 @@ const createTable = (colsRows, state, dispatch) => {
     rows.push(state.config.schema.nodes.table_row.createAndFill(null, cells));
   }
 
-  const table = state.config.schema.nodes.table.createAndFill(null, rows);
-  dispatch(state.tr.replaceSelectionWith(table));
+  const tableBody = state.config.schema.nodes.table_body.createAndFill(
+    null,
+    rows,
+  );
+  dispatch(state.tr.replaceSelectionWith(tableBody));
 };
 
 const createLink = (state, dispatch) => {

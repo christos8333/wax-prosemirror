@@ -1,5 +1,4 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   AnnotationToolGroupService,
   ImageService,
@@ -7,7 +6,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
   BaseService,
   BaseToolGroupService,
   DisplayBlockLevelService,
@@ -34,6 +32,8 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
 } from 'wax-prosemirror-services';
+
+import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 
@@ -79,7 +79,7 @@ export default {
   TitleService: { updateTitle },
   EnableTrackChangeService: { enabled: false },
 
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

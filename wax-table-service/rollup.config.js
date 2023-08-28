@@ -5,7 +5,7 @@ import css from 'rollup-plugin-import-css';
 import { terser } from 'rollup-plugin-terser';
 
 export default {
-  input: './index.js',
+  input: 'index.js',
   output: [
     {
       file: 'dist/index.js',
@@ -21,6 +21,12 @@ export default {
     babel({
       presets: ['react-app'],
       plugins: [
+        [
+          '@babel/plugin-transform-runtime',
+          {
+            regenerator: true,
+          },
+        ],
         ['@babel/plugin-proposal-decorators', { legacy: true }],
         'babel-plugin-parameter-decorator',
       ],
@@ -30,5 +36,5 @@ export default {
     commonjs(),
     terser(),
   ],
-  external: [],
+  external: ['uuid', 'react', 'react-dom', 'lodash', 'prosemirror-model'],
 };

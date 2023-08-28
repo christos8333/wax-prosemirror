@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 import { Service } from 'wax-prosemirror-core';
-import { tableNodes, goToNextCell } from 'prosemirror-tables';
+import { tableNodes, goToNextCell } from '../tableSrc';
 import Table from './Table';
 
 class InsertTableService extends Service {
@@ -8,7 +9,14 @@ class InsertTableService extends Service {
     const CreateShortCut = this.container.get('CreateShortCut');
 
     // eslint-disable-next-line camelcase
-    const { table, table_row, table_cell, table_header } = tableNodes({
+    const {
+      table,
+      table_row,
+      table_caption,
+      table_body,
+      table_cell,
+      table_header,
+    } = tableNodes({
       tableGroup: 'block',
       cellContent: 'block+',
     });
@@ -16,6 +24,12 @@ class InsertTableService extends Service {
 
     createNode({
       table,
+    });
+    createNode({
+      table_caption,
+    });
+    createNode({
+      table_body,
     });
     createNode({
       table_row,

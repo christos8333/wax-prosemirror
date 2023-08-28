@@ -1,5 +1,4 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
@@ -8,7 +7,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
   BaseService,
   BaseToolGroupService,
   DisplayTextToolGroupService,
@@ -19,6 +17,7 @@ import {
 } from 'wax-prosemirror-services';
 
 import { QuestionsService } from 'wax-questions-service';
+import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
@@ -130,7 +129,7 @@ export default {
   RulesService: [emDash, ellipsis],
   ImageService: { showAlt: true },
 
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()])],
   services: [
     // new ExternalAPIContentService(),
     new QuestionsService(),

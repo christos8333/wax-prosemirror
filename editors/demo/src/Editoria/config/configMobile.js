@@ -6,7 +6,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
   BaseService,
   BaseToolGroupService,
   DisplayBlockLevelService,
@@ -33,6 +32,8 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
 } from 'wax-prosemirror-services';
+
+import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 

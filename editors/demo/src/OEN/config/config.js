@@ -9,7 +9,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
   BaseService,
   BaseToolGroupService,
   DisplayBlockLevelService,
@@ -47,6 +46,7 @@ import {
   OENContainersToolGroupService,
   OENAsideToolGroupService,
 } from 'wax-prosemirror-services';
+import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
 

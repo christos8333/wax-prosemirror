@@ -1,3 +1,5 @@
+/* eslint-disable*/
+
 // src/index.ts
 import { Plugin as Plugin2 } from 'prosemirror-state';
 

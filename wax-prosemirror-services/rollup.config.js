@@ -40,11 +40,7 @@ export default {
     'uuid',
     'react',
     'react-dom',
-    'react-dropdown',
     'lodash',
-    'prosemirror-schema-list',
-    'prosemirror-model',
-    'prosemirror-inputrules',
     '@babel/runtime/regenerator',
   ],
 };

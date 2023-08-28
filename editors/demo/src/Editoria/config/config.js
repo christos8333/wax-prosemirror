@@ -9,7 +9,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
   BaseService,
   BaseToolGroupService,
   DisplayBlockLevelService,
@@ -46,9 +45,9 @@ import {
   // YjsService,
   // BlockDropDownToolGroupService,
   // TitleToolGroupService,
-  tableEditing,
-  columnResizing,
 } from 'wax-prosemirror-services';
+
+import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
 

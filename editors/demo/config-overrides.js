@@ -15,6 +15,10 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-questions-service/index',
       ),
+      'wax-table-service': path.resolve(
+        __dirname,
+        '../../wax-table-service/index',
+      ),
     },
   };
   config.module = {

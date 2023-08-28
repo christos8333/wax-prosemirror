@@ -15,7 +15,8 @@
     "typeface-vollkorn": "^0.0.54",
     "wax-prosemirror-core": "^0.8.9",
     "wax-prosemirror-services": "^0.8.9",
-    "wax-questions-service": "^0.8.9"
+    "wax-questions-service": "^0.8.9",
+    "wax-table-service": "^0.8.9"
   },
   "scripts": {
     "start": "react-app-rewired start",

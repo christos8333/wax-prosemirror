@@ -1,0 +1,37 @@
+{
+  "name": "wax-table-service",
+  "author": "Christos Kokosias & Giannis Kopanas",
+  "version": "0.8.9",
+  "description": "Wax Table Service",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "style": "dist/index.css",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "BABEL_ENV=production rollup -c"
+  },
+  "dependencies": {
+    "@pubsweet/ui-toolkit": "^2.3.1",
+    "inversify": "^5.0.1",
+    "lodash": "^4.17.4",
+    "uuid": "^7.0.3",
+    "prosemirror-keymap": "1.2.1",
+    "prosemirror-state": "1.4.2",
+    "prosemirror-view": "1.30.2",
+    "prosemirror-transform": "1.7.1",
+    "wax-prosemirror-core": "^0.8.9",
+    "wax-prosemirror-services": "^0.8.9"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2",
+    "prosemirror-test-builder": "^1.0.1"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.1"
+  }
+}

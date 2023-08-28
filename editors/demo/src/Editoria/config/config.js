@@ -46,6 +46,8 @@ import {
   // YjsService,
   // BlockDropDownToolGroupService,
   // TitleToolGroupService,
+  tableEditing,
+  columnResizing,
 } from 'wax-prosemirror-services';
 
 import { EditoriaSchema } from 'wax-prosemirror-core';
@@ -150,6 +152,8 @@ export default {
     },
   },
   PmPlugins: [
+    tableEditing(),
+    columnResizing(),
     invisibles([hardBreak()]),
     disallowPasteImagesPlugin(() =>
       onWarning(

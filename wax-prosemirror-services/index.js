@@ -61,3 +61,5 @@ export { default as TitleToolGroupService } from './src/WaxToolGroups/TitleToolG
 /* Plugins */
 
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';
+
+export { tableEditing, columnResizing } from './src/TablesService/tableSrc';

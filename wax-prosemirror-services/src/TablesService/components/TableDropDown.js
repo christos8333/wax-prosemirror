@@ -41,7 +41,7 @@ const DropDownMenu = styled.div`
   margin: 10px auto auto;
   position: absolute;
   width: 170px;
-  max-height: 150px;
+  max-height: 180px;
   overflow-y: scroll;
   z-index: 2;
 
@@ -64,20 +64,20 @@ const StyledIcon = styled(Icon)`
 
 const TableDropDown = ({ item }) => {
   const dropDownOptions = [
+    { label: 'Delete table', value: 'deleteTable' },
+    { label: 'Add Caption', value: 'addCaption' },
+    { label: 'Delete Caption', value: 'deleteCaption' },
     { label: 'Add column before', value: 'addColumnBefore' },
     { label: 'Add column after', value: 'addColumnAfter' },
     { label: 'Delete column', value: 'deleteColumn' },
     { label: 'Insert row before', value: 'addRowBefore' },
     { label: 'Insert row after', value: 'addRowAfter' },
     { label: 'Delete row', value: 'deleteRow' },
-    { label: 'Delete table', value: 'deleteTable' },
     { label: 'Merge cells', value: 'mergeCells' },
     { label: 'Split cell', value: 'splitCell' },
     { label: 'Toggle header column', value: 'toggleHeaderColumn' },
     { label: 'Toggle header row', value: 'toggleHeaderRow' },
     { label: 'Toggle header cells', value: 'toggleHeaderCell' },
-    { label: 'Add Caption', value: 'addCaption' },
-    { label: 'Delete Caption', value: 'deleteCaption' },
   ];
 
   const { activeView } = useContext(WaxContext);

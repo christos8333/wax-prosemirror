@@ -40,19 +40,6 @@ const Editoria = () => {
   }
   const editorRef = useRef();
 
-  const text = `<table>
-  <caption>Monthly savings</caption>
-  <tr>
-    <th>Month</th>
-    <th>Savings</th>
-  </tr>
-  <tr>
-    <td>January</td>
-    <td>$100</td>
-  </tr>
-</table>
-          `;
-
   const EditoriaComponent = useMemo(
     () => (
       <>
@@ -63,7 +50,7 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value={text}
+          value={demo}
           // readonly
           layout={layout}
           // onChange={debounce(source => {

@@ -332,13 +332,31 @@ function tableNodes(options) {
     cellAttrs[prop] = { default: extraAttrs[prop].default };
   return {
     table: {
-      content: 'table_row+',
+      content: 'table_caption? table_body*',
       tableRole: 'table',
       isolating: true,
       group: options.tableGroup,
       parseDOM: [{ tag: 'table' }],
       toDOM() {
-        return ['table', ['tbody', 0]];
+        return ['table', 0];
+      },
+    },
+    table_caption: {
+      content: 'block+',
+      tableRole: 'caption',
+      isolating: true,
+      parseDOM: [{ tag: 'caption' }],
+      toDOM() {
+        return ['caption', 0];
+      },
+    },
+    table_body: {
+      content: 'table_row+',
+      tableRole: 'body',
+      isolating: true,
+      parseDOM: [{ tag: 'tbody' }],
+      toDOM() {
+        return ['tbody', 0];
       },
     },
     table_row: {

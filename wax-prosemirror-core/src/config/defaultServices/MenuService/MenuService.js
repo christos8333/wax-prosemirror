@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { isPlainObject, isFunction } from 'lodash';
 import Service from '../../../Service';
 import Menu from './Menu';

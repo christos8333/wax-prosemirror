@@ -155,7 +155,6 @@ const findAllMarksWithSameId = (state, mark) => {
       }
     });
   });
-  console.log(allMarksWithSameId);
   return allMarksWithSameId;
 };
 

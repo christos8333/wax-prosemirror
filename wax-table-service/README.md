@@ -32,6 +32,16 @@ MenuService: [
 
 ```
 
+### ProseMirror Plugins
+
+In case you need tableEditing or columnResizing plugins add the to the array of `PmPlugins` in your editor's config
+```
+ PmPlugins: [
+    tableEditing(),
+    columnResizing(),
+  ],
+```
+
 ### Start the Service
 
 ```
@@ -40,11 +50,4 @@ MenuService: [
   ]
 ```
 
-### ProseMirror Plugins
 
-In case you need tableEditing or columnResizing plugins add the to the array of `PmPlugins` in your editor's config
-
- PmPlugins: [
-    tableEditing(),
-    columnResizing(),
-  ],

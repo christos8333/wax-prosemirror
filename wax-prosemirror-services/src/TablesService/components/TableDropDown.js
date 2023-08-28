@@ -76,6 +76,8 @@ const TableDropDown = ({ item }) => {
     { label: 'Toggle header column', value: 'toggleHeaderColumn' },
     { label: 'Toggle header row', value: 'toggleHeaderRow' },
     { label: 'Toggle header cells', value: 'toggleHeaderCell' },
+    { label: 'Add Caption', value: 'addCaption' },
+    { label: 'Delete Caption', value: 'deleteCaption' },
   ];
 
   const { activeView } = useContext(WaxContext);

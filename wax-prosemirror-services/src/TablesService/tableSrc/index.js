@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // src/index.ts
 import { Plugin as Plugin2 } from 'prosemirror-state';
 
@@ -12,6 +10,153 @@ import {
   TextSelection,
 } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+
+// src/util.ts
+import { PluginKey } from 'prosemirror-state';
+
+// src/schema.ts
+function getCellAttrs(dom, extraAttrs) {
+  if (typeof dom === 'string') {
+    return {};
+  }
+  const widthAttr = dom.getAttribute('data-colwidth');
+  const widths =
+    widthAttr && /^\d+(,\d+)*$/.test(widthAttr)
+      ? widthAttr.split(',').map(s => Number(s))
+      : null;
+  const colspan = Number(dom.getAttribute('colspan') || 1);
+  const result = {
+    colspan,
+    rowspan: Number(dom.getAttribute('rowspan') || 1),
+    colwidth: widths && widths.length == colspan ? widths : null,
+  };
+  for (const prop in extraAttrs) {
+    const getter = extraAttrs[prop].getFromDOM;
+    const value = getter && getter(dom);
+    if (value != null) {
+      result[prop] = value;
+    }
+  }
+  return result;
+}
+function setCellAttrs(node, extraAttrs) {
+  const attrs = {};
+  if (node.attrs.colspan != 1) attrs.colspan = node.attrs.colspan;
+  if (node.attrs.rowspan != 1) attrs.rowspan = node.attrs.rowspan;
+  if (node.attrs.colwidth)
+    attrs['data-colwidth'] = node.attrs.colwidth.join(',');
+  for (const prop in extraAttrs) {
+    const setter = extraAttrs[prop].setDOMAttr;
+    if (setter) setter(node.attrs[prop], attrs);
+  }
+  return attrs;
+}
+function tableNodes(options) {
+  const extraAttrs = options.cellAttributes || {};
+  const cellAttrs = {
+    colspan: { default: 1 },
+    rowspan: { default: 1 },
+    colwidth: { default: null },
+  };
+  for (const prop in extraAttrs)
+    cellAttrs[prop] = { default: extraAttrs[prop].default };
+  return {
+    table: {
+      // content: 'table_caption? table_head? table_body* table_foot?',
+      content: 'table_caption? table_body*',
+      tableRole: 'table',
+      isolating: true,
+      group: options.tableGroup,
+      parseDOM: [{ tag: 'table' }],
+      toDOM() {
+        return ['table', 0];
+      },
+    },
+    table_caption: {
+      content: 'block+',
+      tableRole: 'caption',
+      isolating: true,
+      parseDOM: [{ tag: 'caption' }],
+      toDOM() {
+        return ['caption', 0];
+      },
+    },
+    table_head: {
+      content: 'table_row+',
+      tableRole: 'head',
+      isolating: true,
+      parseDOM: [{ tag: 'thead' }],
+      toDOM() {
+        return ['thead', 0];
+      },
+    },
+    table_foot: {
+      content: 'table_row+',
+      tableRole: 'foot',
+      isolating: true,
+      parseDOM: [{ tag: 'tfoot' }],
+      toDOM() {
+        return ['tfoot', 0];
+      },
+    },
+    table_body: {
+      content: 'table_row+',
+      tableRole: 'body',
+      isolating: true,
+      parseDOM: [{ tag: 'tbody' }],
+      toDOM() {
+        return ['tbody', 0];
+      },
+    },
+    table_row: {
+      content: '(table_cell | table_header)*',
+      tableRole: 'row',
+      parseDOM: [{ tag: 'tr' }],
+      toDOM() {
+        return ['tr', 0];
+      },
+    },
+    table_cell: {
+      content: options.cellContent,
+      attrs: cellAttrs,
+      tableRole: 'cell',
+      isolating: true,
+      parseDOM: [{ tag: 'td', getAttrs: dom => getCellAttrs(dom, extraAttrs) }],
+      toDOM(node) {
+        return ['td', setCellAttrs(node, extraAttrs), 0];
+      },
+    },
+    table_header: {
+      content: options.cellContent,
+      attrs: cellAttrs,
+      tableRole: 'header_cell',
+      isolating: true,
+      parseDOM: [{ tag: 'th', getAttrs: dom => getCellAttrs(dom, extraAttrs) }],
+      toDOM(node) {
+        return ['th', setCellAttrs(node, extraAttrs), 0];
+      },
+    },
+  };
+}
+function tableNodeTypes(schema) {
+  let result = schema.cached.tableNodeTypes;
+  if (!result) {
+    result = schema.cached.tableNodeTypes = {};
+    for (const name in schema.nodes) {
+      const type = schema.nodes[name],
+        role = type.spec.tableRole;
+      if (role) result[role] = type;
+    }
+  }
+  return result;
+}
+function isTableSection(node) {
+  const role = node.type.spec.tableRole;
+  return role === 'body' || role === 'head' || role === 'foot';
+}
+function isTableSectionRole(role) {
+  return role === 'body' || role === 'head' || role === 'foot';
+}
 
 // src/tablemap.ts
 var readFromCache;
@@ -38,10 +183,11 @@ if (typeof WeakMap != 'undefined') {
   };
 }
 var TableMap = class {
-  constructor(width, height, map, problems) {
+  constructor(width, height, map, sectionRows, problems) {
     this.width = width;
     this.height = height;
     this.map = map;
+    this.sectionRows = sectionRows;
     this.problems = problems;
   }
   // Find the dimensions of the cell at the given position.
@@ -131,19 +277,79 @@ var TableMap = class {
     }
     return result;
   }
+  // Return the indices of all sections that are touched (overlapped, even partially)
+  // by the given rectangle.
+  // Indices start from 0 and don't consider the caption, so if there's a caption
+  // section n is table.child(n+1), otherwise it's table.child(n)
+  sectionsInRect(rect) {
+    const result = [];
+    const sectionRows = this.sectionRows;
+    let top = 0,
+      bottom = 0;
+    for (let i = 0; i < sectionRows.length; i++) {
+      bottom += sectionRows[i];
+      if (rect.top < bottom && rect.bottom > top) result.push(i);
+      top = bottom;
+    }
+    return result;
+  }
+  isLastRowInSection(row) {
+    const srows = this.sectionRows;
+    let lastRow = 0;
+    for (let s = 0; s < srows.length; s++) {
+      lastRow += srows[s];
+      if (lastRow === row) return true;
+      if (lastRow > row) return false;
+    }
+    return false;
+  }
   // Return the position at which the cell at the given row and column
   // starts, or would start, if a cell started there.
   positionAt(row, col, table) {
-    for (let i = 0, rowStart = 0; ; i++) {
-      const rowEnd = rowStart + table.child(i).nodeSize;
+    for (let i = 0; ; i++) {
+      const { node, pos: rowStart } = getRow(table, row);
+      const rowEnd = rowStart + node.nodeSize;
       if (i == row) {
         let index = col + row * this.width;
         const rowEndIndex = (row + 1) * this.width;
         while (index < rowEndIndex && this.map[index] < rowStart) index++;
         return index == rowEndIndex ? rowEnd - 1 : this.map[index];
       }
-      rowStart = rowEnd;
     }
+  }
+  findSection(pos) {
+    const { top } = this.findCell(pos);
+    let rows = 0,
+      nextRows = 0;
+    for (let s = 0; s < this.sectionRows.length; s++) {
+      const nextRows2 = rows + this.sectionRows[s];
+      if (top < rows)
+        return {
+          left: 0,
+          top: rows,
+          right: this.width,
+          bottom: nextRows2,
+        };
+      rows = nextRows2;
+    }
+    return {
+      left: 0,
+      top: 0,
+      right: this.width,
+      bottom: this.height,
+    };
+  }
+  sectionOfRow(row) {
+    let countRows = 0;
+    for (let i = 0; i < this.sectionRows.length; i++) {
+      countRows += this.sectionRows[i];
+      if (row < countRows) return i;
+    }
+    return -1;
+  }
+  rectOverOneSection(rect) {
+    const topSection = this.sectionOfRow(rect.top);
+    return topSection >= 0 && topSection == this.sectionOfRow(rect.bottom - 1);
   }
   // Find the table map for the given table node.
   static get(table) {
@@ -153,15 +359,39 @@ var TableMap = class {
 function computeMap(table) {
   if (table.type.spec.tableRole != 'table')
     throw new RangeError('Not a table node: ' + table.type.name);
-  const width = findWidth(table),
-    height = table.childCount;
+  const width = findWidth(table);
+  const height = findHeight(table);
+  const tmap = new TableMap(width, height, [], [], null);
+  let offset = 0;
+  let colWidths = [];
+  for (let c = 0; c < table.childCount; c++) {
+    const section = table.child(c);
+    if (isTableSection(section)) {
+      tmap.sectionRows.push(section.childCount);
+      let smap = computeSectionMap(section, width, offset + 1, colWidths);
+      tmap.map = tmap.map.concat(smap.map);
+      if (smap.problems) {
+        tmap.problems = (tmap.problems || []).concat(smap.problems);
+      }
+    }
+    offset += section.nodeSize;
+  }
+  let badWidths = false;
+  for (let i = 0; !badWidths && i < colWidths.length; i += 2)
+    if (colWidths[i] != null && colWidths[i + 1] < height) badWidths = true;
+  if (badWidths) findBadColWidths(tmap, colWidths, table);
+  return tmap;
+}
+function computeSectionMap(section, width, offset, colWidths) {
+  if (!isTableSection(section))
+    throw new RangeError('Not a table section node: ' + section.type.name);
+  const height = section.childCount;
   const map = [];
   let mapPos = 0;
   let problems = null;
-  const colWidths = [];
   for (let i = 0, e = width * height; i < e; i++) map[i] = 0;
-  for (let row = 0, pos = 0; row < height; row++) {
-    const rowNode = table.child(row);
+  for (let row = 0, pos = offset; row < height; row++) {
+    const rowNode = section.child(row);
     pos++;
     for (let i = 0; ; i++) {
       while (mapPos < map.length && map[mapPos] != 0) mapPos++;
@@ -213,36 +443,47 @@ function computeMap(table) {
       (problems || (problems = [])).push({ type: 'missing', row, n: missing });
     pos++;
   }
-  const tableMap = new TableMap(width, height, map, problems);
-  let badWidths = false;
-  for (let i = 0; !badWidths && i < colWidths.length; i += 2)
-    if (colWidths[i] != null && colWidths[i + 1] < height) badWidths = true;
-  if (badWidths) findBadColWidths(tableMap, colWidths, table);
+  const tableMap = new TableMap(width, height, map, [], problems);
   return tableMap;
 }
 function findWidth(table) {
   let width = -1;
   let hasRowSpan = false;
-  for (let row = 0; row < table.childCount; row++) {
-    const rowNode = table.child(row);
-    let rowWidth = 0;
-    if (hasRowSpan)
-      for (let j = 0; j < row; j++) {
-        const prevRow = table.child(j);
-        for (let i = 0; i < prevRow.childCount; i++) {
-          const cell = prevRow.child(i);
-          if (j + cell.attrs.rowspan > row) rowWidth += cell.attrs.colspan;
+  for (let cIndex = 0; cIndex < table.childCount; cIndex++) {
+    const sectionNode = table.child(cIndex);
+    if (isTableSection(sectionNode)) {
+      for (let row = 0; row < sectionNode.childCount; row++) {
+        const rowNode = sectionNode.child(row);
+        let rowWidth = 0;
+        if (hasRowSpan)
+          for (let j = 0; j < row; j++) {
+            const prevRow = sectionNode.child(j);
+            for (let i = 0; i < prevRow.childCount; i++) {
+              const cell = prevRow.child(i);
+              if (j + cell.attrs.rowspan > row) rowWidth += cell.attrs.colspan;
+            }
+          }
+        for (let i = 0; i < rowNode.childCount; i++) {
+          const cell = rowNode.child(i);
+          rowWidth += cell.attrs.colspan;
+          if (cell.attrs.rowspan > 1) hasRowSpan = true;
         }
+        if (width == -1) width = rowWidth;
+        else if (width != rowWidth) width = Math.max(width, rowWidth);
       }
-    for (let i = 0; i < rowNode.childCount; i++) {
-      const cell = rowNode.child(i);
-      rowWidth += cell.attrs.colspan;
-      if (cell.attrs.rowspan > 1) hasRowSpan = true;
     }
-    if (width == -1) width = rowWidth;
-    else if (width != rowWidth) width = Math.max(width, rowWidth);
   }
   return width;
+}
+function findHeight(table) {
+  let height = 0;
+  for (let cIndex = 0; cIndex < table.childCount; cIndex++) {
+    const sectionNode = table.child(cIndex);
+    if (isTableSection(sectionNode)) {
+      height += sectionNode.childCount;
+    }
+  }
+  return height;
 }
 function findBadColWidths(map, colWidths, table) {
   if (!map.problems) map.problems = [];
@@ -266,139 +507,19 @@ function findBadColWidths(map, colWidths, table) {
       )
         (updated || (updated = freshColWidth(attrs)))[j] = colWidth;
     }
-    if (updated)
+    if (updated) {
       map.problems.unshift({
         type: 'colwidth mismatch',
         pos,
         colwidth: updated,
       });
+    }
   }
 }
 function freshColWidth(attrs) {
   if (attrs.colwidth) return attrs.colwidth.slice();
   const result = [];
   for (let i = 0; i < attrs.colspan; i++) result.push(0);
-  return result;
-}
-
-// src/util.ts
-import { PluginKey } from 'prosemirror-state';
-
-// src/schema.ts
-function getCellAttrs(dom, extraAttrs) {
-  if (typeof dom === 'string') {
-    return {};
-  }
-  const widthAttr = dom.getAttribute('data-colwidth');
-  const widths =
-    widthAttr && /^\d+(,\d+)*$/.test(widthAttr)
-      ? widthAttr.split(',').map(s => Number(s))
-      : null;
-  const colspan = Number(dom.getAttribute('colspan') || 1);
-  const result = {
-    colspan,
-    rowspan: Number(dom.getAttribute('rowspan') || 1),
-    colwidth: widths && widths.length == colspan ? widths : null,
-  };
-  for (const prop in extraAttrs) {
-    const getter = extraAttrs[prop].getFromDOM;
-    const value = getter && getter(dom);
-    if (value != null) {
-      result[prop] = value;
-    }
-  }
-  return result;
-}
-function setCellAttrs(node, extraAttrs) {
-  const attrs = {};
-  if (node.attrs.colspan != 1) attrs.colspan = node.attrs.colspan;
-  if (node.attrs.rowspan != 1) attrs.rowspan = node.attrs.rowspan;
-  if (node.attrs.colwidth)
-    attrs['data-colwidth'] = node.attrs.colwidth.join(',');
-  for (const prop in extraAttrs) {
-    const setter = extraAttrs[prop].setDOMAttr;
-    if (setter) setter(node.attrs[prop], attrs);
-  }
-  return attrs;
-}
-function tableNodes(options) {
-  const extraAttrs = options.cellAttributes || {};
-  const cellAttrs = {
-    colspan: { default: 1 },
-    rowspan: { default: 1 },
-    colwidth: { default: null },
-  };
-  for (const prop in extraAttrs)
-    cellAttrs[prop] = { default: extraAttrs[prop].default };
-  return {
-    table: {
-      content: 'table_caption? table_body*',
-      tableRole: 'table',
-      isolating: true,
-      group: options.tableGroup,
-      parseDOM: [{ tag: 'table' }],
-      toDOM() {
-        return ['table', 0];
-      },
-    },
-    table_caption: {
-      content: 'block+',
-      tableRole: 'caption',
-      isolating: true,
-      parseDOM: [{ tag: 'caption' }],
-      toDOM() {
-        return ['caption', 0];
-      },
-    },
-    table_body: {
-      content: 'table_row+',
-      tableRole: 'body',
-      isolating: true,
-      parseDOM: [{ tag: 'tbody' }],
-      toDOM() {
-        return ['tbody', 0];
-      },
-    },
-    table_row: {
-      content: '(table_cell | table_header)*',
-      tableRole: 'row',
-      parseDOM: [{ tag: 'tr' }],
-      toDOM() {
-        return ['tr', 0];
-      },
-    },
-    table_cell: {
-      content: options.cellContent,
-      attrs: cellAttrs,
-      tableRole: 'cell',
-      isolating: true,
-      parseDOM: [{ tag: 'td', getAttrs: dom => getCellAttrs(dom, extraAttrs) }],
-      toDOM(node) {
-        return ['td', setCellAttrs(node, extraAttrs), 0];
-      },
-    },
-    table_header: {
-      content: options.cellContent,
-      attrs: cellAttrs,
-      tableRole: 'header_cell',
-      isolating: true,
-      parseDOM: [{ tag: 'th', getAttrs: dom => getCellAttrs(dom, extraAttrs) }],
-      toDOM(node) {
-        return ['th', setCellAttrs(node, extraAttrs), 0];
-      },
-    },
-  };
-}
-function tableNodeTypes(schema) {
-  let result = schema.cached.tableNodeTypes;
-  if (!result) {
-    result = schema.cached.tableNodeTypes = {};
-    for (const name in schema.nodes) {
-      const type = schema.nodes[name],
-        role = type.spec.tableRole;
-      if (role) result[role] = type;
-    }
-  }
   return result;
 }
 
@@ -422,6 +543,11 @@ function isInTable(state) {
   for (let d = $head.depth; d > 0; d--)
     if ($head.node(d).type.spec.tableRole == 'row') return true;
   return false;
+}
+function tableDepth($pos) {
+  for (let d = $pos.depth; d >= 0; d--)
+    if ($pos.node(d).type.spec.tableRole == 'table') return d;
+  return -1;
 }
 function selectionCell(state) {
   const sel = state.selection;
@@ -470,20 +596,20 @@ function moveCellForward($pos) {
 function inSameTable($cellA, $cellB) {
   return (
     $cellA.depth == $cellB.depth &&
-    $cellA.pos >= $cellB.start(-1) &&
-    $cellA.pos <= $cellB.end(-1)
+    $cellA.pos >= $cellB.start(-2) &&
+    $cellA.pos <= $cellB.end(-2)
   );
 }
 function findCell($pos) {
-  return TableMap.get($pos.node(-1)).findCell($pos.pos - $pos.start(-1));
+  return TableMap.get($pos.node(-2)).findCell($pos.pos - $pos.start(-2));
 }
 function colCount($pos) {
-  return TableMap.get($pos.node(-1)).colCount($pos.pos - $pos.start(-1));
+  return TableMap.get($pos.node(-2)).colCount($pos.pos - $pos.start(-2));
 }
 function nextCell($pos, axis, dir) {
-  const table = $pos.node(-1);
+  const table = $pos.node(-2);
   const map = TableMap.get(table);
-  const tableStart = $pos.start(-1);
+  const tableStart = $pos.start(-2);
   const moved = map.nextCell($pos.pos - tableStart, axis, dir);
   return moved == null ? null : $pos.node(0).resolve(tableStart + moved);
 }
@@ -511,6 +637,129 @@ function columnIsHeader(map, table, col) {
       return false;
   return true;
 }
+function rowsCount(table) {
+  let count = 0;
+  for (let c = 0; c < table.childCount; c++) {
+    const section = table.child(c);
+    if (isTableSection(section)) count += section.childCount;
+  }
+  return count;
+}
+function getRow(table, row) {
+  let rPos = 0;
+  let prevSectionsRows = 0;
+  let sectionIndex = -1;
+  for (let tc = 0; tc < table.childCount; tc++) {
+    const section = table.child(tc);
+    if (isTableSection(section)) {
+      sectionIndex++;
+      const sectionRows = section.childCount;
+      if (sectionRows > 0) {
+        if (prevSectionsRows + sectionRows <= row) {
+          if (tc === table.childCount - 1) {
+            return {
+              node: null,
+              pos: rPos + section.nodeSize - 1,
+              section: sectionIndex,
+            };
+          }
+          rPos += section.nodeSize;
+          prevSectionsRows += sectionRows;
+        } else {
+          rPos++;
+          let r = 0;
+          while (r < sectionRows) {
+            if (prevSectionsRows + r === row) break;
+            rPos += section.child(r).nodeSize;
+            r++;
+          }
+          if (r === sectionRows) rPos++;
+          return {
+            node: r >= sectionRows ? null : section.child(r),
+            pos: rPos,
+            section: sectionIndex,
+          };
+        }
+      }
+    } else {
+      rPos += section.nodeSize;
+    }
+  }
+  return { node: null, pos: rPos, section: sectionIndex };
+}
+function rowPos(table, row) {
+  return getRow(
+    table,
+    row,
+    /* debug */
+  ).pos;
+}
+function rowAtPos(table, pos) {
+  let rpos = 0;
+  let row = 0;
+  for (let c = 0; c < table.childCount; c++) {
+    const section = table.child(c);
+    if (isTableSection(section)) {
+      rpos++;
+      for (let r = 0; r < section.childCount; r++) {
+        rpos += section.child(r).nodeSize;
+        if (pos < rpos) return row;
+        row++;
+      }
+      rpos++;
+    } else {
+      rpos += section.nodeSize;
+    }
+  }
+  return row;
+}
+function tableHasCaption(table) {
+  if (table && table.type.spec.tableRole === 'table') {
+    return table.child(0).type.spec.tableRole === 'caption';
+  }
+  return false;
+}
+function tableHasHead(table) {
+  if (table && table.type.spec.tableRole === 'table') {
+    for (let i = 0; i < table.childCount; i++)
+      if (table.child(i).type.spec.tableRole === 'head') return true;
+  }
+  return false;
+}
+function tableHasFoot(table) {
+  if (table && table.type.spec.tableRole === 'table') {
+    for (let i = table.childCount - 1; i > 0; i--)
+      if (table.child(i).type.spec.tableRole === 'foot') return true;
+  }
+  return false;
+}
+function tableBodiesCount(table) {
+  let count = 0;
+  if (table && table.type.spec.tableRole === 'table') {
+    for (let i = 0; i < table.childCount; i++)
+      if (table.child(i).type.spec.tableRole === 'body') count++;
+  }
+  return count;
+}
+function tableSectionsCount(table) {
+  let count = 0;
+  if (table && table.type.spec.tableRole === 'table') {
+    for (let i = 0; i < table.childCount; i++)
+      if (isTableSection(table.child(i))) count++;
+  }
+  return count;
+}
+function isRowLastInSection(table, row) {
+  const { height, sectionRows } = TableMap.get(table);
+  if (row >= height || row < 0) return false;
+  let rowsMinusOne = -1;
+  for (let i = 0; i < sectionRows.length; i++) {
+    rowsMinusOne += sectionRows[i];
+    if (row === rowsMinusOne) return true;
+    if (row < rowsMinusOne) return false;
+  }
+  return false;
+}
 
 // src/cellselection.ts
 var CellSelection = class extends Selection {
@@ -519,9 +768,9 @@ var CellSelection = class extends Selection {
   // cells in the same table. They may be the same, to select a single
   // cell.
   constructor($anchorCell, $headCell = $anchorCell) {
-    const table = $anchorCell.node(-1);
+    const table = $anchorCell.node(-2);
     const map = TableMap.get(table);
-    const tableStart = $anchorCell.start(-1);
+    const tableStart = $anchorCell.start(-2);
     const rect = map.rectBetween(
       $anchorCell.pos - tableStart,
       $headCell.pos - tableStart,
@@ -554,7 +803,7 @@ var CellSelection = class extends Selection {
       pointsAtCell($headCell) &&
       inSameTable($anchorCell, $headCell)
     ) {
-      const tableChanged = this.$anchorCell.node(-1) != $anchorCell.node(-1);
+      const tableChanged = this.$anchorCell.node(-2) != $anchorCell.node(-2);
       if (tableChanged && this.isRowSelection())
         return CellSelection.rowSelection($anchorCell, $headCell);
       else if (tableChanged && this.isColSelection())
@@ -566,9 +815,9 @@ var CellSelection = class extends Selection {
   // Returns a rectangular slice of table rows containing the selected
   // cells.
   content() {
-    const table = this.$anchorCell.node(-1);
+    const table = this.$anchorCell.node(-2);
     const map = TableMap.get(table);
-    const tableStart = this.$anchorCell.start(-1);
+    const tableStart = this.$anchorCell.start(-2);
     const rect = map.rectBetween(
       this.$anchorCell.pos - tableStart,
       this.$headCell.pos - tableStart,
@@ -630,10 +879,11 @@ var CellSelection = class extends Selection {
         }
         rowContent.push(cell);
       }
-      rows.push(table.child(row).copy(Fragment.from(rowContent)));
+      const rowNode = getRow(table, row).node;
+      rows.push(rowNode.copy(Fragment.from(rowContent)));
     }
     const fragment =
-      this.isColSelection() && this.isRowSelection() ? table : rows;
+      this.isColSelection(map) && this.isRowSelection() ? table : rows;
     return new Slice(Fragment.from(fragment), 1, 1);
   }
   replace(tr, content = Slice.empty) {
@@ -658,9 +908,9 @@ var CellSelection = class extends Selection {
     this.replace(tr, new Slice(Fragment.from(node), 0, 0));
   }
   forEachCell(f) {
-    const table = this.$anchorCell.node(-1);
+    const table = this.$anchorCell.node(-2);
     const map = TableMap.get(table);
-    const tableStart = this.$anchorCell.start(-1);
+    const tableStart = this.$anchorCell.start(-2);
     const cells = map.cellsInRect(
       map.rectBetween(
         this.$anchorCell.pos - tableStart,
@@ -673,22 +923,22 @@ var CellSelection = class extends Selection {
   }
   // True if this selection goes all the way from the top to the
   // bottom of the table.
-  isColSelection() {
-    const anchorTop = this.$anchorCell.index(-1);
-    const headTop = this.$headCell.index(-1);
+  isColSelection(tableMap) {
+    const table = this.$anchorCell.node(-2);
+    const tableStart = this.$anchorCell.start(-2);
+    const anchorTop = rowAtPos(table, this.$anchorCell.pos - tableStart);
+    const headTop = rowAtPos(table, this.$headCell.pos - tableStart);
     if (Math.min(anchorTop, headTop) > 0) return false;
     const anchorBottom = anchorTop + this.$anchorCell.nodeAfter.attrs.rowspan;
     const headBottom = headTop + this.$headCell.nodeAfter.attrs.rowspan;
-    return (
-      Math.max(anchorBottom, headBottom) == this.$headCell.node(-1).childCount
-    );
+    return Math.max(anchorBottom, headBottom) == rowsCount(table);
   }
   // Returns the smallest column selection that covers the given anchor
   // and head cell.
   static colSelection($anchorCell, $headCell = $anchorCell) {
-    const table = $anchorCell.node(-1);
+    const table = $anchorCell.node(-2);
     const map = TableMap.get(table);
-    const tableStart = $anchorCell.start(-1);
+    const tableStart = $anchorCell.start(-2);
     const anchorRect = map.findCell($anchorCell.pos - tableStart);
     const headRect = map.findCell($headCell.pos - tableStart);
     const doc = $anchorCell.node(0);
@@ -714,9 +964,9 @@ var CellSelection = class extends Selection {
   // True if this selection goes all the way from the left to the
   // right of the table.
   isRowSelection() {
-    const table = this.$anchorCell.node(-1);
+    const table = this.$anchorCell.node(-2);
     const map = TableMap.get(table);
-    const tableStart = this.$anchorCell.start(-1);
+    const tableStart = this.$anchorCell.start(-2);
     const anchorLeft = map.colCount(this.$anchorCell.pos - tableStart);
     const headLeft = map.colCount(this.$headCell.pos - tableStart);
     if (Math.min(anchorLeft, headLeft) > 0) return false;
@@ -734,9 +984,9 @@ var CellSelection = class extends Selection {
   // Returns the smallest row selection that covers the given anchor
   // and head cell.
   static rowSelection($anchorCell, $headCell = $anchorCell) {
-    const table = $anchorCell.node(-1);
+    const table = $anchorCell.node(-2);
     const map = TableMap.get(table);
-    const tableStart = $anchorCell.start(-1);
+    const tableStart = $anchorCell.start(-2);
     const anchorRect = map.findCell($anchorCell.pos - tableStart);
     const headRect = map.findCell($headCell.pos - tableStart);
     const doc = $anchorCell.node(0);
@@ -756,6 +1006,33 @@ var CellSelection = class extends Selection {
         $anchorCell = doc.resolve(
           tableStart + map.map[map.width * (anchorRect.top + 1) - 1],
         );
+    }
+    return new CellSelection($anchorCell, $headCell);
+  }
+  // Returns the smallest section selection that covers the given anchor
+  // and head cell.
+  static sectionSelection($anchorCell, $headCell = $anchorCell) {
+    const table = $anchorCell.node(-2);
+    const map = TableMap.get(table);
+    const tableStart = $anchorCell.start(-2);
+    const sectionStart = $anchorCell.start(-1);
+    const anchorSection = map.findSection($anchorCell.pos - sectionStart + 1);
+    const headSection = map.findSection($headCell.pos - sectionStart + 1);
+    const doc = $anchorCell.node(0);
+    if (anchorSection.top <= headSection.top) {
+      $anchorCell = doc.resolve(
+        tableStart + map.map[map.width * anchorSection.top],
+      );
+      $headCell = doc.resolve(
+        tableStart + map.map[map.width * headSection.bottom - 1],
+      );
+    } else {
+      $anchorCell = doc.resolve(
+        tableStart + map.map[map.width * headSection.top],
+      );
+      $headCell = doc.resolve(
+        tableStart + map.map[map.width * anchorSection.bottom - 1],
+      );
     }
     return new CellSelection($anchorCell, $headCell);
   }
@@ -821,7 +1098,7 @@ function isCellBoundarySelection({ $from, $to }) {
     if ($to.before(d + 1) > $to.start(d)) break;
   return (
     afterFrom == beforeTo &&
-    /row|table/.test($from.node(depth).type.spec.tableRole)
+    /^(row|body|table|head|foot)$/.test($from.node(depth).type.spec.tableRole)
   );
 }
 function isTextSelectionAcrossCells({ $from, $to }) {
@@ -860,11 +1137,14 @@ function normalizeSelection(state, tr, allowTableNodeSelection) {
     } else if (role == 'row') {
       const $cell = doc.resolve(sel.from + 1);
       normalize = CellSelection.rowSelection($cell, $cell);
+    } else if (isTableSectionRole(role)) {
+      const $cell = doc.resolve(sel.from + 2);
+      normalize = CellSelection.sectionSelection($cell, $cell);
     } else if (!allowTableNodeSelection) {
       const map = TableMap.get(sel.node);
       const start = sel.from + 1;
       const lastCell = start + map.map[map.width * map.height - 1];
-      normalize = CellSelection.create(doc, start + 1, lastCell);
+      normalize = CellSelection.create(doc, start + 2, lastCell);
     }
   } else if (sel instanceof TextSelection && isCellBoundarySelection(sel)) {
     normalize = TextSelection.create(doc, sel.from);
@@ -909,6 +1189,7 @@ function fixTables(state, oldState) {
   return tr;
 }
 function fixTable(state, table, tablePos, tr) {
+  if (hasFreeRows(table)) tr = fixFreeRows(state, table, tablePos, tr);
   const map = TableMap.get(table);
   if (!map.problems) return tr;
   if (!tr) tr = state.tr;
@@ -950,8 +1231,8 @@ function fixTable(state, table, tablePos, tr) {
       if (first == null) first = i;
       last = i;
     }
-  for (let i = 0, pos = tablePos + 1; i < map.height; i++) {
-    const row = table.child(i);
+  for (let i = 0; i < map.height; i++) {
+    const { node: row, pos } = getRow(table, i);
     const end = pos + row.nodeSize;
     const add = mustAdd[i];
     if (add > 0) {
@@ -965,11 +1246,44 @@ function fixTable(state, table, tablePos, tr) {
         if (node) nodes.push(node);
       }
       const side = (i == 0 || first == i - 1) && last == i ? pos + 1 : end - 1;
-      tr.insert(tr.mapping.map(side), nodes);
+      tr.insert(tr.mapping.map(side + 1), nodes);
     }
-    pos = end;
   }
   return tr.setMeta(fixTablesKey, { fixTables: true });
+}
+function hasFreeRows(table) {
+  for (let i = 0; i < table.childCount; i++)
+    if (table.child(i).type.spec.tableRole === 'row') return true;
+  return false;
+}
+function fixFreeRows(state, table, tablePos, tr) {
+  let freeRows = [];
+  let freeRowsFound = false;
+  const sections = [];
+  const types = tableNodeTypes(state.schema);
+  for (let i = 0; i < table.childCount; i++) {
+    const child = table.child(i);
+    if (child.type.spec.tableRole === 'row') {
+      freeRowsFound = true;
+      freeRows.push(child);
+    } else {
+      if (freeRows.length > 0) {
+        sections.push(types.body.createAndFill(null, freeRows));
+        freeRows = [];
+      }
+      sections.push(child);
+    }
+  }
+  if (freeRows.length > 0) {
+    sections.push(types.body.createAndFill(null, freeRows));
+    freeRows = [];
+  }
+  if (!freeRowsFound) return tr;
+  return (tr || state.tr).replaceWith(
+    tablePos,
+    tablePos + table.nodeSize,
+    types.table.createAndFill(table.attrs, sections),
+  );
 }
 
 // src/input.ts
@@ -997,9 +1311,27 @@ function pastedCells(slice) {
   }
   const first = content.child(0);
   const role = first.type.spec.tableRole;
-  const schema = first.type.schema,
-    rows = [];
-  if (role == 'row') {
+  const schema = first.type.schema;
+  const rows = [];
+  if (isTableSectionRole(role)) {
+    for (let s = 0; s < content.childCount; s++) {
+      const section = content.child(s);
+      if (isTableSection(section)) {
+        for (let i = 0; i < section.childCount; i++) {
+          let cells = section.child(i).content;
+          const left = i != 0 ? 0 : Math.max(0, openStart - 1);
+          const right =
+            i < section.childCount - 1 ? 0 : Math.max(0, openEnd - 1);
+          if (left || right)
+            cells = fitSlice(
+              tableNodeTypes(schema).row,
+              new Slice2(cells, left, right),
+            ).content;
+          rows.push(cells);
+        }
+      }
+    }
+  } else if (role == 'row') {
     for (let i = 0; i < content.childCount; i++) {
       let cells = content.child(i).content;
       const left = i ? 0 : Math.max(0, openStart - 1);
@@ -1113,16 +1445,23 @@ function growTable(tr, map, table, start, width, height, mapFrom) {
   let empty;
   let emptyHead;
   if (width > map.width) {
-    for (let row = 0, rowEnd = 0; row < map.height; row++) {
-      const rowNode = table.child(row);
-      rowEnd += rowNode.nodeSize;
+    const lastCellOfRow = [];
+    for (let row = 0; row < map.height; row++) {
+      const lastCell = table.nodeAt(map.map[(row + 1) * map.width - 1]);
+      if (lastCell == null || lastCell.type == types.cell) {
+        lastCellOfRow.push(empty || (empty = types.cell.createAndFill()));
+      } else {
+        lastCellOfRow.push(
+          emptyHead || (emptyHead = types.header_cell.createAndFill()),
+        );
+      }
+    }
+    for (let row = 0; row < map.height; row++) {
+      const { node: rowNode, pos: rowPos2 } = getRow(table, row);
+      const rowEnd = rowPos2 + rowNode.nodeSize - 1;
       const cells = [];
-      let add;
-      if (rowNode.lastChild == null || rowNode.lastChild.type == types.cell)
-        add = empty || (empty = types.cell.createAndFill());
-      else add = emptyHead || (emptyHead = types.header_cell.createAndFill());
-      for (let i = map.width; i < width; i++) cells.push(add);
-      tr.insert(tr.mapping.slice(mapFrom).map(rowEnd - 1 + start), cells);
+      for (let i = map.width; i < width; i++) cells.push(lastCellOfRow[row]);
+      tr.insert(tr.mapping.slice(mapFrom).map(rowEnd + start), cells);
     }
   }
   if (height > map.height) {
@@ -1145,7 +1484,7 @@ function growTable(tr, map, table, start, width, height, mapFrom) {
     const emptyRow = types.row.create(null, Fragment2.from(cells)),
       rows = [];
     for (let i = map.height; i < height; i++) rows.push(emptyRow);
-    tr.insert(tr.mapping.slice(mapFrom).map(start + table.nodeSize - 2), rows);
+    tr.insert(tr.mapping.slice(mapFrom).map(start + table.nodeSize - 3), rows);
   }
   return !!(empty || emptyHead);
 }
@@ -1259,6 +1598,8 @@ var handleKeyDown = keydownHandler({
   ArrowRight: arrow('horiz', 1),
   ArrowUp: arrow('vert', -1),
   ArrowDown: arrow('vert', 1),
+  Tab: tabulation(1),
+  'Shift-Tab': tabulation(-1),
   'Shift-ArrowLeft': shiftArrow('horiz', -1),
   'Shift-ArrowRight': shiftArrow('horiz', 1),
   'Shift-ArrowUp': shiftArrow('vert', -1),
@@ -1273,6 +1614,63 @@ function maybeSetSelection(state, dispatch, selection) {
   if (dispatch) dispatch(state.tr.setSelection(selection).scrollIntoView());
   return true;
 }
+function tabulation(dir) {
+  return (state, dispatch, view) => {
+    if (!view) return false;
+    const sel = state.selection;
+    const r = state.doc.resolve(sel.head);
+    let d = r.depth;
+    let inCaption = false;
+    for (; d > 0; d--) {
+      const role = r.node(d).type.spec.tableRole;
+      if (role === 'row') break;
+      if (role === 'caption' && dir > 0) {
+        inCaption = true;
+        break;
+      }
+    }
+    const tableDepth2 = d - (inCaption ? 1 : 2);
+    const table = r.node(tableDepth2);
+    if (!table || table.type.spec.tableRole != 'table') return false;
+    const tableStart = r.start(tableDepth2);
+    const tmap = TableMap.get(table);
+    let nextCellPos;
+    if (inCaption) {
+      nextCellPos = tmap.map[0];
+    } else {
+      const map = tmap.map;
+      const cellStart = inCaption
+        ? tmap.positionAt(0, 0, table)
+        : r.start(d + 1);
+      const cellPos = cellStart - tableStart - 1;
+      let i;
+      for (
+        i = dir < 0 ? 0 : map.length - 1;
+        i >= 0 && i < map.length;
+        i -= dir
+      ) {
+        if (cellPos == map[i]) break;
+      }
+      if (i < 0 || i >= map.length) return false;
+      i += dir;
+      if (i < 0 || i >= map.length) return false;
+      nextCellPos = map[i];
+    }
+    if (nextCellPos) {
+      const cell = table.nodeAt(nextCellPos);
+      if (!cell) return false;
+      if (dispatch) {
+        const from = tableStart + nextCellPos;
+        const to = from + cell.nodeSize - 1;
+        dispatch(
+          state.tr.setSelection(TextSelection2.create(state.doc, from, to)),
+        );
+      }
+      return true;
+    }
+    return false;
+  };
+}
 function arrow(axis, dir) {
   return (state, dispatch, view) => {
     if (!view) return false;
@@ -1285,8 +1683,7 @@ function arrow(axis, dir) {
       );
     }
     if (axis != 'horiz' && !sel.empty) return false;
-    const end = atEndOfCell(view, axis, dir);
-    if (end == null) return false;
+    const end = atEndOfCell(view, axis, dir, true);
     if (axis == 'horiz') {
       return maybeSetSelection(
         state,
@@ -1294,14 +1691,50 @@ function arrow(axis, dir) {
         Selection2.near(state.doc.resolve(sel.head + dir), dir),
       );
     } else {
-      const $cell = state.doc.resolve(end);
-      const $next = nextCell($cell, axis, dir);
       let newSel;
-      if ($next) newSel = Selection2.near($next, 1);
-      else if (dir < 0)
-        newSel = Selection2.near(state.doc.resolve($cell.before(-1)), -1);
-      else newSel = Selection2.near(state.doc.resolve($cell.after(-1)), 1);
-      return maybeSetSelection(state, dispatch, newSel);
+      if (end) {
+        const $cell = state.doc.resolve(end);
+        if ($cell.node().type.spec.tableRole === 'row') {
+          const $next = nextCell($cell, axis, dir);
+          if ($next) newSel = Selection2.near($next, 1);
+          else if (dir < 0) {
+            const table = $cell.node(-2);
+            if (tableHasCaption(table))
+              newSel = Selection2.near(state.doc.resolve($cell.start(-2)), 1);
+            else
+              newSel = Selection2.near(state.doc.resolve($cell.before(-2)), -1);
+          } else
+            newSel = Selection2.near(state.doc.resolve($cell.after(-2)), 1);
+        } else {
+          if (dir < 0) {
+            newSel = Selection2.near(state.doc.resolve($cell.before()), -1);
+          } else {
+            const table = $cell.node();
+            const map = TableMap.get(table);
+            const pos = $cell.start() + map.positionAt(0, 0, table);
+            newSel = Selection2.near(state.doc.resolve(pos), 1);
+          }
+        }
+      } else {
+        if (dir > 0) {
+          const pos = sel.$anchor.after();
+          const table = state.doc.nodeAt(pos);
+          if (table && table.type.spec.tableRole === 'table')
+            newSel = Selection2.near(state.doc.resolve(pos), 1);
+        } else {
+          newSel = Selection2.near(state.doc.resolve(sel.$anchor.before()), -1);
+          const d = tableDepth(newSel.$anchor);
+          if (d >= 0) {
+            const table = newSel.$anchor.node(d);
+            const map = TableMap.get(table);
+            const pos =
+              newSel.$anchor.start(d) +
+              map.positionAt(map.height - 1, 0, table);
+            newSel = Selection2.near(state.doc.resolve(pos), 1);
+          }
+        }
+      }
+      return newSel ? maybeSetSelection(state, dispatch, newSel) : false;
     }
   };
 }
@@ -1367,8 +1800,8 @@ function handlePaste(view, _, slice) {
           ),
         ],
       };
-    const table = sel.$anchorCell.node(-1);
-    const start = sel.$anchorCell.start(-1);
+    const table = sel.$anchorCell.node(-2);
+    const start = sel.$anchorCell.start(-2);
     const rect = TableMap.get(table).rectBetween(
       sel.$anchorCell.pos - start,
       sel.$headCell.pos - start,
@@ -1378,12 +1811,12 @@ function handlePaste(view, _, slice) {
     return true;
   } else if (cells) {
     const $cell = selectionCell(view.state);
-    const start = $cell.start(-1);
+    const start = $cell.start(-2);
     insertCells(
       view.state,
       view.dispatch,
       start,
-      TableMap.get($cell.node(-1)).findCell($cell.pos - start),
+      TableMap.get($cell.node(-2)).findCell($cell.pos - start),
       cells,
     );
     return true;
@@ -1448,16 +1881,19 @@ function handleMouseDown(view, startEvent) {
   view.root.addEventListener('dragstart', stop);
   view.root.addEventListener('mousemove', move);
 }
-function atEndOfCell(view, axis, dir) {
+function atEndOfCell(view, axis, dir, checkCaption = false) {
   if (!(view.state.selection instanceof TextSelection2)) return null;
   const { $head } = view.state.selection;
   for (let d = $head.depth - 1; d >= 0; d--) {
     const parent = $head.node(d),
       index = dir < 0 ? $head.index(d) : $head.indexAfter(d);
     if (index != (dir < 0 ? 0 : parent.childCount)) return null;
+    const alsoInCaption =
+      checkCaption && parent.type.spec.tableRole == 'caption';
     if (
       parent.type.spec.tableRole == 'cell' ||
-      parent.type.spec.tableRole == 'header_cell'
+      parent.type.spec.tableRole == 'header_cell' ||
+      alsoInCaption
     ) {
       const cellPos = $head.before(d);
       const dirStr =
@@ -1490,95 +1926,34 @@ import {
   Decoration as Decoration2,
   DecorationSet as DecorationSet2,
 } from 'prosemirror-view';
-
-// src/tableview.ts
-var TableView = class {
-  constructor(node, cellMinWidth) {
-    this.node = node;
-    this.cellMinWidth = cellMinWidth;
-    this.dom = document.createElement('div');
-    this.dom.className = 'tableWrapper';
-    this.table = this.dom.appendChild(document.createElement('table'));
-    this.colgroup = this.table.appendChild(document.createElement('colgroup'));
-    updateColumnsOnResize(node, this.colgroup, this.table, cellMinWidth);
-    this.contentDOM = this.table.appendChild(document.createElement('tbody'));
-  }
-  update(node) {
-    if (node.type != this.node.type) return false;
-    this.node = node;
-    updateColumnsOnResize(node, this.colgroup, this.table, this.cellMinWidth);
-    return true;
-  }
-  ignoreMutation(record) {
-    return (
-      record.type == 'attributes' &&
-      (record.target == this.table || this.colgroup.contains(record.target))
-    );
-  }
-};
-function updateColumnsOnResize(
-  node,
-  colgroup,
-  table,
-  cellMinWidth,
-  overrideCol,
-  overrideValue,
-) {
-  var _a;
-  let totalWidth = 0;
-  let fixedWidth = true;
-  let nextDOM = colgroup.firstChild;
-  const row = node.firstChild;
-  if (!row) return;
-  for (let i = 0, col = 0; i < row.childCount; i++) {
-    const { colspan, colwidth } = row.child(i).attrs;
-    for (let j = 0; j < colspan; j++, col++) {
-      const hasWidth =
-        overrideCol == col ? overrideValue : colwidth && colwidth[j];
-      const cssWidth = hasWidth ? hasWidth + 'px' : '';
-      totalWidth += hasWidth || cellMinWidth;
-      if (!hasWidth) fixedWidth = false;
-      if (!nextDOM) {
-        colgroup.appendChild(
-          document.createElement('col'),
-        ).style.width = cssWidth;
-      } else {
-        if (nextDOM.style.width != cssWidth) nextDOM.style.width = cssWidth;
-        nextDOM = nextDOM.nextSibling;
-      }
-    }
-  }
-  while (nextDOM) {
-    const after = nextDOM.nextSibling;
-    (_a = nextDOM.parentNode) == null ? void 0 : _a.removeChild(nextDOM);
-    nextDOM = after;
-  }
-  if (fixedWidth) {
-    table.style.width = totalWidth + 'px';
-    table.style.minWidth = '';
-  } else {
-    table.style.width = '';
-    table.style.minWidth = totalWidth + 'px';
-  }
-}
-
-// src/columnresizing.ts
 var columnResizingPluginKey = new PluginKey3('tableColumnResizing');
+var SPEC_COL_WIDTHS = 'colgroup';
+var SPEC_TABLE_WIDTH = 'tablewidth';
+var DEFAULT_HANDLE_WIDTH = 5;
+var DEFAULT_CELL_MIN_WIDTH = 25;
+var DEFAULT_LAST_COLUMN_RESIZABLE = true;
 function columnResizing({
-  handleWidth = 5,
-  cellMinWidth = 25,
-  View = TableView,
-  lastColumnResizable = true,
+  handleWidth = DEFAULT_HANDLE_WIDTH,
+  cellMinWidth = DEFAULT_CELL_MIN_WIDTH,
+  lastColumnResizable = DEFAULT_LAST_COLUMN_RESIZABLE,
 } = {}) {
   const plugin = new Plugin({
+    options: {
+      handleWidth,
+      cellMinWidth,
+      lastColumnResizable,
+    },
     key: columnResizingPluginKey,
     state: {
       init(_, state) {
-        plugin.spec.props.nodeViews[tableNodeTypes(state.schema).table.name] = (
-          node,
-          view,
-        ) => new View(node, cellMinWidth, view);
-        return new ResizeState(-1, false);
+        return new ResizeState(
+          -1,
+          false,
+          DecorationSet2.create(
+            state.doc,
+            createTableDecorations(state.doc, cellMinWidth),
+          ),
+        );
       },
       apply(tr, prev) {
         return prev.apply(tr);
@@ -1610,33 +1985,96 @@ function columnResizing({
       },
       decorations: state => {
         const pluginState = columnResizingPluginKey.getState(state);
-        if (pluginState && pluginState.activeHandle > -1) {
-          return handleDecorations(state, pluginState.activeHandle);
+        let decos = DecorationSet2.empty;
+        if (pluginState) {
+          decos = decos.add(
+            state.doc,
+            pluginState.tableDecos.find(void 0, void 0, () => true),
+          );
+          if (pluginState.activeHandle > -1) {
+            decos = decos.add(
+              state.doc,
+              handleDecorations(state, pluginState.activeHandle),
+            );
+          }
         }
+        return decos;
       },
-      nodeViews: {},
+      // nodeViews: {},
     },
   });
   return plugin;
 }
 var ResizeState = class {
-  constructor(activeHandle, dragging) {
+  constructor(activeHandle, dragging, tableDecos) {
     this.activeHandle = activeHandle;
     this.dragging = dragging;
+    this.tableDecos = tableDecos;
   }
   apply(tr) {
     const state = this;
+    if (tr.docChanged) {
+      state.tableDecos = state.tableDecos.map(tr.mapping, tr.doc);
+    }
     const action = tr.getMeta(columnResizingPluginKey);
-    if (action && action.setHandle != null)
-      return new ResizeState(action.setHandle, false);
-    if (action && action.setDragging !== void 0)
-      return new ResizeState(state.activeHandle, action.setDragging);
-    if (state.activeHandle > -1 && tr.docChanged) {
+    if (action) {
+      if (action.setHandle != null)
+        return new ResizeState(action.setHandle, false, state.tableDecos);
+      if (action.setDragging !== void 0)
+        return new ResizeState(
+          state.activeHandle,
+          action.setDragging,
+          state.tableDecos,
+        );
+      let decos = state.tableDecos;
+      if (action.setColWidths) {
+        const scws = action.setColWidths;
+        scws.forEach(scw => {
+          const removed = decos.find(
+            scw.tableStart - 1,
+            scw.tableStart,
+            spec => spec.type === SPEC_COL_WIDTHS,
+          );
+          if (removed) decos = decos.remove(removed);
+          const deco = colgroupDecoration(scw.tableStart, scw.colWidths);
+          decos = decos.add(tr.doc, [deco]);
+        });
+      }
+      if (action.setTableWidth) {
+        let decos2 = state.tableDecos;
+        const stws = action.setTableWidth;
+        stws.forEach(stw => {
+          const removed = decos2.find(
+            stw.pos,
+            stw.pos + 1,
+            spec => spec.type === SPEC_TABLE_WIDTH,
+          );
+          if (removed) {
+            const newDecos = [];
+            removed.forEach(r => {
+              const pos = tr.mapping.map(stw.pos);
+              const table = tr.doc.nodeAt(pos);
+              if (
+                (table == null ? void 0 : table.type.spec.tableRole) === 'table'
+              ) {
+                newDecos.push(
+                  tableWidthDecoration(pos, pos + table.nodeSize, stw.css),
+                );
+              }
+            });
+            if (newDecos) decos2 = decos2.remove(removed).add(tr.doc, newDecos);
+          }
+        });
+      }
+      if (decos !== state.tableDecos)
+        return new ResizeState(state.activeHandle, state.dragging, decos);
+    }
+    if (tr.docChanged && state.activeHandle > -1) {
       let handle = tr.mapping.map(state.activeHandle, -1);
       if (!pointsAtCell(tr.doc.resolve(handle))) {
         handle = -1;
       }
-      return new ResizeState(handle, state.dragging);
+      return new ResizeState(handle, state.dragging, state.tableDecos);
     }
     return state;
   }
@@ -1656,16 +2094,16 @@ function handleMouseMove(
     if (target) {
       const { left, right } = target.getBoundingClientRect();
       if (event.clientX - left <= handleWidth)
-        cell = edgeCell(view, event, 'left', handleWidth);
+        cell = edgeCell(view, event, 'left');
       else if (right - event.clientX <= handleWidth)
-        cell = edgeCell(view, event, 'right', handleWidth);
+        cell = edgeCell(view, event, 'right');
     }
     if (cell != pluginState.activeHandle) {
       if (!lastColumnResizable && cell !== -1) {
         const $cell = view.state.doc.resolve(cell);
-        const table = $cell.node(-1);
+        const table = $cell.node(-2);
         const map = TableMap.get(table);
-        const tableStart = $cell.start(-1);
+        const tableStart = $cell.start(-2);
         const col =
           map.colCount($cell.pos - tableStart) +
           $cell.nodeAfter.attrs.colspan -
@@ -1752,19 +2190,15 @@ function domCellAround(target) {
         : target.parentNode;
   return target;
 }
-function edgeCell(view, event, side, handleWidth) {
-  const offset = side == 'right' ? -handleWidth : handleWidth;
-  const found = view.posAtCoords({
-    left: event.clientX + offset,
-    top: event.clientY,
-  });
+function edgeCell(view, event, side) {
+  const found = view.posAtCoords({ left: event.clientX, top: event.clientY });
   if (!found) return -1;
   const { pos } = found;
   const $cell = cellAround(view.state.doc.resolve(pos));
   if (!$cell) return -1;
   if (side == 'right') return $cell.pos;
-  const map = TableMap.get($cell.node(-1)),
-    start = $cell.start(-1);
+  const map = TableMap.get($cell.node(-2)),
+    start = $cell.start(-2);
   const index = map.map.indexOf($cell.pos - start);
   return index % map.width == 0 ? -1 : start + map.map[index - 1];
 }
@@ -1779,9 +2213,9 @@ function updateHandle(view, value) {
 }
 function updateColumnWidth(view, cell, width) {
   const $cell = view.state.doc.resolve(cell);
-  const table = $cell.node(-1),
+  const table = $cell.node(-2),
     map = TableMap.get(table),
-    start = $cell.start(-1);
+    start = $cell.start(-2);
   const col =
     map.colCount($cell.pos - start) + $cell.nodeAfter.attrs.colspan - 1;
   const tr = view.state.tr;
@@ -1802,18 +2236,18 @@ function updateColumnWidth(view, cell, width) {
 }
 function displayColumnWidth(view, cell, width, cellMinWidth) {
   const $cell = view.state.doc.resolve(cell);
-  const table = $cell.node(-1),
-    start = $cell.start(-1);
+  const table = $cell.node(-2),
+    tableStart = $cell.start(-2);
   const col =
-    TableMap.get(table).colCount($cell.pos - start) +
+    TableMap.get(table).colCount($cell.pos - tableStart) +
     $cell.nodeAfter.attrs.colspan -
     1;
-  let dom = view.domAtPos($cell.start(-1)).node;
+  let dom = view.domAtPos($cell.start(-2)).node;
   while (dom && dom.nodeName != 'TABLE') {
     dom = dom.parentNode;
   }
   if (!dom) return;
-  updateColumnsOnResize(table, dom.firstChild, dom, cellMinWidth, col, width);
+  updateColumnsOnResize(view, table, tableStart, cellMinWidth, col, width);
 }
 function zeroes(n) {
   return Array(n).fill(0);
@@ -1821,18 +2255,18 @@ function zeroes(n) {
 function handleDecorations(state, cell) {
   const decorations = [];
   const $cell = state.doc.resolve(cell);
-  const table = $cell.node(-1);
+  const table = $cell.node(-2);
   if (!table) {
-    return DecorationSet2.empty;
+    return [];
   }
   const map = TableMap.get(table);
-  const start = $cell.start(-1);
+  const start = $cell.start(-2);
   const col = map.colCount($cell.pos - start) + $cell.nodeAfter.attrs.colspan;
   for (let row = 0; row < map.height; row++) {
     const index = col + row * map.width - 1;
     if (
       (col == map.width || map.map[index] != map.map[index + 1]) &&
-      (row == 0 || map.map[index] != map.map[index - map.width])
+      (row == 0 || map.map[index - 1] != map.map[index - 1 - map.width])
     ) {
       const cellPos = map.map[index];
       const pos = start + cellPos + table.nodeAt(cellPos).nodeSize - 1;
@@ -1841,17 +2275,136 @@ function handleDecorations(state, cell) {
       decorations.push(Decoration2.widget(pos, dom));
     }
   }
-  return DecorationSet2.create(state.doc, decorations);
+  return decorations;
+}
+function colgroupDecoration(tableStart, colWidths) {
+  return Decoration2.widget(
+    tableStart,
+    (view, getPos) => {
+      const colgroup = document.createElement('colgroup');
+      for (let c = 0; c < colWidths.length; c++) {
+        const colElement = document.createElement('col');
+        colElement.style.width = colWidths[c];
+        colgroup.appendChild(colElement);
+      }
+      return colgroup;
+    },
+    {
+      type: SPEC_COL_WIDTHS,
+      colWidths,
+    },
+  );
+}
+function tableWidthDecoration(from, to, css) {
+  const style = Object.entries(css)
+    .map(([prop, value]) => `${prop}: ${value}`)
+    .join('; ');
+  return Decoration2.node(from, to, { style }, { type: SPEC_TABLE_WIDTH });
+}
+function tableDecorationsCallback(doc, decos, cellMinWidth) {
+  return (node, pos) => {
+    if (node.type.spec.tableRole === 'table') {
+      const tableStart = pos + 1;
+      const resolved = doc.resolve(tableStart);
+      decos.push(tableWidthDecoration(resolved.before(), resolved.after(), {}));
+      const { colWidths } = updateColumnsOnResize(
+        null,
+        node,
+        tableStart,
+        cellMinWidth,
+      );
+      decos.push(colgroupDecoration(tableStart, colWidths));
+      return false;
+    }
+    return true;
+  };
+}
+function createTableDecorations(doc, cellMinWidth = 0, from, to) {
+  let decos = [];
+  if (from && to)
+    doc.nodesBetween(
+      from,
+      to,
+      tableDecorationsCallback(doc, decos, cellMinWidth),
+    );
+  else doc.descendants(tableDecorationsCallback(doc, decos, cellMinWidth));
+  return decos;
+}
+function updateColumnsOnResize(
+  view,
+  table,
+  tableStart,
+  cellMinWidth,
+  overrideCol,
+  overrideValue,
+) {
+  const { setColWidths, setTableWidth } = getTableWidths(
+    table,
+    tableStart,
+    cellMinWidth,
+    overrideCol,
+    overrideValue,
+  );
+  const colWidths = setColWidths[0].colWidths;
+  const tableWidth = setTableWidth[0].width + 'px';
+  if (view) {
+    view.dispatch(
+      view.state.tr.setMeta(columnResizingPluginKey, {
+        setColWidths,
+        setTableWidth,
+      }),
+    );
+  }
+  return { colWidths, tableWidth };
+}
+function getCellMinWidth(state) {
+  const plugin = columnResizingPluginKey.get(state);
+  return (plugin && plugin.spec.options.cellMinWidth) || 25;
+}
+function getTableWidths(
+  table,
+  tableStart,
+  cellMinWidth,
+  overrideCol,
+  overrideValue,
+) {
+  let totalWidth = 0;
+  let fixedWidth = true;
+  const row = getRow(table, 0).node;
+  if (!row) return;
+  const colWidths = [];
+  for (let i = 0, col = 0; i < row.childCount; i++) {
+    const { colspan, colwidth } = row.child(i).attrs;
+    for (let j = 0; j < colspan; j++, col++) {
+      const hasWidth =
+        overrideCol == col ? overrideValue : colwidth && colwidth[j];
+      colWidths.push(hasWidth ? hasWidth + 'px' : '');
+      totalWidth += hasWidth || cellMinWidth;
+      if (!hasWidth) fixedWidth = false;
+    }
+  }
+  const setColWidths = [{ tableStart, colWidths }];
+  const pos = tableStart - 1;
+  const tableWidth = totalWidth + 'px';
+  const setTableWidth = [
+    fixedWidth
+      ? { pos, width: totalWidth, css: { 'min-width': '', width: tableWidth } }
+      : { pos, width: totalWidth, css: { 'min-width': tableWidth, width: '' } },
+  ];
+  return { setColWidths, setTableWidth };
 }
 
 // src/commands.ts
 import { Fragment as Fragment4 } from 'prosemirror-model';
-import { TextSelection as TextSelection3 } from 'prosemirror-state';
+import {
+  NodeSelection as NodeSelection4,
+  TextSelection as TextSelection3,
+} from 'prosemirror-state';
 function selectedRect(state) {
   const sel = state.selection;
   const $pos = selectionCell(state);
-  const table = $pos.node(-1);
-  const tableStart = $pos.start(-1);
+  const table = $pos.node(-2);
+  const tableStart = $pos.start(-2);
   const map = TableMap.get(table);
   const rect =
     sel instanceof CellSelection
@@ -1889,7 +2442,7 @@ function addColumn(tr, { map, tableStart, table }, col) {
   }
   return tr;
 }
-function addColumnBefore(state, dispatch) {
+function addColumnBefore(state, dispatch, view) {
   if (!isInTable(state)) return false;
   if (dispatch) {
     const rect = selectedRect(state);
@@ -1897,7 +2450,7 @@ function addColumnBefore(state, dispatch) {
   }
   return true;
 }
-function addColumnAfter(state, dispatch) {
+function addColumnAfter(state, dispatch, view) {
   if (!isInTable(state)) return false;
   if (dispatch) {
     const rect = selectedRect(state);
@@ -1928,7 +2481,7 @@ function removeColumn(tr, { map, table, tableStart }, col) {
     row += attrs.rowspan;
   }
 }
-function deleteColumn(state, dispatch) {
+function deleteColumn(state, dispatch, view) {
   if (!isInTable(state)) return false;
   if (dispatch) {
     const rect = selectedRect(state);
@@ -1962,14 +2515,22 @@ function rowIsHeader(map, table, row) {
       return false;
   return true;
 }
-function addRow(tr, { map, tableStart, table }, row) {
+function addRow(tr, { bottom, map, tableStart, table }, row) {
   var _a;
-  let rowPos = tableStart;
-  for (let i = 0; i < row; i++) rowPos += table.child(i).nodeSize;
+  let rPos = rowPos(table, row) + tableStart;
+  if (bottom === row && isRowLastInSection(table, row - 1)) rPos -= 2;
   const cells = [];
   let refRow = row > 0 ? -1 : 0;
   if (rowIsHeader(map, table, row + refRow))
     refRow = row == 0 || row == map.height ? null : 0;
+  const srows = map.sectionRows;
+  for (let s = 0, acc = 0; s < srows.length; s++) {
+    acc += srows[s];
+    if (row < acc || s === srows.length - 1) {
+      srows[s]++;
+      break;
+    }
+  }
   for (let col = 0, index = map.width * row; col < map.width; col++, index++) {
     if (
       row > 0 &&
@@ -1994,7 +2555,7 @@ function addRow(tr, { map, tableStart, table }, row) {
       if (node) cells.push(node);
     }
   }
-  tr.insert(rowPos, tableNodeTypes(table.type.schema).row.create(null, cells));
+  tr.insert(rPos, tableNodeTypes(table.type.schema).row.create(null, cells));
   return tr;
 }
 function addRowBefore(state, dispatch) {
@@ -2014,11 +2575,11 @@ function addRowAfter(state, dispatch) {
   return true;
 }
 function removeRow(tr, { map, table, tableStart }, row) {
-  let rowPos = 0;
-  for (let i = 0; i < row; i++) rowPos += table.child(i).nodeSize;
-  const nextRow = rowPos + table.child(row).nodeSize;
+  const { node: rNode, pos: rPos } = getRow(table, row);
   const mapFrom = tr.mapping.maps.length;
-  tr.delete(rowPos + tableStart, nextRow + tableStart);
+  const from = rPos + tableStart;
+  const to = from + rNode.nodeSize - 1;
+  tr.delete(from, to);
   for (let col = 0, index = row * map.width; col < map.width; col++, index++) {
     const pos = map.map[index];
     if (row > 0 && pos == map.map[index - map.width]) {
@@ -2041,15 +2602,43 @@ function removeRow(tr, { map, table, tableStart }, row) {
     }
   }
 }
+function removeSection(tr, { map, table, tableStart }, section) {
+  let pos = 0;
+  let s = -1;
+  for (let i = 0; i < table.childCount; i++) {
+    const child = table.child(i);
+    if (isTableSection(child)) {
+      s++;
+      if (s == section) {
+        tr.delete(tableStart + pos, tableStart + pos + child.nodeSize);
+        return;
+      }
+    }
+    pos += child.nodeSize;
+  }
+}
 function deleteRow(state, dispatch) {
   if (!isInTable(state)) return false;
   if (dispatch) {
     const rect = selectedRect(state),
       tr = state.tr;
     if (rect.top == 0 && rect.bottom == rect.map.height) return false;
+    const sectionRows = rect.map.sectionRows;
+    const sectionBottom = [sectionRows[0] || 0];
+    for (let s2 = 1; s2 < sectionRows.length; s2++)
+      sectionBottom[s2] = sectionBottom[s2 - 1] + sectionRows[s2];
+    let s = sectionRows.length - 1;
+    while (s > 0 && sectionBottom[s] > rect.bottom) s--;
     for (let i = rect.bottom - 1; ; i--) {
-      removeRow(tr, rect, i);
-      if (i == rect.top) break;
+      const firstRowOfSection = sectionBottom[s] - sectionRows[s];
+      if (i + 1 === sectionBottom[s] && rect.top <= firstRowOfSection) {
+        removeSection(tr, rect, s);
+        i = firstRowOfSection;
+        s--;
+      } else {
+        removeRow(tr, rect, i);
+      }
+      if (i <= rect.top) break;
       const table = rect.tableStart
         ? tr.doc.nodeAt(rect.tableStart - 1)
         : tr.doc;
@@ -2058,6 +2647,257 @@ function deleteRow(state, dispatch) {
       }
       rect.table = table;
       rect.map = TableMap.get(rect.table);
+    }
+    dispatch(tr);
+  }
+  return true;
+}
+function addCaption(state, dispatch) {
+  const $anchor = state.selection.$anchor;
+  const d = tableDepth($anchor);
+  if (d < 0) return false;
+  const table = $anchor.node(d);
+  if (tableHasCaption(table)) return false;
+  if (dispatch) {
+    let pos = $anchor.start(d);
+    const types = tableNodeTypes(state.schema);
+    const caption = types.caption.createAndFill();
+    dispatch(state.tr.insert(pos, caption));
+  }
+  return true;
+}
+function deleteCaption(state, dispatch) {
+  const $anchor = state.selection.$anchor;
+  const d = tableDepth($anchor);
+  if (d < 0) return false;
+  const table = $anchor.node(d);
+  if (!tableHasCaption(table)) return false;
+  if (dispatch) {
+    let pos = $anchor.start(d);
+    const size = table.firstChild.nodeSize;
+    dispatch(state.tr.delete(pos, pos + size));
+  }
+  return true;
+}
+function createSection(schema, role, width, cellRole) {
+  const types = tableNodeTypes(schema);
+  const cells = [];
+  const cellType =
+    (cellRole && types[cellRole]) || types.cell || types.header_cell;
+  for (let i = 0; i < width; i++) cells.push(cellType.createAndFill());
+  return types[role].createAndFill(null, types.row.createAndFill(null, cells));
+}
+function addTableHead(state, dispatch) {
+  const $anchor = state.selection.$anchor;
+  const d = tableDepth($anchor);
+  if (d < 0) return false;
+  const table = $anchor.node(d);
+  if (tableHasHead(table)) return false;
+  if (dispatch) {
+    let pos = $anchor.start(d);
+    const firstChild = table.child(0);
+    if (firstChild && firstChild.type.spec.tableRole === 'caption')
+      pos += firstChild.nodeSize;
+    const map = TableMap.get(table);
+    const head = createSection(state.schema, 'head', map.width, 'header_cell');
+    dispatch(state.tr.insert(pos, head));
+  }
+  return true;
+}
+function addTableFoot(state, dispatch) {
+  const $anchor = state.selection.$anchor;
+  const d = tableDepth($anchor);
+  if (d < 0) return false;
+  const table = $anchor.node(d);
+  if (tableHasFoot(table)) return false;
+  if (dispatch) {
+    const pos = $anchor.end(d);
+    const map = TableMap.get(table);
+    const foot = createSection(state.schema, 'foot', map.width, 'header_cell');
+    dispatch(state.tr.insert(pos, foot));
+  }
+  return true;
+}
+function addBodyBefore(state, dispatch) {
+  if (!isInTable(state)) return false;
+  const rect = selectedRect(state);
+  const { map, table, tableStart } = rect;
+  const firstSection = map.sectionsInRect(rect)[0];
+  if (firstSection === void 0 || (firstSection === 0 && tableHasHead(table)))
+    return false;
+  if (dispatch) {
+    let pos = tableStart,
+      s = -1;
+    for (let i = 0; i < table.childCount; i++) {
+      const child = table.child(i);
+      if (child.type.spec.tableRole != 'caption') s++;
+      if (s === firstSection) break;
+      pos += child.nodeSize;
+    }
+    const map2 = TableMap.get(table);
+    const body = createSection(state.schema, 'body', map2.width);
+    dispatch(state.tr.insert(pos, body));
+  }
+  return true;
+}
+function addBodyAfter(state, dispatch) {
+  if (!isInTable(state)) return false;
+  const rect = selectedRect(state);
+  const { map, table, tableStart } = rect;
+  const sections = map.sectionsInRect(rect);
+  const lastSection = sections[sections.length - 1];
+  if (lastSection === map.sectionRows.length - 1 && tableHasFoot(table))
+    return false;
+  if (dispatch) {
+    let pos = tableStart - 1,
+      s = -1;
+    for (let i = 0; i < table.childCount; i++) {
+      const child = table.child(i);
+      pos += child.nodeSize;
+      if (child.type.spec.tableRole != 'caption') s++;
+      if (s === lastSection) break;
+    }
+    const map2 = TableMap.get(table);
+    const body = createSection(state.schema, 'body', map2.width);
+    dispatch(state.tr.insert(pos, body));
+  }
+  return true;
+}
+function fixRowCells(row, headerCellType) {
+  const newCells = [];
+  for (let i = 0; i < row.childCount; i++) {
+    const cell = row.child(i);
+    newCells.push(
+      cell.type.spec.tableRole === 'header_cell'
+        ? cell
+        : headerCellType.create(cell.attrs, cell.content),
+    );
+  }
+  return row.copy(Fragment4.from(newCells));
+}
+function makeSection(role, state, dispatch) {
+  if (!isInTable(state)) return false;
+  const rect = selectedRect(state);
+  const { map, table, tableStart, top, bottom } = rect;
+  if (role === 'head' && top > 0) return false;
+  if (role === 'foot' && bottom < map.height) return false;
+  const tableTypes = tableNodeTypes(state.schema);
+  const newSectionType = tableTypes[role];
+  if (!newSectionType) return false;
+  const fixCellsType =
+    (role === 'head' || role === 'foot') &&
+    tableTypes.cell &&
+    tableTypes.header_cell;
+  if (dispatch) {
+    let newTableContents = Fragment4.empty;
+    let refSection = null;
+    let rowIndex = 0;
+    let inSelection = false;
+    let accSectionRows = Fragment4.empty;
+    for (let i = 0; i < table.childCount; i++) {
+      const section = table.child(i);
+      const sectionRole = section.type.spec.tableRole;
+      if (isTableSection(section)) {
+        const sectionRowsCount = section.childCount;
+        const lastRow = rowIndex + sectionRowsCount - 1;
+        if (
+          rowIndex === top &&
+          lastRow + 1 === bottom &&
+          sectionRole === role
+        ) {
+          return false;
+        }
+        if (rowIndex >= bottom || lastRow < top) {
+          newTableContents = newTableContents.addToEnd(section);
+        } else {
+          if (!refSection) refSection = section;
+          for (let j = 0; j < section.childCount; j++) {
+            if (rowIndex + j === top) {
+              if (accSectionRows.childCount > 0) {
+                newTableContents = newTableContents.addToEnd(
+                  refSection.copy(accSectionRows),
+                );
+                accSectionRows = Fragment4.empty;
+              }
+              inSelection = true;
+            }
+            const row =
+              inSelection && fixCellsType
+                ? fixRowCells(section.child(j), tableTypes.header_cell)
+                : section.child(j);
+            accSectionRows = accSectionRows.addToEnd(row);
+            if (rowIndex + j === bottom - 1) {
+              if (refSection.type.spec.tableRole !== role) refSection = section;
+              const newSection =
+                refSection.type.spec.tableRole !== role
+                  ? newSectionType.create(null, accSectionRows)
+                  : refSection.copy(accSectionRows);
+              newTableContents = newTableContents.addToEnd(newSection);
+              accSectionRows = Fragment4.empty;
+              refSection = section;
+              inSelection = false;
+            }
+          }
+          if (!inSelection && accSectionRows.childCount > 0) {
+            newTableContents = newTableContents.addToEnd(
+              refSection.copy(accSectionRows),
+            );
+            accSectionRows = Fragment4.empty;
+          }
+        }
+        rowIndex = lastRow + 1;
+      } else {
+        newTableContents = newTableContents.addToEnd(section);
+      }
+    }
+    const { doc, tr } = state;
+    tr.setSelection(new NodeSelection4(doc.resolve(tableStart - 1)));
+    const newTable = table.copy(newTableContents);
+    tr.replaceSelectionWith(newTable);
+    const cellsPositions = TableMap.get(newTable).cellsInRect(rect);
+    const $anchorCell = tr.doc.resolve(tableStart + cellsPositions[0]);
+    const $headCell = tr.doc.resolve(
+      tableStart + cellsPositions[cellsPositions.length - 1],
+    );
+    tr.setSelection(new CellSelection($anchorCell, $headCell));
+    tr.setMeta(
+      columnResizingPluginKey,
+      getTableWidths(table, tableStart, getCellMinWidth(state)),
+    );
+    dispatch(tr);
+  }
+  return true;
+}
+function makeBody(state, dispatch) {
+  return makeSection('body', state, dispatch);
+}
+function makeHead(state, dispatch) {
+  return makeSection('head', state, dispatch);
+}
+function makeFoot(state, dispatch) {
+  return makeSection('foot', state, dispatch);
+}
+function deleteSection(state, dispatch) {
+  if (!isInTable(state)) return false;
+  const rect = selectedRect(state),
+    tr = state.tr;
+  if (rect.top == 0 && rect.bottom == rect.map.height) return false;
+  if (dispatch) {
+    const { map, table, tableStart } = rect;
+    const sections = map.sectionsInRect(rect);
+    if (sections.length >= tableSectionsCount(table) || sections.length == 0)
+      return false;
+    const firstSectionIndex = tableHasCaption(table) ? 1 : 0;
+    const sectionPosAndSize = [];
+    let pos = tableStart;
+    for (let i = 0; i < table.childCount; i++) {
+      const size = table.child(i).nodeSize;
+      if (i >= firstSectionIndex) sectionPosAndSize.push([pos, size]);
+      pos += size;
+    }
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const [pos2, size] = sectionPosAndSize[sections[i]];
+      tr.delete(pos2, pos2 + size);
     }
     dispatch(tr);
   }
@@ -2103,6 +2943,7 @@ function mergeCells(state, dispatch) {
     return false;
   const rect = selectedRect(state),
     { map } = rect;
+  if (!map.rectOverOneSection(rect)) return false;
   if (cellsOverlapRectangle(map, rect)) return false;
   if (dispatch) {
     const tr = state.tr;
@@ -2376,15 +3217,19 @@ var toggleHeaderCell = toggleHeader('cell', {
   useDeprecatedLogic: true,
 });
 function findNextCell($cell, dir) {
+  const table = $cell.node(-2);
+  const tableStart = $cell.start(-2);
   if (dir < 0) {
     const before = $cell.nodeBefore;
-    if (before) return $cell.pos - before.nodeSize;
+    if (before) {
+      return $cell.pos - before.nodeSize;
+    }
     for (
-      let row = $cell.index(-1) - 1, rowEnd = $cell.before();
+      let row = $cell.index(-2) - 1, rowEnd = $cell.before();
       row >= 0;
       row--
     ) {
-      const rowNode = $cell.node(-1).child(row);
+      const rowNode = $cell.node(-2).child(row);
       const lastChild = rowNode.lastChild;
       if (lastChild) {
         return rowEnd - 1 - lastChild.nodeSize;
@@ -2395,9 +3240,8 @@ function findNextCell($cell, dir) {
     if ($cell.index() < $cell.parent.childCount - 1) {
       return $cell.pos + $cell.nodeAfter.nodeSize;
     }
-    const table = $cell.node(-1);
     for (
-      let row = $cell.indexAfter(-1), rowStart = $cell.after();
+      let row = $cell.indexAfter(-2), rowStart = $cell.after();
       row < table.childCount;
       row++
     ) {
@@ -2486,10 +3330,12 @@ export {
   CellSelection,
   ResizeState,
   TableMap,
-  TableView,
   clipCells as __clipCells,
   insertCells as __insertCells,
   pastedCells as __pastedCells,
+  addBodyAfter,
+  addBodyBefore,
+  addCaption,
   addColSpan,
   addColumn,
   addColumnAfter,
@@ -2497,21 +3343,30 @@ export {
   addRow,
   addRowAfter,
   addRowBefore,
+  addTableFoot,
+  addTableHead,
   cellAround,
   colCount,
   columnIsHeader,
   columnResizing,
   columnResizingPluginKey,
+  deleteCaption,
   deleteColumn,
   deleteRow,
+  deleteSection,
   deleteTable,
   findCell,
   fixTables,
   fixTablesKey,
+  getRow,
   goToNextCell,
   handlePaste,
   inSameTable,
   isInTable,
+  isRowLastInSection,
+  makeBody,
+  makeFoot,
+  makeHead,
   mergeCells,
   moveCellForward,
   nextCell,
@@ -2519,19 +3374,27 @@ export {
   removeColSpan,
   removeColumn,
   removeRow,
+  removeSection,
+  rowAtPos,
   rowIsHeader,
+  rowPos,
+  rowsCount,
   selectedRect,
   selectionCell,
   setCellAttr,
   splitCell,
   splitCellWithType,
+  tableBodiesCount,
   tableEditing,
   tableEditingKey,
+  tableHasCaption,
+  tableHasFoot,
+  tableHasHead,
   tableNodeTypes,
   tableNodes,
+  tableSectionsCount,
   toggleHeader,
   toggleHeaderCell,
   toggleHeaderColumn,
   toggleHeaderRow,
-  updateColumnsOnResize,
 };

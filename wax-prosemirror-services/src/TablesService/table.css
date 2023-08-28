@@ -12,6 +12,12 @@
     width: 100%;
   }
 
+   table>caption {
+      background-color: #535E76;
+      color: white;
+      font-weight: bold;
+    }
+
   th,
   td {
     border: 1px solid #eee;

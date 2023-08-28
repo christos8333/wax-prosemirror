@@ -1,5 +1,4 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   AnnotationToolGroupService,
   ImageService,
@@ -79,7 +78,7 @@ export default {
   TitleService: { updateTitle },
   EnableTrackChangeService: { enabled: false },
 
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

@@ -34,7 +34,6 @@ export default {
     'react-dropdown',
     'uuid',
     'prop-types',
-    'prosemirror-tables',
     'wax-prosemirror-services',
   ],
 };

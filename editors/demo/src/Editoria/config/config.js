@@ -1,6 +1,6 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import { debounce } from 'lodash';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
+
 import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
@@ -150,8 +150,6 @@ export default {
     },
   },
   PmPlugins: [
-    columnResizing(),
-    tableEditing(),
     invisibles([hardBreak()]),
     disallowPasteImagesPlugin(() =>
       onWarning(

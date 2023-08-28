@@ -1,5 +1,4 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
 import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
@@ -130,7 +129,7 @@ export default {
   RulesService: [emDash, ellipsis],
   ImageService: { showAlt: true },
 
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()])],
   services: [
     // new ExternalAPIContentService(),
     new QuestionsService(),

@@ -42,7 +42,6 @@ export default {
     'react-dom',
     'react-dropdown',
     'lodash',
-    'prosemirror-tables',
     'prosemirror-schema-list',
     'prosemirror-model',
     'prosemirror-inputrules',

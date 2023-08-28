@@ -8,8 +8,8 @@ import React, {
   createRef,
 } from 'react';
 import styled from 'styled-components';
-import * as tablesFn from 'prosemirror-tables';
 import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
+import * as tablesFn from '../tableSrc';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};

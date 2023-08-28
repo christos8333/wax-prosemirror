@@ -1,6 +1,6 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import { debounce } from 'lodash';
-import { columnResizing, tableEditing } from 'prosemirror-tables';
+
 import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
@@ -191,7 +191,7 @@ export default {
       reject: true,
     },
   },
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

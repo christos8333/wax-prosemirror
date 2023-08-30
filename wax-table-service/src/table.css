@@ -16,6 +16,7 @@
       background-color: #535E76;
       color: white;
       font-weight: bold;
+      caption-side: bottom;
     }
 
   th,
@@ -29,7 +30,7 @@
   }
 
   .tableWrapper {
-    overflow-x: auto;
+    overflow-x: scroll;
   }
 
   .column-resize-handle {

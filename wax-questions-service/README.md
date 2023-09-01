@@ -26,7 +26,6 @@ import { QuestionsService } from 'wax-questions-service';
 import 'wax-questions-service/dist/index.css'
 ```
 
-
 ### Tools
 
 ```

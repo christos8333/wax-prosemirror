@@ -1,6 +1,6 @@
 ## Wax Table package
 
-Wax Table Package is a fork of [prosemirror-tables](https://github.com/ProseMirror/prosemirror-tables) with added Table Caption 
+Wax Table Package is a fork of [prosemirror-tables](https://github.com/ProseMirror/prosemirror-tables) with added Table Caption
 funcionality
 
 ## How to use
@@ -16,7 +16,6 @@ import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 ```
 import 'wax-table-service/dist/index.css'
 ```
-
 
 ### Tools
 
@@ -35,6 +34,7 @@ MenuService: [
 ### ProseMirror Plugins
 
 In case you need tableEditing or columnResizing plugins add the to the array of `PmPlugins` in your editor's config
+
 ```
  PmPlugins: [
     tableEditing(),
@@ -49,5 +49,3 @@ In case you need tableEditing or columnResizing plugins add the to the array of 
     new TablesService(),
   ]
 ```
-
-

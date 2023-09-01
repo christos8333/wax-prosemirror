@@ -20,6 +20,13 @@
 import { QuestionsService } from 'wax-questions-service';
 ```
 
+### Styles(preferably in your layout)
+
+```
+import 'wax-questions-service/dist/index.css'
+```
+
+
 ### Tools
 
 ```

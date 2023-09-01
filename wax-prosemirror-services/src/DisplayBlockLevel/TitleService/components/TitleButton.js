@@ -31,11 +31,12 @@ const TitleButton = ({ view = {}, item }) => {
   if (titleNode[0]) chapterTitle = titleNode[0].node.textContent;
 
   useEffect(() => {
-    if (titleNode[0]) {
-      if (serviceConfig)
+    if (serviceConfig) {
+      if (titleNode[0]) {
         serviceConfig.updateTitle(titleNode[0].node.textContent);
-    } else {
-      if (serviceConfig) serviceConfig.updateTitle('');
+      } else {
+        serviceConfig.updateTitle('');
+      }
     }
   }, [chapterTitle]);
 

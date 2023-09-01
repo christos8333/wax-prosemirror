@@ -51,10 +51,12 @@ export default (view, fileUpload, placeholderPlugin, context) => file => {
           )
           .setMeta(placeholderPlugin, { remove: { id } }),
       );
+      context.setOption({ uploading: false });
     },
     () => {
       // On failure, just clean up the placeholder
       view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
+      context.setOption({ uploading: false });
     },
   );
 };

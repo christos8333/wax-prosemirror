@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useRef, useMemo } from 'react';
+import React, { useContext, useRef, useMemo, useEffect } from 'react';
 import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
@@ -19,6 +19,10 @@ const ImageUpload = ({ item, fileUpload, view }) => {
     activeViewId,
     pmViews: { main },
   } = context;
+
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
 
   const inputRef = useRef(null);
   const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
@@ -60,12 +64,10 @@ const ImageUpload = ({ item, fileUpload, view }) => {
     insertImage(urls, view, placeholderPlugin);
   }
 
-  let isDisabled = !item.select(activeView);
+  const isDisabled =
+    context.options.uploading || !item.select(activeView) || !isEditable;
 
-  const isEditable = main.props.editable(editable => {
-    return editable;
-  });
-  if (!isEditable) isDisabled = true;
+  useEffect(() => {}, []);
 
   const ImageUploadComponent = useMemo(
     () => (
@@ -73,7 +75,11 @@ const ImageUpload = ({ item, fileUpload, view }) => {
         <label htmlFor="file-upload">
           <MenuButton
             active={false}
-            disabled={isDisabled}
+            disabled={
+              context.options.uploading ||
+              !item.select(activeView) ||
+              !isEditable
+            }
             iconName={item.icon}
             onMouseDown={e => {
               e.preventDefault();
@@ -87,6 +93,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
             id="file-upload"
             onChange={e => {
               fileUpload(e.target.files[0]);
+              context.setOption({ uploading: true });
               if (inputRef.current) inputRef.current.value = '';
             }}
             ref={inputRef}

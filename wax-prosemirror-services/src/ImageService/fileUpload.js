@@ -38,6 +38,7 @@ export default (view, fileUpload, placeholderPlugin, context) => file => {
       }
       // Otherwise, insert it at the placeholder's position, and remove
       // the placeholder
+      context.setOption({ uploading: false });
       context.pmViews.main.dispatch(
         context.pmViews.main.state.tr
           .replaceWith(
@@ -51,7 +52,6 @@ export default (view, fileUpload, placeholderPlugin, context) => file => {
           )
           .setMeta(placeholderPlugin, { remove: { id } }),
       );
-      context.setOption({ uploading: false });
     },
     () => {
       // On failure, just clean up the placeholder

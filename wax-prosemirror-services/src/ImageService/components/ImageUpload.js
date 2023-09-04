@@ -67,19 +67,13 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const isDisabled =
     context.options.uploading || !item.select(activeView) || !isEditable;
 
-  useEffect(() => {}, []);
-
   const ImageUploadComponent = useMemo(
     () => (
       <Wrapper>
         <label htmlFor="file-upload">
           <MenuButton
             active={false}
-            disabled={
-              context.options.uploading ||
-              !item.select(activeView) ||
-              !isEditable
-            }
+            disabled={isDisabled}
             iconName={item.icon}
             onMouseDown={e => {
               e.preventDefault();

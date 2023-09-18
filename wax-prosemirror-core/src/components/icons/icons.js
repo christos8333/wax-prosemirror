@@ -224,12 +224,12 @@ export default {
   highlight: ({ className }) => (
     <Svg className={className} viewBox="0 0 24 24">
       <path
-        id="highlight"
         d="M14.837,2.538L7.587,9.617L6.826,11.846L5.707,12.94L8.752,15.912L9.869,14.818L12.153,14.075L19.402,6.995L14.837,2.538ZM21.685,6.252C22.105,6.662 22.105,7.328 21.685,7.738L13.315,15.912L11.033,16.655L9.511,18.141C9.091,18.551 8.41,18.551 7.989,18.141L3.424,13.682C3.004,13.272 3.004,12.607 3.424,12.197L4.945,10.711L5.706,8.482L14.076,0.308C14.497,-0.103 15.178,-0.103 15.598,0.308L21.685,6.252ZM14.837,5.509L16.359,6.995L10.46,12.769L8.939,11.283L14.837,5.509ZM6.468,18L4.566,20L0,18.514L3.424,15.027"
+        id="highlight"
       />
       <path
-        id="trait"
         d="M7.447,18.31L7.64,18.499C8.254,19.097 9.248,19.097 9.86,18.499L10.053,18.31L22.506,18.31L22.506,21.417L1.876,21.417L1.876,19.65L4.411,20.475C4.594,20.535 4.796,20.484 4.928,20.345L6.83,18.345L6.794,18.31L7.447,18.31Z"
+        id="trait"
       />
     </Svg>
   ),
@@ -412,7 +412,7 @@ export default {
     </Svg>
   ),
   IconCross: ({ className }) => (
-    <Svg className={className} viewBox="0 0 409.6 409.6" fill="none">
+    <Svg className={className} fill="none" viewBox="0 0 409.6 409.6">
       <path d="m405.332031 192h-170.664062v-170.667969c0-11.773437-9.558594-21.332031-21.335938-21.332031-11.773437 0-21.332031 9.558594-21.332031 21.332031v170.667969h-170.667969c-11.773437 0-21.332031 9.558594-21.332031 21.332031 0 11.777344 9.558594 21.335938 21.332031 21.335938h170.667969v170.664062c0 11.777344 9.558594 21.335938 21.332031 21.335938 11.777344 0 21.335938-9.558594 21.335938-21.335938v-170.664062h170.664062c11.777344 0 21.335938-9.558594 21.335938-21.335938 0-11.773437-9.558594-21.332031-21.335938-21.332031zm0 0" />
     </Svg>
   ),
@@ -502,5 +502,128 @@ export default {
       <title> help</title>
       <path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
     </Svg>
+  ),
+  deleteIco: ({ className }) => (
+    <svg
+      className={className}
+      fill="none"
+      height="13"
+      viewBox="0 0 20 20"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Delete Icon</title>
+      <path
+        d="M1.65222 5.47827H18.3479"
+        stroke="#FF4E4E"
+        strokeLinecap="round"
+      />
+      <path
+        d="M5.82666 5.47826V3C5.82666 2.44771 6.27438 2 6.82666 2H13.1745C13.7268 2 14.1745 2.44772 14.1745 3V5.47826"
+        stroke="#FF4E4E"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M3.73889 5.47827L4.38207 17.0555C4.41151 17.5854 4.8498 18 5.38053 18H14.619C15.1497 18 15.588 17.5854 15.6174 17.0555L16.2606 5.47827"
+        stroke="#FF4E4E"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  tryAgain: ({ className }) => (
+    <svg
+      className={className}
+      fill="none"
+      height="13"
+      viewBox="0 0 20 20"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Try Again Icon</title>
+      <path
+        d="M16.2963 13.0625C16.7471 12.1375 17 11.0983 17 10C17 6.13401 13.866 3 10 3C6.13401 3 3 6.13401 3 10C3 13.866 6.13401 17 10 17C10.8587 17 11.6812 16.8454 12.4414 16.5625"
+        stroke="#595959"
+      />
+      <path d="M18 14L15 12V15L18 14Z" fill="#595959" stroke="#595959" />
+    </svg>
+  ),
+  insertIco: ({ className }) => (
+    <svg
+      className={className}
+      fill="none"
+      height="13"
+      viewBox="0 0 20 20"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Insert Icon</title>
+      <path d="M4 4H16" stroke="#505050" />
+      <path d="M4 7H16" stroke="#505050" />
+      <path d="M7 10L16 10" stroke="#505050" />
+      <path d="M10 13L16 13" stroke="#505050" />
+      <path d="M4 9.5V13H7.5" stroke="#505050" />
+      <path d="M6 11L8 13L6 15" stroke="#505050" />
+    </svg>
+  ),
+  replaceIco: ({ className }) => (
+    <svg
+      className={className}
+      fill="none"
+      height="13"
+      viewBox="0 0 20 20"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Replace</title>
+      <path d="M18 8H2L6 4" stroke="#595959" strokeLinejoin="round" />
+      <path d="M2 12H18L14 16" stroke="#595959" strokeLinejoin="round" />
+    </svg>
+  ),
+  submitIco: ({ className }) => (
+    <svg
+      className={className}
+      fill="none"
+      height="12"
+      viewBox="0 0 13 12"
+      width="13"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Submit</title>
+      <path d="M0 11H8V1" stroke="#434343" />
+      <path d="M3.5 4L8 1L12 4" stroke="#434343" />
+    </svg>
+  ),
+  loaderIco: ({ className }) => (
+    <svg
+      className={className}
+      height="17"
+      viewBox="0 0 100 100"
+      width="17"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        fill="none"
+        r="40"
+        stroke="#434343"
+        strokeWidth="10"
+      >
+        <animate
+          attributeName="stroke-dasharray"
+          dur="1.5s"
+          repeatCount="indefinite"
+          values="0,150;120,150"
+        />
+        <animate
+          attributeName="stroke-dashoffset"
+          dur="1.5s"
+          repeatCount="indefinite"
+          values="0;-120"
+        />
+      </circle>
+    </svg>
   ),
 };

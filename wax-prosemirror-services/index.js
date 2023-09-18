@@ -31,6 +31,7 @@ export { default as EnterService } from './src/EnterService/EnterService';
 export { default as OENContainersService } from './src/OENContainersService/OENContainersService';
 export { default as YjsService } from './src/YjsService/YjsService';
 export { default as ExternalAPIContentService } from './src/ExternalAPIContentService/ExternalAPIContentService';
+export { default as AskAiContentService } from './src/AiService/AskAiContentService';
 /*
 ToolGroups
 */

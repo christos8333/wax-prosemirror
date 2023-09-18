@@ -45,6 +45,7 @@ import {
   // YjsService,
   // BlockDropDownToolGroupService,
   // TitleToolGroupService,
+  AskAiContentService,
 } from 'wax-prosemirror-services';
 
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
@@ -62,6 +63,21 @@ import CharactersList from './CharactersList';
 // const updateTitle = title => {
 //   console.log(title);
 // };
+
+async function DummyPromise(userInput) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('User input:', userInput);
+      if (userInput === 'reject') {
+        reject('Your request could not be processed for now');
+      } else {
+        resolve(
+          'He made significant contributions to theoretical physics, including achievements in quantum mechanics',
+        );
+      }
+    }, 4150);
+  });
+}
 
 const updateTitle = debounce(title => {
   console.log(title);
@@ -176,10 +192,15 @@ export default {
   //   docIdentifier: 'prosemirror-demo',
   // },
 
+  AskAiContentService: {
+    AskAiContentTransformation: DummyPromise,
+  },
+
   services: [
     // new TitleToolGroupService(),
     // new YjsService(),
     // new BlockDropDownToolGroupService(),
+    new AskAiContentService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),

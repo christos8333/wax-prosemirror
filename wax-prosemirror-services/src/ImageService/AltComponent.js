@@ -41,10 +41,16 @@ export default ({ setPosition, position }) => {
     const WaxSurface = main.dom.getBoundingClientRect();
     const { selection } = activeView.state;
 
-    if (!selection || !selection.node || !selection.node.attrs.id) return;
+    if (!selection || !selection.node) return;
     const imageId = selection.node.attrs.id;
-    const image = document.querySelector(`[data-id='${imageId}']`);
+    let image = document.querySelector(`[data-id='${imageId}']`);
+    if (!image)
+      image = document.querySelector(
+        `[data-fileid='${selection.node.attrs.fileid}']`,
+      );
+
     const figCaption = document.getElementsByTagName('figcaption')[0];
+
     if (!image || !figCaption) return;
     const imagePosition = image.getBoundingClientRect();
     const figCaptionPosition = figCaption.getBoundingClientRect().height - 5;

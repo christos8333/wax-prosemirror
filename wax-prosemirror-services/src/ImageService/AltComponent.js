@@ -41,7 +41,8 @@ export default ({ setPosition, position }) => {
     const WaxSurface = main.dom.getBoundingClientRect();
     const { selection } = activeView.state;
 
-    if (!selection || !selection.node) return;
+    if (!selection || !selection.node || selection.node.type.name !== 'image')
+      return;
     const imageId = selection.node.attrs.id;
     let image = document.querySelector(`[data-id='${imageId}']`);
     if (!image)

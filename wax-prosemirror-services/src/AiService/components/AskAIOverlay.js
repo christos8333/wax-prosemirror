@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {
   useRef,
   useEffect,
@@ -106,7 +107,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const AskAiContentTransformation = config.AskAiContentTransformation;
+  const { AskAiContentTransformation } = config;
   const inputRef = useRef(null);
   const [isScrollable, setIsScrollable] = useState(false);
   const resultDivRef = useRef(null);
@@ -122,7 +123,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     if (overLayComponent)
       overLayComponentCoords = overLayComponent.getBoundingClientRect();
     const top = end.top - WaxSurface.top + 20;
-    const left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
+    // const left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
+    const left = end.left - WaxSurface.left - 50;
     setPosition({ ...position, left, top });
   }, [position.left]);
 

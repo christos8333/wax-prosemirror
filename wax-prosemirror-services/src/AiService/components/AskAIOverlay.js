@@ -1,15 +1,26 @@
 /* eslint-disable react/prop-types */
-import React, {
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useContext,
-  useState,
-} from 'react';
+import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext, icons } from 'wax-prosemirror-core';
 import { replaceSelectedText } from '../ReplaceSelectedText';
 import { insertTextBelowSelection } from '../InsertTextBelowSelection';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const AskAIForm = styled.div`
+  background: #fafafa;
+  border: 0.5px #dcdcdc solid;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  width: 458px;
+`;
 
 const ActionButton = styled.button`
   align-items: center;
@@ -39,20 +50,6 @@ const ActionText = styled.div`
   font-weight: 400;
   line-height: 22px;
   word-wrap: break-word;
-`;
-
-const AskAIForm = styled.div`
-  align-items: center;
-  background: #fafafa;
-  border: 0.5px #dcdcdc solid;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-  display: inline-flex;
-  gap: 10px;
-  justify-content: space-between;
-  padding: 8px 12px;
-  width: 458px;
 `;
 
 const AskAIFormInput = styled.input`
@@ -109,41 +106,21 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { AskAiContentTransformation } = config;
   const inputRef = useRef(null);
-  const [isScrollable, setIsScrollable] = useState(false);
-  const resultDivRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const { selection } = activeView.state;
-    const { from, to } = selection;
+    const { to } = selection;
     const end = activeView.coordsAtPos(to);
-    const overLayComponent = document.getElementById('ai-overlay');
-    let overLayComponentCoords;
-    if (overLayComponent)
-      overLayComponentCoords = overLayComponent.getBoundingClientRect();
+    // const overLayComponent = document.getElementById('ai-overlay');
+    // let overLayComponentCoords;
+    // if (overLayComponent)
+    // overLayComponentCoords = overLayComponent.getBoundingClientRect();
     const top = end.top - WaxSurface.top + 20;
     // const left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
     const left = end.left - WaxSurface.left - 50;
     setPosition({ ...position, left, top });
   }, [position.left]);
-
-  useEffect(() => {
-    if (resultDivRef.current) {
-      setIsScrollable(
-        resultDivRef.current.scrollHeight > resultDivRef.current.clientHeight,
-      );
-    }
-  }, [result]);
-
-  useEffect(() => {
-    // Add a delay of 2 seconds before showing the overlay
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 1216);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const tryAgain = () => {
     // Reset the state to initial values
@@ -202,11 +179,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   return (
-    <>
-      <AskAIForm
-        className={`fade-in ${isVisible ? 'show' : ''}`}
-        id="ai-overlay"
-      >
+    <Wrapper id="ai-overlay">
+      <AskAIForm>
         <AskAIFormInput
           id="askAiInput"
           onKeyPress={handleKeyDown}
@@ -220,7 +194,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       </AskAIForm>
       {isSubmitted && (
         <>
-          <ResultDiv ref={resultDivRef} isScrollable={isScrollable}>
+          <ResultDiv>
             <ResultText>{result}</ResultText>
           </ResultDiv>
           <ActionSection>
@@ -247,7 +221,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           </ActionSection>
         </>
       )}
-    </>
+    </Wrapper>
   );
 };
 

@@ -87,7 +87,8 @@ const ResultText = styled.div`
   font-family: Roboto, sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 22px;
+  line-height: 19px;
+  white-space: pre-line;
   word-wrap: break-word;
 `;
 
@@ -149,6 +150,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
 
     try {
       const response = await AskAiContentTransformation(combinedInput);
+      console.log(response);
       setResult(response);
       setIsSubmitted(true);
     } catch (error) {
@@ -195,7 +197,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       {isSubmitted && (
         <>
           <ResultDiv>
-            <ResultText>{result}</ResultText>
+            <ResultText dangerouslySetInnerHTML={{ __html: result }} />
           </ResultDiv>
           <ActionSection>
             <ActionButton onClick={handleReplaceText}>

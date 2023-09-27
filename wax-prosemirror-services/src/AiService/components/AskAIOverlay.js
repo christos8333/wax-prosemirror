@@ -111,17 +111,22 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const { selection } = activeView.state;
-    const { to } = selection;
+    const { from, to } = selection;
+    const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to - 1);
     const overLayComponent = document.getElementById('ai-overlay');
 
     const overLayComponentCoords = overLayComponent.getBoundingClientRect();
     const top = end.top - WaxSurface.top + 20;
-    let left = end.left - WaxSurface.left;
+    let left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
+
+    if (end.left - overLayComponentCoords.width / 2 < WaxSurface.left) {
+      left += WaxSurface.left - (end.left - overLayComponentCoords.width / 2);
+    }
 
     // Don't get out of right boundary of the surface
-    if (end.left + overLayComponentCoords.width > WaxSurface.right) {
-      left -= end.left + overLayComponentCoords.width - WaxSurface.right;
+    if (end.left + overLayComponentCoords.width / 2 > WaxSurface.right) {
+      left -= end.left + overLayComponentCoords.width / 2 - WaxSurface.right;
     }
 
     setPosition({ ...position, left, top });

@@ -2,8 +2,8 @@
 import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext, icons } from 'wax-prosemirror-core';
-import { replaceSelectedText } from '../ReplaceSelectedText';
-import { insertTextBelowSelection } from '../InsertTextBelowSelection';
+import replaceSelectedText from '../ReplaceSelectedText';
+import insertTextBelowSelection from '../InsertTextBelowSelection';
 
 const Wrapper = styled.div`
   display: flex;

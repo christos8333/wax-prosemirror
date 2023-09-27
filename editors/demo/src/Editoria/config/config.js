@@ -64,6 +64,41 @@ import CharactersList from './CharactersList';
 //   console.log(title);
 // };
 
+const text = `In the shroud of redundant noise, consectetur,
+A symphony sweeter than summer is discovered,
+In the hearty paws and gentle eyes of a dog, our protector,
+A tangible form of love, in fur is covered.
+
+Against every day's chaos, turmoil, and upset,
+A wagging tail carries, perhaps, the simplest antidote,
+A soothing balm to a soul, in life's whirling roulette,
+In each bark and paw, an unwritten heartfelt note.
+
+Faithful are they, standing unwavering by our side,
+Through the laughter, the struggles, and silent cries,
+In their hearts, a world where compassion and loyalty reside,
+Reflecting the truest emotions in their warm, gleaming eyes.
+
+From the grandeur of a golden retriever's gallop,
+To the charming chortle of a chihuahua's cheer,
+Each breed, each dog, narrates a touching tale,
+A saga of love, in their worlds, so clear.
+
+They are guardian angels sporting leathered noses,
+Draped in a cloak spun with devotion and trust,
+They chase not just toys, but away our woes,
+Their love, a precious gem, untouched by worldly rust.
+
+In every dog, there lies a universe obscure,
+A cosmos of gentleness veiled by playful veneer,
+Their paw prints leave indelible marks, so pure,
+Within us, they awaken a love, incredibly dear.
+
+So here's to these creatures, adorable, and fierce,
+The ones who teach us about love unfeigned,
+In the echoing cacophony of this life, so diverse,
+Semper fidelis - forever faithful, their love remains.`;
+
 async function DummyPromise(userInput) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -71,9 +106,7 @@ async function DummyPromise(userInput) {
       if (userInput === 'reject') {
         reject('Your request could not be processed for now');
       } else {
-        resolve(
-          'He made significant contributions to theoretical physics, including achievements in quantum mechanics',
-        );
+        resolve(text);
       }
     }, 4150);
   });

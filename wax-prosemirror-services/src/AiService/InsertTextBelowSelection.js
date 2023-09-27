@@ -1,13 +1,14 @@
 import { TextSelection } from 'prosemirror-state';
-export const insertTextBelowSelection = (view, transformedText) => {
-  let state = view.state;
-  let tr = state.tr;
+
+const insertTextBelowSelection = (view, transformedText) => {
+  let { state } = view;
+  let { tr } = state;
 
   const { to } = tr.selection;
 
   // Check if 'to' is within the document size
   if (to > state.doc.content.size) {
-    console.error("Position out of range");
+    console.error('Position out of range');
     return;
   }
 
@@ -37,3 +38,5 @@ export const insertTextBelowSelection = (view, transformedText) => {
   // Dispatch the final transaction to update the state
   view.dispatch(tr);
 };
+
+export default insertTextBelowSelection;

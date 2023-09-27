@@ -108,7 +108,7 @@ async function DummyPromise(userInput) {
       } else {
         resolve(text);
       }
-    }, 4150);
+    }, 150);
   });
 }
 

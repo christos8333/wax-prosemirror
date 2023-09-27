@@ -3,7 +3,6 @@ import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext, icons } from 'wax-prosemirror-core';
 import replaceSelectedText from '../ReplaceSelectedText';
-import insertTextBelowSelection from '../InsertTextBelowSelection';
 
 const Wrapper = styled.div`
   display: flex;
@@ -143,7 +142,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleInsertTextBelow = () => {
-    insertTextBelowSelection(activeView, result);
+    replaceSelectedText(activeView, result);
   };
 
   const handleSubmit = async () => {

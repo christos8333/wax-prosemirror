@@ -2,6 +2,7 @@ import { DOMParser } from 'prosemirror-model';
 import { ReplaceStep, ReplaceAroundStep } from 'prosemirror-transform';
 import { Selection, TextSelection } from 'prosemirror-state';
 
+// To Do keep soft break
 const elementFromString = string => {
   const wrappedValue = `<body>${string}</body>`;
 
@@ -33,22 +34,12 @@ const replaceSelectedText = (view, transformedText) => {
   if (transformedText.includes('\n\n')) {
     transformedText.split('\n\n').forEach(element => {
       paragraphNodes.push(
-        state.schema.nodes.paragraph.create(
-          {
-            preserveWhitespace: 'full',
-          },
-          state.schema.text(element),
-        ),
+        state.schema.nodes.paragraph.create({}, state.schema.text(element)),
       );
     });
   }
 
-  const newText = state.schema.nodes.paragraph.create(
-    {
-      preserveWhitespace: 'full',
-    },
-    state.schema.text(transformedText),
-  );
+  const newText = state.schema.text(transformedText);
 
   const finalReplacementText =
     paragraphNodes.length !== 0 ? paragraphNodes : newText;

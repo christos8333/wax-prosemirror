@@ -158,7 +158,6 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
 
     try {
       const response = await AskAiContentTransformation(combinedInput);
-      console.log(response);
       setResult(response);
       setIsSubmitted(true);
     } catch (error) {
@@ -170,7 +169,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleReplaceText = () => {
-    replaceSelectedText(activeView, result);
+    replaceSelectedText(activeView, result, true);
   };
 
   const discardResults = () => {

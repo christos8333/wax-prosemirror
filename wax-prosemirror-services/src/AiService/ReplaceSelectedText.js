@@ -7,7 +7,7 @@ const elementFromString = string => {
   return new window.DOMParser().parseFromString(wrappedValue, 'text/html').body;
 };
 
-const replaceSelectedText = (view, transformedText, replace = false) => {
+const replaceSelectedText = (view, responseText, replace = false) => {
   let { state } = view;
   let { tr } = state;
   const { from, to } = tr.selection;
@@ -18,8 +18,17 @@ const replaceSelectedText = (view, transformedText, replace = false) => {
     return;
   }
 
-  if (transformedText.includes('\n\n')) {
-    transformedText.split('\n\n').forEach(element => {
+  let transformedText = state.schema.text(responseText);
+
+  if (responseText.includes('<ul>') || responseText.includes('ol')) {
+    transformedText = parser.parse(
+      elementFromString(responseText.replace(/^\s+|\s+$/g, '')),
+      {},
+    );
+  }
+
+  if (responseText.includes('\n\n')) {
+    responseText.split('\n\n').forEach(element => {
       paragraphNodes.push(
         parser.parse(elementFromString(element.replace(/\n/g, '<br />')), {
           preserveWhitespace: true,
@@ -29,9 +38,7 @@ const replaceSelectedText = (view, transformedText, replace = false) => {
   }
 
   const finalReplacementText =
-    paragraphNodes.length !== 0
-      ? paragraphNodes
-      : state.schema.text(transformedText);
+    paragraphNodes.length !== 0 ? paragraphNodes : transformedText;
 
   if (replace) {
     if (from !== to) {
@@ -49,7 +56,7 @@ const replaceSelectedText = (view, transformedText, replace = false) => {
 
   // Update the selection to the end of the new text
   const newFrom = replace ? from : to;
-  const newTo = newFrom + transformedText.length;
+  const newTo = newFrom + responseText.length;
   const cursorPosition = paragraphNodes.length !== 0 ? newTo + 2 : newTo;
   const newSelection = TextSelection.create(
     state.doc,

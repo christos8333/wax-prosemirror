@@ -138,6 +138,10 @@ export default {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],
     },
+    {
+      templateArea: 'ToggleAiToolBar',
+      toolGroups: ['ToggleAi'],
+    },
   ],
 
   // CommentsService: { readOnly: true },

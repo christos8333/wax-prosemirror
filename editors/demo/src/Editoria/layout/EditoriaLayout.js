@@ -59,6 +59,15 @@ const Main = styled.div`
   height: 100%;
 `;
 
+const ToggleAiMenu = styled.div`
+  display: flex;
+  min-height: 20px;
+  user-select: none;
+  margin-left: auto;
+  margin-right: 30px;
+  margin-bottom: 10px;
+`;
+
 const TopMenu = styled.div`
   display: flex;
   min-height: 40px;
@@ -208,6 +217,7 @@ const getNotes = main => {
   return notes;
 };
 
+const ToggleAiToolBar = ComponentPlugin('ToggleAiToolBar');
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
@@ -260,6 +270,9 @@ const EditoriaLayout = ({ editor }) => {
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
+        <ToggleAiMenu>
+          <ToggleAiToolBar />
+        </ToggleAiMenu>
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>

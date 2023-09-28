@@ -1,9 +1,9 @@
 import { Service } from 'wax-prosemirror-core';
-import ToggleAiTool from './ToggleAiTool';
+import ToggleAi from './ToggleAi';
 
 class AiToolGroupService extends Service {
   register() {
-    this.container.bind('ToggleAiTool').to(ToggleAiTool);
+    this.container.bind('ToggleAi').to(ToggleAi);
   }
 }
 

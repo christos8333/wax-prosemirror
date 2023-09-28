@@ -2,13 +2,13 @@ import { injectable, inject } from 'inversify';
 import { ToolGroup } from 'wax-prosemirror-core';
 
 @injectable()
-class ToggleAiTool extends ToolGroup {
+class ToggleAi extends ToolGroup {
   tools = [];
 
-  constructor() {
+  constructor(@inject('ToggleAiTool') toggleAiTool) {
     super();
-    this.tools = [];
+    this.tools = [toggleAiTool];
   }
 }
 
-export default ToggleAiTool;
+export default ToggleAi;

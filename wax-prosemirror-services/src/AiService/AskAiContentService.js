@@ -1,5 +1,4 @@
 import { Service } from 'wax-prosemirror-core';
-import AskAiContentTool from './AskAiContentTool';
 import AskAIOverlay from './components/AskAIOverlay';
 import AskAiSelectionPlugin from './plugins/AskAiSelectionPlugin';
 import './AskAiContent.css';
@@ -14,7 +13,7 @@ class AskAiContentService extends Service {
     );
 
     const createOverlay = this.container.get('CreateOverlay');
-    const config = this.config;
+    const { config } = this;
 
     // Create the overlay
     createOverlay(
@@ -29,9 +28,7 @@ class AskAiContentService extends Service {
     );
   }
 
-  register() {
-    this.container.bind('AskAiContentTool').to(AskAiContentTool);
-  }
+  register() {}
 }
 
 export default AskAiContentService;

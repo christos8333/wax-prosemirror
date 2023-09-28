@@ -1,15 +1,25 @@
 /* eslint-disable react/prop-types */
-import React, {
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useContext,
-  useState,
-} from 'react';
+import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { WaxContext, icons } from 'wax-prosemirror-core';
-import { replaceSelectedText } from '../ReplaceSelectedText';
-import { insertTextBelowSelection } from '../InsertTextBelowSelection';
+import replaceSelectedText from '../ReplaceSelectedText';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const AskAIForm = styled.div`
+  background: #fafafa;
+  border: 0.5px #dcdcdc solid;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  width: 458px;
+`;
 
 const ActionButton = styled.button`
   align-items: center;
@@ -39,20 +49,6 @@ const ActionText = styled.div`
   font-weight: 400;
   line-height: 22px;
   word-wrap: break-word;
-`;
-
-const AskAIForm = styled.div`
-  align-items: center;
-  background: #fafafa;
-  border: 0.5px #dcdcdc solid;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-  display: inline-flex;
-  gap: 10px;
-  justify-content: space-between;
-  padding: 8px 12px;
-  width: 458px;
 `;
 
 const AskAIFormInput = styled.input`
@@ -90,7 +86,8 @@ const ResultText = styled.div`
   font-family: Roboto, sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 22px;
+  line-height: 19px;
+  white-space: pre-line;
   word-wrap: break-word;
 `;
 
@@ -109,41 +106,30 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { AskAiContentTransformation } = config;
   const inputRef = useRef(null);
-  const [isScrollable, setIsScrollable] = useState(false);
-  const resultDivRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const { selection } = activeView.state;
-    const { from, to } = selection;
-    const end = activeView.coordsAtPos(to);
+    const { to } = selection;
+    // const start = activeView.coordsAtPos(from);
+    const end = activeView.coordsAtPos(to - 1);
     const overLayComponent = document.getElementById('ai-overlay');
-    let overLayComponentCoords;
-    if (overLayComponent)
-      overLayComponentCoords = overLayComponent.getBoundingClientRect();
+
+    const overLayComponentCoords = overLayComponent.getBoundingClientRect();
     const top = end.top - WaxSurface.top + 20;
-    // const left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
-    const left = end.left - WaxSurface.left - 50;
+    let left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
+
+    if (end.left - overLayComponentCoords.width / 2 < WaxSurface.left) {
+      left += WaxSurface.left - (end.left - overLayComponentCoords.width / 2);
+    }
+
+    // Don't get out of right boundary of the surface
+    if (end.left + overLayComponentCoords.width / 2 > WaxSurface.right) {
+      left -= end.left + overLayComponentCoords.width / 2 - WaxSurface.right;
+    }
+
     setPosition({ ...position, left, top });
   }, [position.left]);
-
-  useEffect(() => {
-    if (resultDivRef.current) {
-      setIsScrollable(
-        resultDivRef.current.scrollHeight > resultDivRef.current.clientHeight,
-      );
-    }
-  }, [result]);
-
-  useEffect(() => {
-    // Add a delay of 2 seconds before showing the overlay
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 1216);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const tryAgain = () => {
     // Reset the state to initial values
@@ -156,12 +142,16 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleInsertTextBelow = () => {
-    insertTextBelowSelection(activeView, result);
+    replaceSelectedText(activeView, result);
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);
     const inputValue = inputRef.current.value;
+    if (inputValue === '') {
+      inputRef.current.focus();
+      return;
+    }
+    setIsLoading(true);
 
     // Get the highlighted text from the editor
     const { from, to } = activeView.state.selection;
@@ -183,7 +173,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleReplaceText = () => {
-    replaceSelectedText(activeView, result);
+    replaceSelectedText(activeView, result, true);
   };
 
   const discardResults = () => {
@@ -202,11 +192,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   return (
-    <>
-      <AskAIForm
-        className={`fade-in ${isVisible ? 'show' : ''}`}
-        id="ai-overlay"
-      >
+    <Wrapper id="ai-overlay">
+      <AskAIForm>
         <AskAIFormInput
           id="askAiInput"
           onKeyPress={handleKeyDown}
@@ -220,8 +207,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       </AskAIForm>
       {isSubmitted && (
         <>
-          <ResultDiv ref={resultDivRef} isScrollable={isScrollable}>
-            <ResultText>{result}</ResultText>
+          <ResultDiv>
+            <ResultText dangerouslySetInnerHTML={{ __html: result }} />
           </ResultDiv>
           <ActionSection>
             <ActionButton onClick={handleReplaceText}>
@@ -247,7 +234,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           </ActionSection>
         </>
       )}
-    </>
+    </Wrapper>
   );
 };
 

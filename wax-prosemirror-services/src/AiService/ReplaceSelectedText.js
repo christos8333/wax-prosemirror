@@ -1,41 +1,73 @@
+import { DOMParser } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
-export const replaceSelectedText = (view, transformedText) => {
-  let state = view.state;
-  let tr = state.tr;
 
+const elementFromString = string => {
+  const wrappedValue = `<body>${string}</body>`;
+
+  return new window.DOMParser().parseFromString(wrappedValue, 'text/html').body;
+};
+
+const replaceSelectedText = (view, responseText, replace = false) => {
+  let { state } = view;
+  let { tr } = state;
   const { from, to } = tr.selection;
+  const paragraphNodes = [];
+  const parser = DOMParser.fromSchema(state.config.schema);
 
-  // Check if 'from' and 'to' are within the document size
   if (from > state.doc.content.size || to > state.doc.content.size) {
-    console.error("Position out of range");
     return;
   }
 
-  // Delete the selected text if any
-  if (from !== to) {
-    tr = tr.delete(from, to);
+  let transformedText = state.schema.text(responseText);
+
+  if (responseText.includes('<ul>') || responseText.includes('ol')) {
+    transformedText = parser.parse(
+      elementFromString(responseText.replace(/^\s+|\s+$/g, '')),
+      {},
+    );
   }
 
-  // Fetch the most recent state again
-  state = view.state;
+  if (responseText.includes('\n\n')) {
+    responseText.split('\n\n').forEach(element => {
+      paragraphNodes.push(
+        parser.parse(elementFromString(element.replace(/\n/g, '<br />')), {
+          preserveWhitespace: true,
+        }),
+      );
+    });
+  }
 
-  // Create a new text node with the transformed text
-  const newText = state.schema.text(transformedText);
+  const finalReplacementText =
+    paragraphNodes.length !== 0 ? paragraphNodes : transformedText;
 
-  // Replace the selected text with the new text
-  tr = tr.replaceWith(from, from, newText);  // Note: 'to' is replaced with 'from'
+  if (replace) {
+    if (from !== to) {
+      tr = tr.delete(from, to);
+    }
+    tr = tr.replaceWith(from, from, finalReplacementText);
+  } else {
+    tr = tr.insert(to, finalReplacementText);
+  }
 
-  // Dispatch the transaction to update the state
   view.dispatch(tr);
 
   // Fetch the most recent state again
   state = view.state;
 
   // Update the selection to the end of the new text
-  const newTo = from + transformedText.length;
-  const newSelection = TextSelection.create(state.doc, newTo, newTo);
+  const newFrom = replace ? from : to;
+  const newTo = newFrom + responseText.length;
+  const cursorPosition = paragraphNodes.length !== 0 ? newTo + 2 : newTo;
+  const newSelection = TextSelection.create(
+    state.doc,
+    cursorPosition,
+    cursorPosition,
+  );
   tr = state.tr.setSelection(newSelection);
 
   // Dispatch the final transaction to update the state
   view.dispatch(tr);
+  view.focus();
 };
+
+export default replaceSelectedText;

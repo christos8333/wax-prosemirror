@@ -75,7 +75,7 @@ async function DummyPromise(userInput) {
           'He made significant contributions to theoretical physics, including achievements in quantum mechanics',
         );
       }
-    }, 4150);
+    }, 3150);
   });
 }
 

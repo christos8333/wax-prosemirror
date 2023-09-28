@@ -1,6 +1,7 @@
 import { Service } from 'wax-prosemirror-core';
 import AskAIOverlay from './components/AskAIOverlay';
 import AskAiSelectionPlugin from './plugins/AskAiSelectionPlugin';
+import AiToolGroupService from './AiToolGroupService/AiToolGroupService';
 import './AskAiContent.css';
 
 class AskAiContentService extends Service {
@@ -28,7 +29,7 @@ class AskAiContentService extends Service {
     );
   }
 
-  register() {}
+  dependencies = [new AiToolGroupService()];
 }
 
 export default AskAiContentService;

@@ -106,7 +106,7 @@ async function DummyPromise(userInput) {
       if (userInput === 'reject') {
         reject('Your request could not be processed for now');
       } else {
-        resolve('hello how are you?');
+        resolve(text);
       }
     }, 150);
   });

@@ -110,8 +110,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const { selection } = activeView.state;
-    const { from, to } = selection;
-    const start = activeView.coordsAtPos(from);
+    const { to } = selection;
+    // const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to - 1);
     const overLayComponent = document.getElementById('ai-overlay');
 
@@ -146,8 +146,12 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);
     const inputValue = inputRef.current.value;
+    if (inputValue === '') {
+      inputRef.current.focus();
+      return;
+    }
+    setIsLoading(true);
 
     // Get the highlighted text from the editor
     const { from, to } = activeView.state.selection;

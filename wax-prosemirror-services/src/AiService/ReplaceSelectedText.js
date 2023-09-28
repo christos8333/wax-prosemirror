@@ -15,7 +15,6 @@ const replaceSelectedText = (view, transformedText, replace = false) => {
   const parser = DOMParser.fromSchema(state.config.schema);
 
   if (from > state.doc.content.size || to > state.doc.content.size) {
-    console.error('Position out of range');
     return;
   }
 
@@ -49,7 +48,8 @@ const replaceSelectedText = (view, transformedText, replace = false) => {
   state = view.state;
 
   // Update the selection to the end of the new text
-  const newTo = from + transformedText.length;
+  const newFrom = replace ? from : to;
+  const newTo = newFrom + transformedText.length;
   const cursorPosition = paragraphNodes.length !== 0 ? newTo + 2 : newTo;
   const newSelection = TextSelection.create(
     state.doc,

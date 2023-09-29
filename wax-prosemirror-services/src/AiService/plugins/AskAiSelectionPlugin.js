@@ -14,14 +14,10 @@ export default () => {
         let createDecoration;
         const askAiInput = document.getElementById('askAiInput');
         if (askAiInput) {
-          const selectionWhenBlured = tr.getMeta(key);
+          // const selectionWhenBlured = tr.getMeta(key);
 
-          const from = selectionWhenBlured
-            ? selectionWhenBlured.from
-            : newState.selection.from;
-          const to = selectionWhenBlured
-            ? selectionWhenBlured.to
-            : newState.selection.to;
+          const from = newState.selection.from;
+          const to = newState.selection.to;
 
           createDecoration = DecorationSet.create(newState.doc, [
             Decoration.inline(from, to, {

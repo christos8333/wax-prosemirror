@@ -23,8 +23,10 @@ const ToggleAiComponent = () => {
   if (!isEditable) isDisabled = true;
 
   const handleChange = () => {
-    setChecked(!checked);
     context.setOption({ AiOn: !checked });
+    setChecked(!checked);
+    main.dispatch(main.state.tr.setMeta('addToHistory', false));
+    main.focus();
   };
 
   return useMemo(

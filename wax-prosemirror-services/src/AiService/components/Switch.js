@@ -3,26 +3,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Switch from 'rc-switch';
-import { grid } from '@pubsweet/ui-toolkit';
+import { grid, th } from '@pubsweet/ui-toolkit';
 
 const Wrapper = styled.span`
   button {
-    width: 55px;
+    width: 65px;
   }
 
   .rc-switch-inner {
-    left: 31px;
+    left: 22px;
   }
 
   .rc-switch-checked {
-    border: 1px solid #008000;
-    background-color: #008000;
+    border: 1px solid ${th('colorPrimary')};
+    background-color: ${th('colorPrimary')};
 
     .rc-switch-inner {
       left: 6px;
     }
     :after {
-      left: 33px;
+      left: 42px;
     }
   }
 `;
@@ -31,12 +31,16 @@ const Label = styled.label`
   ${props =>
     props.labelPosition === 'left' &&
     css`
+      margin-top: 4px;
+      font-size: 14px;
       margin-right: ${grid(2)};
     `}
 
   ${props =>
     props.labelPosition === 'right' &&
     css`
+      margin-top: 4px;
+      font-size: 14px;
       margin-left: ${grid(2)};
     `}
     cursor: pointer;

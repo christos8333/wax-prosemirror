@@ -121,6 +121,7 @@ export default {
         'Images',
         'SpecialCharacters',
         'CodeBlock',
+        'ToggleAi',
         'Tables',
         'TrackingAndEditing',
         'FullScreen',
@@ -137,10 +138,6 @@ export default {
     {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],
-    },
-    {
-      templateArea: 'ToggleAiToolBar',
-      toolGroups: ['ToggleAi'],
     },
   ],
 

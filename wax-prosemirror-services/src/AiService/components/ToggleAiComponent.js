@@ -1,14 +1,19 @@
 import React, { useMemo, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
+import Switch from './Switch';
 
-const ToggleAiComponent = ({ item }) => {
-  const { icon, title } = item;
-  const [isOpen, setIsOpen] = useState(false);
+const StyledSwitch = styled(Switch)`
+  display: flex;
+  margin-left: auto;
+`;
 
+const ToggleAiComponent = () => {
+  const [checked, setChecked] = useState(false);
+  const context = useContext(WaxContext);
   const {
     pmViews: { main },
-  } = useContext(WaxContext);
+  } = context;
 
   let isDisabled = false;
   const isEditable = main.props.editable(editable => {
@@ -17,7 +22,23 @@ const ToggleAiComponent = ({ item }) => {
 
   if (!isEditable) isDisabled = true;
 
-  return useMemo(() => <span> Toggle Ai</span>, [isOpen, isDisabled]);
+  const handleChange = () => {
+    setChecked(!checked);
+    context.setOption({ AiOn: !checked });
+  };
+
+  return useMemo(
+    () => (
+      <StyledSwitch
+        checked={checked}
+        checkedChildren="AI ON"
+        disabled={!isEditable}
+        onChange={handleChange}
+        unCheckedChildren="AI OFF"
+      />
+    ),
+    [checked, isDisabled],
+  );
 };
 
 export default ToggleAiComponent;

@@ -100,7 +100,7 @@ const SubmitButton = styled.button`
 `;
 
 const AskAIOverlay = ({ setPosition, position, config }) => {
-  const { activeView } = useContext(WaxContext);
+  const { activeView, options } = useContext(WaxContext);
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -114,7 +114,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     // const start = activeView.coordsAtPos(from);
     const end = activeView.coordsAtPos(to - 1);
     const overLayComponent = document.getElementById('ai-overlay');
-
+    if (!overLayComponent) return;
     const overLayComponentCoords = overLayComponent.getBoundingClientRect();
     const top = end.top - WaxSurface.top + 20;
     let left = end.left - WaxSurface.left - overLayComponentCoords.width / 2;
@@ -151,6 +151,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       inputRef.current.focus();
       return;
     }
+    setIsSubmitted(false);
     setIsLoading(true);
 
     // Get the highlighted text from the editor
@@ -191,7 +192,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
-  return (
+  return options.AiOn ? (
     <Wrapper id="ai-overlay">
       <AskAIForm>
         <AskAIFormInput
@@ -235,7 +236,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
         </>
       )}
     </Wrapper>
-  );
+  ) : null;
 };
 
 export default AskAIOverlay;

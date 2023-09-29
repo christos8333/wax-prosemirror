@@ -129,7 +129,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
 
     setPosition({ ...position, left, top });
-  }, [position.left]);
+  }, [position.left, options.AiOn]);
 
   const tryAgain = () => {
     // Reset the state to initial values

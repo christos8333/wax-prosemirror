@@ -192,7 +192,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
-  return options.AiOn ? (
+  return options?.AiOn ? (
     <Wrapper id="ai-overlay">
       <AskAIForm>
         <AskAIFormInput

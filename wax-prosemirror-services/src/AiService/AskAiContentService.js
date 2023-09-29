@@ -15,19 +15,15 @@ class AskAiContentService extends Service {
     );
 
     const createOverlay = this.container.get('CreateOverlay');
-    const { config } = this;
+    const config = this.config;
 
     // Create the overlay
-    createOverlay(
-      AskAIOverlay,
-      { config },
-      {
-        nodeType: '',
-        markType: '',
-        followCursor: false,
-        selection: true,
-      },
-    );
+    createOverlay(AskAIOverlay, config, {
+      nodeType: '',
+      markType: '',
+      followCursor: false,
+      selection: true,
+    });
   }
 
   register() {

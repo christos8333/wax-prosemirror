@@ -15,7 +15,7 @@ class AskAiContentService extends Service {
     );
 
     const createOverlay = this.container.get('CreateOverlay');
-    const config = this.config;
+    const { config } = this;
 
     // Create the overlay
     createOverlay(

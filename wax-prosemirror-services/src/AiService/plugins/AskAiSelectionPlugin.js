@@ -42,7 +42,8 @@ export default () => {
       },
       handleDOMEvents: {
         blur(view) {
-          if (view)
+          const askAiInput = document.getElementById('askAiInput');
+          if (askAiInput)
             view.dispatch(view.state.tr.setMeta(key, view.state.selection));
         },
         //   focus(view) {

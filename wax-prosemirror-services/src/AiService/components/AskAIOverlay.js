@@ -100,7 +100,6 @@ const SubmitButton = styled.button`
 `;
 
 const AskAIOverlay = ({ setPosition, position, config }) => {
-  return <span>hi</span>;
   const { activeView, options } = useContext(WaxContext);
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);

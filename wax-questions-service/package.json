@@ -1,7 +1,7 @@
 {
   "name": "wax-questions-service",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.8.18",
+  "version": "0.8.19",
   "description": "Wax Questions Service",
   "license": "MIT",
   "main": "dist/index.js",
@@ -28,8 +28,8 @@
     "rc-switch": "^3.2.2",
     "use-dynamic-refs": "^1.0.0",
     "uuid": "^7.0.3",
-    "wax-prosemirror-core": "^0.8.18",
-    "wax-prosemirror-services": "^0.8.18"
+    "wax-prosemirror-core": "^0.8.19",
+    "wax-prosemirror-services": "^0.8.19"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

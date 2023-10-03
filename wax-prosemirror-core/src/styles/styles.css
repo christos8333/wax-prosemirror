@@ -227,9 +227,20 @@ img.ProseMirror-separator {
   color: #000;
 }
 
+
+/** Mozilla Firefox */
+
 fakecursor {
-    visibility: hidden;
+  display: none;
 }
+
+@-moz-document url-prefix() {
+  fakecursor {
+    visibility: hidden;
+    display: inline !important;
+  }
+}
+
 
 fakecursor::before {
   display: inline;

@@ -168,7 +168,7 @@ export default {
     },
   },
   PmPlugins: [
-    tableEditing(),
+    // tableEditing(),
     columnResizing(),
     invisibles([hardBreak()]),
     disallowPasteImagesPlugin(() =>

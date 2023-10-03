@@ -39,7 +39,11 @@ export default props => {
           const fakeCursor = document.getElementsByTagName('fakecursor');
           if (fakeCursor && fakeCursor[0]) {
             for (let i = 0; i < fakeCursor.length; i++) {
-              fakeCursor[i].style.visibility = 'hidden';
+              if (navigator.userAgent.includes('Firefox')) {
+                fakeCursor[i].style.visibility = 'hidden';
+              } else {
+                fakeCursor[i].style.display = 'none';
+              }
             }
           }
         },
@@ -51,7 +55,11 @@ export default props => {
             const fakeCursor = document.getElementsByTagName('fakecursor');
             if (fakeCursor && fakeCursor[0]) {
               for (let i = 0; i < fakeCursor.length; i++) {
-                fakeCursor[i].style.visibility = 'visible';
+                if (navigator.userAgent.includes('Firefox')) {
+                  fakeCursor[i].style.visibility = 'visible';
+                } else {
+                  fakeCursor[i].style.display = 'inline';
+                }
               }
             }
           }

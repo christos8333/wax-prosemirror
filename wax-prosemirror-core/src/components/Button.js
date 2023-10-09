@@ -1,5 +1,6 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
+import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext } from '../WaxContext';
 import MenuButton from './ui/MenuButton';
@@ -36,7 +37,6 @@ const Button = ({ view = {}, item }) => {
     context.activeView,
   );
   if (!isEditable) isDisabled = true;
-
   const MenuButtonComponent = useMemo(
     () => (
       <MenuButton
@@ -46,7 +46,7 @@ const Button = ({ view = {}, item }) => {
         label={label}
         onMouseDown={e => handleMouseDown(e)}
         title={
-          i18n.exists(`Wax.Annotations.${title}`)
+          !isEmpty(i18n) && i18n.exists(`Wax.Annotations.${title}`)
             ? t(`Wax.Annotations.${title}`)
             : title
         }

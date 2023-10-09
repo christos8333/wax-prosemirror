@@ -7,33 +7,16 @@ import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
 import NCBI from './NCBI/NCBI';
 import OEN from './OEN/OEN';
+import en from './locale/en';
+import es from './locale/es';
 
 import 'wax-prosemirror-core/dist/index.css';
 import 'wax-prosemirror-services/dist/index.css';
 import 'wax-questions-service/dist/index.css';
 import 'wax-table-service/dist/index.css';
 i18next.use(initReactI18next).init({
-  resources: {
-    en: {
-      translation: {
-        Wax: {
-          Annotations: {
-            'Toggle code': 'Toggle code translation',
-          },
-        },
-      },
-    },
-    es: {
-      translation: {
-        Wax: {
-          Annotations: {
-            'Toggle code': 'Toggle code translation Spanish',
-          },
-        },
-      },
-    },
-  },
-  lng: 'en',
+  resources: { es },
+  lng: 'es',
   interpolation: {
     escapeValue: false,
   },

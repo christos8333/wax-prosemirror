@@ -1,8 +1,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
 const UndoRedoButton = ({ view = {}, item }) => {
+  const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
 
   const {
@@ -38,7 +41,11 @@ const UndoRedoButton = ({ view = {}, item }) => {
         iconName={icon}
         label={label}
         onMouseDown={e => handleMouseDown(e, main.state, main.dispatch)}
-        title={title}
+        title={
+          !isEmpty(i18n) && i18n.exists(`Wax.Base.${title}`)
+            ? t(`Wax.Base.${title}`)
+            : title
+        }
       />
     ),
     [isActive, isDisabled],

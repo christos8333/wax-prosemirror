@@ -46,8 +46,8 @@ const Button = ({ view = {}, item }) => {
         label={label}
         onMouseDown={e => handleMouseDown(e)}
         title={
-          i18n.exists(`annotations.${title}`)
-            ? t(`annotations.${title}`)
+          i18n.exists(`Wax.Annotations.${title}`)
+            ? t(`Wax.Annotations.${title}`)
             : title
         }
       />

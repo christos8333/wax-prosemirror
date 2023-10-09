@@ -16,15 +16,19 @@ i18next.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
-        annotations: {
-          'Toggle code': 'Toggle code translation',
+        Wax: {
+          Annotations: {
+            'Toggle code': 'Toggle code translation',
+          },
         },
       },
     },
     es: {
       translation: {
-        annotations: {
-          'Toggle code': 'Toggle code translation Spanish',
+        Wax: {
+          Annotations: {
+            'Toggle code': 'Toggle code translation Spanish',
+          },
         },
       },
     },

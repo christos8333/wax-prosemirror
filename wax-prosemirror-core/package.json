@@ -33,7 +33,9 @@
     "prosemirror-transform": "1.7.1",
     "prosemirror-view": "1.30.2",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "react-i18next": "^13.2.2"
+
   },
   "devDependencies": {
     "mocha": "^3.4.2",
@@ -42,6 +44,7 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "i18next": "^23.5.1",
     "styled-components": "^5.3.1"
   }
 }

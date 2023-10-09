@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
-
+import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
 import NCBI from './NCBI/NCBI';
@@ -11,6 +12,28 @@ import 'wax-prosemirror-core/dist/index.css';
 import 'wax-prosemirror-services/dist/index.css';
 import 'wax-questions-service/dist/index.css';
 import 'wax-table-service/dist/index.css';
+i18next.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: {
+        annotations: {
+          'Toggle code': 'Toggle code translation',
+        },
+      },
+    },
+    es: {
+      translation: {
+        annotations: {
+          'Toggle code': 'Toggle code translation Spanish',
+        },
+      },
+    },
+  },
+  lng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const GlobalStyle = createGlobalStyle`
   body {

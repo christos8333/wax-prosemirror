@@ -16,7 +16,9 @@
     "wax-prosemirror-core": "^0.8.20",
     "wax-prosemirror-services": "^0.8.20",
     "wax-questions-service": "^0.8.20",
-    "wax-table-service": "^0.8.20"
+    "wax-table-service": "^0.8.20",
+    "i18next": "^23.5.1",
+    "react-i18next": "^13.2.2"
   },
   "scripts": {
     "start": "react-app-rewired start",

@@ -1,9 +1,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { WaxContext } from '../WaxContext';
 import MenuButton from './ui/MenuButton';
 
 const Button = ({ view = {}, item }) => {
+  const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
   const context = useContext(WaxContext);
   const {
@@ -43,7 +45,11 @@ const Button = ({ view = {}, item }) => {
         iconName={icon}
         label={label}
         onMouseDown={e => handleMouseDown(e)}
-        title={title}
+        title={
+          i18n.exists(`annotations.${title}`)
+            ? t(`annotations.${title}`)
+            : title
+        }
       />
     ),
     [isActive, isDisabled, activeViewId],

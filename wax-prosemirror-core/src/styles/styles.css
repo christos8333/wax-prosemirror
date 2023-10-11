@@ -227,11 +227,18 @@ img.ProseMirror-separator {
   color: #000;
 }
 
+
+@-moz-document url-prefix() {
+  span#fake-cursor::before {
+      height: 18px !important;
+  }
+}
+
 span#fake-cursor::before {
   display: inline;
   content: '';
   border-right: 1px solid black;
-  height: 19px;
+  height: 23px;
   position: absolute;
   z-index: 999;
   }

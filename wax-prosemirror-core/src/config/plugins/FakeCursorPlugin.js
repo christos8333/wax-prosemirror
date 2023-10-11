@@ -55,7 +55,9 @@ export default props => {
         blur: (view, event) => {
           event.preventDefault();
           if (view && event.relatedTarget === null) {
-            view.focus();
+            setTimeout(() => {
+              view.focus();
+            });
           } else {
             const fakeCursor = document.getElementById('fake-cursor');
             if (fakeCursor) {

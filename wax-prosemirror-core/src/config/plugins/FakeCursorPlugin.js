@@ -11,7 +11,9 @@ export default props => {
       init: (_, state) => {},
       apply(tr, prev, _, newState) {
         let createDecoration;
-        const widget = document.createElement('fakecursor');
+        const widget = document.createElement('span');
+        widget.setAttribute('id', 'fake-cursor');
+
         if (newState.selection.from === newState.selection.to) {
           createDecoration = DecorationSet.create(newState.doc, [
             Decoration.widget(newState.selection.from, widget, {
@@ -21,6 +23,11 @@ export default props => {
         }
         setTimeout(() => {
           widget.setAttribute('contenteditable', true);
+          if (navigator.userAgent.includes('Firefox')) {
+            widget.setAttribute('style', 'visibility:hidden');
+          } else {
+            widget.setAttribute('style', 'display:none');
+          }
         });
         return {
           createDecoration,
@@ -36,14 +43,12 @@ export default props => {
       handleDOMEvents: {
         focus: (view, event) => {
           event.preventDefault();
-          const fakeCursor = document.getElementsByTagName('fakecursor');
-          if (fakeCursor && fakeCursor[0]) {
-            for (let i = 0; i < fakeCursor.length; i++) {
-              if (navigator.userAgent.includes('Firefox')) {
-                fakeCursor[i].style.visibility = 'hidden';
-              } else {
-                fakeCursor[i].style.display = 'none';
-              }
+          const fakeCursor = document.getElementById('fake-cursor');
+          if (fakeCursor) {
+            if (navigator.userAgent.includes('Firefox')) {
+              fakeCursor.style.visibility = 'hidden';
+            } else {
+              fakeCursor.style.display = 'none';
             }
           }
         },
@@ -52,14 +57,12 @@ export default props => {
           if (view && event.relatedTarget === null) {
             view.focus();
           } else {
-            const fakeCursor = document.getElementsByTagName('fakecursor');
-            if (fakeCursor && fakeCursor[0]) {
-              for (let i = 0; i < fakeCursor.length; i++) {
-                if (navigator.userAgent.includes('Firefox')) {
-                  fakeCursor[i].style.visibility = 'visible';
-                } else {
-                  fakeCursor[i].style.display = 'inline';
-                }
+            const fakeCursor = document.getElementById('fake-cursor');
+            if (fakeCursor) {
+              if (navigator.userAgent.includes('Firefox')) {
+                fakeCursor.style.visibility = 'visible';
+              } else {
+                fakeCursor.style.display = 'inline';
               }
             }
           }

@@ -1,8 +1,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useEffect } from 'react';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 
 const TitleButton = ({ view = {}, item }) => {
+  const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
 
   const {
@@ -54,9 +57,17 @@ const TitleButton = ({ view = {}, item }) => {
         active={isActive || false}
         disabled={isDisabled}
         iconName={icon}
-        label={label}
+        label={
+          !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.${label}`)
+            ? t(`Wax.BlockLevel.${label}`)
+            : label
+        }
         onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
-        title={title}
+        title={
+          !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.${title}`)
+            ? t(`Wax.BlockLevel.${title}`)
+            : title
+        }
       />
     ),
     [isActive, isDisabled],

@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
+import { isEmpty } from 'lodash';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import { v4 as uuidv4 } from 'uuid';
@@ -39,6 +41,7 @@ const DropdownStyled = styled(Dropdown)`
 
 // eslint-disable-next-line react/prop-types
 const BlockDropDownComponent = ({ view, tools }) => {
+  const { t, i18n } = useTranslation();
   const context = useContext(WaxContext);
   const {
     activeViewId,
@@ -51,24 +54,47 @@ const BlockDropDownComponent = ({ view, tools }) => {
   });
 
   const dropDownOptions = [
-    // { label: 'Title (H1)', value: '0', item: tools[0] },
-    // { label: 'author', value: '1', item: tools[1] },
-    // { label: 'Subtitle', value: '2', item: tools[2] },
-    // { label: 'Epigraph Prose', value: '3', item: tools[3] },
-    // { label: 'Epigraph Poetry', value: '4', item: tools[4] },
-    { label: 'Heading 2', value: '5', item: tools[5] },
-    { label: 'Heading 3', value: '6', item: tools[6] },
-    // { label: 'Heading 3', value: '7', item: tools[7] },
-    { label: 'Paragraph', value: '8', item: tools[8] },
-    // { label: 'Paragraph Continued', value: '9', item: tools[9] },
-    // { label: 'Extract Prose', value: '10', item: tools[10] },
-    // { label: 'Extract Poetry', value: '11', item: tools[11] },
-    // { label: 'Source Note', value: '12', item: tools[12] },
-    { label: 'Block Quote', value: '13', item: tools[13] },
+    {
+      label:
+        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Heading 2`)
+          ? t(`Wax.BlockLevel.Heading 2`)
+          : 'Heading 2',
+      value: '5',
+      item: tools[5],
+    },
+    {
+      label:
+        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Heading 3`)
+          ? t(`Wax.BlockLevel.Heading 3`)
+          : 'Heading 3',
+      value: '6',
+      item: tools[6],
+    },
+    {
+      label:
+        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Paragraph`)
+          ? t(`Wax.BlockLevel.Paragraph`)
+          : 'Paragraph',
+      value: '8',
+      item: tools[8],
+    },
+    {
+      label:
+        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Block Quote`)
+          ? t(`Wax.BlockLevel.Block Quote`)
+          : 'Block Quote',
+      value: '13',
+      item: tools[13],
+    },
   ];
 
+  const dropDownLabel =
+    !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Block Level`)
+      ? t(`Wax.BlockLevel.Block Level`)
+      : 'Block Level';
+
   useEffect(() => {
-    setLabel('Block Level');
+    setLabel(dropDownLabel);
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
         setTimeout(() => {
@@ -87,7 +113,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
             tools[option.value].run(main.state, main.dispatch);
           }}
           options={dropDownOptions}
-          placeholder="Block Level"
+          placeholder="dropDownLabel"
           select={isEditable}
           value={label}
         />

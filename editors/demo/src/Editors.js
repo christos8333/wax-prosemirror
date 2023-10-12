@@ -15,8 +15,8 @@ import 'wax-prosemirror-services/dist/index.css';
 import 'wax-questions-service/dist/index.css';
 import 'wax-table-service/dist/index.css';
 i18next.use(initReactI18next).init({
-  resources: { en },
-  lng: 'en',
+  resources: { es },
+  lng: 'es',
   interpolation: {
     escapeValue: false,
   },

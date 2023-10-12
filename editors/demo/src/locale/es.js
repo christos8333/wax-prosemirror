@@ -18,6 +18,7 @@ const es = {
         'Add or remove link': 'Agregar o eliminar enlace',
       },
       BlockLevel: {
+        'Block Level': 'Nivel de bloque',
         'Change to Author': 'Cambiar al autor',
         Author: 'Autor',
         'Change to Epigraph Poetry': 'Cambiar a poesía de epígrafe',

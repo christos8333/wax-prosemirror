@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import MenuButton from './MenuButton';
 
@@ -22,10 +23,9 @@ const DropWrapper = styled.div`
 
 const Dropdown = props => {
   const { className, disabled, dropComponent, iconName, label, title } = props;
-
   const [isOpen, setIsOpen] = useState(false);
 
-  // const dropElementRef = useRef(null);
+  const { t, i18n } = useTranslation();
 
   return (
     <Wrapper className={className}>
@@ -33,12 +33,20 @@ const Dropdown = props => {
         active={isOpen}
         disabled={disabled}
         iconName={iconName}
-        label={label}
+        label={
+          !isEmpty(i18n) && i18n.exists(`Wax.Various.${label}`)
+            ? t(`Wax.Various.${label}`)
+            : label
+        }
         onMouseDown={event => {
           event.preventDefault();
           setIsOpen(!isOpen);
         }}
-        title={title}
+        title={
+          !isEmpty(i18n) && i18n.exists(`Wax.Various.${title}`)
+            ? t(`Wax.Various.${title}`)
+            : title
+        }
       />
 
       {isOpen && <DropWrapper>{dropComponent}</DropWrapper>}

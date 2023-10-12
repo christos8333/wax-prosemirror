@@ -1,7 +1,8 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { each, eachRight } from 'lodash';
+import { each, eachRight, isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext, useDebounce, Icon } from 'wax-prosemirror-core';
@@ -233,6 +234,18 @@ const FindComponent = ({
     searchRef.current.focus();
   };
 
+  const Translation = ({ label }) => {
+    const { t, i18n } = useTranslation();
+
+    return (
+      <>
+        {!isEmpty(i18n) && i18n.exists(`Wax.Various.${label}`)
+          ? t(`Wax.Various.${label}`)
+          : label}
+      </>
+    );
+  };
+
   return (
     <Wrapper>
       <SingleRow>
@@ -249,7 +262,10 @@ const FindComponent = ({
         <ControlsWrapper>
           <IconWrapper onClick={matchCase} role="button" tabIndex="0">
             <Svg active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
-              <title> Match Case </title>
+              <title>
+                {' '}
+                <Translation label="Match Case" />{' '}
+              </title>
               <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
             </Svg>
           </IconWrapper>

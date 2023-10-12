@@ -1,6 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo } from 'react';
+import { isEmpty } from 'lodash';
 import styled, { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { WaxContext } from '../WaxContext';
 import MenuButton from './ui/MenuButton';
 
@@ -13,6 +15,7 @@ const StyledButton = styled(MenuButton)`
 `;
 
 const LeftSideButton = ({ view = {}, item }) => {
+  const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
 
   const {
@@ -47,9 +50,17 @@ const LeftSideButton = ({ view = {}, item }) => {
         active={isActive || false}
         disabled={isDisabled}
         iconName={icon}
-        label={label}
+        label={
+          !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.${label}`)
+            ? t(`Wax.BlockLevel.${label}`)
+            : label
+        }
         onMouseDown={e => handleMouseDown(e, view.state, view.dispatch)}
-        title={title}
+        title={
+          !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.${title}`)
+            ? t(`Wax.BlockLevel.${title}`)
+            : title
+        }
       />
     ),
     [isActive, isDisabled],

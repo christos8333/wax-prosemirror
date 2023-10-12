@@ -53,48 +53,37 @@ const BlockDropDownComponent = ({ view, tools }) => {
     return editable;
   });
 
+  const translatedLabel = (translation, defaultLabel) => {
+    return !isEmpty(i18n) && i18n.exists(translation)
+      ? t(translation)
+      : defaultLabel;
+  };
+
   const dropDownOptions = [
     {
-      label:
-        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Heading 2`)
-          ? t(`Wax.BlockLevel.Heading 2`)
-          : 'Heading 2',
+      label: translatedLabel(`Wax.BlockLevel.Heading 2`, 'Heading 2'),
       value: '5',
       item: tools[5],
     },
     {
-      label:
-        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Heading 3`)
-          ? t(`Wax.BlockLevel.Heading 3`)
-          : 'Heading 3',
+      label: translatedLabel(`Wax.BlockLevel.Heading 3`, 'Heading 3'),
       value: '6',
       item: tools[6],
     },
     {
-      label:
-        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Paragraph`)
-          ? t(`Wax.BlockLevel.Paragraph`)
-          : 'Paragraph',
+      label: translatedLabel(`Wax.BlockLevel.Paragraph`, 'Paragraph'),
       value: '8',
       item: tools[8],
     },
     {
-      label:
-        !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Block Quote`)
-          ? t(`Wax.BlockLevel.Block Quote`)
-          : 'Block Quote',
+      label: translatedLabel(`Wax.BlockLevel.Block Quote`, 'Block Quote'),
       value: '13',
       item: tools[13],
     },
   ];
 
-  const dropDownLabel =
-    !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Block Level`)
-      ? t(`Wax.BlockLevel.Block Level`)
-      : 'Heading styles';
-
   useEffect(() => {
-    setLabel(dropDownLabel);
+    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Heading styles'));
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
         setTimeout(() => {
@@ -113,7 +102,10 @@ const BlockDropDownComponent = ({ view, tools }) => {
             tools[option.value].run(main.state, main.dispatch);
           }}
           options={dropDownOptions}
-          placeholder={dropDownLabel}
+          placeholder={translatedLabel(
+            'Wax.BlockLevel.Block Level',
+            'Heading styles',
+          )}
           select={isEditable}
           value={label}
         />

@@ -25,6 +25,8 @@ const en = {
         'Epigraph Poetry': 'Epigraph Poetry',
         'Change to Epigraph Prose': 'Switch to Epigraph Prose',
         'Epigraph Prose': 'Epigraph Prose',
+        'Change to Source Note': 'Switch to Source Note',
+        'Source Note': 'Source Note',
         'Change to heading level 2': 'Switch to heading level 2',
         'Heading 2': 'Heading 2',
         'Change to heading level 3': 'Switch to heading level 3',
@@ -50,7 +52,13 @@ const en = {
         'Change to Paragraph': 'Switch to Paragraph',
         Paragraph: 'Paragraph',
       },
-      CustomTags: {},
+      Various: {
+        Display: 'Display',
+        'Long Boxes': 'Long Boxes',
+        'Short Boxes': 'Short Boxes',
+        Text: 'Text',
+        'Custom Block': 'Custom Block',
+      },
     },
   },
 };

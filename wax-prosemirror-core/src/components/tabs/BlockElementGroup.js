@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { th } from '@pubsweet/ui-toolkit';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Icon from '../icons/Icon';
 import CustomTagBlockComponent from './CustomTagBlockComponent';
@@ -38,11 +40,21 @@ const BlockElementGroup = ({ groupName, items, view }) => {
     setIconClicked(!isIconClicked);
   };
 
+  const { t, i18n } = useTranslation();
+
+  const translatedLabel = (translation, defaultLabel) => {
+    return !isEmpty(i18n) && i18n.exists(translation)
+      ? t(translation)
+      : defaultLabel;
+  };
+
   return (
     <>
       {groupName !== 'Custom Block' && groupName !== 'OEN Containers' && (
         <>
-          <GroupName>{groupName}</GroupName>
+          <GroupName>
+            {translatedLabel(`Wax.Various.${groupName}`, groupName)}
+          </GroupName>
           <ListWrapper>
             {items &&
               items.map(item => (
@@ -59,7 +71,9 @@ const BlockElementGroup = ({ groupName, items, view }) => {
       {groupName === 'Custom Block' && (
         <>
           <FlexDiv>
-            <GroupName>{groupName}</GroupName>
+            <GroupName>
+              {translatedLabel(`Wax.Various.${groupName}`, groupName)}
+            </GroupName>
             <div aria-hidden="true" onClick={onIconClick}>
               {!isIconClicked && <StyledIcon name="IconCross" />}
               {isIconClicked && <StyledIcon name="IconMinus" />}

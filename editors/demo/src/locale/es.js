@@ -25,6 +25,8 @@ const es = {
         'Epigraph Poetry': 'Poesía epígrafe',
         'Change to Epigraph Prose': 'Cambiar a prosa de epígrafe',
         'Epigraph Prose': 'Prosa del epígrafe',
+        'Change to Source Note': 'Cambiar a nota fuente',
+        'Source Note': 'Nota fuente',
         'Change to heading level 2': 'Cambiar al nivel de título 2',
         'Heading 2': 'Título 2',
         'Change to heading level 3': 'Cambiar al nivel de título 3',
@@ -50,7 +52,13 @@ const es = {
         'Change to Paragraph': 'Cambiar al párrafo',
         Paragraph: 'Párrafo',
       },
-      CustomTags: {},
+      Various: {
+        Display: 'Mostrar',
+        'Long Boxes': 'Cajas largas',
+        'Short Boxes': 'Cajas cortas',
+        Text: 'Texto',
+        'Custom Block': 'Bloque personalizado',
+      },
     },
   },
 };

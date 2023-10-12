@@ -87,7 +87,12 @@ const BlockDropDownComponent = ({ view, tools }) => {
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
         setTimeout(() => {
-          setLabel(option.item.label);
+          setLabel(
+            translatedLabel(
+              `Wax.BlockLevel.${option.item.label}`,
+              option.item.label,
+            ),
+          );
         });
       }
     });

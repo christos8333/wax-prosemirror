@@ -239,8 +239,8 @@ const FindComponent = ({
 
     return (
       <>
-        {!isEmpty(i18n) && i18n.exists(`Wax.Various.${label}`)
-          ? t(`Wax.Various.${label}`)
+        {!isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${label}`)
+          ? t(`Wax.FindAndReplace.${label}`)
           : label}
       </>
     );

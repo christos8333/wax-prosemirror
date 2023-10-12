@@ -1,5 +1,7 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuid } from 'uuid';
 import {
@@ -57,10 +59,29 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
 
   useOnClickOutside(ref, () => setIsOpen(false));
 
+  const { t, i18n } = useTranslation();
+  const translatedLabel = translation => {
+    return !isEmpty(i18n) && i18n.exists(translation)
+      ? t(translation)
+      : translation;
+  };
+
   const transformCaseDropDown = [
-    { id: 1, name: 'Upper Case', iconName: 'transformCase' },
-    { id: 2, name: 'Lower Case', iconName: 'lowerCaseTransform' },
-    { id: 3, name: 'Sentence Case', iconName: 'transformCase' },
+    {
+      id: 1,
+      name: translatedLabel('Wax.TransformCase.Upper Case'),
+      iconName: 'transformCase',
+    },
+    {
+      id: 2,
+      name: translatedLabel('Wax.TransformCase.Lower Case'),
+      iconName: 'lowerCaseTransform',
+    },
+    {
+      id: 3,
+      name: translatedLabel('Wax.TransformCase.Sentence Case'),
+      iconName: 'transformCase',
+    },
     // { id: 4, name: 'Title Case', iconName: 'transformCase' },
   ];
 
@@ -110,7 +131,11 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
-          title={title}
+          title={
+            !isEmpty(i18n) && i18n.exists(`Wax.TransformCase.${title}`)
+              ? t(`Wax.TransformCase.${title}`)
+              : title
+          }
         />
 
         {isOpen && (

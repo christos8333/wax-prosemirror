@@ -18,7 +18,7 @@ const en = {
         'Add or remove link': 'Add or remove link',
       },
       BlockLevel: {
-        'Block Level': 'Block Level',
+        'Block Level': ' Heading styles',
         'Change to Author': 'Switch to Author',
         Author: 'Author',
         'Change to Epigraph Poetry': 'Switch to Epigraph Poetry',

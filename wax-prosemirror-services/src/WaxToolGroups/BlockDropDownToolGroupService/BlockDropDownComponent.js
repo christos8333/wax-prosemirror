@@ -91,7 +91,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
   const dropDownLabel =
     !isEmpty(i18n) && i18n.exists(`Wax.BlockLevel.Block Level`)
       ? t(`Wax.BlockLevel.Block Level`)
-      : 'Block Level';
+      : 'Heading styles';
 
   useEffect(() => {
     setLabel(dropDownLabel);
@@ -113,7 +113,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
             tools[option.value].run(main.state, main.dispatch);
           }}
           options={dropDownOptions}
-          placeholder="dropDownLabel"
+          placeholder={dropDownLabel}
           select={isEditable}
           value={label}
         />

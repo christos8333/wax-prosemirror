@@ -1,0 +1,26 @@
+variables:
+  IMAGE_NAME_DEPLOY: wax-demo
+
+include:
+  - project: 'cokoapps/ci'
+    ref: main
+    file: 'ci-templates.yml'
+
+stages:
+  - Build demo
+  - Deploy demo
+
+build demo image:
+  extends: .build production
+  stage: Build demo
+  variables:
+    IMAGE_NAME: $IMAGE_NAME_DEPLOY
+    BUILD_PATH: ./
+  only:
+    - master
+
+deploy demo:
+  extends: .deploy
+  stage: Deploy demo
+  only:
+    - master

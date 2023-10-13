@@ -96,7 +96,10 @@ const BlockDropDownComponent = ({ view, tools }) => {
         });
       }
     });
-  }, [main.state.selection.$from.parent.type.name]);
+  }, [
+    main.state.selection.$from.parent.type.name,
+    t('Wax.BlockLevel.Paragraph'),
+  ]);
 
   const MultipleDropDown = useMemo(
     () => (
@@ -116,7 +119,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
         />
       </Wrapper>
     ),
-    [label, isEditable],
+    [label, isEditable, t('Wax.BlockLevel.Paragraph')],
   );
 
   return MultipleDropDown;

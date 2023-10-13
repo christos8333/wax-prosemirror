@@ -48,7 +48,7 @@ const UndoRedoButton = ({ view = {}, item }) => {
         }
       />
     ),
-    [isActive, isDisabled],
+    [isActive, isDisabled, t(`Wax.Base.${title}`)],
   );
 
   return UndoRedoButtonComponent;

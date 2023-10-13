@@ -70,7 +70,7 @@ const TitleButton = ({ view = {}, item }) => {
         }
       />
     ),
-    [isActive, isDisabled],
+    [isActive, isDisabled, t(`Wax.BlockLevel.${title}`)],
   );
 
   return TitleButtonComponent;

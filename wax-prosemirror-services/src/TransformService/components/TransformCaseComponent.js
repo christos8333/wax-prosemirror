@@ -60,26 +60,26 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
   useOnClickOutside(ref, () => setIsOpen(false));
 
   const { t, i18n } = useTranslation();
-  const translatedLabel = translation => {
+  const translatedLabel = (translation, defaultTr) => {
     return !isEmpty(i18n) && i18n.exists(translation)
       ? t(translation)
-      : translation;
+      : defaultTr;
   };
 
   const transformCaseDropDown = [
     {
       id: 1,
-      name: translatedLabel('Wax.TransformCase.Upper Case'),
+      name: translatedLabel('Wax.TransformCase.Upper Case', 'Upper Case'),
       iconName: 'transformCase',
     },
     {
       id: 2,
-      name: translatedLabel('Wax.TransformCase.Lower Case'),
+      name: translatedLabel('Wax.TransformCase.Lower Case', 'Lower Case'),
       iconName: 'lowerCaseTransform',
     },
     {
       id: 3,
-      name: translatedLabel('Wax.TransformCase.Sentence Case'),
+      name: translatedLabel('Wax.TransformCase.Sentence Case', 'Sentence Case'),
       iconName: 'transformCase',
     },
     // { id: 4, name: 'Title Case', iconName: 'transformCase' },
@@ -154,7 +154,7 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, isDisabled],
+    [isOpen, isDisabled, t(`Wax.TransformCase.${title}`)],
   );
 };
 

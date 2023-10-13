@@ -63,7 +63,7 @@ const LeftSideButton = ({ view = {}, item }) => {
         }
       />
     ),
-    [isActive, isDisabled],
+    [isActive, isDisabled, t(`Wax.BlockLevel.${title}`)],
   );
 
   return LeftSideButtonComponent;

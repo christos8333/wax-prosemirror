@@ -146,7 +146,7 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, isDisabled],
+    [isOpen, isDisabled, t(`Wax.Various.${title}`)],
   );
 
   return MenuButtonComponent;

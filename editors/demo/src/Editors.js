@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { initReactI18next } from 'react-i18next';
 import Editoria from './Editoria/Editoria';
 import HHMI from './HHMI/HHMI';
@@ -14,6 +15,7 @@ import 'wax-prosemirror-core/dist/index.css';
 import 'wax-prosemirror-services/dist/index.css';
 import 'wax-questions-service/dist/index.css';
 import 'wax-table-service/dist/index.css';
+
 i18next.use(initReactI18next).init({
   resources: { es },
   lng: 'es',
@@ -75,9 +77,21 @@ const ProjectButton = styled.button`
   padding: 8px 15px 8px 15px;
   ${props => props.isActive && activeStyles}
 `;
+i18next.use(initReactI18next).init({
+  resources: { es },
+  lng: 'es',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const Editors = () => {
   const [project, setProject] = useState('hhmi');
+  const { t, i18n } = useTranslation();
+  const onClick = e => {
+    e.preventDefault();
+    i18n.changeLanguage('en');
+  };
 
   const displayProject = () => {
     switch (project) {
@@ -98,6 +112,7 @@ const Editors = () => {
       <ChooseProject>
         <Projects>
           <span>Select Project:</span>
+          <button onMouseDown={onClick}>hhh</button>
           <ProjectButton
             isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}

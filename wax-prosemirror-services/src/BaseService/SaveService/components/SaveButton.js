@@ -65,7 +65,7 @@ const SaveButton = ({ view = {}, item }) => {
         }
       />
     ),
-    [isSaving, isDisabled],
+    [isSaving, isDisabled, t(`Wax.Base.${title}`)],
   );
 
   return SaveButtonComponent;

@@ -52,7 +52,7 @@ const Button = ({ view = {}, item }) => {
         }
       />
     ),
-    [isActive, isDisabled, activeViewId],
+    [isActive, isDisabled, activeViewId, t(`Wax.Annotations.${title}`)],
   );
 
   return MenuButtonComponent;

@@ -16,6 +16,10 @@ const es = {
         'Toggle superscript': 'Alternar superíndice',
         'Toggle underline': 'Alternar subrayado',
         'Add or remove link': 'Agregar o eliminar enlace',
+        'Wrap in bullet list': 'Envolver en lista con viñetas',
+        'Wrap in ordered list': 'Envolver en lista ordenada',
+        'Join with above block': 'Unirse al bloque anterior',
+        'Lift out of enclosing block': 'Levante fuera del bloque envolvente',
       },
       BlockLevel: {
         'Block Level': 'Estilos de encabezado',

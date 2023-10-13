@@ -1,0 +1,41 @@
+########
+# BUILD
+
+FROM node:16-bullseye-slim
+
+RUN apt-get update && \
+    apt-get upgrade -y
+
+WORKDIR /home/wax
+
+COPY package.json .
+COPY editors/demo/package.json editors/demo/
+COPY wax-prosemirror-core/package.json wax-prosemirror-core/
+COPY wax-prosemirror-services/package.json wax-prosemirror-services/
+COPY wax-questions-service/package.json wax-questions-service/
+COPY wax-table-service/package.json wax-table-service/
+COPY yarn.lock .
+
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN cd editors/demo && yarn react-app-rewired build
+
+######
+# RUN
+
+FROM node:16-bullseye
+
+RUN apt-get update && \
+    apt-get upgrade -y
+
+RUN npm install --global serve
+
+WORKDIR /home/wax
+
+USER node
+
+COPY --from=0 /home/wax/editors/demo/build ./_build
+
+CMD ["npx", "serve", "--single", "./_build"]

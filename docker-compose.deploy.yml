@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  client:
+    image: cokoapps/wax-demo
+    ports:
+      - ${PORT}:3000

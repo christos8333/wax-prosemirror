@@ -1,8 +1,12 @@
 const path = require('path');
+
 module.exports = function override(config, env) {
   config.resolve = {
     symlinks: true,
-    alias: {
+  };
+
+  if (process.env.NODE_ENV !== 'production') {
+    config.resolve.alias = {
       'wax-prosemirror-core': path.resolve(
         __dirname,
         '../../wax-prosemirror-core/index',
@@ -19,8 +23,9 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-table-service/index',
       ),
-    },
-  };
+    };
+  }
+
   config.module = {
     rules: [
       {

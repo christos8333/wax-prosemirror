@@ -17,7 +17,7 @@ COPY wax-questions-service/package.json wax-questions-service/
 COPY wax-table-service/package.json wax-table-service/
 COPY yarn.lock .
 
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --production=false
 
 COPY . .
 

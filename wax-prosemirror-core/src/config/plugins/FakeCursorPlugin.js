@@ -25,7 +25,7 @@ export default props => {
           widget.setAttribute('contenteditable', true);
           if (
             navigator.userAgent.includes('Firefox') &&
-            newState.selection.$from.nodeBefore == null
+            newState.selection.$from.nodeBefore === null
           ) {
             widget.setAttribute('style', 'visibility:hidden');
           } else {
@@ -69,7 +69,7 @@ export default props => {
             if (fakeCursor) {
               if (
                 navigator.userAgent.includes('Firefox') &&
-                view.state.selection.$from.nodeBefore == null
+                view.state.selection.$from.nodeBefore === null
               ) {
                 fakeCursor.style.visibility = 'visible';
               } else {

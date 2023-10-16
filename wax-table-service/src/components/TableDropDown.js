@@ -8,6 +8,7 @@ import React, {
   createRef,
 } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 import * as tablesFn from '../tableSrc';
 

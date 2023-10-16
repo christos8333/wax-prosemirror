@@ -23,7 +23,10 @@ export default props => {
         }
         setTimeout(() => {
           widget.setAttribute('contenteditable', true);
-          if (navigator.userAgent.includes('Firefox')) {
+          if (
+            navigator.userAgent.includes('Firefox') &&
+            newState.selection.$from.nodeBefore == null
+          ) {
             widget.setAttribute('style', 'visibility:hidden');
           } else {
             widget.setAttribute('style', 'display:none');
@@ -45,7 +48,10 @@ export default props => {
           event.preventDefault();
           const fakeCursor = document.getElementById('fake-cursor');
           if (fakeCursor) {
-            if (navigator.userAgent.includes('Firefox')) {
+            if (
+              navigator.userAgent.includes('Firefox') &&
+              view.state.selection.$from.nodeBefore == null
+            ) {
               fakeCursor.style.visibility = 'hidden';
             } else {
               fakeCursor.style.display = 'none';
@@ -61,7 +67,10 @@ export default props => {
           } else {
             const fakeCursor = document.getElementById('fake-cursor');
             if (fakeCursor) {
-              if (navigator.userAgent.includes('Firefox')) {
+              if (
+                navigator.userAgent.includes('Firefox') &&
+                view.state.selection.$from.nodeBefore == null
+              ) {
                 fakeCursor.style.visibility = 'visible';
               } else {
                 fakeCursor.style.display = 'inline';

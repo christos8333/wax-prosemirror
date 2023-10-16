@@ -15,7 +15,7 @@ build demo image:
   stage: Build demo
   variables:
     IMAGE_NAME: $IMAGE_NAME_DEPLOY
-    BUILD_PATH: ./
+    BUILD_PATH: .
   only:
     - master
 

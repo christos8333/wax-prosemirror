@@ -7,6 +7,11 @@ import HHMI from './HHMI/HHMI';
 import NCBI from './NCBI/NCBI';
 import OEN from './OEN/OEN';
 
+import 'wax-prosemirror-core/dist/index.css';
+import 'wax-prosemirror-services/dist/index.css';
+import 'wax-prosemirror-questions/dist/index.css';
+import 'wax-prosemirror-table/dist/index.css';
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;

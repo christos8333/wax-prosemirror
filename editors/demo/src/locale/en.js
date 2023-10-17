@@ -70,6 +70,7 @@ const en = {
         'Special Characters': 'Special Characters',
         Search: 'Search',
       },
+      AI: {},
       Tables: {
         'Insert table': 'Insert Table',
         'Table Options': 'Table Options',
@@ -96,9 +97,21 @@ const en = {
         Reject: 'Reject',
       },
       FindAndReplace: {
+        'Find And Replace': 'Find And Replace',
+        Find: 'Find',
+        Replace: 'Replace',
+        'Replace with': 'Replace with',
+        All: 'All',
+        'Something is this doc': 'Something is this doc',
+        'Replace text': 'Replace text',
+        'Case Sensitive': 'Case Sensitive',
+        of: 'of',
         'Match Case': 'Match Case',
         Previous: 'Previous',
         Next: 'Next',
+      },
+      ShortCuts: {
+        'short cuts': 'short cuts',
       },
       Various: {
         Display: 'Display',

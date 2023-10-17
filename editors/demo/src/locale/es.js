@@ -70,6 +70,7 @@ const es = {
         'Special Characters': 'Caracteres especiales',
         Search: 'Buscar',
       },
+      AI: {},
       Tables: {
         'Insert table': 'Insertar tabla',
         'Table Options': 'Opciones de tabla',
@@ -96,9 +97,21 @@ const es = {
         Reject: 'Rechazar',
       },
       FindAndReplace: {
+        'Find And Replace': 'Encontrar y reemplazar',
+        Find: 'Encontrar',
+        Replace: 'Reemplazar',
+        'Replace with': 'Reemplazar con',
+        'Something is this doc': 'Algo es este doc',
+        'Replace text': 'Reemplazar texto',
+        'Case Sensitive': 'distingue mayúsculas y minúsculas',
+        All: 'Toda',
+        of: 'de',
         'Match Case': 'Caso de partido',
         Previous: 'Previo',
         Next: 'Próximo',
+      },
+      ShortCuts: {
+        'short cuts': 'atajos',
       },
       Various: {
         Display: 'Mostrar',

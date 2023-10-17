@@ -118,13 +118,27 @@ const FindComponent = ({
     pmViews: { main },
   } = useContext(WaxContext);
   const searchRef = useRef(null);
-
+  const { t, i18n } = useTranslation();
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
+  const Translation = ({ label }) => {
+    return (
+      <>
+        {!isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${label}`)
+          ? t(`Wax.FindAndReplace.${label}`)
+          : label}
+      </>
+    );
+  };
+
+  const of =
+    !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.of')
+      ? t('Wax.FindAndReplace.of')
+      : 'of';
   const [searchValue, setSearchValue] = useState('');
-  const [counterText, setCounterText] = useState('0 of 0');
+  const [counterText, setCounterText] = useState(`0 ${of} 0`);
   const [matchCaseSearch, setMatchCaseSearch] = useState(false);
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
   const [isFirstRun, setFirstRun] = useState(true);
@@ -152,8 +166,8 @@ const FindComponent = ({
   }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
   const setCounterSearches = counter => {
-    if (counter === 0) return setCounterText('0 of 0');
-    setCounterText(`0 of ${counter}`);
+    if (counter === 0) return setCounterText(`0 ${of} 0`);
+    setCounterText(`0 ${of} ${counter}`);
 
     const {
       state: {
@@ -234,25 +248,17 @@ const FindComponent = ({
     searchRef.current.focus();
   };
 
-  const Translation = ({ label }) => {
-    const { t, i18n } = useTranslation();
-
-    return (
-      <>
-        {!isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${label}`)
-          ? t(`Wax.FindAndReplace.${label}`)
-          : label}
-      </>
-    );
-  };
-
   return (
     <Wrapper>
       <SingleRow>
         <SearchInputWrapper>
           <SearchInput
             onChange={onChange}
-            placeholder="Find"
+            placeholder={
+              !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.Find')
+                ? t('Wax.FindAndReplace.Find')
+                : 'Find'
+            }
             ref={searchRef}
             type="text"
             value={searchValue}

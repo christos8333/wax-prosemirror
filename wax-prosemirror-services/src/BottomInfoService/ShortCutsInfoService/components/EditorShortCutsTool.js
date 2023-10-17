@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { useOnClickOutside, MenuButton } from 'wax-prosemirror-core';
@@ -80,6 +82,7 @@ const ShortCutsList = styled.ul`
 `;
 
 const EditorShortCutsTool = ({ view: { state }, item }) => {
+  const { t, i18n } = useTranslation();
   const { title } = item;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -133,7 +136,11 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
         <MenuButton
           active={isOpen}
           disabled={false}
-          label="short cuts"
+          label={
+            !isEmpty(i18n) && i18n.exists('Wax.ShortCuts.short cuts')
+              ? t('Wax.ShortCuts.short cuts')
+              : 'short cuts'
+          }
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
@@ -156,7 +163,7 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen],
+    [isOpen, t('Wax.ShortCuts.short cuts')],
   );
   return MenuButtonComponent;
 };

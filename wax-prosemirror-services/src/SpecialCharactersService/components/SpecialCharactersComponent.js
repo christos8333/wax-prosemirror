@@ -7,10 +7,11 @@ import React, {
   useEffect,
 } from 'react';
 import styled from 'styled-components';
+import { filter, groupBy, debounce, isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { WaxContext } from 'wax-prosemirror-core';
-import { filter, groupBy, debounce } from 'lodash';
 
 const Wrapper = styled.div`
   width: 400px;
@@ -105,7 +106,9 @@ const SpecialCharacter = styled.div`
   ${override('Wax.SpecialCharacterButton')}
 `;
 
-const SpecialCharactersComponent = ({ close }) => {
+const SpecialCharactersComponent = () => {
+  const { t, i18n } = useTranslation();
+
   const searchRef = useRef(null);
   const { activeView, app } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
@@ -184,7 +187,11 @@ const SpecialCharactersComponent = ({ close }) => {
       <SearchInputContainer>
         <SearchInput
           onChange={onChange}
-          placeholder="Search"
+          placeholder={
+            !isEmpty(i18n) && i18n.exists('Wax.SpecialCharacters.Search')
+              ? t('Wax.SpecialCharacters.Search')
+              : 'Search'
+          }
           ref={searchRef}
           type="text"
           value={searchValue}

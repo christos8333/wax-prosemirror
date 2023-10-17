@@ -1,7 +1,9 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useRef, useMemo, useEffect } from 'react';
-import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
+import React, { useContext, useRef, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import insertImage from './Upload';
 
@@ -12,6 +14,8 @@ const Wrapper = styled.div`
 `;
 
 const ImageUpload = ({ item, fileUpload, view }) => {
+  const { t, i18n } = useTranslation();
+  const { title } = item;
   const context = useContext(WaxContext);
   const {
     app,
@@ -79,7 +83,11 @@ const ImageUpload = ({ item, fileUpload, view }) => {
               e.preventDefault();
               handleMouseDown();
             }}
-            title="Upload Image"
+            title={
+              !isEmpty(i18n) && i18n.exists(`Wax.Images.${title}`)
+                ? t(`Wax.Images.${title}`)
+                : title
+            }
           />
 
           <input
@@ -96,7 +104,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
         </label>
       </Wrapper>
     ),
-    [isDisabled, activeViewId],
+    [isDisabled, activeViewId, t(`Wax.Images.${title}`)],
   );
 
   return ImageUploadComponent;

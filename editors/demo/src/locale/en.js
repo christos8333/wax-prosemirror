@@ -20,6 +20,7 @@ const en = {
         'Wrap in ordered list': 'Wrap in ordered list',
         'Join with above block': 'Join with above block',
         'Lift out of enclosing block': 'Lift out of enclosing block',
+        'Insert Note': 'Insert Note',
       },
       BlockLevel: {
         'Block Level': ' Heading styles',
@@ -61,6 +62,13 @@ const en = {
         'Upper Case': 'Upper Case',
         'Lower Case': 'Lower Case',
         'Sentence Case': 'Sentence Case',
+      },
+      Images: {
+        'Upload Image': 'Upload Image',
+      },
+      SpecialCharacters: {
+        'Special Characters': 'Special Characters',
+        Search: 'Search',
       },
       Tables: {
         'Insert table': 'Insert Table',

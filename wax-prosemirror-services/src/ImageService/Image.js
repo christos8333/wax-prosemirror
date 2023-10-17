@@ -7,7 +7,7 @@ import ImageUploadComponent from './components/ImageUploadComponent';
 
 @injectable()
 export default class Image extends Tools {
-  title = 'Insert image';
+  title = 'Upload Image';
   icon = 'image';
   name = 'Image';
 

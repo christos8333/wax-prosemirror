@@ -20,6 +20,7 @@ const es = {
         'Wrap in ordered list': 'Envolver en lista ordenada',
         'Join with above block': 'Unirse al bloque anterior',
         'Lift out of enclosing block': 'Levante fuera del bloque envolvente',
+        'Insert Note': 'Insertar nota',
       },
       BlockLevel: {
         'Block Level': 'Estilos de encabezado',
@@ -61,6 +62,13 @@ const es = {
         'Upper Case': 'Mayúsculas',
         'Lower Case': 'Minúscula',
         'Sentence Case': 'Caso de sentencia',
+      },
+      Images: {
+        'Upload Image': 'Cargar imagen',
+      },
+      SpecialCharacters: {
+        'Special Characters': 'Caracteres especiales',
+        Search: 'Buscar',
       },
       Tables: {
         'Insert table': 'Insertar tabla',

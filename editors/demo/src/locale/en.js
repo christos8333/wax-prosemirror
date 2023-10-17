@@ -63,7 +63,8 @@ const en = {
         'Sentence Case': 'Sentence Case',
       },
       Tables: {
-        'Insert Table': 'Insert Table',
+        'Insert table': 'Insert Table',
+        'Table Options': 'Table Options',
         'Delete table': 'Delete table',
         'Add Caption': 'Add Caption',
         'Delete Caption': 'Delete Caption',

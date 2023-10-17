@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { isEmpty } from 'lodash';
 import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 import * as tablesFn from '../tableSrc';
 
@@ -64,21 +65,134 @@ const StyledIcon = styled(Icon)`
 `;
 
 const TableDropDown = ({ item }) => {
+  const Translation = ({ label, defaultTrans }) => {
+    const { t, i18n } = useTranslation();
+
+    return (
+      <>{!isEmpty(i18n) && i18n.exists(label) ? t(label) : defaultTrans}</>
+    );
+  };
   const dropDownOptions = [
-    { label: 'Delete table', value: 'deleteTable' },
-    { label: 'Add Caption', value: 'addCaption' },
-    { label: 'Delete Caption', value: 'deleteCaption' },
-    { label: 'Add column before', value: 'addColumnBefore' },
-    { label: 'Add column after', value: 'addColumnAfter' },
-    { label: 'Delete column', value: 'deleteColumn' },
-    { label: 'Insert row before', value: 'addRowBefore' },
-    { label: 'Insert row after', value: 'addRowAfter' },
-    { label: 'Delete row', value: 'deleteRow' },
-    { label: 'Merge cells', value: 'mergeCells' },
-    { label: 'Split cell', value: 'splitCell' },
-    { label: 'Toggle header column', value: 'toggleHeaderColumn' },
-    { label: 'Toggle header row', value: 'toggleHeaderRow' },
-    { label: 'Toggle header cells', value: 'toggleHeaderCell' },
+    {
+      label: (
+        <Translation
+          defaultTrans="Delete table"
+          label="Wax.Tables.Delete table"
+        />
+      ),
+      value: 'deleteTable',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Add Caption"
+          label="Wax.Tables.Add Caption"
+        />
+      ),
+      value: 'addCaption',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Delete Caption"
+          label="Wax.Tables.Delete Caption"
+        />
+      ),
+      value: 'deleteCaption',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Add column before"
+          label="Wax.Tables.Add column before"
+        />
+      ),
+      value: 'addColumnBefore',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Add column after"
+          label="Wax.Tables.Add column after"
+        />
+      ),
+      value: 'addColumnAfter',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Delete column"
+          label="Wax.Tables.Delete column"
+        />
+      ),
+      value: 'deleteColumn',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Insert row before"
+          label="Wax.Tables.Insert row before"
+        />
+      ),
+      value: 'addRowBefore',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Insert row after"
+          label="Wax.Tables.Insert row after"
+        />
+      ),
+      value: 'addRowAfter',
+    },
+    {
+      label: (
+        <Translation defaultTrans="Delete row" label="Wax.Tables.Delete row" />
+      ),
+      value: 'deleteRow',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Merge cells"
+          label="Wax.Tables.Merge cells"
+        />
+      ),
+      value: 'mergeCells',
+    },
+    {
+      label: (
+        <Translation defaultTrans="Split cell" label="Wax.Tables.Split cell" />
+      ),
+      value: 'splitCell',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Toggle header column"
+          label="Wax.Tables.Toggle header column"
+        />
+      ),
+      value: 'toggleHeaderColumn',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Toggle header row"
+          label="Wax.Tables.Toggle header row"
+        />
+      ),
+      value: 'toggleHeaderRow',
+    },
+    {
+      label: (
+        <Translation
+          defaultTrans="Toggle header cells"
+          label="Wax.Tables.Toggle header cells"
+        />
+      ),
+      value: 'toggleHeaderCell',
+    },
   ];
 
   const { activeView } = useContext(WaxContext);
@@ -154,7 +268,14 @@ const TableDropDown = ({ item }) => {
           onMouseDown={openCloseMenu}
           type="button"
         >
-          <span>Table Options</span> <StyledIcon name="expand" />
+          <span>
+            {' '}
+            <Translation
+              defaultTrans="Table Options"
+              label="Wax.Tables.Table Options"
+            />
+          </span>{' '}
+          <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
           aria-label="Choose a table action"

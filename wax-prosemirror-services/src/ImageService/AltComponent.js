@@ -73,14 +73,14 @@ export default ({ setPosition, position }) => {
 
   const imageConfig = app.config.get('config.ImageService');
   const showAlt = imageConfig && imageConfig.showAlt;
-  const autoFocus =
-    activeView.state.selection &&
-    activeView.state.selection.node &&
-    activeView.state.selection.node.attrs.alt === '';
+  // const autoFocus =
+  //   activeView.state.selection &&
+  //   activeView.state.selection.node &&
+  //   activeView.state.selection.node.attrs.alt === '';
 
   return !readOnly && showAlt ? (
     <StyledInputAlt
-      autoFocus={autoFocus}
+      // autoFocus={autoFocus}
       key="alt"
       onChange={altTextOnChange}
       placeholder="Alt Text"

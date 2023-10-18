@@ -112,6 +112,28 @@ const en = {
       },
       ShortCuts: {
         'short cuts': 'short cuts',
+        'Indent list item': 'Indent list item',
+        'Lift list item': 'Lift list item',
+        'Soft break': 'Soft break',
+        'Exit code block': 'Exit code block',
+      },
+      Counters: {
+        Word: 'Word',
+        Words: 'Words',
+        Characters: 'Characters',
+        'Characters Without Space': 'Characters Without Space',
+        Paragraph: 'Paragraph',
+        Images: 'Images',
+        Tables: 'Tables',
+        Footnotes: 'Footnotes',
+        'Block-Level Nodes': 'Block-Level Nodes',
+      },
+      Comments: {
+        Resolve: 'Resolve',
+        Post: 'Post',
+        Cancel: 'Cancel',
+        Reply: 'Reply',
+        'Write comment': 'Write comment',
       },
       Various: {
         Display: 'Display',

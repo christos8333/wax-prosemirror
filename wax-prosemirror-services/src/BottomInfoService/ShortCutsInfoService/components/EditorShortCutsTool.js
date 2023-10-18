@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
@@ -57,14 +58,14 @@ const CounterInfoComponent = styled.div`
   position: fixed;
   right: 136px;
   transform-origin: 50% 50% 0px;
-  width: 200px;
+  width: 260px;
 `;
 
 const ShortCutsContainer = styled.div`
   font-size: 14px;
   height: 240px;
   padding: 4px;
-  width: 200px;
+  width: 250px;
 `;
 
 const ShortCutsList = styled.ul`
@@ -90,40 +91,79 @@ const EditorShortCutsTool = ({ view: { state }, item }) => {
 
   useOnClickOutside(ref, () => setIsOpen(false));
 
+  const Translation = ({ label, defaultTrans }) => {
+    return (
+      <>{!isEmpty(i18n) && i18n.exists(label) ? t(label) : defaultTrans}</>
+    );
+  };
   const renderList = () => {
     return (
       <ShortCutsContainer>
         <ShortCutsList>
           <li>
-            <span>Ctrl + s </span> : Save
+            <span>Ctrl + s </span> :
+            <Translation
+              defaultTrans="Save changes"
+              label="Wax.Base.Save changes"
+            />
           </li>
           <li>
-            <span>Ctrl + z </span> : Undo
+            <span>Ctrl + z </span> :{' '}
+            <Translation defaultTrans="Undo" label="Wax.Base.Undo" />
           </li>
           <li>
-            <span>Ctrl + Shift + z </span> : Redo
+            <span>Ctrl + Shift + z </span> :{' '}
+            <Translation defaultTrans="Redo" label="Wax.Base.Redo" />
           </li>
 
           <li>
-            <span>Shift+Ctrl+8 </span> : Bullet List
+            <span>Shift+Ctrl+8 </span> :{' '}
+            <Translation
+              defaultTrans="Wrap in bullet list"
+              label="Wax.Annotations.Wrap in bullet list"
+            />{' '}
           </li>
           <li>
-            <span>Shift+Ctrl+9 </span> : Ordered List
+            <span>Shift+Ctrl+9 </span> :{' '}
+            <Translation
+              defaultTrans="Wrap in ordered list"
+              label="Wax.Annotations.Wrap in ordered list"
+            />{' '}
           </li>
           <li>
-            <span>Ctrl-] </span> : Indent list item
+            <span>Ctrl-] </span> :{' '}
+            <Translation
+              defaultTrans="Indent list item"
+              label="Wax.ShortCuts.Indent list item"
+            />{' '}
           </li>
           <li>
-            <span>Ctrl-[ </span> : Lift list item
+            <span>Ctrl-[ </span> :{' '}
+            <Translation
+              defaultTrans="Lift list item"
+              label="Wax.ShortCuts.Lift list item"
+            />{' '}
           </li>
           <li>
-            <span>Ctrl or Shift + Enter </span> : Soft break
+            <span>Ctrl or Shift + Enter </span> :{' '}
+            <Translation
+              defaultTrans="Soft break"
+              label="Wax.ShortCuts.Soft break"
+            />{' '}
           </li>
           <li>
-            <span>Ctrl + f </span> : Search and replace
+            <span>Ctrl + f </span> :{' '}
+            <Translation
+              defaultTrans="Find And Replace"
+              label="Wax.FindAndReplace.Find And Replace"
+            />{' '}
           </li>
           <li>
-            <span>Shift + Enter </span> : Exit code block
+            <span>Shift + Enter </span> :{' '}
+            <Translation
+              defaultTrans="Exit code block"
+              label="Wax.ShortCuts.Exit code block"
+            />{' '}
           </li>
         </ShortCutsList>
       </ShortCutsContainer>

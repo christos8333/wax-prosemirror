@@ -602,7 +602,9 @@ export default {
       width="20"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Delete Icon</title>
+      <title>
+        <Translation defaultTrans="Discard" label="Wax.Various.Discard" />
+      </title>
       <path
         d="M1.65222 5.47827H18.3479"
         stroke="#FF4E4E"
@@ -631,7 +633,9 @@ export default {
       width="20"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Try Again Icon</title>
+      <title>
+        <Translation defaultTrans="Try Again" label="Wax.AI.Try again" />
+      </title>
       <path
         d="M16.2963 13.0625C16.7471 12.1375 17 11.0983 17 10C17 6.13401 13.866 3 10 3C6.13401 3 3 6.13401 3 10C3 13.866 6.13401 17 10 17C10.8587 17 11.6812 16.8454 12.4414 16.5625"
         stroke="#595959"
@@ -648,7 +652,9 @@ export default {
       width="20"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Insert Icon</title>
+      <title>
+        <Translation defaultTrans="Insert" label="Wax.AI.Insert" />
+      </title>
       <path d="M4 4H16" stroke="#505050" />
       <path d="M4 7H16" stroke="#505050" />
       <path d="M7 10L16 10" stroke="#505050" />
@@ -666,7 +672,12 @@ export default {
       width="20"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Replace</title>
+      <title>
+        <Translation
+          defaultTrans="Replace selected text"
+          label="Wax.AI.Replace selected text"
+        />
+      </title>
       <path d="M18 8H2L6 4" stroke="#595959" strokeLinejoin="round" />
       <path d="M2 12H18L14 16" stroke="#595959" strokeLinejoin="round" />
     </svg>
@@ -680,7 +691,9 @@ export default {
       width="13"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Submit</title>
+      <title>
+        <Translation defaultTrans="Submit" label="Wax.AI.Submit" />
+      </title>
       <path d="M0 11H8V1" stroke="#434343" />
       <path d="M3.5 4L8 1L12 4" stroke="#434343" />
     </svg>

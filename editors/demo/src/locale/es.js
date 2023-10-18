@@ -21,6 +21,7 @@ const es = {
         'Join with above block': 'Unirse al bloque anterior',
         'Lift out of enclosing block': 'Levante fuera del bloque envolvente',
         'Insert Note': 'Insertar nota',
+        'Insert Code Block': 'Insertar bloque de código',
       },
       BlockLevel: {
         'Block Level': 'Estilos de encabezado',
@@ -70,7 +71,15 @@ const es = {
         'Special Characters': 'Caracteres especiales',
         Search: 'Buscar',
       },
-      AI: {},
+      AI: {
+        'Find a better way to word this':
+          'Encuentre una mejor manera de redactar esto',
+        Submit: 'Entregar',
+        'Replace selected text': 'Reemplazar texto seleccionado',
+        Insert: 'Insertar',
+        'Try again': 'Intentar otra vez',
+        Discard: 'Desechar',
+      },
       Tables: {
         'Insert table': 'Insertar tabla',
         'Table Options': 'Opciones de tabla',

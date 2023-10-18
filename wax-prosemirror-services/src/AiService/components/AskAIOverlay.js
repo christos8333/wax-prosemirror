@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, icons } from 'wax-prosemirror-core';
 import replaceSelectedText from '../ReplaceSelectedText';
 
@@ -39,7 +41,7 @@ const ActionSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 188px;
+  width: 250px;
 `;
 
 const ActionText = styled.div`
@@ -100,6 +102,7 @@ const SubmitButton = styled.button`
 `;
 
 const AskAIOverlay = ({ setPosition, position, config }) => {
+  const { t, i18n } = useTranslation();
   const { activeView, options } = useContext(WaxContext);
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -198,7 +201,12 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
         <AskAIFormInput
           id="askAiInput"
           onKeyPress={handleKeyDown}
-          placeholder="Find a better way to word this"
+          placeholder={
+            !isEmpty(i18n) &&
+            i18n.exists(`Wax.AI.Find a better way to word this`)
+              ? t(`Wax.AI.Find a better way to word this`)
+              : 'Find a better way to word this'
+          }
           ref={inputRef}
           type="text"
         />
@@ -214,22 +222,34 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           <ActionSection>
             <ActionButton onClick={handleReplaceText}>
               <ActionText>
-                <icons.replaceIco /> Replace selected text
+                <icons.replaceIco />{' '}
+                {!isEmpty(i18n) && i18n.exists(`Wax.AI.Replace selected text`)
+                  ? t(`Wax.AI.Replace selected text`)
+                  : 'Replace selected text'}
               </ActionText>
             </ActionButton>
             <ActionButton onClick={handleInsertTextBelow}>
               <ActionText>
-                <icons.insertIco /> Insert
+                <icons.insertIco />{' '}
+                {!isEmpty(i18n) && i18n.exists(`Wax.AI.Insert`)
+                  ? t(`Wax.AI.Insert`)
+                  : 'Insert'}
               </ActionText>
             </ActionButton>
             <ActionButton onClick={tryAgain}>
               <ActionText>
-                <icons.tryAgain /> Try again
+                <icons.tryAgain />{' '}
+                {!isEmpty(i18n) && i18n.exists(`Wax.AI. Try again`)
+                  ? t(`Wax.AI. Try again`)
+                  : ' Try again'}
               </ActionText>
             </ActionButton>
             <ActionButton onClick={discardResults}>
               <ActionText color="#FF4E4E">
-                <icons.deleteIco /> Discard
+                <icons.deleteIco />{' '}
+                {!isEmpty(i18n) && i18n.exists(`Wax.AI. Discard`)
+                  ? t(`Wax.AI. Discard`)
+                  : ' Discard'}
               </ActionText>
             </ActionButton>
           </ActionSection>

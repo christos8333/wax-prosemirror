@@ -21,6 +21,7 @@ const en = {
         'Join with above block': 'Join with above block',
         'Lift out of enclosing block': 'Lift out of enclosing block',
         'Insert Note': 'Insert Note',
+        'Insert Code Block': 'Insert Code Block',
       },
       BlockLevel: {
         'Block Level': ' Heading styles',
@@ -70,7 +71,14 @@ const en = {
         'Special Characters': 'Special Characters',
         Search: 'Search',
       },
-      AI: {},
+      AI: {
+        'Find a better way to word this': 'Find a better way to word this',
+        Submit: 'Submit',
+        'Replace selected text': 'Replace selected text',
+        Insert: 'Insert',
+        'Try again': 'Try again',
+        Discard: 'Discard',
+      },
       Tables: {
         'Insert table': 'Insert Table',
         'Table Options': 'Table Options',

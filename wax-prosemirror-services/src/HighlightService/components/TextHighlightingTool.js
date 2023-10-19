@@ -1,4 +1,6 @@
 import React, { useMemo, useState, useRef, useContext } from 'react';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
@@ -41,6 +43,7 @@ const Highlighter = styled.div`
 const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
   const { icon, title, select } = item;
   const [isOpen, setIsOpen] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const highlightDropDownOptions = [
     { name: 'yellow', value: '#F3E95C' },
@@ -120,7 +123,11 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
             onMouseDown={() => {
               setIsOpen(!isOpen);
             }}
-            title={title}
+            title={
+              !isEmpty(i18n) && i18n.exists(`Wax.Various.${title}`)
+                ? t(`Wax.Various.${title}`)
+                : title
+            }
           />
         </div>
         {isOpen && (
@@ -139,7 +146,7 @@ const TextHighlightingTool = ({ view: { dispatch, state }, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, isDisabled],
+    [isOpen, isDisabled, t(`Wax.Various.${title}`)],
   );
 
   return MenuButtonComponent;

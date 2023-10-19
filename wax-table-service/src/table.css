@@ -16,7 +16,7 @@
       background-color: #535E76;
       color: white;
       font-weight: bold;
-      caption-side: bottom;
+      /* caption-side: bottom; */
     }
 
   th,

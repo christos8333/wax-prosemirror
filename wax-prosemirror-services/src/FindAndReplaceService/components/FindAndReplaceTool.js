@@ -6,7 +6,8 @@ import React, {
   useLayoutEffect,
   useEffect,
 } from 'react';
-
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
@@ -27,6 +28,7 @@ const DropWrapper = styled.div`
 `;
 
 const FindAndReplaceTool = ({ item }) => {
+  const { t, i18n } = useTranslation();
   const {
     pmViews: { main },
   } = useContext(WaxContext);
@@ -78,7 +80,11 @@ const FindAndReplaceTool = ({ item }) => {
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
-          title={title}
+          title={
+            !isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${title}`)
+              ? t(`Wax.FindAndReplace.${title}`)
+              : title
+          }
         />
 
         {isOpen && (
@@ -92,7 +98,7 @@ const FindAndReplaceTool = ({ item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, style, isEditable],
+    [isOpen, style, isEditable, t(`Wax.FindAndReplace.${title}`)],
   );
 
   return MemorizedDropdown;

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
 
 const Wrapper = styled.div`
@@ -65,6 +67,7 @@ const CommentReply = props => {
     isReadOnly,
     onTextAreaBlur,
   } = props;
+  const { t, i18n } = useTranslation();
   const commentInput = useRef(null);
   const [commentValue, setCommentValue] = useState('');
 
@@ -104,7 +107,19 @@ const CommentReply = props => {
                 if (commentValue) handleSubmit(e);
               }
             }}
-            placeholder={isNewComment ? 'Write comment...' : 'Reply...'}
+            placeholder={
+              isNewComment
+                ? `${
+                    !isEmpty(i18n) && i18n.exists(`Wax.Comments.Write comment`)
+                      ? t(`Wax.Comments.Write comment`)
+                      : 'Write comment'
+                  }...`
+                : `${
+                    !isEmpty(i18n) && i18n.exists(`Wax.Comments.Reply`)
+                      ? t(`Wax.Comments.Reply`)
+                      : 'Reply'
+                  }...`
+            }
             ref={commentInput}
             rows="3"
             value={commentValue}
@@ -118,11 +133,15 @@ const CommentReply = props => {
               primary
               type="submit"
             >
-              Post
+              {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Post`)
+                ? t(`Wax.Comments.Post`)
+                : 'Post'}
             </Button>
 
             <Button disabled={commentValue.length === 0} onClick={resetValue}>
-              Cancel
+              {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Cancel`)
+                ? t(`Wax.Comments.Cancel`)
+                : 'Cancel'}
             </Button>
           </ButtonGroup>
         </ActionWrapper>

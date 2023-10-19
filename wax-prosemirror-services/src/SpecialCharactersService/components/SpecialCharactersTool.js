@@ -1,5 +1,7 @@
 import React, { useContext, useMemo, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import {
   WaxContext,
@@ -24,6 +26,7 @@ const DropWrapper = styled.div`
 `;
 
 const SpecialCharactersTool = ({ item }) => {
+  const { t, i18n } = useTranslation();
   const {
     pmViews: { main },
   } = useContext(WaxContext);
@@ -50,7 +53,11 @@ const SpecialCharactersTool = ({ item }) => {
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
-          title={title}
+          title={
+            !isEmpty(i18n) && i18n.exists(`Wax.SpecialCharacters.${title}`)
+              ? t(`Wax.SpecialCharacters.${title}`)
+              : title
+          }
         />
 
         {isOpen && (
@@ -64,7 +71,7 @@ const SpecialCharactersTool = ({ item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen, isDisabled],
+    [isOpen, isDisabled, t(`Wax.SpecialCharacters.${title}`)],
   );
 
   return MemorizedDropdown;

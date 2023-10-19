@@ -5,7 +5,7 @@ import { TextSelection } from 'prosemirror-state';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
 const FullScreenButton = ({ view = {}, item }) => {
-  const { active, icon, label, select, title } = item;
+  const { active, icon, select } = item;
   const context = useContext(WaxContext);
 
   const { activeViewId, activeView, options } = context;
@@ -37,9 +37,7 @@ const FullScreenButton = ({ view = {}, item }) => {
         active={false}
         disabled={false}
         iconName={usedIcon}
-        label={label}
         onMouseDown={e => handleMouseDown(e)}
-        title={title}
       />
     ),
     [isActive, isDisabled, usedIcon],

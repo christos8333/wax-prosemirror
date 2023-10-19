@@ -1,11 +1,13 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useContext, useMemo, useRef } from 'react';
+import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import {
   WaxContext,
   useOnClickOutside,
   MenuButton,
 } from 'wax-prosemirror-core';
-import styled from 'styled-components';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import InsertTableTool from './InsertTableTool';
 
@@ -24,6 +26,7 @@ const DropWrapper = styled.div`
 `;
 
 const CreateTable = ({ item }) => {
+  const { t, i18n } = useTranslation();
   const {
     pmViews: { main },
     activeView,
@@ -65,13 +68,17 @@ const CreateTable = ({ item }) => {
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}
-          title={title}
+          title={
+            !isEmpty(i18n) && i18n.exists(`Wax.Tables.${title}`)
+              ? t(`Wax.Tables.${title}`)
+              : title
+          }
         />
 
         {isOpen && <DropWrapper>{dropComponent}</DropWrapper>}
       </Wrapper>
     ),
-    [isDisabled, isOpen],
+    [isDisabled, isOpen, t(`Wax.Tables.${title}`)],
   );
 
   return MemorizedDropdown;

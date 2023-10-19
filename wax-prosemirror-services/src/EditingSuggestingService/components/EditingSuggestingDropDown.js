@@ -1,6 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, ReactDropDownStyles, Icon } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 
@@ -45,41 +47,10 @@ const StyledIcon = styled(Icon)`
   width: 16px;
 `;
 
-const Editing = () => {
-  return (
-    <span>
-      <StyledIcon name="editing" />
-      Editing
-    </span>
-  );
-};
-
-const Suggesting = () => {
-  return (
-    <span>
-      <StyledIcon name="suggesting" />
-      Suggesting
-    </span>
-  );
-};
-
-const Viewing = () => {
-  return (
-    <span>
-      <StyledIcon name="viewing" />
-      Viewing
-    </span>
-  );
-};
-
-const dropDownOptions = [
-  { label: <Editing />, value: 'editing' },
-  { label: <Suggesting />, value: 'suggesting' },
-];
-
 // eslint-disable-next-line no-unused-vars
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
   const { app, activeView, pmViews } = useContext(WaxContext);
+  const { t, i18n } = useTranslation();
   const enableService = app.config.get('config.EnableTrackChangeService')
     ? app.config.get('config.EnableTrackChangeService')
     : { toggle: false };
@@ -98,6 +69,44 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
       activeView.focus();
     }, 100);
   };
+
+  const Editing = () => {
+    return (
+      <span>
+        <StyledIcon name="editing" />
+        {!isEmpty(i18n) && i18n.exists(`Wax.TrackChanges.Editing`)
+          ? t(`Wax.TrackChanges.Editing`)
+          : 'Editing'}
+      </span>
+    );
+  };
+
+  const Suggesting = () => {
+    return (
+      <span>
+        <StyledIcon name="suggesting" />
+        {!isEmpty(i18n) && i18n.exists(`Wax.TrackChanges.Suggesting`)
+          ? t(`Wax.TrackChanges.Suggesting`)
+          : 'Suggesting'}
+      </span>
+    );
+  };
+
+  const Viewing = () => {
+    return (
+      <span>
+        <StyledIcon name="viewing" />
+        {!isEmpty(i18n) && i18n.exists(`Wax.TrackChanges.Viewing`)
+          ? t(`Wax.TrackChanges.Viewing`)
+          : 'Viewing'}
+      </span>
+    );
+  };
+
+  const dropDownOptions = [
+    { label: <Editing />, value: 'editing' },
+    { label: <Suggesting />, value: 'suggesting' },
+  ];
 
   const selectedOption = () => {
     if (enableService.enabled) {

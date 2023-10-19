@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {
   useMemo,
   useState,
@@ -7,6 +8,8 @@ import React, {
   useCallback,
 } from 'react';
 import styled from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -82,7 +85,7 @@ const Counter = styled.div`
   min-width: 150px;
   ${override('Wax.Counters')}
 `;
-
+/* TODO Rewrite all of this */
 const EditorInfoTool = ({ view: { state }, item }) => {
   const { title } = item;
   const [isOpen, setIsOpen] = useState(false);
@@ -104,16 +107,65 @@ const EditorInfoTool = ({ view: { state }, item }) => {
   const InlineNodes = DocumentHelpers.findInlineNodes(main.state.doc);
 
   useOnClickOutside(ref, () => setIsOpen(false));
+  const { t, i18n } = useTranslation();
 
   const infoDropDownOptions = [
-    { name: `${getWordCountFromState} Words` },
-    { name: `${totalCharCount} Characters` },
-    { name: `${totalCharCountWithoutSpace} Characters Without Space` },
-    { name: `${paraCount} Paragraph` },
-    { name: `${imgCount} Images` },
-    { name: `${tableCount} Tables` },
-    { name: `${footnoteCount} Footnotes` },
-    { name: `${blocklevelNode} Block-Level Nodes` },
+    {
+      name: `${getWordCountFromState} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Words`)
+          ? t(`Wax.Counters.Words`)
+          : 'Words'
+      }`,
+    },
+    {
+      name: `${totalCharCount} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Characters`)
+          ? t(`Wax.Counters.Characters`)
+          : 'Characters'
+      }`,
+    },
+    {
+      name: `${totalCharCountWithoutSpace} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Characters Without Space`)
+          ? t(`Wax.Counters.Characters Without Space`)
+          : 'Characters Without Space'
+      }`,
+    },
+    {
+      name: `${paraCount} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Paragraph`)
+          ? t(`Wax.Counters.Paragraph`)
+          : 'Paragraph'
+      }`,
+    },
+    {
+      name: `${imgCount} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Images`)
+          ? t(`Wax.Counters.Images`)
+          : 'Images'
+      }`,
+    },
+    {
+      name: `${tableCount} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Tables`)
+          ? t(`Wax.Counters.Tables`)
+          : 'Tables'
+      }`,
+    },
+    {
+      name: `${footnoteCount} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Footnotes`)
+          ? t(`Wax.Counters.Footnotes`)
+          : 'Footnotes'
+      }`,
+    },
+    {
+      name: `${blocklevelNode} ${
+        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Block-Level Nodes`)
+          ? t(`Wax.Counters.Block-Level Nodes`)
+          : 'Block-Level Nodes'
+      }`,
+    },
   ];
 
   const renderList = () => {
@@ -389,7 +441,11 @@ const EditorInfoTool = ({ view: { state }, item }) => {
               ? getSelectionCountFromState
               : getWordCountFromState
           } 
-          word${
+           ${
+             !isEmpty(i18n) && i18n.exists(`Wax.Counters.Word`)
+               ? t(`Wax.Counters.Word`)
+               : 'Word'
+           }${
             getSelectionCountFromState && getSelectionCountFromState > 1
               ? 's'
               : ''

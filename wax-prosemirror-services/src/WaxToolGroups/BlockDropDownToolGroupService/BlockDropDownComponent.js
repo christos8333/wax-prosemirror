@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
+import { isEmpty } from 'lodash';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 import { v4 as uuidv4 } from 'uuid';
@@ -39,6 +41,7 @@ const DropdownStyled = styled(Dropdown)`
 
 // eslint-disable-next-line react/prop-types
 const BlockDropDownComponent = ({ view, tools }) => {
+  const { t, i18n } = useTranslation();
   const context = useContext(WaxContext);
   const {
     activeViewId,
@@ -50,33 +53,53 @@ const BlockDropDownComponent = ({ view, tools }) => {
     return editable;
   });
 
+  const translatedLabel = (translation, defaultLabel) => {
+    return !isEmpty(i18n) && i18n.exists(translation)
+      ? t(translation)
+      : defaultLabel;
+  };
+
   const dropDownOptions = [
-    // { label: 'Title (H1)', value: '0', item: tools[0] },
-    // { label: 'author', value: '1', item: tools[1] },
-    // { label: 'Subtitle', value: '2', item: tools[2] },
-    // { label: 'Epigraph Prose', value: '3', item: tools[3] },
-    // { label: 'Epigraph Poetry', value: '4', item: tools[4] },
-    { label: 'Heading 2', value: '5', item: tools[5] },
-    { label: 'Heading 3', value: '6', item: tools[6] },
-    // { label: 'Heading 3', value: '7', item: tools[7] },
-    { label: 'Paragraph', value: '8', item: tools[8] },
-    // { label: 'Paragraph Continued', value: '9', item: tools[9] },
-    // { label: 'Extract Prose', value: '10', item: tools[10] },
-    // { label: 'Extract Poetry', value: '11', item: tools[11] },
-    // { label: 'Source Note', value: '12', item: tools[12] },
-    { label: 'Block Quote', value: '13', item: tools[13] },
+    {
+      label: translatedLabel(`Wax.BlockLevel.Heading 2`, 'Heading 2'),
+      value: '5',
+      item: tools[5],
+    },
+    {
+      label: translatedLabel(`Wax.BlockLevel.Heading 3`, 'Heading 3'),
+      value: '6',
+      item: tools[6],
+    },
+    {
+      label: translatedLabel(`Wax.BlockLevel.Paragraph`, 'Paragraph'),
+      value: '8',
+      item: tools[8],
+    },
+    {
+      label: translatedLabel(`Wax.BlockLevel.Block Quote`, 'Block Quote'),
+      value: '13',
+      item: tools[13],
+    },
   ];
 
   useEffect(() => {
-    setLabel('Block Level');
+    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Heading styles'));
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
         setTimeout(() => {
-          setLabel(option.item.label);
+          setLabel(
+            translatedLabel(
+              `Wax.BlockLevel.${option.item.label}`,
+              option.item.label,
+            ),
+          );
         });
       }
     });
-  }, [main.state.selection.$from.parent.type.name]);
+  }, [
+    main.state.selection.$from.parent.type.name,
+    t('Wax.BlockLevel.Paragraph'),
+  ]);
 
   const MultipleDropDown = useMemo(
     () => (
@@ -87,13 +110,16 @@ const BlockDropDownComponent = ({ view, tools }) => {
             tools[option.value].run(main.state, main.dispatch);
           }}
           options={dropDownOptions}
-          placeholder="Block Level"
+          placeholder={translatedLabel(
+            'Wax.BlockLevel.Block Level',
+            'Heading styles',
+          )}
           select={isEditable}
           value={label}
         />
       </Wrapper>
     ),
-    [label, isEditable],
+    [label, isEditable, t('Wax.BlockLevel.Paragraph')],
   );
 
   return MultipleDropDown;

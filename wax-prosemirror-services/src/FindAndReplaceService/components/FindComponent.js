@@ -1,7 +1,8 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { each, eachRight } from 'lodash';
+import { each, eachRight, isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
 import { WaxContext, useDebounce, Icon } from 'wax-prosemirror-core';
@@ -117,13 +118,27 @@ const FindComponent = ({
     pmViews: { main },
   } = useContext(WaxContext);
   const searchRef = useRef(null);
-
+  const { t, i18n } = useTranslation();
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
+  const Translation = ({ label }) => {
+    return (
+      <>
+        {!isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${label}`)
+          ? t(`Wax.FindAndReplace.${label}`)
+          : label}
+      </>
+    );
+  };
+
+  const of =
+    !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.of')
+      ? t('Wax.FindAndReplace.of')
+      : 'of';
   const [searchValue, setSearchValue] = useState('');
-  const [counterText, setCounterText] = useState('0 of 0');
+  const [counterText, setCounterText] = useState(`0 ${of} 0`);
   const [matchCaseSearch, setMatchCaseSearch] = useState(false);
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
   const [isFirstRun, setFirstRun] = useState(true);
@@ -151,8 +166,8 @@ const FindComponent = ({
   }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
   const setCounterSearches = counter => {
-    if (counter === 0) return setCounterText('0 of 0');
-    setCounterText(`0 of ${counter}`);
+    if (counter === 0) return setCounterText(`0 ${of} 0`);
+    setCounterText(`0 ${of} ${counter}`);
 
     const {
       state: {
@@ -239,7 +254,11 @@ const FindComponent = ({
         <SearchInputWrapper>
           <SearchInput
             onChange={onChange}
-            placeholder="Find"
+            placeholder={
+              !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.Find')
+                ? t('Wax.FindAndReplace.Find')
+                : 'Find'
+            }
             ref={searchRef}
             type="text"
             value={searchValue}
@@ -249,7 +268,10 @@ const FindComponent = ({
         <ControlsWrapper>
           <IconWrapper onClick={matchCase} role="button" tabIndex="0">
             <Svg active={matchCaseSearch} fill="none" viewBox="0 0 24 24">
-              <title> Match Case </title>
+              <title>
+                {' '}
+                <Translation label="Match Case" />{' '}
+              </title>
               <path d="M2.5,4v3h5v12h3V7h5V4H2.5z M21.5,9h-9v3h3v7h3v-7h3V9z" />
             </Svg>
           </IconWrapper>

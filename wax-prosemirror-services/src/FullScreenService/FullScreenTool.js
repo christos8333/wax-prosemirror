@@ -6,7 +6,7 @@ import FullScreenButton from './components/FullScreenButton';
 
 @injectable()
 export default class FullScreenTool extends Tools {
-  title = 'full screen';
+  title = 'Full screen';
   icon = 'fullScreen';
   name = 'FullScreen';
 

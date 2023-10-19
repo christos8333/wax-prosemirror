@@ -43,7 +43,7 @@ import {
   CustomTagService,
   disallowPasteImagesPlugin,
   // YjsService,
-  // BlockDropDownToolGroupService,
+  BlockDropDownToolGroupService,
   // TitleToolGroupService,
   AskAiContentService,
 } from 'wax-prosemirror-services';
@@ -101,7 +101,7 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
-        // 'BlockDropDown',
+        'BlockDropDown',
         // 'TitleTool',
         {
           name: 'Annotations',
@@ -200,7 +200,7 @@ export default {
   services: [
     // new TitleToolGroupService(),
     // new YjsService(),
-    // new BlockDropDownToolGroupService(),
+    new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),

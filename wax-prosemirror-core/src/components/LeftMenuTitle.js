@@ -1,6 +1,8 @@
 /* eslint react/prop-types: 0 */
 
 import React from 'react';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const LeftMenuStyled = styled.div`
@@ -22,7 +24,14 @@ const LeftMenuStyled = styled.div`
 `;
 
 const LeftMenuTitle = ({ title }) => {
-  return <LeftMenuStyled>{title}</LeftMenuStyled>;
+  const { t, i18n } = useTranslation();
+  return (
+    <LeftMenuStyled>
+      {!isEmpty(i18n) && i18n.exists(`Wax.Various.${title}`)
+        ? t(`Wax.Various.${title}`)
+        : title}
+    </LeftMenuStyled>
+  );
 };
 
 export default LeftMenuTitle;

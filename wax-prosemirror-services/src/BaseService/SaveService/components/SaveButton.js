@@ -1,8 +1,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
 const SaveButton = ({ view = {}, item }) => {
+  const { t, i18n } = useTranslation();
   const { icon, label, select, title } = item;
 
   const {
@@ -55,10 +58,14 @@ const SaveButton = ({ view = {}, item }) => {
         iconName={iconTodisplay}
         label={label}
         onMouseDown={handleMouseDown}
-        title={title}
+        title={
+          !isEmpty(i18n) && i18n.exists(`Wax.Base.${title}`)
+            ? t(`Wax.Base.${title}`)
+            : title
+        }
       />
     ),
-    [isSaving, isDisabled],
+    [isSaving, isDisabled, t(`Wax.Base.${title}`)],
   );
 
   return SaveButtonComponent;

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { th, override } from '@pubsweet/ui-toolkit';
-
 import CommentItemList from './CommentItemList';
 import CommentReply from './CommentReply';
 
@@ -89,6 +90,7 @@ const CommentBox = props => {
   };
 
   if (!active && (!commentData || commentData.length === 0)) return null;
+  const { t, i18n } = useTranslation();
 
   return (
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
@@ -101,7 +103,9 @@ const CommentBox = props => {
               return false;
             }}
           >
-            Resolve
+            {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Resolve`)
+              ? t(`Wax.Comments.Resolve`)
+              : 'Resolve'}
           </Resolve>
         </Head>
       )}

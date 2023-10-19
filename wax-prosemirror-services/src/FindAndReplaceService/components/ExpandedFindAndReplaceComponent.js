@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { each, eachRight } from 'lodash';
+import { each, eachRight, isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import {
   WaxContext,
   DocumentHelpers,
@@ -146,6 +147,7 @@ const ExpandedFindAndReplaceComponent = ({
   nonExpandedText,
   setMatchCaseValue,
 }) => {
+  const { t, i18n } = useTranslation();
   const { app, pmViews, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
@@ -153,7 +155,11 @@ const ExpandedFindAndReplaceComponent = ({
   const [matchCaseSearch, setMatchCaseSearch] = useState(matchCaseOption);
   const [match, setMatch] = useState([]);
   const [replaceValue, setReplaceValue] = useState('');
-  const [counterText, setCounterText] = useState('0 of 0');
+  const of =
+    !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.of')
+      ? t('Wax.FindAndReplace.of')
+      : 'of';
+  const [counterText, setCounterText] = useState(`0 ${of} 0`);
   const findAndReplacePlugin = app.PmPlugins.get('findAndReplacePlugin');
 
   const allStates = [];
@@ -181,8 +187,8 @@ const ExpandedFindAndReplaceComponent = ({
   }, [debouncedSearchTerm, matchCaseSearch, JSON.stringify(allStates)]);
 
   const setCounterSearches = counter => {
-    if (counter === 0) return setCounterText('0 of 0');
-    setCounterText(`0 of ${counter}`);
+    if (counter === 0) return setCounterText(`0 ${of} 0`);
+    setCounterText(`0 ${of} ${counter}`);
 
     const {
       state: {
@@ -238,7 +244,7 @@ const ExpandedFindAndReplaceComponent = ({
     // setCounterSearches(counter);
 
     if (searchRef.current === document.activeElement) {
-      eachRight(pmViews, (singleView, viewId) => {
+      eachRight(pmViews, singleView => {
         singleView.dispatch(singleView.state.tr);
       });
     }
@@ -259,7 +265,7 @@ const ExpandedFindAndReplaceComponent = ({
   };
 
   const replaceAll = () => {
-    each(pmViews, (singleView, viewId) => {
+    each(pmViews, singleView => {
       const results = DocumentHelpers.findMatches(
         singleView.state.doc,
         searchValue,
@@ -277,7 +283,7 @@ const ExpandedFindAndReplaceComponent = ({
 
   const closeFind = () => {
     findAndReplacePlugin.props.setSearchText('');
-    each(pmViews, (singleView, viewId) => {
+    each(pmViews, singleView => {
       singleView.dispatch(singleView.state.tr);
     });
     close();
@@ -289,22 +295,43 @@ const ExpandedFindAndReplaceComponent = ({
     searchRef.current.focus();
   };
 
+  const Translation = ({ label }) => {
+    return (
+      <>
+        {!isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${label}`)
+          ? t(`Wax.FindAndReplace.${label}`)
+          : label}
+      </>
+    );
+  };
+
   return (
     <Wrapper>
       <TitleContainer>
-        <FindTitle> Find & Replace </FindTitle>
+        <FindTitle>
+          {' '}
+          <Translation label="Find" />
+          & <Translation label="Replace" />{' '}
+        </FindTitle>
         <CloseWrapper onClick={closeFind}>
           <StyledIcon name="close" />
         </CloseWrapper>
       </TitleContainer>
 
-      <InputLabel>Find</InputLabel>
+      <InputLabel>
+        <Translation label="Find" />
+      </InputLabel>
 
       <InputWrapper>
         <FindReplaceInput
           id="search-input"
           onChange={onChangeSearchInput}
-          placeholder="Something is this doc"
+          placeholder={
+            !isEmpty(i18n) &&
+            i18n.exists('Wax.FindAndReplace.Something is this doc')
+              ? t('Wax.FindAndReplace.Something is this doc')
+              : 'Something is this doc'
+          }
           ref={searchRef}
           type="text"
           value={searchValue}
@@ -312,11 +339,17 @@ const ExpandedFindAndReplaceComponent = ({
         <CounterInput> {counterText} </CounterInput>
       </InputWrapper>
 
-      <InputLabel>Replace with</InputLabel>
+      <InputLabel>
+        <Translation label="Replace with" />
+      </InputLabel>
       <InputWrapper>
         <FindReplaceInput
           onChange={onChangeReplaceInput}
-          placeholder="Replace text"
+          placeholder={
+            !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.Replace text')
+              ? t('Wax.FindAndReplace.Replace text')
+              : 'Replace text'
+          }
           ref={replaceRef}
           type="text"
         />
@@ -325,14 +358,24 @@ const ExpandedFindAndReplaceComponent = ({
       <CheckBoxWrapper>
         <CheckBox
           checked={matchCaseOption}
-          label="Case Sensitive"
+          label={
+            !isEmpty(i18n) && i18n.exists('Wax.FindAndReplace.Case Sensitive')
+              ? t('Wax.FindAndReplace.Case Sensitive')
+              : 'Case Sensitive'
+          }
           name="case-sensitive"
           onChange={matchCase}
         />
       </CheckBoxWrapper>
       <ControlContainer>
-        <ButtonReplace onClick={replace}>Replace</ButtonReplace>
-        <ButtonReplaceAll onClick={replaceAll}>Replace All</ButtonReplaceAll>
+        <ButtonReplace onClick={replace}>
+          {' '}
+          <Translation label="Replace with" />
+        </ButtonReplace>
+        <ButtonReplaceAll onClick={replaceAll}>
+          {' '}
+          <Translation label="Replace with" /> <Translation label="All" />
+        </ButtonReplaceAll>
         <PreviousNextContainer>
           <IconWrapper
             onClick={() => findPreviousMatch(searchValue, matchCaseOption)}

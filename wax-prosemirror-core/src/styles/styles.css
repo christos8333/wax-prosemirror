@@ -228,25 +228,17 @@ img.ProseMirror-separator {
 }
 
 
-/** Mozilla Firefox */
-
-fakecursor {
-  display: none;
-}
-
 @-moz-document url-prefix() {
-  fakecursor {
-    visibility: hidden;
-    display: inline !important;
+  span#fake-cursor::before {
+      height: 18px !important;
   }
 }
 
-
-fakecursor::before {
+span#fake-cursor::before {
   display: inline;
   content: '';
   border-right: 1px solid black;
-  height: 19px;
+  height: 23px;
   position: absolute;
   z-index: 999;
   }

@@ -18,9 +18,7 @@ Run a local version of the demos
 
 1.  `yarn with node >= 14`
 
-2.  `yarn editoria` Will bring up a demos of different ediitors
-
-Scripts: `yarn` , `yarn clean`, `yarn reset`
+2.  `yarn start` Will bring up a demos of different ediitors
 
 ## Documentation
 

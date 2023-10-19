@@ -3,7 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Editors from './Editors';
 import * as serviceWorker from './serviceWorker';
-
+import '../../../wax-prosemirror-core/dist/index.css';
+import '../../../wax-prosemirror-services/dist/index.css';
+import '../../../wax-questions-service/dist/index.css';
+import '../../../wax-table-service/dist/index.css';
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(<Editors />);
 

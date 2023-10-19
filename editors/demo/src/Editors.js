@@ -11,6 +11,11 @@ import OEN from './OEN/OEN';
 import en from './locale/en';
 import es from './locale/es';
 
+import 'wax-prosemirror-core/dist/index.css';
+import 'wax-prosemirror-services/dist/index.css';
+import 'wax-questions-service/dist/index.css';
+import 'wax-table-service/dist/index.css';
+
 // i18next.use(initReactI18next).init({
 //   resources: { es },
 //   lng: 'es',

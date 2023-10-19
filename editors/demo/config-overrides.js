@@ -24,6 +24,11 @@ module.exports = function override(config, env) {
         '../../wax-table-service/index',
       ),
     };
+  } else {
+    require('wax-prosemirror-core/dist/index.css');
+    require('wax-prosemirror-services/dist/index.css');
+    require('wax-questions-service/dist/index.css');
+    require('wax-table-service/dist/index.css');
   }
 
   config.module = {

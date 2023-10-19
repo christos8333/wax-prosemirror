@@ -68,22 +68,22 @@ const StyledIcon = styled(Icon)`
 const DropDownComponent = ({ view, tools }) => {
   const dropDownOptions = [
     {
-      label: 'Multiple choice',
+      label: 'Multi-Select',
       value: '0',
       item: tools[0],
     },
     {
-      label: 'Multiple choice (single correct)',
+      label: 'Multiple Choice',
       value: '1',
       item: tools[1],
     },
     {
-      label: 'True/False',
+      label: 'Multiple True/False',
       value: '2',
       item: tools[2],
     },
     {
-      label: 'True/False (single correct)',
+      label: 'True/False',
       value: '3',
       item: tools[3],
     },

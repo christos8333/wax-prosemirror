@@ -11,18 +11,13 @@ import OEN from './OEN/OEN';
 import en from './locale/en';
 import es from './locale/es';
 
-// import 'wax-prosemirror-core/dist/index.css';
-// import 'wax-prosemirror-services/dist/index.css';
-// import 'wax-questions-service/dist/index.css';
-// import 'wax-table-service/dist/index.css';
-
-i18next.use(initReactI18next).init({
-  resources: { es },
-  lng: 'es',
-  interpolation: {
-    escapeValue: false,
-  },
-});
+// i18next.use(initReactI18next).init({
+//   resources: { es },
+//   lng: 'es',
+//   interpolation: {
+//     escapeValue: false,
+//   },
+// });
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -77,13 +72,6 @@ const ProjectButton = styled.button`
   padding: 8px 15px 8px 15px;
   ${props => props.isActive && activeStyles}
 `;
-i18next.use(initReactI18next).init({
-  resources: { es },
-  lng: 'es',
-  interpolation: {
-    escapeValue: false,
-  },
-});
 
 const Editors = () => {
   const [project, setProject] = useState('hhmi');
@@ -112,7 +100,7 @@ const Editors = () => {
       <ChooseProject>
         <Projects>
           <span>Select Project:</span>
-          <button onMouseDown={onClick}>hhh</button>
+          {/* <button onMouseDown={onClick}>hhh</button> */}
           <ProjectButton
             isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}

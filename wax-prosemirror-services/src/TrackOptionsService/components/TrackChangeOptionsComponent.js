@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { each, isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { grid } from '@pubsweet/ui-toolkit';
-import { each } from 'lodash';
 import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
 
 const TotalSuggestions = styled.div`
   color: #bdc2ca;
+  text-transform: uppercase;
 `;
 
 // const TotalComments = styled.div`
@@ -184,6 +186,7 @@ const TrackChangeOptionsComponent = ({
   showHiddenValue,
 }) => {
   // const [isShownTrack, setIsShownTrack] = useState(false);
+  const { t, i18n } = useTranslation();
   const menuItems = groups[0].items;
   const { app, pmViews, activeView, activeViewId } = useContext(WaxContext);
   const { state } = activeView;
@@ -201,9 +204,15 @@ const TrackChangeOptionsComponent = ({
           menuItem.active(state, activeViewId) &&
           menuItem.select(state, activeViewId)
         );
-        let { label } = menuItem;
+        let label =
+          !isEmpty(i18n) && i18n.exists(`Wax.TrackChanges.${menuItem.label}`)
+            ? t(`Wax.TrackChanges.${menuItem.label}`)
+            : menuItem.label;
         if (menuItem.name === 'ShowHideTrackChange' && showHiddenValue) {
-          label = 'Hide suggestions';
+          label =
+            !isEmpty(i18n) && i18n.exists(`Wax.TrackChanges.Hide suggestions`)
+              ? t(`Wax.TrackChanges.Hide suggestions`)
+              : 'Hide suggestions';
         }
 
         const isDisabled = !menuItem.select(state, activeViewId, activeView);
@@ -236,7 +245,10 @@ const TrackChangeOptionsComponent = ({
   return (
     <Wrapper>
       <TotalSuggestions>
-        {inlineTracks + blockTracks} SUGGESTIONS
+        {inlineTracks + blockTracks}{' '}
+        {!isEmpty(i18n) && i18n.exists(`Wax.TrackChanges.Suggestions`)
+          ? t(`Wax.TrackChanges.Suggestions`)
+          : 'Suggestions'}
       </TotalSuggestions>
       <ToolsContainer>{renderTools()}</ToolsContainer>
       {/* <AcceptRejectAll

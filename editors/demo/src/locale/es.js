@@ -104,6 +104,11 @@ const es = {
         'Show Changes': 'Mostrar cambios',
         Accept: 'Aceptar',
         Reject: 'Rechazar',
+        Suggestions: 'Sugerencias',
+        'Show suggestions': 'Mostrar sugerencias',
+        'Hide suggestions': 'Ocultar sugerencias',
+        'Accept in selection': 'Aceptar en la selección',
+        'Reject in selection': 'Rechazar en la selección',
       },
       FindAndReplace: {
         'Find And Replace': 'Encontrar y reemplazar',

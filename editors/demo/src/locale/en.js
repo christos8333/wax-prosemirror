@@ -103,6 +103,11 @@ const en = {
         'Show Changes': 'Show Changes',
         Accept: 'Accept',
         Reject: 'Reject',
+        Suggestions: 'Suggestions',
+        'Show suggestions': 'Show suggestions',
+        'Hide suggestions': 'Hide suggestions',
+        'Accept in selection': 'Accept in selection',
+        'Reject in selection': 'Reject in selection',
       },
       FindAndReplace: {
         'Find And Replace': 'Find And Replace',

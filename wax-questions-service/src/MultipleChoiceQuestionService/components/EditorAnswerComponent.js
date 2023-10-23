@@ -1,0 +1,228 @@
+import React, { useContext, useRef, useEffect } from 'react';
+import styled from 'styled-components';
+import { EditorView } from 'prosemirror-view';
+import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
+import { StepMap } from 'prosemirror-transform';
+import { keymap } from 'prosemirror-keymap';
+import { baseKeymap, chainCommands } from 'prosemirror-commands';
+import { undo, redo } from 'prosemirror-history';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import {
+  splitListItem,
+  liftListItem,
+  sinkListItem,
+} from 'prosemirror-schema-list';
+import Placeholder from '../plugins/placeholder';
+import FakeCursorPlugin from '../../MultipleDropDownService/plugins/FakeCursorPlugin';
+
+const EditorWrapper = styled.div`
+  border: none;
+  display: flex;
+  flex: 2 1 auto;
+  justify-content: left;
+
+  .ProseMirror {
+    white-space: break-spaces;
+    width: 100%;
+    word-wrap: break-word;
+
+    &:focus {
+      outline: none;
+    }
+
+    :empty::before {
+      content: 'Type your answer';
+      color: #aaa;
+      float: left;
+      font-style: italic;
+      pointer-events: none;
+    }
+
+    p:first-child {
+      margin: 0;
+    }
+
+    p.empty-node:first-child::before {
+      content: attr(data-content);
+    }
+
+    .empty-node::before {
+      color: rgb(170, 170, 170);
+      float: left;
+      font-style: italic;
+      height: 0px;
+      pointer-events: none;
+    }
+  }
+`;
+
+let WaxOverlays = () => true;
+
+const EditorAnswerComponent = ({ node, view, getPos }) => {
+  const editorRef = useRef();
+
+  const context = useContext(WaxContext);
+  const {
+    app,
+    pmViews: { main },
+  } = context;
+  let answerView;
+  const questionId = node.attrs.id;
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
+  let finalPlugins = [FakeCursorPlugin()];
+
+  const createKeyBindings = () => {
+    const keys = getKeys();
+    Object.keys(baseKeymap).forEach(key => {
+      if (keys[key]) {
+        keys[key] = chainCommands(keys[key], baseKeymap[key]);
+      } else {
+        keys[key] = baseKeymap[key];
+      }
+    });
+    return keys;
+  };
+
+  const pressEnter = (state, dispatch) => {
+    if (state.selection.node && state.selection.node.type.name === 'image') {
+      const { $from, to } = state.selection;
+
+      const same = $from.sharedDepth(to);
+
+      const pos = $from.before(same);
+      dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+      return true;
+    }
+    // LISTS
+    if (splitListItem(state.schema.nodes.list_item)(state)) {
+      splitListItem(state.schema.nodes.list_item)(state, dispatch);
+      return true;
+    }
+
+    return false;
+  };
+
+  const getKeys = () => {
+    return {
+      'Mod-z': () => undo(view.state, view.dispatch),
+      'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-[': liftListItem(view.state.schema.nodes.list_item),
+      'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
+      //   Enter: () =>
+      //     splitListItem(answerView.state.schema.nodes.list_item)(
+      //       answerView.state,
+      //       answerView.dispatch,
+      //     ),
+      Enter: pressEnter,
+    };
+  };
+
+  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
+
+  const createPlaceholder = placeholder => {
+    return Placeholder({
+      content: placeholder,
+    });
+  };
+
+  finalPlugins = finalPlugins.concat([
+    createPlaceholder('Type your answer'),
+    ...plugins,
+  ]);
+
+  useEffect(() => {
+    WaxOverlays = ComponentPlugin('waxOverlays');
+    answerView = new EditorView(
+      {
+        mount: editorRef.current,
+      },
+      {
+        editable: () => isEditable,
+        state: EditorState.create({
+          doc: node,
+          plugins: finalPlugins,
+        }),
+        dispatchTransaction,
+        disallowedTools: ['MultipleChoice'],
+        handleDOMEvents: {
+          mousedown: () => {
+            context.updateView({}, questionId);
+            main.dispatch(
+              main.state.tr
+                .setMeta('outsideView', questionId)
+                .setSelection(
+                  new TextSelection(
+                    main.state.tr.doc.resolve(
+                      getPos() +
+                        1 +
+                        context.pmViews[questionId].state.selection.to,
+                    ),
+                  ),
+                ),
+            );
+            // context.pmViews[activeViewId].dispatch(
+            //   context.pmViews[activeViewId].state.tr.setSelection(
+            //     TextSelection.between(
+            //       context.pmViews[activeViewId].state.selection.$anchor,
+            //       context.pmViews[activeViewId].state.selection.$head,
+            //     ),
+            //   ),
+            // );
+
+            context.updateView({}, questionId);
+
+            if (answerView.hasFocus()) answerView.focus();
+          },
+          blur: (editorView, event) => {
+            if (answerView && event.relatedTarget === null) {
+              answerView.focus();
+            }
+          },
+        },
+
+        attributes: {
+          spellcheck: 'false',
+        },
+      },
+    );
+
+    // Set Each note into Wax's Context
+    context.updateView(
+      {
+        [questionId]: answerView,
+      },
+      questionId,
+    );
+    if (answerView.hasFocus()) answerView.focus();
+  }, []);
+
+  const dispatchTransaction = tr => {
+    const { state, transactions } = answerView.state.applyTransaction(tr);
+    answerView.updateState(state);
+    context.updateView({}, questionId);
+
+    if (!tr.getMeta('fromOutside')) {
+      const outerTr = view.state.tr;
+      const offsetMap = StepMap.offset(getPos() + 1);
+      for (let i = 0; i < transactions.length; i++) {
+        const { steps } = transactions[i];
+        for (let j = 0; j < steps.length; j++)
+          outerTr.step(steps[j].map(offsetMap));
+      }
+      if (outerTr.docChanged)
+        view.dispatch(outerTr.setMeta('outsideView', questionId));
+    }
+  };
+
+  return (
+    <EditorWrapper>
+      <div ref={editorRef} />
+      <WaxOverlays activeViewId={questionId} />
+    </EditorWrapper>
+  );
+};
+
+export default EditorAnswerComponent;

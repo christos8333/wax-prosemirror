@@ -6,7 +6,7 @@ import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import helpers from '../../helpers/helpers';
 import FeedbackComponent from '../../components/FeedbackComponent';
-import EditorComponent from '../../components/EditorComponent';
+import EditorAnswerComponent from '../../components/EditorAnswerComponent';
 import SwitchComponent from './SwitchComponent';
 
 const Wrapper = styled.div`
@@ -226,7 +226,7 @@ export default ({ node, view, getPos }) => {
         </InfoRow>
         <QuestionWrapper>
           <QuestionData>
-            <EditorComponent getPos={getPos} node={node} view={view} />
+            <EditorAnswerComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
           {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent

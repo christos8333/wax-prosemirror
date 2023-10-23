@@ -4,7 +4,7 @@ import { TextSelection, NodeSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
-import EditorComponent from './EditorComponent';
+import EditorAnswerComponent from './EditorAnswerComponent';
 import SwitchComponent from './SwitchComponent';
 import FeedbackComponent from './FeedbackComponent';
 import helpers from '../helpers/helpers';
@@ -224,7 +224,7 @@ export default ({ node, view, getPos }) => {
         </InfoRow>
         <QuestionWrapper>
           <QuestionData>
-            <EditorComponent getPos={getPos} node={node} view={view} />
+            <EditorAnswerComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
           {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent

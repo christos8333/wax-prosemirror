@@ -5,7 +5,7 @@ import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import helpers from '../../helpers/helpers';
-import EditorComponent from '../../components/EditorComponent';
+import EditorAnswerComponent from '../../components/EditorAnswerComponent';
 import FeedbackComponent from '../../components/FeedbackComponent';
 import SwitchComponent from './SwitchComponent';
 
@@ -226,7 +226,7 @@ export default ({ node, view, getPos }) => {
         </InfoRow>
         <QuestionWrapper>
           <QuestionData>
-            <EditorComponent getPos={getPos} node={node} view={view} />
+            <EditorAnswerComponent getPos={getPos} node={node} view={view} />
           </QuestionData>
           {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent

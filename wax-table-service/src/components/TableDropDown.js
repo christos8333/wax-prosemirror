@@ -65,9 +65,8 @@ const StyledIcon = styled(Icon)`
 `;
 
 const TableDropDown = ({ item }) => {
+  const { t, i18n } = useTranslation();
   const Translation = ({ label, defaultTrans }) => {
-    const { t, i18n } = useTranslation();
-
     return (
       <>{!isEmpty(i18n) && i18n.exists(label) ? t(label) : defaultTrans}</>
     );
@@ -269,12 +268,10 @@ const TableDropDown = ({ item }) => {
           type="button"
         >
           <span>
-            {' '}
-            <Translation
-              defaultTrans="Table Options"
-              label="Wax.Tables.Table Options"
-            />
-          </span>{' '}
+            {!isEmpty(i18n) && i18n.exists('Wax.Tables.Table Options')
+              ? t('Wax.Tables.Table Options')
+              : 'Table Options'}
+          </span>
           <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu

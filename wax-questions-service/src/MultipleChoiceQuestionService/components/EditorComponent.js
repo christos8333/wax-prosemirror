@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -58,7 +59,12 @@ const EditorWrapper = styled.div`
 
 let WaxOverlays = () => true;
 
-const QuestionEditorComponent = ({ node, view, getPos }) => {
+const QuestionEditorComponent = ({
+  node,
+  view,
+  getPos,
+  placeholderText = 'Type your question',
+}) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -129,7 +135,7 @@ const QuestionEditorComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your question'),
+    createPlaceholder(placeholderText),
     ...plugins,
   ]);
 

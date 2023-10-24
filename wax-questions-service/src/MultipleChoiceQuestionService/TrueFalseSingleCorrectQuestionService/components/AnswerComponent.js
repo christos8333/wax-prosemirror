@@ -5,7 +5,7 @@ import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import { Fragment } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import helpers from '../../helpers/helpers';
-import EditorAnswerComponent from '../../components/EditorAnswerComponent';
+import EditorComponent from '../../components/EditorComponent';
 import FeedbackComponent from '../../components/FeedbackComponent';
 import SwitchComponent from './SwitchComponent';
 
@@ -64,6 +64,15 @@ const QuestionData = styled.div`
   align-items: normal;
   display: flex;
   flex-direction: row;
+  .ProseMirror {
+    :empty::before {
+      content: 'Type your answer';
+      color: #aaa;
+      float: left;
+      font-style: italic;
+      pointer-events: none;
+    }
+  }
 `;
 
 const ActionButton = styled.button`
@@ -226,7 +235,12 @@ export default ({ node, view, getPos }) => {
         </InfoRow>
         <QuestionWrapper>
           <QuestionData>
-            <EditorAnswerComponent getPos={getPos} node={node} view={view} />
+            <EditorComponent
+              getPos={getPos}
+              node={node}
+              placeholderText="Type your answer"
+              view={view}
+            />
           </QuestionData>
           {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent

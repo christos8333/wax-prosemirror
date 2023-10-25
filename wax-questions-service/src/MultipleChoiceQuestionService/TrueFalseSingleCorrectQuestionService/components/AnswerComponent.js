@@ -66,7 +66,7 @@ const QuestionData = styled.div`
   flex-direction: row;
   .ProseMirror {
     :empty::before {
-      content: 'Type your answer';
+      content: 'Type option';
       color: #aaa;
       float: left;
       font-style: italic;
@@ -238,7 +238,7 @@ export default ({ node, view, getPos }) => {
             <EditorComponent
               getPos={getPos}
               node={node}
-              placeholderText="Type your answer"
+              placeholderText="Type option"
               view={view}
             />
           </QuestionData>

@@ -122,13 +122,13 @@ const DropDownComponent = ({ view, tools }) => {
   const [isOpen, setIsOpen] = useState(false);
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
 
-  const [label, setLabel] = useState('Question Type');
+  const [label, setLabel] = useState('Item Type');
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
   useEffect(() => {
-    setLabel('Question Type');
+    setLabel('Item Type');
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state)) {
         setLabel(option.label);
@@ -213,7 +213,7 @@ const DropDownComponent = ({ view, tools }) => {
           <span>{label}</span> <StyledIcon name="expand" />
         </DropDownButton>
         <DropDownMenu
-          aria-label="Choose a question type"
+          aria-label="Choose an item type"
           id="questions-list"
           isOpen={isOpen}
           role="menu"

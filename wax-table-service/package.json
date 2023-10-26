@@ -21,7 +21,6 @@
     "prosemirror-state": "1.4.2",
     "prosemirror-transform": "1.7.1",
     "prosemirror-view": "1.30.2",
-    "react-i18next": "^13.2.2",
     "uuid": "^7.0.3",
     "wax-prosemirror-core": "^0.8.23"
   },
@@ -32,6 +31,7 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-i18next": "^13.2.2",
     "styled-components": "^5.3.1"
   }
 }

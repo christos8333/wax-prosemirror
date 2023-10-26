@@ -5,26 +5,26 @@ module.exports = function override(config, env) {
     symlinks: true,
   };
 
-  // if (process.env.NODE_ENV !== 'production') {
-  //   config.resolve.alias = {
-  //     'wax-prosemirror-core': path.resolve(
-  //       __dirname,
-  //       '../../wax-prosemirror-core/index',
-  //     ),
-  //     'wax-prosemirror-services': path.resolve(
-  //       __dirname,
-  //       '../../wax-prosemirror-services/index',
-  //     ),
-  //     'wax-questions-service': path.resolve(
-  //       __dirname,
-  //       '../../wax-questions-service/index',
-  //     ),
-  //     'wax-table-service': path.resolve(
-  //       __dirname,
-  //       '../../wax-table-service/index',
-  //     ),
-  //   };
-  // }
+  if (process.env.NODE_ENV !== 'production') {
+    config.resolve.alias = {
+      'wax-prosemirror-core': path.resolve(
+        __dirname,
+        '../../wax-prosemirror-core/index',
+      ),
+      'wax-prosemirror-services': path.resolve(
+        __dirname,
+        '../../wax-prosemirror-services/index',
+      ),
+      'wax-questions-service': path.resolve(
+        __dirname,
+        '../../wax-questions-service/index',
+      ),
+      'wax-table-service': path.resolve(
+        __dirname,
+        '../../wax-table-service/index',
+      ),
+    };
+  }
 
   config.module = {
     rules: [

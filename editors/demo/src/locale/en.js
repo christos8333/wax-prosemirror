@@ -149,6 +149,7 @@ const en = {
         'Write comment': 'Write comment',
       },
       Various: {
+        Add: 'Add',
         Display: 'Display',
         'Long Boxes': 'Long Boxes',
         'Short Boxes': 'Short Boxes',

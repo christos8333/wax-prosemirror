@@ -40,13 +40,13 @@
     "y-protocols": "1.0.5",
     "y-webrtc": "10.2.0",
     "y-websocket": "1.4.5",
+    "react-i18next": "^13.3.1",
     "yjs": "13.5.38"
   },
   "peerDependencies": {
-    "i18next": "^23.5.1",
+    "i18next": "^23.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-i18next": "^13.2.2",
     "styled-components": "^5.3.1"
   }
 }

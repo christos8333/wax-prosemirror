@@ -49,7 +49,7 @@ const FullScreenButton = ({ view = {}, item }) => {
         }
       />
     ),
-    [isActive, isDisabled, usedIcon, t(`Wax.Annotations.${title}`)],
+    [isActive, isDisabled, usedIcon, t(`Wax.Various.${title}`)],
   );
 
   return MenuButtonComponent;

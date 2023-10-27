@@ -129,7 +129,7 @@ const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
         />
       </Wrapper>
     ),
-    [],
+    [t(`Wax.TrackChanges.Editing`)],
   );
 
   if (!isEditable) return <Viewing />;

@@ -1,5 +1,7 @@
 import React, { useContext, useMemo, useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import MenuButton from '../ui/MenuButton';
 import { WaxContext } from '../../WaxContext';
@@ -69,6 +71,7 @@ const Box = styled.div`
 const initialArr = [];
 
 const CustomTagBlockComponent = ({ isShowTag, item }) => {
+  const { t, i18n } = useTranslation();
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
 
@@ -170,13 +173,23 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
               type="text"
               value={inputValue}
             />
-            <Add onClick={onClickAdd}>Add</Add>
+            <Add onClick={onClickAdd}>
+              {!isEmpty(i18n) && i18n.exists(`Wax.Various.Add`)
+                ? t(`Wax.Various.Add`)
+                : 'Add'}
+            </Add>
           </FlexDiv>
         )}
         {renderTagList()}
       </>
     ),
-    [isShowTag, inputValue, JSON.stringify(tagStatus), isDisabled],
+    [
+      isShowTag,
+      inputValue,
+      JSON.stringify(tagStatus),
+      isDisabled,
+      t(`Wax.Various.Add`),
+    ],
   );
 };
 

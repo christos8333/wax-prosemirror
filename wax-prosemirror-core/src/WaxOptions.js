@@ -9,7 +9,9 @@ const parser = schema => {
     const container = document.createElement('article');
 
     container.innerHTML = content;
-    return WaxParser.parse(container);
+    return WaxParser.parse(container, {
+      preserveWhitespace: true,
+    });
   };
 };
 

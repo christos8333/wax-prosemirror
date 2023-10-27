@@ -306,7 +306,7 @@ const TableDropDown = ({ item }) => {
         </DropDownMenu>
       </Wrapper>
     ),
-    [isDisabled, isOpen],
+    [isDisabled, isOpen, t('Wax.Tables.Table Options')],
   );
 
   return TableDropDownComponent;

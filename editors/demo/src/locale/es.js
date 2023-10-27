@@ -150,6 +150,7 @@ const es = {
         'Write comment': 'Escribir comentario',
       },
       Various: {
+        Add: 'Agregar',
         Display: 'Mostrar',
         'Long Boxes': 'Cajas largas',
         'Short Boxes': 'Cajas cortas',

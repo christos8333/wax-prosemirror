@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-core",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.8.24",
+  "version": "0.8.25",
   "description": "Wax prosemirror core",
   "license": "MIT",
   "main": "dist/index.js",
@@ -32,9 +32,9 @@
     "prosemirror-state": "1.4.2",
     "prosemirror-transform": "1.7.1",
     "prosemirror-view": "1.30.2",
+    "react-i18next": "^13.3.1",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^7.0.3",
-    "react-i18next": "^13.3.1"
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

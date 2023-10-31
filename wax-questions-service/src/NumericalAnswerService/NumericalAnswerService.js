@@ -8,6 +8,10 @@ class NumericalAnswerService extends Service {
     this.container.bind('').to();
     const createNode = this.container.get('CreateNode');
     const addPortal = this.container.get('AddPortal');
+
+    createNode({
+      numerical_answer_container: NumericalAnswerContainerNode,
+    });
   }
 
   dependencies = [];

@@ -18,6 +18,7 @@ class QuestionsDropDown extends ToolGroup {
     @inject('EssayQuestion') essayQuestion,
     @inject('MultipleDropDownQuestion') MultipleDropDownQuestion,
     @inject('FillTheGapQuestion') FillTheGapQuestion,
+    @inject('NumericalAnswerQuestion') NumericalAnswerQuestion,
   ) {
     super();
     this.tools = [
@@ -29,6 +30,7 @@ class QuestionsDropDown extends ToolGroup {
       essayQuestion,
       MultipleDropDownQuestion,
       FillTheGapQuestion,
+      NumericalAnswerQuestion,
     ];
   }
 

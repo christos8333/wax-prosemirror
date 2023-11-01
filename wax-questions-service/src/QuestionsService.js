@@ -3,6 +3,7 @@ import EssayService from './EssayService/EssayService';
 import FillTheGapQuestionService from './FillTheGapQuestionService/FillTheGapQuestionService';
 import MatchingService from './MatchingService/MatchingService';
 import MultipleDropDownService from './MultipleDropDownService/MultipleDropDownService';
+import NumericalAnswerService from './NumericalAnswerService/NumericalAnswerService';
 import QuestionsDropDownToolGroupService from './QuestionsDropDownToolGroupService/QuestionsDropDownToolGroupService';
 import MultipleChoiceQuestionService from './MultipleChoiceQuestionService/MultipleChoiceQuestionService';
 
@@ -15,6 +16,7 @@ class QuestionsService extends Service {
     new FillTheGapQuestionService(),
     new MatchingService(),
     new MultipleDropDownService(),
+    new NumericalAnswerService(),
     new QuestionsDropDownToolGroupService(),
   ];
 }

@@ -1,11 +1,12 @@
 import { Service } from 'wax-prosemirror-core';
 import NumericalAnswerContainerNode from './schema/NumericalAnswerContainerNode';
+import NumericalAnswerQuestion from './NumericalAnswerQuestion';
 
 import './numericalAnswer.css';
 
 class NumericalAnswerService extends Service {
   register() {
-    this.container.bind('').to();
+    this.container.bind('NumericalAnswerQuestion').to(NumericalAnswerQuestion);
     const createNode = this.container.get('CreateNode');
     const addPortal = this.container.get('AddPortal');
 

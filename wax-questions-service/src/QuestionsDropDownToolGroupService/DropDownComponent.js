@@ -107,11 +107,11 @@ const DropDownComponent = ({ view, tools }) => {
       value: '7',
       item: tools[7],
     },
-    // {
-    //   label: 'Numerical answer',
-    //   value: '8',
-    //   item: tools[8],
-    // },
+    {
+      label: 'Numerical answer',
+      value: '8',
+      item: tools[8],
+    },
   ];
 
   const context = useContext(WaxContext);

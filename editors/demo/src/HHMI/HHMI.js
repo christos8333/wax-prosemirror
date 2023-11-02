@@ -167,11 +167,10 @@ const Hhmi = () => {
         ref={editorRef}
         customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
-        // value={content}
-        targetFormat="JSON"
+        value={content}
         readonly={readOnly}
         layout={HhmiLayout}
-        onChange={source => console.log(source)}
+        // onChange={source => console.log(source)}
       />
     </>
   );

@@ -6,7 +6,7 @@ import {
   Icon,
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import EditorComponent from './EditorComponent';
+import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 
 const NumericalAnswerWrapper = styled.div`
@@ -28,6 +28,8 @@ const NumericalAnswerContainerTool = styled.div`
     top: 3px;
   }
 `;
+
+const NumericalAnswerOption = styled.div``;
 
 const ActionButton = styled.button`
   background: transparent;
@@ -95,7 +97,7 @@ export default ({ node, view, getPos }) => {
       </div>
       <NumericalAnswerContainer className="numerical-answer">
         <EditorComponent getPos={getPos} node={node} view={view} />
-
+        <NumericalAnswerOption>Selected Option</NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}

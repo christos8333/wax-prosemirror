@@ -120,7 +120,8 @@ const getNodes = view => {
       node.node.type.name === 'true_false_single_correct' ||
       node.node.type.name === 'matching_container' ||
       node.node.type.name === 'fill_the_gap_container' ||
-      node.node.type.name === 'multiple_drop_down_container'
+      node.node.type.name === 'multiple_drop_down_container' ||
+      node.node.type.name === 'numerical_answer_container'
     ) {
       multipleChoiceNodes.push(node);
     }

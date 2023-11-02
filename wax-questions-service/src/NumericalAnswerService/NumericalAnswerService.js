@@ -1,7 +1,8 @@
 import { Service } from 'wax-prosemirror-core';
 import NumericalAnswerContainerNode from './schema/NumericalAnswerContainerNode';
 import NumericalAnswerQuestion from './NumericalAnswerQuestion';
-
+import NumericalAnswerContainerNodeView from './NumericalAnswerContainerNodeView';
+import NumericalAnswerContainerComponent from './components/NumericalAnswerContainerComponent';
 import './numericalAnswer.css';
 
 class NumericalAnswerService extends Service {
@@ -12,6 +13,12 @@ class NumericalAnswerService extends Service {
 
     createNode({
       numerical_answer_container: NumericalAnswerContainerNode,
+    });
+
+    addPortal({
+      nodeView: NumericalAnswerContainerNodeView,
+      component: NumericalAnswerContainerComponent,
+      context: this.app,
     });
   }
 

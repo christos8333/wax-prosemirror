@@ -6,7 +6,7 @@ import {
   Icon,
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import ContainerEditor from './ContainerEditor';
+import EditorComponent from './EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 
 const NumericalAnswerWrapper = styled.div`
@@ -65,7 +65,6 @@ export default ({ node, view, getPos }) => {
 
   const removeQuestion = () => {
     const allNodes = getNodes(context.pmViews.main);
-
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         context.pmViews.main.dispatch(
@@ -95,7 +94,7 @@ export default ({ node, view, getPos }) => {
         )}
       </div>
       <NumericalAnswerContainer className="numerical-answer">
-        <ContainerEditor getPos={getPos} node={node} view={view} />
+        <EditorComponent getPos={getPos} node={node} view={view} />
 
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent

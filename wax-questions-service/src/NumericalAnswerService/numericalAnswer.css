@@ -1,0 +1,15 @@
+/* fill The Gap */
+
+.numerical-answer {}
+
+.ProseMirror .numerical-answer .ProseMirror {
+    box-shadow: none;
+    border-bottom: 3px solid #F5F5F7;
+    line-height: 2.2;
+    padding: 25px 10px 20px 10px;
+}
+
+.ProseMirror .numerical-answer span>.ProseMirror {
+    box-shadow: none;
+    line-height: 1.6;
+}

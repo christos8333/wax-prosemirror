@@ -11,7 +11,27 @@ class NumericalAnswerQuestion extends Tools {
   name = 'Numerical Answer';
 
   get run() {
-    return main => {};
+    return main => {
+      const { dispatch } = main;
+      const { state } = main;
+      helpers.checkifEmpty(main);
+      const { $from, $to } = main.state.selection;
+      const range = $from.blockRange($to);
+      const { tr } = main.state;
+
+      const wrapping =
+        range &&
+        findWrapping(
+          range,
+          state.config.schema.nodes.numerical_answer_container,
+          {
+            id: uuidv4(),
+          },
+        );
+      if (!wrapping) return false;
+      tr.wrap(range, wrapping);
+      dispatch(tr);
+    };
   }
 
   get active() {

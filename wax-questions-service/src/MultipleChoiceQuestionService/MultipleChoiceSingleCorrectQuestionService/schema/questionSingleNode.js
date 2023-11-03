@@ -4,8 +4,8 @@ const questionSingleNode = {
     class: { default: 'multiple-choice-question-single' },
   },
   group: 'block questions',
-  content: 'block+',
-  defining: true,
+  content: 'block*',
+  // defining: true,
 
   // atom: true,
   parseDOM: [

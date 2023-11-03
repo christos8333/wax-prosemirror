@@ -8,7 +8,7 @@ const trueFalseNode = {
   },
   group: 'block questions',
   content: 'block*',
-  defining: true,
+  // defining: true,
 
   parseDOM: [
     {

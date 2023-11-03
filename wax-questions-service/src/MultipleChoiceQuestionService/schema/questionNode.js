@@ -4,8 +4,8 @@ const questionNode = {
     id: { default: '' },
   },
   group: 'block questions',
-  content: 'block+',
-  defining: true,
+  content: 'block*',
+  // defining: true,
 
   parseDOM: [
     {

@@ -3,6 +3,8 @@ import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
+import { dropCursor } from 'prosemirror-dropcursor';
+import { gapCursor } from 'prosemirror-gapcursor';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
@@ -20,6 +22,7 @@ const EditorWrapper = styled.div`
   border: none;
   display: flex;
   flex: 2 1 auto;
+  width: 100%;
   justify-content: left;
 
   .ProseMirror {
@@ -32,7 +35,7 @@ const EditorWrapper = styled.div`
     }
 
     :empty::before {
-      content: 'Type your question';
+      content: 'Type your item';
       color: #aaa;
       float: left;
       font-style: italic;
@@ -63,7 +66,7 @@ const QuestionEditorComponent = ({
   node,
   view,
   getPos,
-  placeholderText = 'Type your question',
+  placeholderText = 'Type your item',
 }) => {
   const editorRef = useRef();
 
@@ -78,7 +81,7 @@ const QuestionEditorComponent = ({
     return editable;
   });
 
-  let finalPlugins = [FakeCursorPlugin()];
+  let finalPlugins = [FakeCursorPlugin(), gapCursor(), dropCursor()];
 
   const createKeyBindings = () => {
     const keys = getKeys();

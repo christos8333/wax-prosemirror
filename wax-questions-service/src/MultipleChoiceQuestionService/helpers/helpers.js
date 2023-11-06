@@ -17,7 +17,9 @@ const createEmptyParagraph = (context, newAnswerId) => {
     if (context.pmViews[newAnswerId].dispatch) {
       const type = context.pmViews.main.state.schema.nodes.paragraph;
       context.pmViews[newAnswerId].dispatch(
-        context.pmViews[newAnswerId].state.tr.insert(0, type.create()),
+        context.pmViews[newAnswerId].state.tr
+          .insert(0, type.create())
+          .setMeta('exludeToHistoryFromOutside', true),
       );
     }
     context.pmViews[newAnswerId].dispatch(
@@ -80,9 +82,9 @@ const createOptions = (main, context, parentType, questionType, answerType) => {
   dispatch(tr);
   setTimeout(() => {
     context.pmViews[question.attrs.id].focus();
-    //   createEmptyParagraph(context, firstOption.attrs.id);
-    //   createEmptyParagraph(context, secondOption.attrs.id);
-    //   createEmptyParagraph(context, question.attrs.id);
+    createEmptyParagraph(context, firstOption.attrs.id);
+    createEmptyParagraph(context, secondOption.attrs.id);
+    createEmptyParagraph(context, question.attrs.id);
   }, 50);
 
   return true;

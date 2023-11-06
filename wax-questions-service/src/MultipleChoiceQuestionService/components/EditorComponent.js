@@ -209,6 +209,8 @@ const QuestionEditorComponent = ({
   }, []);
 
   const dispatchTransaction = tr => {
+    console.log(tr.getMeta('addToHistoryFromOutside'));
+    const addToHistory = !tr.getMeta('exludeToHistoryFromOutside');
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
     context.updateView({}, questionId);
@@ -222,7 +224,11 @@ const QuestionEditorComponent = ({
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+        view.dispatch(
+          outerTr
+            .setMeta('outsideView', questionId)
+            .setMeta('addToHistory', addToHistory),
+        );
     }
   };
 

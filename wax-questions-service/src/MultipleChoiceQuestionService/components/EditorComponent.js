@@ -209,7 +209,6 @@ const QuestionEditorComponent = ({
   }, []);
 
   const dispatchTransaction = tr => {
-    console.log(tr.getMeta('addToHistoryFromOutside'));
     const addToHistory = !tr.getMeta('exludeToHistoryFromOutside');
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);

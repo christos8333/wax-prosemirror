@@ -4,9 +4,9 @@ import { ToolGroup } from 'wax-prosemirror-core';
 @injectable()
 class NumericalAnswer extends ToolGroup {
   tools = [];
-  constructor() {
+  constructor(@inject('NumericalAnswerDropDown') NumericalAnswerDropDown) {
     super();
-    this.tools = [];
+    this.tools = [NumericalAnswerDropDown];
   }
 }
 

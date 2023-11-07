@@ -53,7 +53,7 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
 
-  const FillTheGapTool = ComponentPlugin('fillTheGap');
+  const NumericalAnswerTool = ComponentPlugin('NumericalAnswer');
 
   const customProps = main.props.customValues;
   const { testMode } = customProps;
@@ -84,7 +84,7 @@ export default ({ node, view, getPos }) => {
       <div>
         {!testMode && !readOnly && (
           <NumericalAnswerContainerTool>
-            <FillTheGapTool />
+            <NumericalAnswerTool />
             <ActionButton
               aria-label="delete this question"
               onClick={removeQuestion}

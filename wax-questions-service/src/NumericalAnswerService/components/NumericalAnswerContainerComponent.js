@@ -22,6 +22,7 @@ const NumericalAnswerContainer = styled.div`
 const NumericalAnswerContainerTool = styled.div`
   border: 3px solid #f5f5f7;
   border-bottom: none;
+  height: 33px;
 
   span:first-of-type {
     position: relative;

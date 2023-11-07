@@ -21,13 +21,13 @@ const Wrapper = styled.div`
 
 const DropDownButton = styled.button`
   background: #fff;
-  border: none;
+  border: 1px solid #f4f4f4;
   color: #000;
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   position: relative;
-  width: 215px;
-  height: 100%;
+  width: 210px;
+  height: 26px;
 
   span {
     position: relative;
@@ -45,13 +45,14 @@ const DropDownMenu = styled.div`
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
   margin: 2px auto auto;
   position: absolute;
-  width: 220px;
+  width: 210px;
   max-height: 150px;
   overflow-y: auto;
   z-index: 2;
 
   span {
     cursor: pointer;
+    border-bottom: 1px solid #f4f4f4;
     font-size: 11px;
     padding: 8px 10px;
   }
@@ -99,6 +100,7 @@ const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
 
   const [label, setLabel] = useState('Select Type');
+
   const isEditable = main.props.editable(editable => {
     return editable;
   });
@@ -166,7 +168,7 @@ const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
     () => (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
         <DropDownButton
-          aria-controls="questions-list"
+          aria-controls="numerical-answer-list"
           aria-expanded={isOpen}
           aria-haspopup
           disabled={isDisabled}
@@ -188,7 +190,7 @@ const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
         </DropDownButton>
         <DropDownMenu
           aria-label="Choose an item type"
-          id="questions-list"
+          id="numerical-list"
           isOpen={isOpen}
           role="menu"
         >

@@ -191,7 +191,8 @@ const QuestionEditorComponent = ({
             }
           },
         },
-
+        scrollMargin: 200,
+        scrollThreshold: 200,
         attributes: {
           spellcheck: 'false',
         },

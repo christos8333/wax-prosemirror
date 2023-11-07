@@ -1,7 +1,8 @@
+import React from 'react';
 import { injectable } from 'inversify';
-import { Fragment } from 'prosemirror-model';
-import { v4 as uuidv4 } from 'uuid';
+import { isEmpty } from 'lodash';
 import { Tools } from 'wax-prosemirror-core';
+import NumericalAnswerDropDownCompontent from '../components/NumericalAnswerDropDownCompontent';
 
 @injectable()
 class NumericalAnswerDropDown extends Tools {
@@ -10,7 +11,9 @@ class NumericalAnswerDropDown extends Tools {
   name = 'Select Numerical Answer';
   label = 'Select Numerical Answer';
 
-  get run() {}
+  get run() {
+    return (state, dispatch) => {};
+  }
 
   select = (state, activeViewId, activeView) => {
     if (activeView.props.type && activeView.props.type === 'filltheGapContaier')
@@ -18,6 +21,17 @@ class NumericalAnswerDropDown extends Tools {
 
     return false;
   };
+
+  renderTool(view) {
+    if (isEmpty(view)) return null;
+    return this.isDisplayed() ? (
+      <NumericalAnswerDropDownCompontent
+        item={this.toJSON()}
+        key="numerical-answer-options"
+        view={view}
+      />
+    ) : null;
+  }
 }
 
 export default NumericalAnswerDropDown;

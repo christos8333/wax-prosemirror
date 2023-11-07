@@ -68,22 +68,22 @@ const StyledIcon = styled(Icon)`
 const DropDownComponent = ({ view, tools }) => {
   const dropDownOptions = [
     {
-      label: 'Multiple Answers',
+      label: 'Multiple Choice',
       value: '0',
       item: tools[0],
     },
     {
-      label: 'Multiple Choice',
+      label: 'Multiple Choice Single Correct',
       value: '1',
       item: tools[1],
     },
     {
-      label: 'Multiple True/False',
+      label: 'True/False',
       value: '2',
       item: tools[2],
     },
     {
-      label: 'True/False',
+      label: 'True/False Single Correct',
       value: '3',
       item: tools[3],
     },
@@ -127,13 +127,13 @@ const DropDownComponent = ({ view, tools }) => {
   const [isOpen, setIsOpen] = useState(false);
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
 
-  const [label, setLabel] = useState('Item Type');
+  const [label, setLabel] = useState('Question Type');
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
   useEffect(() => {
-    setLabel('Item Type');
+    setLabel('Question Type');
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state)) {
         setLabel(option.label);

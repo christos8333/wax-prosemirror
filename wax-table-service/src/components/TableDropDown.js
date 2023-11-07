@@ -71,6 +71,7 @@ const TableDropDown = ({ item }) => {
       <>{!isEmpty(i18n) && i18n.exists(label) ? t(label) : defaultTrans}</>
     );
   };
+
   const dropDownOptions = [
     {
       label: (

@@ -3,7 +3,6 @@ import NumericalAnswerContainerNode from './schema/NumericalAnswerContainerNode'
 import NumericalAnswerQuestion from './NumericalAnswerQuestion';
 import NumericalAnswerContainerNodeView from './NumericalAnswerContainerNodeView';
 import NumericalAnswerContainerComponent from './components/NumericalAnswerContainerComponent';
-import NumericalAnswerDropDownService from './NumericalAnswerDropDownService/NumericalAnswerDropDownService';
 import './numericalAnswer.css';
 
 class NumericalAnswerService extends Service {
@@ -22,8 +21,6 @@ class NumericalAnswerService extends Service {
       context: this.app,
     });
   }
-
-  dependencies = [new NumericalAnswerDropDownService()];
 }
 
 export default NumericalAnswerService;

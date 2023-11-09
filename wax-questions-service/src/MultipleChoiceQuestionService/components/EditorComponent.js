@@ -67,6 +67,7 @@ const QuestionEditorComponent = ({
   view,
   getPos,
   placeholderText = 'Type your item',
+  QuestionType = 'Multiple',
 }) => {
   const editorRef = useRef();
 
@@ -191,6 +192,7 @@ const QuestionEditorComponent = ({
             }
           },
         },
+        type: QuestionType,
         scrollMargin: 200,
         scrollThreshold: 200,
         attributes: {

@@ -53,10 +53,6 @@ export default {
       templateArea: 'MultipleDropDown',
       toolGroups: ['MultipleDropDown'],
     },
-    {
-      templateArea: 'NumericalAnswer',
-      toolGroups: ['NumericalAnswer'],
-    },
   ],
 
   SchemaService: DefaultSchema,

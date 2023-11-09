@@ -21,6 +21,8 @@ const DropDownButton = styled.button`
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   position: relative;
+  top: 2px;
+  left: 3px;
   width: 235px;
   height: 26px;
 
@@ -66,7 +68,8 @@ const StyledIcon = styled(Icon)`
   position: relative;
 `;
 
-const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
+const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
+  console.log(nodeId);
   const dropDownOptions = [
     {
       label: 'Exact answer with margin of error',

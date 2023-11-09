@@ -1,13 +1,9 @@
 import React, { useContext } from 'react';
-import {
-  WaxContext,
-  ComponentPlugin,
-  DocumentHelpers,
-  Icon,
-} from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
+import NumericalAnswerDropDownCompontent from './NumericalAnswerDropDownCompontent';
 import ExactAnswerComponent from './ExactAnswerComponent';
 import PreciseAnswerComponent from './PreciseAnswerComponent';
 import RangeAnswerComponent from './RangeAnswerComponent';
@@ -43,7 +39,7 @@ const ActionButton = styled.button`
   margin-top: 16px;
   border: none;
   position: relative;
-  bottom: 14px;
+  bottom: 40px;
   left: -11px;
   float: right;
 `;
@@ -60,8 +56,6 @@ export default ({ node, view, getPos }) => {
     pmViews: { main },
   } = context;
   const { numericalAnswer } = options;
-
-  const NumericalAnswerTool = ComponentPlugin('NumericalAnswer');
 
   const customProps = main.props.customValues;
   const { testMode } = customProps;
@@ -92,7 +86,7 @@ export default ({ node, view, getPos }) => {
       <div>
         {!testMode && !readOnly && (
           <NumericalAnswerContainerTool>
-            <NumericalAnswerTool />
+            <NumericalAnswerDropDownCompontent nodeId={node.attrs.id} />
             <ActionButton
               aria-label="delete this question"
               onClick={removeQuestion}
@@ -104,7 +98,12 @@ export default ({ node, view, getPos }) => {
         )}
       </div>
       <NumericalAnswerContainer className="numerical-answer">
-        <EditorComponent getPos={getPos} node={node} view={view} />
+        <EditorComponent
+          getPos={getPos}
+          node={node}
+          type="NumericalAnswer"
+          view={view}
+        />
         <NumericalAnswerOption>
           {!numericalAnswer && <>No Type Selected</>}
           {numericalAnswer === 'exactAnswer' && <ExactAnswerComponent />}

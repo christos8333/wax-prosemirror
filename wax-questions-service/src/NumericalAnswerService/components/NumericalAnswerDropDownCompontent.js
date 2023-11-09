@@ -26,7 +26,7 @@ const DropDownButton = styled.button`
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   position: relative;
-  width: 210px;
+  width: 235px;
   height: 26px;
 
   span {
@@ -45,7 +45,7 @@ const DropDownMenu = styled.div`
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
   margin: 2px auto auto;
   position: absolute;
-  width: 210px;
+  width: 235px;
   max-height: 150px;
   overflow-y: auto;
   z-index: 2;
@@ -109,11 +109,11 @@ const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
   useEffect(() => {
     setLabel('Select Type');
     dropDownOptions.forEach(option => {
-      //   if (option.item.active(main.state)) {
-      //     setLabel(option.label);
-      //   }
+      if (context.options?.numericalAnswer === option.value) {
+        setLabel(option.label);
+      }
     });
-  }, [activeViewId]);
+  }, []);
 
   let isDisabled = false;
 
@@ -161,7 +161,9 @@ const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
   };
 
   const onChange = option => {
-    tools[option.value].run(main, context);
+    context.setOption({ numericalAnswer: option.value });
+    main.dispatch(main.state.tr.setMeta('addToHistory', false));
+    setLabel(option.label);
     openCloseMenu();
   };
 

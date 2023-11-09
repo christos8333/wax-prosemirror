@@ -30,7 +30,9 @@ const NumericalAnswerContainerTool = styled.div`
   }
 `;
 
-const NumericalAnswerOption = styled.div``;
+const NumericalAnswerOption = styled.div`
+  padding: 8px;
+`;
 
 const ActionButton = styled.button`
   background: transparent;
@@ -80,6 +82,8 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  console.log(context.options.numericalAnswer);
+
   return (
     <NumericalAnswerWrapper>
       <div>
@@ -98,7 +102,9 @@ export default ({ node, view, getPos }) => {
       </div>
       <NumericalAnswerContainer className="numerical-answer">
         <EditorComponent getPos={getPos} node={node} view={view} />
-        <NumericalAnswerOption>Selected Option</NumericalAnswerOption>
+        <NumericalAnswerOption>
+          {!context.options?.numericalAnswer && <>No Type Selected</>}
+        </NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}

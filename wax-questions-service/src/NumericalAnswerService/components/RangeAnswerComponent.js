@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const ExactAnswerContainer = styled.div`
+const AnswerContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -41,7 +41,7 @@ const RangeAnswerComponent = () => {
   };
 
   return (
-    <ExactAnswerContainer>
+    <AnswerContainer>
       <ValueContainer>
         <label htmlFor="minAnswer">
           <ValueInnerContainer>
@@ -70,7 +70,7 @@ const RangeAnswerComponent = () => {
           </ValueInnerContainer>
         </label>
       </ValueContainer>
-    </ExactAnswerContainer>
+    </AnswerContainer>
   );
 };
 

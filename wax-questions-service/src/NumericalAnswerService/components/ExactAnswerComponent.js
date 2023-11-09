@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const ExactAnswerContainer = styled.div`
+const AnswerContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -41,7 +41,7 @@ const ExactAnswerComponent = () => {
   };
 
   return (
-    <ExactAnswerContainer>
+    <AnswerContainer>
       <ValueContainer>
         <label htmlFor="exactAnswer">
           <ValueInnerContainer>
@@ -70,7 +70,7 @@ const ExactAnswerComponent = () => {
           </ValueInnerContainer>
         </label>
       </ValueContainer>
-    </ExactAnswerContainer>
+    </AnswerContainer>
   );
 };
 

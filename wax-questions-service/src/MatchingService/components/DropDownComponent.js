@@ -54,7 +54,8 @@ const DropDownMenu = styled.div`
     padding: 8px 10px;
   }
 
-  span:focus {
+  span:focus,
+  span:hover {
     background: #f2f9fc;
     outline: 2px solid #f2f9fc;
   }

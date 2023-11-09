@@ -5,8 +5,8 @@ const questionTrueFalseNode = {
   },
   group: 'block questions',
   // content: 'paragraph* bulletlist* orderedlist*',
-  content: 'block+',
-  defining: true,
+  content: 'block*',
+  // defining: true,
 
   // atom: true,
   parseDOM: [

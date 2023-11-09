@@ -8,7 +8,7 @@ const multipleChoiceSingleCorrectNode = {
   },
   group: 'block questions',
   content: 'block*',
-  defining: true,
+  // defining: true,
 
   parseDOM: [
     {

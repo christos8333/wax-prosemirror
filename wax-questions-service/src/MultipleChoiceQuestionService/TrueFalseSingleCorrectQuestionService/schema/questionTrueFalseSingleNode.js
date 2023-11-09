@@ -4,10 +4,8 @@ const questionTrueFalseNode = {
     class: { default: 'true-false-question-single' },
   },
   group: 'block questions',
-  content: 'block+',
-  defining: true,
-
-  // atom: true,
+  content: 'block*',
+  // defining: true,
   parseDOM: [
     {
       tag: 'div.true-false-question-single',

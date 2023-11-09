@@ -8,7 +8,7 @@ const multipleChoiceNode = {
   },
   group: 'block questions',
   content: 'block*',
-  defining: true,
+  // defining: true,
   parseDOM: [
     {
       tag: 'div.multiple-choice-option',

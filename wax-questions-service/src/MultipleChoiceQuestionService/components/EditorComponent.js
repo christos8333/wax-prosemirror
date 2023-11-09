@@ -67,6 +67,7 @@ const QuestionEditorComponent = ({
   view,
   getPos,
   placeholderText = 'Type your item',
+  QuestionType = 'Multiple',
 }) => {
   const editorRef = useRef();
 
@@ -191,7 +192,9 @@ const QuestionEditorComponent = ({
             }
           },
         },
-
+        type: QuestionType,
+        scrollMargin: 200,
+        scrollThreshold: 200,
         attributes: {
           spellcheck: 'false',
         },
@@ -209,6 +212,7 @@ const QuestionEditorComponent = ({
   }, []);
 
   const dispatchTransaction = tr => {
+    const addToHistory = !tr.getMeta('exludeToHistoryFromOutside');
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
     context.updateView({}, questionId);
@@ -222,7 +226,11 @@ const QuestionEditorComponent = ({
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+        view.dispatch(
+          outerTr
+            .setMeta('outsideView', questionId)
+            .setMeta('addToHistory', addToHistory),
+        );
     }
   };
 

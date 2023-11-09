@@ -22,7 +22,8 @@ const NumericalAnswerContainerTool = styled.div`
   border: 3px solid #f5f5f7;
   border-bottom: none;
   height: 33px;
-
+  display: flex;
+  flex-direction: row;
   span:first-of-type {
     position: relative;
     top: 3px;
@@ -39,9 +40,8 @@ const ActionButton = styled.button`
   margin-top: 16px;
   border: none;
   position: relative;
-  bottom: 40px;
-  left: -11px;
-  float: right;
+  margin-left: auto;
+  bottom: 13px;
 `;
 
 const StyledIconActionRemove = styled(Icon)`
@@ -55,7 +55,6 @@ export default ({ node, view, getPos }) => {
     options,
     pmViews: { main },
   } = context;
-  const { numericalAnswer } = options;
 
   const customProps = main.props.customValues;
   const { testMode } = customProps;
@@ -105,10 +104,16 @@ export default ({ node, view, getPos }) => {
           view={view}
         />
         <NumericalAnswerOption>
-          {!numericalAnswer && <>No Type Selected</>}
-          {numericalAnswer === 'exactAnswer' && <ExactAnswerComponent />}
-          {numericalAnswer === 'rangeAnswer' && <RangeAnswerComponent />}
-          {numericalAnswer === 'preciseAnswer' && <PreciseAnswerComponent />}
+          {!options[node.attrs.id] && <>No Type Selected</>}
+          {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
+            <ExactAnswerComponent />
+          )}
+          {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
+            <RangeAnswerComponent />
+          )}
+          {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
+            <PreciseAnswerComponent />
+          )}
         </NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent

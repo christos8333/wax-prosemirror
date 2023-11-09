@@ -69,7 +69,6 @@ const StyledIcon = styled(Icon)`
 `;
 
 const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
-  console.log(nodeId);
   const dropDownOptions = [
     {
       label: 'Exact answer with margin of error',
@@ -157,7 +156,7 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
   };
 
   const onChange = option => {
-    context.setOption({ numericalAnswer: option.value });
+    context.setOption({ [nodeId]: { numericalAnswer: option.value } });
     main.dispatch(main.state.tr.setMeta('addToHistory', false));
     setLabel(option.label);
     openCloseMenu();

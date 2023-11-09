@@ -3,6 +3,7 @@ const NumericalAnswerContainerNode = {
     id: { default: '' },
     class: { default: 'numerical-answer' },
     feedback: { default: '' },
+    answerType: { default: '' },
   },
   group: 'block questions',
   atom: true,

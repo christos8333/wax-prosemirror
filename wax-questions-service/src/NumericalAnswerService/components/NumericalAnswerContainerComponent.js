@@ -8,6 +8,9 @@ import {
 import styled from 'styled-components';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
+import ExactAnswerComponent from './ExactAnswerComponent';
+import PreciseAnswerComponent from './PreciseAnswerComponent';
+import RangeAnswerComponent from './RangeAnswerComponent';
 
 const NumericalAnswerWrapper = styled.div`
   margin: 0px 38px 15px 38px;
@@ -53,8 +56,10 @@ const StyledIconActionRemove = styled(Icon)`
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
+    options,
     pmViews: { main },
   } = context;
+  const { numericalAnswer } = options;
 
   const NumericalAnswerTool = ComponentPlugin('NumericalAnswer');
 
@@ -82,8 +87,6 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  console.log(context.options.numericalAnswer);
-
   return (
     <NumericalAnswerWrapper>
       <div>
@@ -103,7 +106,10 @@ export default ({ node, view, getPos }) => {
       <NumericalAnswerContainer className="numerical-answer">
         <EditorComponent getPos={getPos} node={node} view={view} />
         <NumericalAnswerOption>
-          {!context.options?.numericalAnswer && <>No Type Selected</>}
+          {!numericalAnswer && <>No Type Selected</>}
+          {numericalAnswer === 'exactAnswer' && <ExactAnswerComponent />}
+          {numericalAnswer === 'rangeAnswer' && <RangeAnswerComponent />}
+          {numericalAnswer === 'preciseAnswer' && <PreciseAnswerComponent />}
         </NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent

@@ -8,12 +8,7 @@ import React, {
   createRef,
 } from 'react';
 import styled from 'styled-components';
-import {
-  WaxContext,
-  DocumentHelpers,
-  Icon,
-  useOnClickOutside,
-} from 'wax-prosemirror-core';
+import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -90,10 +85,8 @@ const NumericalAnswerDropDownCompontent = ({ view = {}, item }) => {
   const context = useContext(WaxContext);
   const {
     activeView,
-    activeViewId,
     pmViews: { main },
   } = context;
-  const { state } = view;
 
   const itemRefs = useRef([]);
   const wrapperRef = useRef();

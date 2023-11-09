@@ -8,7 +8,12 @@ import React, {
   createRef,
 } from 'react';
 import styled from 'styled-components';
-import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
+import {
+  DocumentHelpers,
+  WaxContext,
+  Icon,
+  useOnClickOutside,
+} from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -66,6 +71,7 @@ const StyledIcon = styled(Icon)`
   width: 18px;
   margin-left: auto;
   position: relative;
+  top: 1px;
 `;
 
 const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
@@ -214,6 +220,17 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
   );
 
   return NumericalAnswerDropDown;
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const numericalAnswerpContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'numerical_answer_container') {
+      numericalAnswerpContainerNodes.push(node);
+    }
+  });
+  return numericalAnswerpContainerNodes;
 };
 
 export default NumericalAnswerDropDownCompontent;

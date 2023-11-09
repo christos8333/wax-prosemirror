@@ -27,18 +27,6 @@ export default class NumericalAnswerContainerNodeView extends QuestionsNodeView 
   }
 
   stopEvent(event) {
-    if (
-      event.target.type === 'textarea' ||
-      event.target.type === 'button' ||
-      !event.target.type
-    ) {
-      return true;
-    }
-
-    return (
-      this.context.pmViews[this.node.attrs.id] !== undefined &&
-      event.target !== undefined &&
-      this.context.pmViews[this.node.attrs.id].dom.contains(event.target)
-    );
+    return true;
   }
 }

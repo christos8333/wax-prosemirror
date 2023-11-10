@@ -74,7 +74,7 @@ const StyledIcon = styled(Icon)`
   top: 1px;
 `;
 
-const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
+const NumericalAnswerDropDownCompontent = ({ node }) => {
   const dropDownOptions = [
     {
       label: 'Exact answer with margin of error',
@@ -94,6 +94,8 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
   const {
     activeView,
     pmViews: { main },
+    setOption,
+    options,
   } = context;
 
   const itemRefs = useRef([]);
@@ -109,14 +111,19 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
 
   useEffect(() => {
     setLabel('Select Type');
+    setOption({
+      [node.attrs.id]: { numericalAnswer: node.attrs.answerType },
+    });
+
     dropDownOptions.forEach(option => {
-      if (context.options?.numericalAnswer === option.value) {
+      if (options[node.attrs.id]?.numericalAnswer === option.value) {
         setLabel(option.label);
       }
     });
   }, []);
 
-  let isDisabled = false;
+  const isDisabled = !isEditable;
+  // if (activeView.props?.type !== 'NumericalAnswer') isDisabled = true;
 
   useEffect(() => {
     if (isDisabled) setIsOpen(false);
@@ -164,7 +171,7 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
   const SaveTypeToNode = option => {
     const allNodes = getNodes(context.pmViews.main);
     allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === nodeId) {
+      if (singleNode.node.attrs.id === node.attrs.id) {
         context.pmViews.main.dispatch(
           context.pmViews.main.state.tr.setNodeMarkup(
             singleNode.pos,
@@ -183,7 +190,7 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
   };
 
   const onChange = option => {
-    context.setOption({ [nodeId]: { numericalAnswer: option.value } });
+    context.setOption({ [node.attrs.id]: { numericalAnswer: option.value } });
     setLabel(option.label);
     openCloseMenu();
     SaveTypeToNode(option.value);

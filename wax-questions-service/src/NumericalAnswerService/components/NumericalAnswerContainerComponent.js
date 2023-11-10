@@ -92,7 +92,7 @@ export default ({ node, view, getPos }) => {
       <div>
         {!testMode && !readOnly && (
           <NumericalAnswerContainerTool>
-            <NumericalAnswerDropDownCompontent nodeId={node.attrs.id} />
+            <NumericalAnswerDropDownCompontent node={node} />
             <ActionButton
               aria-label="delete this question"
               onClick={removeQuestion}
@@ -107,7 +107,7 @@ export default ({ node, view, getPos }) => {
         <EditorComponent
           getPos={getPos}
           node={node}
-          type="NumericalAnswer"
+          QuestionType="NumericalAnswer"
           view={view}
         />
         <NumericalAnswerOption>

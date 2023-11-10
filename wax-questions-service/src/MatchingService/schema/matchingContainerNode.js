@@ -6,9 +6,7 @@ const matchingContainerNode = {
     feedback: { default: '' },
   },
   group: 'block questions',
-  atom: true,
-  selectable: true,
-  draggable: false,
+  isolating: true,
   content: 'block*',
   parseDOM: [
     {

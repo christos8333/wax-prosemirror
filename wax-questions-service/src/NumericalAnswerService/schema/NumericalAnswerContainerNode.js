@@ -9,7 +9,7 @@ const NumericalAnswerContainerNode = {
     answersPrecise: { default: [] },
   },
   group: 'block questions',
-  atom: true,
+  isolating: true,
   content: 'block+',
   parseDOM: [
     {

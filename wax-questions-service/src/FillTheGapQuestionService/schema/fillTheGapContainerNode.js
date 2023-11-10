@@ -5,10 +5,7 @@ const fillTheGapContainerNode = {
     feedback: { default: '' },
   },
   group: 'block questions',
-  atom: true,
-  draggable: false,
-  selectable: true,
-  defining: true,
+  isolating: true,
   content: 'paragraph+',
   parseDOM: [
     {

@@ -47,7 +47,7 @@ const RangeAnswerComponent = ({ node }) => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         const obj = {
           minAnswer: onlyNumbers(minRef.current.value),
-          maxError: onlyNumbers(maxRef.current.value),
+          maxAnswer: onlyNumbers(maxRef.current.value),
         };
 
         context.pmViews.main.dispatch(

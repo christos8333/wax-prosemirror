@@ -54,8 +54,9 @@ export default ({ node, view, getPos }) => {
   const {
     options,
     pmViews: { main },
+    setOption,
   } = context;
-  const [answerType, setAnswerType] = useState(node.attrs.answerType);
+
   const customProps = main.props.customValues;
   const { testMode } = customProps;
 
@@ -81,11 +82,8 @@ export default ({ node, view, getPos }) => {
   };
 
   useEffect(() => {
-    const allNodes = getNodes(context.pmViews.main);
-    allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
-        setAnswerType(singleNode.node.attrs.answerType);
-      }
+    setOption({
+      [node.attrs.id]: { numericalAnswer: node.attrs.answerType },
     });
   }, []);
 
@@ -113,19 +111,16 @@ export default ({ node, view, getPos }) => {
           view={view}
         />
         <NumericalAnswerOption>
-          {!options[node.attrs.id] && answerType === '' && (
+          {options[node.attrs.id]?.numericalAnswer === '' && (
             <>No Type Selected</>
           )}
-          {(options[node.attrs.id]?.numericalAnswer === 'exactAnswer' ||
-            answerType === 'exactAnswer') && (
+          {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
             <ExactAnswerComponent node={node} />
           )}
-          {(options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' ||
-            answerType === 'rangeAnswer') && (
+          {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
             <RangeAnswerComponent node={node} />
           )}
-          {(options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' ||
-            answerType === 'preciseAnswer') && (
+          {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
             <PreciseAnswerComponent node={node} />
           )}
         </NumericalAnswerOption>

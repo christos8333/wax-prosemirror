@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -32,12 +33,19 @@ const RangeAnswerComponent = () => {
   const minRef = useRef(null);
   const maxRef = useRef(null);
 
+  const onlyNumbers = value => {
+    return value
+      .replace(/[^0-9.]/g, '')
+      .replace(/(\..*?)\..*/g, '$1')
+      .replace(/^0[^.]/, '0');
+  };
+
   const onChangeMin = () => {
-    setMinValue(minRef.current.value);
+    setMinValue(onlyNumbers(minRef.current.value));
   };
 
   const onChangeMax = () => {
-    setMaxValue(maxRef.current.value);
+    setMaxValue(onlyNumbers(maxRef.current.value));
   };
 
   return (
@@ -72,6 +80,17 @@ const RangeAnswerComponent = () => {
       </ValueContainer>
     </AnswerContainer>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const numericalAnswerpContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'numerical_answer_container') {
+      numericalAnswerpContainerNodes.push(node);
+    }
+  });
+  return numericalAnswerpContainerNodes;
 };
 
 export default RangeAnswerComponent;

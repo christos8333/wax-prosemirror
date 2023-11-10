@@ -163,9 +163,10 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
 
   const onChange = option => {
     context.setOption({ [nodeId]: { numericalAnswer: option.value } });
-    main.dispatch(main.state.tr.setMeta('addToHistory', false));
     setLabel(option.label);
     openCloseMenu();
+    activeView.dispatch(activeView.state.tr.setMeta('addToHistory', false));
+    activeView.focus();
   };
 
   const NumericalAnswerDropDown = useMemo(

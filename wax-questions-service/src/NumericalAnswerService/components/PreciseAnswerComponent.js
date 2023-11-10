@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -30,8 +31,15 @@ const PreciseAnswerComponent = () => {
 
   const preciseRef = useRef(null);
 
+  const onlyNumbers = value => {
+    return value
+      .replace(/[^0-9.]/g, '')
+      .replace(/(\..*?)\..*/g, '$1')
+      .replace(/^0[^.]/, '0');
+  };
+
   const onChangePrecice = () => {
-    setPrecise(preciseRef.current.value);
+    setPrecise(onlyNumbers(preciseRef.current.value));
   };
 
   return (
@@ -52,6 +60,17 @@ const PreciseAnswerComponent = () => {
       </ValueContainer>
     </AnswerContainer>
   );
+};
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const numericalAnswerpContainerNodes = [];
+  allNodes.forEach(node => {
+    if (node.node.type.name === 'numerical_answer_container') {
+      numericalAnswerpContainerNodes.push(node);
+    }
+  });
+  return numericalAnswerpContainerNodes;
 };
 
 export default PreciseAnswerComponent;

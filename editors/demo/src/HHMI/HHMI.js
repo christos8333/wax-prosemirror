@@ -142,6 +142,30 @@ const Hhmi = () => {
 
   const { readOnly, testMode, submitted, content } = stateProps;
 
+  const data = {
+    type: 'doc',
+    content: [
+      {
+        type: 'numerical_answer_container',
+        attrs: {
+          id: 'f9c33d03-68ee-4c27-8a03-5072447fac1a',
+          class: 'numerical-answer',
+          feedback: '',
+          answerType: 'exactAnswer',
+          answersExact: [],
+        },
+        content: [
+          {
+            type: 'paragraph',
+            attrs: {
+              class: 'paragraph',
+            },
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
       <ButtonContainer>
@@ -167,7 +191,7 @@ const Hhmi = () => {
         ref={editorRef}
         customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
-        // value={content}
+        value={data}
         targetFormat="JSON"
         readonly={readOnly}
         layout={HhmiLayout}

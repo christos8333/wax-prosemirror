@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { DocumentHelpers } from 'wax-prosemirror-core';
+import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -26,7 +26,8 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const PreciseAnswerComponent = () => {
+const PreciseAnswerComponent = ({ node }) => {
+  const context = useContext(WaxContext);
   const [precise, setPrecise] = useState('');
 
   const preciseRef = useRef(null);
@@ -38,8 +39,31 @@ const PreciseAnswerComponent = () => {
       .replace(/^0[^.]/, '0');
   };
 
+  const SaveValuesToNode = () => {
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        const obj = {
+          exactAnswer: onlyNumbers(preciseRef.current.value),
+        };
+
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answersPrecise: obj,
+            },
+          ),
+        );
+      }
+    });
+  };
+
   const onChangePrecice = () => {
     setPrecise(onlyNumbers(preciseRef.current.value));
+    SaveValuesToNode();
   };
 
   return (

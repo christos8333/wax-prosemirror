@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
@@ -55,7 +55,7 @@ export default ({ node, view, getPos }) => {
     options,
     pmViews: { main },
   } = context;
-
+  const [answerType, setAnswerType] = useState(node.attrs.answerType);
   const customProps = main.props.customValues;
   const { testMode } = customProps;
 
@@ -79,6 +79,15 @@ export default ({ node, view, getPos }) => {
       }
     });
   };
+
+  useEffect(() => {
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        setAnswerType(singleNode.node.attrs.answerType);
+      }
+    });
+  }, []);
 
   return (
     <NumericalAnswerWrapper>
@@ -104,15 +113,20 @@ export default ({ node, view, getPos }) => {
           view={view}
         />
         <NumericalAnswerOption>
-          {!options[node.attrs.id] && <>No Type Selected</>}
-          {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
-            <ExactAnswerComponent getPos={getPos} node={node} />
+          {!options[node.attrs.id] && answerType === '' && (
+            <>No Type Selected</>
           )}
-          {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
-            <RangeAnswerComponent getPos={getPos} node={node} />
+          {(options[node.attrs.id]?.numericalAnswer === 'exactAnswer' ||
+            answerType === 'exactAnswer') && (
+            <ExactAnswerComponent node={node} />
           )}
-          {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
-            <PreciseAnswerComponent getPos={getPos} node={node} />
+          {(options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' ||
+            answerType === 'rangeAnswer') && (
+            <RangeAnswerComponent node={node} />
+          )}
+          {(options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' ||
+            answerType === 'preciseAnswer') && (
+            <PreciseAnswerComponent node={node} />
           )}
         </NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (

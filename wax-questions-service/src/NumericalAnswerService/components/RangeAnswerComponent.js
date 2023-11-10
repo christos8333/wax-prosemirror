@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { DocumentHelpers } from 'wax-prosemirror-core';
+import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -26,7 +26,8 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const RangeAnswerComponent = () => {
+const RangeAnswerComponent = ({ node }) => {
+  const context = useContext(WaxContext);
   const [minValue, setMinValue] = useState('');
   const [maxValue, setMaxValue] = useState('');
 
@@ -40,12 +41,37 @@ const RangeAnswerComponent = () => {
       .replace(/^0[^.]/, '0');
   };
 
+  const SaveValuesToNode = () => {
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        const obj = {
+          minAnswer: onlyNumbers(minRef.current.value),
+          maxError: onlyNumbers(maxRef.current.value),
+        };
+
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answersRange: obj,
+            },
+          ),
+        );
+      }
+    });
+  };
+
   const onChangeMin = () => {
     setMinValue(onlyNumbers(minRef.current.value));
+    SaveValuesToNode();
   };
 
   const onChangeMax = () => {
     setMaxValue(onlyNumbers(maxRef.current.value));
+    SaveValuesToNode();
   };
 
   return (

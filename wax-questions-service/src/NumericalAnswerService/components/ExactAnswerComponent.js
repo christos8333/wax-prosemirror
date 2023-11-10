@@ -26,9 +26,8 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const ExactAnswerComponent = ({ getPos, node }) => {
+const ExactAnswerComponent = ({ node }) => {
   const context = useContext(WaxContext);
-  const { activeView } = context;
   const [exact, setExact] = useState('');
   const [marginError, setMarginError] = useState('');
 

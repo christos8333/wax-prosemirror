@@ -161,11 +161,32 @@ const NumericalAnswerDropDownCompontent = ({ nodeId }) => {
     }
   };
 
+  const SaveTypeToNode = option => {
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === nodeId) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answerType: option,
+              answersExact: [],
+              answersRange: [],
+              answersPrecise: [],
+            },
+          ),
+        );
+      }
+    });
+  };
+
   const onChange = option => {
     context.setOption({ [nodeId]: { numericalAnswer: option.value } });
     setLabel(option.label);
     openCloseMenu();
-    activeView.dispatch(activeView.state.tr.setMeta('addToHistory', false));
+    SaveTypeToNode(option.value);
     activeView.focus();
   };
 

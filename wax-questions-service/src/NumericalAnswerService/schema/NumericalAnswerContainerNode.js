@@ -5,6 +5,8 @@ const NumericalAnswerContainerNode = {
     feedback: { default: '' },
     answerType: { default: '' },
     answersExact: { default: [] },
+    answersRange: { default: [] },
+    answersPrecise: { default: [] },
   },
   group: 'block questions',
   atom: true,
@@ -15,6 +17,8 @@ const NumericalAnswerContainerNode = {
       getAttrs(dom) {
         return {
           answersExact: JSON.parse(dom.getAttribute('answersExact')),
+          answersRange: JSON.parse(dom.getAttribute('answersRange')),
+          answersPrecise: JSON.parse(dom.getAttribute('answersPrecise')),
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           feedback: dom.getAttribute('feedback'),
@@ -27,11 +31,13 @@ const NumericalAnswerContainerNode = {
     return [
       'div',
       {
+        answerType: node.attrs.answerType,
+        answersExact: JSON.stringify(node.attrs.answersExact),
+        answersRange: JSON.stringify(node.attrs.answersRange),
+        answersPrecise: JSON.stringify(node.attrs.answersPrecise),
         id: node.attrs.id,
         class: node.attrs.class,
-        answersExact: JSON.stringify(node.attrs.answersExact),
         feedback: node.attrs.feedback,
-        answerType: node.attrs.answerType,
       },
     ];
   },

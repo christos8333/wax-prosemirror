@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { DocumentHelpers } from 'wax-prosemirror-core';
+import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -26,7 +26,9 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const ExactAnswerComponent = () => {
+const ExactAnswerComponent = ({ getPos, node }) => {
+  const context = useContext(WaxContext);
+  const { activeView } = context;
   const [exact, setExact] = useState('');
   const [marginError, setMarginError] = useState('');
 
@@ -40,12 +42,37 @@ const ExactAnswerComponent = () => {
       .replace(/^0[^.]/, '0');
   };
 
+  const SaveValuesToNode = () => {
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        const obj = {
+          exactAnswer: onlyNumbers(exactRef.current.value),
+          marginError: onlyNumbers(errorRef.current.value),
+        };
+
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answersExact: obj,
+            },
+          ),
+        );
+      }
+    });
+  };
+
   const onChangeExact = () => {
     setExact(onlyNumbers(exactRef.current.value));
+    SaveValuesToNode();
   };
 
   const onChangeError = () => {
     setMarginError(onlyNumbers(errorRef.current.value));
+    SaveValuesToNode();
   };
 
   return (

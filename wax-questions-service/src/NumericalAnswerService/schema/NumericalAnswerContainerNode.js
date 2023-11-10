@@ -4,7 +4,7 @@ const NumericalAnswerContainerNode = {
     class: { default: 'numerical-answer' },
     feedback: { default: '' },
     answerType: { default: '' },
-    answers: { default: [] },
+    answersExact: { default: [] },
   },
   group: 'block questions',
   atom: true,
@@ -14,7 +14,7 @@ const NumericalAnswerContainerNode = {
       tag: 'div.numerical-answer',
       getAttrs(dom) {
         return {
-          answers: JSON.parse(dom.getAttribute('answers')),
+          answersExact: JSON.parse(dom.getAttribute('answersExact')),
           id: dom.getAttribute('id'),
           class: dom.getAttribute('class'),
           feedback: dom.getAttribute('feedback'),
@@ -29,7 +29,7 @@ const NumericalAnswerContainerNode = {
       {
         id: node.attrs.id,
         class: node.attrs.class,
-        answers: JSON.stringify(node.attrs.answers),
+        answersExact: JSON.stringify(node.attrs.answersExact),
         feedback: node.attrs.feedback,
         answerType: node.attrs.answerType,
       },

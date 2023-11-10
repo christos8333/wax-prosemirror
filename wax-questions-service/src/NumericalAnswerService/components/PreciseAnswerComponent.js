@@ -33,7 +33,7 @@ const PreciseAnswerComponent = () => {
 
   const onlyNumbers = value => {
     return value
-      .replace(/[^0-9.]/g, '')
+      .replace(/[^0-9.;]/g, '')
       .replace(/(\..*?)\..*/g, '$1')
       .replace(/^0[^.]/, '0');
   };

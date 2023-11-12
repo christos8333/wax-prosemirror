@@ -26,9 +26,11 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const PreciseAnswerComponent = ({ node }) => {
+const PreciseAnswerComponent = ({ node, readOnly, testMode }) => {
   const context = useContext(WaxContext);
-  const [precise, setPrecise] = useState('');
+  const [precise, setPrecise] = useState(
+    node.attrs.answersPrecise.preciseAnswer || '',
+  );
 
   const preciseRef = useRef(null);
 
@@ -44,7 +46,7 @@ const PreciseAnswerComponent = ({ node }) => {
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
         const obj = {
-          exactAnswer: onlyNumbers(preciseRef.current.value),
+          preciseAnswer: onlyNumbers(preciseRef.current.value),
         };
 
         context.pmViews.main.dispatch(
@@ -73,6 +75,7 @@ const PreciseAnswerComponent = ({ node }) => {
           <ValueInnerContainer>
             <span>Precise Answer</span>
             <input
+              disabled={readOnly}
               name="preciseAnswer"
               onChange={onChangePrecice}
               ref={preciseRef}

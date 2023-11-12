@@ -115,13 +115,25 @@ export default ({ node, view, getPos }) => {
             <>No Type Selected</>
           )}
           {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
-            <ExactAnswerComponent node={node} />
+            <ExactAnswerComponent
+              node={node}
+              readOnly={readOnly}
+              testMode={testMode}
+            />
           )}
           {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
-            <RangeAnswerComponent node={node} />
+            <RangeAnswerComponent
+              node={node}
+              readOnly={readOnly}
+              testMode={testMode}
+            />
           )}
           {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
-            <PreciseAnswerComponent node={node} />
+            <PreciseAnswerComponent
+              node={node}
+              readOnly={readOnly}
+              testMode={testMode}
+            />
           )}
         </NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (

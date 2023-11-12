@@ -26,10 +26,12 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const ExactAnswerComponent = ({ node }) => {
+const ExactAnswerComponent = ({ node, readOnly, testMode }) => {
   const context = useContext(WaxContext);
-  const [exact, setExact] = useState('');
-  const [marginError, setMarginError] = useState('');
+  const [exact, setExact] = useState(node.attrs.answersExact.exactAnswer || '');
+  const [marginError, setMarginError] = useState(
+    node.attrs.answersExact.marginError || '',
+  );
 
   const exactRef = useRef(null);
   const errorRef = useRef(null);
@@ -81,6 +83,7 @@ const ExactAnswerComponent = ({ node }) => {
           <ValueInnerContainer>
             <span>Exact Answer</span>
             <input
+              disabled={readOnly}
               name="exactAnswer"
               onChange={onChangeExact}
               ref={exactRef}
@@ -95,6 +98,7 @@ const ExactAnswerComponent = ({ node }) => {
           <ValueInnerContainer>
             <span>Margin of error (%)</span>
             <input
+              disabled={readOnly}
               name="errorAnswer"
               onChange={onChangeError}
               ref={errorRef}

@@ -26,10 +26,14 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const RangeAnswerComponent = ({ node }) => {
+const RangeAnswerComponent = ({ node, readOnly, testMode }) => {
   const context = useContext(WaxContext);
-  const [minValue, setMinValue] = useState('');
-  const [maxValue, setMaxValue] = useState('');
+  const [minValue, setMinValue] = useState(
+    node.attrs.answersRange.minAnswer || '',
+  );
+  const [maxValue, setMaxValue] = useState(
+    node.attrs.answersRange.maxAnswer || '',
+  );
 
   const minRef = useRef(null);
   const maxRef = useRef(null);
@@ -81,6 +85,7 @@ const RangeAnswerComponent = ({ node }) => {
           <ValueInnerContainer>
             <span>Min</span>
             <input
+              disabled={readOnly}
               name="minAnswer"
               onChange={onChangeMin}
               ref={minRef}
@@ -95,6 +100,7 @@ const RangeAnswerComponent = ({ node }) => {
           <ValueInnerContainer>
             <span>Max</span>
             <input
+              disabled={readOnly}
               name="maxAnswer"
               onChange={onChangeMax}
               ref={maxRef}

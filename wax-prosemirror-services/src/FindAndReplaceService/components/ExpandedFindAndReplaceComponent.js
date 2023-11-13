@@ -269,6 +269,7 @@ const ExpandedFindAndReplaceComponent = ({
       const results = DocumentHelpers.findMatches(
         singleView.state.doc,
         searchValue,
+        matchCaseOption,
       );
       const {
         state: { tr },
@@ -370,11 +371,11 @@ const ExpandedFindAndReplaceComponent = ({
       <ControlContainer>
         <ButtonReplace onClick={replace}>
           {' '}
-          <Translation label="Replace with" />
+          <Translation label="Replace" />
         </ButtonReplace>
         <ButtonReplaceAll onClick={replaceAll}>
           {' '}
-          <Translation label="Replace with" /> <Translation label="All" />
+          <Translation label="Replace" /> <Translation label="All" />
         </ButtonReplaceAll>
         <PreviousNextContainer>
           <IconWrapper

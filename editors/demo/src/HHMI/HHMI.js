@@ -94,6 +94,30 @@ const initialContent = `<p class="paragraph"></p>
    <p class="paragraph">first <span id="16ec8f33-db5b-4839-9567-8aa73b776bcf" class="fill-the-gap" answer="">answer1; answer2; answer3</span> second <span id="72f23a71-e774-4834-acba-f357afb6a243" class="fill-the-gap" answer="">answer 4; answer5;</span></p>
 </div>`;
 
+// const initialContent = {
+//   type: 'doc',
+//   content: [
+//     {
+//       type: 'numerical_answer_container',
+//       attrs: {
+//         id: 'f9c33d03-68ee-4c27-8a03-5072447fac1a',
+//         class: 'numerical-answer',
+//         feedback: '',
+//         answerType: 'exactAnswer',
+//         answersExact: [],
+//       },
+//       content: [
+//         {
+//           type: 'paragraph',
+//           attrs: {
+//             class: 'paragraph',
+//           },
+//         },
+//       ],
+//     },
+//   ],
+// };
+
 const Hhmi = () => {
   const [stateProps, setStateProps] = useState({
     readOnly: false,
@@ -168,9 +192,10 @@ const Hhmi = () => {
         customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
         value={content}
+        // targetFormat="JSON"
         readonly={readOnly}
         layout={HhmiLayout}
-        // onChange={source => console.log(source)}
+        onChange={source => console.log(source)}
       />
     </>
   );

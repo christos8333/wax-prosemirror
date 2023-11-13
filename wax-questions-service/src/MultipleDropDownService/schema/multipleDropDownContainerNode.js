@@ -5,10 +5,7 @@ const multipleDropDownContainerNode = {
     feedback: { default: '' },
   },
   group: 'block questions',
-  atom: true,
-  selectable: false,
-  draggable: false,
-  defining: true,
+  isolating: true,
   // content: 'paragraph* bulletlist* orderedlist*',
   content: 'block*',
   parseDOM: [

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
@@ -54,10 +54,12 @@ export default ({ node, view, getPos }) => {
   const {
     options,
     pmViews: { main },
+    setOption,
   } = context;
 
   const customProps = main.props.customValues;
-  const { testMode } = customProps;
+
+  const { testMode, showFeedBack } = customProps;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -80,12 +82,18 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  useEffect(() => {
+    setOption({
+      [node.attrs.id]: { numericalAnswer: node.attrs.answerType },
+    });
+  }, []);
+
   return (
     <NumericalAnswerWrapper>
       <div>
         {!testMode && !readOnly && (
           <NumericalAnswerContainerTool>
-            <NumericalAnswerDropDownCompontent nodeId={node.attrs.id} />
+            <NumericalAnswerDropDownCompontent node={node} />
             <ActionButton
               aria-label="delete this question"
               onClick={removeQuestion}
@@ -100,19 +108,36 @@ export default ({ node, view, getPos }) => {
         <EditorComponent
           getPos={getPos}
           node={node}
-          type="NumericalAnswer"
+          QuestionType="NumericalAnswer"
           view={view}
         />
         <NumericalAnswerOption>
-          {!options[node.attrs.id] && <>No Type Selected</>}
+          {options[node.attrs.id]?.numericalAnswer === '' && (
+            <>No Type Selected</>
+          )}
           {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
-            <ExactAnswerComponent />
+            <ExactAnswerComponent
+              node={node}
+              readOnly={readOnly}
+              showFeedBack={showFeedBack}
+              testMode={testMode}
+            />
           )}
           {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
-            <RangeAnswerComponent />
+            <RangeAnswerComponent
+              node={node}
+              readOnly={readOnly}
+              showFeedBack={showFeedBack}
+              testMode={testMode}
+            />
           )}
           {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
-            <PreciseAnswerComponent />
+            <PreciseAnswerComponent
+              node={node}
+              readOnly={readOnly}
+              showFeedBack={showFeedBack}
+              testMode={testMode}
+            />
           )}
         </NumericalAnswerOption>
         {!testMode && !(readOnly && feedback === '') && (

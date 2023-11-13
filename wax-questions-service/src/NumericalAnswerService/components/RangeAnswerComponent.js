@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
@@ -26,7 +27,7 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const RangeAnswerComponent = ({ node, readOnly, testMode }) => {
+const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [minValue, setMinValue] = useState(
     node.attrs.answersRange.minAnswer || '',
@@ -35,8 +36,13 @@ const RangeAnswerComponent = ({ node, readOnly, testMode }) => {
     node.attrs.answersRange.maxAnswer || '',
   );
 
+  const [rangeStudentValue, setRangeStudentValue] = useState(
+    node.attrs.answerRange || '',
+  );
+
   const minRef = useRef(null);
   const maxRef = useRef(null);
+  const rangeStudentRef = useRef(null);
 
   const onlyNumbers = value => {
     return value
@@ -78,38 +84,78 @@ const RangeAnswerComponent = ({ node, readOnly, testMode }) => {
     SaveValuesToNode();
   };
 
+  const onChangeRangeStudent = () => {
+    setRangeStudentValue(onlyNumbers(rangeStudentRef.current.value));
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answerRange: onlyNumbers(rangeStudentRef.current.value),
+            },
+          ),
+        );
+      }
+    });
+  };
+
   return (
     <AnswerContainer>
-      <ValueContainer>
-        <label htmlFor="minAnswer">
-          <ValueInnerContainer>
-            <span>Min</span>
-            <input
-              disabled={readOnly}
-              name="minAnswer"
-              onChange={onChangeMin}
-              ref={minRef}
-              type="text"
-              value={minValue}
-            />
-          </ValueInnerContainer>
-        </label>
-      </ValueContainer>
-      <ValueContainer>
-        <label htmlFor="maxAnswer">
-          <ValueInnerContainer>
-            <span>Max</span>
-            <input
-              disabled={readOnly}
-              name="maxAnswer"
-              onChange={onChangeMax}
-              ref={maxRef}
-              type="text"
-              value={maxValue}
-            />
-          </ValueInnerContainer>
-        </label>
-      </ValueContainer>
+      {!testMode && !showFeedBack && (
+        <>
+          <ValueContainer>
+            <label htmlFor="minAnswer">
+              <ValueInnerContainer>
+                <span>Min</span>
+                <input
+                  disabled={readOnly}
+                  name="minAnswer"
+                  onChange={onChangeMin}
+                  ref={minRef}
+                  type="text"
+                  value={minValue}
+                />
+              </ValueInnerContainer>
+            </label>
+          </ValueContainer>
+          <ValueContainer>
+            <label htmlFor="maxAnswer">
+              <ValueInnerContainer>
+                <span>Max</span>
+                <input
+                  disabled={readOnly}
+                  name="maxAnswer"
+                  onChange={onChangeMax}
+                  ref={maxRef}
+                  type="text"
+                  value={maxValue}
+                />
+              </ValueInnerContainer>
+            </label>
+          </ValueContainer>
+        </>
+      )}
+      {testMode && (
+        <ValueContainer>
+          <label htmlFor="exactAnswerStudent">
+            <ValueInnerContainer>
+              <span>Answer</span>
+              <input
+                name="exactAnswerStudent"
+                onChange={onChangeRangeStudent}
+                ref={rangeStudentRef}
+                type="text"
+                value={rangeStudentValue}
+              />
+            </ValueInnerContainer>
+          </label>
+        </ValueContainer>
+      )}
+      {readOnly && showFeedBack && <span>SUBMIT</span>}
     </AnswerContainer>
   );
 };

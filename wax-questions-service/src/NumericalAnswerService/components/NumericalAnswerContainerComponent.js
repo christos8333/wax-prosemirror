@@ -58,7 +58,8 @@ export default ({ node, view, getPos }) => {
   } = context;
 
   const customProps = main.props.customValues;
-  const { testMode } = customProps;
+
+  const { testMode, showFeedBack } = customProps;
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -118,6 +119,7 @@ export default ({ node, view, getPos }) => {
             <ExactAnswerComponent
               node={node}
               readOnly={readOnly}
+              showFeedBack={showFeedBack}
               testMode={testMode}
             />
           )}
@@ -125,6 +127,7 @@ export default ({ node, view, getPos }) => {
             <RangeAnswerComponent
               node={node}
               readOnly={readOnly}
+              showFeedBack={showFeedBack}
               testMode={testMode}
             />
           )}
@@ -132,6 +135,7 @@ export default ({ node, view, getPos }) => {
             <PreciseAnswerComponent
               node={node}
               readOnly={readOnly}
+              showFeedBack={showFeedBack}
               testMode={testMode}
             />
           )}

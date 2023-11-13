@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
@@ -26,15 +27,18 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const ExactAnswerComponent = ({ node, readOnly, testMode }) => {
+const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [exact, setExact] = useState(node.attrs.answersExact.exactAnswer || '');
   const [marginError, setMarginError] = useState(
     node.attrs.answersExact.marginError || '',
   );
-
+  const [exactStudent, setExactStudent] = useState(
+    node.attrs.answerExact || '',
+  );
   const exactRef = useRef(null);
   const errorRef = useRef(null);
+  const exactStudentRef = useRef(null);
 
   const onlyNumbers = value => {
     return value
@@ -76,38 +80,78 @@ const ExactAnswerComponent = ({ node, readOnly, testMode }) => {
     SaveValuesToNode();
   };
 
+  const onChangeExactStudent = () => {
+    setExactStudent(onlyNumbers(exactStudentRef.current.value));
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answerExact: onlyNumbers(exactStudentRef.current.value),
+            },
+          ),
+        );
+      }
+    });
+  };
+
   return (
     <AnswerContainer>
-      <ValueContainer>
-        <label htmlFor="exactAnswer">
-          <ValueInnerContainer>
-            <span>Exact Answer</span>
-            <input
-              disabled={readOnly}
-              name="exactAnswer"
-              onChange={onChangeExact}
-              ref={exactRef}
-              type="text"
-              value={exact}
-            />
-          </ValueInnerContainer>
-        </label>
-      </ValueContainer>
-      <ValueContainer>
-        <label htmlFor="errorAnswer">
-          <ValueInnerContainer>
-            <span>Margin of error (%)</span>
-            <input
-              disabled={readOnly}
-              name="errorAnswer"
-              onChange={onChangeError}
-              ref={errorRef}
-              type="text"
-              value={marginError}
-            />
-          </ValueInnerContainer>
-        </label>
-      </ValueContainer>
+      {!testMode && !showFeedBack && (
+        <>
+          <ValueContainer>
+            <label htmlFor="exactAnswer">
+              <ValueInnerContainer>
+                <span>Exact Answer</span>
+                <input
+                  disabled={readOnly}
+                  name="exactAnswer"
+                  onChange={onChangeExact}
+                  ref={exactRef}
+                  type="text"
+                  value={exact}
+                />
+              </ValueInnerContainer>
+            </label>
+          </ValueContainer>
+          <ValueContainer>
+            <label htmlFor="errorAnswer">
+              <ValueInnerContainer>
+                <span>Margin of error (%)</span>
+                <input
+                  disabled={readOnly}
+                  name="errorAnswer"
+                  onChange={onChangeError}
+                  ref={errorRef}
+                  type="text"
+                  value={marginError}
+                />
+              </ValueInnerContainer>
+            </label>
+          </ValueContainer>
+        </>
+      )}
+      {testMode && (
+        <ValueContainer>
+          <label htmlFor="exactAnswerStudent">
+            <ValueInnerContainer>
+              <span>Exact Answer</span>
+              <input
+                name="exactAnswerStudent"
+                onChange={onChangeExactStudent}
+                ref={exactStudentRef}
+                type="text"
+                value={exactStudent}
+              />
+            </ValueInnerContainer>
+          </label>
+        </ValueContainer>
+      )}
+      {readOnly && showFeedBack && <span>SUBMIT</span>}
     </AnswerContainer>
   );
 };

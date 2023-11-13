@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
@@ -26,13 +27,18 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
-const PreciseAnswerComponent = ({ node, readOnly, testMode }) => {
+const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [precise, setPrecise] = useState(
     node.attrs.answersPrecise.preciseAnswer || '',
   );
 
+  const [preciseStudent, setPreciseStudent] = useState(
+    node.attrs.answerPrecise || '',
+  );
+
   const preciseRef = useRef(null);
+  const preciseStudentRef = useRef(null);
 
   const onlyNumbers = value => {
     return value
@@ -68,23 +74,61 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode }) => {
     SaveValuesToNode();
   };
 
+  const onChangePreciseStudent = () => {
+    setPreciseStudent(onlyNumbers(preciseStudentRef.current.value));
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singleNode => {
+      if (singleNode.node.attrs.id === node.attrs.id) {
+        context.pmViews.main.dispatch(
+          context.pmViews.main.state.tr.setNodeMarkup(
+            singleNode.pos,
+            undefined,
+            {
+              ...singleNode.node.attrs,
+              answerPrecise: onlyNumbers(preciseStudentRef.current.value),
+            },
+          ),
+        );
+      }
+    });
+  };
+
   return (
     <AnswerContainer>
-      <ValueContainer>
-        <label htmlFor="preciseAnswer">
-          <ValueInnerContainer>
-            <span>Precise Answer</span>
-            <input
-              disabled={readOnly}
-              name="preciseAnswer"
-              onChange={onChangePrecice}
-              ref={preciseRef}
-              type="text"
-              value={precise}
-            />
-          </ValueInnerContainer>
-        </label>
-      </ValueContainer>
+      {!testMode && !showFeedBack && (
+        <ValueContainer>
+          <label htmlFor="preciseAnswer">
+            <ValueInnerContainer>
+              <span>Precise Answer</span>
+              <input
+                disabled={readOnly}
+                name="preciseAnswer"
+                onChange={onChangePrecice}
+                ref={preciseRef}
+                type="text"
+                value={precise}
+              />
+            </ValueInnerContainer>
+          </label>
+        </ValueContainer>
+      )}
+      {testMode && (
+        <ValueContainer>
+          <label htmlFor="exactAnswerStudent">
+            <ValueInnerContainer>
+              <span>Precise Answer</span>
+              <input
+                name="exactAnswerStudent"
+                onChange={onChangePreciseStudent}
+                ref={preciseStudentRef}
+                type="text"
+                value={preciseStudent}
+              />
+            </ValueInnerContainer>
+          </label>
+        </ValueContainer>
+      )}
+      {readOnly && showFeedBack && <span>SUBMIT</span>}
     </AnswerContainer>
   );
 };

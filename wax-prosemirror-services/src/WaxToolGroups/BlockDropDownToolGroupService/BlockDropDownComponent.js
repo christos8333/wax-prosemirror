@@ -3,43 +3,8 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, ReactDropDownStyles } from 'wax-prosemirror-core';
-import Dropdown from 'react-dropdown';
-import { v4 as uuidv4 } from 'uuid';
+import { WaxContext } from 'wax-prosemirror-core';
 
-const Wrapper = styled.div`
-  ${ReactDropDownStyles};
-`;
-const DropdownStyled = styled(Dropdown)`
-  display: inline-flex;
-  cursor: not-allowed;
-  opacity: ${props => (props.select ? 1 : 0.4)};
-  pointer-events: ${props => (props.select ? 'default' : 'none')};
-  .Dropdown-control {
-    width: 170px;
-    border: none;
-    padding: 12px 26px 8px 10px;
-    &:hover {
-      box-shadow: none;
-    }
-  }
-
-  .Dropdown-arrow {
-    top: 17px;
-  }
-
-  .Dropdown-menu {
-    width: 102%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    .Dropdown-option {
-      width: 100%;
-    }
-  }
-`;
-
-// eslint-disable-next-line react/prop-types
 const BlockDropDownComponent = ({ view, tools }) => {
   const { t, i18n } = useTranslation();
   const context = useContext(WaxContext);
@@ -47,6 +12,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
     activeViewId,
     pmViews: { main },
   } = context;
+
   const [label, setLabel] = useState(null);
 
   const isEditable = main.props.editable(editable => {
@@ -82,47 +48,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
     },
   ];
 
-  useEffect(() => {
-    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Heading styles'));
-    dropDownOptions.forEach(option => {
-      if (option.item.active(main.state, activeViewId)) {
-        setTimeout(() => {
-          setLabel(
-            translatedLabel(
-              `Wax.BlockLevel.${option.item.label}`,
-              option.item.label,
-            ),
-          );
-        });
-      }
-    });
-  }, [
-    main.state.selection.$from.parent.type.name,
-    t('Wax.BlockLevel.Paragraph'),
-  ]);
-
-  const MultipleDropDown = useMemo(
-    () => (
-      <Wrapper key={uuidv4()}>
-        <DropdownStyled
-          key={uuidv4()}
-          onChange={option => {
-            tools[option.value].run(main.state, main.dispatch);
-          }}
-          options={dropDownOptions}
-          placeholder={translatedLabel(
-            'Wax.BlockLevel.Block Level',
-            'Heading styles',
-          )}
-          select={isEditable}
-          value={label}
-        />
-      </Wrapper>
-    ),
-    [label, isEditable, t('Wax.BlockLevel.Paragraph')],
-  );
-
-  return MultipleDropDown;
+  return <>DropDown</>;
 };
 
 export default BlockDropDownComponent;

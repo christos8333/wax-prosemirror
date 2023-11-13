@@ -27,6 +27,16 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
+const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FinalResult = styled.span`
+  color: ${props => (props.isCorrect ? ' #008000' : 'red')};
+  font-weight: 999;
+`;
+
 const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [precise, setPrecise] = useState(
@@ -93,6 +103,10 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
     });
   };
 
+  const isCorrect = precise
+    .split(';')
+    .find(element => element === preciseStudent.trim());
+
   return (
     <AnswerContainer>
       {!testMode && !showFeedBack && (
@@ -128,7 +142,18 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
           </label>
         </ValueContainer>
       )}
-      {readOnly && showFeedBack && <span>SUBMIT</span>}
+      {readOnly && showFeedBack && (
+        <ResultContainer>
+          <span>
+            Accepted Answer Range:{' '}
+            {`(Accepted Answers : ${precise.replaceAll(';', ' -')})`}
+          </span>
+          <span>
+            Answer:{' '}
+            <FinalResult isCorrect={isCorrect}>{preciseStudent}</FinalResult>
+          </span>
+        </ResultContainer>
+      )}
     </AnswerContainer>
   );
 };

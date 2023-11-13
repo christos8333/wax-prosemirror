@@ -27,6 +27,16 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
+const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FinalResult = styled.span`
+  color: ${props => (props.isCorrect ? ' #008000' : 'red')};
+  font-weight: 999;
+`;
+
 const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [exact, setExact] = useState(node.attrs.answersExact.exactAnswer || '');
@@ -99,6 +109,14 @@ const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
     });
   };
 
+  // SUBMIT
+  const exactMultMargin = parseFloat((exact * marginError) / 100);
+  const computedMaxValue = Number(exactMultMargin) + Number(exact);
+  const computedMinValue = Number(exact) - Number(exactMultMargin);
+  const isCorrect = !!(
+    exactStudent <= computedMaxValue && exactStudent >= computedMinValue
+  );
+
   return (
     <AnswerContainer>
       {!testMode && !showFeedBack && (
@@ -151,7 +169,17 @@ const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
           </label>
         </ValueContainer>
       )}
-      {readOnly && showFeedBack && <span>SUBMIT</span>}
+      {readOnly && showFeedBack && (
+        <ResultContainer>
+          <span>
+            Accepted Answer Range: {computedMinValue} - {computedMaxValue}
+          </span>
+          <span>
+            Answer:{' '}
+            <FinalResult isCorrect={isCorrect}>{exactStudent}</FinalResult>
+          </span>
+        </ResultContainer>
+      )}
     </AnswerContainer>
   );
 };

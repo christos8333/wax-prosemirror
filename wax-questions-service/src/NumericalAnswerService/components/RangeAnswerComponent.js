@@ -27,6 +27,16 @@ const ValueInnerContainer = styled.div`
   flex-direction: column;
 `;
 
+const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FinalResult = styled.span`
+  color: ${props => (props.isCorrect ? ' #008000' : 'red')};
+  font-weight: 999;
+`;
+
 const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [minValue, setMinValue] = useState(
@@ -103,6 +113,12 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
     });
   };
 
+  // SUBMIT
+
+  const isCorrect = !!(
+    rangeStudentValue <= maxValue && rangeStudentValue >= minValue
+  );
+
   return (
     <AnswerContainer>
       {!testMode && !showFeedBack && (
@@ -155,7 +171,17 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
           </label>
         </ValueContainer>
       )}
-      {readOnly && showFeedBack && <span>SUBMIT</span>}
+      {readOnly && showFeedBack && (
+        <ResultContainer>
+          <span>
+            Accepted Answer Range: {minValue} - {maxValue}
+          </span>
+          <span>
+            Answer:{' '}
+            <FinalResult isCorrect={isCorrect}>{rangeStudentValue}</FinalResult>
+          </span>
+        </ResultContainer>
+      )}
     </AnswerContainer>
   );
 };

@@ -34,11 +34,9 @@ const NumericalAnswerOption = styled.div`
 const ActionButton = styled.button`
   background: transparent;
   cursor: pointer;
-  margin-top: 16px;
   border: none;
-  position: relative;
   margin-left: auto;
-  bottom: 13px;
+  z-index: 999;
 `;
 
 const StyledIconContainer = styled.span`
@@ -53,19 +51,22 @@ const StyledIconAction = styled(Icon)`
   cursor: pointer;
   height: 24px;
   width: 24px;
+  z-index: 999;
 `;
 
 const InfoMsg = styled.div`
-  border-radius: 4px;
   color: #fff;
   display: none;
   user-select: none;
   position: absolute;
-
+  width: 100%;
   span {
-    padding: 4px;
-    bottom: 25px;
     background: ${th('colorPrimary')};
+    bottom: 35px;
+    border-radius: 4px;
+    float: right;
+    right: 162px;
+    padding: 4px;
     position: relative;
   }
 `;

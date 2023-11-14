@@ -14,6 +14,13 @@ import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
+  display: flex;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const DropDownButton = styled.button`
@@ -22,8 +29,6 @@ const DropDownButton = styled.button`
   color: #000;
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   display: flex;
-  position: relative;
-  top: 9px;
   width: 160px;
 
   span {
@@ -40,7 +45,7 @@ const DropDownMenu = styled.div`
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
-  margin: 10px auto auto;
+  margin: 38px auto auto;
   position: absolute;
   width: 160px;
   max-height: 180px;
@@ -190,28 +195,30 @@ const BlockDropDownComponent = ({ view, tools }) => {
   const MultipleDropDown = useMemo(
     () => (
       <Wrapper disabled={isDisabled} ref={wrapperRef}>
-        <DropDownButton
-          aria-controls="block-level-options"
-          aria-expanded={isOpen}
-          aria-haspopup
-          disabled={isDisabled}
-          onKeyDown={e => {
-            if (e.keyCode === 40) {
-              itemRefs.current[0].current.focus();
-            }
-            if (e.keyCode === 27) {
-              setIsOpen(false);
-            }
-            if (e.keyCode === 13 || e.keyCode === 32) {
-              setIsOpen(true);
-            }
-          }}
-          onMouseDown={openCloseMenu}
-          type="button"
-        >
-          <span>{label}</span>
-          <StyledIcon name="expand" />
-        </DropDownButton>
+        <ButtonWrapper>
+          <DropDownButton
+            aria-controls="block-level-options"
+            aria-expanded={isOpen}
+            aria-haspopup
+            disabled={isDisabled}
+            onKeyDown={e => {
+              if (e.keyCode === 40) {
+                itemRefs.current[0].current.focus();
+              }
+              if (e.keyCode === 27) {
+                setIsOpen(false);
+              }
+              if (e.keyCode === 13 || e.keyCode === 32) {
+                setIsOpen(true);
+              }
+            }}
+            onMouseDown={openCloseMenu}
+            type="button"
+          >
+            <span>{label}</span>
+            <StyledIcon name="expand" />
+          </DropDownButton>
+        </ButtonWrapper>
         <DropDownMenu
           aria-label="Choose a block level action"
           id="block-level-options"

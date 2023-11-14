@@ -17,6 +17,7 @@ import {
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
+  z-index: 999;
 `;
 
 const DropDownButton = styled.button`
@@ -33,7 +34,7 @@ const DropDownButton = styled.button`
 
   span {
     position: relative;
-    top: 12px;
+    top: 4px;
   }
 `;
 

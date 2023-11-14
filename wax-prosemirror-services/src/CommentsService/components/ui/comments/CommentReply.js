@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
+import useOutsideClick from './useOutsideClick';
 
 const Wrapper = styled.div`
   background: ${th('colorBackgroundHue')};
@@ -66,40 +67,56 @@ const CommentReply = props => {
     onClickPost,
     isReadOnly,
     onTextAreaBlur,
+    showTitle,
   } = props;
   const { t, i18n } = useTranslation();
   const commentInput = useRef(null);
+  const commentTitle = useRef(null);
   const [commentValue, setCommentValue] = useState('');
+  const [title, setTitle] = useState('');
+
+  const ref = useRef(null);
+
+  useOutsideClick(ref, onTextAreaBlur);
 
   useEffect(() => {
     setTimeout(() => {
-      if (commentInput.current && isNewComment) commentInput.current.focus();
+      if (commentTitle.current && isNewComment) commentTitle.current.focus();
+      if (commentInput.current && !isNewComment) commentInput.current.focus();
     });
   }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
     e.stopPropagation();
-    onClickPost(commentValue);
+    onClickPost({ title, commentValue });
     setCommentValue('');
+    setTitle('');
   };
 
   const resetValue = e => {
     e.preventDefault();
     setCommentValue('');
-  };
-
-  const onBlur = content => {
-    onTextAreaBlur(content, isNewComment);
+    setTitle('');
   };
 
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} ref={ref}>
       <form onSubmit={handleSubmit}>
         <TextWrapper>
+          {isNewComment && showTitle && (
+            <input
+              name="title"
+              onChange={e => {
+                setTitle(e.target.value);
+              }}
+              ref={commentTitle}
+              type="text"
+              value={title}
+            />
+          )}
           <ReplyTextArea
             cols="5"
-            onBlur={() => onBlur(commentInput.current.value)}
             onChange={() => setCommentValue(commentInput.current.value)}
             onKeyDown={e => {
               if (e.keyCode === 13 && !e.shiftKey) {
@@ -155,6 +172,7 @@ CommentReply.propTypes = {
   onClickPost: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   onTextAreaBlur: PropTypes.func.isRequired,
+  showTitle: PropTypes.bool.isRequired,
 };
 
 CommentReply.defaultProps = {};

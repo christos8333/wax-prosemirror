@@ -27,7 +27,7 @@ const More = styled.span`
 `;
 
 const CommentItemList = props => {
-  const { active, className, data } = props;
+  const { active, className, data, title } = props;
   if (!data || data.length === 0) return null;
 
   const [items, setItems] = useState(data);
@@ -49,6 +49,7 @@ const CommentItemList = props => {
 
   return (
     <Wrapper active={active} className={className}>
+      {title && <span>{title}</span>}
       {items.map(item => (
         <CommentItem
           active={active}
@@ -79,11 +80,13 @@ CommentItemList.propTypes = {
       timestamp: PropTypes.number.isRequired,
     }),
   ),
+  title: PropTypes.string,
 };
 
 CommentItemList.defaultProps = {
   active: false,
   data: [],
+  title: null,
 };
 
 export default CommentItemList;

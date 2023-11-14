@@ -81,6 +81,8 @@ const CommentBox = props => {
     onClickPost,
     onClickResolve,
     onTextAreaBlur,
+    title,
+    showTitle,
   } = props;
 
   // send signal to make this comment active
@@ -91,7 +93,6 @@ const CommentBox = props => {
 
   if (!active && (!commentData || commentData.length === 0)) return null;
   const { t, i18n } = useTranslation();
-
   return (
     <Wrapper active={active} className={className} onClick={onClickWrapper}>
       {active && commentData.length > 0 && (
@@ -109,15 +110,14 @@ const CommentBox = props => {
           </Resolve>
         </Head>
       )}
-
-      <CommentItemList active={active} data={commentData} />
-
+      <CommentItemList active={active} data={commentData} title={title} />
       {active && (
         <StyledReply
           isNewComment={commentData.length === 0}
           isReadOnly={isReadOnly}
           onClickPost={onClickPost}
           onTextAreaBlur={onTextAreaBlur}
+          showTitle={showTitle}
         />
       )}
     </Wrapper>
@@ -150,11 +150,14 @@ CommentBox.propTypes = {
   onClickResolve: PropTypes.func.isRequired,
   /** Function to run when text area loses focus */
   onTextAreaBlur: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  showTitle: PropTypes.bool.isRequired,
 };
 
 CommentBox.defaultProps = {
   active: false,
   commentData: [],
+  title: null,
 };
 
 export default CommentBox;

@@ -31,10 +31,12 @@ export default class CommentsService extends Service {
   }
 
   register() {
+    const commentConfig = this.config.get('config.CommentsService');
     const createMark = this.container.get('CreateMark');
+
     createMark(
       {
-        comment: commentMark,
+        comment: commentMark(commentConfig?.showTitle || false),
       },
       { toWaxSchema: true },
     );

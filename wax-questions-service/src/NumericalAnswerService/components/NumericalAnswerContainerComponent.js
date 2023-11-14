@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { th } from '@pubsweet/ui-toolkit';
+import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import EditorComponent from '../../MultipleChoiceQuestionService/components/EditorComponent';
 import FeedbackComponent from '../../MultipleChoiceQuestionService/components/FeedbackComponent';
 import NumericalAnswerDropDownCompontent from './NumericalAnswerDropDownCompontent';
@@ -24,10 +25,6 @@ const NumericalAnswerContainerTool = styled.div`
   height: 33px;
   display: flex;
   flex-direction: row;
-  span:first-of-type {
-    position: relative;
-    top: 3px;
-  }
 `;
 
 const NumericalAnswerOption = styled.div`
@@ -37,11 +34,41 @@ const NumericalAnswerOption = styled.div`
 const ActionButton = styled.button`
   background: transparent;
   cursor: pointer;
-  margin-top: 16px;
   border: none;
-  position: relative;
   margin-left: auto;
-  bottom: 13px;
+  z-index: 999;
+`;
+
+const StyledIconContainer = styled.span`
+  float: right;
+  position: relative;
+  top: 3px;
+`;
+
+const StyledIconAction = styled(Icon)`
+  position: relative;
+  right: 4px;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  z-index: 999;
+`;
+
+const InfoMsg = styled.div`
+  color: #fff;
+  display: none;
+  user-select: none;
+  position: absolute;
+  width: 100%;
+  span {
+    background: ${th('colorPrimary')};
+    bottom: 35px;
+    border-radius: 4px;
+    float: right;
+    right: 162px;
+    padding: 4px;
+    position: relative;
+  }
 `;
 
 const StyledIconActionRemove = styled(Icon)`
@@ -60,6 +87,8 @@ export default ({ node, view, getPos }) => {
   const customProps = main.props.customValues;
 
   const { testMode, showFeedBack } = customProps;
+  const infoMsgRef = useRef();
+  const [infoMsgIsOpen, setInfoMsgIsOpen] = useState(false);
 
   const isEditable = main.props.editable(editable => {
     return editable;
@@ -88,6 +117,16 @@ export default ({ node, view, getPos }) => {
     });
   }, []);
 
+  const displayInfoMsg = () => {
+    if (infoMsgRef.current && !infoMsgIsOpen)
+      infoMsgRef.current.style.display = 'block';
+
+    if (infoMsgRef.current && infoMsgIsOpen)
+      infoMsgRef.current.style.display = 'none';
+
+    setInfoMsgIsOpen(!infoMsgIsOpen);
+  };
+
   return (
     <NumericalAnswerWrapper>
       <div>
@@ -101,6 +140,20 @@ export default ({ node, view, getPos }) => {
             >
               <StyledIconActionRemove name="deleteOutlinedQuestion" />
             </ActionButton>
+            {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
+              <StyledIconContainer
+                onClick={displayInfoMsg}
+                onKeyPress={() => {}}
+                role="button"
+                tabIndex={0}
+              >
+                <StyledIconAction name="help" />
+              </StyledIconContainer>
+            )}
+
+            <InfoMsg ref={infoMsgRef}>
+              <span>Separate answer variants with a semi colon</span>
+            </InfoMsg>
           </NumericalAnswerContainerTool>
         )}
       </div>

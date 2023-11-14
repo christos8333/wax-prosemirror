@@ -144,10 +144,7 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
       )}
       {readOnly && showFeedBack && (
         <ResultContainer>
-          <span>
-            Accepted Answer Range:{' '}
-            {`(Accepted Answers : ${precise.replaceAll(';', ' -')})`}
-          </span>
+          <span>{`(Accepted Answers : ${precise.replaceAll(';', ' -')})`}</span>
           <span>
             Answer:{' '}
             <FinalResult isCorrect={isCorrect}>{preciseStudent}</FinalResult>

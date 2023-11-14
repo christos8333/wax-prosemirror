@@ -46,7 +46,7 @@ const en = {
         'Change to Subtitle': 'Switch to Subtitle',
         Subtitle: 'Subtitle',
         'Change to Title': 'Switch to Title',
-        'Title (H1)': 'Title (H1)',
+        'Title (H1)': 'Title',
         'Change to Block Quote': 'Switch to Block Quote',
         'Block Quote': 'Block Quote',
         'Change to Extract Poetry': 'Switch to Extract Poetry',

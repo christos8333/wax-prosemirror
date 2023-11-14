@@ -59,6 +59,10 @@ const backSpaceShortCut = (state, dispatch, view) => {
 };
 
 const pressEnter = (state, dispatch) => {
+  // Images
+  if (state.selection.$head.parent.type.name === 'figcaption') {
+    return true;
+  }
   if (state.selection.node && state.selection.node.type.name === 'image') {
     const { $from, to } = state.selection;
 
@@ -68,6 +72,7 @@ const pressEnter = (state, dispatch) => {
     dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
     return true;
   }
+
   // LISTS
   if (splitListItem(state.schema.nodes.list_item)(state)) {
     splitListItem(state.schema.nodes.list_item)(state, dispatch);

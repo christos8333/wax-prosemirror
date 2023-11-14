@@ -48,6 +48,7 @@ const NumericalAnswerContainerNode = {
         class: node.attrs.class,
         feedback: node.attrs.feedback,
       },
+      0,
     ];
   },
 };

@@ -8,7 +8,7 @@ import checkLevelFromConfig from '../HeadingService/checkLevelFromConfig';
 @injectable()
 export default class Title extends Tools {
   title = 'Change to Title';
-  label = 'Title (H1)';
+  label = 'Title';
   name = 'Title';
 
   get run() {

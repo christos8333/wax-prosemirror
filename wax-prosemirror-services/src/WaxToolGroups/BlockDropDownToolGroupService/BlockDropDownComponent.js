@@ -163,7 +163,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
   }, [isDisabled]);
 
   useEffect(() => {
-    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Heading styles'));
+    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Styles'));
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
         setTimeout(() => {

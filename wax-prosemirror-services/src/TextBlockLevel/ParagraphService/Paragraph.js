@@ -25,7 +25,7 @@ export default class Paragraph extends Tools {
 
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
-    return true;
+    return Commands.setBlockType(state.config.schema.nodes.paragraph)(state);
   };
 
   get enable() {

@@ -1,7 +1,7 @@
 {
   "name": "wax-table-service",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.8.26",
+  "version": "0.8.27",
   "description": "Wax Table Service",
   "license": "MIT",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "prosemirror-view": "1.30.2",
     "react-i18next": "^13.3.1",
     "uuid": "^7.0.3",
-    "wax-prosemirror-core": "^0.8.26"
+    "wax-prosemirror-core": "^0.8.27"
   },
   "devDependencies": {
     "mocha": "^3.4.2",

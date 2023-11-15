@@ -178,6 +178,9 @@ export default {
     ),
   ],
   ImageService: { showAlt: true },
+  CommentsService: {
+    showTitle: true
+  },
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

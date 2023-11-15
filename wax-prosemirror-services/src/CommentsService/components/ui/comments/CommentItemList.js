@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clone, uniqueId } from 'lodash';
-import { override } from '@pubsweet/ui-toolkit';
+import { override, th } from '@pubsweet/ui-toolkit';
 
 import CommentItem from './CommentItem';
 
@@ -13,6 +13,13 @@ const Wrapper = styled.div`
     margin-bottom: 16px;
   }
   ${override('Wax.CommentItemWrapper')}
+`;
+
+const CommentTitle = styled.span`
+  font-weight: bold;
+  font-size: ${th('fontSizeBase')};
+
+  ${override('Wax.CommentItemTitle')}
 `;
 
 const More = styled.span`
@@ -27,7 +34,7 @@ const More = styled.span`
 `;
 
 const CommentItemList = props => {
-  const { active, className, data } = props;
+  const { active, className, data, title } = props;
   if (!data || data.length === 0) return null;
 
   const [items, setItems] = useState(data);
@@ -49,6 +56,7 @@ const CommentItemList = props => {
 
   return (
     <Wrapper active={active} className={className}>
+      {title && <CommentTitle>{title}</CommentTitle>}
       {items.map(item => (
         <CommentItem
           active={active}
@@ -79,11 +87,13 @@ CommentItemList.propTypes = {
       timestamp: PropTypes.number.isRequired,
     }),
   ),
+  title: PropTypes.string,
 };
 
 CommentItemList.defaultProps = {
   active: false,
   data: [],
+  title: null,
 };
 
 export default CommentItemList;

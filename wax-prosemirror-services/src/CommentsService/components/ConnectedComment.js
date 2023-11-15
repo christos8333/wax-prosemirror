@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
@@ -55,7 +56,10 @@ export default ({ comment, top, commentId, recalculateTops }) => {
   };
 
   const commentConfig = app.config.get('config.CommentsService');
-  const isReadOnly = commentConfig ? commentConfig.readOnly : false;
+  const isReadOnly =
+    commentConfig && commentConfig.readOnly ? commentConfig.readOnly : false;
+  const showTitle =
+    commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const activeComment = commentPlugin.getState(activeView.state).comment;
 
@@ -68,16 +72,17 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     }
   }, [activeComment]);
 
-  const onClickPost = content => {
-    const { tr } = state;
+  const onClickPost = ({ commentValue, title }) => {
     setClickPost(true);
     const obj = {
-      content,
+      content: commentValue,
       displayName: user.username,
       timestamp: Math.floor(Date.now()),
     };
 
+    comment.attrs.title = title || comment.attrs.title;
     comment.attrs.conversation.push(obj);
+
     const id = uuidv4();
     allCommentsWithSameId.forEach(singleComment => {
       activeView.dispatch(
@@ -98,6 +103,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
               group: comment.attrs.group,
               viewid: comment.attrs.viewid,
               conversation: comment.attrs.conversation,
+              title: comment.attrs.title,
             }),
           )
           .setMeta('forceUpdate', true),
@@ -148,17 +154,13 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     activeView.focus();
   };
 
-  const onTextAreaBlur = (content, isNewComment) => {
+  const onTextAreaBlur = () => {
     // TODO Save into local storage
     // if (content !== '') {
     //   onClickPost(content);
     // }
     setTimeout(() => {
-      if (
-        comment.attrs.conversation.length === 0 &&
-        isNewComment &&
-        !clickPost
-      ) {
+      if (comment.attrs.conversation.length === 0 && !clickPost) {
         onClickResolve();
         activeView.focus();
       }
@@ -184,6 +186,8 @@ export default ({ comment, top, commentId, recalculateTops }) => {
           onClickResolve={onClickResolve}
           onTextAreaBlur={onTextAreaBlur}
           recalculateTops={recalculateTops}
+          showTitle={showTitle}
+          title={comment.attrs.title}
         />
       </ConnectedCommentStyled>
     ),

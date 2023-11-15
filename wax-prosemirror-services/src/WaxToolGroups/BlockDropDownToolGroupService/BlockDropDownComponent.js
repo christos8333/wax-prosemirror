@@ -10,7 +10,12 @@ import React, {
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
+import {
+  DocumentHelpers,
+  WaxContext,
+  Icon,
+  useOnClickOutside,
+} from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -76,20 +81,12 @@ const StyledIcon = styled(Icon)`
 
 const BlockDropDownComponent = ({ view, tools }) => {
   const { t, i18n } = useTranslation();
-  const context = useContext(WaxContext);
-  const {
-    activeView,
-    activeViewId,
-    pmViews: { main },
-  } = context;
 
   const translatedLabel = (translation, defaultLabel) => {
     return !isEmpty(i18n) && i18n.exists(translation)
       ? t(translation)
       : defaultLabel;
   };
-
-  const [label, setLabel] = useState(null);
 
   const dropDownOptions = [
     {
@@ -119,6 +116,37 @@ const BlockDropDownComponent = ({ view, tools }) => {
     },
   ];
 
+  const context = useContext(WaxContext);
+  const {
+    app,
+    activeView,
+    activeViewId,
+    pmViews: { main },
+  } = context;
+  const [label, setLabel] = useState(null);
+  const { dispatch, state } = view;
+
+  /* Chapter Title */
+  const titleNode = DocumentHelpers.findChildrenByType(
+    state.doc,
+    state.config.schema.nodes.title,
+    true,
+  );
+  const titleConfig = app.config.get('config.TitleService');
+
+  let chapterTitle = '';
+  if (titleNode[0]) chapterTitle = titleNode[0].node.textContent;
+
+  useEffect(() => {
+    if (titleConfig) {
+      if (titleNode[0]) {
+        titleConfig.updateTitle(titleNode[0].node.textContent);
+      } else {
+        titleConfig.updateTitle('');
+      }
+    }
+  }, [chapterTitle]);
+
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -135,7 +163,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
   }, [isDisabled]);
 
   useEffect(() => {
-    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Heading styles'));
+    setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Styles'));
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
         setTimeout(() => {

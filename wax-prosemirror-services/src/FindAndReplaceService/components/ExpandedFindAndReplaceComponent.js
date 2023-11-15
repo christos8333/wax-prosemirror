@@ -97,8 +97,8 @@ const ControlContainer = styled.div`
 `;
 
 const ButtonReplace = styled.button`
-  background: ${th('colorBackgroundButton')};
-  border: 1px solid ${th('colorBackgroundButton')};
+  background: ${th('colorPrimary')};
+  border: 1px solid ${th('colorPrimary')};
   color: white;
   cursor: pointer;
   height: 42px;
@@ -108,8 +108,8 @@ const ButtonReplace = styled.button`
 
 const ButtonReplaceAll = styled.button`
   background: white;
-  border: 1px solid ${th('colorBackgroundButton')};
-  color: ${th('colorBackgroundButton')};
+  border: 1px solid ${th('colorPrimary')};
+  color: ${th('colorPrimary')};
   cursor: pointer;
   height: 42px;
   margin-right: 10px;

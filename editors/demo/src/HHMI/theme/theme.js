@@ -22,7 +22,6 @@ const cokoTheme = {
   colorWarning: '#ffc107',
   colorBackgroundToolBar: '#fff',
   colorSelection: '#C5D7FE',
-  colorBackgroundButton: '#0042C7',
   /* Text variables */
 
   // fonts

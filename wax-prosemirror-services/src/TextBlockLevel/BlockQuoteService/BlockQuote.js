@@ -19,7 +19,7 @@ class BlockQuote extends Tools {
 
   select = (state, activeViewId) => {
     if (activeViewId !== 'main') return false;
-    return true;
+    return wrapIn(state.config.schema.nodes.blockquote)(state);
   };
 
   get active() {

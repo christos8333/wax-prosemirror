@@ -37,7 +37,7 @@ const CheckBoxLabel = styled.label`
 
   input:checked ~ span::after {
     background-color: transparent;
-    border: solid ${th('colorBackgroundButton')};
+    border: solid ${th('colorPrimary')};
     border-radius: 0;
     border-width: 0 2px 2px 0;
     height: 12px;
@@ -66,7 +66,7 @@ const CheckboxCustom = styled.span`
   -o-transition: all 0.3s ease-out;
 
   &:after {
-    border: solid ${th('colorBackgroundButton')};
+    border: solid ${th('colorPrimary')};
     border-radius: 5px;
     border-width: 0 3px 3px 0;
     content: '';

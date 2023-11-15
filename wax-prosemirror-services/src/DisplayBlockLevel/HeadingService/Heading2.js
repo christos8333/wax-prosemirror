@@ -45,7 +45,7 @@ export default class Heading2 extends Tools {
       if (allowedLevel > 2) return false;
     }
 
-    return true;
+    return Commands.setBlockType(state.config.schema.nodes.heading2)(state);
   };
 
   get enable() {

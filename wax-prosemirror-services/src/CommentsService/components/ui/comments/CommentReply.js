@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
-import useOutsideClick from './useOutsideClick';
+import { useOnClickOutside } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   background: ${th('colorBackgroundHue')};
@@ -92,7 +92,7 @@ const CommentReply = props => {
 
   const ref = useRef(null);
 
-  useOutsideClick(ref, onTextAreaBlur);
+  useOnClickOutside(ref, onTextAreaBlur);
 
   useEffect(() => {
     setTimeout(() => {

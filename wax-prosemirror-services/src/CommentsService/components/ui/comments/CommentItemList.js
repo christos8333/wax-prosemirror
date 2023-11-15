@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clone, uniqueId } from 'lodash';
-import { override } from '@pubsweet/ui-toolkit';
+import { override, th } from '@pubsweet/ui-toolkit';
 
 import CommentItem from './CommentItem';
 
@@ -13,6 +13,13 @@ const Wrapper = styled.div`
     margin-bottom: 16px;
   }
   ${override('Wax.CommentItemWrapper')}
+`;
+
+const CommentTitle = styled.span`
+  font-weight: bold;
+  font-size: ${th('fontSizeBase')};
+
+  ${override('Wax.CommentItemTitle')}
 `;
 
 const More = styled.span`
@@ -49,7 +56,7 @@ const CommentItemList = props => {
 
   return (
     <Wrapper active={active} className={className}>
-      {title && <span>{title}</span>}
+      {title && <CommentTitle>{title}</CommentTitle>}
       {items.map(item => (
         <CommentItem
           active={active}

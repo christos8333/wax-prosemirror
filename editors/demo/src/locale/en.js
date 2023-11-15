@@ -147,6 +147,7 @@ const en = {
         Cancel: 'Cancel',
         Reply: 'Reply',
         'Write comment': 'Write comment',
+        'Write title': 'Write title',
       },
       Various: {
         Add: 'Add',

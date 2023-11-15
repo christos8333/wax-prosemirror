@@ -15,6 +15,21 @@ const Wrapper = styled.div`
 
 const TextWrapper = styled.div``;
 
+const CommentTitle = styled.input`
+  background: ${th('colorBackgroundHue')};
+  border: 3px solid ${th('colorBackgroundTabs')};
+  font-family: ${th('fontWriting')};
+  margin-bottom: 10px;
+  position: relative;
+  width: 100%;
+
+  &:focus {
+    outline: 1px solid ${th('colorPrimary')};
+  }
+
+  ${override('Wax.CommentTitle')}
+`;
+
 const ReplyTextArea = styled.textarea`
   background: ${th('colorBackgroundHue')};
   border: 3px solid ${th('colorBackgroundTabs')};
@@ -105,11 +120,16 @@ const CommentReply = props => {
       <form onSubmit={handleSubmit}>
         <TextWrapper>
           {isNewComment && showTitle && (
-            <input
+            <CommentTitle
               name="title"
               onChange={e => {
                 setTitle(e.target.value);
               }}
+              placeholder={`${
+                !isEmpty(i18n) && i18n.exists(`Wax.Comments.Write title`)
+                  ? t(`Wax.Comments.Write title`)
+                  : 'Write title'
+              }...`}
               ref={commentTitle}
               type="text"
               value={title}

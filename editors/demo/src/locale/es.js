@@ -148,6 +148,7 @@ const es = {
         Cancel: 'Cancelar',
         Reply: 'Responder',
         'Write comment': 'Escribir comentario',
+        'Write title': 'Escribir titulo',
       },
       Various: {
         Add: 'Agregar',

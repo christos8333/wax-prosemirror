@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Service } from 'wax-prosemirror-core';
 import { yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
 import { WebsocketProvider } from 'y-websocket';
@@ -7,10 +8,22 @@ import './yjs.css';
 class YjsService extends Service {
   name = 'YjsService';
   boot() {
-    const { connectionUrl, docIdentifier } = this.config;
-    const ydoc = new Y.Doc();
-    // const provider = new WebsocketProvider('wss://demos.yjs.dev', 'prosemirror-demo', ydoc)
-    const provider = new WebsocketProvider(connectionUrl, docIdentifier, ydoc);
+    const {
+      connectionUrl,
+      docIdentifier,
+      cursorBuilder,
+      provider: configProvider,
+      ydoc: configYdoc,
+    } = this.config;
+
+    let provider = configProvider ? configProvider() : null;
+    let ydoc = configYdoc ? configYdoc() : null;
+
+    if (!configProvider || !configYdoc) {
+      ydoc = new Y.Doc();
+      provider = new WebsocketProvider(connectionUrl, docIdentifier, ydoc);
+    }
+
     provider.on('sync', args => {
       console.log({ sync: args });
     });
@@ -23,9 +36,23 @@ class YjsService extends Service {
     provider.on('connection-error', args => {
       console.log({ connectioError: args });
     });
+
     const type = ydoc.getXmlFragment('prosemirror');
+
     this.app.PmPlugins.add('ySyncPlugin', ySyncPlugin(type));
-    this.app.PmPlugins.add('yCursorPlugin', yCursorPlugin(provider.awareness));
+
+    if (cursorBuilder) {
+      this.app.PmPlugins.add(
+        'yCursorPlugin',
+        yCursorPlugin(provider.awareness, { cursorBuilder }),
+      );
+    } else {
+      this.app.PmPlugins.add(
+        'yCursorPlugin',
+        yCursorPlugin(provider.awareness),
+      );
+    }
+
     this.app.PmPlugins.add('yUndoPlugin', yUndoPlugin());
   }
 }

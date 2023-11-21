@@ -28,14 +28,12 @@ import {
   EditorInfoToolGroupServices,
   BottomInfoService,
   TransformService,
-  TransformToolGroupService,
   TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
   CustomTagInlineToolGroupService,
   CustomTagBlockToolGroupService,
   CustomTagService,
   OENContainersService,
-  OENAsideToolGroupService,
 } from 'wax-prosemirror-services';
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
@@ -223,7 +221,6 @@ export default {
     new EditorInfoToolGroupServices(),
     new BottomInfoService(),
     new TransformService(),
-    new TransformToolGroupService(),
     new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
     new CustomTagInlineToolGroupService(),

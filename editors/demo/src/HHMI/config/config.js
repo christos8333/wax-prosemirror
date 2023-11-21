@@ -1,9 +1,7 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import {
   InlineAnnotationsService,
-  AnnotationToolGroupService,
   ImageService,
-  ImageToolGroupService,
   LinkService,
   ListsService,
   BaseService,
@@ -65,8 +63,6 @@ export default {
     new ImageService(),
     new TablesService(),
     new BaseService(),
-    new ImageToolGroupService(),
-    new AnnotationToolGroupService(),
     new DisplayTextToolGroupService(),
     new MathService(),
     new FullScreenService(),

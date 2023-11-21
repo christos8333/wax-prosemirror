@@ -6,6 +6,7 @@ import SuperscriptService from './SuperscriptService/SuperscriptService';
 import StrikeThroughService from './StrikeThroughService/StrikeThroughService';
 import UnderlineService from './UnderlineService/UnderlineService';
 import SmallCapsService from './SmallCapsService/SmallCapsService';
+import AnnotationToolGroupService from './AnnotationToolGroupService/AnnotationToolGroupService';
 
 export default [
   new CodeService(),
@@ -16,4 +17,5 @@ export default [
   new StrikeThroughService(),
   new UnderlineService(),
   new SmallCapsService(),
+  new AnnotationToolGroupService(),
 ];

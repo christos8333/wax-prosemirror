@@ -1,7 +1,6 @@
 import { DefaultSchema } from 'wax-prosemirror-core';
 import {
   InlineAnnotationsService,
-  AnnotationToolGroupService,
   ListsService,
   BaseService,
   LinkService,
@@ -30,7 +29,6 @@ const config = {
 
   services: [
     new InlineAnnotationsService(),
-    new AnnotationToolGroupService(),
     new LinkService(),
     new BaseService(),
     new ListsService(),

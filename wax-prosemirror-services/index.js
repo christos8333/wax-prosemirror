@@ -35,11 +35,8 @@ export { default as AskAiContentService } from './src/AiService/AskAiContentServ
 /*
 ToolGroups
 */
-export { default as AnnotationToolGroupService } from './src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService';
-export { default as ImageToolGroupService } from './src/WaxToolGroups/ImageToolGroupService/ImageToolGroupService';
 export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayToolGroupService/DisplayToolGroupService';
 export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
-export { default as NoteToolGroupService } from './src/WaxToolGroups/NoteToolGroupService/NoteToolGroupService';
 export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBlockToolGroupService/CodeBlockToolGroupService';
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';

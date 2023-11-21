@@ -3,9 +3,7 @@ import { debounce } from 'lodash';
 
 import {
   InlineAnnotationsService,
-  AnnotationToolGroupService,
   ImageService,
-  ImageToolGroupService,
   LinkService,
   ListsService,
   BaseService,
@@ -14,7 +12,6 @@ import {
   TextBlockLevelService,
   TextToolGroupService,
   NoteService,
-  NoteToolGroupService,
   TrackChangeService,
   CommentsService,
   CodeBlockService,
@@ -217,9 +214,6 @@ export default {
     new TablesService(),
     new BaseService(),
     new NoteService(),
-    new ImageToolGroupService(),
-    new AnnotationToolGroupService(),
-    new NoteToolGroupService(),
     new CodeBlockService(),
     new CodeBlockToolGroupService(),
     new EditingSuggestingService(),

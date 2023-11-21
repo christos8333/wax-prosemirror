@@ -1,7 +1,6 @@
 import { DefaultSchema } from 'wax-prosemirror-core';
 import {
   InlineAnnotationsService,
-  AnnotationToolGroupService,
   ListsService,
   BaseService,
   LinkService,
@@ -46,7 +45,6 @@ const configEnter = getContent => ({
   services: [
     new EnterService(),
     new InlineAnnotationsService(),
-    new AnnotationToolGroupService(),
     new LinkService(),
     new BaseService(),
     new ListsService(),

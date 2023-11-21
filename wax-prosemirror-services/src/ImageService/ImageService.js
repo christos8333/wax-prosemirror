@@ -3,8 +3,9 @@ import { imageNode, figureCaptionNode, figureNode } from './schema';
 import PlaceHolderPlugin from './plugins/placeHolderPlugin';
 import captionPlugin from './plugins/captionPlugin';
 import Image from './Image';
-import './image.css';
 import AltComponent from './AltComponent';
+import ImageToolGroupService from './ImageToolGroupService/ImageToolGroupService';
+import './image.css';
 
 class ImageService extends Service {
   name = 'ImageService';
@@ -51,6 +52,8 @@ class ImageService extends Service {
       },
     );
   }
+
+  dependencies = [new ImageToolGroupService()];
 }
 
 export default ImageService;

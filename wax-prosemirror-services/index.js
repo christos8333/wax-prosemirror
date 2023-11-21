@@ -36,7 +36,6 @@ export { default as AskAiContentService } from './src/AiService/AskAiContentServ
 ToolGroups
 */
 export { default as AnnotationToolGroupService } from './src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService';
-export { default as ListToolGroupService } from './src/WaxToolGroups/ListToolGroupService/ListToolGroupService';
 export { default as ImageToolGroupService } from './src/WaxToolGroups/ImageToolGroupService/ImageToolGroupService';
 export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayToolGroupService/DisplayToolGroupService';
 export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
@@ -45,7 +44,6 @@ export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBl
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';
 export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGroups/TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
-export { default as FullScreenToolGroupService } from './src/WaxToolGroups/FullScreenToolGroupService/FullScreenToolGroupService';
 export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';
 export { default as TextHighlightToolGroupServices } from './src/WaxToolGroups/TextHighlightToolGroupService/TextHighlightToolGroupService';
 export { default as EditorInfoToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/InfoToolGroupService/EditorInfoToolGroupService';

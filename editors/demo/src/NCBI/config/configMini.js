@@ -3,7 +3,6 @@ import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
   ListsService,
-  ListToolGroupService,
   BaseService,
   LinkService,
 } from 'wax-prosemirror-services';
@@ -33,7 +32,6 @@ const config = {
     new InlineAnnotationsService(),
     new AnnotationToolGroupService(),
     new LinkService(),
-    new ListToolGroupService(),
     new BaseService(),
     new ListsService(),
   ],

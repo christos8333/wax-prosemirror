@@ -6,12 +6,10 @@ import {
   ImageToolGroupService,
   LinkService,
   ListsService,
-  ListToolGroupService,
   BaseService,
   DisplayTextToolGroupService,
   MathService,
   FullScreenService,
-  FullScreenToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { QuestionsService } from 'wax-questions-service';
@@ -69,10 +67,8 @@ export default {
     new BaseService(),
     new ImageToolGroupService(),
     new AnnotationToolGroupService(),
-    new ListToolGroupService(),
     new DisplayTextToolGroupService(),
     new MathService(),
     new FullScreenService(),
-    new FullScreenToolGroupService(),
   ],
 };

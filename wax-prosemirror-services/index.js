@@ -42,15 +42,12 @@ export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/Disp
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';
 export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGroups/TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
 export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';
-export { default as TextHighlightToolGroupServices } from './src/WaxToolGroups/TextHighlightToolGroupService/TextHighlightToolGroupService';
 export { default as EditorInfoToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/InfoToolGroupService/EditorInfoToolGroupService';
 export { default as TransformToolGroupService } from './src/WaxToolGroups/TransformToolGroupService/TransformToolGroupService';
 export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/TrackOptionsToolGroupService/TrackOptionsToolGroupService';
 export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
 export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
-export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
-export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';
 /* Plugins */
 
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';

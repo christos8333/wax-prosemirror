@@ -25,7 +25,6 @@ import {
   SpecialCharactersService,
   SpecialCharactersToolGroupService,
   HighlightService,
-  TextHighlightToolGroupServices,
   EditorInfoToolGroupServices,
   BottomInfoService,
   TransformService,
@@ -36,8 +35,6 @@ import {
   CustomTagBlockToolGroupService,
   CustomTagService,
   OENContainersService,
-  OENLeftToolGroupService,
-  OENContainersToolGroupService,
   OENAsideToolGroupService,
 } from 'wax-prosemirror-services';
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
@@ -197,9 +194,7 @@ export default {
   },
 
   services: [
-    new OENContainersToolGroupService(),
     new OENContainersService(),
-    new OENLeftToolGroupService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),
     new DisplayToolGroupService(),
@@ -225,7 +220,6 @@ export default {
     new SpecialCharactersService(),
     new SpecialCharactersToolGroupService(),
     new HighlightService(),
-    new TextHighlightToolGroupServices(),
     new EditorInfoToolGroupServices(),
     new BottomInfoService(),
     new TransformService(),

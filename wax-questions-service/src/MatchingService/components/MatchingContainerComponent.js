@@ -12,6 +12,10 @@ const MatchingWrapper = styled.div`
   flex-direction: column;
   margin: 0px 38px 15px 38px;
   margin-top: 10px;
+
+  .ProseMirror-selectednode {
+    outline: none;
+  }
 `;
 
 const MatchingContainerTool = styled.div`

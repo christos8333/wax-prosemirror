@@ -26,8 +26,6 @@ import {
   TransformService,
   TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
-  CustomTagInlineToolGroupService,
-  CustomTagBlockToolGroupService,
   CustomTagService,
   OENContainersService,
 } from 'wax-prosemirror-services';
@@ -215,7 +213,5 @@ export default {
     new TransformService(),
     new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
-    new CustomTagInlineToolGroupService(),
-    new CustomTagBlockToolGroupService(),
   ],
 };

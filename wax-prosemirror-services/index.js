@@ -41,8 +41,6 @@ export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGrou
 export { default as EditorInfoToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/InfoToolGroupService/EditorInfoToolGroupService';
 export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/TrackOptionsToolGroupService/TrackOptionsToolGroupService';
 export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
-export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
-export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
 /* Plugins */
 
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';

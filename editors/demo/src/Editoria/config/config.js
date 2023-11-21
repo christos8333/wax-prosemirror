@@ -26,8 +26,6 @@ import {
   TransformService,
   TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
-  CustomTagInlineToolGroupService,
-  CustomTagBlockToolGroupService,
   CustomTagService,
   disallowPasteImagesPlugin,
   // YjsService,
@@ -217,7 +215,5 @@ export default {
     new TransformService(),
     new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
-    new CustomTagInlineToolGroupService(),
-    new CustomTagBlockToolGroupService(),
   ],
 };

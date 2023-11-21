@@ -18,8 +18,6 @@ import {
   EditorInfoToolGroupServices,
   BottomInfoService,
   TransformService,
-  CustomTagInlineToolGroupService,
-  CustomTagBlockToolGroupService,
   CustomTagService,
 } from 'wax-prosemirror-services';
 
@@ -101,7 +99,5 @@ export default {
     new BottomInfoService(),
     new TransformService(),
     new CustomTagService(),
-    new CustomTagInlineToolGroupService(),
-    new CustomTagBlockToolGroupService(),
   ],
 };

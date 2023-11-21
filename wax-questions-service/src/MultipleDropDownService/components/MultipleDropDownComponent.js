@@ -14,16 +14,14 @@ const activeStylesSvg = css`
 `;
 
 const StyledIconActionContainer = styled.span`
-  display: inline;
-  padding: 2px;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
   ${props => props.isActive && activeStylesContainer}
 `;
 
 const StyledIconAction = styled(Icon)`
-  height: 24px;
-  width: 24px;
-  cursor: pointer;
-
   ${props => props.isActive && activeStylesSvg}
 `;
 

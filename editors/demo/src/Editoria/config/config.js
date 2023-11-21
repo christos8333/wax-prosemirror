@@ -17,19 +17,19 @@ import {
   MathService,
   FindAndReplaceService,
   EditingSuggestingService,
-  TrackingAndEditingToolGroupService,
   FullScreenService,
   SpecialCharactersService,
   HighlightService,
   BottomInfoService,
   TransformService,
+  TrackingAndEditingToolGroupService,
   TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
   CustomTagService,
   disallowPasteImagesPlugin,
-  // YjsService,
   BlockDropDownToolGroupService,
   AskAiContentService,
+  // YjsService,
 } from 'wax-prosemirror-services';
 
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';

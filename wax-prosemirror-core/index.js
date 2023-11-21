@@ -18,7 +18,6 @@ export { default as EditoriaSchema } from './src/utilities/schema/EditoriaSchema
 export { default as Middleware } from './src/utilities/lib/Middleware';
 export { default as ToolGroup } from './src/utilities/lib/ToolGroup';
 export { default as Tools } from './src/utilities/lib/Tools';
-export { default as Translation } from './src/helpers/Translation';
 
 /* Base Services */
 export { default as LayoutService } from './src/config/defaultServices/LayoutService/LayoutService';

@@ -2,6 +2,7 @@ import { Service } from 'wax-prosemirror-core';
 import codeBlockNode from './schema/codeBlockNode';
 import highlightPlugin from './plugins/highlightPlugin';
 import CodeBlockTool from './CodeBlockTool';
+import CodeBlockToolGroupService from './CodeBlockToolGroupService/CodeBlockToolGroupService';
 import './highlightStyles.css';
 
 export default class CodeBlockService extends Service {
@@ -17,4 +18,6 @@ export default class CodeBlockService extends Service {
       code_block: codeBlockNode,
     });
   }
+
+  dependencies = [new CodeBlockToolGroupService()];
 }

@@ -19,7 +19,6 @@ export { default as SpecialCharactersService } from './src/SpecialCharactersServ
 export { default as HighlightService } from './src/HighlightService/HightlightService';
 export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
 export { default as ShortCutsInfoService } from './src/BottomInfoService/ShortCutsInfoService/ShortCutsInfoService';
-
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
@@ -32,6 +31,7 @@ export { default as OENContainersService } from './src/OENContainersService/OENC
 export { default as YjsService } from './src/YjsService/YjsService';
 export { default as ExternalAPIContentService } from './src/ExternalAPIContentService/ExternalAPIContentService';
 export { default as AskAiContentService } from './src/AiService/AskAiContentService';
+
 /*
 ToolGroups
 */
@@ -51,7 +51,6 @@ export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/
 export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
 export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
 export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';
-export { default as TitleToolGroupService } from './src/WaxToolGroups/TitleToolGroupService/TitleToolGroupService';
 /* Plugins */
 
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';

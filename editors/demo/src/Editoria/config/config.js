@@ -38,7 +38,6 @@ import {
   disallowPasteImagesPlugin,
   // YjsService,
   BlockDropDownToolGroupService,
-  // TitleToolGroupService,
   AskAiContentService,
 } from 'wax-prosemirror-services';
 
@@ -195,7 +194,6 @@ export default {
   },
 
   services: [
-    // new TitleToolGroupService(),
     // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),

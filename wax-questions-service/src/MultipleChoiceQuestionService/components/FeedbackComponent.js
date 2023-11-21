@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import { TextSelection } from 'prosemirror-state';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
@@ -50,16 +50,9 @@ export default ({ node, getPos, readOnly }) => {
     pmViews: { main },
   } = context;
 
+  const [isFirstRun, setFirstRun] = useState(true);
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
   const feedBackRef = useRef(null);
-
-  const setHeight = () => {
-    const textarea = feedBackRef.current;
-    if (!textarea) return;
-    const heightLimit = 200;
-    textarea.style.height = '';
-    textarea.style.height = `${Math.min(textarea.scrollHeight, heightLimit)}px`;
-  };
 
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
@@ -79,6 +72,14 @@ export default ({ node, getPos, readOnly }) => {
     return false;
   };
 
+  const setHeight = () => {
+    const textarea = feedBackRef.current;
+    if (!textarea) return;
+    const heightLimit = 200;
+    textarea.style.height = '';
+    textarea.style.height = `${Math.min(textarea.scrollHeight, heightLimit)}px`;
+  };
+
   const setNullSelection = () => {
     main.dispatch(
       main.state.tr.setSelection(TextSelection.create(main.state.tr.doc, null)),
@@ -91,20 +92,30 @@ export default ({ node, getPos, readOnly }) => {
     }, 50);
   };
 
-  return (
-    <FeedBack>
-      <FeedBackLabel>Feedback</FeedBackLabel>
-      <FeedBackInput
-        onChange={feedBackInput}
-        onFocus={onFocus}
-        placeholder="Insert feedback"
-        readOnly={readOnly}
-        ref={feedBackRef}
-        rows="1"
-        type="text"
-        value={feedBack}
-      />
-    </FeedBack>
+  useEffect(() => {
+    setTimeout(() => {
+      setFirstRun(false);
+    });
+  }, []);
+
+  return useMemo(
+    () => (
+      <FeedBack>
+        <FeedBackLabel>Feedback</FeedBackLabel>
+        <FeedBackInput
+          onChange={feedBackInput}
+          onFocus={onFocus}
+          placeholder="Insert feedback"
+          readOnly={readOnly}
+          ref={feedBackRef}
+          rows="1"
+          style={{ height: setHeight() }}
+          type="text"
+          value={feedBack}
+        />
+      </FeedBack>
+    ),
+    [feedBack, isFirstRun],
   );
 };
 

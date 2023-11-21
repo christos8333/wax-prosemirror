@@ -53,6 +53,14 @@ export default ({ node, getPos, readOnly }) => {
   const [feedBack, setFeedBack] = useState(node.attrs.feedback);
   const feedBackRef = useRef(null);
 
+  const setHeight = () => {
+    const textarea = feedBackRef.current;
+    if (!textarea) return;
+    const heightLimit = 200;
+    textarea.style.height = '';
+    textarea.style.height = `${Math.min(textarea.scrollHeight, heightLimit)}px`;
+  };
+
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
     const allNodes = getNodes(main);
@@ -69,14 +77,6 @@ export default ({ node, getPos, readOnly }) => {
     setNullSelection();
     setHeight();
     return false;
-  };
-
-  const setHeight = () => {
-    const textarea = feedBackRef.current;
-    if (!textarea) return;
-    const heightLimit = 200;
-    textarea.style.height = '';
-    textarea.style.height = `${Math.min(textarea.scrollHeight, heightLimit)}px`;
   };
 
   const setNullSelection = () => {
@@ -101,7 +101,6 @@ export default ({ node, getPos, readOnly }) => {
         readOnly={readOnly}
         ref={feedBackRef}
         rows="1"
-        style={{ height: setHeight() }}
         type="text"
         value={feedBack}
       />

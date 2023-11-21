@@ -52,3 +52,8 @@ export { default as Button } from './src/components/Button';
 /* Plugins */
 
 export { default as FakeCursorPlugin } from './src/config/plugins/FakeCursorPlugin';
+
+// export * from 'prosemirror-state';
+// export * from 'prosemirror-view';
+// export * from 'prosemirror-model';
+// export * from 'prosemirror-transform';

@@ -16,6 +16,7 @@ import FakeCursorPlugin from '../plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
   position: relative;
+  height: 100%;
 
   > .ProseMirror {
     padding: 5px !important;

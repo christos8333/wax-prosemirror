@@ -59,13 +59,13 @@ const backSpaceShortCut = (state, dispatch, view) => {
 };
 
 const pressEnter = (state, dispatch) => {
+  const { $from, to, from } = state.selection;
+
   // Images
-  if (state.selection.$head.parent.type.name === 'figcaption') {
+  if (state.doc.resolve(from).parent.type.name === 'figcaption') {
     return true;
   }
   if (state.selection.node && state.selection.node.type.name === 'image') {
-    const { $from, to } = state.selection;
-
     const same = $from.sharedDepth(to);
 
     const pos = $from.before(same);
@@ -88,8 +88,8 @@ const pressEnter = (state, dispatch) => {
 
     if (
       title.length === 1 &&
-      state.selection.from > title[0].pos + 1 &&
-      state.selection.from < title[0].pos + title[0].node.nodeSize - 1
+      from > title[0].pos + 1 &&
+      from < title[0].pos + title[0].node.nodeSize - 1
     ) {
       return true;
     }

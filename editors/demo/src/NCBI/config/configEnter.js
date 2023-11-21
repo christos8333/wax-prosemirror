@@ -5,7 +5,6 @@ import {
   ListsService,
   ListToolGroupService,
   BaseService,
-  BaseToolGroupService,
   LinkService,
   EnterService,
 } from 'wax-prosemirror-services';
@@ -53,7 +52,6 @@ const configEnter = getContent => ({
     new ListToolGroupService(),
     new BaseService(),
     new ListsService(),
-    new BaseToolGroupService(),
   ],
 });
 

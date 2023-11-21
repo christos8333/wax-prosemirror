@@ -5,7 +5,6 @@ import {
   ListsService,
   ListToolGroupService,
   BaseService,
-  BaseToolGroupService,
   LinkService,
 } from 'wax-prosemirror-services';
 
@@ -37,7 +36,6 @@ const config = {
     new ListToolGroupService(),
     new BaseService(),
     new ListsService(),
-    new BaseToolGroupService(),
   ],
 };
 

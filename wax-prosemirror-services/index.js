@@ -35,7 +35,6 @@ export { default as AskAiContentService } from './src/AiService/AskAiContentServ
 /*
 ToolGroups
 */
-export { default as BaseToolGroupService } from './src/WaxToolGroups/BaseToolGroupService/BaseToolGroupService';
 export { default as AnnotationToolGroupService } from './src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService';
 export { default as ListToolGroupService } from './src/WaxToolGroups/ListToolGroupService/ListToolGroupService';
 export { default as ImageToolGroupService } from './src/WaxToolGroups/ImageToolGroupService/ImageToolGroupService';

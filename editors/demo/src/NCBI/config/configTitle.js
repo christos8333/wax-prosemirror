@@ -2,7 +2,6 @@ import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
   BaseService,
-  BaseToolGroupService,
   LinkService,
 } from 'wax-prosemirror-services';
 
@@ -61,7 +60,6 @@ const configTitle = {
     new AnnotationToolGroupService(),
     new LinkService(),
     new BaseService(),
-    new BaseToolGroupService(),
   ],
 };
 

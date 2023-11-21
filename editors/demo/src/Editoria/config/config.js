@@ -10,7 +10,6 @@ import {
   ListsService,
   ListToolGroupService,
   BaseService,
-  BaseToolGroupService,
   DisplayBlockLevelService,
   DisplayToolGroupService,
   TextBlockLevelService,
@@ -179,7 +178,7 @@ export default {
   ],
   ImageService: { showAlt: true },
   CommentsService: {
-    showTitle: true
+    showTitle: true,
   },
   CustomTagService: {
     tags: [
@@ -218,7 +217,6 @@ export default {
     new ImageService(),
     new TablesService(),
     new BaseService(),
-    new BaseToolGroupService(),
     new NoteService(),
     new ImageToolGroupService(),
     new AnnotationToolGroupService(),

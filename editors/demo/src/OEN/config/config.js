@@ -22,7 +22,6 @@ import {
   HighlightService,
   BottomInfoService,
   TransformService,
-  TrackCommentOptionsToolGroupService,
   CustomTagService,
   OENContainersService,
 } from 'wax-prosemirror-services';
@@ -206,6 +205,5 @@ export default {
     new HighlightService(),
     new BottomInfoService(),
     new TransformService(),
-    new TrackCommentOptionsToolGroupService(),
   ],
 };

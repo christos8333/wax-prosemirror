@@ -4,6 +4,7 @@ import RejectTrackChangeService from './RejectTrackChangeService/RejectTrackChan
 import ShowHideTrackChangeService from './ShowHideTrackChangeService/ShowHideTrackChangeService';
 import TrackingAndEditingToolGroupService from './TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
 import TrackOptionsToolGroupService from './TrackOptionsToolGroupService/TrackOptionsToolGroupService';
+import TrackCommentOptionsToolGroupService from './TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
 
 export default [
   new EnableTrackChangeService(),
@@ -12,4 +13,5 @@ export default [
   new ShowHideTrackChangeService(),
   new TrackingAndEditingToolGroupService(),
   new TrackOptionsToolGroupService(),
+  new TrackCommentOptionsToolGroupService(),
 ];

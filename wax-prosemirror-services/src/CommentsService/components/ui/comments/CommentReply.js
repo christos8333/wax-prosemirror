@@ -97,7 +97,7 @@ const CommentReply = props => {
   useEffect(() => {
     setTimeout(() => {
       if (commentTitle.current && isNewComment) commentTitle.current.focus();
-      if (commentInput.current && !isNewComment) commentInput.current.focus();
+      if (!commentTitle.current && isNewComment) commentInput.current.focus();
     });
   }, []);
 

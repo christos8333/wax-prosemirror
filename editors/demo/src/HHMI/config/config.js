@@ -1,18 +1,13 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules';
 import {
   InlineAnnotationsService,
-  AnnotationToolGroupService,
   ImageService,
-  ImageToolGroupService,
   LinkService,
   ListsService,
-  ListToolGroupService,
   BaseService,
-  BaseToolGroupService,
   DisplayTextToolGroupService,
   MathService,
   FullScreenService,
-  FullScreenToolGroupService,
 } from 'wax-prosemirror-services';
 
 import { QuestionsService } from 'wax-questions-service';
@@ -68,13 +63,8 @@ export default {
     new ImageService(),
     new TablesService(),
     new BaseService(),
-    new BaseToolGroupService(),
-    new ImageToolGroupService(),
-    new AnnotationToolGroupService(),
-    new ListToolGroupService(),
     new DisplayTextToolGroupService(),
     new MathService(),
     new FullScreenService(),
-    new FullScreenToolGroupService(),
   ],
 };

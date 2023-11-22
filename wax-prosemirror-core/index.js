@@ -18,7 +18,6 @@ export { default as EditoriaSchema } from './src/utilities/schema/EditoriaSchema
 export { default as Middleware } from './src/utilities/lib/Middleware';
 export { default as ToolGroup } from './src/utilities/lib/ToolGroup';
 export { default as Tools } from './src/utilities/lib/Tools';
-export { default as Translation } from './src/helpers/Translation';
 
 /* Base Services */
 export { default as LayoutService } from './src/config/defaultServices/LayoutService/LayoutService';
@@ -52,3 +51,8 @@ export { default as Button } from './src/components/Button';
 /* Plugins */
 
 export { default as FakeCursorPlugin } from './src/config/plugins/FakeCursorPlugin';
+
+// export * from 'prosemirror-state';
+// export * from 'prosemirror-view';
+// export * from 'prosemirror-model';
+// export * from 'prosemirror-transform';

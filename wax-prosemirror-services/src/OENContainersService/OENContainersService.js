@@ -9,6 +9,8 @@ import OENAsideShortToolTip from './OENAsideShortToolTip';
 import OENAsideShortToolWarning from './OENAsideShortToolWarning';
 import OENAsideShortToolReminder from './OENAsideShortToolReminder';
 import PopulateHeadingsComponent from './PopulateHeadingsComponent';
+import OENLeftToolGroupService from './OENLeftToolGroupService/OENLeftToolGroupService';
+import OENContainersToolGroupService from './OENContainersToolGroupService/OENContainersToolGroupService';
 import './oenContainers.css';
 
 class OENContainersService extends Service {
@@ -59,6 +61,11 @@ class OENContainersService extends Service {
       },
     );
   }
+
+  dependencies = [
+    new OENLeftToolGroupService(),
+    new OENContainersToolGroupService(),
+  ];
 }
 
 export default OENContainersService;

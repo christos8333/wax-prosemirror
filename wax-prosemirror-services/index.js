@@ -19,7 +19,6 @@ export { default as SpecialCharactersService } from './src/SpecialCharactersServ
 export { default as HighlightService } from './src/HighlightService/HightlightService';
 export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
 export { default as ShortCutsInfoService } from './src/BottomInfoService/ShortCutsInfoService/ShortCutsInfoService';
-
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
@@ -32,32 +31,12 @@ export { default as OENContainersService } from './src/OENContainersService/OENC
 export { default as YjsService } from './src/YjsService/YjsService';
 export { default as ExternalAPIContentService } from './src/ExternalAPIContentService/ExternalAPIContentService';
 export { default as AskAiContentService } from './src/AiService/AskAiContentService';
+
 /*
 ToolGroups
 */
-export { default as BaseToolGroupService } from './src/WaxToolGroups/BaseToolGroupService/BaseToolGroupService';
-export { default as AnnotationToolGroupService } from './src/WaxToolGroups/AnnotationToolGroupService/AnnotationToolGroupService';
-export { default as ListToolGroupService } from './src/WaxToolGroups/ListToolGroupService/ListToolGroupService';
-export { default as ImageToolGroupService } from './src/WaxToolGroups/ImageToolGroupService/ImageToolGroupService';
-export { default as DisplayToolGroupService } from './src/WaxToolGroups/DisplayToolGroupService/DisplayToolGroupService';
-export { default as TextToolGroupService } from './src/WaxToolGroups/TextToolGroupService/TextToolGroupService';
-export { default as NoteToolGroupService } from './src/WaxToolGroups/NoteToolGroupService/NoteToolGroupService';
-export { default as CodeBlockToolGroupService } from './src/WaxToolGroups/CodeBlockToolGroupService/CodeBlockToolGroupService';
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';
-export { default as TrackingAndEditingToolGroupService } from './src/WaxToolGroups/TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
-export { default as FullScreenToolGroupService } from './src/WaxToolGroups/FullScreenToolGroupService/FullScreenToolGroupService';
-export { default as SpecialCharactersToolGroupService } from './src/WaxToolGroups/SpecialCharactersToolGroupService/SpecialCharactersToolGroupService';
-export { default as TextHighlightToolGroupServices } from './src/WaxToolGroups/TextHighlightToolGroupService/TextHighlightToolGroupService';
-export { default as EditorInfoToolGroupServices } from './src/WaxToolGroups/BottomToolGroupService/InfoToolGroupService/EditorInfoToolGroupService';
-export { default as TransformToolGroupService } from './src/WaxToolGroups/TransformToolGroupService/TransformToolGroupService';
-export { default as TrackOptionsToolGroupService } from './src/WaxToolGroups/TrackOptionsToolGroupService/TrackOptionsToolGroupService';
-export { default as TrackCommentOptionsToolGroupService } from './src/WaxToolGroups/TrackCommentOptionsToolGroupService/TrackCommentOptionsToolGroupService';
-export { default as CustomTagInlineToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagInlineToolGroupService/CustomTagInlineToolGroupService';
-export { default as CustomTagBlockToolGroupService } from './src/WaxToolGroups/CustomTagToolGroupService/CustomTagBlockToolGroupService/CustomTagBlockToolGroupService';
-export { default as OENContainersToolGroupService } from './src/WaxToolGroups/OENContainersToolGroupService/OENContainersToolGroupService';
-export { default as OENLeftToolGroupService } from './src/WaxToolGroups/OENLeftToolGroupService/OENLeftToolGroupService';
-export { default as TitleToolGroupService } from './src/WaxToolGroups/TitleToolGroupService/TitleToolGroupService';
 /* Plugins */
 
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';

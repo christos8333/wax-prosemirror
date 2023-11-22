@@ -22,7 +22,6 @@ import {
   HighlightService,
   BottomInfoService,
   TransformService,
-  TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
   CustomTagService,
   disallowPasteImagesPlugin,
@@ -209,7 +208,6 @@ export default {
     new HighlightService(),
     new BottomInfoService(),
     new TransformService(),
-    new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
   ],
 };

@@ -3,6 +3,7 @@ import AcceptTrackChangeService from './AcceptTrackChangeService/AcceptTrackChan
 import RejectTrackChangeService from './RejectTrackChangeService/RejectTrackChangeService';
 import ShowHideTrackChangeService from './ShowHideTrackChangeService/ShowHideTrackChangeService';
 import TrackingAndEditingToolGroupService from './TrackingAndEditingToolGroupService/TrackingAndEditingToolGroupService';
+import TrackOptionsToolGroupService from './TrackOptionsToolGroupService/TrackOptionsToolGroupService';
 
 export default [
   new EnableTrackChangeService(),
@@ -10,4 +11,5 @@ export default [
   new RejectTrackChangeService(),
   new ShowHideTrackChangeService(),
   new TrackingAndEditingToolGroupService(),
+  new TrackOptionsToolGroupService(),
 ];

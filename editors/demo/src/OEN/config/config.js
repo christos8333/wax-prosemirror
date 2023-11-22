@@ -22,7 +22,6 @@ import {
   HighlightService,
   BottomInfoService,
   TransformService,
-  TrackOptionsToolGroupService,
   TrackCommentOptionsToolGroupService,
   CustomTagService,
   OENContainersService,
@@ -207,7 +206,6 @@ export default {
     new HighlightService(),
     new BottomInfoService(),
     new TransformService(),
-    new TrackOptionsToolGroupService(),
     new TrackCommentOptionsToolGroupService(),
   ],
 };

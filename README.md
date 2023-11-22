@@ -9,7 +9,7 @@
 This library is being developed by [Cabbage Tree Labs] (https://www.cabbagetreelabs.org).
 Wax Editor is built on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-## [Various Demos.](http://wax-demo.coko.foundation/)
+## [Various Demos.](https://waxeditor.cloud68.co/)
 
 
 ## Get up and running
@@ -18,7 +18,9 @@ Run a local version of the demos
 
 1.  `yarn with node >= 14`
 
-2.  `yarn start` Will bring up a demos of different ediitors
+2.  `yarn build`
+
+3.  `yarn start` Will bring up a demos of different ediitors
 
 ## Documentation
 

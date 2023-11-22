@@ -52,7 +52,7 @@ const YesNoSwitch = ({
 }) => {
   const { testMode, showFeedBack } = customProps;
 
-  if (showFeedBack) {
+  if (showFeedBack && node) {
     const correct = node.attrs.correct ? 'YES' : 'NO';
     const answer = node.attrs.answer ? 'YES' : 'NO';
     const isCorrect = node.attrs.correct === node.attrs.answer;

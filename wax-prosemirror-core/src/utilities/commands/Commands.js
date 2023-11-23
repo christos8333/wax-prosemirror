@@ -128,7 +128,7 @@ const isOnSameTextBlock = state => {
   return false;
 };
 
-const createComment = (state, dispatch, group, viewid) => {
+const createComment = (state, dispatch, group, viewid, conversation = []) => {
   const {
     selection: { $from, $to },
     tr,
@@ -147,20 +147,38 @@ const createComment = (state, dispatch, group, viewid) => {
       footnoteNode.content.size + 2 ===
       state.selection.to - state.selection.from
     ) {
-      return createCommentOnSingleFootnote(state, dispatch, group, viewid);
+      return createCommentOnSingleFootnote(
+        state,
+        dispatch,
+        group,
+        viewid,
+        conversation,
+      );
     }
-    return createCommentOnFootnote(state, dispatch, group, viewid);
+    return createCommentOnFootnote(
+      state,
+      dispatch,
+      group,
+      viewid,
+      conversation,
+    );
   }
 
   toggleMark(state.config.schema.marks.comment, {
     id: uuidv4(),
     group,
-    conversation: [],
+    conversation,
     viewid,
   })(state, dispatch);
 };
 
-const createCommentOnSingleFootnote = (state, dispatch, group, viewid) => {
+const createCommentOnSingleFootnote = (
+  state,
+  dispatch,
+  group,
+  viewid,
+  conversation,
+) => {
   const { tr } = state;
   tr.step(
     new AddMarkStep(
@@ -169,15 +187,21 @@ const createCommentOnSingleFootnote = (state, dispatch, group, viewid) => {
       state.config.schema.marks.comment.create({
         id: uuidv4(),
         group,
-        conversation: [],
+        conversation,
         viewid,
       }),
     ),
-  );
+  ).setMeta('forceUpdate', true);
   dispatch(tr);
 };
 
-const createCommentOnFootnote = (state, dispatch, group, viewid) => {
+const createCommentOnFootnote = (
+  state,
+  dispatch,
+  group,
+  viewid,
+  conversation,
+) => {
   const {
     selection: { $from },
     selection,
@@ -231,11 +255,11 @@ const createCommentOnFootnote = (state, dispatch, group, viewid) => {
         state.config.schema.marks.comment.create({
           id,
           group,
-          conversation: [],
+          conversation,
           viewid,
         }),
       ),
-    );
+    ).setMeta('forceUpdate', true);
   });
 
   dispatch(tr);

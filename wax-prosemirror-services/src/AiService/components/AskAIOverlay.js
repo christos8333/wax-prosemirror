@@ -103,7 +103,10 @@ const SubmitButton = styled.button`
 
 const AskAIOverlay = ({ setPosition, position, config }) => {
   const { t, i18n } = useTranslation();
-  const { activeView, options } = useContext(WaxContext);
+  const {
+    pmViews: { main },
+    options,
+  } = useContext(WaxContext);
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -111,11 +114,11 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const inputRef = useRef(null);
 
   useLayoutEffect(() => {
-    const WaxSurface = activeView.dom.getBoundingClientRect();
-    const { selection } = activeView.state;
+    const WaxSurface = main.dom.getBoundingClientRect();
+    const { selection } = main.state;
     const { to } = selection;
-    // const start = activeView.coordsAtPos(from);
-    const end = activeView.coordsAtPos(to - 1);
+    // const start = main.coordsAtPos(from);
+    const end = main.coordsAtPos(to - 1);
     const overLayComponent = document.getElementById('ai-overlay');
     if (!overLayComponent) return;
     const overLayComponentCoords = overLayComponent.getBoundingClientRect();
@@ -145,7 +148,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleInsertTextBelow = () => {
-    replaceSelectedText(activeView, result);
+    replaceSelectedText(main, result);
   };
 
   const handleSubmit = async () => {
@@ -158,8 +161,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     setIsLoading(true);
 
     // Get the highlighted text from the editor
-    const { from, to } = activeView.state.selection;
-    const highlightedText = activeView.state.doc.textBetween(from, to);
+    const { from, to } = main.state.selection;
+    const highlightedText = main.state.doc.textBetween(from, to);
 
     // Combine the user's input and the highlighted text
     const combinedInput = `${inputValue}\n\nHighlighted Text: ${highlightedText}`;
@@ -177,7 +180,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   };
 
   const handleReplaceText = () => {
-    replaceSelectedText(activeView, result, true);
+    replaceSelectedText(main, result, true);
   };
 
   const discardResults = () => {

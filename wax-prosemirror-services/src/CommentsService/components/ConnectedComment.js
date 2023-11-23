@@ -4,7 +4,7 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy } from 'lodash';
 import styled from 'styled-components';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers, Commands } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
@@ -48,7 +48,6 @@ export default ({ comment, top, commentId, recalculateTops }) => {
       comment,
     );
   }
-
   const commentMark = state.schema.marks.comment;
 
   const styles = {
@@ -92,23 +91,29 @@ export default ({ comment, top, commentId, recalculateTops }) => {
           commentMark,
         ),
       );
-
-      activeView.dispatch(
-        activeView.state.tr
-          .addMark(
-            singleComment.pos,
-            singleComment.pos + singleComment.node.nodeSize,
-            commentMark.create({
-              id,
-              group: comment.attrs.group,
-              viewid: comment.attrs.viewid,
-              conversation: comment.attrs.conversation,
-              title: comment.attrs.title,
-            }),
-          )
-          .setMeta('forceUpdate', true),
-      );
+      // activeView.dispatch(
+      //   activeView.state.tr
+      //     .addMark(
+      //       singleComment.pos,
+      //       singleComment.pos + singleComment.node.nodeSize,
+      //       commentMark.create({
+      //         id,
+      //         group: comment.attrs.group,
+      //         viewid: comment.attrs.viewid,
+      //         conversation: comment.attrs.conversation,
+      //         title: comment.attrs.title,
+      //       }),
+      //     )
+      //     .setMeta('forceUpdate', true),
+      // );
     });
+    Commands.createComment(
+      activeView.state,
+      activeView.dispatch,
+      comment.attrs.group,
+      comment.attrs.viewid,
+      comment.attrs.conversation,
+    );
     activeView.focus();
     recalculateTops();
   };

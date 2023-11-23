@@ -33,6 +33,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     },
     app,
     activeView,
+    activeViewId,
   } = context;
 
   const [isActive, setIsActive] = useState(false);
@@ -91,29 +92,35 @@ export default ({ comment, top, commentId, recalculateTops }) => {
           commentMark,
         ),
       );
-      // activeView.dispatch(
-      //   activeView.state.tr
-      //     .addMark(
-      //       singleComment.pos,
-      //       singleComment.pos + singleComment.node.nodeSize,
-      //       commentMark.create({
-      //         id,
-      //         group: comment.attrs.group,
-      //         viewid: comment.attrs.viewid,
-      //         conversation: comment.attrs.conversation,
-      //         title: comment.attrs.title,
-      //       }),
-      //     )
-      //     .setMeta('forceUpdate', true),
-      // );
+
+      if (activeViewId !== 'main') {
+        activeView.dispatch(
+          activeView.state.tr
+            .addMark(
+              singleComment.pos,
+              singleComment.pos + singleComment.node.nodeSize,
+              commentMark.create({
+                id,
+                group: comment.attrs.group,
+                viewid: comment.attrs.viewid,
+                conversation: comment.attrs.conversation,
+                title: comment.attrs.title,
+              }),
+            )
+            .setMeta('forceUpdate', true),
+        );
+      }
     });
-    Commands.createComment(
-      activeView.state,
-      activeView.dispatch,
-      comment.attrs.group,
-      comment.attrs.viewid,
-      comment.attrs.conversation,
-    );
+
+    if (activeViewId === 'main') {
+      Commands.createComment(
+        pmViews.main.state,
+        pmViews.main.dispatch,
+        comment.attrs.group,
+        comment.attrs.viewid,
+        comment.attrs.conversation,
+      );
+    }
     activeView.focus();
     recalculateTops();
   };

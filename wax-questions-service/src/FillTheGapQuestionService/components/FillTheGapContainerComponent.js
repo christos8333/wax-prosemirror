@@ -119,7 +119,6 @@ export default ({ node, view, getPos }) => {
   return (
     <FillTheGapWrapper>
       <div>
-        {/* <span> Fill The Gap</span> */}
         {!testMode && !readOnly && (
           <FillTheGapContainerTool>
             <FillTheGapTool />

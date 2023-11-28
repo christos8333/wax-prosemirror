@@ -121,11 +121,6 @@ const QuestionEditorComponent = ({
       'Mod-y': () => redo(view.state, view.dispatch),
       'Mod-[': liftListItem(view.state.schema.nodes.list_item),
       'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
-      //   Enter: () =>
-      //     splitListItem(questionView.state.schema.nodes.list_item)(
-      //       questionView.state,
-      //       questionView.dispatch,
-      //     ),
       Enter: pressEnter,
     };
   };

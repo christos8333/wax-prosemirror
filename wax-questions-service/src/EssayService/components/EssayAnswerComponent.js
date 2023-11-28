@@ -191,7 +191,7 @@ const EssayAnswerComponent = ({ node, view, getPos }) => {
   };
 
   return (
-    <EditorWrapper testMode={testMode} showFeedBack={showFeedBack}>
+    <EditorWrapper showFeedBack={showFeedBack} testMode={testMode}>
       <div ref={editorRef} />
     </EditorWrapper>
   );

@@ -8,7 +8,7 @@ import {
 import { th } from '@pubsweet/ui-toolkit';
 
 import styled from 'styled-components';
-import ContainerEditor from './ContainerEditor';
+import ContainerEditor from '../../FillTheGapQuestionService/components/ContainerEditor';
 
 const EssayQuestionWrapper = styled.div`
   margin: 0px 38px 15px 38px;

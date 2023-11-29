@@ -37,7 +37,9 @@ const createEmptyParagraph = (context, newAnswerId) => {
     if (pmViews[newAnswerId].dispatch) {
       const type = pmViews.main.state.schema.nodes.paragraph;
       pmViews[newAnswerId].dispatch(
-        pmViews[newAnswerId].state.tr.insert(0, type.create()),
+        pmViews[newAnswerId].state.tr
+          .insert(0, type.create())
+          .setMeta('exludeToHistoryFromOutside', true),
       );
     }
     pmViews[newAnswerId].dispatch(

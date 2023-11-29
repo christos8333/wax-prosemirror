@@ -1,23 +1,28 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, TextSelection, NodeSelection } from 'prosemirror-state';
+import { dropCursor } from 'prosemirror-dropcursor';
+import { gapCursor } from 'prosemirror-gapcursor';
 import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import {
   splitListItem,
   liftListItem,
   sinkListItem,
 } from 'prosemirror-schema-list';
 import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
+import FakeCursorPlugin from '../../MultipleDropDownService/plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
   border: none;
   display: flex;
   flex: 2 1 auto;
+  width: 100%;
   justify-content: left;
 
   .ProseMirror {
@@ -27,6 +32,18 @@ const EditorWrapper = styled.div`
 
     &:focus {
       outline: none;
+    }
+
+    :empty::before {
+      content: 'Type your item';
+      color: #aaa;
+      float: left;
+      font-style: italic;
+      pointer-events: none;
+    }
+
+    p:first-child {
+      margin: 0;
     }
 
     p.empty-node:first-child::before {
@@ -42,7 +59,16 @@ const EditorWrapper = styled.div`
     }
   }
 `;
-const EssayQuestionComponent = ({ node, view, getPos }) => {
+
+let WaxOverlays = () => true;
+
+const QuestionEditorComponent = ({
+  node,
+  view,
+  getPos,
+  placeholderText = 'Type your item',
+  QuestionType = 'Multiple',
+}) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -50,14 +76,13 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
     app,
     pmViews: { main },
   } = context;
-
-  let essayQuestionView;
+  let questionView;
   const questionId = node.attrs.id;
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
-  let finalPlugins = [];
+  let finalPlugins = [FakeCursorPlugin(), gapCursor(), dropCursor()];
 
   const createKeyBindings = () => {
     const keys = getKeys();
@@ -109,12 +134,13 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
   };
 
   finalPlugins = finalPlugins.concat([
-    createPlaceholder('Type your essay item'),
+    createPlaceholder(placeholderText),
     ...plugins,
   ]);
 
   useEffect(() => {
-    essayQuestionView = new EditorView(
+    WaxOverlays = ComponentPlugin('waxOverlays');
+    questionView = new EditorView(
       {
         mount: editorRef.current,
       },
@@ -124,7 +150,6 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
           doc: node,
           plugins: finalPlugins,
         }),
-
         dispatchTransaction,
         disallowedTools: ['MultipleChoice'],
         handleDOMEvents: {
@@ -137,26 +162,34 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
                   new TextSelection(
                     main.state.tr.doc.resolve(
                       getPos() +
-                        2 +
+                        1 +
                         context.pmViews[questionId].state.selection.to,
                     ),
                   ),
                 ),
             );
+            // context.pmViews[activeViewId].dispatch(
+            //   context.pmViews[activeViewId].state.tr.setSelection(
+            //     TextSelection.between(
+            //       context.pmViews[activeViewId].state.selection.$anchor,
+            //       context.pmViews[activeViewId].state.selection.$head,
+            //     ),
+            //   ),
+            // );
+
             context.updateView({}, questionId);
 
-            if (essayQuestionView.hasFocus()) essayQuestionView.focus();
+            if (questionView.hasFocus()) questionView.focus();
           },
           blur: (editorView, event) => {
-            if (essayQuestionView && event.relatedTarget === null) {
-              essayQuestionView.focus();
+            if (questionView && event.relatedTarget === null) {
+              questionView.focus();
             }
           },
         },
-        handleClickOn: () => {
-          context.updateView({}, questionId);
-        },
-
+        type: QuestionType,
+        scrollMargin: 200,
+        scrollThreshold: 200,
         attributes: {
           spellcheck: 'false',
         },
@@ -166,22 +199,21 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
     // Set Each note into Wax's Context
     context.updateView(
       {
-        [questionId]: essayQuestionView,
+        [questionId]: questionView,
       },
       questionId,
     );
-    if (essayQuestionView.hasFocus()) essayQuestionView.focus();
+    if (questionView.hasFocus()) questionView.focus();
   }, []);
 
   const dispatchTransaction = tr => {
-    const outerTr = main.state.tr;
-    main.dispatch(outerTr.setMeta('outsideView', questionId));
-    const { state, transactions } = essayQuestionView.state.applyTransaction(
-      tr,
-    );
+    const addToHistory = !tr.getMeta('exludeToHistoryFromOutside');
+    const { state, transactions } = questionView.state.applyTransaction(tr);
+    questionView.updateState(state);
     context.updateView({}, questionId);
-    essayQuestionView.updateState(state);
+
     if (!tr.getMeta('fromOutside')) {
+      const outerTr = view.state.tr;
       const offsetMap = StepMap.offset(getPos() + 1);
       for (let i = 0; i < transactions.length; i++) {
         const { steps } = transactions[i];
@@ -189,15 +221,20 @@ const EssayQuestionComponent = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        main.dispatch(outerTr.setMeta('outsideView', questionId));
+        view.dispatch(
+          outerTr
+            .setMeta('outsideView', questionId)
+            .setMeta('addToHistory', addToHistory),
+        );
     }
   };
 
   return (
     <EditorWrapper>
       <div ref={editorRef} />
+      <WaxOverlays activeViewId={questionId} />
     </EditorWrapper>
   );
 };
 
-export default EssayQuestionComponent;
+export default QuestionEditorComponent;

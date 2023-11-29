@@ -136,7 +136,11 @@ const ContainerEditor = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+        view.dispatch(
+          outerTr
+            .setMeta('outsideView', questionId)
+            .setMeta('addToHistory', tr.getMeta('addToHistory')),
+        );
     }
   };
 

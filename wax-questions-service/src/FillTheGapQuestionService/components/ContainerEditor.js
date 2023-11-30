@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
@@ -29,7 +30,13 @@ const EditorWrapper = styled.div`
   }
 `;
 
-const ContainerEditor = ({ node, view, getPos }) => {
+const ContainerEditor = ({
+  node,
+  view,
+  getPos,
+  disallowedTools,
+  isNotEditable = false,
+}) => {
   const editorRef = useRef();
 
   const context = useContext(WaxContext);
@@ -40,9 +47,11 @@ const ContainerEditor = ({ node, view, getPos }) => {
 
   let gapContainerView;
   const questionId = node.attrs.id;
-  const isEditable = main.props.editable(editable => {
+  let isEditable = main.props.editable(editable => {
     return editable;
   });
+
+  if (isNotEditable) isEditable = false;
 
   let finalPlugins = [];
 
@@ -77,14 +86,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
           plugins: finalPlugins,
         }),
         dispatchTransaction,
-        disallowedTools: [
-          'Images',
-          'Lists',
-          'lift',
-          'Tables',
-          'FillTheGap',
-          'MultipleChoice',
-        ],
+        disallowedTools,
         type: 'filltheGapContaier',
         handleDOMEvents: {
           mousedown: () => {
@@ -136,7 +138,11 @@ const ContainerEditor = ({ node, view, getPos }) => {
           outerTr.step(steps[j].map(offsetMap));
       }
       if (outerTr.docChanged)
-        view.dispatch(outerTr.setMeta('outsideView', questionId));
+        view.dispatch(
+          outerTr
+            .setMeta('outsideView', questionId)
+            .setMeta('addToHistory', tr.getMeta('addToHistory')),
+        );
     }
   };
 

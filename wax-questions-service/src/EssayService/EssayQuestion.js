@@ -37,13 +37,15 @@ const createEmptyParagraph = (context, newAnswerId) => {
     if (pmViews[newAnswerId].dispatch) {
       const type = pmViews.main.state.schema.nodes.paragraph;
       pmViews[newAnswerId].dispatch(
-        pmViews[newAnswerId].state.tr.insert(0, type.create()),
+        pmViews[newAnswerId].state.tr
+          .insert(0, type.create())
+          .setMeta('exludeToHistoryFromOutside', true),
       );
     }
     pmViews[newAnswerId].dispatch(
       pmViews[newAnswerId].state.tr.setSelection(
         TextSelection.between(
-          pmViews[newAnswerId].state.selection.$anchor,
+          pmViews[newAnswerId].state.selection.$head,
           pmViews[newAnswerId].state.selection.$head,
         ),
       ),
@@ -116,7 +118,10 @@ class EssayQuestion extends Tools {
   get active() {
     return state => {
       if (
-        Commands.isParentOfType(state, state.config.schema.nodes.essay_question)
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.essay_container,
+        )
       ) {
         return true;
       }

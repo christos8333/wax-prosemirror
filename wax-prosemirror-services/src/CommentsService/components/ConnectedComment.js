@@ -28,7 +28,7 @@ export default ({ comment, top, commentId, recalculateTops }) => {
     pmViews,
     pmViews: {
       main: {
-        props: { user },
+        props: { user, users },
       },
     },
     app,
@@ -74,9 +74,14 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const onClickPost = ({ commentValue, title }) => {
     setClickPost(true);
+    let currentUser = users.find(u => u.currentUser === true);
+    if (user) {
+      currentUser = user;
+    }
     const obj = {
       content: commentValue,
-      displayName: user.username,
+      displayName: currentUser ? currentUser.username : 'Anonymous',
+      userId: currentUser ? currentUser.userId : '1',
       timestamp: Math.floor(Date.now()),
     };
 

@@ -42,6 +42,7 @@ const Wax = forwardRef((props, ref) => {
     readonly,
     value,
     user,
+    users,
     onChange,
     targetFormat,
     scrollMargin,
@@ -80,6 +81,7 @@ const Wax = forwardRef((props, ref) => {
             undefined
           }
           user={user}
+          users={users}
           value={value}
         >
           {({ editor }) => <WaxRender className={className} editor={editor} />}

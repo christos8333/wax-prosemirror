@@ -26,6 +26,11 @@ const user = {
   username: 'admin',
 };
 
+// const users = [{
+//   userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+//   username: 'admin',
+// }];
+
 const Editoria = () => {
   const [width] = useWindowSize();
 
@@ -62,7 +67,7 @@ const Editoria = () => {
         />
       </>
     ),
-    [layout, finalConfig],
+    [key, finalConfig, layout],
   );
   return <>{EditoriaComponent}</>;
 };

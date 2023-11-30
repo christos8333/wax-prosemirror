@@ -38,6 +38,7 @@ const WaxView = forwardRef((props, ref) => {
     readonly,
     autoFocus,
     user,
+    users,
     targetFormat,
     serializer,
     scrollMargin,
@@ -73,6 +74,7 @@ const WaxView = forwardRef((props, ref) => {
             dispatchTransaction,
             disallowedTools: [],
             user,
+            users,
             scrollMargin: scrollMargin || 200,
             scrollThreshold: scrollThreshold || 200,
             attributes: {

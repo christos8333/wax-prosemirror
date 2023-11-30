@@ -133,6 +133,7 @@ CommentBox.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       displayName: PropTypes.string.isRequired,
+      userId: PropTypes.string,
       timestamp: PropTypes.string.number,
     }),
   ),

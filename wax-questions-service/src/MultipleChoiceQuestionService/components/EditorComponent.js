@@ -68,6 +68,7 @@ const QuestionEditorComponent = ({
   getPos,
   placeholderText = 'Type your item',
   QuestionType = 'Multiple',
+  forceEditable = false,
 }) => {
   const editorRef = useRef();
 
@@ -78,9 +79,10 @@ const QuestionEditorComponent = ({
   } = context;
   let questionView;
   const questionId = node.attrs.id;
-  const isEditable = main.props.editable(editable => {
+  let isEditable = main.props.editable(editable => {
     return editable;
   });
+  if (forceEditable) isEditable = true;
 
   let finalPlugins = [FakeCursorPlugin(), gapCursor(), dropCursor()];
 
@@ -210,7 +212,9 @@ const QuestionEditorComponent = ({
     const addToHistory = !tr.getMeta('exludeToHistoryFromOutside');
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
-    context.updateView({}, questionId);
+    setTimeout(() => {
+      context.updateView({}, questionId);
+    });
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;

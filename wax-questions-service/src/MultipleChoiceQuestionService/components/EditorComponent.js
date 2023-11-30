@@ -119,8 +119,8 @@ const QuestionEditorComponent = ({
 
   const getKeys = () => {
     return {
-      'Mod-z': () => undo(view.state, view.dispatch),
-      'Mod-y': () => redo(view.state, view.dispatch),
+      'Mod-z': () => undo(main.state, main.dispatch),
+      'Mod-y': () => redo(main.state, main.dispatch),
       'Mod-[': liftListItem(view.state.schema.nodes.list_item),
       'Mod-]': sinkListItem(view.state.schema.nodes.list_item),
       Enter: pressEnter,

@@ -45,7 +45,7 @@ const createEmptyParagraph = (context, newAnswerId) => {
     pmViews[newAnswerId].dispatch(
       pmViews[newAnswerId].state.tr.setSelection(
         TextSelection.between(
-          pmViews[newAnswerId].state.selection.$anchor,
+          pmViews[newAnswerId].state.selection.$head,
           pmViews[newAnswerId].state.selection.$head,
         ),
       ),

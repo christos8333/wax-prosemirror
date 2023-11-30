@@ -78,7 +78,12 @@ export default ({ node, view, getPos }) => {
         )}
       </div>
       <EssayQuestionContainer className="essay-question">
-        <ContainerEditor getPos={getPos} node={node} view={view} />
+        <ContainerEditor
+          disallowedTools={['FillTheGap', 'MultipleChoice']}
+          getPos={getPos}
+          node={node}
+          view={view}
+        />
       </EssayQuestionContainer>
     </EssayQuestionWrapper>
   );

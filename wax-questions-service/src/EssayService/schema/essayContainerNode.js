@@ -4,9 +4,7 @@ const essayContainerNode = {
     class: { default: 'essay' },
   },
   group: 'block questions',
-  atom: true,
-  selectable: true,
-  draggable: true,
+  isolating: true,
   content: 'block+',
   parseDOM: [
     {

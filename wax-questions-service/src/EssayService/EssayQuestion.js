@@ -118,7 +118,10 @@ class EssayQuestion extends Tools {
   get active() {
     return state => {
       if (
-        Commands.isParentOfType(state, state.config.schema.nodes.essay_question)
+        Commands.isParentOfType(
+          state,
+          state.config.schema.nodes.essay_container,
+        )
       ) {
         return true;
       }

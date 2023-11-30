@@ -144,7 +144,19 @@ export default ({ node, view, getPos }) => {
         )}
       </div>
       <FillTheGapContainer className="fill-the-gap">
-        <ContainerEditor getPos={getPos} node={node} view={view} />
+        <ContainerEditor
+          disallowedTools={[
+            'Images',
+            'Lists',
+            'lift',
+            'Tables',
+            'FillTheGap',
+            'MultipleChoice',
+          ]}
+          getPos={getPos}
+          node={node}
+          view={view}
+        />
 
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent

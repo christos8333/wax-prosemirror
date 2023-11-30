@@ -12,7 +12,7 @@ const renderImage = file => {
     reader.onload = () => accept(reader.result);
     reader.onerror = () => fail(reader.error);
     // Some extra delay to make the asynchronicity visible
-    setTimeout(() => reader.readAsDataURL(file), 6150);
+    setTimeout(() => reader.readAsDataURL(file), 200);
   });
 };
 
@@ -191,7 +191,7 @@ const Hhmi = () => {
         ref={editorRef}
         customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
-        value={content}
+        // value={content}
         // targetFormat="JSON"
         readonly={readOnly}
         layout={HhmiLayout}

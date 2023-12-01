@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clone, uniqueId } from 'lodash';
 import { override, th } from '@pubsweet/ui-toolkit';
-
 import CommentItem from './CommentItem';
 
 const Wrapper = styled.div`
@@ -34,7 +33,7 @@ const More = styled.span`
 `;
 
 const CommentItemList = props => {
-  const { active, className, data, title } = props;
+  const { active, className, data, title, users } = props;
   if (!data || data.length === 0) return null;
 
   const [items, setItems] = useState(data);
@@ -54,6 +53,8 @@ const CommentItemList = props => {
     }
   }, [active, data]);
 
+  const displayName = id => (users || []).find(user => user.userId === id);
+
   return (
     <Wrapper active={active} className={className}>
       {title && <CommentTitle>{title}</CommentTitle>}
@@ -61,7 +62,9 @@ const CommentItemList = props => {
         <CommentItem
           active={active}
           content={item.content}
-          displayName={item.displayName}
+          displayName={
+            (displayName(item.userId) || {}).displayName || item.displayName
+          }
           key={uniqueId('comment-item-')}
           timestamp={item.timestamp}
         />
@@ -84,16 +87,25 @@ CommentItemList.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       displayName: PropTypes.string.isRequired,
+      id: PropTypes.string,
       timestamp: PropTypes.number.isRequired,
     }),
   ),
   title: PropTypes.string,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      displayName: PropTypes.string.isRequired,
+      userId: PropTypes.string.isRequired,
+      currentUser: PropTypes.bool,
+    }),
+  ),
 };
 
 CommentItemList.defaultProps = {
   active: false,
   data: [],
   title: null,
+  users: [],
 };
 
 export default CommentItemList;

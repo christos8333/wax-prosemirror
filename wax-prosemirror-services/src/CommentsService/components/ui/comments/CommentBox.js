@@ -83,6 +83,7 @@ const CommentBox = props => {
     onTextAreaBlur,
     title,
     showTitle,
+    users,
   } = props;
 
   // send signal to make this comment active
@@ -110,7 +111,12 @@ const CommentBox = props => {
           </Resolve>
         </Head>
       )}
-      <CommentItemList active={active} data={commentData} title={title} />
+      <CommentItemList
+        active={active}
+        data={commentData}
+        title={title}
+        users={users}
+      />
       {active && (
         <StyledReply
           isNewComment={commentData.length === 0}
@@ -133,6 +139,7 @@ CommentBox.propTypes = {
     PropTypes.shape({
       content: PropTypes.string.isRequired,
       displayName: PropTypes.string.isRequired,
+      userId: PropTypes.string,
       timestamp: PropTypes.string.number,
     }),
   ),
@@ -152,12 +159,20 @@ CommentBox.propTypes = {
   onTextAreaBlur: PropTypes.func.isRequired,
   title: PropTypes.string,
   showTitle: PropTypes.bool.isRequired,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      displayName: PropTypes.string.isRequired,
+      userId: PropTypes.string.isRequired,
+      currentUser: PropTypes.bool,
+    }),
+  ),
 };
 
 CommentBox.defaultProps = {
   active: false,
   commentData: [],
   title: null,
+  users: [],
 };
 
 export default CommentBox;

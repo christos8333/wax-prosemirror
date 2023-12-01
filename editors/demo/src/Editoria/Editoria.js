@@ -67,7 +67,8 @@ const Editoria = () => {
         />
       </>
     ),
-    [key, finalConfig, layout],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [layout, finalConfig],
   );
   return <>{EditoriaComponent}</>;
 };

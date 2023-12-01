@@ -6,7 +6,7 @@ import { each, uniqBy, sortBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
 
-export default ({ area }) => {
+export default ({ area, users }) => {
   const {
     pmViews,
     pmViews: { main },
@@ -170,10 +170,11 @@ export default ({ area }) => {
         commentsTracks={marksNodes[area] || []}
         position={position}
         recalculateTops={recalculateTops}
+        users={users}
         view={main}
       />
     ),
-    [marksNodes[area] || [], position],
+    [marksNodes[area] || [], position, users],
   );
   return <>{CommentTrackComponent}</>;
 };

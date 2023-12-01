@@ -22,13 +22,13 @@ const ConnectedCommentStyled = styled.div`
   ${override('Wax.CommentOuterBox')}
 `;
 
-export default ({ comment, top, commentId, recalculateTops }) => {
+export default ({ comment, top, commentId, recalculateTops, users }) => {
   const context = useContext(WaxContext);
   const {
     pmViews,
     pmViews: {
       main: {
-        props: { user, users },
+        props: { user },
       },
     },
     app,
@@ -74,13 +74,13 @@ export default ({ comment, top, commentId, recalculateTops }) => {
 
   const onClickPost = ({ commentValue, title }) => {
     setClickPost(true);
-    let currentUser = users.find(u => u.currentUser === true);
-    if (user) {
-      currentUser = user;
-    }
+    const currentUser = user || (users || []).find(u => u.currentUser === true);
+
     const obj = {
       content: commentValue,
-      displayName: currentUser ? currentUser.username : 'Anonymous',
+      displayName: currentUser
+        ? currentUser.displayName || currentUser.username
+        : 'Anonymous',
       userId: currentUser ? currentUser.userId : '1',
       timestamp: Math.floor(Date.now()),
     };
@@ -205,10 +205,11 @@ export default ({ comment, top, commentId, recalculateTops }) => {
           recalculateTops={recalculateTops}
           showTitle={showTitle}
           title={comment.attrs.title}
+          users={users}
         />
       </ConnectedCommentStyled>
     ),
-    [isActive, top, comment.attrs.conversation.length],
+    [isActive, top, comment.attrs.conversation.length, users],
   );
   return <>{MemorizedComponent}</>;
 };

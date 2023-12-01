@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clone, uniqueId } from 'lodash';
 import { override, th } from '@pubsweet/ui-toolkit';
-import { WaxContext } from 'wax-prosemirror-core';
 import CommentItem from './CommentItem';
 
 const Wrapper = styled.div`
@@ -34,19 +33,10 @@ const More = styled.span`
 `;
 
 const CommentItemList = props => {
-  const { active, className, data, title } = props;
+  const { active, className, data, title, users } = props;
   if (!data || data.length === 0) return null;
 
   const [items, setItems] = useState(data);
-
-  const context = useContext(WaxContext);
-  const {
-    pmViews: {
-      main: {
-        props: { users },
-      },
-    },
-  } = context;
 
   useEffect(() => {
     if (!active) {
@@ -63,7 +53,7 @@ const CommentItemList = props => {
     }
   }, [active, data]);
 
-  const displayName = id => users.find(user => user.userId === id);
+  const displayName = id => (users || []).find(user => user.userId === id);
 
   return (
     <Wrapper active={active} className={className}>
@@ -73,7 +63,7 @@ const CommentItemList = props => {
           active={active}
           content={item.content}
           displayName={
-            displayName(item.userId)?.displayName || item.displayName
+            (displayName(item.userId) || {}).displayName || item.displayName
           }
           key={uniqueId('comment-item-')}
           timestamp={item.timestamp}
@@ -102,12 +92,20 @@ CommentItemList.propTypes = {
     }),
   ),
   title: PropTypes.string,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      displayName: PropTypes.string.isRequired,
+      userId: PropTypes.string.isRequired,
+      currentUser: PropTypes.bool,
+    }),
+  ),
 };
 
 CommentItemList.defaultProps = {
   active: false,
   data: [],
   title: null,
+  users: [],
 };
 
 export default CommentItemList;

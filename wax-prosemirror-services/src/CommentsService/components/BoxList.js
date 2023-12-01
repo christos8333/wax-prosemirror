@@ -4,7 +4,7 @@ import React from 'react';
 import ConnectedComment from './ConnectedComment';
 import ConnectedTrackChange from './ConnectedTrackChange';
 
-export default ({ commentsTracks, view, position, recalculateTops }) => {
+export default ({ commentsTracks, view, position, recalculateTops, users }) => {
   if (!position) return null;
   return (
     <>
@@ -24,6 +24,7 @@ export default ({ commentsTracks, view, position, recalculateTops }) => {
               key={id}
               recalculateTops={recalculateTops}
               top={top}
+              users={users}
             />
           );
         }
@@ -34,6 +35,7 @@ export default ({ commentsTracks, view, position, recalculateTops }) => {
             top={top}
             trackChange={commentTrack}
             trackChangeId={id}
+            users={users}
             view={view}
           />
         );

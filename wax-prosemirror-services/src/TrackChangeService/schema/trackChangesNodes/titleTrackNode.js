@@ -13,7 +13,7 @@ const title = {
   },
   parseDOM: [
     {
-      tag: 'p.title',
+      tag: 'h1',
       getAttrs(hook, next) {
         Object.assign(hook, {
           id: hook.dom.dataset.id,

@@ -242,17 +242,17 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
             <ActionButton onClick={tryAgain}>
               <ActionText>
                 <icons.tryAgain />{' '}
-                {!isEmpty(i18n) && i18n.exists(`Wax.AI. Try again`)
+                {!isEmpty(i18n) && i18n.exists(`Wax.AI.Try again`)
                   ? t(`Wax.AI. Try again`)
-                  : ' Try again'}
+                  : 'Try again'}
               </ActionText>
             </ActionButton>
             <ActionButton onClick={discardResults}>
               <ActionText color="#FF4E4E">
                 <icons.deleteIco />{' '}
-                {!isEmpty(i18n) && i18n.exists(`Wax.AI. Discard`)
-                  ? t(`Wax.AI. Discard`)
-                  : ' Discard'}
+                {!isEmpty(i18n) && i18n.exists(`Wax.AI.Discard`)
+                  ? t(`Wax.AI.Discard`)
+                  : 'Discard'}
               </ActionText>
             </ActionButton>
           </ActionSection>

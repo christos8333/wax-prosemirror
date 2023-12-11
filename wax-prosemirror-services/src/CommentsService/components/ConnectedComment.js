@@ -72,16 +72,69 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     }
   }, [activeComment]);
 
+  // const onClickPost = ({ commentValue, title }) => {
+  //   setClickPost(true);
+  //   const currentUser = user || (users || []).find(u => u.currentUser === true);
+
+  //   const obj = {
+  //     content: commentValue,
+  //     displayName: currentUser
+  //       ? currentUser.displayName || currentUser.username
+  //       : 'Anonymous',
+  //     userId: currentUser ? currentUser.userId : '1',
+  //     timestamp: Math.floor(Date.now()),
+  //   };
+
+  //   comment.attrs.title = title || comment.attrs.title;
+  //   comment.attrs.conversation.push(obj);
+
+  //   const id = uuidv4();
+  //   allCommentsWithSameId.forEach(singleComment => {
+  //     activeView.dispatch(
+  //       activeView.state.tr.removeMark(
+  //         singleComment.pos,
+  //         singleComment.pos + singleComment.node.nodeSize,
+  //         commentMark,
+  //       ),
+  //     );
+
+  //     if (activeViewId !== 'main') {
+  //       activeView.dispatch(
+  //         activeView.state.tr
+  //           .addMark(
+  //             singleComment.pos,
+  //             singleComment.pos + singleComment.node.nodeSize,
+  //             commentMark.create({
+  //               id,
+  //               group: comment.attrs.group,
+  //               viewid: comment.attrs.viewid,
+  //               conversation: comment.attrs.conversation,
+  //               title: comment.attrs.title,
+  //             }),
+  //           )
+  //           .setMeta('forceUpdate', true),
+  //       );
+  //     }
+  //   });
+
+  //   if (activeViewId === 'main') {
+  //     Commands.createComment(
+  //       pmViews.main.state,
+  //       pmViews.main.dispatch,
+  //       comment.attrs.group,
+  //       comment.attrs.viewid,
+  //       comment.attrs.conversation,
+  //     );
+  //   }
+  //   activeView.focus();
+  //   recalculateTops();
+  // };
+
   const onClickPost = ({ commentValue, title }) => {
     setClickPost(true);
-    const currentUser = user || (users || []).find(u => u.currentUser === true);
-
     const obj = {
       content: commentValue,
-      displayName: currentUser
-        ? currentUser.displayName || currentUser.username
-        : 'Anonymous',
-      userId: currentUser ? currentUser.userId : '1',
+      displayName: user.username,
       timestamp: Math.floor(Date.now()),
     };
 
@@ -98,34 +151,22 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         ),
       );
 
-      if (activeViewId !== 'main') {
-        activeView.dispatch(
-          activeView.state.tr
-            .addMark(
-              singleComment.pos,
-              singleComment.pos + singleComment.node.nodeSize,
-              commentMark.create({
-                id,
-                group: comment.attrs.group,
-                viewid: comment.attrs.viewid,
-                conversation: comment.attrs.conversation,
-                title: comment.attrs.title,
-              }),
-            )
-            .setMeta('forceUpdate', true),
-        );
-      }
-    });
-
-    if (activeViewId === 'main') {
-      Commands.createComment(
-        pmViews.main.state,
-        pmViews.main.dispatch,
-        comment.attrs.group,
-        comment.attrs.viewid,
-        comment.attrs.conversation,
+      activeView.dispatch(
+        activeView.state.tr
+          .addMark(
+            singleComment.pos,
+            singleComment.pos + singleComment.node.nodeSize,
+            commentMark.create({
+              id,
+              group: comment.attrs.group,
+              viewid: comment.attrs.viewid,
+              conversation: comment.attrs.conversation,
+              title: comment.attrs.title,
+            }),
+          )
+          .setMeta('forceUpdate', true),
       );
-    }
+    });
     activeView.focus();
     recalculateTops();
   };

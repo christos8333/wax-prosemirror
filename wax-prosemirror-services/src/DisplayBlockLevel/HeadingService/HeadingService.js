@@ -23,81 +23,111 @@ class HeadingService extends Service {
       return new Heading6(this.config.get('config.OENContainersService'));
     });
     const createNode = this.container.get('CreateNode');
-    createNode({
-      heading2: {
-        content: 'inline*',
-        group: 'block',
-        defining: true,
-        parseDOM: [
-          {
-            tag: 'h2',
+    createNode(
+      {
+        heading2: {
+          content: 'inline*',
+          group: 'block',
+          defining: true,
+          parseDOM: [
+            {
+              tag: 'h2',
+            },
+          ],
+          toDOM(hook, next) {
+            const attrs = {};
+            // eslint-disable-next-line no-param-reassign
+            hook.value = ['h2', attrs, 0];
+            next();
           },
-        ],
-        toDOM(node) {
-          return ['h2', 0];
         },
       },
-    });
-    createNode({
-      heading3: {
-        content: 'inline*',
-        group: 'block',
-        defining: true,
-        parseDOM: [
-          {
-            tag: 'h3',
+      { toWaxSchema: true },
+    );
+    createNode(
+      {
+        heading3: {
+          content: 'inline*',
+          group: 'block',
+          defining: true,
+          parseDOM: [
+            {
+              tag: 'h3',
+            },
+          ],
+          toDOM(hook, next) {
+            const attrs = {};
+            // eslint-disable-next-line no-param-reassign
+            hook.value = ['h3', attrs, 0];
+            next();
           },
-        ],
-        toDOM(node) {
-          return ['h3', 0];
         },
       },
-    });
-    createNode({
-      heading4: {
-        content: 'inline*',
-        group: 'block',
-        defining: true,
-        parseDOM: [
-          {
-            tag: 'h4',
+      { toWaxSchema: true },
+    );
+    createNode(
+      {
+        heading4: {
+          content: 'inline*',
+          group: 'block',
+          defining: true,
+          parseDOM: [
+            {
+              tag: 'h4',
+            },
+          ],
+          toDOM(hook, next) {
+            const attrs = {};
+            // eslint-disable-next-line no-param-reassign
+            hook.value = ['h4', attrs, 0];
+            next();
           },
-        ],
-        toDOM(node) {
-          return ['h4', 0];
         },
       },
-    });
-    createNode({
-      heading5: {
-        content: 'inline*',
-        group: 'block',
-        defining: true,
-        parseDOM: [
-          {
-            tag: 'h5',
+      { toWaxSchema: true },
+    );
+    createNode(
+      {
+        heading5: {
+          content: 'inline*',
+          group: 'block',
+          defining: true,
+          parseDOM: [
+            {
+              tag: 'h5',
+            },
+          ],
+          toDOM(hook, next) {
+            const attrs = {};
+            // eslint-disable-next-line no-param-reassign
+            hook.value = ['h5', attrs, 0];
+            next();
           },
-        ],
-        toDOM(node) {
-          return ['h5', 0];
         },
       },
-    });
-    createNode({
-      heading6: {
-        content: 'inline*',
-        group: 'block',
-        defining: true,
-        parseDOM: [
-          {
-            tag: 'h6',
+      { toWaxSchema: true },
+    );
+    createNode(
+      {
+        heading6: {
+          content: 'inline*',
+          group: 'block',
+          defining: true,
+          parseDOM: [
+            {
+              tag: 'h6',
+            },
+          ],
+          toDOM(hook, next) {
+            const attrs = {};
+            // eslint-disable-next-line no-param-reassign
+            hook.value = ['h6', attrs, 0];
+            next();
           },
-        ],
-        toDOM(node) {
-          return ['h6', 0];
         },
       },
-    });
+      { toWaxSchema: true },
+    );
   }
 }
 

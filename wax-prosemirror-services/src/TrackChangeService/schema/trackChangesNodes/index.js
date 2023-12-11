@@ -3,7 +3,11 @@ import titleTrackNode from './titleTrackNode';
 import subTitleTrackNode from './subTitleTrackNode';
 import epigraphProseTrackNode from './epigraphProseTrackNode';
 import epigraphPoetryTrackNode from './epigraphPoetryTrackNode';
-import headingTrackNode from './headingTrackNode';
+import heading2TrackNode from './heading2TrackNode';
+import heading3TrackNode from './heading3TrackNode';
+import heading4TrackNode from './heading4TrackNode';
+import heading5TrackNode from './heading5TrackNode';
+import heading6TrackNode from './heading6TrackNode';
 import paragraphContTrackNode from './paragraphContTrackNode';
 import extractProseTrackNode from './extractProseTrackNode';
 import extractPoetryTrackNode from './extractPoetryTrackNode';
@@ -25,7 +29,11 @@ export default {
   extractPoetry: extractPoetryTrackNode,
   orderedlist: orderedListTrackNode,
   sourceNote: sourceNoteTrackNode,
-  heading: headingTrackNode,
+  heading2: heading2TrackNode,
+  heading3: heading3TrackNode,
+  heading4: heading4TrackNode,
+  heading5: heading5TrackNode,
+  heading6: heading6TrackNode,
   customTagBlock: customBlockTrackNode,
   // bulletlist: bulletListTrackNode,
   // list_item: listItemTrackNode,

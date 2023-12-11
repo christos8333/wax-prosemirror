@@ -128,7 +128,14 @@ const isOnSameTextBlock = state => {
   return false;
 };
 
-const createComment = (state, dispatch, group, viewid, conversation = []) => {
+const createComment = (
+  state,
+  dispatch,
+  group,
+  viewid,
+  conversation = [],
+  title = '',
+) => {
   const {
     selection: { $from, $to },
     tr,
@@ -153,6 +160,7 @@ const createComment = (state, dispatch, group, viewid, conversation = []) => {
         group,
         viewid,
         conversation,
+        title,
       );
     }
     return createCommentOnFootnote(
@@ -161,6 +169,7 @@ const createComment = (state, dispatch, group, viewid, conversation = []) => {
       group,
       viewid,
       conversation,
+      title,
     );
   }
 
@@ -178,6 +187,7 @@ const createCommentOnSingleFootnote = (
   group,
   viewid,
   conversation,
+  title,
 ) => {
   const { tr } = state;
   tr.step(
@@ -189,6 +199,7 @@ const createCommentOnSingleFootnote = (
         group,
         conversation,
         viewid,
+        title,
       }),
     ),
   ).setMeta('forceUpdate', true);
@@ -201,6 +212,7 @@ const createCommentOnFootnote = (
   group,
   viewid,
   conversation,
+  title,
 ) => {
   const {
     selection: { $from },
@@ -257,6 +269,7 @@ const createCommentOnFootnote = (
           group,
           conversation,
           viewid,
+          title,
         }),
       ),
     ).setMeta('forceUpdate', true);

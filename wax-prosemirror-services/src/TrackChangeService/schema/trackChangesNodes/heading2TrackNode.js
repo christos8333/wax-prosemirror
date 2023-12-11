@@ -1,6 +1,6 @@
 import { SchemaHelpers } from 'wax-prosemirror-core';
 
-const title = {
+const heading2 = {
   content: 'inline*',
   group: 'block',
   priority: 0,
@@ -13,7 +13,7 @@ const title = {
   },
   parseDOM: [
     {
-      tag: 'h1',
+      tag: 'h2',
       getAttrs(hook, next) {
         Object.assign(hook, {
           id: hook.dom.dataset.id,
@@ -38,4 +38,4 @@ const title = {
   },
 };
 
-export default title;
+export default heading2;

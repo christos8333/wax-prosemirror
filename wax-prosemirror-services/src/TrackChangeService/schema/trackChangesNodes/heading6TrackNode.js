@@ -1,42 +1,19 @@
 import { SchemaHelpers } from 'wax-prosemirror-core';
 
-const heading = {
+const heading6 = {
+  content: 'inline*',
+  group: 'block',
+  priority: 0,
+  defining: true,
   attrs: {
     id: { default: '' },
     track: { default: [] },
     group: { default: '' },
     viewid: { default: '' },
   },
-  content: 'inline*',
-  group: 'block',
-  defining: true,
   parseDOM: [
     {
-      tag: 'h2',
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          id: hook.dom.dataset.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
-          group: hook.dom.dataset.group,
-          viewid: hook.dom.dataset.viewid,
-        });
-        next();
-      },
-    },
-    {
-      tag: 'h3',
-      getAttrs(hook, next) {
-        Object.assign(hook, {
-          id: hook.dom.dataset.id,
-          track: SchemaHelpers.parseTracks(hook.dom.dataset.track),
-          group: hook.dom.dataset.group,
-          viewid: hook.dom.dataset.viewid,
-        });
-        next();
-      },
-    },
-    {
-      tag: 'h4',
+      tag: 'h6',
       getAttrs(hook, next) {
         Object.assign(hook, {
           id: hook.dom.dataset.id,
@@ -61,4 +38,4 @@ const heading = {
   },
 };
 
-export default heading;
+export default heading6;

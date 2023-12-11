@@ -205,10 +205,9 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           id="askAiInput"
           onKeyPress={handleKeyDown}
           placeholder={
-            !isEmpty(i18n) &&
-            i18n.exists(`Wax.AI.Find a better way to word this`)
-              ? t(`Wax.AI.Find a better way to word this`)
-              : 'Find a better way to word this'
+            !isEmpty(i18n) && i18n.exists(`Wax.AI.Placeholder`)
+              ? t(`Wax.AI.Placeholder`)
+              : 'How can I help you? Type your prompt here.'
           }
           ref={inputRef}
           type="text"

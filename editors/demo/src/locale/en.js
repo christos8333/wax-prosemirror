@@ -72,7 +72,7 @@ const en = {
         Search: 'Search',
       },
       AI: {
-        'Find a better way to word this': 'Find a better way to word this',
+        Placeholder: 'How can I help you? Type your prompt here.',
         Submit: 'Submit',
         'Replace selected text': 'Replace selected text',
         Insert: 'Insert',

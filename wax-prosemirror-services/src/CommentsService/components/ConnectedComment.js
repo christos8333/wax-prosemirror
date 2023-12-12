@@ -132,9 +132,14 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
   const onClickPost = ({ commentValue, title }) => {
     setClickPost(true);
+    const currentUser = user || (users || []).find(u => u.currentUser === true);
+
     const obj = {
       content: commentValue,
-      displayName: user.username,
+      displayName: currentUser
+        ? currentUser.displayName || currentUser.username
+        : 'Anonymous',
+      userId: currentUser ? currentUser.userId : '1',
       timestamp: Math.floor(Date.now()),
     };
 

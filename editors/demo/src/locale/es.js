@@ -72,8 +72,7 @@ const es = {
         Search: 'Buscar',
       },
       AI: {
-        'Find a better way to word this':
-          'Encuentre una mejor manera de redactar esto',
+        Placeholder: 'Le puedo ayudar en algo? Escriba su mensaje aquí.',
         Submit: 'Entregar',
         'Replace selected text': 'Reemplazar texto seleccionado',
         Insert: 'Insertar',

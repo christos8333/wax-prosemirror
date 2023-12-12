@@ -50,7 +50,7 @@ const DropDownMenu = styled.div`
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
-  margin: 38px auto auto;
+  margin: 32px auto auto;
   position: absolute;
   width: 160px;
   max-height: 180px;

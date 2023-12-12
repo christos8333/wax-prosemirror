@@ -6,21 +6,8 @@ import { Fragment } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { findWrapping } from 'prosemirror-transform';
 import { Commands, Tools } from 'wax-prosemirror-core';
+import helpers from '../MultipleChoiceQuestionService/helpers/helpers';
 import ToolBarBtn from './components/ToolBarBtn';
-
-const checkifEmpty = view => {
-  const { state } = view;
-  const { from, to } = state.selection;
-  state.doc.nodesBetween(from, to, node => {
-    if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
-  });
-  if (state.selection.constructor.name === 'GapCursor') {
-    Commands.simulateKey(view, 13, 'Enter');
-    setTimeout(() => {
-      view.focus();
-    });
-  }
-};
 
 const createEmptyParagraph = (context, newAnswerId) => {
   const { pmViews } = context;
@@ -63,16 +50,16 @@ class EssayQuestion extends Tools {
 
   get run() {
     return (main, context) => {
-      checkifEmpty(main);
+      helpers.checkifEmpty(main);
       const { state, dispatch } = main;
       /* Create Wrapping */
       const { $from, $to } = state.selection;
       const range = $from.blockRange($to);
-      const { tr } = main.state;
+      const { tr } = state;
 
       const wrapping =
         range &&
-        findWrapping(range, main.state.config.schema.nodes.essay_container, {
+        findWrapping(range, state.config.schema.nodes.essay_container, {
           id: uuidv4(),
         });
       if (!wrapping) return false;
@@ -86,16 +73,16 @@ class EssayQuestion extends Tools {
 
       tr.setSelection(TextSelection.create(tr.doc, range.$to.pos));
 
-      const essayQuestion = main.state.config.schema.nodes.essay_question.create(
+      const essayQuestion = state.config.schema.nodes.essay_question.create(
         { id: uuidv4() },
         Fragment.empty,
       );
-      const essayPrompt = main.state.config.schema.nodes.essay_prompt.create(
+      const essayPrompt = state.config.schema.nodes.essay_prompt.create(
         { id: uuidv4() },
         Fragment.empty,
       );
 
-      const essayAnswer = main.state.config.schema.nodes.essay_answer.create(
+      const essayAnswer = state.config.schema.nodes.essay_answer.create(
         { id: uuidv4() },
         Fragment.empty,
       );

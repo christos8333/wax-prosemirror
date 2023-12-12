@@ -27,7 +27,7 @@ const replaceSelectedText = (view, responseText, replace = false) => {
     );
   }
 
-  if (responseText.includes('\n\n')) {
+  if (responseText.includes('\n\n') || /^\d+\..*\n/.test(responseText)) {
     responseText.split('\n\n').forEach(element => {
       paragraphNodes.push(
         parser.parse(elementFromString(element.replace(/\n/g, '<br />')), {

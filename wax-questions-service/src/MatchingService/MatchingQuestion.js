@@ -30,13 +30,13 @@ class MatchingQuestion extends Tools {
       if (!wrapping) return false;
       tr.wrap(range, wrapping);
 
-      const map = tr.mapping.maps[0];
-      let newPos = 0;
-      map.forEach((_from, _to, _newFrom, newTo) => {
-        newPos = newTo;
-      });
+      // const map = tr.mapping.maps[0];
+      // let newPos = 0;
+      // map.forEach((_from, _to, _newFrom, newTo) => {
+      //   newPos = newTo;
+      // });
 
-      tr.setSelection(TextSelection.create(tr.doc, range.$to.pos));
+      tr.setSelection(TextSelection.create(tr.doc, range.$to.pos + 1));
       const option = state.config.schema.nodes.matching_option.create(
         { id: uuidv4(), isfirst: true },
         Fragment.empty,

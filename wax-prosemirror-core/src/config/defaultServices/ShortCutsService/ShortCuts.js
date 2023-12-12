@@ -39,7 +39,8 @@ const backSpaceShortCut = (state, dispatch, view) => {
       node.type.name === 'fill_the_gap_container' ||
       node.type.name === 'multiple_drop_down_container' ||
       node.type.name === 'numerical_answer_container' ||
-      node.type.name === 'essay_container'
+      node.type.name === 'essay_container' ||
+      node.type.name === 'matching_container'
     ) {
       dispatch(state.tr.delete(from, from + node.nodeSize));
       // const index = $from.index($from.depth);

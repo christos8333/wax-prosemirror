@@ -2591,7 +2591,7 @@ function removeRow(tr, { map, table, tableStart }, row) {
         rowspan: attrs.rowspan - 1,
       });
       col += attrs.colspan - 1;
-    } else if (row < map.width && pos == map.map[index + map.width]) {
+    } else if (row < map.height && pos == map.map[index + map.width]) {
       const cell = table.nodeAt(pos);
       const attrs = cell.attrs;
       const copy = cell.type.create(

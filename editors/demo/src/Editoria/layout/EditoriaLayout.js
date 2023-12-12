@@ -257,6 +257,12 @@ const EditoriaLayout = ({ editor }) => {
 
   useEffect(() => {}, [delayedShowedNotes]);
 
+  // const users = [{
+  //   userId: '1',
+  //   displayName: 'test test',
+  //   currentUser: true,
+  // }]
+
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">

@@ -27,13 +27,31 @@ const replaceSelectedText = (view, responseText, replace = false) => {
     );
   }
 
-  if (responseText.includes('\n\n') || /^\d+\..*\n/.test(responseText)) {
-    responseText.split('\n\n').forEach(element => {
-      paragraphNodes.push(
-        parser.parse(elementFromString(element.replace(/\n/g, '<br />')), {
-          preserveWhitespace: true,
-        }),
-      );
+  if (responseText.includes('\n')) {
+    responseText.split('\n\n').forEach(paragraph => {
+      let content = '';
+
+      if (/^\d+\..*\n/.test(paragraph)) {
+        content = `<ol>`;
+
+        paragraph.split('\n').forEach(line => {
+          content += `<li>${line.replace(/^(\d+\.\s)/g, '').trim()}</li>`;
+        });
+
+        content += `</ol>`;
+      } else if (/^-.*\n/.test(paragraph)) {
+        content = `<ul>`;
+
+        paragraph.split('\n').forEach(line => {
+          content += `<li>${line.replace(/[-\s]/g, '')}</li>`;
+        });
+
+        content += `</ul>`;
+      } else {
+        content = paragraph.replace(/\n/g, '<br />');
+      }
+
+      paragraphNodes.push(parser.parse(elementFromString(content)));
     });
   }
 

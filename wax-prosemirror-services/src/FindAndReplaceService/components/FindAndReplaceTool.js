@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { grid, override } from '@pubsweet/ui-toolkit';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import FindAndReplaceComponent from './FindAndReplaceComponent';
+import epigraphPoetry from '../../TrackChangeService/schema/trackChangesNodes/epigraphPoetryTrackNode';
 
 const Wrapper = styled.div`
   font-size: 0;
@@ -30,6 +31,7 @@ const DropWrapper = styled.div`
 const FindAndReplaceTool = ({ item }) => {
   const { t, i18n } = useTranslation();
   const {
+    activeView,
     pmViews: { main },
   } = useContext(WaxContext);
 
@@ -77,8 +79,10 @@ const FindAndReplaceTool = ({ item }) => {
           active={isOpen}
           disabled={false}
           iconName={icon}
-          onMouseDown={() => {
+          onMouseDown={e => {
+            e.preventDefault();
             setIsOpen(!isOpen);
+            activeView.focus();
           }}
           title={
             !isEmpty(i18n) && i18n.exists(`Wax.FindAndReplace.${title}`)
@@ -92,6 +96,7 @@ const FindAndReplaceTool = ({ item }) => {
             <FindAndReplaceComponent
               close={() => {
                 setIsOpen(false);
+                activeView.focus();
               }}
             />
           </DropWrapper>

@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-assign */
 import { v4 as uuidv4 } from 'uuid';
 import { toggleMark } from 'prosemirror-commands';
 import { AddMarkStep } from 'prosemirror-transform';
@@ -178,6 +179,7 @@ const createComment = (
     group,
     conversation,
     viewid,
+    title,
   })(state, dispatch);
 };
 

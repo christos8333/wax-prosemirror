@@ -136,11 +136,19 @@ const createComment = (
   viewid,
   conversation = [],
   title = '',
+  posFrom,
+  posTo,
 ) => {
   const {
     selection: { $from, $to },
     tr,
   } = state;
+  let fromPosition = $from.pos;
+  let toPosition = $to.pos;
+  if ($from.pos === $to.pos) {
+    fromPosition = posFrom;
+    toPosition = posTo;
+  }
   let footnote = false;
   let footnoteNode;
   state.doc.nodesBetween($from.pos, $to.pos, (node, from) => {
@@ -173,14 +181,21 @@ const createComment = (
       title,
     );
   }
-
-  toggleMark(state.config.schema.marks.comment, {
-    id: uuidv4(),
-    group,
-    conversation,
-    viewid,
-    title,
-  })(state, dispatch);
+  dispatch(
+    state.tr
+      .addMark(
+        fromPosition,
+        toPosition,
+        state.config.schema.marks.comment.create({
+          id: uuidv4(),
+          group,
+          viewid,
+          conversation,
+          title,
+        }),
+      )
+      .setMeta('forceUpdate', true),
+  );
 };
 
 const createCommentOnSingleFootnote = (

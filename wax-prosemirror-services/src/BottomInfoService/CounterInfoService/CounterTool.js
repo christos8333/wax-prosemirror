@@ -202,9 +202,9 @@ const CounterTool = ({ view: { state }, item }) => {
               item={item}
               view={state}
             >
-              {Object.keys(infoDropDownOptions).map(key => (
-                <Counter key={key} title={infoDropDownOptions[key].name}>
-                  <span>{infoDropDownOptions[key].name}</span>
+              {infoDropDownOptions.map(option => (
+                <Counter key={option.name} title={option.name}>
+                  <span>{option.name}</span>
                 </Counter>
               ))}
             </CounterInfoComponent>

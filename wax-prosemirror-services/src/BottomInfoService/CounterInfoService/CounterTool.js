@@ -1,7 +1,7 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { grid, override } from '@pubsweet/ui-toolkit';
-import { MenuButton } from 'wax-prosemirror-core';
+import { MenuButton, useOnClickOutside } from 'wax-prosemirror-core';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -83,8 +83,6 @@ const Counter = styled.div`
 const CounterTool = ({ view: { state }, item }) => {
   const { t, i18n } = useTranslation();
 
-  const [isOpen, setIsOpen] = useState(true);
-
   const [wordCount, setWordCount] = useState(0);
   const [characterCount, setCharacterCount] = useState(0);
   const [charactersNoSpaceCount, setCharactersNoSpace] = useState(0);
@@ -92,10 +90,14 @@ const CounterTool = ({ view: { state }, item }) => {
   const [imageCount, setImageCount] = useState(0);
   const [footnoteCount, setFootnoteCount] = useState(0);
   const [tableCount, setTableCount] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [blockLevelNodes, setBlockLevelNodes] = useState(0);
+
+  const ref = useRef();
+  const [isOpen, setIsOpen] = useState(false);
+  useOnClickOutside(ref, () => setIsOpen(false));
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const docText = state.doc.textBetween(
       0,
       state.doc.content.size,
@@ -126,7 +128,7 @@ const CounterTool = ({ view: { state }, item }) => {
         setTableCount(prevState => prevState + 1);
       }
     });
-  }, []);
+  }, [isOpen]);
 
   const infoDropDownOptions = [
     {
@@ -178,35 +180,18 @@ const CounterTool = ({ view: { state }, item }) => {
           : 'Footnotes'
       }`,
     },
-    {
-      name: `${blockLevelNodes} ${
-        !isEmpty(i18n) && i18n.exists(`Wax.Counters.Block-Level Nodes`)
-          ? t(`Wax.Counters.Block-Level Nodes`)
-          : 'Block-Level Nodes'
-      }`,
-    },
   ];
-
-  const renderList = () => {
-    const lists = [];
-
-    Object.keys(infoDropDownOptions).forEach(key => {
-      lists.push(
-        <Counter key={key} title={infoDropDownOptions[key].name}>
-          <span>{infoDropDownOptions[key].name}</span>
-        </Counter>,
-      );
-    });
-    return <div>{lists}</div>;
-  };
 
   const MenuButtonComponent = useMemo(
     () => (
-      <Wrapper active={isOpen}>
+      <Wrapper active={isOpen} ref={ref}>
         <MenuButton
           active={isOpen}
           disabled={false}
           label="Words"
+          onMouseDown={() => {
+            setIsOpen(!isOpen);
+          }}
           title={item.title}
         />
 
@@ -217,13 +202,17 @@ const CounterTool = ({ view: { state }, item }) => {
               item={item}
               view={state}
             >
-              {renderList()}
+              {Object.keys(infoDropDownOptions).map(key => (
+                <Counter key={key} title={infoDropDownOptions[key].name}>
+                  <span>{infoDropDownOptions[key].name}</span>
+                </Counter>
+              ))}
             </CounterInfoComponent>
           </DropWrapper>
         )}
       </Wrapper>
     ),
-    [isOpen, renderList],
+    [isOpen, infoDropDownOptions],
   );
 
   return MenuButtonComponent;

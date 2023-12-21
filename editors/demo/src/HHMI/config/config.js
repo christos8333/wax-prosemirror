@@ -54,7 +54,7 @@ export default {
   RulesService: [emDash, ellipsis],
   ImageService: { showAlt: true },
 
-  PmPlugins: [invisibles([hardBreak()])],
+  PmPlugins: [invisibles([hardBreak()]), tableEditing(), columnResizing()],
   services: [
     new QuestionsService(),
     new ListsService(),

@@ -180,7 +180,11 @@ const EditorInfoTool = ({ view: { state }, item }) => {
         <MenuButton
           active={isOpen}
           disabled={false}
-          label="Words"
+          label={
+            !isEmpty(i18n) && i18n.exists(`Wax.Counters.Word`)
+              ? t(`Wax.Counters.Word`)
+              : 'Word'
+          }
           onMouseDown={() => {
             setIsOpen(!isOpen);
           }}

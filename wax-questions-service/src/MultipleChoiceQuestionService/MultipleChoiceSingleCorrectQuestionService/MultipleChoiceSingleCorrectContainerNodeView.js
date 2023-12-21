@@ -19,7 +19,7 @@ export default class MultipleChoiceSingleCorrectContainerNodeView extends Questi
   }
 
   static name() {
-    return 'multiple_choice_container';
+    return 'multiple_choice_single_correct_container';
   }
 
   stopEvent(event) {

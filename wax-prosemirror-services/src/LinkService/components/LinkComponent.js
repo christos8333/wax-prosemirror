@@ -90,7 +90,7 @@ const LinkComponent = ({ mark }) => {
         mark.to,
         schemaLinkMark.create({
           ...((mark && mark.attrs) || {}),
-          href: linkHref,
+          href: getValidUrl(linkHref),
         }),
       ),
     );

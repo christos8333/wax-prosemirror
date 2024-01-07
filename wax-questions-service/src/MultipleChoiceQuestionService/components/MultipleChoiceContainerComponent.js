@@ -98,7 +98,9 @@ const getNodes = view => {
   allNodes.forEach(node => {
     if (
       node.node.type.name === 'multiple_choice_container' ||
-      node.node.type.name === 'multiple_choice_single_correct_container'
+      node.node.type.name === 'multiple_choice_single_correct_container' ||
+      node.node.type.name === 'true_false_container' ||
+      node.node.type.name === 'true_false_single_correct_container'
     ) {
       fillTheGapContainerNodes.push(node);
     }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import ContainerEditor from '../../FillTheGapQuestionService/components/ContainerEditor';
+import ContainerEditor from '../../../FillTheGapQuestionService/components/ContainerEditor';
 
 const MultipleChoiceQuestionWrapper = styled.div`
   border: 3px solid #f5f5f7;
@@ -30,7 +30,7 @@ const StyledIconActionRemove = styled(Icon)`
 `;
 
 const MultipleChoiceQuestionContainer = styled.div`
-  // border: 3px solid #f5f5f7;
+  border: 3px solid #f5f5f7;
   margin-bottom: 30px;
 `;
 
@@ -96,10 +96,7 @@ const getNodes = view => {
   const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
   const fillTheGapContainerNodes = [];
   allNodes.forEach(node => {
-    if (
-      node.node.type.name === 'multiple_choice_container' ||
-      node.node.type.name === 'multiple_choice_single_correct_container'
-    ) {
+    if (node.node.type.name === 'multiple_choice_container') {
       fillTheGapContainerNodes.push(node);
     }
   });

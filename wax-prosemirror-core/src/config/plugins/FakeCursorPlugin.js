@@ -11,27 +11,34 @@ export default props => {
       init: (_, state) => {},
       apply(tr, prev, _, newState) {
         let createDecoration;
-        const widget = document.createElement('span');
-        widget.setAttribute('id', 'fake-cursor');
 
-        if (newState.selection.from === newState.selection.to) {
-          createDecoration = DecorationSet.create(newState.doc, [
-            Decoration.widget(newState.selection.from, widget, {
-              key: 'fakecursor',
-            }),
-          ]);
-        }
-        setTimeout(() => {
-          widget.setAttribute('contenteditable', true);
-          if (
-            navigator.userAgent.includes('Firefox') &&
-            newState.selection.$from.nodeBefore === null
-          ) {
-            widget.setAttribute('style', 'visibility:hidden');
-          } else {
-            widget.setAttribute('style', 'display:none');
+        if (
+          tr.steps.length === 0 ||
+          (tr.steps[0] && tr.steps[0].from === tr.steps[0].to)
+        ) {
+          const widget = document.createElement('span');
+          widget.setAttribute('id', 'fake-cursor');
+
+          if (newState.selection.from === newState.selection.to) {
+            createDecoration = DecorationSet.create(newState.doc, [
+              Decoration.widget(newState.selection.from, widget, {
+                key: 'fakecursor',
+              }),
+            ]);
           }
-        });
+          setTimeout(() => {
+            widget.setAttribute('contenteditable', true);
+            if (
+              navigator.userAgent.includes('Firefox') &&
+              newState.selection.$from.nodeBefore === null
+            ) {
+              widget.setAttribute('style', 'visibility:hidden');
+            } else {
+              widget.setAttribute('style', 'display:none');
+            }
+          });
+        }
+
         return {
           createDecoration,
         };

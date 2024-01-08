@@ -4,6 +4,7 @@ import trueFalseNode from './schema/trueFalseNode';
 import questionTrueFalseNode from './schema/questionTrueFalseNode';
 import trueFalseContainerNode from './schema/trueFalseContainerNode';
 import AnswerComponent from './components/AnswerComponent';
+import MultipleChoiceContainerComponent from '../components/MultipleChoiceContainerComponent';
 import TrueFalseContainerNodeView from './TrueFalseContainerNodeView';
 import TrueFalseNodeView from './TrueFalseNodeView';
 import QuestionTrueFalseNodeView from './QuestionTrueFalseNodeView';
@@ -27,11 +28,11 @@ class TrueFalseQuestionService extends Service {
       question_node_true_false: questionTrueFalseNode,
     });
 
-    //  addPortal({
-    //    nodeView: TrueFalseContainerNodeView,
-    //    component: QuestionComponent,
-    //    context: this.app,
-    //  });
+    addPortal({
+      nodeView: TrueFalseContainerNodeView,
+      component: MultipleChoiceContainerComponent,
+      context: this.app,
+    });
 
     addPortal({
       nodeView: QuestionTrueFalseNodeView,

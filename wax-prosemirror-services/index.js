@@ -22,7 +22,6 @@ export { default as ShortCutsInfoService } from './src/BottomInfoService/ShortCu
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
 export { default as TransformService } from './src/TransformService/TransformService';
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
-export { default as TrackOptionsService } from './src/TrackOptionsService/TrackOptionsService';
 export { default as CustomTagInlineService } from './src/CustomTagService/CustomTagInlineService/CustomTagInlineService';
 export { default as CustomTagBlockService } from './src/CustomTagService/CustomTagBlockService/CustomTagBlockService';
 export { default as CustomTagService } from './src/CustomTagService/CustomTagService';

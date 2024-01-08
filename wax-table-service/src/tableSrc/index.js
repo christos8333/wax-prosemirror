@@ -1598,7 +1598,7 @@ function insertCells(state, dispatch, tableStart, rect, cells) {
 var handleKeyDown = keydownHandler({
   ArrowLeft: arrow('horiz', -1),
   ArrowRight: arrow('horiz', 1),
-  ArrowUp: arrow('vert', -1),
+  // ArrowUp: arrow('vert', -1),
   ArrowDown: arrow('vert', 1),
   Tab: tabulation(1),
   'Shift-Tab': tabulation(-1),

@@ -5,6 +5,7 @@ import multipleChoiceContainerNode from './schema/multipleChoiceContainerNode';
 import questionNode from './schema/questionNode';
 import AnswerComponent from './components/AnswerComponent';
 import QuestionComponent from './components/QuestionComponent';
+import MultipleChoiceContainerComponent from './components/MultipleChoiceContainerComponent';
 import MultipleChoiceContainerNodeView from './MultipleChoiceContainerNodeView';
 import MultipleChoiceNodeView from './MultipleChoiceNodeView';
 import QuestionNodeView from './QuestionNodeView';
@@ -12,16 +13,8 @@ import MultipleChoiceSingleCorrectQuestionService from './MultipleChoiceSingleCo
 import TrueFalseQuestionService from './TrueFalseQuestionService/TrueFalseQuestionService';
 import TrueFalseSingleCorrectQuestionService from './TrueFalseSingleCorrectQuestionService/TrueFalseSingleCorrectQuestionService';
 import './multipleQuestionStyles.css';
-import MoveCursorPlugin from './plugins/MoveCursorPlugin';
 
 class MultipleChoiceQuestionService extends Service {
-  boot() {
-    // this.app.PmPlugins.add(
-    //   'moveCursorPlugin',
-    //   MoveCursorPlugin('moveCursorPlugin'),
-    // );
-  }
-
   register() {
     this.container.bind('MultipleChoiceQuestion').to(MultipleChoiceQuestion);
     const createNode = this.container.get('CreateNode');
@@ -39,11 +32,11 @@ class MultipleChoiceQuestionService extends Service {
       question_node_multiple: questionNode,
     });
 
-    // addPortal({
-    //   nodeView: MultipleChoiceContainerNodeView,
-    //   component: QuestionComponent,
-    //   context: this.app,
-    // });
+    addPortal({
+      nodeView: MultipleChoiceContainerNodeView,
+      component: MultipleChoiceContainerComponent,
+      context: this.app,
+    });
 
     addPortal({
       nodeView: QuestionNodeView,

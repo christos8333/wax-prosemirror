@@ -3,6 +3,7 @@ import TrueFalseSingleCorrectQuestion from './TrueFalseSingleCorrectQuestion';
 import trueFalseSingleCorrectNode from './schema/trueFalseSingleCorrectNode';
 import trueFalseSingleCorrectContainerNode from './schema/trueFalseSingleCorrectContainerNode';
 import questionTrueFalseSingleNode from './schema/questionTrueFalseSingleNode';
+import MultipleChoiceContainerComponent from '../components/MultipleChoiceContainerComponent';
 import AnswerComponent from './components/AnswerComponent';
 import TrueFalseSingleCorrectContainerNodeView from './TrueFalseSingleCorrectContainerNodeView';
 import TrueFalseSingleCorrectNodeView from './TrueFalseSingleCorrectNodeView';
@@ -29,11 +30,11 @@ class TrueFalseSingleCorrectQuestionService extends Service {
       true_false_single_correct: trueFalseSingleCorrectNode,
     });
 
-    // addPortal({
-    //   nodeView: TrueFalseSingleCorrectContainerNodeView,
-    //   component: QuestionComponent,
-    //   context: this.app,
-    // });
+    addPortal({
+      nodeView: TrueFalseSingleCorrectContainerNodeView,
+      component: MultipleChoiceContainerComponent,
+      context: this.app,
+    });
 
     addPortal({
       nodeView: QuestionTrueFalseSingleNodeView,

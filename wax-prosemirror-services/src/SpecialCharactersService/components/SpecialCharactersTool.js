@@ -28,6 +28,7 @@ const DropWrapper = styled.div`
 const SpecialCharactersTool = ({ item }) => {
   const { t, i18n } = useTranslation();
   const {
+    activeView,
     pmViews: { main },
   } = useContext(WaxContext);
 
@@ -50,8 +51,10 @@ const SpecialCharactersTool = ({ item }) => {
           active={isOpen}
           disabled={isDisabled}
           iconName={icon}
-          onMouseDown={() => {
+          onMouseDown={e => {
+            e.preventDefault();
             setIsOpen(!isOpen);
+            activeView.focus();
           }}
           title={
             !isEmpty(i18n) && i18n.exists(`Wax.SpecialCharacters.${title}`)

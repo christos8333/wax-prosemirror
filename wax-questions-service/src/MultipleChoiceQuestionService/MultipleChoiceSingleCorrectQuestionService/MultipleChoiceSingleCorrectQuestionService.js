@@ -4,8 +4,9 @@ import multipleChoiceSingleCorrectNode from './schema/multipleChoiceSingleCorrec
 import multipleChoiceSingleCorrectContainerNode from './schema/multipleChoiceSingleCorrectContainerNode';
 import questionSingleNode from './schema/questionSingleNode';
 import AnswerComponent from './components/AnswerComponent';
-import MultipleChoiceSingleCorrectContainerNodeView from './MultipleChoiceSingleCorrectContainerNodeView';
+import MultipleChoiceContainerComponent from '../components/MultipleChoiceContainerComponent';
 import MultipleChoiceSingleCorrectNodeView from './MultipleChoiceSingleCorrectNodeView';
+import MultipleChoiceSingleCorrectContainerNodeView from './MultipleChoiceSingleCorrectContainerNodeView';
 import QuestionMultipleSingleNodeView from './QuestionMultipleSingleNodeView';
 import QuestionComponent from '../components/QuestionComponent';
 
@@ -29,11 +30,11 @@ class MultipleChoiceSingleCorrectQuestionService extends Service {
       question_node_multiple_single: questionSingleNode,
     });
 
-    // addPortal({
-    //   nodeView: MultipleChoiceSingleCorrectContainerNodeView,
-    //   component: QuestionComponent,
-    //   context: this.app,
-    // });
+    addPortal({
+      nodeView: MultipleChoiceSingleCorrectContainerNodeView,
+      component: MultipleChoiceContainerComponent,
+      context: this.app,
+    });
 
     addPortal({
       nodeView: QuestionMultipleSingleNodeView,

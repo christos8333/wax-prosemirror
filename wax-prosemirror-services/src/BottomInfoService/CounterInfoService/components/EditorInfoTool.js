@@ -86,7 +86,10 @@ const Counter = styled.div`
 `;
 
 const EditorInfoTool = ({ view: { state }, item }) => {
-  const { activeView } = useContext(WaxContext);
+  const {
+    activeView,
+    pmViews: { main },
+  } = useContext(WaxContext);
   const { t, i18n } = useTranslation();
   const ref = useRef();
   const [currentWordCount, setCurrentWordCount] = useState(0);
@@ -102,9 +105,9 @@ const EditorInfoTool = ({ view: { state }, item }) => {
   }, [activeView.state.selection]);
 
   const infoDropDownOptions = () => {
-    const docText = activeView.state.doc.textBetween(
+    const docText = main.state.doc.textBetween(
       0,
-      activeView.state.doc.content.size,
+      main.state.doc.content.size,
       undefined,
       ' ',
     );

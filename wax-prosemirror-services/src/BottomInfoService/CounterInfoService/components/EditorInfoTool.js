@@ -1,7 +1,12 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, useContext, useEffect } from 'react';
+
 import styled from 'styled-components';
 import { grid, override } from '@pubsweet/ui-toolkit';
-import { MenuButton, useOnClickOutside } from 'wax-prosemirror-core';
+import {
+  MenuButton,
+  useOnClickOutside,
+  WaxContext,
+} from 'wax-prosemirror-core';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -81,17 +86,25 @@ const Counter = styled.div`
 `;
 
 const EditorInfoTool = ({ view: { state }, item }) => {
+  const { activeView } = useContext(WaxContext);
   const { t, i18n } = useTranslation();
   const ref = useRef();
+  const [currentWordCount, setCurrentWordCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   useOnClickOutside(ref, () => setIsOpen(false));
 
-  const infoDropDownOptions = useMemo(() => {
-    if (!isOpen) return [];
+  useEffect(() => {
+    const { from, to } = activeView.state.selection;
+    const currentSelection = activeView.state.doc.textBetween(from, to);
+    setCurrentWordCount(
+      currentSelection.split(' ').filter(word => word !== '').length,
+    );
+  }, [activeView.state.selection]);
 
-    const docText = state.doc.textBetween(
+  const infoDropDownOptions = () => {
+    const docText = activeView.state.doc.textBetween(
       0,
-      state.doc.content.size,
+      activeView.state.doc.content.size,
       undefined,
       ' ',
     );
@@ -172,7 +185,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
         }`,
       },
     ];
-  }, [state]);
+  };
 
   const MenuButtonComponent = useMemo(
     () => (
@@ -180,12 +193,14 @@ const EditorInfoTool = ({ view: { state }, item }) => {
         <MenuButton
           active={isOpen}
           disabled={false}
-          label={
+          label={`${currentWordCount} ${
             !isEmpty(i18n) && i18n.exists(`Wax.Counters.Word`)
               ? t(`Wax.Counters.Word`)
               : 'Word'
-          }
-          onMouseDown={() => {
+          }${currentWordCount > 1 ? 's' : ''}
+`}
+          onMouseDown={e => {
+            e.preventDefault();
             setIsOpen(!isOpen);
           }}
           title={item.title}
@@ -198,7 +213,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
               item={item}
               view={state}
             >
-              {infoDropDownOptions.map(option => (
+              {infoDropDownOptions().map(option => (
                 <Counter key={option.name} title={option.name}>
                   <span>{option.name}</span>
                 </Counter>
@@ -208,7 +223,7 @@ const EditorInfoTool = ({ view: { state }, item }) => {
         )}
       </Wrapper>
     ),
-    [isOpen],
+    [currentWordCount, isOpen],
   );
 
   return MenuButtonComponent;

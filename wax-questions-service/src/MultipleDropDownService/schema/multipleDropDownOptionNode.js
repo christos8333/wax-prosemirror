@@ -9,7 +9,6 @@ const multipleDropDownOptionNode = {
   group: 'inline questions',
   inline: true,
   atom: true,
-  defining: true,
   parseDOM: [
     {
       tag: 'span.multiple-drop-down-option',

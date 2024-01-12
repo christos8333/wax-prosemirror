@@ -125,7 +125,7 @@ export default ({ setPosition, position }) => {
   }, [position.left]);
 
   useEffect(() => {
-    if (addOptionRef.current) addOptionRef.current.focus();
+    // if (addOptionRef.current) addOptionRef.current.focus();
     if (!activeView.state.selection.node) return;
     const { tr } = activeView.state;
 
@@ -163,7 +163,7 @@ export default ({ setPosition, position }) => {
     const obj = { label: addOptionRef.current.value, value: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
     setOptionText('');
-    addOptionRef.current.focus();
+    // addOptionRef.current.focus();
   };
 
   const removeOption = id => {

@@ -94,7 +94,6 @@ const IconRemove = styled(Icon)`
 let previousNode = '';
 
 export default ({ setPosition, position }) => {
-  console.log('here');
   const context = useContext(WaxContext);
   const {
     activeView,

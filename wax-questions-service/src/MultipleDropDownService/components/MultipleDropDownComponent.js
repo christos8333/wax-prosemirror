@@ -13,7 +13,7 @@ const activeStylesSvg = css`
   fill: white !important;
 `;
 
-const StyledIconActionContainer = styled.span`
+const StyledIconActionContainer = styled.div`
   font-variant-numeric: lining-nums proportional-nums;
   display: inline-block;
   height: 24px;

@@ -24,6 +24,10 @@ const EditorWrapper = styled.div`
       outline: none;
     }
 
+    img[class='ProseMirror-separator'] {
+      display: inline !important;
+    }
+
     span {
       display: inline-block;
       width: 24px;

@@ -23,6 +23,7 @@ const StyledIconActionContainer = styled.span`
 
 const StyledIconAction = styled(Icon)`
   ${props => props.isActive && activeStylesSvg}
+  display: inline-block;
 `;
 
 const AnswerContainer = styled.div`

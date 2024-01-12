@@ -119,7 +119,6 @@ export default ({ setPosition, position }) => {
     const { from } = selection;
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
-    console.log(start, WaxSurface.top);
     const left = start.left - WaxSurface.left - 75;
     const top = start.top - WaxSurface.top + 25;
     setPosition({ ...position, left, top });

@@ -14,6 +14,7 @@ const activeStylesSvg = css`
 `;
 
 const StyledIconActionContainer = styled.span`
+  font-variant-numeric: lining-nums proportional-nums;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -68,7 +69,8 @@ export default ({ node, getPos }) => {
   if (!readOnly) {
     return (
       <StyledIconActionContainer isActive={isActive}>
-        <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
+        1
+        {/* <StyledIconAction isActive={isActive} name="mulitpleDropDown" /> */}
       </StyledIconActionContainer>
     );
   }

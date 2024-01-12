@@ -24,6 +24,12 @@ const EditorWrapper = styled.div`
       outline: none;
     }
 
+    span {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+    }
+
     p.empty-node:first-child::before {
       content: attr(data-content);
     }

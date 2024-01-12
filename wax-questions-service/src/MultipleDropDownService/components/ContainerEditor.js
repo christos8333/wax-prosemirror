@@ -15,7 +15,7 @@ import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
 import FakeCursorPlugin from '../plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
-  // position: relative;
+  position: relative;
   height: 100%;
 
   > .ProseMirror {

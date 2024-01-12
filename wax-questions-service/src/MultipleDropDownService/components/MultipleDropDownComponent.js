@@ -14,7 +14,6 @@ const activeStylesSvg = css`
 `;
 
 const StyledIconActionContainer = styled.div`
-  font-variant-numeric: lining-nums proportional-nums;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -24,7 +23,6 @@ const StyledIconActionContainer = styled.div`
 
 const StyledIconAction = styled(Icon)`
   ${props => props.isActive && activeStylesSvg}
-  display: inline-block;
 `;
 
 const AnswerContainer = styled.div`
@@ -69,8 +67,7 @@ export default ({ node, getPos }) => {
   if (!readOnly) {
     return (
       <StyledIconActionContainer isActive={isActive}>
-        1
-        {/* <StyledIconAction isActive={isActive} name="mulitpleDropDown" /> */}
+        <StyledIconAction isActive={isActive} name="mulitpleDropDown" />
       </StyledIconActionContainer>
     );
   }

@@ -6,6 +6,7 @@ const multipleDropDownOptionNode = {
     correct: { default: '' },
     answer: { default: '' },
   },
+  content: 'inline*',
   group: 'inline questions',
   inline: true,
   atom: true,

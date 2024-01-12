@@ -119,13 +119,14 @@ export default ({ setPosition, position }) => {
     const { from } = selection;
     const WaxSurface = activeView.dom.getBoundingClientRect();
     const start = activeView.coordsAtPos(from);
+    console.log(start, WaxSurface.top);
     const left = start.left - WaxSurface.left - 75;
     const top = start.top - WaxSurface.top + 25;
     setPosition({ ...position, left, top });
   }, [position.left]);
 
   useEffect(() => {
-    // if (addOptionRef.current) addOptionRef.current.focus();
+    if (addOptionRef.current) addOptionRef.current.focus();
     if (!activeView.state.selection.node) return;
     const { tr } = activeView.state;
 
@@ -163,7 +164,7 @@ export default ({ setPosition, position }) => {
     const obj = { label: addOptionRef.current.value, value: uuidv4() };
     setOptions(prevOptions => [...prevOptions, obj]);
     setOptionText('');
-    // addOptionRef.current.focus();
+    addOptionRef.current.focus();
   };
 
   const removeOption = id => {

@@ -131,10 +131,30 @@ export default ({ node, view, getPos }) => {
     };
   }, []);
 
+  // const removeOption = () => {
+  //   const answersCount = findAnswerCount();
+  //   if (answersCount.count >= 1) {
+  //     main.state.doc.nodesBetween(getPos(), getPos() + 1, (sinlgeNode, pos) => {
+  //       if (sinlgeNode.attrs.id === node.attrs.id) {
+  //         main.dispatch(
+  //           main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
+  //         );
+  //       }
+  //     });
+  //   } else {
+  //     main.dispatch(
+  //       main.state.tr.setSelection(
+  //         NodeSelection.create(main.state.doc, answersCount.parentPosition),
+  //       ),
+  //     );
+  //     main.dispatch(main.state.tr.deleteSelection());
+  //   }
+  // };
+
   const removeOption = () => {
     const answersCount = findAnswerCount();
     if (answersCount.count >= 1) {
-      main.state.doc.nodesBetween(getPos(), getPos() + 1, (sinlgeNode, pos) => {
+      answersCount.parentContainer.content.content.forEach(sinlgeNode => {
         if (sinlgeNode.attrs.id === node.attrs.id) {
           main.dispatch(
             main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),

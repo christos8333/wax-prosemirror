@@ -130,30 +130,10 @@ export default ({ node, view, getPos }) => {
     };
   }, []);
 
-  // const removeOption = () => {
-  //   const answersCount = findAnswerCount();
-  //   if (answersCount.count >= 1) {
-  //     main.state.doc.nodesBetween(getPos(), getPos() + 1, sinlgeNode => {
-  //       if (sinlgeNode.attrs.id === node.attrs.id) {
-  //         main.dispatch(
-  //           main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
-  //         );
-  //       }
-  //     });
-  //   } else {
-  //     main.dispatch(
-  //       main.state.tr.setSelection(
-  //         NodeSelection.create(main.state.doc, answersCount.parentPosition),
-  //       ),
-  //     );
-  //     main.dispatch(main.state.tr.deleteSelection());
-  //   }
-  // };
-
   const removeOption = () => {
     const answersCount = findAnswerCount();
     if (answersCount.count >= 1) {
-      answersCount.parentContainer.content.content.forEach(sinlgeNode => {
+      main.state.doc.nodesBetween(getPos(), getPos() + 1, sinlgeNode => {
         if (sinlgeNode.attrs.id === node.attrs.id) {
           main.dispatch(
             main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
@@ -169,6 +149,26 @@ export default ({ node, view, getPos }) => {
       main.dispatch(main.state.tr.deleteSelection());
     }
   };
+
+  // const removeOption = () => {
+  //   const answersCount = findAnswerCount();
+  //   if (answersCount.count >= 1) {
+  //     answersCount.parentContainer.content.content.forEach(sinlgeNode => {
+  //       if (sinlgeNode.attrs.id === node.attrs.id) {
+  //         main.dispatch(
+  //           main.state.tr.deleteRange(getPos(), getPos() + sinlgeNode.nodeSize),
+  //         );
+  //       }
+  //     });
+  //   } else {
+  //     main.dispatch(
+  //       main.state.tr.setSelection(
+  //         NodeSelection.create(main.state.doc, answersCount.parentPosition),
+  //       ),
+  //     );
+  //     main.dispatch(main.state.tr.deleteSelection());
+  //   }
+  // };
 
   const addOption = nodeId => {
     const newAnswerId = uuidv4();

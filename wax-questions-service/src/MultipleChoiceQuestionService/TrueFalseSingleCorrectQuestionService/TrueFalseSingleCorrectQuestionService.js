@@ -30,11 +30,11 @@ class TrueFalseSingleCorrectQuestionService extends Service {
       true_false_single_correct: trueFalseSingleCorrectNode,
     });
 
-    addPortal({
-      nodeView: TrueFalseSingleCorrectContainerNodeView,
-      component: MultipleChoiceContainerComponent,
-      context: this.app,
-    });
+    // addPortal({
+    //   nodeView: TrueFalseSingleCorrectContainerNodeView,
+    //   component: MultipleChoiceContainerComponent,
+    //   context: this.app,
+    // });
 
     addPortal({
       nodeView: QuestionTrueFalseSingleNodeView,

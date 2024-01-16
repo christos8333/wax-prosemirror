@@ -30,11 +30,11 @@ class MultipleChoiceSingleCorrectQuestionService extends Service {
       question_node_multiple_single: questionSingleNode,
     });
 
-    addPortal({
-      nodeView: MultipleChoiceSingleCorrectContainerNodeView,
-      component: MultipleChoiceContainerComponent,
-      context: this.app,
-    });
+    // addPortal({
+    //   nodeView: MultipleChoiceSingleCorrectContainerNodeView,
+    //   component: MultipleChoiceContainerComponent,
+    //   context: this.app,
+    // });
 
     addPortal({
       nodeView: QuestionMultipleSingleNodeView,

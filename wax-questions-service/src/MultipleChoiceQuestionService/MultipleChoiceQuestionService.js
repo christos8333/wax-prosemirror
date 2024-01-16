@@ -32,11 +32,11 @@ class MultipleChoiceQuestionService extends Service {
       question_node_multiple: questionNode,
     });
 
-    addPortal({
-      nodeView: MultipleChoiceContainerNodeView,
-      component: MultipleChoiceContainerComponent,
-      context: this.app,
-    });
+    // addPortal({
+    //   nodeView: MultipleChoiceContainerNodeView,
+    //   component: MultipleChoiceContainerComponent,
+    //   context: this.app,
+    // });
 
     addPortal({
       nodeView: QuestionNodeView,

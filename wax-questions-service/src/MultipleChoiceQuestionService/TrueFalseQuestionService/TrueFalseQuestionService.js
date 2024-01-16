@@ -28,11 +28,11 @@ class TrueFalseQuestionService extends Service {
       question_node_true_false: questionTrueFalseNode,
     });
 
-    addPortal({
-      nodeView: TrueFalseContainerNodeView,
-      component: MultipleChoiceContainerComponent,
-      context: this.app,
-    });
+    // addPortal({
+    //   nodeView: TrueFalseContainerNodeView,
+    //   component: MultipleChoiceContainerComponent,
+    //   context: this.app,
+    // });
 
     addPortal({
       nodeView: QuestionTrueFalseNodeView,

@@ -69,6 +69,7 @@ const QuestionEditorComponent = ({
   placeholderText = 'Type your item',
   QuestionType = 'Multiple',
   forceEditable = false,
+  showDelete = false,
 }) => {
   const editorRef = useRef();
 
@@ -212,9 +213,11 @@ const QuestionEditorComponent = ({
     const addToHistory = !tr.getMeta('exludeToHistoryFromOutside');
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
-    setTimeout(() => {
-      context.updateView({}, questionId);
-    });
+    context.updateView({}, questionId);
+
+    // setTimeout(() => {
+    //   context.updateView({}, questionId);
+    // });
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;

@@ -9,7 +9,12 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ComponentPlugin,
+  DocumentHelpers,
+  Icon,
+} from 'wax-prosemirror-core';
 import {
   splitListItem,
   liftListItem,
@@ -18,13 +23,18 @@ import {
 import Placeholder from '../plugins/placeholder';
 import FakeCursorPlugin from '../../MultipleDropDownService/plugins/FakeCursorPlugin';
 
+const DeleteArea = styled.div`
+  border-bottom: 3px solid #f5f5f7;
+  height: 30px;
+`;
+
 const EditorWrapper = styled.div`
   border: none;
   display: flex;
   flex: 2 1 auto;
   width: 100%;
   justify-content: left;
-
+  padding: ${props => (props.showDelete ? '0px 20px 10px 20px' : `0px`)};
   .ProseMirror {
     white-space: break-spaces;
     width: 100%;
@@ -58,6 +68,21 @@ const EditorWrapper = styled.div`
       pointer-events: none;
     }
   }
+`;
+
+const ActionButton = styled.button`
+  background: transparent;
+  cursor: pointer;
+  margin-top: 16px;
+  border: none;
+  position: relative;
+  bottom: 14px;
+  float: right;
+`;
+
+const StyledIconActionRemove = styled(Icon)`
+  height: 24px;
+  width: 24px;
 `;
 
 let WaxOverlays = () => true;
@@ -236,12 +261,55 @@ const QuestionEditorComponent = ({
     }
   };
 
+  const removeQuestion = () => {
+    console.log('delete');
+    const allNodes = getNodes(context.pmViews.main);
+
+    allNodes.forEach(singleNode => {
+      context.pmViews.main.dispatch(
+        context.pmViews.main.state.tr.delete(
+          singleNode.pos,
+          singleNode.pos + singleNode.node.nodeSize,
+        ),
+      );
+    });
+  };
+
   return (
-    <EditorWrapper>
-      <div ref={editorRef} />
-      <WaxOverlays activeViewId={questionId} />
-    </EditorWrapper>
+    <>
+      {showDelete && (
+        <DeleteArea>
+          <ActionButton
+            aria-label="delete this question"
+            onClick={removeQuestion}
+            type="button"
+          >
+            <StyledIconActionRemove name="deleteOutlinedQuestion" />
+          </ActionButton>
+        </DeleteArea>
+      )}
+      <EditorWrapper showDelete={showDelete}>
+        <div ref={editorRef} />
+        <WaxOverlays activeViewId={questionId} />
+      </EditorWrapper>
+    </>
   );
 };
 
 export default QuestionEditorComponent;
+
+const getNodes = view => {
+  const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
+  const fillTheGapContainerNodes = [];
+  allNodes.forEach(node => {
+    if (
+      node.node.type.name === 'multiple_choice_container' ||
+      node.node.type.name === 'multiple_choice_single_correct_container' ||
+      node.node.type.name === 'true_false_container' ||
+      node.node.type.name === 'true_false_single_correct_container'
+    ) {
+      fillTheGapContainerNodes.push(node);
+    }
+  });
+  return fillTheGapContainerNodes;
+};

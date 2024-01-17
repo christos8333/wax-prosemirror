@@ -262,7 +262,6 @@ const QuestionEditorComponent = ({
   };
 
   const removeQuestion = () => {
-    console.log('delete');
     const allNodes = getNodes(context.pmViews.main);
 
     allNodes.forEach(singleNode => {

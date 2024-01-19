@@ -41,7 +41,8 @@
     "y-protocols": "1.0.5",
     "y-webrtc": "10.2.0",
     "y-websocket": "1.4.5",
-    "yjs": "13.5.38"
+    "yjs": "13.5.38",
+    "tiptap-annotation-magic": "^2.0.0"
   },
   "peerDependencies": {
     "i18next": "^23.6.0",

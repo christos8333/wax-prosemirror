@@ -42,6 +42,7 @@ const StyledIconWrong = styled(Icon)`
   pointer-events: none;
   width: 24px;
 `;
+
 const YesNoSwitch = ({
   customProps,
   node: { node },

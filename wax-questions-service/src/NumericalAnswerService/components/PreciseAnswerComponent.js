@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers, WaxContext, Icon } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -35,6 +35,20 @@ const ResultContainer = styled.div`
 const FinalResult = styled.span`
   color: ${props => (props.isCorrect ? ' #008000' : 'red')};
   font-weight: 999;
+`;
+
+const StyledIconCorrect = styled(Icon)`
+  fill: #008000;
+  height: 24px;
+  pointer-events: none;
+  width: 24px;
+`;
+
+const StyledIconWrong = styled(Icon)`
+  fill: red;
+  height: 24px;
+  pointer-events: none;
+  width: 24px;
 `;
 
 const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
@@ -147,7 +161,10 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
           <span>{`(Accepted Answers : ${precise.replaceAll(';', ' -')})`}</span>
           <span>
             Answer:{' '}
-            <FinalResult isCorrect={isCorrect}>{preciseStudent}</FinalResult>
+            <FinalResult isCorrect={isCorrect}>
+              {preciseStudent} {isCorrect && <StyledIconCorrect name="done" />}
+              {!isCorrect && <StyledIconWrong name="close" />}
+            </FinalResult>
           </span>
         </ResultContainer>
       )}

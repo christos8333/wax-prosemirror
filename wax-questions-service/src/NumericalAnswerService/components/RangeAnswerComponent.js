@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useRef, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { DocumentHelpers, WaxContext } from 'wax-prosemirror-core';
+import { DocumentHelpers, WaxContext, Icon } from 'wax-prosemirror-core';
 
 const AnswerContainer = styled.div`
   display: flex;
@@ -35,6 +35,20 @@ const ResultContainer = styled.div`
 const FinalResult = styled.span`
   color: ${props => (props.isCorrect ? ' #008000' : 'red')};
   font-weight: 999;
+`;
+
+const StyledIconCorrect = styled(Icon)`
+  fill: #008000;
+  height: 24px;
+  pointer-events: none;
+  width: 24px;
+`;
+
+const StyledIconWrong = styled(Icon)`
+  fill: red;
+  height: 24px;
+  pointer-events: none;
+  width: 24px;
 `;
 
 const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
@@ -116,7 +130,8 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   // SUBMIT
 
   const isCorrect = !!(
-    rangeStudentValue <= maxValue && rangeStudentValue >= minValue
+    Number(rangeStudentValue) <= Number(maxValue) &&
+    Number(rangeStudentValue) >= Number(minValue)
   );
 
   return (
@@ -178,7 +193,11 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
           </span>
           <span>
             Answer:{' '}
-            <FinalResult isCorrect={isCorrect}>{rangeStudentValue}</FinalResult>
+            <FinalResult isCorrect={isCorrect}>
+              {rangeStudentValue}{' '}
+              {isCorrect && <StyledIconCorrect name="done" />}
+              {!isCorrect && <StyledIconWrong name="close" />}
+            </FinalResult>
           </span>
         </ResultContainer>
       )}

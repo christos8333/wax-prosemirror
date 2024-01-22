@@ -61,7 +61,7 @@ const StyledIconWrong = styled(Icon)`
 
 const TrueFalseSwitch = ({
   customProps,
-  node,
+  node: { node },
   isEditable,
   handleChange,
   checked,

@@ -81,6 +81,17 @@ const CustomSwitch = ({ node, getPos }) => {
     main.dispatch(tr);
   };
 
+  const getUpdatedNode = () => {
+    let nodeFound = node;
+    const allNodes = getNodes(main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        nodeFound = singNode;
+      }
+    });
+    return nodeFound;
+  };
+
   return (
     <TrueFalseSwitch
       checked={checked}
@@ -88,7 +99,7 @@ const CustomSwitch = ({ node, getPos }) => {
       customProps={customProps}
       handleChange={handleChange}
       isEditable={isEditable}
-      node={node}
+      node={getUpdatedNode()}
     />
   );
 };

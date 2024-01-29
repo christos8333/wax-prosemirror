@@ -18,7 +18,7 @@ export default props => {
     pmViews: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
-    options: { fullScreen: false, AiOn: false },
+    options: { fullScreen: false, AiOn: props.app.config._config.AiOn },
     transaction: {},
     setTransaction: tr => {
       Object.assign(context.transaction, tr);

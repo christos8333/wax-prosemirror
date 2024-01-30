@@ -1,6 +1,9 @@
+import { Decoration, DecorationSet } from 'prosemirror-view';
+import AnnotationDecoration from './AnnotationDecoration';
+
 export default class AnnotationState {
   constructor(options) {
-    this.decorations = view_1.DecorationSet.empty;
+    this.decorations = DecorationSet.empty;
     this.options = options;
   }
 
@@ -30,7 +33,7 @@ export default class AnnotationState {
 
   termsAt(position, to) {
     return this.decorations.find(position, to || position).map(decoration => {
-      return new annotation_decoration_1.AnnotationDecoration(decoration);
+      return new AnnotationDecoration(decoration);
     });
   }
 

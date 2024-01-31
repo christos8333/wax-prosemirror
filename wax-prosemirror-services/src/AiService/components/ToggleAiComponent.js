@@ -1,46 +1,35 @@
-import React, { useMemo, useState, useContext } from 'react';
-import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
-import Switch from './Switch';
+import React, { useContext } from 'react';
+import { WaxContext, MenuButton } from 'wax-prosemirror-core';
+import PropTypes from 'prop-types';
 
-const StyledSwitch = styled(Switch)`
-  display: flex;
-  margin-left: auto;
-`;
-
-const ToggleAiComponent = () => {
-  const [checked, setChecked] = useState(false);
+const ToggleAiComponent = ({ item }) => {
   const context = useContext(WaxContext);
   const {
-    pmViews: { main },
+    options: { AiOn },
   } = context;
 
-  let isDisabled = false;
-  const isEditable = main.props.editable(editable => {
-    return editable;
-  });
+  return AiOn ? (
+    <MenuButton
+      active={false}
+      disabled={false}
+      iconName={item.icon}
+      title={item.title}
+    />
+  ) : null;
+};
 
-  if (!isEditable) isDisabled = true;
+ToggleAiComponent.propTypes = {
+  item: PropTypes.shape({
+    icon: PropTypes.string,
+    title: PropTypes.string,
+  }),
+};
 
-  const handleChange = () => {
-    context.setOption({ AiOn: !checked });
-    setChecked(!checked);
-    main.dispatch(main.state.tr.setMeta('addToHistory', false));
-    main.focus();
-  };
-
-  return useMemo(
-    () => (
-      <StyledSwitch
-        checked={checked}
-        checkedChildren="AI ON"
-        disabled={!isEditable}
-        onChange={handleChange}
-        unCheckedChildren="AI OFF"
-      />
-    ),
-    [checked, isDisabled],
-  );
+ToggleAiComponent.defaultProps = {
+  item: {
+    icon: '',
+    title: '',
+  },
 };
 
 export default ToggleAiComponent;

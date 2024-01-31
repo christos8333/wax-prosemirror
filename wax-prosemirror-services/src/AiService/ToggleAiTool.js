@@ -5,12 +5,17 @@ import ToggleAiComponent from './components/ToggleAiComponent';
 
 class ToggleAiTool extends Tools {
   title = 'Toggle Ai';
-  icon = '';
+  icon = 'ai';
   name = 'ToggleAi';
 
   renderTool(view) {
     return (
-      <ToggleAiComponent item={this.toJSON()} key={uuidv4()} view={view} />
+      <ToggleAiComponent
+        displayed={false}
+        item={this.toJSON()}
+        key={uuidv4()}
+        view={view}
+      />
     );
   }
 }

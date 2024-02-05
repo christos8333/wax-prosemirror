@@ -3,12 +3,10 @@ import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
 const ToggleAiComponent = ({ item }) => {
-  const context = useContext(WaxContext);
-  const {
-    options: { AiOn },
-  } = context;
+  const { app } = useContext(WaxContext);
+  const enableService = app.config.get('config.AskAiContentService');
 
-  return AiOn ? (
+  return enableService.AiOn ? (
     <MenuButton
       active={false}
       disabled={false}

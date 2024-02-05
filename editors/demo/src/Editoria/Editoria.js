@@ -64,7 +64,6 @@ const Editoria = () => {
           user={user}
           scrollMargin={200}
           scrollThreshold={200}
-          AiOn={true}
         />
       </>
     ),

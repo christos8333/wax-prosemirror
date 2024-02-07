@@ -22,9 +22,12 @@ class ImageService extends Service {
     this.container.bind('Image').to(Image);
     const createNode = this.container.get('CreateNode');
     const createOverlay = this.container.get('CreateOverlay');
-    createNode({
-      figure: figureNode,
-    });
+    createNode(
+      {
+        figure: figureNode,
+      },
+      { toWaxSchema: true },
+    );
 
     createNode(
       {

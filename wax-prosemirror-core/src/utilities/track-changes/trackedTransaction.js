@@ -30,21 +30,12 @@ const trackedTransaction = (
       }
     }
   }
-
-  if (state.selection.node && state.selection.node.type.name === 'image') {
-    return tr;
-  }
-
-  // images
-  if (state.selection.node && state.selection.node.type.name === 'figure') {
-    return tr;
-  }
-
+  console.log('up', tr);
   if (
     !tr.steps.length ||
     (tr.meta &&
       !Object.keys(tr.meta).every(meta =>
-        ['inputType', 'uiEvent', 'paste'].includes(meta),
+        ['inputType', 'uiEvent', 'paste', 'imagePlaceHolder$1'].includes(meta),
       )) ||
     ['AcceptReject', 'Undo', 'Redo'].includes(tr.getMeta('inputType'))
   ) {
@@ -55,7 +46,7 @@ const trackedTransaction = (
   const newTr = state.tr;
   const map = new Mapping();
   const date = Math.floor(Date.now());
-
+  console.log(tr);
   tr.steps.forEach((originalStep, originalStepIndex) => {
     const step = originalStep.map(map);
     const { doc } = newTr;

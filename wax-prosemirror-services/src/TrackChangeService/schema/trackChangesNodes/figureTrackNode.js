@@ -22,6 +22,7 @@ const figureTrackNode = {
     },
   ],
   toDOM(hook, next) {
+    console.log(hook);
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       Object.assign(hook.value[1], {
         'data-id': hook.node.attrs.id,

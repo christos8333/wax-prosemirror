@@ -30,7 +30,7 @@ const trackedTransaction = (
       }
     }
   }
-  console.log('up', tr);
+  console.log(tr);
   if (
     !tr.steps.length ||
     (tr.meta &&
@@ -46,7 +46,7 @@ const trackedTransaction = (
   const newTr = state.tr;
   const map = new Mapping();
   const date = Math.floor(Date.now());
-  console.log(tr);
+
   tr.steps.forEach((originalStep, originalStepIndex) => {
     const step = originalStep.map(map);
     const { doc } = newTr;

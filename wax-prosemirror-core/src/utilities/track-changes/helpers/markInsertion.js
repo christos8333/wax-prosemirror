@@ -54,6 +54,9 @@ const markInsertion = (tr, from, to, user, date, group, viewId) => {
       // A table was inserted. We don't add track marks to elements inside of it.
       return false;
     }
+    if (node.type.name === 'figure') {
+      // TODO delete placeholder
+    }
   });
 };
 

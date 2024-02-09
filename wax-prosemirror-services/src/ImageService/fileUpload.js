@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { Commands } from 'wax-prosemirror-core';
 
 const findPlaceholder = (state, id, placeholderPlugin) => {
   const decos = placeholderPlugin.getState(state);
@@ -7,12 +8,23 @@ const findPlaceholder = (state, id, placeholderPlugin) => {
 };
 
 export default (view, fileUpload, placeholderPlugin, context) => file => {
-  const { state } = view;
+  // const { state } = view;
+  const trackChange = context.app.config.get('config.EnableTrackChangeService');
+  if (trackChange?.enabled)
+    if (
+      context.pmViews.main.state.doc.resolve(
+        context.pmViews.main.state.tr.selection.from,
+      ).parent.nodeSize !== 2
+    ) {
+      Commands.simulateKey(context.pmViews.main, 13, 'Enter');
+    }
+
   // A fresh object to act as the ID for this upload
   const id = {};
 
   // Replace the selection with a placeholder
-  const { tr } = state;
+  const { tr } = context.pmViews.main.state;
+
   if (!tr.selection.empty) tr.deleteSelection();
 
   tr.setMeta(placeholderPlugin, {
@@ -36,13 +48,14 @@ export default (view, fileUpload, placeholderPlugin, context) => file => {
       if (pos == null) {
         return;
       }
-      // Otherwise, insert it at the placeholder's position, and remove
-      // the placeholder
 
       // if paragraph is empty don't break into new line
       if (context.pmViews.main.state.doc.resolve(pos).parent.nodeSize === 2) {
         pos -= 1;
       }
+
+      // Otherwise, insert it at the placeholder's position, and remove
+      // the placeholder
 
       context.setOption({ uploading: false });
       context.pmViews.main.dispatch(

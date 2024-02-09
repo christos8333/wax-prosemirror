@@ -15,6 +15,7 @@ import sourceNoteTrackNode from './sourceNoteTrackNode';
 // import bulletListTrackNode from './bulletListTrackNode';
 import orderedListTrackNode from './orderedListTrackNode';
 // import listItemTrackNode from './listItemTrackNode';
+// import figureTrackNode from './figureTrackNode';
 // import imageTrackNode from './imageTrackNode';
 import customBlockTrackNode from './customBlockTrackNode';
 
@@ -37,5 +38,6 @@ export default {
   customTagBlock: customBlockTrackNode,
   // bulletlist: bulletListTrackNode,
   // list_item: listItemTrackNode,
+  // figure: figureTrackNode,
   // image: imageTrackNode
 };

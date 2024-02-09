@@ -1,10 +1,6 @@
 import { SchemaHelpers } from 'wax-prosemirror-core';
 
-const author = {
-  content: 'inline*',
-  group: 'block',
-  priority: 0,
-  defining: true,
+const figureTrackNode = {
   attrs: {
     id: { default: '' },
     track: { default: [] },
@@ -39,4 +35,4 @@ const author = {
   },
 };
 
-export default author;
+export default figureTrackNode;

@@ -13,7 +13,7 @@ const activeStylesSvg = css`
   fill: white !important;
 `;
 
-const StyledIconActionContainer = styled.div`
+const StyledIconActionContainer = styled.span`
   display: inline-block;
   height: 24px;
   width: 24px;

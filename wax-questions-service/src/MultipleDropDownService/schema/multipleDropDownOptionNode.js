@@ -8,9 +8,10 @@ const multipleDropDownOptionNode = {
   },
   group: 'inline questions',
   inline: true,
+  defining: true,
   parseDOM: [
     {
-      tag: 'div.multiple-drop-down-option',
+      tag: 'span.multiple-drop-down-option',
       getAttrs(dom) {
         return {
           id: dom.getAttribute('id'),
@@ -24,7 +25,7 @@ const multipleDropDownOptionNode = {
   ],
   toDOM(node) {
     return [
-      'div',
+      'span',
       {
         id: node.attrs.id,
         class: node.attrs.class,

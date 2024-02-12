@@ -55,6 +55,7 @@ const markInsertion = (tr, from, to, user, date, group, viewId) => {
       return false;
     }
     if (node.type.name === 'figure') {
+      console.log('remove placeholder');
       // TODO delete placeholder
     }
   });

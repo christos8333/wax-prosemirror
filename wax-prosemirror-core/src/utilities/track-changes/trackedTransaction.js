@@ -30,12 +30,17 @@ const trackedTransaction = (
       }
     }
   }
-  console.log(tr);
   if (
     !tr.steps.length ||
     (tr.meta &&
       !Object.keys(tr.meta).every(meta =>
-        ['inputType', 'uiEvent', 'paste', 'imagePlaceHolder$1'].includes(meta),
+        [
+          'inputType',
+          'uiEvent',
+          'paste',
+          'imagePlaceHolder$',
+          'imagePlaceHolder$1',
+        ].includes(meta),
       )) ||
     ['AcceptReject', 'Undo', 'Redo'].includes(tr.getMeta('inputType'))
   ) {

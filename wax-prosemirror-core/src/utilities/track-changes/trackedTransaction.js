@@ -6,7 +6,7 @@ import {
   RemoveMarkStep,
   Mapping,
 } from 'prosemirror-transform';
-
+import { isEmpty } from 'lodash';
 import DocumentHelpers from '../document/DocumentHelpers';
 import replaceStep from './helpers/replaceStep';
 import replaceAroundStep from './helpers/replaceAroundStep';
@@ -181,9 +181,14 @@ const trackedTransaction = (
 
   if (tr.scrolledIntoView) newTr.scrollIntoView();
 
-  console.log(tr.meta);
-  const imagePlaceholder = context.app.PmPlugins.get('imagePlaceHolder');
-  return newTr.setMeta(imagePlaceholder, { remove: { id: {} } });
+  if (
+    !isEmpty(tr.meta) &&
+    Object.keys(tr.meta).every(meta => meta.includes('imagePlaceHolder'))
+  ) {
+    const imagePlaceholder = context.app.PmPlugins.get('imagePlaceHolder');
+    return newTr.setMeta(imagePlaceholder, { remove: { id: {} } });
+  }
+  return newTr;
 };
 
 export default trackedTransaction;

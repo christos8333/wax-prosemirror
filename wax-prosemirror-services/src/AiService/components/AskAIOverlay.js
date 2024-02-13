@@ -105,6 +105,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const { t, i18n } = useTranslation();
   const {
     pmViews: { main },
+    options,
   } = useContext(WaxContext);
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -134,7 +135,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
 
     setPosition({ ...position, left, top });
-  }, [position.left, AiOn]);
+  }, [position.left, options.AiOn, AiOn]);
 
   const tryAgain = () => {
     // Reset the state to initial values
@@ -197,7 +198,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
-  return AiOn ? (
+  return options?.AiOn && AiOn ? (
     <Wrapper id="ai-overlay">
       <AskAIForm>
         <AskAIFormInput

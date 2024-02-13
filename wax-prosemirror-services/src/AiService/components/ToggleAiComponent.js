@@ -3,7 +3,7 @@ import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
 const ToggleAiComponent = ({ item }) => {
-  const { app, pmViews } = useContext(WaxContext);
+  const { app, pmViews, options } = useContext(WaxContext);
   const enableService = app.config.get('config.AskAiContentService');
 
   let isDisabled = false;
@@ -19,7 +19,7 @@ const ToggleAiComponent = ({ item }) => {
       enableService.AiOn ? (
         <MenuButton
           active={false}
-          disabled={!isEditable}
+          disabled={!isEditable || !options?.AiOn}
           iconName={item.icon}
           title={item.title}
         />

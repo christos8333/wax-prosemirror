@@ -20,9 +20,7 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
     if (node.type.name.includes('table')) {
       return;
     }
-    if (node.type.name === 'figure') {
-      console.log('delete figure');
-    }
+
     if (
       node.isInline &&
       node.marks.find(
@@ -95,7 +93,11 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
         });
       });
 
-      if (node.content.size === 0 || counter === node.nodeSize) {
+      if (
+        node.content.size === 0 ||
+        counter === node.nodeSize ||
+        node.type.name === 'figure'
+      ) {
         const track = node.attrs.track.slice();
         track.push({
           type: 'deletion',

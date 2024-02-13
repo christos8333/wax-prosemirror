@@ -90,7 +90,7 @@ const Editors = () => {
       case 'oen':
         return <OEN />;
       default:
-        return <HHMI />;
+        return <Editoria />;
     }
   };
 

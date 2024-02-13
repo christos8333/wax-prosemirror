@@ -24,6 +24,11 @@ export default key =>
           set = set.remove(
             set.find(null, null, spec => spec.id === action.remove.id),
           );
+          // HACK to fix
+          if (set?.find().length >= 1) {
+            set = set.remove(set.find()[0]);
+            set.children = [];
+          }
         }
         return set;
       },

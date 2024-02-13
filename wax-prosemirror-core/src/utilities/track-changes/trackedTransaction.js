@@ -17,6 +17,7 @@ const trackedTransaction = (
   tr,
   state,
   user,
+  context,
   group = 'main',
   viewId = 'main',
 ) => {
@@ -180,7 +181,9 @@ const trackedTransaction = (
 
   if (tr.scrolledIntoView) newTr.scrollIntoView();
 
-  return newTr;
+  console.log(tr.meta);
+  const imagePlaceholder = context.app.PmPlugins.get('imagePlaceHolder');
+  return newTr.setMeta(imagePlaceholder, { remove: { id: {} } });
 };
 
 export default trackedTransaction;

@@ -116,7 +116,7 @@ const WaxView = forwardRef((props, ref) => {
     const { TrackChange } = props;
     const tr =
       TrackChange && TrackChange.enabled
-        ? trackedTransaction(transaction, view.state, user)
+        ? trackedTransaction(transaction, view.state, user, context)
         : transaction;
 
     previousDoc = view.state.doc;

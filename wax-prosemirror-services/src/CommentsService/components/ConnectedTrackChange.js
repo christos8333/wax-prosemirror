@@ -58,6 +58,8 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   };
 
   const focusOnBlcock = trackData => {
+    console.log(trackData);
+    console.log(pmViews, viewId);
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
         new TextSelection(

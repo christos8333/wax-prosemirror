@@ -99,6 +99,7 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
         node.type.name === 'figure'
       ) {
         const track = node.attrs.track.slice();
+        console.log('viewId', viewId);
         track.push({
           type: 'deletion',
           user: user.userId,
@@ -108,6 +109,7 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
           group,
           viewid: viewId,
         });
+        console.log('track', track);
         tr.setNodeMarkup(
           deletionMap.map(pos),
           null,
@@ -115,6 +117,7 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
             track,
             group,
             id: uuidv4(),
+            viewid: viewId,
           }),
           // Object.assign(node.attrs.track, { track }),
           node.marks,

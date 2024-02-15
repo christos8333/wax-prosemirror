@@ -39,6 +39,7 @@ const trackedTransaction = (
           'inputType',
           'uiEvent',
           'paste',
+          'pointer',
           'imagePlaceHolder$',
           'imagePlaceHolder$1',
         ].includes(meta),

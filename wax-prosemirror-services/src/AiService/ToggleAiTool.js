@@ -5,7 +5,7 @@ import ToggleAiComponent from './components/ToggleAiComponent';
 
 class ToggleAiTool extends Tools {
   title = 'Toggle Ai';
-  icon = '';
+  icon = 'ai';
   name = 'ToggleAi';
 
   renderTool(view) {

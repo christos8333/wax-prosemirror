@@ -179,6 +179,7 @@ export default {
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
+    AiOn: true,
   },
 
   services: [

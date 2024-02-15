@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
@@ -25,6 +25,12 @@ const ToggleAiComponent = ({ item }) => {
     main.dispatch(main.state.tr.setMeta('addToHistory', false));
     main.focus();
   };
+
+  useEffect(() => {
+    setChecked(false);
+    context.setOption({ AiOn: false });
+    main.dispatch(main.state.tr.setMeta('addToHistory', false));
+  }, [checked && main.state.selection.from === main.state.selection.to]);
 
   return useMemo(
     () =>

@@ -37,10 +37,10 @@ const rejectTrackChange = (
     selection: { to },
   } = state;
 
-  if (trackData?.node.type.name === 'figure') {
+  if (trackData?.node?.type?.name === 'figure') {
     to = from + 3;
   }
-
+  console.log('reject');
   tr.setMeta('AcceptReject', true);
   const map = new Mapping();
 

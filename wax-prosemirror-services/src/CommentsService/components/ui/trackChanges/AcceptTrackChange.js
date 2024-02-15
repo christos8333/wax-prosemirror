@@ -32,7 +32,7 @@ const acceptTrackChange = (
     selection: { to },
   } = state;
 
-  if (trackData?.node.type.name === 'figure') {
+  if (trackData?.node?.type?.name === 'figure') {
     to = from + 3;
   }
 

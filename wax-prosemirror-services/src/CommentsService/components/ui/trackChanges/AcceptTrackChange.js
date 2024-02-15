@@ -28,12 +28,11 @@ const acceptTrackChange = (
     tr,
     selection: { from },
   } = state;
-  let {
-    selection: { to },
-  } = state;
+
+  let { to } = activeTrackChange;
 
   if (trackData?.node?.type?.name === 'figure') {
-    to = from + 3;
+    to = activeTrackChange.from + 3;
   }
 
   tr.setMeta('AcceptReject', true);

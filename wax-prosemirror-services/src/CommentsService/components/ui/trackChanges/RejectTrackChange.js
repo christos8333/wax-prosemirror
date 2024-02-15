@@ -20,16 +20,27 @@ const checkFromConfig = (mark, user, config) => {
 };
 
 const rejectTrackChange = (
-  state,
   dispatch,
   user,
   activeTrackChange,
   rejectConfig,
+  context,
+  trackData,
 ) => {
+  const { activeView } = context;
+  const { state } = activeView;
   const {
     tr,
-    selection: { from, to },
+    selection: { from },
   } = state;
+  let {
+    selection: { to },
+  } = state;
+
+  if (trackData?.node.type.name === 'figure') {
+    to = from + 3;
+  }
+
   tr.setMeta('AcceptReject', true);
   const map = new Mapping();
 

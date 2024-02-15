@@ -81,13 +81,27 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
 
   const onClickAccept = () => {
     const acceptConfig = app.config.get('config.AcceptTrackChangeService');
-    acceptTrackChange(state, dispatch, user, activeTrackChange, acceptConfig);
+    acceptTrackChange(
+      dispatch,
+      user,
+      activeTrackChange,
+      acceptConfig,
+      context,
+      trackChange,
+    );
     pmViews[viewId].focus();
   };
 
   const onClickReject = () => {
     const rejectConfig = app.config.get('config.RejectTrackChangeService');
-    rejectTrackChange(state, dispatch, user, activeTrackChange, rejectConfig);
+    rejectTrackChange(
+      dispatch,
+      user,
+      activeTrackChange,
+      rejectConfig,
+      context,
+      trackChange,
+    );
     pmViews[viewId].focus();
   };
 

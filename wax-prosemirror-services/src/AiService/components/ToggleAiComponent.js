@@ -6,8 +6,11 @@ const ToggleAiComponent = ({ item }) => {
   const [checked, setChecked] = useState(false);
   const context = useContext(WaxContext);
   const {
+    app,
     pmViews: { main },
   } = context;
+
+  const enableService = app.config.get('config.AskAiContentService');
 
   let isDisabled = false;
   const isEditable = main.props.editable(editable => {
@@ -24,16 +27,17 @@ const ToggleAiComponent = ({ item }) => {
   };
 
   return useMemo(
-    () => (
-      <MenuButton
-        active={checked}
-        disabled={!isEditable}
-        iconName={item.icon}
-        onMouseDown={onMouseDown}
-        title={item.title}
-      />
-    ),
-    [checked, isDisabled],
+    () =>
+      enableService.AiOn ? (
+        <MenuButton
+          active={checked}
+          disabled={!isEditable}
+          iconName={item.icon}
+          onMouseDown={onMouseDown}
+          title={item.title}
+        />
+      ) : null,
+    [checked, isDisabled, enableService.AiOn],
   );
 };
 

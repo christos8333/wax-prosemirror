@@ -1,30 +1,39 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
 const ToggleAiComponent = ({ item }) => {
-  const { app, pmViews, options } = useContext(WaxContext);
-  const enableService = app.config.get('config.AskAiContentService');
+  const [checked, setChecked] = useState(false);
+  const context = useContext(WaxContext);
+  const {
+    pmViews: { main },
+  } = context;
 
   let isDisabled = false;
-  const { main } = pmViews;
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
   if (!isEditable) isDisabled = true;
 
+  const onMouseDown = () => {
+    context.setOption({ AiOn: !checked });
+    setChecked(!checked);
+    main.dispatch(main.state.tr.setMeta('addToHistory', false));
+    main.focus();
+  };
+
   return useMemo(
-    () =>
-      enableService.AiOn ? (
-        <MenuButton
-          active={false}
-          disabled={!isEditable || !options?.AiOn}
-          iconName={item.icon}
-          title={item.title}
-        />
-      ) : null,
-    [enableService.AiOn, isDisabled],
+    () => (
+      <MenuButton
+        active={checked}
+        disabled={!isEditable}
+        iconName={item.icon}
+        onMouseDown={onMouseDown}
+        title={item.title}
+      />
+    ),
+    [checked, isDisabled],
   );
 };
 

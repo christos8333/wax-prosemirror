@@ -10,12 +10,7 @@ class ToggleAiTool extends Tools {
 
   renderTool(view) {
     return (
-      <ToggleAiComponent
-        displayed={false}
-        item={this.toJSON()}
-        key={uuidv4()}
-        view={view}
-      />
+      <ToggleAiComponent item={this.toJSON()} key={uuidv4()} view={view} />
     );
   }
 }

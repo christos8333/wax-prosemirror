@@ -110,7 +110,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { AskAiContentTransformation, AiOn } = config;
+  const { AskAiContentTransformation } = config;
   const inputRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -135,7 +135,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
 
     setPosition({ ...position, left, top });
-  }, [position.left, options.AiOn, AiOn]);
+  }, [position.left, options.AiOn]);
 
   const tryAgain = () => {
     // Reset the state to initial values
@@ -198,7 +198,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
-  return options?.AiOn && AiOn ? (
+  return options?.AiOn ? (
     <Wrapper id="ai-overlay">
       <AskAIForm>
         <AskAIFormInput

@@ -68,7 +68,7 @@ const rejectTrackChange = (
       node.attrs.track &&
       node.attrs.track.find(track => track.type === 'deletion')
     ) {
-      console.log('remove track attrs');
+      tr.setNodeMarkup(map.map(pos), undefined, { ...node.attrs, track: [] });
     }
     if (node.marks && node.marks.find(mark => mark.type.name === 'insertion')) {
       const insertionMark = node.marks.find(

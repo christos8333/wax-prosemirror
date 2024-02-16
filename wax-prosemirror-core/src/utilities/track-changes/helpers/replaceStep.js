@@ -68,7 +68,9 @@ const replaceStep = (
     }
   }
   if (step.from !== step.to) {
-    map.appendMap(markDeletion(newTr, step.from, step.to, user, date, group));
+    map.appendMap(
+      markDeletion(newTr, step.from, step.to, user, date, group, viewId),
+    );
   }
 };
 

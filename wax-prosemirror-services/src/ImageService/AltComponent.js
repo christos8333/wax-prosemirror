@@ -64,10 +64,12 @@ export default ({ setPosition, position }) => {
     const { selection } = activeView.state;
     setAltText(altRef.current.value);
     activeView.dispatch(
-      activeView.state.tr.setNodeMarkup(selection.from, undefined, {
-        ...selection.node.attrs,
-        alt: altRef.current.value,
-      }),
+      activeView.state.tr
+        .setNodeMarkup(selection.from, undefined, {
+          ...selection.node.attrs,
+          alt: altRef.current.value,
+        })
+        .setMeta('imageAlt', true),
     );
   };
 

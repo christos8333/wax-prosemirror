@@ -20,20 +20,30 @@ const checkFromConfig = (mark, user, config) => {
 };
 
 const rejectTrackChange = (
-  state,
   dispatch,
   user,
   activeTrackChange,
   rejectConfig,
+  context,
+  trackData,
 ) => {
+  const { activeView } = context;
+  const { state } = activeView;
   const {
     tr,
-    selection: { from, to },
+    selection: { from },
   } = state;
+
+  let { to } = activeTrackChange;
+
+  if (trackData?.node?.type?.name === 'figure') {
+    to = activeTrackChange.from + 3;
+  }
+  console.log(activeTrackChange, trackData);
   tr.setMeta('AcceptReject', true);
   const map = new Mapping();
 
-  state.doc.nodesBetween(from, to, (node, pos) => {
+  state.doc.nodesBetween(activeTrackChange.from, to, (node, pos) => {
     if (node.marks && node.marks.find(mark => mark.type.name === 'deletion')) {
       const deletionMark = node.marks.find(
         mark => mark.type.name === 'deletion',
@@ -48,15 +58,19 @@ const rejectTrackChange = (
           deletionMark,
         ),
       );
-    } else if (
+    }
+    if (
       node.attrs.track &&
       node.attrs.track.find(track => track.type === 'insertion')
     ) {
       removeNode(tr, node, pos, map);
     } else if (
-      node.marks &&
-      node.marks.find(mark => mark.type.name === 'insertion')
+      node.attrs.track &&
+      node.attrs.track.find(track => track.type === 'deletion')
     ) {
+      tr.setNodeMarkup(map.map(pos), undefined, { ...node.attrs, track: [] });
+    }
+    if (node.marks && node.marks.find(mark => mark.type.name === 'insertion')) {
       const insertionMark = node.marks.find(
         mark => mark.type.name === 'insertion',
       );

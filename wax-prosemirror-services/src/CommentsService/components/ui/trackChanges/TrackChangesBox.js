@@ -127,6 +127,7 @@ const TrackChangesBox = props => {
   const labelBlockChange = 'changed ';
   let textBlockChange = '';
   let textBlockInsert = '';
+  let textBlockRemoved = '';
 
   if (trackData.type && trackData.type.name === 'format_change') {
     const { before, after } = trackData.attrs;
@@ -155,6 +156,9 @@ const TrackChangesBox = props => {
     }
     if (track.type === 'block_change') {
       textBlockChange = `${track.before.type} to ${trackData.node.type.name}`;
+    }
+    if (track.type === 'deletion') {
+      textBlockRemoved = trackData.node.type.name;
     }
   }
 
@@ -196,6 +200,12 @@ const TrackChangesBox = props => {
           <ActionWrapper>
             <Label>{labelAdded}</Label>
             <Text>{textBlockInsert}</Text>
+          </ActionWrapper>
+        )}
+        {textBlockRemoved !== '' && (
+          <ActionWrapper>
+            <Label>{labelRemoved}</Label>
+            <Text>{textBlockRemoved}</Text>
           </ActionWrapper>
         )}
         {textBlockChange !== '' && (

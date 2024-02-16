@@ -115,6 +115,7 @@ const markDeletion = (tr, from, to, user, date, group, viewId) => {
             track,
             group,
             id: uuidv4(),
+            viewid: viewId,
           }),
           // Object.assign(node.attrs.track, { track }),
           node.marks,

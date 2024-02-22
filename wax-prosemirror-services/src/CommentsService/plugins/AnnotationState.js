@@ -1,5 +1,7 @@
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import AnnotationDecoration from './AnnotationDecoration';
+import { createAnnotationRendering } from './rendering/engine';
+import { AnnotationPluginKey } from './AnnotationPlugin';
 
 export default class AnnotationState {
   constructor(options) {
@@ -7,6 +9,7 @@ export default class AnnotationState {
     this.options = options;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   randomId() {
     return Math.floor(Math.random() * 0xffffffff).toString();
   }
@@ -53,17 +56,16 @@ export default class AnnotationState {
     }).filter(value => {
       return 'from' in value && 'to' in value;
     });
-    const annotationRendering = (0, engine_1.createAnnotationRendering)(
-      termList,
-    );
+    const annotationRendering = createAnnotationRendering(termList);
     annotationRendering.forEach(annotation => {
-      const from = annotation.from;
-      const to = annotation.to;
+      const { from, to } = annotation;
+
       // eslint-disable-next-line
       console.log(`[${this.options.instance}] Decoration.inline()`, from, to, {
         id: annotation.id,
         data: annotation,
       });
+
       if (from === to) {
         console.warn(
           `[${this.options.instance}] corrupt decoration `,
@@ -99,7 +101,7 @@ export default class AnnotationState {
         };
       }
       decorations.push(
-        view_1.Decoration.inline(
+        Decoration.inline(
           from,
           to,
           customStyle || {
@@ -114,12 +116,12 @@ export default class AnnotationState {
         ),
       );
     });
-    this.decorations = view_1.DecorationSet.create(state.doc, decorations);
+    this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
   apply(transaction, state) {
     // Add/Remove annotations
-    const action = transaction.getMeta(annotation_plugin_1.AnnotationPluginKey);
+    const action = transaction.getMeta(AnnotationPluginKey);
     if (action && action.type) {
       console.log(`[${this.options.instance}] action: ${action.type}`);
       if (action.type === 'addAnnotation') {

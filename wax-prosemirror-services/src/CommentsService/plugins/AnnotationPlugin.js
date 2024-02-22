@@ -1,13 +1,14 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
+import AnnotationState from './AnnotationState';
 
-const AnnotationPluginKey = new PluginKey('AnnotationPluginKey');
+export const AnnotationPluginKey = new PluginKey('annotation-magic');
 
-export default props => {
+export const AnnotationPlugin = options => {
   return new Plugin({
     key: AnnotationPluginKey,
     state: {
       init() {
-        return new annotation_state_1.AnnotationState({
+        return new AnnotationState({
           styles: options.styles,
           map: new Map(),
           instance: options.instance,

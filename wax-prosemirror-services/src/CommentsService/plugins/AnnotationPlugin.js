@@ -3,7 +3,8 @@ import AnnotationState from './AnnotationState';
 
 export const AnnotationPluginKey = new PluginKey('annotation-magic');
 
-export const AnnotationPlugin = options => {
+export const AnnotationPlugin = (name, options) => {
+  console.log(options);
   return new Plugin({
     key: AnnotationPluginKey,
     state: {

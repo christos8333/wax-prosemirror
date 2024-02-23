@@ -4,6 +4,7 @@ import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';
 import CommentPlugin from './plugins/CommentPlugin';
 import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
+import { AnnotationPlugin } from './plugins/AnnotationPlugin';
 import './comments.css';
 
 const PLUGIN_KEY = 'commentPlugin';
@@ -14,6 +15,25 @@ export default class CommentsService extends Service {
     this.app.PmPlugins.add(
       'copyPasteCommentPlugin',
       CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),
+    );
+
+    const options = {
+      styles: {
+        rightFragment: '',
+        leftFragment: '',
+        normal: '',
+        middleFragment: '',
+      },
+      onSelectionChange: items => items,
+      onAnnotationListChange: items => items,
+      document: null,
+      field: 'annotations',
+      instance: '',
+    };
+
+    this.app.PmPlugins.add(
+      'AnnotationPlugin',
+      AnnotationPlugin('AnnotationPlugin', options),
     );
     const createOverlay = this.container.get('CreateOverlay');
     const layout = this.container.get('Layout');

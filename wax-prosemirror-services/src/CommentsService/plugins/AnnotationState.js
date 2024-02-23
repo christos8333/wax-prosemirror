@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import AnnotationDecoration from './AnnotationDecoration';
 import { createAnnotationRendering } from './rendering/engine';
@@ -54,6 +55,7 @@ export default class AnnotationState {
     const decorations = [];
     // only terms, not connectives, are rendered
     const termList = Array.from(map, ([key, value]) => {
+      // eslint-disable-next-line prefer-object-spread
       return Object.assign(Object.assign({}, value), { id: key });
     }).filter(value => {
       return 'from' in value && 'to' in value;
@@ -61,7 +63,7 @@ export default class AnnotationState {
     const annotationRendering = createAnnotationRendering(termList);
     annotationRendering.forEach(annotation => {
       const { from, to } = annotation;
-
+      console.log(this.options);
       // eslint-disable-next-line
       console.log(`[${this.options.instance}] Decoration.inline()`, from, to, {
         id: annotation.id,
@@ -108,7 +110,7 @@ export default class AnnotationState {
           to,
           customStyle || {
             class: baseClasses,
-            style: 'background-color: white;',
+            style: 'background-color: orange;',
           },
           {
             id: annotation.id,
@@ -124,7 +126,6 @@ export default class AnnotationState {
   apply(transaction, state) {
     // Add/Remove annotations
     const action = transaction.getMeta(AnnotationPluginKey);
-    console.log('action', action, transaction);
     if (action && action.type) {
       console.log(`[${this.options.instance}] action: ${action.type}`);
       if (action.type === 'addAnnotation') {

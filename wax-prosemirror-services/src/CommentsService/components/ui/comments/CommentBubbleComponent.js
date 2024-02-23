@@ -6,6 +6,7 @@ import {
   AnnotationPlugin,
   AnnotationPluginKey,
 } from '../../../plugins/AnnotationPlugin';
+import { v4 as uuidv4 } from 'uuid';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const { activeView, activeViewId } = useContext(WaxContext);
@@ -26,13 +27,13 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const createComment = event => {
     // event.preventDefault();
     const { selection } = state;
-
+    console.log(selection.from, selection.to);
     dispatch(
       state.tr.setMeta(AnnotationPluginKey, {
         type: 'addAnnotation',
         from: selection.from,
         to: selection.to,
-        data: [{ type: 'comment' }],
+        data: [{ id: uuidv4(), type: 'comment' }],
       }),
     );
     // Commands.createComment(state, dispatch, group, activeViewId);

@@ -16,7 +16,7 @@ export default class CommentsService extends Service {
       'copyPasteCommentPlugin',
       CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),
     );
-    console.log(this.app.context);
+
     const options = {
       styles: {
         rightFragment: '',
@@ -26,15 +26,16 @@ export default class CommentsService extends Service {
       },
       onSelectionChange: items => console.log(items),
       onAnnotationListChange: items => console.log(items),
-      document: this.app.context.pmViews?.main?.state.doc,
+      document: '',
       field: 'annotations',
-      instance: this.app.context.pmViews.main,
+      instance: '',
     };
 
     this.app.PmPlugins.add(
       'AnnotationPlugin',
       AnnotationPlugin('AnnotationPlugin', options),
     );
+
     const createOverlay = this.container.get('CreateOverlay');
     const layout = this.container.get('Layout');
     createOverlay(

@@ -15,6 +15,7 @@ export default class AnnotationState {
   }
 
   addAnnotation(action) {
+    console.log('here?');
     const { map } = this.options;
     const { from, to, data } = action;
     const id = this.randomId();
@@ -49,6 +50,7 @@ export default class AnnotationState {
 
   createDecorations(state) {
     const { map, styles } = this.options;
+
     const decorations = [];
     // only terms, not connectives, are rendered
     const termList = Array.from(map, ([key, value]) => {
@@ -122,6 +124,7 @@ export default class AnnotationState {
   apply(transaction, state) {
     // Add/Remove annotations
     const action = transaction.getMeta(AnnotationPluginKey);
+    console.log('action', action, transaction);
     if (action && action.type) {
       console.log(`[${this.options.instance}] action: ${action.type}`);
       if (action.type === 'addAnnotation') {

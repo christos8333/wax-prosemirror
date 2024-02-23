@@ -2,6 +2,10 @@
 import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext, Commands, DocumentHelpers } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
+import {
+  AnnotationPlugin,
+  AnnotationPluginKey,
+} from '../../../plugins/AnnotationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const { activeView, activeViewId } = useContext(WaxContext);
@@ -20,9 +24,19 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
   }, [position.left]);
 
   const createComment = event => {
-    event.preventDefault();
-    Commands.createComment(state, dispatch, group, activeViewId);
-    activeView.focus();
+    // event.preventDefault();
+    const { selection } = state;
+
+    dispatch(
+      state.tr.setMeta(AnnotationPluginKey, {
+        type: 'addAnnotation',
+        from: selection.from,
+        to: selection.to,
+        data: [{ type: 'comment' }],
+      }),
+    );
+    // Commands.createComment(state, dispatch, group, activeViewId);
+    // activeView.focus();
   };
 
   const isCommentAllowed = () => {

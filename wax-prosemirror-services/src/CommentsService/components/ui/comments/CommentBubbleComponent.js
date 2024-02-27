@@ -2,11 +2,7 @@
 import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext, Commands, DocumentHelpers } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
-import {
-  AnnotationPlugin,
-  AnnotationPluginKey,
-} from '../../../plugins/AnnotationPlugin';
-import { v4 as uuidv4 } from 'uuid';
+import { AnnotationPluginKey } from '../../../plugins/AnnotationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const { activeView, activeViewId } = useContext(WaxContext);
@@ -33,7 +29,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         type: 'addAnnotation',
         from: selection.from,
         to: selection.to,
-        data: [{ id: uuidv4(), type: 'comment' }],
+        data: [{ type: 'comment' }],
       }),
     );
     // Commands.createComment(state, dispatch, group, activeViewId);

@@ -4,7 +4,6 @@ import AnnotationState from './AnnotationState';
 export const AnnotationPluginKey = new PluginKey('annotation-magic');
 
 export const AnnotationPlugin = (name, options) => {
-  console.log(context);
   return new Plugin({
     key: AnnotationPluginKey,
     state: {
@@ -31,7 +30,7 @@ export const AnnotationPlugin = (name, options) => {
             selection.from,
             selection.to,
           );
-          console.log(annotations);
+
           options.onSelectionChange(annotations);
           return decorations;
         }

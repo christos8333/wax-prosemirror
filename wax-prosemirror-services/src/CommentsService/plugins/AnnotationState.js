@@ -16,7 +16,6 @@ export default class AnnotationState {
   }
 
   addAnnotation(action) {
-    console.log('here?');
     const { map } = this.options;
     const { from, to, data } = action;
     const id = this.randomId();
@@ -63,12 +62,11 @@ export default class AnnotationState {
     const annotationRendering = createAnnotationRendering(termList);
     annotationRendering.forEach(annotation => {
       const { from, to } = annotation;
-      console.log(this.options);
       // eslint-disable-next-line
-      console.log(`[${this.options.instance}] Decoration.inline()`, from, to, {
-        id: annotation.id,
-        data: annotation,
-      });
+      // console.log(`[${this.options.instance}] Decoration.inline()`, from, to, {
+      //   id: annotation.id,
+      //   data: annotation,
+      // });
 
       if (from === to) {
         console.warn(
@@ -120,6 +118,7 @@ export default class AnnotationState {
         ),
       );
     });
+    console.log('sadas', decorations);
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 

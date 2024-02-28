@@ -21,15 +21,15 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
   }, [position.left]);
 
   const createComment = event => {
-    // event.preventDefault();
+    event.preventDefault();
     const { selection } = state;
-    console.log(selection.from, selection.to);
+
     dispatch(
       state.tr.setMeta(AnnotationPluginKey, {
-        type: 'addAnnotation',
+        type: 'addComment',
         from: selection.from,
         to: selection.to,
-        data: [{ type: 'comment' }],
+        data: [{ conversation: [], group, activeViewId }],
       }),
     );
     // Commands.createComment(state, dispatch, group, activeViewId);

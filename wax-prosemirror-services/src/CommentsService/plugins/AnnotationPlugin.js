@@ -1,8 +1,10 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import AnnotationState from './AnnotationState';
 
-export const AnnotationPluginKey = new PluginKey('annotation-magic');
+let contentSize = 0;
+let allCommentsCount = 0;
 
+export const AnnotationPluginKey = new PluginKey('annotationPlugin');
 export const AnnotationPlugin = (name, options) => {
   return new Plugin({
     key: AnnotationPluginKey,
@@ -23,20 +25,20 @@ export const AnnotationPlugin = (name, options) => {
     props: {
       decorations(state) {
         const { decorations } = this.getState(state);
-        const { selection } = state;
-        // multiple characters selected
-        if (!selection.empty) {
-          const annotations = this.getState(state).termsAt(
-            selection.from,
-            selection.to,
-          );
+        if (
+          contentSize !== state.doc.content.size ||
+          this.getState(state).allTermsList().length !== allCommentsCount
+        ) {
+          // const annotations = this.getState(state).termsAt(
+          //   0,
+          //   state.doc.content.size,
+          // );
+          // options.onSelectionChange(annotations);
 
-          options.onSelectionChange(annotations);
-          return decorations;
+          options.onSelectionChange(this.getState(state).allTermsList());
         }
-        // only cursor change
-        const annotations = this.getState(state).termsAt(selection.from);
-        options.onSelectionChange(annotations);
+        contentSize = state.doc.content.size;
+        allCommentsCount = this.getState(state).allTermsList().length;
         return decorations;
       },
     },

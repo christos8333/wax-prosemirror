@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
+import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import AnnotationDecoration from './AnnotationDecoration';
-import { createAnnotationRendering } from './rendering/engine';
+// import { createAnnotationRendering } from './rendering/engine';
 import { AnnotationPluginKey } from './AnnotationPlugin';
 
 export default class AnnotationState {
@@ -12,17 +13,17 @@ export default class AnnotationState {
 
   // eslint-disable-next-line class-methods-use-this
   randomId() {
-    return Math.floor(Math.random() * 0xffffffff).toString();
+    return uuidv4();
   }
 
-  addAnnotation(action) {
+  addComment(action) {
     const { map } = this.options;
     const { from, to, data } = action;
     const id = this.randomId();
     map.set(id, { id, from, to, data });
   }
 
-  updateAnnotation(action) {
+  updateComment(action) {
     const { map } = this.options;
     const annotationToUpdate = map.get(action.id);
     if (annotationToUpdate) {
@@ -30,7 +31,7 @@ export default class AnnotationState {
     }
   }
 
-  deleteAnnotation(id) {
+  deleteComment(id) {
     const { map } = this.options;
     map.delete(id);
   }
@@ -48,6 +49,16 @@ export default class AnnotationState {
     });
   }
 
+  allTermsList() {
+    const { map } = this.options;
+    return Array.from(map, ([key, value]) => {
+      // eslint-disable-next-line prefer-object-spread
+      return Object.assign(Object.assign({}, value), { id: key });
+    }).filter(value => {
+      return 'from' in value && 'to' in value;
+    });
+  }
+
   createDecorations(state) {
     const { map, styles } = this.options;
 
@@ -59,8 +70,10 @@ export default class AnnotationState {
     }).filter(value => {
       return 'from' in value && 'to' in value;
     });
-    const annotationRendering = createAnnotationRendering(termList);
-    annotationRendering.forEach(annotation => {
+
+    // const annotationRendering = createAnnotationRendering(termList);
+
+    termList.forEach(annotation => {
       const { from, to } = annotation;
       // eslint-disable-next-line
       // console.log(`[${this.options.instance}] Decoration.inline()`, from, to, {
@@ -102,13 +115,14 @@ export default class AnnotationState {
           class: baseClasses,
         };
       }
+
       decorations.push(
         Decoration.inline(
           from,
           to,
           customStyle || {
-            class: baseClasses,
-            style: 'background-color: orange;',
+            class: 'comment',
+            'data-id': annotation.id,
           },
           {
             id: annotation.id,
@@ -118,23 +132,21 @@ export default class AnnotationState {
         ),
       );
     });
-    console.log('sadas', decorations);
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
   apply(transaction, state) {
-    // Add/Remove annotations
+    // Add/Remove comments
     const action = transaction.getMeta(AnnotationPluginKey);
     if (action && action.type) {
-      console.log(`[${this.options.instance}] action: ${action.type}`);
-      if (action.type === 'addAnnotation') {
-        this.addAnnotation(action);
+      if (action.type === 'addComment') {
+        this.addComment(action);
       }
-      if (action.type === 'updateAnnotation') {
-        this.updateAnnotation(action);
+      if (action.type === 'updateComment') {
+        this.updateComment(action);
       }
-      if (action.type === 'deleteAnnotation') {
-        this.deleteAnnotation(action.id);
+      if (action.type === 'deleteComment') {
+        this.deleteComment(action.id);
       }
       this.createDecorations(state);
       this.options.onAnnotationListChange(this.allAnnotations());
@@ -142,6 +154,7 @@ export default class AnnotationState {
     }
     // manually map annotation positions
     this.options.map.forEach((annotation, _) => {
+      console.log(this.decorations);
       if ('from' in annotation && 'to' in annotation) {
         annotation.from = transaction.mapping.map(annotation.from);
         annotation.to = transaction.mapping.map(annotation.to);

@@ -18,14 +18,9 @@ export default class CommentsService extends Service {
     );
 
     const options = {
-      styles: {
-        rightFragment: '',
-        leftFragment: '',
-        normal: '',
-        middleFragment: '',
-      },
+      styles: {},
       onSelectionChange: items => console.log(items),
-      onAnnotationListChange: items => console.log(items),
+      onAnnotationListChange: () => true,
       document: '',
       field: 'annotations',
       instance: '',

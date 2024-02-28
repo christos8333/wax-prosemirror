@@ -64,6 +64,10 @@ const updateTitle = debounce(title => {
   console.log(title);
 }, 100);
 
+const getComments = debounce(comments => {
+  console.log(comments);
+}, 100);
+
 const saveTags = tags => {
   // console.log(tags);
 };
@@ -159,9 +163,12 @@ export default {
     ),
   ],
   ImageService: { showAlt: true },
+
   CommentsService: {
     showTitle: true,
+    getComments,
   },
+
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },

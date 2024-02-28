@@ -154,7 +154,6 @@ export default class AnnotationState {
     }
     // manually map annotation positions
     this.options.map.forEach((annotation, _) => {
-      console.log(this.decorations);
       if ('from' in annotation && 'to' in annotation) {
         annotation.from = transaction.mapping.map(annotation.from);
         annotation.to = transaction.mapping.map(annotation.to);

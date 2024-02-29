@@ -37,13 +37,20 @@ const ToggleAiComponent = ({ item }) => {
       enableService.AiOn ? (
         <MenuButton
           active={checked}
-          disabled={!isEditable}
+          disabled={
+            !isEditable || main.state.selection.from === main.state.selection.to
+          }
           iconName={item.icon}
           onMouseDown={onMouseDown}
           title={item.title}
         />
       ) : null,
-    [checked, isDisabled, enableService.AiOn],
+    [
+      checked,
+      isDisabled,
+      enableService.AiOn,
+      main.state.selection.from === main.state.selection.to,
+    ],
   );
 };
 

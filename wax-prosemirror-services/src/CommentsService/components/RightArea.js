@@ -12,8 +12,9 @@ export default ({ area, users }) => {
     pmViews: { main },
     app,
     activeView,
+    options,
   } = useContext(WaxContext);
-
+  console.log(options);
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 

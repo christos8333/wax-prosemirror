@@ -12,7 +12,7 @@ const PLUGIN_KEY = 'commentPlugin';
 export default class CommentsService extends Service {
   boot() {
     const commentsConfig = this.app.config.get('config.CommentsService');
-    console.log(commentsConfig);
+
     this.app.PmPlugins.add(PLUGIN_KEY, CommentPlugin(PLUGIN_KEY));
     this.app.PmPlugins.add(
       'copyPasteCommentPlugin',
@@ -21,7 +21,10 @@ export default class CommentsService extends Service {
 
     const options = {
       styles: {},
-      onSelectionChange: items => commentsConfig.getComments(items),
+      onSelectionChange: items => {
+        commentsConfig.getComments(items);
+        this.app.context.setOption({ comments: items });
+      },
       onAnnotationListChange: () => true,
       document: '',
       field: 'annotations',

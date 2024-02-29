@@ -12,9 +12,11 @@ export default ({ area, users }) => {
     pmViews: { main },
     app,
     activeView,
-    options,
+    options: { comments },
   } = useContext(WaxContext);
-  console.log(options);
+
+  console.log('sddssd', comments);
+
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
@@ -38,7 +40,7 @@ export default ({ area, users }) => {
       WaxSurface = main.dom.getBoundingClientRect();
       WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
     }
-
+    console.log(marksNodes);
     each(marksNodes[area], (markNode, pos) => {
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;

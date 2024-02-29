@@ -10,6 +10,7 @@ import './comments.css';
 const PLUGIN_KEY = 'commentPlugin';
 
 export default class CommentsService extends Service {
+  allCommentsFromStates = [];
   boot() {
     const commentsConfig = this.app.config.get('config.CommentsService');
 
@@ -22,8 +23,11 @@ export default class CommentsService extends Service {
     const options = {
       styles: {},
       onSelectionChange: items => {
-        commentsConfig.getComments(items);
-        this.app.context.setOption({ comments: items });
+        this.allCommentsFromStates = this.allCommentsFromStates.concat([
+          ...items,
+        ]);
+        commentsConfig.getComments(this.allCommentsFromStates);
+        this.app.context.setOption({ comments: this.allCommentsFromStates });
       },
       onAnnotationListChange: () => true,
       document: '',

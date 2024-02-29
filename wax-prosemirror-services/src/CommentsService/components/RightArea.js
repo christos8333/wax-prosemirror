@@ -2,7 +2,7 @@
 import { Mark } from 'prosemirror-model';
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { each, uniqBy, sortBy } from 'lodash';
+import { each, uniqBy, sortBy, groupBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
 
@@ -14,8 +14,6 @@ export default ({ area, users }) => {
     activeView,
     options: { comments },
   } = useContext(WaxContext);
-
-  console.log('sddssd', comments);
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
@@ -41,6 +39,7 @@ export default ({ area, users }) => {
       WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
     }
     console.log(marksNodes);
+    return;
     each(marksNodes[area], (markNode, pos) => {
       const id =
         markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
@@ -155,7 +154,7 @@ export default ({ area, users }) => {
   };
 
   useDeepCompareEffect(() => {
-    setMarksNodes(updateMarks(pmViews));
+    setMarksNodes(updateMarks(pmViews, comments));
     if (isFirstRun) {
       setTimeout(() => {
         setPosition(setTops());
@@ -164,7 +163,7 @@ export default ({ area, users }) => {
     } else {
       setPosition(setTops());
     }
-  }, [updateMarks(pmViews), setTops()]);
+  }, [updateMarks(pmViews, comments), setTops()]);
 
   const CommentTrackComponent = useMemo(
     () => (
@@ -182,7 +181,9 @@ export default ({ area, users }) => {
   return <>{CommentTrackComponent}</>;
 };
 
-const updateMarks = views => {
+const updateMarks = (views, comments) => {
+  const newComments = groupBy(comments, comm => comm.data.group) || [];
+
   if (views.main) {
     const allInlineNodes = [];
 
@@ -205,7 +206,7 @@ const updateMarks = views => {
             mark.type.name === 'deletion' ||
             mark.type.name === 'format_change'
           ) {
-            mark.pos = node.pos;
+            mark.from = node.pos;
             finalMarks.push(mark);
           }
         });
@@ -220,7 +221,7 @@ const updateMarks = views => {
 
     const nodesAndMarks = [...uniqBy(finalMarks, 'attrs.id'), ...finalNodes];
 
-    const groupedMarkNodes = {};
+    const groupedMarkNodes = { main: [], notes: [] };
     nodesAndMarks.forEach(markNode => {
       const markNodeAttrs = markNode.attrs
         ? markNode.attrs
@@ -232,9 +233,12 @@ const updateMarks = views => {
         groupedMarkNodes[markNodeAttrs.group].push(markNode);
       }
     });
-
+    if (newComments?.main?.length > 0)
+      groupedMarkNodes.main = groupedMarkNodes.main.concat(newComments.main);
+    if (newComments?.notes?.length > 0)
+      groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
     return {
-      main: sortBy(groupedMarkNodes.main, ['pos']),
+      main: sortBy(groupedMarkNodes.main, ['from']),
       notes: groupedMarkNodes.notes,
     };
   }

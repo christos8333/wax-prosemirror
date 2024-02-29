@@ -65,8 +65,8 @@ const updateTitle = debounce(title => {
 }, 100);
 
 const getComments = debounce(comments => {
-  console.log(comments);
-}, 100);
+  // console.log(comments);
+}, 2000);
 
 const saveTags = tags => {
   // console.log(tags);

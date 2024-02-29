@@ -29,7 +29,11 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         type: 'addComment',
         from: selection.from,
         to: selection.to,
-        data: [{ conversation: [], group, activeViewId }],
+        data: {
+          conversation: [],
+          group,
+          viewid: activeViewId,
+        },
       }),
     );
     // Commands.createComment(state, dispatch, group, activeViewId);

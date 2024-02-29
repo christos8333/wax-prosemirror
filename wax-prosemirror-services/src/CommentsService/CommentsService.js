@@ -23,6 +23,10 @@ export default class CommentsService extends Service {
     const options = {
       styles: {},
       onSelectionChange: items => {
+        this.allCommentsFromStates = this.allCommentsFromStates.filter(
+          comm =>
+            (items.find(item => item.id === comm.id) || {}).id !== comm.id,
+        );
         this.allCommentsFromStates = this.allCommentsFromStates.concat([
           ...items,
         ]);

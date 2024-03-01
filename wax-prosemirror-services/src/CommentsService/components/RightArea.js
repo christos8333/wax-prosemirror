@@ -213,7 +213,6 @@ const updateMarks = (views, comments) => {
       if (node.node.marks.length > 0) {
         node.node.marks.filter(mark => {
           if (
-            mark.type.name === 'comment' ||
             mark.type.name === 'insertion' ||
             mark.type.name === 'deletion' ||
             mark.type.name === 'format_change'

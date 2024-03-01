@@ -39,10 +39,8 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   const [clickPost, setClickPost] = useState(false);
 
   const { state, dispatch } = activeView;
-  const viewId = comment.attrs ? comment.attrs.viewid : comment.data.viewId;
-  const conversation = comment.attrs
-    ? comment.attrs.conversation
-    : comment.data.conversation;
+  const { viewId, conversation } = comment.data;
+
   let allCommentsWithSameId = [];
 
   if (pmViews[viewId]) {
@@ -165,7 +163,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     //   onClickPost(content);
     // }
     setTimeout(() => {
-      if (comment.attrs.conversation.length === 0 && !clickPost) {
+      if (conversation.length === 0 && !clickPost) {
         onClickResolve();
         activeView.focus();
       }
@@ -177,12 +175,12 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       <ConnectedCommentStyled
         active={isActive}
         data-box={commentId}
-        length={comment.attrs.conversation.length === 0}
+        length={conversation.length === 0}
         style={styles}
       >
         <CommentBox
           active={isActive}
-          commentData={comment.attrs.conversation}
+          commentData={conversation}
           commentId={commentId}
           isReadOnly={isReadOnly}
           key={commentId}
@@ -197,7 +195,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         />
       </ConnectedCommentStyled>
     ),
-    [isActive, top, comment.attrs.conversation.length, users],
+    [isActive, top, conversation.length, users],
   );
   return <>{MemorizedComponent}</>;
 };

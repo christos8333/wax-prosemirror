@@ -20,10 +20,7 @@ export default ({ commentsTracks, view, position, recalculateTops, users }) => {
 
         const top = position[index] ? position[index][id] : 0;
 
-        if (
-          commentTrack?.type?.name === 'comment' ||
-          commentTrack?.data?.type === 'comment'
-        ) {
+        if (commentTrack.data?.type === 'comment') {
           return (
             <ConnectedComment
               comment={commentTrack}

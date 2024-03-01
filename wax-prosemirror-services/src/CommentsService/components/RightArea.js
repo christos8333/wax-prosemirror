@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
 import { Mark } from 'prosemirror-model';
 import React, { useContext, useState, useMemo, useCallback } from 'react';
@@ -38,11 +39,18 @@ export default ({ area, users }) => {
       WaxSurface = main.dom.getBoundingClientRect();
       WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
     }
-    console.log(marksNodes);
-    return;
+
     each(marksNodes[area], (markNode, pos) => {
-      const id =
-        markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
+      let id = '';
+
+      if (markNode?.node?.attrs.id) {
+        id = markNode.node.attrs.id;
+      } else if (markNode?.attrs?.id) {
+        id = markNode.attrs.id;
+      } else {
+        id = markNode.id;
+      }
+
       let activeTrackChange = null;
       const activeComment = commentPlugin.getState(activeView.state).comment;
       if (trakChangePlugin)
@@ -129,11 +137,15 @@ export default ({ area, users }) => {
           if (doesOverlap) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
+            let previousMarkNode = '';
 
-            const previousMarkNode =
-              marksNodes[area][i - 1] instanceof Mark
-                ? marksNodes[area][i - 1].attrs.id
-                : marksNodes[area][i - 1].node.attrs.id;
+            if (marksNodes[area][i - 1]?.node?.attrs.id) {
+              previousMarkNode = marksNodes[area][i - 1].node.attrs.id;
+            } else if (marksNodes[area][i - 1]?.attrs?.id) {
+              previousMarkNode = marksNodes[area][i - 1].attrs.id;
+            } else {
+              previousMarkNode = marksNodes[area][i - 1].id;
+            }
 
             allCommentsTop[i - 1][previousMarkNode] = result[i - 1];
           }

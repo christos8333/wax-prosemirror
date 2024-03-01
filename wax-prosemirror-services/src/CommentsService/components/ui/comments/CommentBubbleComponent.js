@@ -30,6 +30,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         from: selection.from,
         to: selection.to,
         data: {
+          type: 'comment',
           conversation: [],
           group,
           viewid: activeViewId,

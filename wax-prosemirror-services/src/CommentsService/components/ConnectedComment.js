@@ -39,7 +39,10 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   const [clickPost, setClickPost] = useState(false);
 
   const { state, dispatch } = activeView;
-  const viewId = comment.attrs.viewid;
+  const viewId = comment.attrs ? comment.attrs.viewid : comment.data.viewId;
+  const conversation = comment.attrs
+    ? comment.attrs.conversation
+    : comment.data.conversation;
   let allCommentsWithSameId = [];
 
   if (pmViews[viewId]) {

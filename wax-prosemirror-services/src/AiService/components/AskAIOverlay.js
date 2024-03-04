@@ -165,7 +165,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     const highlightedText = main.state.doc.textBetween(from, to);
 
     // Combine the user's input and the highlighted text
-    const combinedInput = `${inputValue}\n\nHighlighted Text: ${highlightedText}`;
+    const combinedInput = `${inputValue}\n\n${highlightedText}`;
 
     try {
       const response = await AskAiContentTransformation(combinedInput);

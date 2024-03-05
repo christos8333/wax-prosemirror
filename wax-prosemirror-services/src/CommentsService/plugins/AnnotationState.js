@@ -2,7 +2,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import AnnotationDecoration from './AnnotationDecoration';
-// import { createAnnotationRendering } from './rendering/engine';
 import { AnnotationPluginKey } from './AnnotationPlugin';
 
 export default class AnnotationState {
@@ -90,37 +89,12 @@ export default class AnnotationState {
           to,
         );
       }
-      let baseClasses; // = "border-black p-0.5 font-semibold inline relative ";
-      switch (annotation.rendering) {
-        case 'fragment-left':
-          baseClasses = styles.leftFragment;
-          break;
-        case 'fragment-middle':
-          baseClasses = styles.middleFragment;
-          break;
-        case 'fragment-right':
-          baseClasses = styles.rightFragment;
-          break;
-        case 'normal':
-          baseClasses = styles.normal;
-          break;
-        default:
-          break;
-      }
-      // set custom background color
-      let customStyle;
-      if (annotation.backgroundColor) {
-        customStyle = {
-          style: `background-color: ${annotation.backgroundColor};`,
-          class: baseClasses,
-        };
-      }
 
       decorations.push(
         Decoration.inline(
           from,
           to,
-          customStyle || {
+          {
             class: 'comment',
             'data-id': annotation.id,
           },

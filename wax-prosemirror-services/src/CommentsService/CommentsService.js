@@ -7,14 +7,16 @@ import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
 import { AnnotationPlugin } from './plugins/AnnotationPlugin';
 import './comments.css';
 
-const PLUGIN_KEY = 'commentPlugin';
-
 export default class CommentsService extends Service {
   allCommentsFromStates = [];
   boot() {
     const commentsConfig = this.app.config.get('config.CommentsService');
 
-    this.app.PmPlugins.add(PLUGIN_KEY, CommentPlugin(PLUGIN_KEY));
+    this.app.PmPlugins.add(
+      'commentPlugin',
+      CommentPlugin('commentPlugin', this.app.context),
+    );
+
     this.app.PmPlugins.add(
       'copyPasteCommentPlugin',
       CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),

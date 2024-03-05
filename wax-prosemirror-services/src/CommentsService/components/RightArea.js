@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
-import { Mark } from 'prosemirror-model';
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy, groupBy } from 'lodash';
@@ -248,6 +247,7 @@ const updateMarks = (views, comments) => {
       groupedMarkNodes.main = groupedMarkNodes.main.concat(newComments.main);
     if (newComments?.notes?.length > 0)
       groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
+    console.log(sortBy(groupedMarkNodes.main, ['from']));
     return {
       main: sortBy(groupedMarkNodes.main, ['from']),
       notes: groupedMarkNodes.notes,

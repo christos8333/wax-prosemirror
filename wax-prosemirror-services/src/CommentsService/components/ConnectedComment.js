@@ -190,7 +190,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
           onTextAreaBlur={onTextAreaBlur}
           recalculateTops={recalculateTops}
           showTitle={showTitle}
-          title={comment.attrs.title}
+          // title={comment.attrs.title}
           users={users}
         />
       </ConnectedCommentStyled>

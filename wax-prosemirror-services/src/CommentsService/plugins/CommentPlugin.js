@@ -65,7 +65,7 @@ const getComment = state => {
   return commentOnSelection;
 };
 
-export default props => {
+export default (key, context) => {
   return new Plugin({
     key: commentPlugin,
     state: {
@@ -73,6 +73,7 @@ export default props => {
         return { comment: getComment(state) };
       },
       apply(tr, prev, _, newState) {
+        console.log(context);
         const comment = getComment(newState);
         let createDecoration;
         if (comment) {

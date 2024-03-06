@@ -37,6 +37,8 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         },
       }),
     );
+    dispatch(state.tr);
+    // Delete when new comments are done
     // Commands.createComment(state, dispatch, group, activeViewId);
     // activeView.focus();
   };

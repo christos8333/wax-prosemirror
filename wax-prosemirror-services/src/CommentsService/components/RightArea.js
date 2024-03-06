@@ -58,7 +58,7 @@ export default ({ area, users }) => {
 
       let isActive = false;
       if (
-        (activeComment && id === activeComment.attrs.id) ||
+        (activeComment && id === activeComment.id) ||
         (activeTrackChange && id === activeTrackChange.attrs.id)
       )
         isActive = true;
@@ -247,7 +247,7 @@ const updateMarks = (views, comments) => {
       groupedMarkNodes.main = groupedMarkNodes.main.concat(newComments.main);
     if (newComments?.notes?.length > 0)
       groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
-    console.log(sortBy(groupedMarkNodes.main, ['from']));
+
     return {
       main: sortBy(groupedMarkNodes.main, ['from']),
       notes: groupedMarkNodes.notes,

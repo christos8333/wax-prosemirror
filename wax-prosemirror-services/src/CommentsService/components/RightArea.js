@@ -52,6 +52,7 @@ export default ({ area, users }) => {
 
       let activeTrackChange = null;
       const activeComment = commentPlugin.getState(activeView.state).comment;
+
       if (trakChangePlugin)
         activeTrackChange = trakChangePlugin.getState(activeView.state)
           .trackChange;

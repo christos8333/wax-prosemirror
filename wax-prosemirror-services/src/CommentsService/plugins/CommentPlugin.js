@@ -1,9 +1,7 @@
-/* eslint-disable */
-
-import { minBy, maxBy, last } from 'lodash';
+/* eslint-disable consistent-return */
+import { inRange, sortBy, last } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const commentPlugin = new PluginKey('commentPlugin');
 
@@ -12,18 +10,25 @@ const getComment = (state, context) => {
     options: { comments },
   } = context;
   if (!comments?.length) return;
-  console.log('sds', comments);
 
-  return {
-    from: comments[0].from,
-    to: comments[0].to,
-    attrs: comments[0].data,
-    id: comments[0].id,
-    // contained: commentOnSelection.contained,
-  };
+  let commentData = comments.filter(comment =>
+    inRange(state.selection.from, comment.from, comment.to),
+  );
+
+  commentData = sortBy(commentData, ['from']);
+
+  if (commentData.length > 0) {
+    return {
+      from: last(commentData).from,
+      to: last(commentData).to,
+      attrs: last(commentData).data,
+      id: last(commentData).id,
+      // contained: commentOnSelection.contained,
+    };
+  }
+  return {};
 };
 
-c;
 export default (key, context) => {
   return new Plugin({
     key: commentPlugin,

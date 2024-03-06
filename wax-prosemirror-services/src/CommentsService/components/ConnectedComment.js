@@ -33,6 +33,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     app,
     activeView,
     activeViewId,
+    options: { comments },
   } = context;
 
   const [isActive, setIsActive] = useState(false);
@@ -164,7 +165,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     // }
     setTimeout(() => {
       if (conversation.length === 0 && !clickPost) {
-        onClickResolve();
+        // onClickResolve();
         activeView.focus();
       }
     }, 400);

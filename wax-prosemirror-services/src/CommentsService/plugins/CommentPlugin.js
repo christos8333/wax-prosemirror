@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { inRange, sortBy, last } from 'lodash';
+import { inRange, last } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
@@ -11,20 +11,18 @@ const getComment = (state, context) => {
   } = context;
   if (!comments?.length) return;
 
-  let commentData = comments.filter(comment =>
+  const commentData = comments.filter(comment =>
     inRange(state.selection.from, comment.from, comment.to),
   );
 
-  commentData = sortBy(commentData, ['from']);
-
   if (commentData.length > 0) {
-    return {
-      from: last(commentData).from,
-      to: last(commentData).to,
-      attrs: last(commentData).data,
-      id: last(commentData).id,
-      // contained: commentOnSelection.contained,
-    };
+    if (
+      state.selection.from !== state.selection.to &&
+      state.selection.to < last(commentData).to
+    ) {
+      return {};
+    }
+    return last(commentData);
   }
   return {};
 };

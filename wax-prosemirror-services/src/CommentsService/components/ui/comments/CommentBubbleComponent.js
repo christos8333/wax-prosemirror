@@ -5,7 +5,7 @@ import CommentBubble from './CommentBubble';
 import { AnnotationPluginKey } from '../../../plugins/AnnotationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
-  const { activeView, activeViewId } = useContext(WaxContext);
+  const { app, activeView, activeViewId } = useContext(WaxContext);
   const { state, dispatch } = activeView;
 
   useLayoutEffect(() => {
@@ -61,11 +61,16 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         }
       },
     );
-    // TODO Overlapping comments . for now don't allow
-    marks.forEach(mark => {
-      if (mark.attrs.group === 'main') allowed = false;
-    });
 
+    const commentPlugin = app.PmPlugins.get('commentPlugin');
+    const activeComment = commentPlugin.getState(activeView.state).comment;
+
+    if (
+      activeComment &&
+      state.selection.from === activeComment.from &&
+      state.selection.to === activeComment.to
+    )
+      allowed = false;
     // TO DO this is because of a bug and overlay doesn't rerender. Fix in properly in Notes, and remove
     if (activeViewId !== 'main' && marks.length >= 1) allowed = false;
     return allowed;

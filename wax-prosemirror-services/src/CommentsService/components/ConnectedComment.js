@@ -33,7 +33,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     app,
     activeView,
     activeViewId,
-    options: { comments },
   } = context;
 
   const [isActive, setIsActive] = useState(false);

@@ -33,6 +33,7 @@ export default class CommentsService extends Service {
           ...items,
         ]);
         commentsConfig.getComments(this.allCommentsFromStates);
+
         this.app.context.setOption({ comments: this.allCommentsFromStates });
       },
       onAnnotationListChange: () => true,

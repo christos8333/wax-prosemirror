@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { WaxContext, DocumentHelpers, Commands } from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
+import { AnnotationPluginKey } from '../plugins/AnnotationPlugin';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
@@ -33,6 +34,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     app,
     activeView,
     activeViewId,
+    options: { comments },
   } = context;
 
   const [isActive, setIsActive] = useState(false);
@@ -40,8 +42,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
   const { state, dispatch } = activeView;
   const { viewId, conversation } = comment.data;
-
-  const commentMark = state.schema.marks.comment;
 
   const styles = {
     top: `${top}px`,
@@ -106,36 +106,27 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   };
 
   const onClickResolve = () => {
-    let maxPos = comment.pos;
-    let minPos = comment.pos;
-
-    allCommentsWithSameId.forEach(singleComment => {
-      const markPosition = DocumentHelpers.findMarkPosition(
-        state,
-        singleComment.pos,
-        'comment',
-      );
-      if (markPosition.from < minPos) minPos = markPosition.from;
-      if (markPosition.to > maxPos) maxPos = markPosition.to;
-    });
-    // if (allCommentsWithSameId.length > 1);
-    // maxPos += last(allCommentsWithSameId).node.nodeSize;
+    dispatch(
+      state.tr.setMeta(AnnotationPluginKey, {
+        type: 'deleteComment',
+        id: activeComment.id,
+      }),
+    );
     recalculateTops();
-    dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
     activeView.focus();
+    setTimeout(() => {
+      const newComments = comments.filter(comm => {
+        return comm.id !== activeComment.id;
+      });
+      context.setOption({ comments: newComments });
+    });
   };
 
   const onTextAreaBlur = () => {
-    // TODO Save into local storage
-    // if (content !== '') {
-    //   onClickPost(content);
-    // }
-    setTimeout(() => {
-      if (conversation.length === 0 && !clickPost) {
-        // onClickResolve();
-        activeView.focus();
-      }
-    }, 400);
+    if (conversation.length === 0 && !clickPost) {
+      onClickResolve();
+      activeView.focus();
+    }
   };
 
   const MemorizedComponent = useMemo(

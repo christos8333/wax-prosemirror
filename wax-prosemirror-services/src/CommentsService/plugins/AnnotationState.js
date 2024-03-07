@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import AnnotationDecoration from './AnnotationDecoration';
 import { AnnotationPluginKey } from './AnnotationPlugin';
-
+let toPos = 0;
 export default class AnnotationState {
   constructor(options) {
     this.decorations = DecorationSet.empty;
@@ -126,6 +126,7 @@ export default class AnnotationState {
       this.options.onAnnotationListChange(this.allAnnotations());
       return this;
     }
+
     // manually map annotation positions
     this.options.map.forEach((annotation, _) => {
       if ('from' in annotation && 'to' in annotation) {
@@ -137,3 +138,8 @@ export default class AnnotationState {
     return this;
   }
 }
+
+//  let res =
+//    annotation.to === state.selection.to &&
+//    state.selection.from === state.selection.to;
+//  console.log(res, transaction.docChanged);

@@ -34,7 +34,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
           conversation: [],
           title: '',
           group,
-          viewid: activeViewId,
+          viewId: activeViewId,
         },
       }),
     );

@@ -42,7 +42,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
   const { state, dispatch } = activeView;
   const { viewId, conversation } = comment.data;
-
   const styles = {
     top: `${top}px`,
   };
@@ -77,9 +76,16 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       timestamp: Math.floor(Date.now()),
     };
 
-    comment.attrs.title = title || comment.attrs.title;
-    comment.attrs.conversation.push(obj);
+    comment.data.title = title || comment.data.title;
+    comment.data.conversation.push(obj);
 
+    dispatch(
+      state.tr.setMeta(AnnotationPluginKey, {
+        type: 'updateComment',
+        id: activeComment.id,
+        data: comment.data,
+      }),
+    );
     activeView.focus();
     recalculateTops();
   };
@@ -92,12 +98,9 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     if (viewId !== 'main') context.updateView({}, viewId);
 
-    const maxPos = maxBy(allCommentsWithSameId, 'pos');
-    maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
-
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
-        new TextSelection(pmViews[viewId].state.tr.doc.resolve(maxPos.pos)),
+        new TextSelection(pmViews[viewId].state.tr.doc.resolve(comment.to - 1)),
       ),
     );
 

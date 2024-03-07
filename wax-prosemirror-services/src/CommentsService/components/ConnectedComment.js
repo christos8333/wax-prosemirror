@@ -41,14 +41,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   const { state, dispatch } = activeView;
   const { viewId, conversation } = comment.data;
 
-  let allCommentsWithSameId = [];
-
-  if (pmViews[viewId]) {
-    allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-      pmViews[viewId].state,
-      comment,
-    );
-  }
   const commentMark = state.schema.marks.comment;
 
   const styles = {
@@ -87,30 +79,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     comment.attrs.title = title || comment.attrs.title;
     comment.attrs.conversation.push(obj);
-
-    allCommentsWithSameId.forEach(singleComment => {
-      activeView.dispatch(
-        activeView.state.tr.removeMark(
-          singleComment.pos,
-          singleComment.pos + singleComment.node.nodeSize,
-          commentMark,
-        ),
-      );
-    });
-
-    const minPos = minBy(allCommentsWithSameId, 'pos');
-    const maxPos = maxBy(allCommentsWithSameId, 'pos');
-
-    Commands.createComment(
-      activeView.state,
-      activeView.dispatch,
-      comment.attrs.group,
-      comment.attrs.viewid,
-      comment.attrs.conversation,
-      comment.attrs.title,
-      minPos.pos,
-      maxPos.pos + last(allCommentsWithSameId).node.nodeSize,
-    );
 
     activeView.focus();
     recalculateTops();
@@ -190,7 +158,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
           onTextAreaBlur={onTextAreaBlur}
           recalculateTops={recalculateTops}
           showTitle={showTitle}
-          // title={comment.attrs.title}
+          title={comment.data.title}
           users={users}
         />
       </ConnectedCommentStyled>

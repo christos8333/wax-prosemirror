@@ -32,15 +32,13 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         data: {
           type: 'comment',
           conversation: [],
+          title: '',
           group,
           viewid: activeViewId,
         },
       }),
     );
     dispatch(state.tr);
-    // Delete when new comments are done
-    // Commands.createComment(state, dispatch, group, activeViewId);
-    // activeView.focus();
   };
 
   const isCommentAllowed = () => {

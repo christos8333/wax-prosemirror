@@ -26,9 +26,9 @@ const getComment = (state, context) => {
     ) {
       return last(commentData);
     }
-    return {};
+    return undefined;
   }
-  return {};
+  return undefined;
 };
 
 export default (key, context) => {

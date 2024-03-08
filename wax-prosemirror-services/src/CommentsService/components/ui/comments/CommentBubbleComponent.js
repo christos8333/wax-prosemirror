@@ -1,11 +1,16 @@
 /* eslint react/prop-types: 0 */
 import React, { useLayoutEffect, useContext } from 'react';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import { WaxContext } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
 import { AnnotationPluginKey } from '../../../plugins/AnnotationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
-  const { app, activeView, activeViewId } = useContext(WaxContext);
+  const {
+    activeView,
+    activeViewId,
+    options: { comments },
+  } = useContext(WaxContext);
+
   const { state, dispatch } = activeView;
 
   useLayoutEffect(() => {
@@ -42,9 +47,6 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
   };
 
   const isCommentAllowed = () => {
-    const commentMark = activeView.state.schema.marks.comment;
-    const marks = DocumentHelpers.findMark(state, commentMark, true);
-
     let allowed = true;
     state.doc.nodesBetween(
       state.selection.$from.pos,
@@ -60,17 +62,17 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
       },
     );
 
-    const commentPlugin = app.PmPlugins.get('commentPlugin');
-    const activeComment = commentPlugin.getState(activeView.state).comment;
-
     if (
-      activeComment &&
-      state.selection.from === activeComment.from &&
-      state.selection.to === activeComment.to
-    )
+      comments.find(
+        comm =>
+          comm.from === state.selection.from && comm.to === state.selection.to,
+      )
+    ) {
       allowed = false;
+    }
+
     // TO DO this is because of a bug and overlay doesn't rerender. Fix in properly in Notes, and remove
-    if (activeViewId !== 'main' && marks.length >= 1) allowed = false;
+    // if (activeViewId !== 'main' && marks.length >= 1) allowed = false;
     return allowed;
   };
 

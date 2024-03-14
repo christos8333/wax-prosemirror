@@ -2,9 +2,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
-import { last, maxBy, minBy } from 'lodash';
 import styled from 'styled-components';
-import { WaxContext, DocumentHelpers, Commands } from 'wax-prosemirror-core';
+import { WaxContext } from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
 import { AnnotationPluginKey } from '../plugins/AnnotationPlugin';

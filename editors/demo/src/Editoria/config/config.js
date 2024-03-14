@@ -61,12 +61,16 @@ async function DummyPromise(userInput) {
 }
 
 const updateTitle = debounce(title => {
-  console.log(title);
+  // console.log(title);
 }, 100);
 
 const getComments = debounce(comments => {
-  // console.log(comments);
+  console.log(comments);
 }, 2000);
+
+const setComments = (comments = []) => {
+  return comments;
+};
 
 const saveTags = tags => {
   // console.log(tags);
@@ -167,6 +171,7 @@ export default {
   CommentsService: {
     showTitle: true,
     getComments,
+    setComments,
   },
 
   CustomTagService: {

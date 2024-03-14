@@ -12,7 +12,7 @@ export const AnnotationPlugin = (name, options) => {
       init() {
         return new AnnotationState({
           styles: options.styles,
-          map: new Map(),
+          map: options.existingComments(),
           instance: options.instance,
           onAnnotationListChange: options.onAnnotationListChange,
           onSelectionChange: options.onSelectionChange,

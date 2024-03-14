@@ -24,6 +24,15 @@ export default class CommentsService extends Service {
 
     const options = {
       styles: {},
+      existingComments: () => {
+        const map = new Map();
+        if (commentsConfig.setComments().length > 0) {
+          commentsConfig.setComments().forEach(value => {
+            map.set(value.id, value);
+          });
+        }
+        return map;
+      },
       onSelectionChange: items => {
         this.allCommentsFromStates = this.allCommentsFromStates.filter(
           comm =>

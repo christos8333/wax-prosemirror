@@ -1,5 +1,5 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
-import AnnotationState from './AnnotationState';
+import CommentState from './CommentState';
 
 let contentSize = 0;
 let allCommentsCount = 0;
@@ -10,11 +10,8 @@ export const AnnotationPlugin = (name, options) => {
     key: AnnotationPluginKey,
     state: {
       init() {
-        return new AnnotationState({
-          styles: options.styles,
+        return new CommentState({
           map: options.existingComments(),
-          instance: options.instance,
-          onAnnotationListChange: options.onAnnotationListChange,
           onSelectionChange: options.onSelectionChange,
         });
       },
@@ -27,18 +24,18 @@ export const AnnotationPlugin = (name, options) => {
         const { decorations } = this.getState(state);
         if (
           contentSize !== state.doc.content.size ||
-          this.getState(state).allTermsList().length !== allCommentsCount
+          this.getState(state).allCommentsList().length !== allCommentsCount
         ) {
-          // const annotations = this.getState(state).termsAt(
+          // const annotations = this.getState(state).commentsAt(
           //   0,
           //   state.doc.content.size,
           // );
           // options.onSelectionChange(annotations);
 
-          options.onSelectionChange(this.getState(state).allTermsList());
+          options.onSelectionChange(this.getState(state).allCommentsList());
         }
         contentSize = state.doc.content.size;
-        allCommentsCount = this.getState(state).allTermsList().length;
+        allCommentsCount = this.getState(state).allCommentsList().length;
         return decorations;
       },
     },

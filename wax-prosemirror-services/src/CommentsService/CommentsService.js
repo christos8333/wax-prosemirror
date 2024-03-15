@@ -3,23 +3,22 @@ import CommentBubbleComponent from './components/ui/comments/CommentBubbleCompon
 import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';
 import CommentPlugin from './plugins/CommentPlugin';
-import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
+// import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
 import { AnnotationPlugin } from './plugins/AnnotationPlugin';
 import './comments.css';
 
 export default class CommentsService extends Service {
   allCommentsFromStates = [];
   boot() {
+    // this.app.PmPlugins.add(
+    //   'copyPasteCommentPlugin',
+    //   CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),
+    // );
     const commentsConfig = this.app.config.get('config.CommentsService');
 
     this.app.PmPlugins.add(
       'commentPlugin',
       CommentPlugin('commentPlugin', this.app.context),
-    );
-
-    this.app.PmPlugins.add(
-      'copyPasteCommentPlugin',
-      CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),
     );
 
     const options = {
@@ -44,10 +43,6 @@ export default class CommentsService extends Service {
 
         this.app.context.setOption({ comments: this.allCommentsFromStates });
       },
-      onAnnotationListChange: () => true,
-      document: '',
-      field: 'annotations',
-      instance: '',
     };
 
     this.app.PmPlugins.add(

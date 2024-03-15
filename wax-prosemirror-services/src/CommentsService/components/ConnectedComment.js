@@ -58,7 +58,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     recalculateTops();
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
-      recalculateTops();
     }
   }, [activeComment]);
 
@@ -86,7 +85,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       }),
     );
     activeView.focus();
-    recalculateTops();
   };
 
   const onClickBox = () => {
@@ -114,13 +112,14 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         id: activeComment.id,
       }),
     );
-    recalculateTops();
+    // recalculateTops();
     activeView.focus();
     setTimeout(() => {
       const newComments = comments.filter(comm => {
         return comm.id !== activeComment.id;
       });
       context.setOption({ comments: newComments });
+      dispatch(state.tr);
     });
   };
 
@@ -149,7 +148,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
           onClickPost={onClickPost}
           onClickResolve={onClickResolve}
           onTextAreaBlur={onTextAreaBlur}
-          recalculateTops={recalculateTops}
           showTitle={showTitle}
           title={comment.data.title}
           users={users}

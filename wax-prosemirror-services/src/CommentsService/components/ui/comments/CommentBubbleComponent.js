@@ -71,8 +71,6 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
       allowed = false;
     }
 
-    // TO DO this is because of a bug and overlay doesn't rerender. Fix in properly in Notes, and remove
-    // if (activeViewId !== 'main' && marks.length >= 1) allowed = false;
     return allowed;
   };
 

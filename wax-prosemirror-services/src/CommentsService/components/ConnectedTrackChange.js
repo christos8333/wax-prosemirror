@@ -75,7 +75,6 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     recalculateTops();
     if (activeTrackChange && trackChangeId === activeTrackChange.attrs.id) {
       setIsActive(true);
-      recalculateTops();
     }
   }, [activeTrackChange]);
 

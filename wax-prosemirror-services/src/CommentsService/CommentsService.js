@@ -23,7 +23,6 @@ export default class CommentsService extends Service {
     );
 
     const options = {
-      styles: {},
       existingComments: () => {
         const map = new Map();
         if (commentsConfig.setComments().length > 0) {

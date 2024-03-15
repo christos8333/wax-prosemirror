@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import AnnotationDecoration from './AnnotationDecoration';
 import { AnnotationPluginKey } from './AnnotationPlugin';
-let toPos = 0;
+
 export default class AnnotationState {
   constructor(options) {
     this.decorations = DecorationSet.empty;
@@ -59,10 +59,9 @@ export default class AnnotationState {
   }
 
   createDecorations(state) {
-    const { map, styles } = this.options;
+    const { map } = this.options;
 
     const decorations = [];
-    // only terms, not connectives, are rendered
     const termList = Array.from(map, ([key, value]) => {
       // eslint-disable-next-line prefer-object-spread
       return Object.assign(Object.assign({}, value), { id: key });
@@ -70,16 +69,8 @@ export default class AnnotationState {
       return 'from' in value && 'to' in value;
     });
 
-    // const annotationRendering = createAnnotationRendering(termList);
-
     termList.forEach(annotation => {
       const { from, to } = annotation;
-      // eslint-disable-next-line
-      // console.log(`[${this.options.instance}] Decoration.inline()`, from, to, {
-      //   id: annotation.id,
-      //   data: annotation,
-      // });
-
       if (from === to) {
         console.warn(
           `[${this.options.instance}] corrupt decoration `,

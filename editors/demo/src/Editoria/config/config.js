@@ -68,7 +68,50 @@ const getComments = debounce(comments => {
   console.log(comments);
 }, 2000);
 
-const setComments = (comments = []) => {
+const setComments = (
+  comments = [
+    {
+      id: 'a1',
+      from: 70,
+      to: 82,
+      data: {
+        type: 'comment',
+        conversation: [
+          {
+            content: '1111',
+            displayName: 'admin',
+            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+            timestamp: 1710501980537,
+          },
+        ],
+        title: '111',
+        group: 'main',
+        viewId: 'main',
+      },
+      endHeight: 362.3579406738281,
+    },
+    {
+      id: 'a2',
+      from: 63,
+      to: 92,
+      data: {
+        type: 'comment',
+        conversation: [
+          {
+            content: '222',
+            displayName: 'admin',
+            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+            timestamp: 1710501987197,
+          },
+        ],
+        title: '222',
+        group: 'main',
+        viewId: 'main',
+      },
+      endHeight: 266.3579406738281,
+    },
+  ],
+) => {
   return comments;
 };
 

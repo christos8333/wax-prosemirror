@@ -67,11 +67,18 @@ export default ({ area, users }) => {
       // annotation top
       if (area === 'main') {
         markNodeEl = document.querySelector(`[data-id="${id}"]`);
-        if (markNodeEl)
+        if (!markNodeEl && marksNodes[area][pos - 1]) {
+          markNodeEl = document.querySelector(
+            `[data-id="${marksNodes[area][pos - 1].id}"]`,
+          );
+        }
+
+        if (markNodeEl) {
           annotationTop =
             markNodeEl.getBoundingClientRect().top -
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
+        }
       } else {
         // Notes
         panelWrapper = document.getElementsByClassName('panelWrapper');

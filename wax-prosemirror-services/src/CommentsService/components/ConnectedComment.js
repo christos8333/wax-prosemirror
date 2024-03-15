@@ -99,7 +99,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
-        new TextSelection(pmViews[viewId].state.tr.doc.resolve(comment.to - 1)),
+        new TextSelection(pmViews[viewId].state.tr.doc.resolve(comment.from)),
       ),
     );
 

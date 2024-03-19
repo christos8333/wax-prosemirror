@@ -43,29 +43,16 @@ export default class CommentState {
   allCommentsList() {
     const { map } = this.options;
     return Array.from(map, ([key, value]) => {
-      // eslint-disable-next-line prefer-object-spread
-      return Object.assign(Object.assign({}, value), {
-        id: key,
-      });
+      return { ...value, id: key };
     }).filter(value => {
       return 'from' in value && 'to' in value;
     });
   }
 
   createDecorations(state) {
-    const { map } = this.options;
-
     const decorations = [];
-    const termList = Array.from(map, ([key, value]) => {
-      // eslint-disable-next-line prefer-object-spread
-      return Object.assign(Object.assign({}, value), {
-        id: key,
-      });
-    }).filter(value => {
-      return 'from' in value && 'to' in value;
-    });
 
-    termList.forEach(annotation => {
+    this.allCommentsList().forEach(annotation => {
       const { from, to } = annotation;
 
       decorations.push(
@@ -103,7 +90,6 @@ export default class CommentState {
       return this;
     }
 
-    // manually map annotation positions
     this.options.map.forEach((annotation, _) => {
       if ('from' in annotation && 'to' in annotation) {
         annotation.from = transaction.mapping.map(annotation.from);

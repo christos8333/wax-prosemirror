@@ -1,4 +1,4 @@
-export default class AnnotationDecoration {
+export default class CommentDecoration {
   constructor(decoration) {
     this.decoration = decoration;
   }

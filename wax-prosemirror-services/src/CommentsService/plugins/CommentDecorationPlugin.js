@@ -4,10 +4,12 @@ import CommentState from './CommentState';
 let contentSize = 0;
 let allCommentsCount = 0;
 
-export const AnnotationPluginKey = new PluginKey('annotationPlugin');
-export const AnnotationPlugin = (name, options) => {
+export const CommentDecorationPluginKey = new PluginKey(
+  'commentDecorationPlugin',
+);
+export const CommentDecorationPlugin = (name, options) => {
   return new Plugin({
-    key: AnnotationPluginKey,
+    key: CommentDecorationPluginKey,
     state: {
       init() {
         return new CommentState({

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { WaxContext } from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
-import { AnnotationPluginKey } from '../plugins/AnnotationPlugin';
+import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
@@ -78,7 +78,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     comment.data.conversation.push(obj);
 
     dispatch(
-      state.tr.setMeta(AnnotationPluginKey, {
+      state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'updateComment',
         id: activeComment.id,
         data: comment.data,
@@ -107,7 +107,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
   const onClickResolve = () => {
     dispatch(
-      state.tr.setMeta(AnnotationPluginKey, {
+      state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'deleteComment',
         id: activeComment.id,
       }),

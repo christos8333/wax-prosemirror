@@ -2,7 +2,7 @@
 import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
-import { AnnotationPluginKey } from '../../../plugins/AnnotationPlugin';
+import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const {
@@ -30,7 +30,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     const { selection } = state;
 
     dispatch(
-      state.tr.setMeta(AnnotationPluginKey, {
+      state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'addComment',
         from: selection.from,
         to: selection.to,

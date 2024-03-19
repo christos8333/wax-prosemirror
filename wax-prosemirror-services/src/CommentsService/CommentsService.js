@@ -4,7 +4,7 @@ import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';
 import CommentPlugin from './plugins/CommentPlugin';
 // import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
-import { AnnotationPlugin } from './plugins/AnnotationPlugin';
+import { CommentDecorationPlugin } from './plugins/CommentDecorationPlugin';
 import './comments.css';
 
 export default class CommentsService extends Service {
@@ -46,8 +46,8 @@ export default class CommentsService extends Service {
     };
 
     this.app.PmPlugins.add(
-      'AnnotationPlugin',
-      AnnotationPlugin('AnnotationPlugin', options),
+      'CommentDecorationPlugin',
+      CommentDecorationPlugin('commentDecorationPlugin', options),
     );
 
     const createOverlay = this.container.get('CreateOverlay');

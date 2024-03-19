@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import CommentDecoration from './CommentDecoration';
-import { AnnotationPluginKey } from './AnnotationPlugin';
+import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 
 const randomId = () => {
   return uuidv4();
@@ -88,7 +88,7 @@ export default class CommentState {
   }
 
   apply(transaction, state) {
-    const action = transaction.getMeta(AnnotationPluginKey);
+    const action = transaction.getMeta(CommentDecorationPluginKey);
     if (action && action.type) {
       if (action.type === 'addComment') {
         this.addComment(action);

@@ -106,21 +106,16 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   };
 
   const onClickResolve = () => {
+    context.setOption({ resolvedComment: activeComment.id });
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'deleteComment',
         id: activeComment.id,
       }),
     );
-    // recalculateTops();
+
+    dispatch(state.tr);
     activeView.focus();
-    setTimeout(() => {
-      const newComments = comments.filter(comm => {
-        return comm.id !== activeComment.id;
-      });
-      context.setOption({ comments: newComments });
-      dispatch(state.tr);
-    });
   };
 
   const onTextAreaBlur = () => {

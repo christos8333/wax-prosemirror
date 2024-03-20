@@ -40,7 +40,13 @@ export default class CommentsService extends Service {
           ...items,
         ]);
         commentsConfig.getComments(this.allCommentsFromStates);
-
+        if (this.app.context.options.resolvedComment) {
+          this.allCommentsFromStates = this.allCommentsFromStates.filter(
+            comm => {
+              return comm.id !== this.app.context.options.resolvedComment;
+            },
+          );
+        }
         this.app.context.setOption({ comments: this.allCommentsFromStates });
       },
     };

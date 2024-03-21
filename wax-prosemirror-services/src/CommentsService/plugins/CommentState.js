@@ -1,6 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import {
+  ySyncPluginKey,
+  relativePositionToAbsolutePosition,
+  absolutePositionToRelativePosition,
+} from 'y-prosemirror';
 import CommentDecoration from './CommentDecoration';
 import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 
@@ -51,26 +56,70 @@ export default class CommentState {
 
   createDecorations(state) {
     const decorations = [];
+    const ystate = ySyncPluginKey.getState(state);
+    const { doc, type, binding } = ystate;
 
-    this.allCommentsList().forEach(annotation => {
-      const { from, to } = annotation;
+    const { map } = this.options;
+    console.log(binding);
+    if (binding) {
+      console.log(doc, type, binding);
+      map.forEach((annotation, id) => {
+        console.log(annotation);
+        const from = relativePositionToAbsolutePosition(
+          doc,
+          type,
+          annotation.from,
+          binding.mapping,
+        );
+        console.log(from);
+        const to = relativePositionToAbsolutePosition(
+          doc,
+          type,
+          annotation.to,
+          binding.mapping,
+        );
 
-      decorations.push(
-        Decoration.inline(
-          from,
-          to,
-          {
-            class: 'comment',
-            'data-id': annotation.id,
-          },
-          {
-            id: annotation.id,
-            data: annotation,
-            inclusiveEnd: true,
-          },
-        ),
-      );
-    });
+        if (!from || !to) {
+          return;
+        }
+
+        decorations.push(
+          Decoration.inline(
+            from,
+            to,
+            {
+              class: 'comment',
+              'data-id': annotation.id,
+            },
+            {
+              id: annotation.id,
+              data: annotation,
+              inclusiveEnd: true,
+            },
+          ),
+        );
+      });
+    }
+
+    // this.allCommentsList().forEach(annotation => {
+    //   const { from, to } = annotation;
+
+    //   decorations.push(
+    //     Decoration.inline(
+    //       from,
+    //       to,
+    //       {
+    //         class: 'comment',
+    //         'data-id': annotation.id,
+    //       },
+    //       {
+    //         id: annotation.id,
+    //         data: annotation,
+    //         inclusiveEnd: true,
+    //       },
+    //     ),
+    //   );
+    // });
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 

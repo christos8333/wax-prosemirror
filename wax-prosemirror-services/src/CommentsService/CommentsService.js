@@ -1,4 +1,5 @@
 import { Service } from 'wax-prosemirror-core';
+import * as Y from 'yjs';
 import CommentBubbleComponent from './components/ui/comments/CommentBubbleComponent';
 import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';

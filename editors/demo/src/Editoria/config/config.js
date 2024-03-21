@@ -26,7 +26,7 @@ import {
   disallowPasteImagesPlugin,
   BlockDropDownToolGroupService,
   AskAiContentService,
-  // YjsService,
+  YjsService,
   CommentDecoration,
 } from 'wax-prosemirror-services';
 
@@ -149,7 +149,7 @@ export default {
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',
-        'Notes',
+        // 'Notes',
         'Lists',
         'Images',
         'SpecialCharacters',
@@ -227,11 +227,11 @@ export default {
     ],
     updateTags: saveTags,
   },
-  // YjsService: {
-  //   // eslint-disable-next-line no-restricted-globals
-  //   connectionUrl: 'ws://localhost:4000',
-  //   docIdentifier: 'prosemirror-demo',
-  // },
+  YjsService: {
+    // eslint-disable-next-line no-restricted-globals
+    connectionUrl: 'ws://localhost:4000',
+    docIdentifier: 'prosemirror-demo',
+  },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -239,7 +239,7 @@ export default {
   },
 
   services: [
-    // new YjsService(),
+    new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),
@@ -253,7 +253,7 @@ export default {
     new ImageService(),
     new TablesService(),
     new BaseService(),
-    new NoteService(),
+    // new NoteService(),
     new CodeBlockService(),
     new EditingSuggestingService(),
     new DisplayTextToolGroupService(),

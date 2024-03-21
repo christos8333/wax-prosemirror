@@ -73,8 +73,8 @@ const setComments = (
   comments = [
     {
       id: 'a1',
-      from: 70,
-      to: 82,
+      from: 5,
+      to: 10,
       data: {
         type: 'comment',
         conversation: [
@@ -93,8 +93,8 @@ const setComments = (
     },
     {
       id: 'a2',
-      from: 63,
-      to: 92,
+      from: 8,
+      to: 15,
       data: {
         type: 'comment',
         conversation: [

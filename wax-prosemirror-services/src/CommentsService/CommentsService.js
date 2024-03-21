@@ -24,7 +24,10 @@ export default class CommentsService extends Service {
 
     const options = {
       existingComments: () => {
-        const map = new Map();
+        const doc = new Y.Doc();
+        const map = doc.getMap('prosemirror-demo');
+        // const ymapNested = new Y.Map();
+        // map.set('my nested map', ymapNested);
         if (commentsConfig.setComments().length > 0) {
           commentsConfig.setComments().forEach(value => {
             map.set(value.id, value);

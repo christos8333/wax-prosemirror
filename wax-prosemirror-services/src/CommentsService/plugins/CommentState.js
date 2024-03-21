@@ -56,26 +56,32 @@ export default class CommentState {
 
   createDecorations(state) {
     const decorations = [];
+
     const ystate = ySyncPluginKey.getState(state);
     const { doc, type, binding } = ystate;
 
     const { map } = this.options;
-    console.log(binding);
+
     if (binding) {
-      console.log(doc, type, binding);
       map.forEach((annotation, id) => {
-        console.log(annotation);
         const from = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.from,
+          absolutePositionToRelativePosition(
+            annotation.from,
+            type,
+            binding.mapping,
+          ),
           binding.mapping,
         );
-        console.log(from);
         const to = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.to,
+          absolutePositionToRelativePosition(
+            annotation.to,
+            type,
+            binding.mapping,
+          ),
           binding.mapping,
         );
 
@@ -138,14 +144,52 @@ export default class CommentState {
       this.createDecorations(state);
       return this;
     }
+    console.log(this.decorations);
+    // this.options.map.forEach((annotation, _) => {
+    //   if ('from' in annotation && 'to' in annotation) {
+    //     annotation.from = transaction.mapping.map(annotation.from);
+    //     annotation.to = transaction.mapping.map(annotation.to);
+    //   }
+    // });
+    // this.createDecorations(state);
 
-    this.options.map.forEach((annotation, _) => {
-      if ('from' in annotation && 'to' in annotation) {
-        annotation.from = transaction.mapping.map(annotation.from);
-        annotation.to = transaction.mapping.map(annotation.to);
-      }
-    });
-    this.createDecorations(state);
+    const ystate = ySyncPluginKey.getState(state);
+
+    if (ystate.isChangeOrigin) {
+      this.createDecorations(state);
+
+      return this;
+    }
+
+    this.decorations = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
+
+    if (ystate.binding && ystate.binding.mapping) {
+      this.options.map.doc.transact(() => {
+        this.decorations.find().forEach(deco => {
+          const { id } = deco.spec;
+          const newFrom = absolutePositionToRelativePosition(
+            deco.from,
+            ystate.type,
+            ystate.binding.mapping,
+          );
+          const newTo = absolutePositionToRelativePosition(
+            deco.to,
+            ystate.type,
+            ystate.binding.mapping,
+          );
+
+          const annotation = this.options.map.get(id);
+          annotation.from = newFrom;
+          annotation.to = newTo;
+
+          this.options.map.set(id, annotation);
+        });
+      }, CommentDecorationPluginKey);
+      return this;
+    }
     return this;
   }
 }

@@ -64,11 +64,6 @@ export default class CommentState {
 
     if (binding) {
       map.forEach((annotation, id) => {
-        console.log(
-          'hello annotation',
-          annotation.from,
-          typeof annotation.from === 'number',
-        );
         if (typeof annotation.from === 'number') {
           annotation.from = absolutePositionToRelativePosition(
             annotation.from,
@@ -183,7 +178,7 @@ export default class CommentState {
     const ystate = ySyncPluginKey.getState(state);
 
     if (ystate.isChangeOrigin) {
-      this.updateCommentPostions(ystate);
+      // this.updateCommentPostions(ystate);
       this.createDecorations(state);
 
       return this;
@@ -198,7 +193,6 @@ export default class CommentState {
       this.updateCommentPostions(ystate);
       return this;
     }
-    this.createDecorations(state);
     return this;
   }
 }

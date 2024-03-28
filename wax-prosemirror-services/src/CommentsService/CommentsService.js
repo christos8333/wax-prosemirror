@@ -29,6 +29,7 @@ export default class CommentsService extends Service {
         // const ymapNested = new Y.Map();
         // map.set('my nested map', ymapNested);
         if (commentsConfig.setComments().length > 0) {
+          console.log('how many');
           commentsConfig.setComments().forEach(value => {
             map.set(value.id, value);
           });

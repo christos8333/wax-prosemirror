@@ -64,24 +64,35 @@ export default class CommentState {
 
     if (binding) {
       map.forEach((annotation, id) => {
-        const from = relativePositionToAbsolutePosition(
-          doc,
-          type,
-          absolutePositionToRelativePosition(
+        console.log(
+          'hello annotation',
+          annotation.from,
+          typeof annotation.from === 'number',
+        );
+        if (typeof annotation.from === 'number') {
+          annotation.from = absolutePositionToRelativePosition(
             annotation.from,
             type,
             binding.mapping,
-          ),
+          );
+        }
+        if (typeof annotation.to === 'number') {
+          annotation.to = absolutePositionToRelativePosition(
+            annotation.to,
+            type,
+            binding.mapping,
+          );
+        }
+        const from = relativePositionToAbsolutePosition(
+          doc,
+          type,
+          annotation.from,
           binding.mapping,
         );
         const to = relativePositionToAbsolutePosition(
           doc,
           type,
-          absolutePositionToRelativePosition(
-            annotation.to,
-            type,
-            binding.mapping,
-          ),
+          annotation.to,
           binding.mapping,
         );
 
@@ -129,6 +140,30 @@ export default class CommentState {
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
+  updateCommentPostions(ystate) {
+    this.options.map.doc.transact(() => {
+      this.decorations.find().forEach(deco => {
+        const { id } = deco.spec;
+        const newFrom = absolutePositionToRelativePosition(
+          deco.from,
+          ystate.type,
+          ystate.binding.mapping,
+        );
+        const newTo = absolutePositionToRelativePosition(
+          deco.to,
+          ystate.type,
+          ystate.binding.mapping,
+        );
+
+        const annotation = this.options.map.get(id);
+        annotation.from = newFrom;
+        annotation.to = newTo;
+
+        this.options.map.set(id, annotation);
+      });
+    }, CommentDecorationPluginKey);
+  }
+
   apply(transaction, state) {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     if (action && action.type) {
@@ -144,18 +179,11 @@ export default class CommentState {
       this.createDecorations(state);
       return this;
     }
-    console.log(this.decorations);
-    // this.options.map.forEach((annotation, _) => {
-    //   if ('from' in annotation && 'to' in annotation) {
-    //     annotation.from = transaction.mapping.map(annotation.from);
-    //     annotation.to = transaction.mapping.map(annotation.to);
-    //   }
-    // });
-    // this.createDecorations(state);
 
     const ystate = ySyncPluginKey.getState(state);
 
     if (ystate.isChangeOrigin) {
+      this.updateCommentPostions(ystate);
       this.createDecorations(state);
 
       return this;
@@ -167,29 +195,10 @@ export default class CommentState {
     );
 
     if (ystate.binding && ystate.binding.mapping) {
-      this.options.map.doc.transact(() => {
-        this.decorations.find().forEach(deco => {
-          const { id } = deco.spec;
-          const newFrom = absolutePositionToRelativePosition(
-            deco.from,
-            ystate.type,
-            ystate.binding.mapping,
-          );
-          const newTo = absolutePositionToRelativePosition(
-            deco.to,
-            ystate.type,
-            ystate.binding.mapping,
-          );
-
-          const annotation = this.options.map.get(id);
-          annotation.from = newFrom;
-          annotation.to = newTo;
-
-          this.options.map.set(id, annotation);
-        });
-      }, CommentDecorationPluginKey);
+      this.updateCommentPostions(ystate);
       return this;
     }
+    this.createDecorations(state);
     return this;
   }
 }

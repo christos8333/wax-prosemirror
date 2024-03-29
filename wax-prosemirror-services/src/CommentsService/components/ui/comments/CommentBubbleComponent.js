@@ -34,6 +34,8 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         type: 'addComment',
         from: selection.from,
         to: selection.to,
+        yjsFrom: selection.from,
+        yjsTo: selection.to,
         data: {
           type: 'comment',
           conversation: [],

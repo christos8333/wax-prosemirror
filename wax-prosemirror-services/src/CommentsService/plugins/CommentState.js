@@ -64,16 +64,16 @@ export default class CommentState {
 
     if (binding) {
       map.forEach((annotation, id) => {
-        if (typeof annotation.from === 'number') {
-          annotation.from = absolutePositionToRelativePosition(
-            annotation.from,
+        if (typeof annotation.yjsFrom === 'number') {
+          annotation.yjsFrom = absolutePositionToRelativePosition(
+            annotation.yjsFrom,
             type,
             binding.mapping,
           );
         }
-        if (typeof annotation.to === 'number') {
-          annotation.to = absolutePositionToRelativePosition(
-            annotation.to,
+        if (typeof annotation.yjsTo === 'number') {
+          annotation.yjsTo = absolutePositionToRelativePosition(
+            annotation.yjsTo,
             type,
             binding.mapping,
           );
@@ -81,13 +81,13 @@ export default class CommentState {
         const from = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.from,
+          annotation.yjsFrom,
           binding.mapping,
         );
         const to = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.to,
+          annotation.yjsTo,
           binding.mapping,
         );
 
@@ -177,7 +177,7 @@ export default class CommentState {
 
     const ystate = ySyncPluginKey.getState(state);
 
-    if (ystate.isChangeOrigin) {
+    if (ystate?.isChangeOrigin) {
       // this.updateCommentPostions(ystate);
       this.createDecorations(state);
 
@@ -189,15 +189,10 @@ export default class CommentState {
       transaction.doc,
     );
 
-    if (ystate.binding && ystate.binding.mapping) {
+    if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);
       return this;
     }
     return this;
   }
 }
-
-//  let res =
-//    annotation.to === state.selection.to &&
-//    state.selection.from === state.selection.to;
-//  console.log(res, transaction.docChanged);

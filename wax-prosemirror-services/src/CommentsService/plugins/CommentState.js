@@ -58,11 +58,11 @@ export default class CommentState {
     const decorations = [];
 
     const ystate = ySyncPluginKey.getState(state);
-    const { doc, type, binding } = ystate;
 
     const { map } = this.options;
 
-    if (binding) {
+    if (ystate?.binding) {
+      const { doc, type, binding } = ystate;
       map.forEach((annotation, id) => {
         if (typeof annotation.yjsFrom === 'number') {
           annotation.yjsFrom = absolutePositionToRelativePosition(
@@ -111,27 +111,28 @@ export default class CommentState {
           ),
         );
       });
+    } else {
+      this.allCommentsList().forEach(annotation => {
+        const { from, to } = annotation;
+
+        decorations.push(
+          Decoration.inline(
+            from,
+            to,
+            {
+              class: 'comment',
+              'data-id': annotation.id,
+            },
+            {
+              id: annotation.id,
+              data: annotation,
+              inclusiveEnd: true,
+            },
+          ),
+        );
+      });
     }
 
-    // this.allCommentsList().forEach(annotation => {
-    //   const { from, to } = annotation;
-
-    //   decorations.push(
-    //     Decoration.inline(
-    //       from,
-    //       to,
-    //       {
-    //         class: 'comment',
-    //         'data-id': annotation.id,
-    //       },
-    //       {
-    //         id: annotation.id,
-    //         data: annotation,
-    //         inclusiveEnd: true,
-    //       },
-    //     ),
-    //   );
-    // });
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
@@ -192,7 +193,16 @@ export default class CommentState {
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);
       return this;
+      // eslint-disable-next-line no-else-return
+    } else {
+      this.options.map.forEach((annotation, _) => {
+        if ('from' in annotation && 'to' in annotation) {
+          annotation.from = transaction.mapping.map(annotation.from);
+          annotation.to = transaction.mapping.map(annotation.to);
+        }
+      });
+      this.createDecorations(state);
+      return this;
     }
-    return this;
   }
 }

@@ -24,18 +24,22 @@ export default class CommentsService extends Service {
 
     const options = {
       existingComments: () => {
-        const doc = new Y.Doc();
         const map = this.app.config.get('config.YjsService')
-          ? doc.getMap('prosemirror-demo')
+          ? this.app.context.options.currentYdoc.getMap('comments')
           : new Map();
-        console.log(map);
+
         if (commentsConfig.setComments().length > 0) {
           commentsConfig.setComments().forEach(value => {
             map.set(value.id, value);
           });
         }
+
+        this.app.context.setOption({
+          commentsMap: map,
+        });
         return map;
       },
+      context: this.app.context,
       onSelectionChange: items => {
         this.allCommentsFromStates = this.allCommentsFromStates.filter(
           comm =>

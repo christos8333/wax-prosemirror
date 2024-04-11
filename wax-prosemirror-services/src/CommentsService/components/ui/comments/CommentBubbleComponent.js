@@ -3,13 +3,19 @@ import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
 import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
+import {
+  ySyncPluginKey,
+  relativePositionToAbsolutePosition,
+  absolutePositionToRelativePosition,
+} from 'y-prosemirror';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
+  const context = useContext(WaxContext);
   const {
     activeView,
     activeViewId,
-    options: { comments },
-  } = useContext(WaxContext);
+    options: { comments, commentsMap },
+  } = context;
 
   const { state, dispatch } = activeView;
 
@@ -29,14 +35,42 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     event.preventDefault();
     const { selection } = state;
 
+    const ystate = ySyncPluginKey.getState(state);
+    const { doc, type, binding } = ystate;
+    const from = absolutePositionToRelativePosition(
+      selection.from,
+      type,
+      binding.mapping,
+    );
+    const to = absolutePositionToRelativePosition(
+      selection.to,
+      type,
+      binding.mapping,
+    );
+
+    commentsMap.observe(ymapEvent => {
+      const transaction = context.pmViews.main.state.tr.setMeta(
+        CommentDecorationPluginKey,
+        {
+          type: 'createDecorations',
+        },
+      );
+      context.pmViews.main.dispatch(transaction);
+    });
+
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'addComment',
-        from: selection.from,
-        to: selection.to,
-        yjsFrom: selection.from,
-        yjsTo: selection.to,
+        from: relativePositionToAbsolutePosition(
+          doc,
+          type,
+          from,
+          binding.mapping,
+        ),
+        to: relativePositionToAbsolutePosition(doc, type, to, binding.mapping),
         data: {
+          yjsFrom: selection.from,
+          yjsTo: selection.to,
           type: 'comment',
           conversation: [],
           title: '',
@@ -45,6 +79,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         },
       }),
     );
+
     dispatch(state.tr);
   };
 

@@ -13,6 +13,7 @@ export const CommentDecorationPlugin = (name, options) => {
     state: {
       init() {
         return new CommentState({
+          context: options.context,
           map: options.existingComments(),
           onSelectionChange: options.onSelectionChange,
         });

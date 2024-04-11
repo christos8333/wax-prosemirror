@@ -33,7 +33,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     app,
     activeView,
     activeViewId,
-    options: { comments },
+    options: { comments, commentsMap },
   } = context;
 
   const [isActive, setIsActive] = useState(false);
@@ -84,7 +84,18 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         data: comment.data,
       }),
     );
+
     activeView.focus();
+    commentsMap.observe(() => {
+      const transaction = context.pmViews.main.state.tr.setMeta(
+        CommentDecorationPluginKey,
+        {
+          type: 'createDecorations',
+        },
+      );
+
+      context.pmViews.main.dispatch(transaction);
+    });
   };
 
   const onClickBox = () => {

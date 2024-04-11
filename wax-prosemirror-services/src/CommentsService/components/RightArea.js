@@ -7,13 +7,14 @@ import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
 
 export default ({ area, users }) => {
+  const context = useContext(WaxContext);
   const {
     pmViews,
     pmViews: { main },
     app,
     activeView,
     options: { comments },
-  } = useContext(WaxContext);
+  } = context;
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');

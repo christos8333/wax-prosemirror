@@ -55,6 +55,7 @@ export default class CommentState {
   }
 
   createDecorations(state) {
+    console.log('in create', this.options.map);
     const decorations = [];
 
     const ystate = ySyncPluginKey.getState(state);
@@ -63,17 +64,19 @@ export default class CommentState {
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
+
       map.forEach((annotation, id) => {
-        if (typeof annotation.yjsFrom === 'number') {
-          annotation.yjsFrom = absolutePositionToRelativePosition(
-            annotation.yjsFrom,
+        console.log('in map', annotation);
+        if (typeof annotation.data.yjsFrom === 'number') {
+          annotation.data.yjsFrom = absolutePositionToRelativePosition(
+            annotation.data.yjsFrom,
             type,
             binding.mapping,
           );
         }
-        if (typeof annotation.yjsTo === 'number') {
-          annotation.yjsTo = absolutePositionToRelativePosition(
-            annotation.yjsTo,
+        if (typeof annotation.data.yjsTo === 'number') {
+          annotation.data.yjsTo = absolutePositionToRelativePosition(
+            annotation.data.yjsTo,
             type,
             binding.mapping,
           );
@@ -81,13 +84,13 @@ export default class CommentState {
         const from = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.yjsFrom,
+          annotation.data.yjsFrom,
           binding.mapping,
         );
         const to = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.yjsTo,
+          annotation.data.yjsTo,
           binding.mapping,
         );
 
@@ -172,7 +175,10 @@ export default class CommentState {
       if (action.type === 'deleteComment') {
         this.deleteComment(action.id);
       }
-      this.createDecorations(state);
+      if (action.type === 'createDecorations') {
+        this.createDecorations(state);
+      }
+      // this.createDecorations(state);
       return this;
     }
 

@@ -22,6 +22,8 @@ class YjsService extends Service {
     if (!configProvider || !configYdoc) {
       ydoc = new Y.Doc();
       provider = new WebsocketProvider(connectionUrl, docIdentifier, ydoc);
+      console.log(this.app.context);
+      this.app.context.setOption({ currentYdoc: ydoc });
     }
 
     provider.on('sync', args => {

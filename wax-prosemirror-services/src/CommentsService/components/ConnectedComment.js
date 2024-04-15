@@ -84,18 +84,9 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         data: comment.data,
       }),
     );
-
     activeView.focus();
-    commentsMap.observe(() => {
-      const transaction = context.pmViews.main.state.tr.setMeta(
-        CommentDecorationPluginKey,
-        {
-          type: 'createDecorations',
-        },
-      );
 
-      context.pmViews.main.dispatch(transaction);
-    });
+    sendYjsUpdate();
   };
 
   const onClickBox = () => {
@@ -127,12 +118,28 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     dispatch(state.tr);
     activeView.focus();
+    sendYjsUpdate();
   };
 
   const onTextAreaBlur = () => {
     if (conversation.length === 0 && !clickPost) {
       onClickResolve();
       activeView.focus();
+    }
+  };
+
+  const sendYjsUpdate = () => {
+    if (context.app.config.get('config.YjsService')) {
+      commentsMap.observe(() => {
+        const transaction = context.pmViews.main.state.tr.setMeta(
+          CommentDecorationPluginKey,
+          {
+            type: 'createDecorations',
+          },
+        );
+
+        context.pmViews.main.dispatch(transaction);
+      });
     }
   };
 

@@ -35,6 +35,29 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     event.preventDefault();
     const { selection } = state;
 
+    if (context.app.config.get('config.YjsService')) {
+      return createYjsComments(selection);
+    }
+    dispatch(
+      state.tr.setMeta(CommentDecorationPluginKey, {
+        type: 'addComment',
+        from: selection.from,
+        to: selection.to,
+        yjsFrom: selection.from,
+        yjsTo: selection.to,
+        data: {
+          type: 'comment',
+          conversation: [],
+          title: '',
+          group,
+          viewId: activeViewId,
+        },
+      }),
+    );
+    dispatch(state.tr);
+  };
+
+  const createYjsComments = selection => {
     const ystate = ySyncPluginKey.getState(state);
     const { doc, type, binding } = ystate;
     const from = absolutePositionToRelativePosition(
@@ -48,7 +71,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
       binding.mapping,
     );
 
-    commentsMap.observe(ymapEvent => {
+    commentsMap.observe(() => {
       const transaction = context.pmViews.main.state.tr.setMeta(
         CommentDecorationPluginKey,
         {

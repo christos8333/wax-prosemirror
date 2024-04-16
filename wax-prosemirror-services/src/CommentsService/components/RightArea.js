@@ -79,6 +79,13 @@ export default ({ area, users }) => {
             markNodeEl.getBoundingClientRect().top -
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
+        } else {
+          // comment is deleted
+          context.setOption({
+            comments: comments.filter(comment => {
+              return comment.id !== id;
+            }),
+          });
         }
       } else {
         // Notes

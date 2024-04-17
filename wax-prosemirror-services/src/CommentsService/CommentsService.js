@@ -48,7 +48,7 @@ export default class CommentsService extends Service {
         this.allCommentsFromStates = this.allCommentsFromStates.concat([
           ...items,
         ]);
-        commentsConfig.getComments(this.allCommentsFromStates);
+
         if (this.app.context.options.resolvedComment) {
           this.allCommentsFromStates = this.allCommentsFromStates.filter(
             comm => {
@@ -56,6 +56,7 @@ export default class CommentsService extends Service {
             },
           );
         }
+        commentsConfig.getComments(this.allCommentsFromStates);
         this.app.context.setOption({ comments: this.allCommentsFromStates });
       },
     };

@@ -5,6 +5,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy, groupBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
+import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 export default ({ area, users }) => {
   const context = useContext(WaxContext);
@@ -80,11 +81,21 @@ export default ({ area, users }) => {
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
         } else {
-          // comment is deleted
+          // comment is deleted from editing surface
+          context.setOption({ resolvedComment: id });
           context.setOption({
             comments: comments.filter(comment => {
               return comment.id !== id;
             }),
+          });
+
+          setTimeout(() => {
+            activeView.dispatch(
+              activeView.state.tr.setMeta(CommentDecorationPluginKey, {
+                type: 'deleteComment',
+                id,
+              }),
+            );
           });
         }
       } else {

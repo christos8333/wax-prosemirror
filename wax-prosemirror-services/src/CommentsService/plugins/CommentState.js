@@ -155,6 +155,7 @@ export default class CommentState {
         );
 
         const annotation = this.options.map.get(id);
+
         annotation.from = newFrom;
         annotation.to = newTo;
 

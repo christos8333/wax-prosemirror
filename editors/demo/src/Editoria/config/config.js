@@ -77,8 +77,8 @@ const setComments = (
       to: 10,
       data: {
         type: 'comment',
-        yjsTo: 10,
         yjsFrom: 5,
+        yjsTo: 10,
         conversation: [
           {
             content: '1111',
@@ -231,11 +231,11 @@ export default {
     ],
     updateTags: saveTags,
   },
-  // YjsService: {
-  //   // eslint-disable-next-line no-restricted-globals
-  //   connectionUrl: 'ws://localhost:4000',
-  //   docIdentifier: 'prosemirror-demo',
-  // },
+  YjsService: {
+    // eslint-disable-next-line no-restricted-globals
+    connectionUrl: 'ws://localhost:4000',
+    docIdentifier: 'prosemirror-demo',
+  },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -243,7 +243,7 @@ export default {
   },
 
   services: [
-    // new YjsService(),
+    new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),

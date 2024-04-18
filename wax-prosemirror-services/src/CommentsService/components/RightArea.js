@@ -14,7 +14,7 @@ export default ({ area, users }) => {
     pmViews: { main },
     app,
     activeView,
-    options: { comments },
+    options: { comments, commentsMap },
   } = context;
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
@@ -80,7 +80,7 @@ export default ({ area, users }) => {
             markNodeEl.getBoundingClientRect().top -
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
-        } else {
+        } else if (!isFirstRun) {
           // comment is deleted from editing surface
           context.setOption({ resolvedComment: id });
           context.setOption({
@@ -96,6 +96,19 @@ export default ({ area, users }) => {
                 id,
               }),
             );
+
+            if (context.app.config.get('config.YjsService')) {
+              commentsMap.observe(() => {
+                const transaction = context.pmViews.main.state.tr.setMeta(
+                  CommentDecorationPluginKey,
+                  {
+                    type: 'createDecorations',
+                  },
+                );
+
+                context.pmViews.main.dispatch(transaction);
+              });
+            }
           });
         }
       } else {

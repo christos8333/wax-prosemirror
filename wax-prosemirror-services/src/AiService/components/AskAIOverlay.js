@@ -96,14 +96,25 @@ const ResultText = styled.div`
 const SubmitButton = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   outline: none;
   padding: 0 8px; /* Adjust padding as needed */
+`;
+
+const PromptDiv = styled.div`
+  background: white;
+  border: 0.5px #dcdcdc solid;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  width: 458px;
 `;
 
 const AskAIOverlay = ({ setPosition, position, config }) => {
   const { t, i18n } = useTranslation();
   const {
+    app,
     pmViews: { main },
     options,
   } = useContext(WaxContext);
@@ -112,6 +123,9 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { AskAiContentTransformation } = config;
   const inputRef = useRef(null);
+
+  const aiService = app.config.get('config.AskAiContentService');
+  const prompts = aiService.freeTextPrompts;
 
   useLayoutEffect(() => {
     const WaxSurface = main.dom.getBoundingClientRect();
@@ -198,10 +212,16 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
+  const handleSubmitPrompt = idx => {
+    inputRef.current.value = prompts[idx];
+    handleSubmit();
+  };
+
   return options?.AiOn ? (
     <Wrapper id="ai-overlay">
       <AskAIForm>
         <AskAIFormInput
+          disabled={!aiService.customPromptsOn}
           id="askAiInput"
           onKeyPress={handleKeyDown}
           placeholder={
@@ -212,10 +232,24 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           ref={inputRef}
           type="text"
         />
-        <SubmitButton onClick={handleSubmit}>
+        <SubmitButton
+          disabled={!aiService.customPromptsOn}
+          onClick={handleSubmit}
+        >
           {isLoading ? <icons.loaderIco /> : <icons.submitIco />}
         </SubmitButton>
       </AskAIForm>
+      {prompts.map((prompt, idx) => (
+        <PromptDiv key={prompt}>
+          <ResultText>{prompt}</ResultText>
+          <SubmitButton
+            disabled={isLoading}
+            onClick={() => handleSubmitPrompt(idx)}
+          >
+            <icons.submitIco />
+          </SubmitButton>
+        </PromptDiv>
+      ))}
       {isSubmitted && (
         <>
           <ResultDiv>

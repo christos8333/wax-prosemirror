@@ -180,8 +180,8 @@ export default {
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
     AiOn: true,
-    customPromptsOn: true,
-    freeTextPrompts: [],
+    FreeTextPromptsOn: true,
+    CustomPrompts: [],
   },
 
   services: [

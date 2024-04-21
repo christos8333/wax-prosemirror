@@ -59,13 +59,10 @@ export default class CommentState {
 
     const ystate = ySyncPluginKey.getState(state);
 
-    const { map } = this.options;
-
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
 
-      map.forEach((annotation, id) => {
-        console.log('in map', annotation);
+      this.allCommentsList().forEach((annotation, id) => {
         if (typeof annotation.data.yjsFrom === 'number') {
           annotation.data.yjsFrom = absolutePositionToRelativePosition(
             annotation.data.yjsFrom,

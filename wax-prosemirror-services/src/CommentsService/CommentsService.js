@@ -1,20 +1,14 @@
 import { Service } from 'wax-prosemirror-core';
-import * as Y from 'yjs';
 import CommentBubbleComponent from './components/ui/comments/CommentBubbleComponent';
 import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';
 import CommentPlugin from './plugins/CommentPlugin';
-// import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
 import { CommentDecorationPlugin } from './plugins/CommentDecorationPlugin';
 import './comments.css';
 
 export default class CommentsService extends Service {
   allCommentsFromStates = [];
   boot() {
-    // this.app.PmPlugins.add(
-    //   'copyPasteCommentPlugin',
-    //   CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),
-    // );
     const commentsConfig = this.app.config.get('config.CommentsService');
 
     this.app.PmPlugins.add(

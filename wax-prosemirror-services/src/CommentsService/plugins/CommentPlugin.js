@@ -16,7 +16,6 @@ const getComment = (state, context) => {
   );
 
   commentData = sortBy(commentData, ['data.pmFrom']);
-  console.log(commentData, comments);
   if (commentData.length > 0) {
     if (
       (state.selection.from !== state.selection.to &&
@@ -24,7 +23,6 @@ const getComment = (state, context) => {
       (state.selection.from === state.selection.to &&
         last(commentData).data.conversation.length !== 0)
     ) {
-      console.log('hereee? acitve');
       return last(commentData);
     }
     return undefined;

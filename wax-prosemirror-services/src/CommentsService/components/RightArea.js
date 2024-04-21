@@ -287,7 +287,7 @@ const updateMarks = (views, comments) => {
       groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
 
     return {
-      main: sortBy(groupedMarkNodes.main, ['from']),
+      main: sortBy(groupedMarkNodes.main, ['data.pmFrom']),
       notes: groupedMarkNodes.notes,
     };
   }

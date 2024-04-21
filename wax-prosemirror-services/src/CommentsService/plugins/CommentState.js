@@ -61,22 +61,20 @@ export default class CommentState {
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
-
+      console.log(this.allCommentsList());
       this.allCommentsList().forEach((annotation, id) => {
-        if (typeof annotation.data.yjsFrom === 'number') {
-          annotation.data.yjsFrom = absolutePositionToRelativePosition(
-            annotation.data.yjsFrom,
-            type,
-            binding.mapping,
-          );
-        }
-        if (typeof annotation.data.yjsTo === 'number') {
-          annotation.data.yjsTo = absolutePositionToRelativePosition(
-            annotation.data.yjsTo,
-            type,
-            binding.mapping,
-          );
-        }
+        annotation.data.yjsFrom = absolutePositionToRelativePosition(
+          annotation.data.pmFrom,
+          type,
+          binding.mapping,
+        );
+
+        annotation.data.yjsTo = absolutePositionToRelativePosition(
+          annotation.data.pmTo,
+          type,
+          binding.mapping,
+        );
+
         const from = relativePositionToAbsolutePosition(
           doc,
           type,

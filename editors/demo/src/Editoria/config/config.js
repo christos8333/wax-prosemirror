@@ -79,6 +79,8 @@ const setComments = (
         type: 'comment',
         yjsFrom: 5,
         yjsTo: 10,
+        pmFrom: 5,
+        pmTo: 10,
         conversation: [
           {
             content: '1111',
@@ -101,6 +103,8 @@ const setComments = (
         type: 'comment',
         yjsFrom: 8,
         yjsTo: 15,
+        pmFrom: 8,
+        pmTo: 15,
         conversation: [
           {
             content: '222',

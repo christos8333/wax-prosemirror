@@ -81,6 +81,7 @@ export default ({ area, users }) => {
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
         } else if (!isFirstRun) {
+          console.log('else');
           // comment is deleted from editing surface
           context.setOption({ resolvedComment: id });
           context.setOption({
@@ -88,7 +89,6 @@ export default ({ area, users }) => {
               return comment.id !== id;
             }),
           });
-
           setTimeout(() => {
             activeView.dispatch(
               activeView.state.tr.setMeta(CommentDecorationPluginKey, {
@@ -96,7 +96,6 @@ export default ({ area, users }) => {
                 id,
               }),
             );
-
             if (context.app.config.get('config.YjsService')) {
               commentsMap.observe(() => {
                 const transaction = context.pmViews.main.state.tr.setMeta(
@@ -105,7 +104,6 @@ export default ({ area, users }) => {
                     type: 'createDecorations',
                   },
                 );
-
                 context.pmViews.main.dispatch(transaction);
               });
             }

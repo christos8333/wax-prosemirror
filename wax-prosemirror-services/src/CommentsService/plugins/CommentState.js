@@ -55,7 +55,6 @@ export default class CommentState {
   }
 
   createDecorations(state) {
-    console.log('in create', this.options.map);
     const decorations = [];
 
     const ystate = ySyncPluginKey.getState(state);
@@ -116,12 +115,14 @@ export default class CommentState {
       });
     } else {
       this.allCommentsList().forEach(annotation => {
-        const { from, to } = annotation;
+        const {
+          data: { pmFrom, pmTo },
+        } = annotation;
 
         decorations.push(
           Decoration.inline(
-            from,
-            to,
+            pmFrom,
+            pmTo,
             {
               class: 'comment',
               'data-id': annotation.id,
@@ -165,6 +166,7 @@ export default class CommentState {
   }
 
   apply(transaction, state) {
+    const { map } = this.options;
     const action = transaction.getMeta(CommentDecorationPluginKey);
     if (action && action.type) {
       if (action.type === 'addComment') {

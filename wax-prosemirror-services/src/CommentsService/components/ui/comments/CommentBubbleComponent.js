@@ -1,13 +1,13 @@
 /* eslint react/prop-types: 0 */
 import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
-import CommentBubble from './CommentBubble';
-import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
 import {
   ySyncPluginKey,
   relativePositionToAbsolutePosition,
   absolutePositionToRelativePosition,
 } from 'y-prosemirror';
+import CommentBubble from './CommentBubble';
+import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const context = useContext(WaxContext);
@@ -45,6 +45,8 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         to: selection.to,
         yjsFrom: selection.from,
         yjsTo: selection.to,
+        pmFrom: selection.from,
+        pmTo: selection.to,
         data: {
           type: 'comment',
           conversation: [],
@@ -94,6 +96,8 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         data: {
           yjsFrom: selection.from,
           yjsTo: selection.to,
+          pmFrom: selection.from,
+          pmTo: selection.to,
           type: 'comment',
           conversation: [],
           title: '',
@@ -125,7 +129,8 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     if (
       comments.find(
         comm =>
-          comm.from === state.selection.from && comm.to === state.selection.to,
+          comm.data.pmFrom === state.selection.from &&
+          comm.data.pmTo === state.selection.to,
       )
     ) {
       allowed = false;

@@ -12,11 +12,11 @@ const getComment = (state, context) => {
   if (!comments?.length) return;
 
   let commentData = comments.filter(comment =>
-    inRange(state.selection.from, comment.from, comment.to),
+    inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo),
   );
 
-  commentData = sortBy(commentData, ['from']);
-
+  commentData = sortBy(commentData, ['data.pmFrom']);
+  console.log(commentData, comments);
   if (commentData.length > 0) {
     if (
       (state.selection.from !== state.selection.to &&
@@ -24,6 +24,7 @@ const getComment = (state, context) => {
       (state.selection.from === state.selection.to &&
         last(commentData).data.conversation.length !== 0)
     ) {
+      console.log('hereee? acitve');
       return last(commentData);
     }
     return undefined;
@@ -43,7 +44,7 @@ export default (key, context) => {
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [
-            Decoration.inline(comment.from, comment.to, {
+            Decoration.inline(comment.data.pmFrom, comment.data.pmTo, {
               class: 'active-comment',
             }),
           ]);

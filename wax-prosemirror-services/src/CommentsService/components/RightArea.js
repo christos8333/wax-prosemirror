@@ -81,7 +81,6 @@ export default ({ area, users }) => {
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
         } else if (!isFirstRun) {
-          console.log('else');
           // comment is deleted from editing surface
           context.setOption({ resolvedComment: id });
           context.setOption({

@@ -71,122 +71,122 @@ const getComments = debounce(comments => {
 
 const setComments = (
   comments = [
-    {
-      id: 'a1',
-      from: 5,
-      to: 10,
-      data: {
-        type: 'comment',
-        yjsFrom: 5,
-        yjsTo: 10,
-        pmFrom: 5,
-        pmTo: 10,
-        conversation: [
-          {
-            content: '1111',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1710501980537,
-          },
-        ],
-        title: '111',
-        group: 'main',
-        viewId: 'main',
-      },
-      endHeight: 362.3579406738281,
-    },
-    {
-      id: 'a2',
-      from: 8,
-      to: 15,
-      data: {
-        type: 'comment',
-        yjsFrom: 8,
-        yjsTo: 15,
-        pmFrom: 8,
-        pmTo: 15,
-        conversation: [
-          {
-            content: '222',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1710501987197,
-          },
-        ],
-        title: '222',
-        group: 'main',
-        viewId: 'main',
-      },
-      endHeight: 266.3579406738281,
-    },
-    {
-      id: 'b8d907d4-1859-49a9-abcd-13788d497758',
-      from: {
-        type: {
-          client: 2887320119,
-          clock: 150,
-        },
-        tname: null,
-        item: {
-          client: 2887320119,
-          clock: 185,
-        },
-        assoc: 0,
-      },
-      to: {
-        type: {
-          client: 2887320119,
-          clock: 150,
-        },
-        tname: null,
-        item: {
-          client: 2887320119,
-          clock: 195,
-        },
-        assoc: 0,
-      },
-      data: {
-        yjsFrom: {
-          type: {
-            client: 2887320119,
-            clock: 150,
-          },
-          tname: null,
-          item: {
-            client: 2887320119,
-            clock: 185,
-          },
-          assoc: 0,
-        },
-        yjsTo: {
-          type: {
-            client: 2887320119,
-            clock: 150,
-          },
-          tname: null,
-          item: {
-            client: 2887320119,
-            clock: 195,
-          },
-          assoc: 0,
-        },
-        pmFrom: 164,
-        pmTo: 174,
-        type: 'comment',
-        conversation: [
-          {
-            content: 'dfgdfgd',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1713699155995,
-          },
-        ],
-        title: 'dgfdgf',
-        group: 'main',
-        viewId: 'main',
-      },
-      endHeight: 406.734375,
-    },
+    // {
+    //   id: 'a1',
+    //   from: 5,
+    //   to: 10,
+    //   data: {
+    //     type: 'comment',
+    //     yjsFrom: 5,
+    //     yjsTo: 10,
+    //     pmFrom: 5,
+    //     pmTo: 10,
+    //     conversation: [
+    //       {
+    //         content: '1111',
+    //         displayName: 'admin',
+    //         userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+    //         timestamp: 1710501980537,
+    //       },
+    //     ],
+    //     title: '111',
+    //     group: 'main',
+    //     viewId: 'main',
+    //   },
+    //   endHeight: 362.3579406738281,
+    // },
+    // {
+    //   id: 'a2',
+    //   from: 8,
+    //   to: 15,
+    //   data: {
+    //     type: 'comment',
+    //     yjsFrom: 8,
+    //     yjsTo: 15,
+    //     pmFrom: 8,
+    //     pmTo: 15,
+    //     conversation: [
+    //       {
+    //         content: '222',
+    //         displayName: 'admin',
+    //         userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+    //         timestamp: 1710501987197,
+    //       },
+    //     ],
+    //     title: '222',
+    //     group: 'main',
+    //     viewId: 'main',
+    //   },
+    //   endHeight: 266.3579406738281,
+    // },
+    // {
+    //   id: 'b8d907d4-1859-49a9-abcd-13788d497758',
+    //   from: {
+    //     type: {
+    //       client: 2887320119,
+    //       clock: 150,
+    //     },
+    //     tname: null,
+    //     item: {
+    //       client: 2887320119,
+    //       clock: 185,
+    //     },
+    //     assoc: 0,
+    //   },
+    //   to: {
+    //     type: {
+    //       client: 2887320119,
+    //       clock: 150,
+    //     },
+    //     tname: null,
+    //     item: {
+    //       client: 2887320119,
+    //       clock: 195,
+    //     },
+    //     assoc: 0,
+    //   },
+    //   data: {
+    //     yjsFrom: {
+    //       type: {
+    //         client: 2887320119,
+    //         clock: 150,
+    //       },
+    //       tname: null,
+    //       item: {
+    //         client: 2887320119,
+    //         clock: 185,
+    //       },
+    //       assoc: 0,
+    //     },
+    //     yjsTo: {
+    //       type: {
+    //         client: 2887320119,
+    //         clock: 150,
+    //       },
+    //       tname: null,
+    //       item: {
+    //         client: 2887320119,
+    //         clock: 195,
+    //       },
+    //       assoc: 0,
+    //     },
+    //     pmFrom: 164,
+    //     pmTo: 174,
+    //     type: 'comment',
+    //     conversation: [
+    //       {
+    //         content: 'dfgdfgd',
+    //         displayName: 'admin',
+    //         userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
+    //         timestamp: 1713699155995,
+    //       },
+    //     ],
+    //     title: 'dgfdgf',
+    //     group: 'main',
+    //     viewId: 'main',
+    //   },
+    //   endHeight: 406.734375,
+    // },
   ],
 ) => {
   return comments;
@@ -225,7 +225,7 @@ export default {
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',
-        // 'Notes',
+        'Notes',
         'Lists',
         'Images',
         'SpecialCharacters',
@@ -303,11 +303,12 @@ export default {
     ],
     updateTags: saveTags,
   },
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:4000',
-    docIdentifier: 'prosemirror-demo',
-  },
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:4000',
+  //   docIdentifier: 'prosemirror-demo',
+  //   YjsType: 'prosemirror',
+  // },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -315,7 +316,7 @@ export default {
   },
 
   services: [
-    new YjsService(),
+    // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),
@@ -329,7 +330,7 @@ export default {
     new ImageService(),
     new TablesService(),
     new BaseService(),
-    // new NoteService(),
+    new NoteService(),
     new CodeBlockService(),
     new EditingSuggestingService(),
     new DisplayTextToolGroupService(),

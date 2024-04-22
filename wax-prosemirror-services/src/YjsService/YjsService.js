@@ -11,6 +11,7 @@ class YjsService extends Service {
     const {
       connectionUrl,
       docIdentifier,
+      YjsType,
       cursorBuilder,
       provider: configProvider,
       ydoc: configYdoc,
@@ -38,7 +39,7 @@ class YjsService extends Service {
       console.log({ connectioError: args });
     });
 
-    const type = ydoc.getXmlFragment('prosemirror');
+    const type = ydoc.getXmlFragment(YjsType || 'prosemirror');
 
     this.app.PmPlugins.add('ySyncPlugin', ySyncPlugin(type));
 

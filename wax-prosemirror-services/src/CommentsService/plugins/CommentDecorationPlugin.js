@@ -19,6 +19,9 @@ export const CommentDecorationPlugin = (name, options) => {
         });
       },
       apply(transaction, pluginState, oldState, newState) {
+        console.log(transaction);
+        const yjsSync = transaction.getMeta('y-sync$');
+        if (yjsSync) console.log('hodododo');
         return pluginState.apply(transaction, newState);
       },
     },
@@ -36,9 +39,10 @@ export const CommentDecorationPlugin = (name, options) => {
           // options.onSelectionChange(annotations);
 
           options.onSelectionChange(this.getState(state).allCommentsList());
+          this.getState(state).createDecorations(state);
         }
-        contentSize = state.doc.content.size;
-        allCommentsCount = this.getState(state).allCommentsList().length;
+        // contentSize = state.doc.content.size;
+        // allCommentsCount = this.getState(state).allCommentsList().length;
         return decorations;
       },
     },

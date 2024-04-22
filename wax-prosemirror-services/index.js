@@ -36,6 +36,10 @@ ToolGroups
 */
 export { default as DisplayTextToolGroupService } from './src/WaxToolGroups/DisplayTextToolGroupService/DisplayTextToolGroupService';
 export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/BlockDropDownToolGroupService/BlockDropDownToolGroupService';
-/* Plugins */
 
+/* Plugins */
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';
+export {
+  CommentDecorationPlugin,
+  CommentDecorationPluginKey,
+} from './src/CommentsService/plugins/CommentDecorationPlugin';

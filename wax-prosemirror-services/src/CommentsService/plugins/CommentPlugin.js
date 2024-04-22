@@ -1,83 +1,48 @@
-/* eslint-disable */
-
-import { minBy, maxBy, last } from 'lodash';
+/* eslint-disable consistent-return */
+import { inRange, last, sortBy } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { DocumentHelpers } from 'wax-prosemirror-core';
 
 const commentPlugin = new PluginKey('commentPlugin');
 
-const getComment = state => {
-  const commentMark = state.schema.marks.comment;
-  const commentOnSelection = DocumentHelpers.findFragmentedMark(
-    state,
-    commentMark,
+const getComment = (state, context) => {
+  const {
+    options: { comments },
+  } = context;
+  if (!comments?.length) return;
+
+  let commentData = comments.filter(comment =>
+    inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo),
   );
 
-  // Don't allow Active comment if selection is not collapsed
-  if (
-    state.selection.from !== state.selection.to &&
-    commentOnSelection &&
-    commentOnSelection.attrs.conversation.length
-  ) {
-    return;
-  }
-
-  if (commentOnSelection) {
-    const commentNodes = DocumentHelpers.findChildrenByMark(
-      state.doc,
-      commentMark,
-      true,
-    );
-
-    const allCommentsWithSameId = [];
-    commentNodes.map(node => {
-      node.node.marks.filter(mark => {
-        if (
-          mark.type.name === 'comment' &&
-          commentOnSelection.attrs.id === mark.attrs.id
-        ) {
-          allCommentsWithSameId.push(node);
-        }
-      });
-    });
-
-    const minPos = minBy(allCommentsWithSameId, 'pos');
-    const maxPos = maxBy(allCommentsWithSameId, 'pos');
-
+  commentData = sortBy(commentData, ['data.pmFrom']);
+  if (commentData.length > 0) {
     if (
-      state.selection.from ===
-      maxPos.pos + last(allCommentsWithSameId).node.nodeSize
+      (state.selection.from !== state.selection.to &&
+        last(commentData).data.conversation.length === 0) ||
+      (state.selection.from === state.selection.to &&
+        last(commentData).data.conversation.length !== 0)
     ) {
-      state.schema.marks.comment.spec.inclusive = false;
-    } else {
-      state.schema.marks.comment.spec.inclusive = true;
+      return last(commentData);
     }
-    if (allCommentsWithSameId.length > 1) {
-      return {
-        from: minPos.pos,
-        to: maxPos.pos + last(allCommentsWithSameId).node.nodeSize,
-        attrs: commentOnSelection.attrs,
-        contained: commentOnSelection.contained,
-      };
-    }
+    return undefined;
   }
-  return commentOnSelection;
+  return undefined;
 };
 
-export default props => {
+export default (key, context) => {
   return new Plugin({
     key: commentPlugin,
     state: {
       init: (_, state) => {
-        return { comment: getComment(state) };
+        return { comment: getComment(state, context) };
       },
       apply(tr, prev, _, newState) {
-        const comment = getComment(newState);
+        const comment = getComment(newState, context);
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [
-            Decoration.inline(comment.from, comment.to, {
+            Decoration.inline(comment.data.pmFrom, comment.data.pmTo, {
               class: 'active-comment',
             }),
           ]);

@@ -2,11 +2,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
-import { last, maxBy, minBy } from 'lodash';
 import styled from 'styled-components';
-import { WaxContext, DocumentHelpers, Commands } from 'wax-prosemirror-core';
+import { WaxContext } from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
+import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
@@ -33,23 +33,14 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     app,
     activeView,
     activeViewId,
+    options: { comments, commentsMap },
   } = context;
 
   const [isActive, setIsActive] = useState(false);
   const [clickPost, setClickPost] = useState(false);
 
   const { state, dispatch } = activeView;
-  const viewId = comment.attrs.viewid;
-  let allCommentsWithSameId = [];
-
-  if (pmViews[viewId]) {
-    allCommentsWithSameId = DocumentHelpers.findAllMarksWithSameId(
-      pmViews[viewId].state,
-      comment,
-    );
-  }
-  const commentMark = state.schema.marks.comment;
-
+  const { viewId, conversation } = comment.data;
   const styles = {
     top: `${top}px`,
   };
@@ -65,9 +56,8 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   useEffect(() => {
     setIsActive(false);
     recalculateTops();
-    if (activeComment && commentId === activeComment.attrs.id) {
+    if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
-      recalculateTops();
     }
   }, [activeComment]);
 
@@ -84,35 +74,19 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       timestamp: Math.floor(Date.now()),
     };
 
-    comment.attrs.title = title || comment.attrs.title;
-    comment.attrs.conversation.push(obj);
+    comment.data.title = title || comment.data.title;
+    comment.data.conversation.push(obj);
 
-    allCommentsWithSameId.forEach(singleComment => {
-      activeView.dispatch(
-        activeView.state.tr.removeMark(
-          singleComment.pos,
-          singleComment.pos + singleComment.node.nodeSize,
-          commentMark,
-        ),
-      );
-    });
-
-    const minPos = minBy(allCommentsWithSameId, 'pos');
-    const maxPos = maxBy(allCommentsWithSameId, 'pos');
-
-    Commands.createComment(
-      activeView.state,
-      activeView.dispatch,
-      comment.attrs.group,
-      comment.attrs.viewid,
-      comment.attrs.conversation,
-      comment.attrs.title,
-      minPos.pos,
-      maxPos.pos + last(allCommentsWithSameId).node.nodeSize,
+    dispatch(
+      state.tr.setMeta(CommentDecorationPluginKey, {
+        type: 'updateComment',
+        id: activeComment.id,
+        data: comment.data,
+      }),
     );
-
     activeView.focus();
-    recalculateTops();
+
+    sendYjsUpdate();
   };
 
   const onClickBox = () => {
@@ -123,12 +97,11 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     if (viewId !== 'main') context.updateView({}, viewId);
 
-    const maxPos = maxBy(allCommentsWithSameId, 'pos');
-    maxPos.pos += last(allCommentsWithSameId).node.nodeSize;
-
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
-        new TextSelection(pmViews[viewId].state.tr.doc.resolve(maxPos.pos)),
+        new TextSelection(
+          pmViews[viewId].state.tr.doc.resolve(comment.data.pmFrom),
+        ),
       ),
     );
 
@@ -137,36 +110,39 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   };
 
   const onClickResolve = () => {
-    let maxPos = comment.pos;
-    let minPos = comment.pos;
+    context.setOption({ resolvedComment: activeComment.id });
+    dispatch(
+      state.tr.setMeta(CommentDecorationPluginKey, {
+        type: 'deleteComment',
+        id: activeComment.id,
+      }),
+    );
 
-    allCommentsWithSameId.forEach(singleComment => {
-      const markPosition = DocumentHelpers.findMarkPosition(
-        state,
-        singleComment.pos,
-        'comment',
-      );
-      if (markPosition.from < minPos) minPos = markPosition.from;
-      if (markPosition.to > maxPos) maxPos = markPosition.to;
-    });
-    // if (allCommentsWithSameId.length > 1);
-    // maxPos += last(allCommentsWithSameId).node.nodeSize;
-    recalculateTops();
-    dispatch(state.tr.removeMark(minPos, maxPos, commentMark));
+    dispatch(state.tr);
     activeView.focus();
+    sendYjsUpdate();
   };
 
   const onTextAreaBlur = () => {
-    // TODO Save into local storage
-    // if (content !== '') {
-    //   onClickPost(content);
-    // }
-    setTimeout(() => {
-      if (comment.attrs.conversation.length === 0 && !clickPost) {
-        onClickResolve();
-        activeView.focus();
-      }
-    }, 400);
+    if (conversation.length === 0 && !clickPost) {
+      onClickResolve();
+      activeView.focus();
+    }
+  };
+
+  const sendYjsUpdate = () => {
+    if (context.app.config.get('config.YjsService')) {
+      commentsMap.observe(() => {
+        const transaction = context.pmViews.main.state.tr.setMeta(
+          CommentDecorationPluginKey,
+          {
+            type: 'createDecorations',
+          },
+        );
+
+        context.pmViews.main.dispatch(transaction);
+      });
+    }
   };
 
   const MemorizedComponent = useMemo(
@@ -174,12 +150,12 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       <ConnectedCommentStyled
         active={isActive}
         data-box={commentId}
-        length={comment.attrs.conversation.length === 0}
+        length={conversation.length === 0}
         style={styles}
       >
         <CommentBox
           active={isActive}
-          commentData={comment.attrs.conversation}
+          commentData={conversation}
           commentId={commentId}
           isReadOnly={isReadOnly}
           key={commentId}
@@ -187,14 +163,13 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
           onClickPost={onClickPost}
           onClickResolve={onClickResolve}
           onTextAreaBlur={onTextAreaBlur}
-          recalculateTops={recalculateTops}
           showTitle={showTitle}
-          title={comment.attrs.title}
+          title={comment.data.title}
           users={users}
         />
       </ConnectedCommentStyled>
     ),
-    [isActive, top, comment.attrs.conversation.length, users],
+    [isActive, top, conversation.length, users],
   );
   return <>{MemorizedComponent}</>;
 };

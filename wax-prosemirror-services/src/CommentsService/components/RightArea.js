@@ -1,18 +1,21 @@
+/* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
-import { Mark } from 'prosemirror-model';
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import { each, uniqBy, sortBy } from 'lodash';
+import { each, uniqBy, sortBy, groupBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
+import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 export default ({ area, users }) => {
+  const context = useContext(WaxContext);
   const {
     pmViews,
     pmViews: { main },
     app,
     activeView,
-  } = useContext(WaxContext);
+    options: { comments, commentsMap },
+  } = context;
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
@@ -39,17 +42,26 @@ export default ({ area, users }) => {
     }
 
     each(marksNodes[area], (markNode, pos) => {
-      const id =
-        markNode instanceof Mark ? markNode.attrs.id : markNode.node.attrs.id;
+      let id = '';
+
+      if (markNode?.node?.attrs.id) {
+        id = markNode.node.attrs.id;
+      } else if (markNode?.attrs?.id) {
+        id = markNode.attrs.id;
+      } else {
+        id = markNode.id;
+      }
+
       let activeTrackChange = null;
       const activeComment = commentPlugin.getState(activeView.state).comment;
+
       if (trakChangePlugin)
         activeTrackChange = trakChangePlugin.getState(activeView.state)
           .trackChange;
 
       let isActive = false;
       if (
-        (activeComment && id === activeComment.attrs.id) ||
+        (activeComment && id === activeComment.id) ||
         (activeTrackChange && id === activeTrackChange.attrs.id)
       )
         isActive = true;
@@ -57,11 +69,45 @@ export default ({ area, users }) => {
       // annotation top
       if (area === 'main') {
         markNodeEl = document.querySelector(`[data-id="${id}"]`);
-        if (markNodeEl)
+        if (!markNodeEl && marksNodes[area][pos - 1]) {
+          markNodeEl = document.querySelector(
+            `[data-id="${marksNodes[area][pos - 1].id}"]`,
+          );
+        }
+
+        if (markNodeEl) {
           annotationTop =
             markNodeEl.getBoundingClientRect().top -
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
+        } else if (!isFirstRun) {
+          // comment is deleted from editing surface
+          context.setOption({ resolvedComment: id });
+          context.setOption({
+            comments: comments.filter(comment => {
+              return comment.id !== id;
+            }),
+          });
+          setTimeout(() => {
+            activeView.dispatch(
+              activeView.state.tr.setMeta(CommentDecorationPluginKey, {
+                type: 'deleteComment',
+                id,
+              }),
+            );
+            if (context.app.config.get('config.YjsService')) {
+              commentsMap.observe(() => {
+                const transaction = context.pmViews.main.state.tr.setMeta(
+                  CommentDecorationPluginKey,
+                  {
+                    type: 'createDecorations',
+                  },
+                );
+                context.pmViews.main.dispatch(transaction);
+              });
+            }
+          });
+        }
       } else {
         // Notes
         panelWrapper = document.getElementsByClassName('panelWrapper');
@@ -127,11 +173,15 @@ export default ({ area, users }) => {
           if (doesOverlap) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
+            let previousMarkNode = '';
 
-            const previousMarkNode =
-              marksNodes[area][i - 1] instanceof Mark
-                ? marksNodes[area][i - 1].attrs.id
-                : marksNodes[area][i - 1].node.attrs.id;
+            if (marksNodes[area][i - 1]?.node?.attrs.id) {
+              previousMarkNode = marksNodes[area][i - 1].node.attrs.id;
+            } else if (marksNodes[area][i - 1]?.attrs?.id) {
+              previousMarkNode = marksNodes[area][i - 1].attrs.id;
+            } else {
+              previousMarkNode = marksNodes[area][i - 1].id;
+            }
 
             allCommentsTop[i - 1][previousMarkNode] = result[i - 1];
           }
@@ -152,7 +202,7 @@ export default ({ area, users }) => {
   };
 
   useDeepCompareEffect(() => {
-    setMarksNodes(updateMarks(pmViews));
+    setMarksNodes(updateMarks(pmViews, comments));
     if (isFirstRun) {
       setTimeout(() => {
         setPosition(setTops());
@@ -161,7 +211,7 @@ export default ({ area, users }) => {
     } else {
       setPosition(setTops());
     }
-  }, [updateMarks(pmViews), setTops()]);
+  }, [updateMarks(pmViews, comments), setTops()]);
 
   const CommentTrackComponent = useMemo(
     () => (
@@ -179,7 +229,9 @@ export default ({ area, users }) => {
   return <>{CommentTrackComponent}</>;
 };
 
-const updateMarks = views => {
+const updateMarks = (views, comments) => {
+  const newComments = groupBy(comments, comm => comm.data.group) || [];
+
   if (views.main) {
     const allInlineNodes = [];
 
@@ -197,12 +249,11 @@ const updateMarks = views => {
       if (node.node.marks.length > 0) {
         node.node.marks.filter(mark => {
           if (
-            mark.type.name === 'comment' ||
             mark.type.name === 'insertion' ||
             mark.type.name === 'deletion' ||
             mark.type.name === 'format_change'
           ) {
-            mark.pos = node.pos;
+            mark.from = node.pos;
             finalMarks.push(mark);
           }
         });
@@ -217,7 +268,7 @@ const updateMarks = views => {
 
     const nodesAndMarks = [...uniqBy(finalMarks, 'attrs.id'), ...finalNodes];
 
-    const groupedMarkNodes = {};
+    const groupedMarkNodes = { main: [], notes: [] };
     nodesAndMarks.forEach(markNode => {
       const markNodeAttrs = markNode.attrs
         ? markNode.attrs
@@ -229,9 +280,13 @@ const updateMarks = views => {
         groupedMarkNodes[markNodeAttrs.group].push(markNode);
       }
     });
+    if (newComments?.main?.length > 0)
+      groupedMarkNodes.main = groupedMarkNodes.main.concat(newComments.main);
+    if (newComments?.notes?.length > 0)
+      groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
 
     return {
-      main: sortBy(groupedMarkNodes.main, ['pos']),
+      main: sortBy(groupedMarkNodes.main, ['data.pmFrom']),
       notes: groupedMarkNodes.notes,
     };
   }

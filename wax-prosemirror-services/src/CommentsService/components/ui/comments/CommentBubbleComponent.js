@@ -1,10 +1,22 @@
 /* eslint react/prop-types: 0 */
 import React, { useLayoutEffect, useContext } from 'react';
-import { WaxContext, Commands, DocumentHelpers } from 'wax-prosemirror-core';
+import { WaxContext } from 'wax-prosemirror-core';
+import {
+  ySyncPluginKey,
+  relativePositionToAbsolutePosition,
+  absolutePositionToRelativePosition,
+} from 'y-prosemirror';
 import CommentBubble from './CommentBubble';
+import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
-  const { activeView, activeViewId } = useContext(WaxContext);
+  const context = useContext(WaxContext);
+  const {
+    activeView,
+    activeViewId,
+    options: { comments, commentsMap },
+  } = context;
+
   const { state, dispatch } = activeView;
 
   useLayoutEffect(() => {
@@ -21,14 +33,84 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
 
   const createComment = event => {
     event.preventDefault();
-    Commands.createComment(state, dispatch, group, activeViewId);
-    activeView.focus();
+    const { selection } = state;
+
+    if (context.app.config.get('config.YjsService')) {
+      return createYjsComments(selection);
+    }
+    dispatch(
+      state.tr.setMeta(CommentDecorationPluginKey, {
+        type: 'addComment',
+        from: selection.from,
+        to: selection.to,
+        yjsFrom: selection.from,
+        yjsTo: selection.to,
+        pmFrom: selection.from,
+        pmTo: selection.to,
+        data: {
+          type: 'comment',
+          conversation: [],
+          title: '',
+          group,
+          viewId: activeViewId,
+        },
+      }),
+    );
+    dispatch(state.tr);
+  };
+
+  const createYjsComments = selection => {
+    const ystate = ySyncPluginKey.getState(state);
+    const { doc, type, binding } = ystate;
+    const from = absolutePositionToRelativePosition(
+      selection.from,
+      type,
+      binding.mapping,
+    );
+    const to = absolutePositionToRelativePosition(
+      selection.to,
+      type,
+      binding.mapping,
+    );
+
+    commentsMap.observe(() => {
+      const transaction = context.pmViews.main.state.tr.setMeta(
+        CommentDecorationPluginKey,
+        {
+          type: 'createDecorations',
+        },
+      );
+      context.pmViews.main.dispatch(transaction);
+    });
+
+    dispatch(
+      state.tr.setMeta(CommentDecorationPluginKey, {
+        type: 'addComment',
+        from: relativePositionToAbsolutePosition(
+          doc,
+          type,
+          from,
+          binding.mapping,
+        ),
+        to: relativePositionToAbsolutePosition(doc, type, to, binding.mapping),
+        data: {
+          yjsFrom: selection.from,
+          yjsTo: selection.to,
+          pmFrom: selection.from,
+          pmTo: selection.to,
+          type: 'comment',
+          conversation: [],
+          title: '',
+          group,
+          viewId: activeViewId,
+        },
+      }),
+    );
+
+    dispatch(state.tr);
   };
 
   const isCommentAllowed = () => {
-    const commentMark = activeView.state.schema.marks.comment;
-    const marks = DocumentHelpers.findMark(state, commentMark, true);
-
     let allowed = true;
     state.doc.nodesBetween(
       state.selection.$from.pos,
@@ -43,13 +125,17 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         }
       },
     );
-    // TODO Overlapping comments . for now don't allow
-    marks.forEach(mark => {
-      if (mark.attrs.group === 'main') allowed = false;
-    });
 
-    // TO DO this is because of a bug and overlay doesn't rerender. Fix in properly in Notes, and remove
-    if (activeViewId !== 'main' && marks.length >= 1) allowed = false;
+    if (
+      comments.find(
+        comm =>
+          comm.data.pmFrom === state.selection.from &&
+          comm.data.pmTo === state.selection.to,
+      )
+    ) {
+      allowed = false;
+    }
+
     return allowed;
   };
 

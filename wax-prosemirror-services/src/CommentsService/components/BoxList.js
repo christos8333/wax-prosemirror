@@ -1,5 +1,4 @@
 /* eslint react/prop-types: 0 */
-import { Mark } from 'prosemirror-model';
 import React from 'react';
 import ConnectedComment from './ConnectedComment';
 import ConnectedTrackChange from './ConnectedTrackChange';
@@ -9,14 +8,19 @@ export default ({ commentsTracks, view, position, recalculateTops, users }) => {
   return (
     <>
       {commentsTracks.map((commentTrack, index) => {
-        const id =
-          commentTrack instanceof Mark
-            ? commentTrack.attrs.id
-            : commentTrack.node.attrs.id;
+        let id = '';
+
+        if (commentTrack?.node?.attrs.id) {
+          id = commentTrack.node.attrs.id;
+        } else if (commentTrack?.attrs?.id) {
+          id = commentTrack.attrs.id;
+        } else {
+          id = commentTrack.id;
+        }
 
         const top = position[index] ? position[index][id] : 0;
 
-        if (commentTrack.type && commentTrack.type.name === 'comment') {
+        if (commentTrack.data?.type === 'comment') {
           return (
             <ConnectedComment
               comment={commentTrack}

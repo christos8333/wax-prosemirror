@@ -3,18 +3,63 @@ import CommentBubbleComponent from './components/ui/comments/CommentBubbleCompon
 import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';
 import CommentPlugin from './plugins/CommentPlugin';
-import CopyPasteCommentPlugin from './plugins/CopyPasteCommentPlugin';
+import { CommentDecorationPlugin } from './plugins/CommentDecorationPlugin';
 import './comments.css';
 
-const PLUGIN_KEY = 'commentPlugin';
-
 export default class CommentsService extends Service {
+  allCommentsFromStates = [];
   boot() {
-    this.app.PmPlugins.add(PLUGIN_KEY, CommentPlugin(PLUGIN_KEY));
+    const commentsConfig = this.app.config.get('config.CommentsService');
+
     this.app.PmPlugins.add(
-      'copyPasteCommentPlugin',
-      CopyPasteCommentPlugin('copyPasteCommentPlugin', this.app.context),
+      'commentPlugin',
+      CommentPlugin('commentPlugin', this.app.context),
     );
+
+    const options = {
+      existingComments: () => {
+        const map = this.app.config.get('config.YjsService')
+          ? this.app.context.options.currentYdoc.getMap('comments')
+          : new Map();
+
+        if (commentsConfig.setComments().length > 0) {
+          commentsConfig.setComments().forEach(value => {
+            map.set(value.id, value);
+          });
+        }
+
+        this.app.context.setOption({
+          commentsMap: map,
+        });
+        return map;
+      },
+      context: this.app.context,
+      onSelectionChange: items => {
+        this.allCommentsFromStates = this.allCommentsFromStates.filter(
+          comm =>
+            (items.find(item => item.id === comm.id) || {}).id !== comm.id,
+        );
+        this.allCommentsFromStates = this.allCommentsFromStates.concat([
+          ...items,
+        ]);
+
+        if (this.app.context.options.resolvedComment) {
+          this.allCommentsFromStates = this.allCommentsFromStates.filter(
+            comm => {
+              return comm.id !== this.app.context.options.resolvedComment;
+            },
+          );
+        }
+        commentsConfig.getComments(this.allCommentsFromStates);
+        this.app.context.setOption({ comments: this.allCommentsFromStates });
+      },
+    };
+
+    this.app.PmPlugins.add(
+      'CommentDecorationPlugin',
+      CommentDecorationPlugin('commentDecorationPlugin', options),
+    );
+
     const createOverlay = this.container.get('CreateOverlay');
     const layout = this.container.get('Layout');
     createOverlay(

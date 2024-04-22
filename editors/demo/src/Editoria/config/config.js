@@ -289,7 +289,7 @@ export default {
   ImageService: { showAlt: true },
 
   CommentsService: {
-    showTitle: true,
+    showTitle: false,
     getComments,
     setComments,
   },

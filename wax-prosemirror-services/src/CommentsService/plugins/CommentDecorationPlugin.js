@@ -19,9 +19,6 @@ export const CommentDecorationPlugin = (name, options) => {
         });
       },
       apply(transaction, pluginState, oldState, newState) {
-        console.log(transaction);
-        const yjsSync = transaction.getMeta('y-sync$');
-        if (yjsSync) console.log('hodododo');
         return pluginState.apply(transaction, newState);
       },
     },

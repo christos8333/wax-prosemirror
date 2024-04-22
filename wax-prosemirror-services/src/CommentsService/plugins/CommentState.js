@@ -20,10 +20,12 @@ export default class CommentState {
   }
 
   addComment(action) {
+    console.log('here?');
     const { map } = this.options;
     const { from, to, data } = action;
     const id = randomId();
     map.set(id, { id, from, to, data });
+    console.log(map);
   }
 
   updateComment(action) {

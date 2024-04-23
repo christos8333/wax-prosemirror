@@ -17,7 +17,7 @@ const AskAIForm = styled.div`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-  display: inline-flex;
+  display: ${prop => (prop.hidden ? 'none' : 'inline-flex;')};
   justify-content: space-between;
   padding: 8px 12px;
   width: 458px;
@@ -96,22 +96,37 @@ const ResultText = styled.div`
 const SubmitButton = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   outline: none;
   padding: 0 8px; /* Adjust padding as needed */
+`;
+
+const PromptDiv = styled.div`
+  background: white;
+  border: 0.5px #dcdcdc solid;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  width: 458px;
 `;
 
 const AskAIOverlay = ({ setPosition, position, config }) => {
   const { t, i18n } = useTranslation();
   const {
+    app,
     pmViews: { main },
     options,
   } = useContext(WaxContext);
   const [result, setResult] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [promptIdx, setPromptIdx] = useState(-1);
   const { AskAiContentTransformation } = config;
   const inputRef = useRef(null);
+
+  const aiService = app.config.get('config.AskAiContentService');
+  const prompts = aiService.CustomPrompts;
 
   useLayoutEffect(() => {
     const WaxSurface = main.dom.getBoundingClientRect();
@@ -176,6 +191,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       setIsSubmitted(true);
     } finally {
       setIsLoading(false);
+      setPromptIdx(-1);
     }
   };
 
@@ -198,9 +214,16 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
+  const handleSubmitPrompt = idx => {
+    setPromptIdx(idx);
+
+    inputRef.current.value = prompts[idx];
+    handleSubmit(new Event('submit'));
+  };
+
   return options?.AiOn ? (
     <Wrapper id="ai-overlay">
-      <AskAIForm>
+      <AskAIForm hidden={!aiService.FreeTextPromptsOn}>
         <AskAIFormInput
           id="askAiInput"
           onKeyPress={handleKeyDown}
@@ -216,6 +239,21 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           {isLoading ? <icons.loaderIco /> : <icons.submitIco />}
         </SubmitButton>
       </AskAIForm>
+      {prompts.map((prompt, idx) => (
+        <PromptDiv key={prompt}>
+          <ResultText>{prompt}</ResultText>
+          <SubmitButton
+            disabled={isLoading}
+            onClick={() => handleSubmitPrompt(idx)}
+          >
+            {isLoading && idx === promptIdx ? (
+              <icons.loaderIco />
+            ) : (
+              <icons.submitIco />
+            )}
+          </SubmitButton>
+        </PromptDiv>
+      ))}
       {isSubmitted && (
         <>
           <ResultDiv>

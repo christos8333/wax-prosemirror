@@ -313,6 +313,8 @@ export default {
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
     AiOn: true,
+    FreeTextPromptsOn: true,
+    CustomPrompts: [],
   },
 
   services: [

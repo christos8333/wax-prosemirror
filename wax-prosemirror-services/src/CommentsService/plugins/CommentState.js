@@ -20,12 +20,10 @@ export default class CommentState {
   }
 
   addComment(action) {
-    console.log('here?');
     const { map } = this.options;
     const { from, to, data } = action;
     const id = randomId();
     map.set(id, { id, from, to, data });
-    console.log(map);
   }
 
   updateComment(action) {
@@ -56,6 +54,10 @@ export default class CommentState {
     });
   }
 
+  getMap() {
+    return this.options.map;
+  }
+
   createDecorations(state) {
     const decorations = [];
 
@@ -63,7 +65,6 @@ export default class CommentState {
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
-      console.log(this.allCommentsList());
       this.allCommentsList().forEach((annotation, id) => {
         annotation.data.yjsFrom = absolutePositionToRelativePosition(
           annotation.data.pmFrom,

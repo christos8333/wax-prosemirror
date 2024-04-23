@@ -80,33 +80,6 @@ export default ({ area, users }) => {
             markNodeEl.getBoundingClientRect().top -
             WaxSurface.top +
             parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
-        } else if (!isFirstRun) {
-          // comment is deleted from editing surface
-          context.setOption({ resolvedComment: id });
-          context.setOption({
-            comments: comments.filter(comment => {
-              return comment.id !== id;
-            }),
-          });
-          setTimeout(() => {
-            activeView.dispatch(
-              activeView.state.tr.setMeta(CommentDecorationPluginKey, {
-                type: 'deleteComment',
-                id,
-              }),
-            );
-            if (context.app.config.get('config.YjsService')) {
-              commentsMap.observe(() => {
-                const transaction = context.pmViews.main.state.tr.setMeta(
-                  CommentDecorationPluginKey,
-                  {
-                    type: 'createDecorations',
-                  },
-                );
-                context.pmViews.main.dispatch(transaction);
-              });
-            }
-          });
         }
       } else {
         // Notes

@@ -1,4 +1,5 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { flatten } from 'lodash';
 import CommentState from './CommentState';
 
 let contentSize = 0;
@@ -25,6 +26,29 @@ export const CommentDecorationPlugin = (name, options) => {
     props: {
       decorations(state) {
         const { decorations } = this.getState(state);
+
+        const ids = this.getState(state).decorations.children.map(child => {
+          if (child.constructor.name === 'DecorationSet') {
+            return child.local.map(l => l.type.attrs['data-id']);
+          }
+        });
+        const finalIds = flatten(ids.filter(id => id));
+        const deletedComments = options.context.options.comments?.filter(
+          comment => !finalIds.includes(comment.id),
+        );
+
+        if (deletedComments?.length > 0) {
+          deletedComments.forEach(deletedComment => {
+            options.context.setOption({ resolvedComment: deletedComment.id });
+            options.context.setOption({
+              comments: options.context.options.comments.filter(comment => {
+                return comment.id !== deletedComment.id;
+              }),
+            });
+            this.getState(state).getMap().delete(deletedComment.id);
+          });
+        }
+
         if (
           contentSize !== state.doc.content.size ||
           this.getState(state).allCommentsList().length !== allCommentsCount
@@ -38,8 +62,8 @@ export const CommentDecorationPlugin = (name, options) => {
           options.onSelectionChange(this.getState(state).allCommentsList());
           this.getState(state).createDecorations(state);
         }
-        // contentSize = state.doc.content.size;
-        // allCommentsCount = this.getState(state).allCommentsList().length;
+        contentSize = state.doc.content.size;
+        allCommentsCount = this.getState(state).allCommentsList().length;
         return decorations;
       },
     },

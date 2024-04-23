@@ -73,7 +73,6 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
       type,
       binding.mapping,
     );
-
     commentsMap.observe(() => {
       const transaction = context.pmViews.main.state.tr.setMeta(
         CommentDecorationPluginKey,

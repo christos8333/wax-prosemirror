@@ -27,27 +27,27 @@ export const CommentDecorationPlugin = (name, options) => {
       decorations(state) {
         const { decorations } = this.getState(state);
 
-        const ids = this.getState(state).decorations.children.map(child => {
-          if (child.constructor.name === 'DecorationSet') {
-            return child.local.map(l => l.type.attrs['data-id']);
-          }
-        });
-        const finalIds = flatten(ids.filter(id => id));
-        const deletedComments = options.context.options.comments?.filter(
-          comment => !finalIds.includes(comment.id),
-        );
+        // const ids = this.getState(state).decorations.children.map(child => {
+        //   if (child.constructor.name === 'DecorationSet') {
+        //     return child.local.map(l => l.type.attrs['data-id']);
+        //   }
+        // });
+        // const finalIds = flatten(ids.filter(id => id));
+        // const deletedComments = options.context.options.comments?.filter(
+        //   comment => !finalIds.includes(comment.id),
+        // );
 
-        if (deletedComments?.length > 0) {
-          deletedComments.forEach(deletedComment => {
-            options.context.setOption({ resolvedComment: deletedComment.id });
-            options.context.setOption({
-              comments: options.context.options.comments.filter(comment => {
-                return comment.id !== deletedComment.id;
-              }),
-            });
-            this.getState(state).getMap().delete(deletedComment.id);
-          });
-        }
+        // if (deletedComments?.length > 0) {
+        //   deletedComments.forEach(deletedComment => {
+        //     options.context.setOption({ resolvedComment: deletedComment.id });
+        //     options.context.setOption({
+        //       comments: options.context.options.comments.filter(comment => {
+        //         return comment.id !== deletedComment.id;
+        //       }),
+        //     });
+        //     this.getState(state).getMap().delete(deletedComment.id);
+        //   });
+        // }
 
         if (
           contentSize !== state.doc.content.size ||

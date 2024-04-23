@@ -5,6 +5,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy, groupBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
+import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 export default ({ area, users }) => {
   const context = useContext(WaxContext);
@@ -173,7 +174,12 @@ export default ({ area, users }) => {
   };
 
   useDeepCompareEffect(() => {
-    setMarksNodes(updateMarks(pmViews, context.options.comments));
+    setMarksNodes(
+      updateMarks(
+        pmViews,
+        CommentDecorationPluginKey.getState(activeView.state).allCommentsList(),
+      ),
+    );
     if (isFirstRun) {
       setTimeout(() => {
         setPosition(setTops());
@@ -182,7 +188,13 @@ export default ({ area, users }) => {
     } else {
       setPosition(setTops());
     }
-  }, [updateMarks(pmViews, context.options.comments), setTops()]);
+  }, [
+    updateMarks(
+      pmViews,
+      CommentDecorationPluginKey.getState(activeView.state).allCommentsList(),
+    ),
+    setTops(),
+  ]);
 
   const CommentTrackComponent = useMemo(
     () => (
@@ -202,7 +214,6 @@ export default ({ area, users }) => {
 
 const updateMarks = (views, comments) => {
   const newComments = groupBy(comments, comm => comm.data.group) || [];
-  console.log(comments);
   if (views.main) {
     const allInlineNodes = [];
 
@@ -252,15 +263,11 @@ const updateMarks = (views, comments) => {
       }
     });
     if (newComments?.main?.length > 0) {
-      console.log(newComments);
       groupedMarkNodes.main = groupedMarkNodes.main.concat(newComments.main);
     }
     if (newComments?.notes?.length > 0)
       groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
-    console.log(
-      sortBy(groupedMarkNodes.main, ['data.pmFrom']),
-      groupedMarkNodes,
-    );
+
     return {
       main: sortBy(groupedMarkNodes.main, ['data.pmFrom']),
       notes: groupedMarkNodes.notes,

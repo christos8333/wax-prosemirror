@@ -19,9 +19,7 @@ export default ({ commentsTracks, view, position, recalculateTops, users }) => {
         }
 
         const top = position[index] ? position[index][id] : 0;
-        console.log(commentTrack);
         if (commentTrack.data?.type === 'comment') {
-          console.log('in comment box list');
           return (
             <ConnectedComment
               comment={commentTrack}

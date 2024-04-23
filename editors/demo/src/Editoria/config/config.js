@@ -27,7 +27,6 @@ import {
   BlockDropDownToolGroupService,
   AskAiContentService,
   YjsService,
-  CommentDecoration,
 } from 'wax-prosemirror-services';
 
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';

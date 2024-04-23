@@ -35,8 +35,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     options: { commentsMap },
   } = context;
 
-  console.log('in connected comment');
-
   const [isActive, setIsActive] = useState(false);
   const [clickPost, setClickPost] = useState(false);
 
@@ -57,7 +55,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   useEffect(() => {
     setIsActive(false);
     recalculateTops();
-    console.log(activeComment, commentId, activeComment?.id);
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
     }
@@ -146,7 +143,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       });
     }
   };
-  console.log(isActive);
   const MemorizedComponent = useMemo(
     () => (
       <ConnectedCommentStyled

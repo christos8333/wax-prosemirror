@@ -38,7 +38,6 @@ export default (key, context) => {
       },
       apply(tr, prev, _, newState) {
         const comment = getComment(newState, context);
-        console.log('active comment', comment);
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [

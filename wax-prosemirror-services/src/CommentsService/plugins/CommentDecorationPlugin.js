@@ -50,6 +50,23 @@ export const CommentDecorationPlugin = (name, options) => {
         // }
 
         if (
+          this.getState(state).allCommentsList().length !== allCommentsCount
+        ) {
+          this.getState(state)
+            .getMap()
+            .observe(() => {
+              const transaction = options.context.pmViews.main.state.tr.setMeta(
+                CommentDecorationPluginKey,
+                {
+                  type: 'createDecorations',
+                },
+              );
+
+              options.context.pmViews.main.dispatch(transaction);
+            });
+        }
+
+        if (
           contentSize !== state.doc.content.size ||
           this.getState(state).allCommentsList().length !== allCommentsCount
         ) {

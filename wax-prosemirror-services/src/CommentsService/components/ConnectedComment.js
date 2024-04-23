@@ -83,9 +83,8 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         data: comment.data,
       }),
     );
-    activeView.focus();
 
-    sendYjsUpdate();
+    activeView.focus();
   };
 
   const onClickBox = () => {
@@ -119,7 +118,20 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     dispatch(state.tr);
     activeView.focus();
-    sendYjsUpdate();
+
+    if (context.app.config.get('config.YjsService')) {
+      commentsMap.observe(() => {
+        const transaction = context.pmViews.main.state.tr.setMeta(
+          CommentDecorationPluginKey,
+          {
+            type: 'deleteComment',
+            id: activeComment.id,
+          },
+        );
+
+        context.pmViews.main.dispatch(transaction);
+      });
+    }
   };
 
   const onTextAreaBlur = () => {
@@ -129,20 +141,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     }
   };
 
-  const sendYjsUpdate = () => {
-    if (context.app.config.get('config.YjsService')) {
-      commentsMap.observe(() => {
-        const transaction = context.pmViews.main.state.tr.setMeta(
-          CommentDecorationPluginKey,
-          {
-            type: 'createDecorations',
-          },
-        );
-
-        context.pmViews.main.dispatch(transaction);
-      });
-    }
-  };
   const MemorizedComponent = useMemo(
     () => (
       <ConnectedCommentStyled

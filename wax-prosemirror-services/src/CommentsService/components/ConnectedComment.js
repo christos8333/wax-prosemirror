@@ -57,7 +57,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   useEffect(() => {
     setIsActive(false);
     recalculateTops();
-    console.log(activeComment, commentId, activeComment.id);
+    console.log(activeComment, commentId, activeComment?.id);
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
     }

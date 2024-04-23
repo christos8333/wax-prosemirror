@@ -196,14 +196,14 @@ export default ({ area, users }) => {
         view={main}
       />
     ),
-    [marksNodes[area] || [], position, users],
+    [marksNodes[area] || [], position, users, comments.length],
   );
   return <>{CommentTrackComponent}</>;
 };
 
 const updateMarks = (views, comments) => {
   const newComments = groupBy(comments, comm => comm.data.group) || [];
-
+  console.log(comments);
   if (views.main) {
     const allInlineNodes = [];
 
@@ -252,11 +252,16 @@ const updateMarks = (views, comments) => {
         groupedMarkNodes[markNodeAttrs.group].push(markNode);
       }
     });
-    if (newComments?.main?.length > 0)
+    if (newComments?.main?.length > 0) {
+      console.log(newComments);
       groupedMarkNodes.main = groupedMarkNodes.main.concat(newComments.main);
+    }
     if (newComments?.notes?.length > 0)
       groupedMarkNodes.notes = groupedMarkNodes.notes.concat(newComments.notes);
-
+    console.log(
+      sortBy(groupedMarkNodes.main, ['data.pmFrom']),
+      groupedMarkNodes,
+    );
     return {
       main: sortBy(groupedMarkNodes.main, ['data.pmFrom']),
       notes: groupedMarkNodes.notes,

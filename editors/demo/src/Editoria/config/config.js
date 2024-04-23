@@ -45,7 +45,6 @@ import CharactersList from './CharactersList';
 // const updateTitle = title => {
 //   console.log(title);
 // };
-console.log('in config');
 
 async function DummyPromise(userInput) {
   return new Promise((resolve, reject) => {

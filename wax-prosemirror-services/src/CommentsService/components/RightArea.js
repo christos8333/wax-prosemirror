@@ -5,7 +5,6 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy, groupBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
-import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 export default ({ area, users }) => {
   const context = useContext(WaxContext);
@@ -14,7 +13,7 @@ export default ({ area, users }) => {
     pmViews: { main },
     app,
     activeView,
-    options: { comments, commentsMap },
+    options: { comments },
   } = context;
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');

@@ -23,11 +23,13 @@ const getComment = (state, context) => {
       (state.selection.from === state.selection.to &&
         last(commentData).data.conversation.length !== 0)
     ) {
-      console.log(last(commentData));
+      console.log('return active', last(commentData));
       return last(commentData);
     }
+    console.log('not return active');
     return undefined;
   }
+  console.log('not return active 2');
   return undefined;
 };
 
@@ -40,6 +42,7 @@ export default (key, context) => {
       },
       apply(tr, prev, _, newState) {
         const comment = getComment(newState, context);
+        console.log('active comment', comment);
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [

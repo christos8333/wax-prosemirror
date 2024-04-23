@@ -13,7 +13,6 @@ export default ({ area, users }) => {
     pmViews: { main },
     app,
     activeView,
-    options: { comments },
   } = context;
 
   const commentPlugin = app.PmPlugins.get('commentPlugin');
@@ -174,7 +173,7 @@ export default ({ area, users }) => {
   };
 
   useDeepCompareEffect(() => {
-    setMarksNodes(updateMarks(pmViews, comments));
+    setMarksNodes(updateMarks(pmViews, context.options.comments));
     if (isFirstRun) {
       setTimeout(() => {
         setPosition(setTops());
@@ -183,7 +182,7 @@ export default ({ area, users }) => {
     } else {
       setPosition(setTops());
     }
-  }, [updateMarks(pmViews, comments), setTops()]);
+  }, [updateMarks(pmViews, context.options.comments), setTops()]);
 
   const CommentTrackComponent = useMemo(
     () => (
@@ -196,7 +195,7 @@ export default ({ area, users }) => {
         view={main}
       />
     ),
-    [marksNodes[area] || [], position, users, comments.length],
+    [marksNodes[area] || [], position, users],
   );
   return <>{CommentTrackComponent}</>;
 };

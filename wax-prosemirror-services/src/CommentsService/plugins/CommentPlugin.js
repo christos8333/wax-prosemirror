@@ -10,7 +10,7 @@ const getComment = (state, context) => {
     options: { comments },
   } = context;
   if (!comments?.length) return;
-
+  console.log(comments);
   let commentData = comments.filter(comment =>
     inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo),
   );
@@ -23,6 +23,7 @@ const getComment = (state, context) => {
       (state.selection.from === state.selection.to &&
         last(commentData).data.conversation.length !== 0)
     ) {
+      console.log(last(commentData));
       return last(commentData);
     }
     return undefined;

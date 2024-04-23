@@ -38,7 +38,7 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     if (context.app.config.get('config.YjsService')) {
       return createYjsComments(selection);
     }
-
+    console.log('here?');
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'addComment',

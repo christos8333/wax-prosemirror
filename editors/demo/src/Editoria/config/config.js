@@ -45,6 +45,7 @@ import CharactersList from './CharactersList';
 // const updateTitle = title => {
 //   console.log(title);
 // };
+console.log('in config');
 
 async function DummyPromise(userInput) {
   return new Promise((resolve, reject) => {
@@ -289,7 +290,7 @@ export default {
   ImageService: { showAlt: true },
 
   CommentsService: {
-    showTitle: false,
+    showTitle: true,
     getComments,
     setComments,
   },

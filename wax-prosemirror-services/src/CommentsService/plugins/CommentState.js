@@ -211,7 +211,7 @@ export default class CommentState {
       return this;
       // eslint-disable-next-line no-else-return
     } else {
-      this.options.map.forEach((annotation, _) => {
+      map.forEach((annotation, _) => {
         if ('from' in annotation && 'to' in annotation) {
           annotation.from = transaction.mapping.map(annotation.from);
           annotation.to = transaction.mapping.map(annotation.to);

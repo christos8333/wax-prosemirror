@@ -66,17 +66,21 @@ export default class CommentState {
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
       this.allCommentsList().forEach((annotation, id) => {
-        annotation.data.yjsFrom = absolutePositionToRelativePosition(
-          annotation.data.pmFrom,
-          type,
-          binding.mapping,
-        );
+        if (typeof annotation.data.yjsFrom !== 'object') {
+          annotation.data.yjsFrom = absolutePositionToRelativePosition(
+            annotation.data.pmFrom,
+            type,
+            binding.mapping,
+          );
+        }
 
-        annotation.data.yjsTo = absolutePositionToRelativePosition(
-          annotation.data.pmTo,
-          type,
-          binding.mapping,
-        );
+        if (typeof annotation.data.yjsTo !== 'object') {
+          annotation.data.yjsTo = absolutePositionToRelativePosition(
+            annotation.data.pmTo,
+            type,
+            binding.mapping,
+          );
+        }
 
         const from = relativePositionToAbsolutePosition(
           doc,
@@ -157,6 +161,18 @@ export default class CommentState {
 
         annotation.from = newFrom;
         annotation.to = newTo;
+        annotation.data.pmFrom = relativePositionToAbsolutePosition(
+          ystate.doc,
+          ystate.type,
+          newFrom,
+          ystate.binding.mapping,
+        );
+        annotation.data.pmTo = relativePositionToAbsolutePosition(
+          ystate.doc,
+          ystate.type,
+          newTo,
+          ystate.binding.mapping,
+        );
 
         this.options.map.set(id, annotation);
       });
@@ -185,26 +201,17 @@ export default class CommentState {
 
     const ystate = ySyncPluginKey.getState(state);
 
-    if (ystate?.isChangeOrigin) {
-      // this.updateCommentPostions(ystate);
-      this.createDecorations(state);
-
-      return this;
-    }
-
     this.decorations = this.decorations.map(
       transaction.mapping,
       transaction.doc,
     );
 
-    map.forEach((annotation, _) => {
-      if ('from' in annotation && 'to' in annotation) {
-        annotation.data.pmFrom = transaction.mapping.map(
-          annotation.data.pmFrom,
-        );
-        annotation.data.pmTo = transaction.mapping.map(annotation.data.pmTo);
-      }
-    });
+    if (ystate?.isChangeOrigin) {
+      this.updateCommentPostions(ystate);
+      this.createDecorations(state);
+
+      return this;
+    }
 
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);
@@ -212,6 +219,15 @@ export default class CommentState {
       return this;
       // eslint-disable-next-line no-else-return
     } else {
+      // Not YJS
+      map.forEach((annotation, _) => {
+        if ('from' in annotation && 'to' in annotation) {
+          annotation.data.pmFrom = transaction.mapping.map(
+            annotation.data.pmFrom,
+          );
+          annotation.data.pmTo = transaction.mapping.map(annotation.data.pmTo);
+        }
+      });
       this.createDecorations(state);
       return this;
     }

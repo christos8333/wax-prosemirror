@@ -2,17 +2,21 @@
 import { inRange, last, sortBy } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 
 const commentPlugin = new PluginKey('commentPlugin');
 
-const getComment = (state, context) => {
-  const {
-    options: { comments },
-  } = context;
-  if (!comments?.length) return;
-  let commentData = comments.filter(comment =>
-    inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo),
-  );
+const getComment = state => {
+  const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
+
+  if (commentsMap.size === 0) return;
+  let commentData = [];
+
+  commentsMap.forEach(comment => {
+    if (inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo)) {
+      commentData.push(comment);
+    }
+  });
 
   commentData = sortBy(commentData, ['data.pmFrom']);
   if (commentData.length > 0) {
@@ -29,15 +33,15 @@ const getComment = (state, context) => {
   return undefined;
 };
 
-export default (key, context) => {
+export default () => {
   return new Plugin({
     key: commentPlugin,
     state: {
       init: (_, state) => {
-        return { comment: getComment(state, context) };
+        return { comment: getComment(state) };
       },
       apply(tr, prev, _, newState) {
-        const comment = getComment(newState, context);
+        const comment = getComment(newState);
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [

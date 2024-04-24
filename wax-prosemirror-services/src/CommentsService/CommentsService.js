@@ -11,11 +11,6 @@ export default class CommentsService extends Service {
   boot() {
     const commentsConfig = this.app.config.get('config.CommentsService');
 
-    this.app.PmPlugins.add(
-      'commentPlugin',
-      CommentPlugin('commentPlugin', this.app.context),
-    );
-
     const options = {
       existingComments: () => {
         const map = this.app.config.get('config.YjsService')
@@ -52,13 +47,17 @@ export default class CommentsService extends Service {
         }
 
         commentsConfig.getComments(this.allCommentsFromStates);
-        this.app.context.setOption({ comments: this.allCommentsFromStates });
       },
     };
 
     this.app.PmPlugins.add(
       'CommentDecorationPlugin',
       CommentDecorationPlugin('commentDecorationPlugin', options),
+    );
+
+    this.app.PmPlugins.add(
+      'commentPlugin',
+      CommentPlugin('commentPlugin', this.app.context),
     );
 
     const createOverlay = this.container.get('CreateOverlay');

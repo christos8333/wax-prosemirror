@@ -27,7 +27,7 @@ export default ({
   commentId,
   recalculateTops,
   users,
-  commentActive,
+  activeComment,
 }) => {
   const context = useContext(WaxContext);
   const {
@@ -55,14 +55,17 @@ export default ({
     commentConfig && commentConfig.readOnly ? commentConfig.readOnly : false;
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
-  const [activeComment, setActiveComment] = useState(commentActive);
-
   useEffect(() => {
-    setIsActive(false);
-    setActiveComment(context.options.activeComment);
+    console.log('act', activeComment);
+    //
     recalculateTops();
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
+    } else if (
+      (activeComment && commentId !== activeComment.id) ||
+      !activeComment
+    ) {
+      setIsActive(false);
     }
   }, [activeComment]);
 
@@ -94,11 +97,6 @@ export default ({
   };
 
   const onClickBox = () => {
-    setActiveComment(
-      CommentDecorationPluginKey.getState(activeView.state)
-        .getMap()
-        .get(commentId),
-    );
     if (isActive) {
       pmViews[viewId].focus();
       return false;
@@ -162,7 +160,7 @@ export default ({
         />
       </ConnectedCommentStyled>
     ),
-    [isActive, top, conversation.length, users, context.options.activeComment],
+    [isActive, top, conversation.length, users],
   );
   return <>{MemorizedComponent}</>;
 };

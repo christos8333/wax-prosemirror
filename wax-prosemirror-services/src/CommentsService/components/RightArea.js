@@ -14,9 +14,9 @@ export default ({ area, users }) => {
     pmViews: { main },
     app,
     activeView,
+    options: { activeComment },
   } = context;
 
-  const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
   const [marksNodes, setMarksNodes] = useState([]);
@@ -52,7 +52,6 @@ export default ({ area, users }) => {
       }
 
       let activeTrackChange = null;
-      const activeComment = commentPlugin.getState(activeView.state).comment;
 
       if (trakChangePlugin)
         activeTrackChange = trakChangePlugin.getState(activeView.state)
@@ -199,6 +198,7 @@ export default ({ area, users }) => {
   const CommentTrackComponent = useMemo(
     () => (
       <BoxList
+        activeComment={context.options.activeComment}
         area={area}
         commentsTracks={marksNodes[area] || []}
         position={position}
@@ -207,7 +207,7 @@ export default ({ area, users }) => {
         view={main}
       />
     ),
-    [marksNodes[area] || [], position, users],
+    [marksNodes[area] || [], position, users, context.options.activeComment],
   );
   return <>{CommentTrackComponent}</>;
 };

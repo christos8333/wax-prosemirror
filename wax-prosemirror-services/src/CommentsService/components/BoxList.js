@@ -3,7 +3,14 @@ import React from 'react';
 import ConnectedComment from './ConnectedComment';
 import ConnectedTrackChange from './ConnectedTrackChange';
 
-export default ({ commentsTracks, view, position, recalculateTops, users }) => {
+export default ({
+  commentsTracks,
+  view,
+  position,
+  recalculateTops,
+  users,
+  activeComment,
+}) => {
   if (!position) return null;
   return (
     <>
@@ -22,6 +29,7 @@ export default ({ commentsTracks, view, position, recalculateTops, users }) => {
         if (commentTrack.data?.type === 'comment') {
           return (
             <ConnectedComment
+              activeComment={activeComment}
               comment={commentTrack}
               commentId={id}
               key={id}

@@ -33,7 +33,7 @@ const getComment = state => {
   return undefined;
 };
 
-export default () => {
+export default (key, context) => {
   return new Plugin({
     key: commentPlugin,
     state: {
@@ -44,6 +44,7 @@ export default () => {
         const comment = getComment(newState);
         let createDecoration;
         if (comment) {
+          context.setOption({ activeComment: comment });
           createDecoration = DecorationSet.create(newState.doc, [
             Decoration.inline(comment.data.pmFrom, comment.data.pmTo, {
               class: 'active-comment',

@@ -21,7 +21,14 @@ const ConnectedCommentStyled = styled.div`
   ${override('Wax.CommentOuterBox')}
 `;
 
-export default ({ comment, top, commentId, recalculateTops, users }) => {
+export default ({
+  comment,
+  top,
+  commentId,
+  recalculateTops,
+  users,
+  commentActive,
+}) => {
   const context = useContext(WaxContext);
   const {
     pmViews,
@@ -48,13 +55,11 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     commentConfig && commentConfig.readOnly ? commentConfig.readOnly : false;
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
-  const commentPlugin = app.PmPlugins.get('commentPlugin');
-  const [activeComment, setActiveComment] = useState(
-    commentPlugin.getState(activeView.state).comment,
-  );
+  const [activeComment, setActiveComment] = useState(commentActive);
 
   useEffect(() => {
     setIsActive(false);
+    setActiveComment(context.options.activeComment);
     recalculateTops();
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
@@ -76,7 +81,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     comment.data.title = title || comment.data.title;
     comment.data.conversation.push(obj);
-    console.log(comment);
+
     context.activeView.dispatch(
       context.activeView.state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'updateComment',
@@ -89,6 +94,11 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   };
 
   const onClickBox = () => {
+    setActiveComment(
+      CommentDecorationPluginKey.getState(activeView.state)
+        .getMap()
+        .get(commentId),
+    );
     if (isActive) {
       pmViews[viewId].focus();
       return false;
@@ -152,7 +162,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         />
       </ConnectedCommentStyled>
     ),
-    [isActive, top, conversation.length, users],
+    [isActive, top, conversation.length, users, context.options.activeComment],
   );
   return <>{MemorizedComponent}</>;
 };

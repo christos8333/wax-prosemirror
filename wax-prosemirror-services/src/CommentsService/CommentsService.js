@@ -23,9 +23,6 @@ export default class CommentsService extends Service {
           });
         }
 
-        this.app.context.setOption({
-          commentsMap: map,
-        });
         return map;
       },
       context: this.app.context,

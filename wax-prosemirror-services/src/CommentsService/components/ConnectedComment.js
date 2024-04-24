@@ -56,9 +56,6 @@ export default ({
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
   useEffect(() => {
-    console.log('act', activeComment);
-    //
-    recalculateTops();
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
     } else if (
@@ -67,6 +64,7 @@ export default ({
     ) {
       setIsActive(false);
     }
+    recalculateTops();
   }, [activeComment]);
 
   const onClickPost = ({ commentValue, title }) => {

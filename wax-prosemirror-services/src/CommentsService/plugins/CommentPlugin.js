@@ -6,7 +6,7 @@ import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 
 const commentPlugin = new PluginKey('commentPlugin');
 
-const getComment = (state, context) => {
+const getComment = state => {
   const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
   if (commentsMap.size === 0) return;
   let commentData = [];
@@ -40,7 +40,7 @@ export default (key, context) => {
         return { comment: getComment(state) };
       },
       apply(tr, prev, _, newState) {
-        const comment = getComment(newState, context);
+        const comment = getComment(newState);
         let createDecoration;
         if (comment) {
           context.setOption({ activeComment: comment });

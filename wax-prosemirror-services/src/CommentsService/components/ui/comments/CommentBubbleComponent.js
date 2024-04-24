@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useLayoutEffect, useContext } from 'react';
+import React, { useLayoutEffect, useContext, useEffect, useState } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import {
   ySyncPluginKey,
@@ -17,8 +17,9 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     activeViewId,
     options: { comments },
   } = context;
-
   const { state, dispatch } = activeView;
+  const [fromPos, setFromPos] = useState(state.selection.from);
+  const [toPos, setToPos] = useState(state.selection.to);
 
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
@@ -36,24 +37,21 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     event.preventDefault();
     const { selection } = state;
 
-    // if (context.app.config.get('config.YjsService')) {
-    //   return createYjsComments(selection);
-    // }
-
-    const fromPos = state.tr.mapping.map(selection.from);
-    const toPos = state.tr.mapping.map(selection.to);
+    if (context.app.config.get('config.YjsService')) {
+      return createYjsComments(selection);
+    }
 
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'addComment',
-        from: fromPos,
-        to: toPos,
+        from: selection.from,
+        to: selection.to,
         data: {
           type: 'comment',
-          yjsFrom: fromPos,
-          yjsTo: toPos,
-          pmFrom: fromPos,
-          pmTo: toPos,
+          yjsFrom: selection.from,
+          yjsTo: selection.to,
+          pmFrom: selection.from,
+          pmTo: selection.to,
           conversation: [],
           title: '',
           group,
@@ -68,15 +66,11 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     const ystate = ySyncPluginKey.getState(state);
     const { doc, type, binding } = ystate;
     const from = absolutePositionToRelativePosition(
-      selection.from,
+      fromPos,
       type,
       binding.mapping,
     );
-    const to = absolutePositionToRelativePosition(
-      selection.to,
-      type,
-      binding.mapping,
-    );
+    const to = absolutePositionToRelativePosition(toPos, type, binding.mapping);
 
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
@@ -89,10 +83,10 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         ),
         to: relativePositionToAbsolutePosition(doc, type, to, binding.mapping),
         data: {
-          yjsFrom: selection.from,
-          yjsTo: selection.to,
-          pmFrom: selection.from,
-          pmTo: selection.to,
+          yjsFrom: fromPos,
+          yjsTo: toPos,
+          pmFrom: fromPos,
+          pmTo: toPos,
           type: 'comment',
           conversation: [],
           title: '',
@@ -104,6 +98,13 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
 
     dispatch(state.tr);
   };
+
+  useEffect(() => {
+    if (context.app.config.get('config.YjsService')) {
+      setFromPos(state.tr.mapping.map(activeView.state.selection.from));
+      setToPos(state.tr.mapping.map(activeView.state.selection.to));
+    }
+  }, [activeView.state]);
 
   const isCommentAllowed = () => {
     let allowed = true;

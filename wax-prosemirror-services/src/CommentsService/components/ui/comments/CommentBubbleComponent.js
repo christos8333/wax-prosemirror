@@ -64,17 +64,13 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
     const commentData = [];
     commentsMap.forEach(comment => {
-      console.log(comment);
       if (
         comment.data.pmFrom === state.selection.from &&
         comment.data.pmTo === state.selection.to
       ) {
-        console.log('here');
         commentData.push(comment);
       }
-      console.log(commentData);
       if (commentData.length !== 0) allowed = false;
-      console.log(allowed);
     });
     return allowed;
   };

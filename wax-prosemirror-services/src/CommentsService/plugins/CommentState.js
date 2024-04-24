@@ -27,6 +27,7 @@ export default class CommentState {
   }
 
   updateComment(action) {
+    console.log('update');
     const { map } = this.options;
     const annotationToUpdate = map.get(action.id);
     if (annotationToUpdate) {

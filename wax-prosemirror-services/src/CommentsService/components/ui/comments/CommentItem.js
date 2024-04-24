@@ -38,7 +38,6 @@ const Content = styled.div`
 
 const CommentItem = props => {
   const { className, content, displayName, timestamp, active } = props;
-  console.log('111');
   return (
     <Wrapper active={active} className={className}>
       <Head active={active}>

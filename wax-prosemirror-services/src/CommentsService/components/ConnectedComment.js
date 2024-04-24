@@ -49,7 +49,9 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
   const commentPlugin = app.PmPlugins.get('commentPlugin');
-  const activeComment = commentPlugin.getState(activeView.state).comment;
+  const [activeComment, setActiveComment] = useState(
+    commentPlugin.getState(activeView.state).comment,
+  );
 
   useEffect(() => {
     setIsActive(false);
@@ -74,7 +76,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     comment.data.title = title || comment.data.title;
     comment.data.conversation.push(obj);
-
+    console.log(comment);
     context.activeView.dispatch(
       context.activeView.state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'updateComment',

@@ -37,10 +37,6 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     event.preventDefault();
     const { selection } = state;
 
-    if (context.app.config.get('config.YjsService')) {
-      return createYjsComments(selection);
-    }
-
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'addComment',
@@ -61,50 +57,6 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     );
     dispatch(state.tr);
   };
-
-  const createYjsComments = selection => {
-    const ystate = ySyncPluginKey.getState(state);
-    const { doc, type, binding } = ystate;
-    const from = absolutePositionToRelativePosition(
-      fromPos,
-      type,
-      binding.mapping,
-    );
-    const to = absolutePositionToRelativePosition(toPos, type, binding.mapping);
-
-    dispatch(
-      state.tr.setMeta(CommentDecorationPluginKey, {
-        type: 'addComment',
-        from: relativePositionToAbsolutePosition(
-          doc,
-          type,
-          from,
-          binding.mapping,
-        ),
-        to: relativePositionToAbsolutePosition(doc, type, to, binding.mapping),
-        data: {
-          yjsFrom: fromPos,
-          yjsTo: toPos,
-          pmFrom: fromPos,
-          pmTo: toPos,
-          type: 'comment',
-          conversation: [],
-          title: '',
-          group,
-          viewId: activeViewId,
-        },
-      }),
-    );
-
-    dispatch(state.tr);
-  };
-
-  useEffect(() => {
-    if (context.app.config.get('config.YjsService')) {
-      setFromPos(state.tr.mapping.map(activeView.state.selection.from));
-      setToPos(state.tr.mapping.map(activeView.state.selection.to));
-    }
-  }, [activeView.state]);
 
   const isCommentAllowed = () => {
     let allowed = true;

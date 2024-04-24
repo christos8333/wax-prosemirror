@@ -75,8 +75,8 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     comment.data.title = title || comment.data.title;
     comment.data.conversation.push(obj);
 
-    dispatch(
-      state.tr.setMeta(CommentDecorationPluginKey, {
+    context.activeView.dispatch(
+      context.activeView.state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'updateComment',
         id: activeComment.id,
         data: comment.data,

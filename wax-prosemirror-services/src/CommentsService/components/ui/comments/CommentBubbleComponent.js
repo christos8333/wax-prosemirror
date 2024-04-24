@@ -36,21 +36,24 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     event.preventDefault();
     const { selection } = state;
 
-    if (context.app.config.get('config.YjsService')) {
-      return createYjsComments(selection);
-    }
+    // if (context.app.config.get('config.YjsService')) {
+    //   return createYjsComments(selection);
+    // }
+
+    const fromPos = state.tr.mapping.map(selection.from);
+    const toPos = state.tr.mapping.map(selection.to);
 
     dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'addComment',
-        from: selection.from,
-        to: selection.to,
+        from: fromPos,
+        to: toPos,
         data: {
           type: 'comment',
-          yjsFrom: selection.from,
-          yjsTo: selection.to,
-          pmFrom: selection.from,
-          pmTo: selection.to,
+          yjsFrom: fromPos,
+          yjsTo: toPos,
+          pmFrom: fromPos,
+          pmTo: toPos,
           conversation: [],
           title: '',
           group,

@@ -6,7 +6,7 @@ import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 
 const commentPlugin = new PluginKey('commentPlugin');
 
-const getComment = state => {
+const getComment = (state, context) => {
   const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
   if (commentsMap.size === 0) return;
   let commentData = [];
@@ -25,8 +25,10 @@ const getComment = state => {
       (state.selection.from === state.selection.to &&
         last(commentData).data.conversation.length !== 0)
     ) {
+      context.setOption({ activeComment: last(commentData) });
       return last(commentData);
     }
+    context.setOption({ activeComment: undefined });
     return undefined;
   }
   return undefined;
@@ -37,20 +39,17 @@ export default (key, context) => {
     key: commentPlugin,
     state: {
       init: (_, state) => {
-        return { comment: getComment(state) };
+        return { comment: getComment(state, context) };
       },
       apply(tr, prev, _, newState) {
-        const comment = getComment(newState);
+        const comment = getComment(newState, context);
         let createDecoration;
         if (comment) {
-          context.setOption({ activeComment: comment });
           createDecoration = DecorationSet.create(newState.doc, [
             Decoration.inline(comment.data.pmFrom, comment.data.pmTo, {
               class: 'active-comment',
             }),
           ]);
-        } else {
-          context.setOption({ activeComment: undefined });
         }
         return {
           comment,

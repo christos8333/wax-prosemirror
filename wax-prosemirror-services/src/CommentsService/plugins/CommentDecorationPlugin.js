@@ -70,14 +70,8 @@ export const CommentDecorationPlugin = (name, options) => {
           contentSize !== state.doc.content.size ||
           this.getState(state).allCommentsList().length !== allCommentsCount
         ) {
-          // const annotations = this.getState(state).commentsAt(
-          //   0,
-          //   state.doc.content.size,
-          // );
-          // options.onSelectionChange(annotations);
-
           options.onSelectionChange(this.getState(state).allCommentsList());
-          this.getState(state).createDecorations(state);
+          // this.getState(state).createDecorations(state);
         }
         contentSize = state.doc.content.size;
         allCommentsCount = this.getState(state).allCommentsList().length;

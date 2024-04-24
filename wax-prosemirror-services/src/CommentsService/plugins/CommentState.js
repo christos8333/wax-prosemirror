@@ -30,7 +30,12 @@ export default class CommentState {
     const { map } = this.options;
     const annotationToUpdate = map.get(action.id);
     if (annotationToUpdate) {
-      annotationToUpdate.data = action.data;
+      map.set(action.id, {
+        id: action.id,
+        from: annotationToUpdate.from,
+        to: annotationToUpdate.to,
+        data: annotationToUpdate.data,
+      });
     }
   }
 

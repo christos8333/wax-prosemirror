@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
@@ -90,7 +91,7 @@ const Editors = () => {
       case 'oen':
         return <OEN />;
       default:
-        return <Editoria />;
+        return <HHMI />;
     }
   };
 

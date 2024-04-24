@@ -32,7 +32,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
     },
     app,
     activeView,
-    options: { commentsMap },
   } = context;
 
   const [isActive, setIsActive] = useState(false);
@@ -118,20 +117,6 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
 
     dispatch(state.tr);
     activeView.focus();
-
-    if (context.app.config.get('config.YjsService')) {
-      commentsMap.observe(() => {
-        const transaction = context.pmViews.main.state.tr.setMeta(
-          CommentDecorationPluginKey,
-          {
-            type: 'deleteComment',
-            id: activeComment.id,
-          },
-        );
-
-        context.pmViews.main.dispatch(transaction);
-      });
-    }
   };
 
   const onTextAreaBlur = () => {

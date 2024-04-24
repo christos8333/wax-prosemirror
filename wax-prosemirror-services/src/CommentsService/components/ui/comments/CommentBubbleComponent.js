@@ -1,25 +1,13 @@
 /* eslint react/prop-types: 0 */
-import React, { useLayoutEffect, useContext, useEffect, useState } from 'react';
+import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
-import {
-  ySyncPluginKey,
-  relativePositionToAbsolutePosition,
-  absolutePositionToRelativePosition,
-} from 'y-prosemirror';
-
 import CommentBubble from './CommentBubble';
 import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const context = useContext(WaxContext);
-  const {
-    activeView,
-    activeViewId,
-    options: { comments },
-  } = context;
+  const { activeView, activeViewId } = context;
   const { state, dispatch } = activeView;
-  const [fromPos, setFromPos] = useState(state.selection.from);
-  const [toPos, setToPos] = useState(state.selection.to);
 
   useLayoutEffect(() => {
     const WaxSurface = activeView.dom.getBoundingClientRect();
@@ -73,17 +61,21 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
         }
       },
     );
-
-    if (
-      comments.find(
-        comm =>
-          comm.data.pmFrom === state.selection.from &&
-          comm.data.pmTo === state.selection.to,
-      )
-    ) {
-      allowed = false;
-    }
-
+    const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
+    const commentData = [];
+    commentsMap.forEach(comment => {
+      console.log(comment);
+      if (
+        comment.data.pmFrom === state.selection.from &&
+        comment.data.pmTo === state.selection.to
+      ) {
+        console.log('here');
+        commentData.push(comment);
+      }
+      console.log(commentData);
+      if (commentData.length !== 0) allowed = false;
+      console.log(allowed);
+    });
     return allowed;
   };
 

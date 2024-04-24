@@ -157,15 +157,6 @@ export default class CommentState {
           ystate.binding.mapping,
         );
 
-        console.log(
-          relativePositionToAbsolutePosition(
-            ystate.doc,
-            ystate.type,
-            newTo,
-            ystate.binding.mapping,
-          ),
-        );
-
         const annotation = this.options.map.get(id);
 
         annotation.from = newFrom;

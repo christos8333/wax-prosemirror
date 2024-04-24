@@ -208,15 +208,10 @@ export default class CommentState {
 
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);
+      this.createDecorations(state);
       return this;
       // eslint-disable-next-line no-else-return
     } else {
-      map.forEach((annotation, _) => {
-        if ('from' in annotation && 'to' in annotation) {
-          annotation.from = transaction.mapping.map(annotation.from);
-          annotation.to = transaction.mapping.map(annotation.to);
-        }
-      });
       this.createDecorations(state);
       return this;
     }

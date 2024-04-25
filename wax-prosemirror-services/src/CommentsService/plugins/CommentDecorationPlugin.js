@@ -71,7 +71,7 @@ export const CommentDecorationPlugin = (name, options) => {
           this.getState(state).allCommentsList().length !== allCommentsCount
         ) {
           options.onSelectionChange(this.getState(state).allCommentsList());
-          // this.getState(state).createDecorations(state);
+          this.getState(state).createDecorations(state);
         }
         contentSize = state.doc.content.size;
         allCommentsCount = this.getState(state).allCommentsList().length;

@@ -21,14 +21,7 @@ const ConnectedCommentStyled = styled.div`
   ${override('Wax.CommentOuterBox')}
 `;
 
-export default ({
-  comment,
-  top,
-  commentId,
-  recalculateTops,
-  users,
-  activeComment,
-}) => {
+export default ({ comment, top, commentId, users, activeComment }) => {
   const context = useContext(WaxContext);
   const {
     pmViews,
@@ -55,14 +48,15 @@ export default ({
     commentConfig && commentConfig.readOnly ? commentConfig.readOnly : false;
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
+
   useEffect(() => {
-    recalculateTops();
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
     } else if (
       (activeComment && commentId !== activeComment.id) ||
       !activeComment
     ) {
+      console.log('here?');
       setIsActive(false);
     }
   }, [activeComment]);
@@ -116,14 +110,14 @@ export default ({
 
   const onClickResolve = () => {
     context.setOption({ resolvedComment: activeComment.id });
-    dispatch(
+    context.activeView.dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
         type: 'deleteComment',
         id: activeComment.id,
       }),
     );
 
-    dispatch(state.tr);
+    context.activeView.dispatch(state.tr);
     activeView.focus();
   };
 

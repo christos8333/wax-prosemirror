@@ -30,13 +30,11 @@ export default class CommentState {
     const { map } = this.options;
     const annotationToUpdate = map.get(action.id);
     if (annotationToUpdate) {
-      map.set(action.id, {
-        id: action.id,
-        from: annotationToUpdate.from,
-        to: annotationToUpdate.to,
-        data: annotationToUpdate.data,
-      });
+      console.log('the update', annotationToUpdate);
+      annotationToUpdate.data.conversation = action.data.conversation;
+      annotationToUpdate.data.title = action.data.title;
     }
+    console.log('item after update', map.get(action.id));
   }
 
   deleteComment(id) {
@@ -200,7 +198,6 @@ export default class CommentState {
       if (action.type === 'createDecorations') {
         this.createDecorations(state);
       }
-      // this.createDecorations(state);
       return this;
     }
 

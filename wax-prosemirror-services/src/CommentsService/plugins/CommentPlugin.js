@@ -28,9 +28,14 @@ const getComment = (state, context) => {
       context.setOption({ activeComment: last(commentData) });
       return last(commentData);
     }
-    context.setOption({ activeComment: undefined });
+    setTimeout(() => {
+      // context.setOption({ activeComment: undefined });
+    }, 1500);
     return undefined;
   }
+  setTimeout(() => {
+    // context.setOption({ activeComment: undefined });
+  }, 1500);
   return undefined;
 };
 

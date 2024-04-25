@@ -143,7 +143,9 @@ export default class CommentState {
 
   updateCommentPostions(ystate) {
     this.options.map.doc.transact(() => {
+      console.log('in transact');
       this.decorations.find().forEach(deco => {
+        console.log('in transact deco');
         const { id } = deco.spec;
         const newFrom = absolutePositionToRelativePosition(
           deco.from,
@@ -195,7 +197,6 @@ export default class CommentState {
       if (action.type === 'createDecorations') {
         this.createDecorations(state);
       }
-      // this.createDecorations(state);
       return this;
     }
 

@@ -223,6 +223,7 @@ export default class CommentState {
 
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);
+      this.createDecorations(state);
       return this;
       // eslint-disable-next-line no-else-return
     } else {

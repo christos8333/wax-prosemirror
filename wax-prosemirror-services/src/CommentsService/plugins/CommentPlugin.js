@@ -31,6 +31,7 @@ const getComment = (state, context) => {
         commentsDataMap.get(last(commentData)?.id)?.data?.conversation
           .length !== 0)
     ) {
+      console.log(last(commentData));
       context.setOption({ activeComment: last(commentData) });
       return last(commentData);
     }

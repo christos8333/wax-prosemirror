@@ -221,17 +221,17 @@ export default class CommentState {
       return this;
     }
 
-    if (ystate?.isChangeOrigin) {
-      // this.updateCommentPostions(ystate);
-      this.createDecorations(state);
-
-      return this;
-    }
-
     this.decorations = this.decorations.map(
       transaction.mapping,
       transaction.doc,
     );
+
+    if (ystate?.isChangeOrigin) {
+      this.updateCommentPostions(ystate);
+      this.createDecorations(state);
+
+      return this;
+    }
 
     map.forEach((annotation, _) => {
       if ('from' in annotation && 'to' in annotation) {

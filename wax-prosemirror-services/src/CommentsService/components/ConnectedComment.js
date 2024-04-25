@@ -56,7 +56,6 @@ export default ({ comment, top, commentId, users, activeComment }) => {
       (activeComment && commentId !== activeComment.id) ||
       !activeComment
     ) {
-      console.log('here?');
       setIsActive(false);
     }
   }, [activeComment]);

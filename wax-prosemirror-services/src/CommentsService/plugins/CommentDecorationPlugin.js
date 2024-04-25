@@ -16,6 +16,7 @@ export const CommentDecorationPlugin = (name, options) => {
         return new CommentState({
           context: options.context,
           map: options.existingComments(),
+          commentsDataMap: options.commentsDataMap,
           onSelectionChange: options.onSelectionChange,
         });
       },

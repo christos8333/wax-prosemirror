@@ -8,6 +8,9 @@ const commentPlugin = new PluginKey('commentPlugin');
 
 const getComment = (state, context) => {
   const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
+  const commentsDataMap = CommentDecorationPluginKey.getState(
+    state,
+  ).getCommentsDataMap();
   if (commentsMap.size === 0) return;
   let commentData = [];
 
@@ -18,12 +21,15 @@ const getComment = (state, context) => {
   });
 
   commentData = sortBy(commentData, ['data.pmFrom']);
+
   if (commentData.length > 0) {
     if (
       (state.selection.from !== state.selection.to &&
-        last(commentData).data.conversation.length === 0) ||
+        commentsDataMap.get(last(commentData)?.id)?.data?.conversation
+          .length === 0) ||
       (state.selection.from === state.selection.to &&
-        last(commentData).data.conversation.length !== 0)
+        commentsDataMap.get(last(commentData)?.id)?.data?.conversation
+          .length !== 0)
     ) {
       context.setOption({ activeComment: last(commentData) });
       return last(commentData);

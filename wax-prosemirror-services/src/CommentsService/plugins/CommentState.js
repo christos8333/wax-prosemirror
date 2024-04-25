@@ -19,27 +19,37 @@ export default class CommentState {
     this.options = options;
   }
 
-  addComment(action) {
-    const { map } = this.options;
+  addComment(action, ystate) {
+    const { map, commentsDataMap } = this.options;
     const { from, to, data } = action;
     const id = randomId();
     map.set(id, { id, from, to, data });
+    if (ystate?.binding && ystate?.binding.mapping)
+      commentsDataMap.set(id, { id, from, to, data });
   }
 
-  updateComment(action) {
-    const { map } = this.options;
+  updateComment(action, ystate) {
+    const { map, commentsDataMap } = this.options;
     const annotationToUpdate = map.get(action.id);
     if (annotationToUpdate) {
-      console.log('the update', annotationToUpdate);
-      annotationToUpdate.data.conversation = action.data.conversation;
-      annotationToUpdate.data.title = action.data.title;
+      if (ystate?.binding && ystate?.binding.mapping) {
+        commentsDataMap.set(action.id, {
+          ...annotationToUpdate,
+          data: action.data,
+        });
+      }
+    } else {
+      map.set(action.id, {
+        ...annotationToUpdate,
+        data: action.data,
+      });
     }
-    console.log('item after update', map.get(action.id));
   }
 
-  deleteComment(id) {
-    const { map } = this.options;
+  deleteComment(id, ystate) {
+    const { map, commentsDataMap } = this.options;
     map.delete(id);
+    if (ystate?.binding && ystate?.binding.mapping) commentsDataMap.delete(id);
   }
 
   commentsAt(position, to) {
@@ -57,8 +67,21 @@ export default class CommentState {
     });
   }
 
+  allCommentsDataList() {
+    const { commentsDataMap } = this.options;
+    return Array.from(commentsDataMap, ([key, value]) => {
+      return { ...value, id: key };
+    }).filter(value => {
+      return 'from' in value && 'to' in value;
+    });
+  }
+
   getMap() {
     return this.options.map;
+  }
+
+  getCommentsDataMap() {
+    return this.options.commentsDataMap;
   }
 
   createDecorations(state) {
@@ -143,9 +166,7 @@ export default class CommentState {
 
   updateCommentPostions(ystate) {
     this.options.map.doc.transact(() => {
-      console.log('in transact');
       this.decorations.find().forEach(deco => {
-        console.log('in transact deco');
         const { id } = deco.spec;
         const newFrom = absolutePositionToRelativePosition(
           deco.from,
@@ -186,13 +207,13 @@ export default class CommentState {
     const ystate = ySyncPluginKey.getState(state);
     if (action && action.type) {
       if (action.type === 'addComment') {
-        this.addComment(action);
+        this.addComment(action, ystate);
       }
       if (action.type === 'updateComment') {
-        this.updateComment(action);
+        this.updateComment(action, ystate);
       }
       if (action.type === 'deleteComment') {
-        this.deleteComment(action.id);
+        this.deleteComment(action.id, ystate);
       }
       if (action.type === 'createDecorations') {
         this.createDecorations(state);

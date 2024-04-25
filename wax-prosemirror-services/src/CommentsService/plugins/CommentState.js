@@ -203,17 +203,26 @@ export default class CommentState {
 
     const ystate = ySyncPluginKey.getState(state);
 
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
-
     if (ystate?.isChangeOrigin) {
       this.updateCommentPostions(ystate);
       this.createDecorations(state);
 
       return this;
     }
+
+    this.decorations = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
+
+    map.forEach((annotation, _) => {
+      if ('from' in annotation && 'to' in annotation) {
+        annotation.data.pmFrom = transaction.mapping.map(
+          annotation.data.pmFrom,
+        );
+        annotation.data.pmTo = transaction.mapping.map(annotation.data.pmTo);
+      }
+    });
 
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);

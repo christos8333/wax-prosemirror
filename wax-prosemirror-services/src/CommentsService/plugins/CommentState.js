@@ -141,7 +141,10 @@ export default class CommentState {
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
-  updateCommentPostions(ystate) {
+  updateCommentPostions(ystate, action) {
+    const { map } = this.options;
+    const annotationToUpdate = map.get(action?.id);
+
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
         const { id } = deco.spec;
@@ -157,7 +160,10 @@ export default class CommentState {
         );
 
         const annotation = this.options.map.get(id);
-
+        if (annotationToUpdate?.id === annotation.id) {
+          annotation.data.conversation = action.data.conversation;
+          annotation.data.title = action.data.title;
+        }
         annotation.from = newFrom;
         annotation.to = newTo;
         annotation.data.pmFrom = relativePositionToAbsolutePosition(
@@ -181,12 +187,17 @@ export default class CommentState {
   apply(transaction, state) {
     const { map } = this.options;
     const action = transaction.getMeta(CommentDecorationPluginKey);
+    const ystate = ySyncPluginKey.getState(state);
     if (action && action.type) {
       if (action.type === 'addComment') {
         this.addComment(action);
       }
       if (action.type === 'updateComment') {
-        this.updateComment(action);
+        if (ystate?.binding && ystate?.binding.mapping) {
+          this.updateCommentPostions(ystate, action);
+        } else {
+          this.updateComment(action);
+        }
       }
       if (action.type === 'deleteComment') {
         this.deleteComment(action.id);
@@ -197,8 +208,6 @@ export default class CommentState {
       // this.createDecorations(state);
       return this;
     }
-
-    const ystate = ySyncPluginKey.getState(state);
 
     if (ystate?.isChangeOrigin) {
       // this.updateCommentPostions(ystate);

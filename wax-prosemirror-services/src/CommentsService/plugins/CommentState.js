@@ -141,10 +141,7 @@ export default class CommentState {
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
-  updateCommentPostions(ystate, action) {
-    const { map } = this.options;
-    const annotationToUpdate = map.get(action?.id);
-
+  updateCommentPostions(ystate) {
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
         const { id } = deco.spec;
@@ -160,10 +157,7 @@ export default class CommentState {
         );
 
         const annotation = this.options.map.get(id);
-        if (annotationToUpdate?.id === annotation.id) {
-          annotation.data.conversation = action.data.conversation;
-          annotation.data.title = action.data.title;
-        }
+
         annotation.from = newFrom;
         annotation.to = newTo;
         annotation.data.pmFrom = relativePositionToAbsolutePosition(
@@ -193,11 +187,7 @@ export default class CommentState {
         this.addComment(action);
       }
       if (action.type === 'updateComment') {
-        if (ystate?.binding && ystate?.binding.mapping) {
-          this.updateCommentPostions(ystate, action);
-        } else {
-          this.updateComment(action);
-        }
+        this.updateComment(action);
       }
       if (action.type === 'deleteComment') {
         this.deleteComment(action.id);

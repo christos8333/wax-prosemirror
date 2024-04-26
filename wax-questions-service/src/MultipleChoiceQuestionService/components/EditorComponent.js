@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
 import React, { useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
@@ -32,9 +33,10 @@ const EditorWrapper = styled.div`
   border: none;
   display: flex;
   flex: 2 1 auto;
-  width: 100%;
   justify-content: left;
   padding: ${props => (props.showDelete ? '0px 20px 10px 20px' : `0px`)};
+  width: 100%;
+
   .ProseMirror {
     white-space: break-spaces;
     width: 100%;
@@ -45,8 +47,8 @@ const EditorWrapper = styled.div`
     }
 
     :empty::before {
-      content: 'Type your item';
       color: #aaa;
+      content: 'Type your item';
       float: left;
       font-style: italic;
       pointer-events: none;
@@ -72,12 +74,12 @@ const EditorWrapper = styled.div`
 
 const ActionButton = styled.button`
   background: transparent;
-  cursor: pointer;
-  margin-top: 16px;
   border: none;
-  position: relative;
   bottom: 14px;
+  cursor: pointer;
   float: right;
+  margin-top: 16px;
+  position: relative;
 `;
 
 const StyledIconActionRemove = styled(Icon)`
@@ -94,7 +96,6 @@ const QuestionEditorComponent = ({
   placeholderText = 'Type your item',
   QuestionType = 'Multiple',
   forceEditable = false,
-  showDelete = false,
 }) => {
   const editorRef = useRef();
 
@@ -103,12 +104,18 @@ const QuestionEditorComponent = ({
     app,
     pmViews: { main },
   } = context;
+
+  const customProps = main.props.customValues;
+  const { testMode } = customProps;
+
   let questionView;
   const questionId = node.attrs.id;
   let isEditable = main.props.editable(editable => {
     return editable;
   });
   if (forceEditable) isEditable = true;
+
+  const showDelete = !testMode && isEditable;
 
   let finalPlugins = [FakeCursorPlugin(), gapCursor(), dropCursor()];
 

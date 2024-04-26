@@ -92,17 +92,20 @@ export default class CommentState {
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
       this.allCommentsList().forEach((annotation, id) => {
-        annotation.data.yjsFrom = absolutePositionToRelativePosition(
-          annotation.data.pmFrom,
-          type,
-          binding.mapping,
-        );
-
-        annotation.data.yjsTo = absolutePositionToRelativePosition(
-          annotation.data.pmTo,
-          type,
-          binding.mapping,
-        );
+        if (typeof annotation.data.yjsFrom !== 'object') {
+          annotation.data.yjsFrom = absolutePositionToRelativePosition(
+            annotation.data.pmFrom,
+            type,
+            binding.mapping,
+          );
+        }
+        if (typeof annotation.data.yjsTo !== 'object') {
+          annotation.data.yjsTo = absolutePositionToRelativePosition(
+            annotation.data.pmTo,
+            type,
+            binding.mapping,
+          );
+        }
 
         const from = relativePositionToAbsolutePosition(
           doc,
@@ -168,6 +171,7 @@ export default class CommentState {
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
         const { id } = deco.spec;
+
         const newFrom = absolutePositionToRelativePosition(
           deco.from,
           ystate.type,
@@ -221,17 +225,17 @@ export default class CommentState {
       return this;
     }
 
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
-
     if (ystate?.isChangeOrigin) {
-      this.updateCommentPostions(ystate);
+      // this.updateCommentPostions(ystate);
       this.createDecorations(state);
 
       return this;
     }
+
+    this.decorations = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
 
     map.forEach((annotation, _) => {
       if ('from' in annotation && 'to' in annotation) {

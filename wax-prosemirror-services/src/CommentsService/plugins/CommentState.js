@@ -182,18 +182,7 @@ export default class CommentState {
 
         annotation.from = newFrom;
         annotation.to = newTo;
-        annotation.data.pmFrom = relativePositionToAbsolutePosition(
-          ystate.doc,
-          ystate.type,
-          newFrom,
-          ystate.binding.mapping,
-        );
-        annotation.data.pmTo = relativePositionToAbsolutePosition(
-          ystate.doc,
-          ystate.type,
-          newTo,
-          ystate.binding.mapping,
-        );
+
         console.log('decos', deco.from, deco.to);
         console.log(annotation.data.pmFrom, annotation.data.pmTo);
         this.options.map.set(id, annotation);
@@ -234,7 +223,7 @@ export default class CommentState {
     );
 
     if (ystate?.binding && ystate?.binding.mapping) {
-      this.updateCommentPostions(ystate);
+      // this.updateCommentPostions(ystate);
       this.createDecorations(state);
       return this;
       // eslint-disable-next-line no-else-return

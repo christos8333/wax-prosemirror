@@ -306,7 +306,7 @@ export default {
     // eslint-disable-next-line no-restricted-globals
     connectionUrl: 'ws://localhost:5010',
     // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-    docIdentifier: 'prosemirror-rw31d5dc',
+    docIdentifier: 'prosemirror-r5dc',
     YjsType: 'prosemirror',
   },
 

@@ -94,11 +94,13 @@ export default ({ comment, top, commentId, users, activeComment }) => {
     }
 
     if (viewId !== 'main') context.updateView({}, viewId);
-
+    const commentFromMap = CommentDecorationPluginKey.getState(state)
+      .getMap()
+      .get(comment.id);
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
         new TextSelection(
-          pmViews[viewId].state.tr.doc.resolve(comment.data.pmFrom),
+          pmViews[viewId].state.tr.doc.resolve(commentFromMap.data.pmFrom),
         ),
       ),
     );

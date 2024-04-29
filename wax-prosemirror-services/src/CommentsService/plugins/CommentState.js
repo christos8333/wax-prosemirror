@@ -23,9 +23,19 @@ export default class CommentState {
     const { map, commentsDataMap } = this.options;
     const { from, to, data } = action;
     const id = randomId();
-    map.set(id, { id, from, to, data });
+    const relativeFrom = absolutePositionToRelativePosition(
+      from,
+      ystate.type,
+      ystate.binding.mapping,
+    );
+    const relativeTo = absolutePositionToRelativePosition(
+      to,
+      ystate.type,
+      ystate.binding.mapping,
+    );
+    map.set(id, { id, from: relativeFrom, to: relativeTo, data });
     if (ystate?.binding && ystate?.binding.mapping)
-      commentsDataMap.set(id, { id, from, to, data });
+      commentsDataMap.set(id, { id, from: relativeFrom, to: relativeTo, data });
   }
 
   updateComment(action, ystate) {
@@ -92,30 +102,16 @@ export default class CommentState {
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
       this.allCommentsList().forEach((annotation, id) => {
-        // if (typeof annotation.data.yjsFrom === 'object') {
-        annotation.from = absolutePositionToRelativePosition(
-          annotation.data.pmFrom,
-          type,
-          binding.mapping,
-        );
-        // }
-        // if (typeof annotation.data.yjsFrom === 'object') {
-        annotation.data.yjsTo = absolutePositionToRelativePosition(
-          annotation.data.pmTo,
-          type,
-          binding.mapping,
-        );
-        // }
         const from = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.data.yjsFrom,
+          annotation.from,
           binding.mapping,
         );
         const to = relativePositionToAbsolutePosition(
           doc,
           type,
-          annotation.data.yjsTo,
+          annotation.to,
           binding.mapping,
         );
 

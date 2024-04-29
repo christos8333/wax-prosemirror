@@ -17,9 +17,11 @@ export default class CommentState {
   constructor(options) {
     this.decorations = DecorationSet.empty;
     this.options = options;
+    this.transactYjsPos = false;
   }
 
   addComment(action, ystate) {
+    this.transactYjsPos = true;
     const { map, commentsDataMap } = this.options;
     const { from, to, data } = action;
     const id = randomId();
@@ -36,6 +38,9 @@ export default class CommentState {
     map.set(id, { id, from: relativeFrom, to: relativeTo, data });
     if (ystate?.binding && ystate?.binding.mapping)
       commentsDataMap.set(id, { id, from: relativeFrom, to: relativeTo, data });
+    setTimeout(() => {
+      this.transactYjsPos = false;
+    });
   }
 
   updateComment(action, ystate) {
@@ -84,6 +89,11 @@ export default class CommentState {
     }).filter(value => {
       return 'from' in value && 'to' in value;
     });
+  }
+
+  setTransactYjsPos(transactYjsPos) {
+    this.transactYjsPos = transactYjsPos;
+    return this.transactYjsPos;
   }
 
   getMap() {
@@ -165,37 +175,40 @@ export default class CommentState {
   updateCommentPostions(ystate) {
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
+        let newFrom = deco.from;
+        let newTo = deco.to;
         const { id } = deco.spec;
-
-        const newFrom = absolutePositionToRelativePosition(
-          deco.from,
-          ystate.type,
-          ystate.binding.mapping,
-        );
-        const newTo = absolutePositionToRelativePosition(
-          deco.to,
-          ystate.type,
-          ystate.binding.mapping,
-        );
-
+        if (this.transactYjsPos) {
+          newFrom = absolutePositionToRelativePosition(
+            deco.from,
+            ystate.type,
+            ystate.binding.mapping,
+          );
+          newTo = absolutePositionToRelativePosition(
+            deco.to,
+            ystate.type,
+            ystate.binding.mapping,
+          );
+        }
         const annotation = this.options.map.get(id);
 
-        annotation.from = newFrom;
-        annotation.to = newTo;
-        annotation.data.pmFrom = relativePositionToAbsolutePosition(
-          ystate.doc,
-          ystate.type,
-          newFrom,
-          ystate.binding.mapping,
-        );
-        annotation.data.pmTo = relativePositionToAbsolutePosition(
-          ystate.doc,
-          ystate.type,
-          newTo,
-          ystate.binding.mapping,
-        );
-        console.log('decos', deco.from, deco.to);
-        console.log(annotation.data.pmFrom, annotation.data.pmTo);
+        if (this.transactYjsPos) {
+          annotation.from = newFrom;
+          annotation.to = newTo;
+          annotation.data.pmFrom = relativePositionToAbsolutePosition(
+            ystate.doc,
+            ystate.type,
+            newFrom,
+            ystate.binding.mapping,
+          );
+          annotation.data.pmTo = relativePositionToAbsolutePosition(
+            ystate.doc,
+            ystate.type,
+            newTo,
+            ystate.binding.mapping,
+          );
+        }
+
         this.options.map.set(id, annotation);
       });
     }, CommentDecorationPluginKey);
@@ -232,6 +245,15 @@ export default class CommentState {
       transaction.mapping,
       transaction.doc,
     );
+
+    this.options.map.forEach((annotation, _) => {
+      if ('from' in annotation && 'to' in annotation) {
+        annotation.data.pmFrom = transaction.mapping.map(
+          annotation.data.pmFrom,
+        );
+        annotation.data.pmTo = transaction.mapping.map(annotation.data.pmTo);
+      }
+    });
 
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPostions(ystate);

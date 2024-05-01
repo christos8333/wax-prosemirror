@@ -8,24 +8,27 @@ const StyledSwitch = styled(Switch)`
   display: flex;
   margin-left: auto;
 
-    button {
+  button {
     width: 65px;
   }
 
   .rc-switch-inner {
-    left: 25px;
     font-size: 14px;
+    left: 25px;
   }
 
   .rc-switch-checked {
-    border: 1px solid #008000;
     background-color: #008000;
+    border: 1px solid #008000;
 
     .rc-switch-inner {
       left: 6px;
     }
+
     :after {
       left: 42px;
+    }
+  }
 `;
 
 const AnswerContainer = styled.span`
@@ -34,12 +37,15 @@ const AnswerContainer = styled.span`
 
 const Correct = styled.span`
   margin-right: 10px;
+
   span {
-   color: #008000;
+    color: #008000;
+  }
 `;
 
 const Answer = styled.span`
   margin-right: 10px;
+
   span {
     color: ${props => (props.isCorrect ? ' #008000' : 'red')};
   }
@@ -47,15 +53,15 @@ const Answer = styled.span`
 
 const StyledIconCorrect = styled(Icon)`
   fill: #008000;
-  pointer-events: none;
   height: 24px;
+  pointer-events: none;
   width: 24px;
 `;
 
 const StyledIconWrong = styled(Icon)`
   fill: red;
-  pointer-events: none;
   height: 24px;
+  pointer-events: none;
   width: 24px;
 `;
 
@@ -97,7 +103,7 @@ const TrueFalseSwitch = ({
       }
       checkedChildren="True"
       disabled={!isEditable && !testMode}
-      label="True/false?"
+      label="True/False?"
       labelPosition="left"
       onChange={handleChange}
       unCheckedChildren="False"

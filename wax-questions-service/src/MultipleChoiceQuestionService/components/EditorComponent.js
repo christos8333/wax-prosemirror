@@ -96,6 +96,7 @@ const QuestionEditorComponent = ({
   placeholderText = 'Type your item',
   QuestionType = 'Multiple',
   forceEditable = false,
+  showDelete = false,
 }) => {
   const editorRef = useRef();
 
@@ -105,17 +106,12 @@ const QuestionEditorComponent = ({
     pmViews: { main },
   } = context;
 
-  const customProps = main.props.customValues;
-  const { testMode } = customProps;
-
   let questionView;
   const questionId = node.attrs.id;
   let isEditable = main.props.editable(editable => {
     return editable;
   });
   if (forceEditable) isEditable = true;
-
-  const showDelete = !testMode && isEditable;
 
   let finalPlugins = [FakeCursorPlugin(), gapCursor(), dropCursor()];
 

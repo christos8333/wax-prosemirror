@@ -37,7 +37,6 @@ const getComment = (state, context) => {
       return last(commentData);
     }
     context.setOption({ activeComment: undefined });
-
     return undefined;
   }
 

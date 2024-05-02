@@ -209,7 +209,7 @@ export default ({ area, users }) => {
         view={main}
       />
     ),
-    [marksNodes[area] || [], position, users],
+    [marksNodes[area] || [], position, users, context.options.activeComment],
   );
   return <>{CommentTrackComponent}</>;
 };

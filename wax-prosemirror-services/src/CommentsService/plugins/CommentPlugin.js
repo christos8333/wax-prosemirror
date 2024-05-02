@@ -34,7 +34,6 @@ const getComment = (state, context) => {
           .length !== 0)
     ) {
       context.setOption({ activeComment: last(commentData) });
-      console.log(context);
       return last(commentData);
     }
     return undefined;

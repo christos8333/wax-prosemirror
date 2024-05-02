@@ -17,6 +17,8 @@ const getComment = (state, context) => {
   commentsMap.forEach(comment => {
     if (inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo)) {
       commentData.push(comment);
+    } else if (state.selection.from === state.selection.to) {
+      context.setOption({ activeComment: undefined });
     }
   });
 
@@ -31,7 +33,6 @@ const getComment = (state, context) => {
         commentsDataMap.get(last(commentData)?.id)?.data?.conversation
           .length !== 0)
     ) {
-      console.log(last(commentData));
       context.setOption({ activeComment: last(commentData) });
       return last(commentData);
     }

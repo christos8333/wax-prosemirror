@@ -65,6 +65,18 @@ export const CommentDecorationPlugin = (name, options) => {
 
               options.context.pmViews.main.dispatch(transaction);
             });
+          this.getState(state)
+            .getCommentsDataMap()
+            .observe(() => {
+              const transaction = options.context.pmViews.main.state.tr.setMeta(
+                CommentDecorationPluginKey,
+                {
+                  type: 'createDecorations',
+                },
+              );
+
+              options.context.pmViews.main.dispatch(transaction);
+            });
         }
 
         if (
@@ -77,6 +89,15 @@ export const CommentDecorationPlugin = (name, options) => {
         contentSize = state.doc.content.size;
         allCommentsCount = this.getState(state).allCommentsList().length;
         return decorations;
+      },
+      handleKeyDown(view, event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          console.log('enter');
+          this.getState(view.state).setTransactYjsPos(true);
+        } else {
+          this.getState(view.state).setTransactYjsPos(false);
+        }
+        return false;
       },
     },
   });

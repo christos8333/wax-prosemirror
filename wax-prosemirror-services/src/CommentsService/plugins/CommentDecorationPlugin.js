@@ -28,28 +28,6 @@ export const CommentDecorationPlugin = (name, options) => {
       decorations(state) {
         const { decorations } = this.getState(state);
 
-        // const ids = this.getState(state).decorations.children.map(child => {
-        //   if (child.constructor.name === 'DecorationSet') {
-        //     return child.local.map(l => l.type.attrs['data-id']);
-        //   }
-        // });
-        // const finalIds = flatten(ids.filter(id => id));
-        // const deletedComments = options.context.options.comments?.filter(
-        //   comment => !finalIds.includes(comment.id),
-        // );
-
-        // if (deletedComments?.length > 0) {
-        //   deletedComments.forEach(deletedComment => {
-        //     options.context.setOption({ resolvedComment: deletedComment.id });
-        //     options.context.setOption({
-        //       comments: options.context.options.comments.filter(comment => {
-        //         return comment.id !== deletedComment.id;
-        //       }),
-        //     });
-        //     this.getState(state).getMap().delete(deletedComment.id);
-        //   });
-        // }
-
         if (
           this.getState(state).allCommentsList().length !== allCommentsCount
         ) {
@@ -91,12 +69,41 @@ export const CommentDecorationPlugin = (name, options) => {
         return decorations;
       },
       handleKeyDown(view, event) {
+        const { state } = view;
+        const { decorations } = this.getState(state);
+
         if (event.key === 'Enter' && !event.shiftKey) {
-          console.log('enter');
-          this.getState(view.state).setTransactYjsPos(true);
+          this.getState(state).setTransactYjsPos(true);
         } else {
-          this.getState(view.state).setTransactYjsPos(false);
+          this.getState(state).setTransactYjsPos(false);
         }
+        if (event.key === 'Backspace' || event.key === 'Delete') {
+          const ids = decorations.children.map(child => {
+            if (child.constructor.name === 'DecorationSet') {
+              return child.local.map(l => l.type.attrs['data-id']);
+            }
+          });
+          console.log(ids, this.getState(state).allCommentsList());
+          const finalIds = flatten(ids.filter(id => id));
+          const deletedComments = this.getState(state)
+            .allCommentsList()
+            ?.filter(comment => !finalIds.includes(comment.id));
+
+          console.log(deletedComments);
+
+          // if (deletedComments?.length > 0) {
+          //   deletedComments.forEach(deletedComment => {
+          //     options.context.setOption({ resolvedComment: deletedComment.id });
+          //     options.context.setOption({
+          //       comments: options.context.options.comments.filter(comment => {
+          //         return comment.id !== deletedComment.id;
+          //       }),
+          //     });
+          //     this.getState(state).getMap().delete(deletedComment.id);
+          //   });
+          // }
+        }
+
         return false;
       },
     },

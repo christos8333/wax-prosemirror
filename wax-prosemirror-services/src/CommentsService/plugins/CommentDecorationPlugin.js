@@ -103,7 +103,7 @@ export const CommentDecorationPlugin = (name, options) => {
                 );
               });
             }
-          });
+          }, 100);
         }
 
         return false;

@@ -41,6 +41,7 @@ export default ({ area, users }) => {
     }
 
     each(marksNodes[area], (markNode, pos) => {
+      console.log('here', markNode);
       let id = '';
 
       if (markNode?.node?.attrs.id) {

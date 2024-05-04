@@ -78,30 +78,36 @@ export const CommentDecorationPlugin = (name, options) => {
           this.getState(state).setTransactYjsPos(false);
         }
         if (event.key === 'Backspace' || event.key === 'Delete') {
+          console.log('here?');
           const ids = decorations.children.map(child => {
             if (child.constructor.name === 'DecorationSet') {
               return child.local.map(l => l.type.attrs['data-id']);
             }
           });
-          console.log(ids, this.getState(state).allCommentsList());
+
           const finalIds = flatten(ids.filter(id => id));
           const deletedComments = this.getState(state)
             .allCommentsList()
             ?.filter(comment => !finalIds.includes(comment.id));
 
-          console.log(deletedComments);
-
-          // if (deletedComments?.length > 0) {
-          //   deletedComments.forEach(deletedComment => {
-          //     options.context.setOption({ resolvedComment: deletedComment.id });
-          //     options.context.setOption({
-          //       comments: options.context.options.comments.filter(comment => {
-          //         return comment.id !== deletedComment.id;
-          //       }),
-          //     });
-          //     this.getState(state).getMap().delete(deletedComment.id);
-          //   });
-          // }
+          if (deletedComments?.length > 0) {
+            deletedComments.forEach(deletedComment => {
+              options.context.setOption({ resolvedComment: deletedComment.id });
+              // this.getState(state).getMap().delete(deletedComment.id);
+              view.dispatch(
+                view.state.tr.setMeta(CommentDecorationPluginKey, {
+                  type: 'deleteComment',
+                  id: deletedComment.id,
+                }),
+              );
+              console.log(
+                deletedComment,
+                this.getState(state).getMap(),
+                options.context,
+                view,
+              );
+            });
+          }
         }
 
         return false;

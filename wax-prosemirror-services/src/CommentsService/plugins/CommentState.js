@@ -62,6 +62,7 @@ export default class CommentState {
   }
 
   deleteComment(id, ystate) {
+    console.log('in delete', id);
     const { map, commentsDataMap } = this.options;
     map.delete(id);
     if (ystate?.binding && ystate?.binding.mapping) commentsDataMap.delete(id);

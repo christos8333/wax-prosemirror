@@ -47,6 +47,9 @@ export default class CommentsService extends Service {
         }
 
         commentsConfig.getComments(this.allCommentsFromStates);
+        this.app.context.setOption({
+          comments: this.allCommentsFromStates,
+        });
       },
     };
 

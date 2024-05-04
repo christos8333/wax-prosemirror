@@ -70,44 +70,40 @@ export const CommentDecorationPlugin = (name, options) => {
       },
       handleKeyDown(view, event) {
         const { state } = view;
-        const { decorations } = this.getState(state);
 
         if (event.key === 'Enter' && !event.shiftKey) {
           this.getState(state).setTransactYjsPos(true);
         } else {
           this.getState(state).setTransactYjsPos(false);
         }
+
         if (event.key === 'Backspace' || event.key === 'Delete') {
-          console.log('here?');
-          const ids = decorations.children.map(child => {
-            if (child.constructor.name === 'DecorationSet') {
-              return child.local.map(l => l.type.attrs['data-id']);
+          setTimeout(() => {
+            const ids = this.getState(state).decorations.children.map(child => {
+              if (child.constructor.name === 'DecorationSet') {
+                return child.local.map(l => l.type.attrs['data-id']);
+              }
+            });
+
+            const finalIds = flatten(ids.filter(id => id));
+            const deletedComments = this.getState(state)
+              .allCommentsList()
+              ?.filter(comment => !finalIds.includes(comment.id));
+
+            if (deletedComments?.length > 0) {
+              deletedComments.forEach(deletedComment => {
+                options.context.setOption({
+                  resolvedComment: deletedComment.id,
+                });
+                view.dispatch(
+                  view.state.tr.setMeta(CommentDecorationPluginKey, {
+                    type: 'deleteComment',
+                    id: deletedComment.id,
+                  }),
+                );
+              });
             }
           });
-
-          const finalIds = flatten(ids.filter(id => id));
-          const deletedComments = this.getState(state)
-            .allCommentsList()
-            ?.filter(comment => !finalIds.includes(comment.id));
-
-          if (deletedComments?.length > 0) {
-            deletedComments.forEach(deletedComment => {
-              options.context.setOption({ resolvedComment: deletedComment.id });
-              // this.getState(state).getMap().delete(deletedComment.id);
-              view.dispatch(
-                view.state.tr.setMeta(CommentDecorationPluginKey, {
-                  type: 'deleteComment',
-                  id: deletedComment.id,
-                }),
-              );
-              console.log(
-                deletedComment,
-                this.getState(state).getMap(),
-                options.context,
-                view,
-              );
-            });
-          }
         }
 
         return false;

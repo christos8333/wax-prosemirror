@@ -29,6 +29,7 @@ export const CommentDecorationPlugin = (name, options) => {
         const { decorations } = this.getState(state);
 
         if (
+          options.context.app.config.get('config.YjsService') &&
           this.getState(state).allCommentsList().length !== allCommentsCount
         ) {
           this.getState(state)

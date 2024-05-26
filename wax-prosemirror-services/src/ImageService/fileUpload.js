@@ -67,6 +67,7 @@ export default (view, fileUpload, placeholderPlugin, context) => file => {
               src: url,
               id: uuidv4(),
               extraData,
+              'aria-describedby': uuidv4(),
             }),
           )
           .setMeta(placeholderPlugin, { remove: { id } }),

@@ -52,7 +52,7 @@ export default {
 
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
-  ImageService: { showAlt: true },
+  ImageService: { showAlt: true, showLongDesc: true },
 
   PmPlugins: [invisibles([hardBreak()]), tableEditing(), columnResizing()],
   services: [

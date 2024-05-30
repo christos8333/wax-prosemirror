@@ -26,10 +26,9 @@ export default {
         'babel-plugin-parameter-decorator',
       ],
       exclude: 'node_modules/**',
-      // babelHelpers: true,
     }),
     commonjs(),
-    // terser(),
+    terser(),
   ],
   external: [],
 };

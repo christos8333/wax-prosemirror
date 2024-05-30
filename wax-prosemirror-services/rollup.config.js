@@ -32,7 +32,6 @@ export default {
         'babel-plugin-parameter-decorator',
       ],
       exclude: 'node_modules/**',
-      // runtimeHelpers: true,
     }),
     commonjs(),
     terser(),

@@ -4,6 +4,7 @@ import PlaceHolderPlugin from './plugins/placeHolderPlugin';
 import captionPlugin from './plugins/captionPlugin';
 import Image from './Image';
 import AltComponent from './AltComponent';
+import LongDescComponent from './LongDescComponent';
 import ImageToolGroupService from './ImageToolGroupService/ImageToolGroupService';
 import './image.css';
 
@@ -42,6 +43,18 @@ class ImageService extends Service {
 
     createOverlay(
       AltComponent,
+      {},
+      {
+        nodeType: 'image',
+        findInParent: false,
+        markType: '',
+        followCursor: false,
+        selection: false,
+      },
+    );
+
+    createOverlay(
+      LongDescComponent,
       {},
       {
         nodeType: 'image',

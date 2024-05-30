@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
 import css from 'rollup-plugin-import-css';
@@ -9,7 +9,7 @@ export default {
   output: [
     {
       file: 'dist/index.js',
-      format: 'cjs',
+      format: 'esm',
       sourcemap: false,
     },
   ],
@@ -19,6 +19,7 @@ export default {
       includeDependencies: true,
     }),
     babel({
+      babelHelpers: 'runtime',
       presets: ['react-app'],
       plugins: [
         [
@@ -31,7 +32,6 @@ export default {
         'babel-plugin-parameter-decorator',
       ],
       exclude: 'node_modules/**',
-      runtimeHelpers: true,
     }),
     commonjs(),
     terser(),

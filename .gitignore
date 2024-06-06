@@ -21,3 +21,5 @@ yarn.lock
 package-lock.json
 lerna-debug.log
 README.md
+
+.vscode

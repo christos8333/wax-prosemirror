@@ -13,6 +13,7 @@ const ValueContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 25px;
+
   label {
     font-size: 12px;
   }
@@ -66,7 +67,8 @@ const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
 
   const onlyNumbers = value => {
     return value
-      .replace(/[^0-9.]/g, '')
+      .replace(/[^-?0-9.]/g, '')
+      .replace(/(?<!^)-/g, '')
       .replace(/(\..*?)\..*/g, '$1')
       .replace(/^0[^.]/, '0');
   };
@@ -124,11 +126,14 @@ const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   };
 
   // SUBMIT
-  const exactMultMargin = parseFloat((exact * marginError) / 100);
+  const exactMultMargin = Math.abs(parseFloat((exact * marginError) / 100));
+  const castExactStudent = ['-', '-.', '.'].includes(exactStudent)
+    ? 0
+    : Number(exactStudent);
   const computedMaxValue = Number(exactMultMargin) + Number(exact);
   const computedMinValue = Number(exact) - Number(exactMultMargin);
   const isCorrect = !!(
-    exactStudent <= computedMaxValue && exactStudent >= computedMinValue
+    castExactStudent <= computedMaxValue && castExactStudent >= computedMinValue
   );
 
   return (

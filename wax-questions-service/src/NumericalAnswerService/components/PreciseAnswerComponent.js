@@ -13,6 +13,7 @@ const ValueContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 25px;
+
   label {
     font-size: 12px;
   }
@@ -66,7 +67,7 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
 
   const onlyNumbers = value => {
     return value
-      .replace(/[^0-9.;]/g, '')
+      .replace(/[^-?0-9.;]/g, '')
       .replace(/(\..*?)\..*/g, '$1')
       .replace(/^0[^.]/, '0');
   };
@@ -158,7 +159,7 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
       )}
       {readOnly && showFeedBack && (
         <ResultContainer>
-          <span>{`(Accepted Answers : ${precise.replaceAll(';', ' -')})`}</span>
+          <span>{`(Accepted Answers : ${precise.replaceAll(';', '; ')})`}</span>
           <span>
             Answer:{' '}
             <FinalResult isCorrect={isCorrect}>

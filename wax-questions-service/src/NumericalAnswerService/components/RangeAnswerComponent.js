@@ -13,6 +13,7 @@ const ValueContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 25px;
+
   label {
     font-size: 12px;
   }
@@ -70,7 +71,8 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
 
   const onlyNumbers = value => {
     return value
-      .replace(/[^0-9.]/g, '')
+      .replace(/[^-?0-9.]/g, '')
+      .replace(/(?<!^)-/g, '')
       .replace(/(\..*?)\..*/g, '$1')
       .replace(/^0[^.]/, '0');
   };
@@ -128,10 +130,12 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   };
 
   // SUBMIT
+  const castExactStudent = ['-', '-.', '.'].includes(rangeStudentValue)
+    ? 0
+    : Number(rangeStudentValue);
 
   const isCorrect = !!(
-    Number(rangeStudentValue) <= Number(maxValue) &&
-    Number(rangeStudentValue) >= Number(minValue)
+    castExactStudent <= Number(maxValue) && castExactStudent >= Number(minValue)
   );
 
   return (

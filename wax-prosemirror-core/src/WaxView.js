@@ -119,6 +119,8 @@ const WaxView = forwardRef((props, ref) => {
         ? trackedTransaction(transaction, view.state, user, context)
         : transaction;
 
+    if (!view) return;
+
     previousDoc = view.state.doc;
     const state = view.state.apply(tr);
     view.updateState(state);

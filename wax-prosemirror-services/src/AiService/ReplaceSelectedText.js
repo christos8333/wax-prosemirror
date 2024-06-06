@@ -8,6 +8,7 @@ const elementFromString = string => {
 };
 
 const replaceSelectedText = (view, responseText, replace = false) => {
+  if (!responseText) return;
   let { state } = view;
   let { tr } = state;
   const { from, to } = tr.selection;

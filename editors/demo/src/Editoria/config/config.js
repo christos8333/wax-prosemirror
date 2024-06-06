@@ -41,10 +41,6 @@ import invisibles, {
 
 import CharactersList from './CharactersList';
 
-// const updateTitle = title => {
-//   console.log(title);
-// };
-
 async function DummyPromise(userInput) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -52,9 +48,15 @@ async function DummyPromise(userInput) {
       if (userInput === 'reject') {
         reject('Your request could not be processed for now');
       } else {
-        resolve(
-          'He made significant contributions to theoretical physics, including achievements in quantum mechanics',
-        );
+        // JSON response test
+        const json = JSON.stringify({
+          content:
+            'From the documents you have this is the most accurate answer',
+          citations: ['citation 1', 'citation 2', 'citation 3'],
+          links: ['https://coko.foundation/', 'https://waxjs.net/about/'],
+        });
+
+        resolve(json);
       }
     }, 3150);
   });
@@ -313,6 +315,9 @@ export default {
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
     AiOn: true,
+    AskKb: false,
+    GenerateImages: false,
+    CustomPromptsOn: true,
     FreeTextPromptsOn: true,
     CustomPrompts: [],
   },

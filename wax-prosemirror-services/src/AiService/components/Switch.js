@@ -15,12 +15,13 @@ const Wrapper = styled.span`
   }
 
   .rc-switch-checked {
-    border: 1px solid ${th('colorPrimary')};
     background-color: ${th('colorPrimary')};
+    border: 1px solid ${th('colorPrimary')};
 
     .rc-switch-inner {
       left: 6px;
     }
+
     :after {
       left: 42px;
     }
@@ -28,6 +29,7 @@ const Wrapper = styled.span`
 `;
 
 const Label = styled.label`
+  cursor: pointer;
   ${props =>
     props.labelPosition === 'left' &&
     css`
@@ -43,7 +45,6 @@ const Label = styled.label`
       font-size: 14px;
       margin-left: ${grid(2)};
     `}
-    cursor: pointer;
 `;
 
 const SwitchComponent = props => {

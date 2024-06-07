@@ -41,7 +41,9 @@ import invisibles, {
 
 import CharactersList from './CharactersList';
 
-async function DummyPromise(userInput) {
+// A second { options } param to handle calls bahavior
+// this options will have the same names as in aiServce but in camelCase
+async function DummyPromise(userInput, { askKb }) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log('User input:', userInput);
@@ -51,7 +53,7 @@ async function DummyPromise(userInput) {
         // JSON response test
         const json = JSON.stringify({
           content:
-            'From the documents you have this is the most accurate answer',
+            askKb ? 'KB will be queried' : 'Just a normal call',
           citations: ['citation 1', 'citation 2', 'citation 3'],
           links: ['https://coko.foundation/', 'https://waxjs.net/about/'],
         });
@@ -316,7 +318,7 @@ export default {
     AskAiContentTransformation: DummyPromise,
     AiOn: true,
     AskKb: false,
-    GenerateImages: false,
+    // GenerateImages: false,
     CustomPromptsOn: true,
     FreeTextPromptsOn: true,
     CustomPrompts: [],

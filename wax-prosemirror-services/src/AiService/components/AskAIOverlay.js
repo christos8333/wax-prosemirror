@@ -275,7 +275,6 @@ const CustomPromptButton = styled(ButtonBase)`
     margin: 0;
     padding: 0.5rem 1rem;
     text-align: left;
-    transform: ${p => (p.$selected ? 'scale(1)' : 'scale(0.95)')};
     transition: all 0.3s;
     width: 100%;
   }
@@ -385,7 +384,9 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     const input = { text: [userPrompt, highlightedText] };
 
     try {
-      const response = await AskAiContentTransformation(input);
+      const response = await AskAiContentTransformation(input, {
+        askKb: optionsState.AskKb,
+      });
       const processedRes = safeParse(response, DEFAULT_KEY);
       setResult(processedRes);
     } catch (error) {
@@ -560,12 +561,14 @@ AskAIOverlay.propTypes = {
     left: PropTypes.number,
   }),
   setPosition: PropTypes.func,
-  config: PropTypes.shape({ AskAiContentTransformation: PropTypes.shape({}) }),
+  config: PropTypes.shape({ AskAiContentTransformation: PropTypes.func }),
 };
 AskAIOverlay.defaultProps = {
   position: {},
   setPosition: () => {},
-  config: {},
+  config: {
+    AskAiContentTransformation: () => {},
+  },
 };
 
 export default AskAIOverlay;

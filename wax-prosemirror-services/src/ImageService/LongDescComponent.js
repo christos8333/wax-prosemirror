@@ -53,13 +53,14 @@ export default ({ setPosition, position }) => {
         `[data-fileid='${selection.node.attrs.fileid}']`,
       );
 
-    const figCaption = document.getElementsByTagName('figcaption')[0];
+    const siblings = [...image.parentElement.children];
+    const figCaption = siblings.find(s => s.localName === 'figcaption');
 
     if (!image || !figCaption) return;
     const imagePosition = image.getBoundingClientRect();
-    const figCaptionPosition = figCaption.getBoundingClientRect().bottom + 5;
+    const figCaptionPosition = figCaption.getBoundingClientRect().height + 10;
     const left = imagePosition.left - WaxSurface.left;
-    const top = figCaptionPosition - WaxSurface.top;
+    const top = imagePosition.bottom - WaxSurface.top + figCaptionPosition;
     setPosition({ ...position, left, top });
   }, [position.left, position.top]);
 

@@ -7,9 +7,9 @@ const StyledInputAlt = styled.input`
   background: #e2ebff;
   border: none;
   box-sizing: border-box;
-  width: 240px;
   min-height: 20px;
   padding: 4px;
+  width: 240px;
 
   &:focus {
     outline: none;
@@ -50,13 +50,15 @@ export default ({ setPosition, position }) => {
         `[data-fileid='${selection.node.attrs.fileid}']`,
       );
 
-    const figCaption = document.getElementsByTagName('figcaption')[0];
+    const siblings = [...image.parentElement.children];
+    const figCaption = siblings.find(s => s.localName === 'figcaption');
 
     if (!image || !figCaption) return;
     const imagePosition = image.getBoundingClientRect();
     const figCaptionPosition = figCaption.getBoundingClientRect().height - 5;
     const left = imagePosition.left - WaxSurface.left;
     const top = imagePosition.bottom - WaxSurface.top - figCaptionPosition;
+
     setPosition({ ...position, left, top });
   }, [position.left, position.top]);
 

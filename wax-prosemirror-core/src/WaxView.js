@@ -17,6 +17,7 @@ import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
 import WaxOptions, { parser } from './WaxOptions';
+import Placeholder from './config/plugins/placeholder';
 import defaultPlugins from './config/plugins/defaultPlugins';
 
 import helpers from './helpers/helpers';
@@ -41,6 +42,7 @@ const WaxView = forwardRef((props, ref) => {
     autoFocus,
     reconfigureState,
     user,
+    placeholder,
     targetFormat,
     serializer,
     scrollMargin,
@@ -52,7 +54,6 @@ const WaxView = forwardRef((props, ref) => {
   const [mounted, setMounted] = useState(false);
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
-  const plugins = context.app.getPlugins();
 
   const setEditorRef = useCallback(
     node => {
@@ -65,7 +66,7 @@ const WaxView = forwardRef((props, ref) => {
         const options = WaxOptions({
           ...props,
           schema,
-          plugins,
+          plugins: context.app.getPlugins(),
         });
 
         view = new EditorView(
@@ -110,45 +111,47 @@ const WaxView = forwardRef((props, ref) => {
     return () => (view = null);
   }, []);
 
-  // useEffect(() => {
-  //   // const parse = parser(schema);
+  useEffect(() => {
+    // const parse = parser(schema);
+    if (!reconfigureState) return;
 
-  //   (reconfigureState?.plugins || []).forEach(plugin => {
-  //     const key = Object.keys(plugin)[0];
-  //     const va = plugin[key];
-  //     if (context.app.PmPlugins.get(key)) {
-  //       context.app.PmPlugins.replace(key, va);
-  //     } else {
-  //       context.app.PmPlugins.add(key, va);
-  //     }
-  //   });
+    (reconfigureState?.plugins || []).forEach(plugin => {
+      const pluginKey = Object.keys(plugin)[0];
+      const pluginValue = plugin[pluginKey];
 
-  //   let finalPlugins = [];
+      if (context.app.PmPlugins.get(pluginKey)) {
+        context.app.PmPlugins.replace(pluginKey, pluginValue);
+      } else {
+        context.app.PmPlugins.add(pluginKey, pluginValue);
+      }
+    });
 
-  //   // const createPlaceholder = () => {
-  //   //   return Placeholder({ content: placeholder });
-  //   // };
+    let finalPlugins = [];
 
-  //   finalPlugins = defaultPlugins.concat([
-  //     // createPlaceholder(placeholder),
-  //     ...plugins,
-  //   ]);
+    const createPlaceholder = () => {
+      return Placeholder({ content: placeholder });
+    };
 
-  //   const reconfigureOptions = {
-  //     // doc: parse(value),
-  //     schema,
-  //     plugins: finalPlugins,
-  //   };
+    finalPlugins = defaultPlugins.concat([
+      createPlaceholder(placeholder),
+      ...context.app.getPlugins(),
+    ]);
 
-  //   context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
+    const reconfigureOptions = {
+      // doc: parse(value),
+      schema,
+      plugins: finalPlugins,
+    };
 
-  //   if (context.pmViews.main.dispatch) {
-  //     context.pmViews.main.dispatch(
-  //       context.pmViews?.main.state.tr.setMeta('addToHistory', false),
-  //     );
-  //   }
-  //   return true;
-  // }, [JSON.stringify(reconfigureState)]);
+    context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
+
+    if (context.pmViews.main.dispatch) {
+      context.pmViews.main.dispatch(
+        context.pmViews?.main.state.tr.setMeta('addToHistory', false),
+      );
+    }
+    return true;
+  }, [JSON.stringify(reconfigureState)]);
 
   useImperativeHandle(ref, () => ({
     getContent() {

@@ -16,7 +16,9 @@ import trackedTransaction from './utilities/track-changes/trackedTransaction';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
-import WaxOptions from './WaxOptions';
+import WaxOptions, { parser } from './WaxOptions';
+import defaultPlugins from './config/plugins/defaultPlugins';
+
 import helpers from './helpers/helpers';
 import './styles/styles.css';
 
@@ -37,6 +39,7 @@ const WaxView = forwardRef((props, ref) => {
     customValues,
     readonly,
     autoFocus,
+    reconfigureState,
     user,
     targetFormat,
     serializer,
@@ -49,6 +52,7 @@ const WaxView = forwardRef((props, ref) => {
   const [mounted, setMounted] = useState(false);
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
+  const plugins = context.app.getPlugins();
 
   const setEditorRef = useCallback(
     node => {
@@ -61,7 +65,7 @@ const WaxView = forwardRef((props, ref) => {
         const options = WaxOptions({
           ...props,
           schema,
-          plugins: context.app.getPlugins(),
+          plugins,
         });
 
         view = new EditorView(
@@ -105,6 +109,46 @@ const WaxView = forwardRef((props, ref) => {
   useEffect(() => {
     return () => (view = null);
   }, []);
+
+  // useEffect(() => {
+  //   // const parse = parser(schema);
+
+  //   (reconfigureState?.plugins || []).forEach(plugin => {
+  //     const key = Object.keys(plugin)[0];
+  //     const va = plugin[key];
+  //     if (context.app.PmPlugins.get(key)) {
+  //       context.app.PmPlugins.replace(key, va);
+  //     } else {
+  //       context.app.PmPlugins.add(key, va);
+  //     }
+  //   });
+
+  //   let finalPlugins = [];
+
+  //   // const createPlaceholder = () => {
+  //   //   return Placeholder({ content: placeholder });
+  //   // };
+
+  //   finalPlugins = defaultPlugins.concat([
+  //     // createPlaceholder(placeholder),
+  //     ...plugins,
+  //   ]);
+
+  //   const reconfigureOptions = {
+  //     // doc: parse(value),
+  //     schema,
+  //     plugins: finalPlugins,
+  //   };
+
+  //   context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
+
+  //   if (context.pmViews.main.dispatch) {
+  //     context.pmViews.main.dispatch(
+  //       context.pmViews?.main.state.tr.setMeta('addToHistory', false),
+  //     );
+  //   }
+  //   return true;
+  // }, [JSON.stringify(reconfigureState)]);
 
   useImperativeHandle(ref, () => ({
     getContent() {

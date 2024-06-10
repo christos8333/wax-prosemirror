@@ -16,7 +16,10 @@ import trackedTransaction from './utilities/track-changes/trackedTransaction';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
-import WaxOptions from './WaxOptions';
+import WaxOptions, { parser } from './WaxOptions';
+import Placeholder from './config/plugins/placeholder';
+import defaultPlugins from './config/plugins/defaultPlugins';
+
 import helpers from './helpers/helpers';
 import './styles/styles.css';
 
@@ -37,7 +40,9 @@ const WaxView = forwardRef((props, ref) => {
     customValues,
     readonly,
     autoFocus,
+    reconfigureState,
     user,
+    placeholder,
     targetFormat,
     serializer,
     scrollMargin,
@@ -105,6 +110,48 @@ const WaxView = forwardRef((props, ref) => {
   useEffect(() => {
     return () => (view = null);
   }, []);
+
+  useEffect(() => {
+    // const parse = parser(schema);
+    if (!reconfigureState) return;
+
+    (reconfigureState?.plugins || []).forEach(plugin => {
+      const pluginKey = Object.keys(plugin)[0];
+      const pluginValue = plugin[pluginKey];
+
+      if (context.app.PmPlugins.get(pluginKey)) {
+        context.app.PmPlugins.replace(pluginKey, pluginValue);
+      } else {
+        context.app.PmPlugins.add(pluginKey, pluginValue);
+      }
+    });
+
+    let finalPlugins = [];
+
+    const createPlaceholder = () => {
+      return Placeholder({ content: placeholder });
+    };
+
+    finalPlugins = defaultPlugins.concat([
+      createPlaceholder(placeholder),
+      ...context.app.getPlugins(),
+    ]);
+
+    const reconfigureOptions = {
+      // doc: parse(value),
+      schema,
+      plugins: finalPlugins,
+    };
+
+    context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
+
+    if (context.pmViews.main.dispatch) {
+      context.pmViews.main.dispatch(
+        context.pmViews?.main.state.tr.setMeta('addToHistory', false),
+      );
+    }
+    return true;
+  }, [JSON.stringify(reconfigureState)]);
 
   useImperativeHandle(ref, () => ({
     getContent() {

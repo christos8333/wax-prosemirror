@@ -176,9 +176,9 @@ export default ({ area, users }) => {
     setMarksNodes(
       updateMarks(
         pmViews,
-        CommentDecorationPluginKey.getState(
+        CommentDecorationPluginKey?.getState(
           activeView.state,
-        ).allCommentsDataList(),
+        )?.allCommentsDataList(),
       ),
     );
     if (isFirstRun) {
@@ -192,7 +192,7 @@ export default ({ area, users }) => {
   }, [
     updateMarks(
       pmViews,
-      CommentDecorationPluginKey.getState(activeView.state).allCommentsList(),
+      CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
     ),
     setTops(),
   ]);

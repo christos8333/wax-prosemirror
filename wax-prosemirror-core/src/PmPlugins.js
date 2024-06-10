@@ -12,6 +12,11 @@ export default class PmPlugins {
     return [...this._plugins.values()];
   }
 
+  replace(key, plugin) {
+    this._plugins.delete(key);
+    this.add(key, plugin);
+  }
+
   get(key) {
     return this._plugins.get(key);
   }

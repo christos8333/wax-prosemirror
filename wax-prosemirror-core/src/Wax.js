@@ -40,6 +40,7 @@ const Wax = forwardRef((props, ref) => {
     layout,
     placeholder,
     readonly,
+    reconfigureState,
     value,
     user,
     onChange,
@@ -70,6 +71,7 @@ const Wax = forwardRef((props, ref) => {
           onChange={finalOnChange || (() => true)}
           placeholder={placeholder}
           readonly={readonly}
+          reconfigureState={reconfigureState}
           ref={ref}
           scrollMargin={scrollMargin}
           scrollThreshold={scrollThreshold}

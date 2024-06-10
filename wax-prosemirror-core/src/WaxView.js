@@ -54,6 +54,7 @@ const WaxView = forwardRef((props, ref) => {
   const [mounted, setMounted] = useState(false);
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
+  const waxPlugins = context.app.getPlugins();
 
   const setEditorRef = useCallback(
     node => {
@@ -134,7 +135,7 @@ const WaxView = forwardRef((props, ref) => {
 
     finalPlugins = defaultPlugins.concat([
       createPlaceholder(placeholder),
-      ...context.app.getPlugins(),
+      ...waxPlugins,
     ]);
 
     const reconfigureOptions = {

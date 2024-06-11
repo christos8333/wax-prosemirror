@@ -28,7 +28,7 @@ export default {
       exclude: 'node_modules/**',
     }),
     commonjs(),
-    terser(),
+    // terser(),
   ],
   external: [],
 };

@@ -2,12 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { th } from '@pubsweet/ui-toolkit';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, icons } from 'wax-prosemirror-core';
 import { keys } from 'lodash';
 import SwitchComponent from './Switch';
 
 // #region CONSTANTS ---------------------------------------------
-const LABEL_POS = 'left';
+// const LABEL_POS = 'left';
 
 const SETTINGS = [
   {
@@ -85,44 +85,76 @@ export const ToggleInput = styled(SwitchComponent)`
   }
 `;
 
-const SettingsDropdown = styled.ul`
-  --item-height: var(--ai-settings-menu-height, 30px);
-  --items-length: ${p => p.$listlng};
-  --max-height: calc(var(--item-height) * var(--items-length));
+// const SettingsDropdown = styled.ul`
+//   --item-height: var(--ai-settings-menu-height, 30px);
+//   --items-length: ${p => p.$listlng};
+//   --max-height: calc(var(--item-height) * var(--items-length));
 
-  background-color: #f8f8f8;
-  border: ${p => (p.$show ? 'var(--ai-tool-border)' : '0 solid #0000')};
-  border-radius: 0 0 0.3rem 0.3rem;
-  border-top: none;
+//   background-color: #f8f8f8;
+//   border: ${p => (p.$show ? 'var(--ai-tool-border)' : '0 solid #0000')};
+//   border-radius: 0 0 0.3rem 0.3rem;
+//   border-top: none;
+//   display: flex;
+//   flex-direction: column;
+//   list-style: none;
+//   margin: 0;
+//   max-height: ${p => (p.$show ? 'var(--max-height)' : 0)};
+//   overflow: hidden;
+//   padding: 0 0.5rem;
+//   position: absolute;
+//   right: calc(-1 * var(--ai-tool-border-width));
+//   top: calc(100% + var(--ai-tool-border-width));
+//   transition: all ${p => `${0.15 * p.$listlng}s`};
+//   z-index: 15;
+
+//   > li {
+//     align-items: center;
+//     display: flex;
+//     height: var(--item-height);
+//     justify-content: ${LABEL_POS === 'right' ? 'flex-start' : 'flex-end'};
+//     padding: 0;
+//     user-select: none;
+//   }
+
+//   > li:not(:first-child) {
+//     border-top: 1px solid #0001;
+//   }
+// `;
+
+const SettingsContainer = styled.div`
+  align-items: center;
+  background-color: #fafafa;
+  border-bottom: var(--ai-tool-border);
   display: flex;
-  flex-direction: column;
-  list-style: none;
-  margin: 0;
-  max-height: ${p => (p.$show ? 'var(--max-height)' : 0)};
-  overflow: hidden;
-  padding: 0 0.5rem;
-  position: absolute;
-  right: calc(-1 * var(--ai-tool-border-width));
-  top: calc(100% + var(--ai-tool-border-width));
-  transition: all ${p => `${0.15 * p.$listlng}s`};
-  z-index: 15;
+  gap: 5px;
+  justify-content: space-between;
+  padding: 2px 5px;
+  width: 100%;
 
-  > li {
-    align-items: center;
+  span {
     display: flex;
-    height: var(--item-height);
-    justify-content: ${LABEL_POS === 'right' ? 'flex-start' : 'flex-end'};
-    padding: 0;
-    user-select: none;
+    gap: 5px;
   }
+`;
 
-  > li:not(:first-child) {
-    border-top: 1px solid #0001;
+const SettingsButton = styled.button.attrs({ type: 'button' })`
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  /* outline: ${p => (p.$checked ? 'var(--ai-tool-border)' : 'none')}; */
+  padding: 2px;
+
+  > svg {
+    fill: ${p => (p.$checked ? '#000' : '#aaa')};
+    width: 15px;
   }
 `;
 // #endregion STYLED COMPONENTS ---------------------------------------------
 
-const AiSettingsMenu = ({ show, aiService, optionsState, setOptionsState }) => {
+const AiSettingsMenu = ({ aiService, optionsState, setOptionsState }) => {
   const ctx = useContext(WaxContext);
 
   const onAiService = ({ key }) => keys(aiService).includes(key);
@@ -155,16 +187,18 @@ const AiSettingsMenu = ({ show, aiService, optionsState, setOptionsState }) => {
 
   const renderSettings = ({ key, label, type }) => {
     const value = optionsState[key];
+    const Icon = icons[key] ?? null;
     const typeBasedSettingUI = {
       boolean: (
-        <li key={key}>
-          <ToggleInput
-            checked={optionsState[key]}
-            label={label}
-            labelPosition={LABEL_POS}
-            onChange={handlers(key, type, value)}
-          />
-        </li>
+        <SettingsButton
+          $checked={optionsState[key]}
+          key={key}
+          onClick={handlers(key, type, value)}
+          title={`${label} (${value ? 'enabled' : 'disabled'})`}
+        >
+          {Icon ? <Icon /> : ''}
+          {Icon ? '' : label}
+        </SettingsButton>
       ),
     };
 
@@ -172,24 +206,21 @@ const AiSettingsMenu = ({ show, aiService, optionsState, setOptionsState }) => {
   };
 
   return (
-    <SettingsDropdown
-      $listlng={enabledSettings.length}
-      $show={show}
+    <SettingsContainer
       onClick={e => e.stopPropagation()} // to prevent !showSettings
     >
-      {enabledSettings?.map(renderSettings)}
-    </SettingsDropdown>
+      <span>AI Wizard</span>
+      <span>{enabledSettings?.map(renderSettings)}</span>
+    </SettingsContainer>
   );
 };
 
 AiSettingsMenu.propTypes = {
-  show: PropTypes.bool,
   aiService: PropTypes.shape({}),
   optionsState: PropTypes.shape({}),
   setOptionsState: PropTypes.func,
 };
 AiSettingsMenu.defaultProps = {
-  show: false,
   aiService: {},
   optionsState: {},
   setOptionsState: () => {},

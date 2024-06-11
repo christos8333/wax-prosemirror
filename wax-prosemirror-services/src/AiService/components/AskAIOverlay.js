@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
-import { capitalize, isEmpty } from 'lodash';
+import { capitalize, isEmpty, keys } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext, icons } from 'wax-prosemirror-core';
 import { PropTypes } from 'prop-types';
@@ -17,6 +17,8 @@ const DEFAULT_KEY = 'content';
 // #region MAIN & MISC-------------------
 
 const Root = styled.div`
+  --ai-tool-result-height: 500px;
+  --ai-tool-width: 100%;
   --ai-tool-border-width: 1px;
   --ai-tool-border: var(--ai-tool-border-width) solid #0001;
   align-items: flex-end;
@@ -25,6 +27,7 @@ const Root = styled.div`
   display: flex;
   filter: drop-shadow(0 0 1px #0002);
   flex-direction: column;
+  width: var(--ai-tool-width);
 
   div {
     ::-webkit-scrollbar {
@@ -34,7 +37,6 @@ const Root = styled.div`
 
     ::-webkit-scrollbar-thumb {
       background: var(--scrollbar-color, #0004);
-      border-radius: 5px;
       width: 5px;
     }
 
@@ -66,6 +68,11 @@ const FlexRow = styled.div`
   flex-direction: row;
   width: 100%;
 `;
+const FlexCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 const ButtonBase = styled.button.attrs({ type: 'button' })`
   align-items: center;
   background: none;
@@ -83,20 +90,17 @@ const ButtonBase = styled.button.attrs({ type: 'button' })`
 
 // #region FORM -------------------------
 
-const AskAIForm = styled.form`
+const AskAIForm = styled(FlexCol)`
   background: #fafafa;
-  border-radius: 0.3rem 0.3rem 0 0;
   display: ${p => (p.$show ? 'flex' : 'none')};
-  flex-direction: column;
-  justify-content: space-between;
   padding: 8px 12px;
   position: relative;
-  width: 458px;
 `;
 
 const PromptInput = styled.input`
   background: transparent;
   border: none;
+  border-right: var(--ai-tool-border);
   color: #555;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 14px;
@@ -107,20 +111,20 @@ const PromptInput = styled.input`
 `;
 
 const SendButton = styled(ButtonBase)`
-  border-right: 1px solid #0001;
   margin-bottom: 3px;
-  padding: 0 8px;
+  padding: 0 0 0 5px;
+  transform: scale(1.3);
 `;
 
-const SettingsButton = styled(ButtonBase)`
-  padding: 0 0 0 8px;
+// const SettingsButton = styled(ButtonBase)`
+//   padding: 0 0 0 8px;
 
-  > svg {
-    fill: #777;
-    height: 16px;
-    width: 16px;
-  }
-`;
+//   > svg {
+//     fill: #777;
+//     height: 16px;
+//     width: 16px;
+//   }
+// `;
 
 // #endregion FORM --------------------------
 
@@ -132,35 +136,31 @@ const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  height: 150px;
+  height: fit-content;
   justify-content: flex-start;
-  max-height: ${p => (p.$show ? '150px' : '0')};
+  max-height: ${p => (p.$show ? 'var(--ai-tool-result-height)' : '0')};
+  min-height: ${p => (p.$show ? '200px' : '0')};
   overflow-y: auto;
   padding: 0;
   position: relative;
   transition: all 0.3s;
-  width: 458px;
+  width: 100%;
 `;
 
 const ResultHeading = styled(Heading)`
   align-items: flex-end;
+  padding-left: 0;
 `;
 
 const ResultTab = styled(ButtonBase)`
   background: ${p => (p.$selected ? '#fff' : '#fff4')};
   border: var(--ai-tool-border);
   border-bottom-color: ${p => (p.$selected ? '#fff' : '#0001')};
-  border-radius: 5px 5px 0 0;
-  color: #777;
-  font-size: 11px;
-  font-style: italic;
   margin-bottom: -1px;
   padding: 3px 0.5rem;
   text-decoration: underline;
   text-decoration-color: #bbb0;
   text-underline-offset: 5px;
-  transform: scale(${p => (p.$selected ? '1' : '0.93')});
-  transform-origin: bottom;
   transition: all 0.2s;
   z-index: 9;
 
@@ -233,12 +233,11 @@ const CustomPromptContainer = styled.div`
   border-top: ${p => (p.$show ? 'var(--ai-tool-border)' : '0 solid #0000')};
   display: flex;
   flex-direction: column;
-  font-style: italic;
   max-height: ${p => (p.$show ? '205px' : '0')};
   overflow: hidden;
   padding: 0;
   transition: all 0.3s linear;
-  width: 458px;
+  width: 100%;
 `;
 
 const CustomPromptsHeading = styled(Heading)`
@@ -314,7 +313,6 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
 
   const [result, setResult] = useState({ [DEFAULT_KEY]: '' });
   const [resultKey, setResultKey] = useState(DEFAULT_KEY);
-  const [showSettings, setShowSettings] = useState(false);
 
   const aiService = app.config.get('config.AskAiContentService');
   const { AskAiContentTransformation } = config;
@@ -364,11 +362,6 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
-  const handleShowSettings = e => {
-    e.stopPropagation(); // to prevent !showSettings
-    setShowSettings(!showSettings);
-  };
-
   const handleSubmit = async () => {
     if (!enabled.send) {
       inputRef.current.focus();
@@ -388,11 +381,12 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
         askKb: optionsState.AskKb,
       });
       const processedRes = safeParse(response, DEFAULT_KEY);
+      setResultKey(keys(processedRes)[0] ?? DEFAULT_KEY);
+
       setResult(processedRes);
     } catch (error) {
       setResult({ [DEFAULT_KEY]: error });
     } finally {
-      setResultKey(DEFAULT_KEY);
       setIsSubmitted(true);
       setIsLoading(false);
     }
@@ -465,7 +459,12 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   // #endregion UI -------------------------------
 
   return enabled.component ? (
-    <Root id={AI_TOOL_ID} onClick={() => setShowSettings(false)}>
+    <Root id={AI_TOOL_ID}>
+      <AiSettingsMenu
+        aiService={aiService}
+        optionsState={optionsState}
+        setOptionsState={setOptionsState}
+      />
       <AskAIForm $show>
         <FlexRow>
           <PromptInput
@@ -484,16 +483,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           <SendButton disabled={!enabled.send} onClick={handleSubmit}>
             {submitIcon}
           </SendButton>
-          <SettingsButton onClick={handleShowSettings}>
-            <icons.settings />
-          </SettingsButton>
         </FlexRow>
-        <AiSettingsMenu
-          aiService={aiService}
-          optionsState={optionsState}
-          setOptionsState={setOptionsState}
-          show={showSettings}
-        />
       </AskAIForm>
 
       <ResultContainer $show={enabled.results}>
@@ -510,10 +500,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
         </ResultHeading>
         <ResultContent
           dangerouslySetInnerHTML={{
-            __html: `<h4>${capitalize(resultKey)}</h4>${resultsToHtml(
-              resultKey,
-              result[resultKey],
-            )}</br>`,
+            __html: resultsToHtml(resultKey, result[resultKey]),
           }}
         />
         <ResultActions $show={enabled.results}>

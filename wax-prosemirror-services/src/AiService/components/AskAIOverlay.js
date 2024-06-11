@@ -27,6 +27,8 @@ const Root = styled.div`
   display: flex;
   filter: drop-shadow(0 0 1px #0002);
   flex-direction: column;
+  margin: 0 10px 10px;
+  max-width: 95%;
   width: var(--ai-tool-width);
 
   div {
@@ -100,7 +102,6 @@ const AskAIForm = styled(FlexCol)`
 const PromptInput = styled.input`
   background: transparent;
   border: none;
-  border-right: var(--ai-tool-border);
   color: #555;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 14px;
@@ -115,16 +116,6 @@ const SendButton = styled(ButtonBase)`
   padding: 0 0 0 5px;
   transform: scale(1.3);
 `;
-
-// const SettingsButton = styled(ButtonBase)`
-//   padding: 0 0 0 8px;
-
-//   > svg {
-//     fill: #777;
-//     height: 16px;
-//     width: 16px;
-//   }
-// `;
 
 // #endregion FORM --------------------------
 
@@ -305,6 +296,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     options,
   } = ctx;
   const inputRef = useRef(null);
+  const resultRef = useRef(null);
   const [userPrompt, setUserPrompt] = useState('');
   const [optionsState, setOptionsState] = useState({ ...options });
 
@@ -499,9 +491,11 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           ))}
         </ResultHeading>
         <ResultContent
+          contentEditable
           dangerouslySetInnerHTML={{
             __html: resultsToHtml(resultKey, result[resultKey]),
           }}
+          ref={resultRef} // to get the text from this innerHTML in the future
         />
         <ResultActions $show={enabled.results}>
           {Object.values(resultActions).map(({ title, Icon, ...rest }) => (

@@ -71,7 +71,6 @@ export default ({ setPosition, position }) => {
         ...selection.node.attrs,
         'aria-description': longDescRef.current.value,
       }),
-      // .setMeta('imageLongDesc', true),
     );
   };
 

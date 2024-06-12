@@ -26,7 +26,8 @@ export default class TrueFalseSingleCorrectContainerNodeView extends QuestionsNo
     if (
       !event.target.type ||
       event.target.type === 'button' ||
-      event.target.type === 'text'
+      event.target.type === 'text' ||
+      event.target.type === 'textarea'
     ) {
       return true;
     }

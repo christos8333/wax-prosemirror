@@ -23,6 +23,9 @@ export default class EssayPromptNodeView extends QuestionsNodeView {
   }
 
   stopEvent(event) {
+    if (event.target.type === 'text' || event.target.type === 'textarea') {
+      return true;
+    }
     const innerView = this.context.pmViews[this.node.attrs.id];
     return innerView && innerView.dom.contains(event.target);
   }

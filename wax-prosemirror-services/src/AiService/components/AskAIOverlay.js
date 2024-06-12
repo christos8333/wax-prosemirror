@@ -29,6 +29,7 @@ const Root = styled.div`
   flex-direction: column;
   margin: 0 10px 10px;
   max-width: 95%;
+  min-width: 500px;
   width: var(--ai-tool-width);
 
   div {

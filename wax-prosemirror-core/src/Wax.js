@@ -58,7 +58,11 @@ const Wax = forwardRef((props, ref) => {
   const [application, setApplication] = useState();
   const configHash = createConfigWithHash(config);
 
-  // useEffect(() => () => application && application.resetApp(), []);
+  // useEffect(() => {
+  //   const newApplication = createApplication(props);
+  //   setApplication(newApplication);
+  //   return () => newApplication.resetApp();
+  // }, []);
 
   useEffect(() => {
     console.log('updated application', configHash);

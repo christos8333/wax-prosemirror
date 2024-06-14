@@ -4,7 +4,6 @@ import React, {
   useContext,
   useCallback,
   useMemo,
-  useRef,
   useEffect,
   forwardRef,
   useImperativeHandle,
@@ -55,55 +54,53 @@ const WaxView = forwardRef((props, ref) => {
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
 
-  console.log(context.app.id);
   const setEditorRef = useCallback(
     node => {
-      // if (node) {
-      console.log('load editor view');
-      // if (!mounted) {
-      context.app.bootServices();
-      context.app.getShortCuts();
-      context.app.getRules();
-      // }
-      const options = WaxOptions({
-        ...props,
-        schema,
-        plugins: context.app.getPlugins(),
-      });
+      if (node) {
+        // if (!mounted) {
+        context.app.bootServices();
+        context.app.getShortCuts();
+        context.app.getRules();
+        // }
+        const options = WaxOptions({
+          ...props,
+          schema,
+          plugins: context.app.getPlugins(),
+        });
 
-      view = new EditorView(
-        { mount: node },
-        {
-          editable: () => !readonly,
-          customValues,
-          state: EditorState.create(options),
-          dispatchTransaction,
-          disallowedTools: [],
-          user,
-          scrollMargin: scrollMargin || 200,
-          scrollThreshold: scrollThreshold || 200,
-          attributes: {
-            spellcheck: browserSpellCheck ? 'true' : 'false',
+        view = new EditorView(
+          { mount: node },
+          {
+            editable: () => !readonly,
+            customValues,
+            state: EditorState.create(options),
+            dispatchTransaction,
+            disallowedTools: [],
+            user,
+            scrollMargin: scrollMargin || 200,
+            scrollThreshold: scrollThreshold || 200,
+            attributes: {
+              spellcheck: browserSpellCheck ? 'true' : 'false',
+            },
           },
-        },
-      );
+        );
 
-      // setMounted(true);
+        // setMounted(true);
 
-      context.updateView(
-        {
-          main: view,
-        },
-        'main',
-      );
-      setTimeout(() => {
-        if (autoFocus && view) {
-          view.state.tr.insertText('', 0);
-          view.dispatch(view.state.tr.scrollIntoView());
-          view.focus();
-        }
-      }, 500);
-      // }
+        context.updateView(
+          {
+            main: view,
+          },
+          'main',
+        );
+        setTimeout(() => {
+          if (autoFocus && view) {
+            view.state.tr.insertText('', 0);
+            view.dispatch(view.state.tr.scrollIntoView());
+            view.focus();
+          }
+        }, 500);
+      }
       return node;
     },
     [readonly, customValues, context.app.id],
@@ -114,41 +111,34 @@ const WaxView = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
-    // const currentConfigHash = context.app.config.get('config.hash');
-    // if (
-    //   prevConfigHashRef.current &&
-    //   prevConfigHashRef.current !== currentConfigHash
-    // ) {
-    // eslint-disable-next-line no-console
-    console.log('Creating new state from config ...');
     // const parse = parser(schema);
-    let finalPlugins = [];
+    if (context.app.config.get('config.PmPlugins').length === 0) {
+      console.log('reconfigure>');
+      let finalPlugins = [];
 
-    const createPlaceholder = () => {
-      return Placeholder({ content: placeholder });
-    };
+      const createPlaceholder = () => {
+        return Placeholder({ content: placeholder });
+      };
 
-    finalPlugins = defaultPlugins.concat([
-      createPlaceholder(placeholder),
-      ...context.app.getPlugins(),
-    ]);
+      finalPlugins = defaultPlugins.concat([
+        createPlaceholder(placeholder),
+        ...context.app.getPlugins(),
+      ]);
 
-    const reconfigureOptions = {
-      // doc: parse(value),
-      schema,
-      plugins: finalPlugins,
-    };
+      const reconfigureOptions = {
+        // doc: parse(value),
+        schema,
+        plugins: finalPlugins,
+      };
 
-    context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
+      context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
 
-    if (context.pmViews.main.dispatch) {
-      context.pmViews.main.dispatch(
-        context.pmViews?.main.state.tr.setMeta('addToHistory', false),
-      );
+      if (context.pmViews.main.dispatch) {
+        context.pmViews.main.dispatch(
+          context.pmViews?.main.state.tr.setMeta('addToHistory', false),
+        );
+      }
     }
-    // }
-
-    // prevConfigHashRef.current = currentConfigHash;
 
     return true;
   }, [context.app.id]);
@@ -176,15 +166,15 @@ const WaxView = forwardRef((props, ref) => {
       main don't keep updating the view ,as this is
       the central point of each transaction
       */
-    // context.setTransaction(transaction);
+    context.setTransaction(transaction);
 
     if (!transaction.getMeta('outsideView')) {
-      // context.updateView(
-      //   {
-      //     main: view,
-      //   },
-      //   'main',
-      // );
+      context.updateView(
+        {
+          main: view,
+        },
+        'main',
+      );
     }
 
     const docContent =

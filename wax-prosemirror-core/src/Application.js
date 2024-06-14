@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Config from './config/Config';
 import defaultConfig from './config/defaultConfig';
 import PmPlugins from './PmPlugins';
+import DefaultSchema from './utilities/schema/DefaultSchema';
+import { cloneDeep } from 'lodash';
 
 export default class Application {
   constructor(container) {
@@ -85,16 +87,24 @@ export default class Application {
 
   static create(config) {
     /* Merge Core Config with User Config */
-    const appConfig = deepmerge({ config: defaultConfig() }, config, {
-      customMerge: key => {
-        if (key === 'services') {
-          return (coreService, configService) => {
-            return coreService.concat(configService);
-          };
-        }
-        return true;
+    const appConfig = deepmerge(
+      { config: defaultConfig() },
+      cloneDeep(config),
+      {
+        customMerge: key => {
+          if (key === 'services') {
+            return (coreService, configService) => {
+              return coreService.concat(configService);
+            };
+          }
+          return true;
+        },
       },
-    });
+    );
+
+    // const appConfig = {
+    //   config: { SchemaService: DefaultSchema, ...defaultConfig() },
+    // };
 
     /*
     Create Container
@@ -108,6 +118,7 @@ export default class Application {
 
     container.bind('Wax').toFactory(() => new Application(container));
 
+    console.log(appConfig);
     container.bind('config').toFactory(() => appConfig);
     container.bind('Config').to(Config);
 

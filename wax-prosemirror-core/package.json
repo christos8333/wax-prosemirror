@@ -19,6 +19,8 @@
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "lodash": "^4.17.4",
+    "crypto-js": "^4.2.0",
+    "safe-stable-stringify": "^2.4.3",
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
     "prosemirror-commands": "1.5.1",

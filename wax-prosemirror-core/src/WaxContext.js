@@ -42,7 +42,8 @@ export default props => {
   });
 
   useEffect(() => {
-    if (props.app.config.get('config.PmPlugins').length === 0) {
+    if (context.app.id !== props.app.id) {
+      console.log('waxContent, useeffect');
       setContext({
         ...context,
         app: props.app,

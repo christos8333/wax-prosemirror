@@ -338,7 +338,7 @@ export default {
     new ImageService(),
     // new TablesService(),
     new BaseService(),
-    // new NoteService(),
+    new NoteService(),
     new CodeBlockService(),
     new EditingSuggestingService(),
     new DisplayTextToolGroupService(),

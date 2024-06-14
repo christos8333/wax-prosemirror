@@ -1,6 +1,9 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState, forwardRef } from 'react';
 import { DOMSerializer } from 'prosemirror-model';
+import { v4 as uuidv4 } from 'uuid';
+import CryptoJS from 'crypto-js';
+import stringify from 'safe-stable-stringify';
 import DefaultSchema from './utilities/schema/DefaultSchema';
 import WaxProvider from './WaxContext';
 import PortalProvider from './PortalContext';
@@ -22,15 +25,17 @@ const createApplication = props => {
   return application;
 };
 
+const createObjectHash = obj => {
+  const str = stringify(obj);
+  return CryptoJS.SHA256(str).toString();
+};
+
+const createConfigWithHash = config => {
+  const configHash = createObjectHash(config);
+  return configHash;
+};
+
 const Wax = forwardRef((props, ref) => {
-  const [application, setApplication] = useState();
-
-  useEffect(() => {
-    const newApplication = createApplication(props);
-    setApplication(newApplication);
-    return () => newApplication.resetApp();
-  }, []);
-
   const {
     autoFocus,
     browserSpellCheck,
@@ -50,10 +55,17 @@ const Wax = forwardRef((props, ref) => {
     scrollThreshold,
   } = props;
 
+  const [application, setApplication] = useState();
+  const configHash = createConfigWithHash(config);
+
+  // useEffect(() => () => application && application.resetApp(), []);
+
   useEffect(() => {
+    console.log('updated application', configHash);
     const newApplication = createApplication(props);
+
     setApplication(newApplication);
-  }, [config.PmPlugins.length]);
+  }, [configHash]);
 
   if (!application) return null;
 

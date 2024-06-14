@@ -31,7 +31,7 @@ pages:
   stage: Deploy
   image: $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
   script:
-    - mv /home/wax/_build public
+    - cp -r /home/wax/_build public
   artifacts:
     paths:
       - public

@@ -11,7 +11,7 @@ stages:
   - Build demo
   - Deploy demo
 
-.build demo:
+build demo:
   stage: Build demo
   image: docker:26
   services:

@@ -1,16 +1,35 @@
-variables:
-  IMAGE_NAME_DEPLOY: wax-demo
+# include:
+#   - project: 'cokoapps/ci'
+#     ref: main
+#     file: 'ci-templates.yml'
 
-include:
-  - project: 'cokoapps/ci'
-    ref: main
-    file: 'ci-templates.yml'
+variables:
+  IMAGE_NAME_DEMO: $CI_REGISTRY/wax/wax-prosemirror/wax-demo
+  BUILD_PATH: .
 
 stages:
   - Build demo
   - Deploy demo
 
-build demo image:
+.build demo:
+  stage: Build demo
+  image: docker:26
+  services:
+    - docker:26-dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker pull $IMAGE_NAME_DEMO:latest || true
+    - docker build
+      --cache-from $IMAGE_NAME_DEMO:latest
+      --tag $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
+      --tag $IMAGE_NAME_DEMO:latest
+      -f $BUILD_PATH/Dockerfile-production
+      $BUILD_PATH
+    - docker push $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
+    - docker push $IMAGE_NAME_DEMO:latest
+
+.build demo image:
   extends: .build production
   stage: Build demo
   variables:
@@ -19,7 +38,7 @@ build demo image:
   only:
     - master
 
-deploy demo:
+.deploy demo:
   extends: .deploy
   stage: Deploy demo
   only:

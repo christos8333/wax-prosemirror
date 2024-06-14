@@ -19,10 +19,7 @@ build demo:
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
   script:
-    - docker build
-      --tag $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
-      -f $BUILD_PATH/Dockerfile-production
-      $BUILD_PATH
+    - docker build --tag $IMAGE_NAME_DEMO:$CI_COMMIT_SHA -f $BUILD_PATH/Dockerfile-production $BUILD_PATH
     - docker push $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
   only:
     - master

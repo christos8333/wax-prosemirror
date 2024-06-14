@@ -34,7 +34,7 @@ const EditorWrapper = styled.div`
   display: flex;
   flex: 2 1 auto;
   justify-content: left;
-  padding: ${props => (props.showDelete ? '0px 20px 10px 20px' : `0px`)};
+  padding: ${props => (props.usePadding ? '0px 20px 10px 20px' : `0px`)};
   width: 100%;
 
   .ProseMirror {
@@ -290,7 +290,9 @@ const QuestionEditorComponent = ({
           </ActionButton>
         </DeleteArea>
       )}
-      <EditorWrapper showDelete={showDelete}>
+      <EditorWrapper
+        usePadding={showDelete && QuestionType !== 'EssayQuestion'}
+      >
         <div ref={editorRef} />
         <WaxOverlays activeViewId={questionId} />
       </EditorWrapper>
@@ -308,7 +310,8 @@ const getNodes = view => {
       node.node.type.name === 'multiple_choice_container' ||
       node.node.type.name === 'multiple_choice_single_correct_container' ||
       node.node.type.name === 'true_false_container' ||
-      node.node.type.name === 'true_false_single_correct_container'
+      node.node.type.name === 'true_false_single_correct_container' ||
+      node.node.type.name === 'essay_container'
     ) {
       fillTheGapContainerNodes.push(node);
     }

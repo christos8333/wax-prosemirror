@@ -34,18 +34,3 @@ pages:
       - public
   only:
     - master
-
-# .build demo image:
-#   extends: .build production
-#   stage: Build demo
-#   variables:
-#     IMAGE_NAME: $IMAGE_NAME_DEPLOY
-#     BUILD_PATH: .
-#   only:
-#     - master
-
-# .deploy demo:
-#   extends: .deploy
-#   stage: Deploy demo
-#   only:
-#     - master

@@ -112,6 +112,7 @@ const WaxView = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
+    console.log('in reconfigure');
     // const parse = parser(schema);
     if (!reconfigureState) return;
 
@@ -125,6 +126,11 @@ const WaxView = forwardRef((props, ref) => {
         context.app.PmPlugins.add(pluginKey, pluginValue);
       }
     });
+    console.log(
+      'in reconfigure down',
+      reconfigureState,
+      context.app.getPlugins(),
+    );
 
     let finalPlugins = [];
 
@@ -140,7 +146,7 @@ const WaxView = forwardRef((props, ref) => {
     const reconfigureOptions = {
       // doc: parse(value),
       schema,
-      plugins: context.app.getPlugins(),
+      plugins: finalPlugins,
     };
 
     context.pmViews.main.updateState(EditorState.create(reconfigureOptions));

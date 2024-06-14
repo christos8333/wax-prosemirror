@@ -3,8 +3,8 @@
 
 FROM node:16-bullseye-slim
 
-RUN apt-get update && \
-    apt-get upgrade -y
+# RUN apt-get update && \
+#    apt-get upgrade -y
 
 WORKDIR /home/wax
 ENV NODE_ENV=production
@@ -27,10 +27,10 @@ RUN cd editors/demo && yarn react-app-rewired build
 ######
 # RUN
 
-FROM node:16-bullseye
+FROM node:16-bullseye-slim
 
-RUN apt-get update && \
-    apt-get upgrade -y
+# RUN apt-get update && \
+#     apt-get upgrade -y
 
 RUN npm install --global serve
 

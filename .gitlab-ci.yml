@@ -29,17 +29,17 @@ stages:
     - docker push $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
     - docker push $IMAGE_NAME_DEMO:latest
 
-.build demo image:
-  extends: .build production
-  stage: Build demo
-  variables:
-    IMAGE_NAME: $IMAGE_NAME_DEPLOY
-    BUILD_PATH: .
-  only:
-    - master
+# .build demo image:
+#   extends: .build production
+#   stage: Build demo
+#   variables:
+#     IMAGE_NAME: $IMAGE_NAME_DEPLOY
+#     BUILD_PATH: .
+#   only:
+#     - master
 
-.deploy demo:
-  extends: .deploy
-  stage: Deploy demo
-  only:
-    - master
+# .deploy demo:
+#   extends: .deploy
+#   stage: Deploy demo
+#   only:
+#     - master

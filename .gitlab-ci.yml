@@ -38,7 +38,7 @@ pages:
     - mv _build public
   artifacts:
     paths:
-      public
+      - public
   only:
     - master
 

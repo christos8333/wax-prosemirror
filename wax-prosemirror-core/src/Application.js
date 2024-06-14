@@ -1,12 +1,15 @@
 import { Container } from 'inversify';
 import 'reflect-metadata';
 import deepmerge from 'deepmerge';
+
+import { v4 as uuidv4 } from 'uuid';
 import Config from './config/Config';
 import defaultConfig from './config/defaultConfig';
 import PmPlugins from './PmPlugins';
 
 export default class Application {
   constructor(container) {
+    this.id = uuidv4();
     this.container = container;
     this.PmPlugins = container.get('PmPlugins');
   }
@@ -101,12 +104,12 @@ export default class Application {
 
     Set base bindings for the App to work
     */
-    container.bind('PmPlugins').to(PmPlugins).inSingletonScope();
+    container.bind('PmPlugins').to(PmPlugins);
 
     container.bind('Wax').toFactory(() => new Application(container));
 
-    container.bind('config').toConstantValue(appConfig);
-    container.bind('Config').to(Config).inSingletonScope();
+    container.bind('config').toFactory(() => appConfig);
+    container.bind('Config').to(Config);
 
     /*
     Start the App

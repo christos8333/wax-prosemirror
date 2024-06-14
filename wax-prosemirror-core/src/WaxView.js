@@ -7,7 +7,6 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
-  useState,
 } from 'react';
 import styled from 'styled-components';
 import { EditorState } from 'prosemirror-state';
@@ -40,7 +39,6 @@ const WaxView = forwardRef((props, ref) => {
     customValues,
     readonly,
     autoFocus,
-    reconfigureState,
     user,
     placeholder,
     targetFormat,
@@ -51,18 +49,19 @@ const WaxView = forwardRef((props, ref) => {
 
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
+
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
 
   const setEditorRef = useCallback(
     node => {
       if (node) {
-        if (!mounted) {
-          context.app.bootServices();
-          context.app.getShortCuts();
-          context.app.getRules();
-        }
+        // if (!mounted) {
+        context.app.bootServices();
+        context.app.getShortCuts();
+        context.app.getRules();
+        // }
         const options = WaxOptions({
           ...props,
           schema,
@@ -86,7 +85,7 @@ const WaxView = forwardRef((props, ref) => {
           },
         );
 
-        setMounted(true);
+        // setMounted(true);
 
         context.updateView(
           {
@@ -104,7 +103,7 @@ const WaxView = forwardRef((props, ref) => {
       }
       return node;
     },
-    [readonly, customValues],
+    [readonly, customValues, context.app.id],
   );
 
   useEffect(() => {
@@ -112,52 +111,36 @@ const WaxView = forwardRef((props, ref) => {
   }, []);
 
   useEffect(() => {
-    console.log('in reconfigure');
     // const parse = parser(schema);
-    if (!reconfigureState) return;
+    if (context.app.config.get('config.PmPlugins').length === 0) {
+      let finalPlugins = [];
 
-    (reconfigureState?.plugins || []).forEach(plugin => {
-      const pluginKey = Object.keys(plugin)[0];
-      const pluginValue = plugin[pluginKey];
+      const createPlaceholder = () => {
+        return Placeholder({ content: placeholder });
+      };
 
-      if (context.app.PmPlugins.get(pluginKey)) {
-        context.app.PmPlugins.replace(pluginKey, pluginValue);
-      } else {
-        context.app.PmPlugins.add(pluginKey, pluginValue);
+      finalPlugins = defaultPlugins.concat([
+        createPlaceholder(placeholder),
+        ...context.app.getPlugins(),
+      ]);
+
+      const reconfigureOptions = {
+        // doc: parse(value),
+        schema,
+        plugins: finalPlugins,
+      };
+
+      context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
+
+      if (context.pmViews.main.dispatch) {
+        context.pmViews.main.dispatch(
+          context.pmViews?.main.state.tr.setMeta('addToHistory', false),
+        );
       }
-    });
-    console.log(
-      'in reconfigure down',
-      reconfigureState,
-      context.app.getPlugins(),
-    );
-
-    let finalPlugins = [];
-
-    const createPlaceholder = () => {
-      return Placeholder({ content: placeholder });
-    };
-
-    finalPlugins = defaultPlugins.concat([
-      createPlaceholder(placeholder),
-      ...context.app.getPlugins(),
-    ]);
-
-    const reconfigureOptions = {
-      // doc: parse(value),
-      schema,
-      plugins: finalPlugins,
-    };
-
-    context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
-
-    if (context.pmViews.main.dispatch) {
-      context.pmViews.main.dispatch(
-        context.pmViews?.main.state.tr.setMeta('addToHistory', false),
-      );
     }
+
     return true;
-  }, [JSON.stringify(reconfigureState)]);
+  }, [context.app.id]);
 
   useImperativeHandle(ref, () => ({
     getContent() {

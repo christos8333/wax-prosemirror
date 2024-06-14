@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
 /* eslint react/destructuring-assignment: 0 */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 export const WaxContext = React.createContext({
   pmViews: {},
@@ -41,14 +41,17 @@ export default props => {
     },
   });
 
-  return (
-    <WaxContext.Provider
-      value={{
+  useEffect(() => {
+    if (props.app.config.get('config.PmPlugins').length === 0) {
+      setContext({
         ...context,
-      }}
-    >
-      {props.children}
-    </WaxContext.Provider>
+        app: props.app,
+      });
+    }
+  }, [props.app.id]);
+
+  return (
+    <WaxContext.Provider value={context}>{props.children}</WaxContext.Provider>
   );
 };
 

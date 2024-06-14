@@ -6,6 +6,7 @@ import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
 import { debounce } from 'lodash';
+import { TablesService } from 'wax-table-service';
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -32,6 +33,7 @@ const user = {
 // }];
 
 const Editoria = () => {
+  const [myConfig, setMyConfig] = useState(config);
   const [width] = useWindowSize();
 
   let layout = EditoriaLayout;
@@ -48,10 +50,22 @@ const Editoria = () => {
   const EditoriaComponent = useMemo(
     () => (
       <>
+        <button
+          onClick={() => {
+            console.log(myConfig);
+            myConfig.PmPlugins = [];
+            myConfig.services = [...myConfig.services, new TablesService()];
+            setMyConfig({ ...myConfig });
+          }}
+        >
+          {' '}
+          change config
+        </button>
+
         <Wax
           ref={editorRef}
           key={key}
-          config={finalConfig}
+          config={myConfig}
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
@@ -68,7 +82,7 @@ const Editoria = () => {
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [layout, finalConfig],
+    [layout, myConfig],
   );
   return <>{EditoriaComponent}</>;
 };

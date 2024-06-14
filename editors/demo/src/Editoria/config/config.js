@@ -52,8 +52,7 @@ async function DummyPromise(userInput, { askKb }) {
       } else {
         // JSON response test
         const json = JSON.stringify({
-          content:
-            askKb ? 'KB will be queried' : 'Just a normal call',
+          content: askKb ? 'KB will be queried' : 'Just a normal call',
           citations: ['citation 1', 'citation 2', 'citation 3'],
           links: ['https://coko.foundation/', 'https://waxjs.net/about/'],
         });
@@ -234,7 +233,7 @@ export default {
         'SpecialCharacters',
         'CodeBlock',
         'ToggleAi',
-        'Tables',
+        // 'Tables',
         'TrackingAndEditing',
         'FullScreen',
       ],
@@ -306,13 +305,13 @@ export default {
     ],
     updateTags: saveTags,
   },
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:5010',
-    // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-    docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
-    YjsType: 'prosemirror',
-  },
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:5010',
+  //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
+  //   docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
+  //   YjsType: 'prosemirror',
+  // },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -325,7 +324,7 @@ export default {
   },
 
   services: [
-    new YjsService(),
+    // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),
@@ -337,7 +336,7 @@ export default {
     new TrackChangeService(),
     new CommentsService(),
     new ImageService(),
-    new TablesService(),
+    // new TablesService(),
     new BaseService(),
     // new NoteService(),
     new CodeBlockService(),

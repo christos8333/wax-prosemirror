@@ -35,6 +35,7 @@ const Wax = forwardRef((props, ref) => {
     autoFocus,
     browserSpellCheck,
     className,
+    config,
     customValues,
     fileUpload,
     layout,
@@ -48,6 +49,11 @@ const Wax = forwardRef((props, ref) => {
     scrollMargin,
     scrollThreshold,
   } = props;
+
+  useEffect(() => {
+    const newApplication = createApplication(props);
+    setApplication(newApplication);
+  }, [config.PmPlugins.length]);
 
   if (!application) return null;
 

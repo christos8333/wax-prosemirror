@@ -11,7 +11,7 @@ stages:
   - Build
   - Deploy
 
-build demo:
+.build demo:
   stage: Build
   image: docker:26
   services:
@@ -31,7 +31,7 @@ pages:
   stage: Deploy
   image: $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
   script:
-    - mv _build public
+    - mv /home/wax/_build public
   artifacts:
     paths:
       - public

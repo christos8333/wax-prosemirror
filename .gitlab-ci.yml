@@ -8,11 +8,11 @@ variables:
   BUILD_PATH: .
 
 stages:
-  - Build demo
-  - Deploy demo
+  - Build
+  - Deploy
 
 build demo:
-  stage: Build demo
+  stage: Build
   image: docker:26
   services:
     - docker:26-dind
@@ -28,6 +28,19 @@ build demo:
       $BUILD_PATH
     - docker push $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
     - docker push $IMAGE_NAME_DEMO:latest
+  only:
+    - master
+
+pages:
+  stage: Deploy
+  image: $IMAGE_NAME_DEPLOY
+  script:
+    - mv _build public
+  artifacts:
+    paths:
+      public
+  only:
+    - master
 
 # .build demo image:
 #   extends: .build production

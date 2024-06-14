@@ -29,7 +29,7 @@ build demo:
 
 pages:
   stage: Deploy
-  image: $IMAGE_NAME_DEPLOY:$CI_COMMIT_SHA
+  image: $IMAGE_NAME_DEMO:$CI_COMMIT_SHA
   script:
     - mv _build public
   artifacts:

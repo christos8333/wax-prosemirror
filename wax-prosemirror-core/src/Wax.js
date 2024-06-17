@@ -10,6 +10,7 @@ import PortalProvider from './PortalContext';
 import Application from './Application';
 import WaxView from './WaxView';
 import helpers from './helpers/helpers';
+import useWaxView from './useWaxView';
 
 const serializer = schema => {
   const WaxSerializer = DOMSerializer.fromSchema(schema);
@@ -34,6 +35,16 @@ const createConfigWithHash = config => {
   const configHash = createObjectHash(config);
   return configHash;
 };
+
+const setupLayout = (application, layout) => {
+  const Layout = application.container.get('Layout');
+  if (layout) Layout.setLayout(layout);
+
+  console.log(Layout.layoutComponent);
+  return WaviewMemo || Layout.layoutComponent;
+};
+
+let WaviewMemo = null;
 
 const Wax = forwardRef((props, ref) => {
   const {
@@ -67,18 +78,9 @@ const Wax = forwardRef((props, ref) => {
     console.log('create application from config. hash:', configHash);
     const newApplication = createApplication(props);
 
+    WaviewMemo = setupLayout(newApplication, layout);
     setApplication(newApplication);
   }, [configHash]);
-
-  const [WaxRender, setLayout] = useState(null);
-
-  useEffect(() => {
-    if (application) {
-      const Layout = application.container.get('Layout');
-      if (layout) Layout.setLayout(layout);
-      setLayout(() => Layout.layoutComponent);
-    }
-  }, [application?.id]);
 
   const finalOnChange = content => {
     if (!onChange) return;
@@ -90,20 +92,52 @@ const Wax = forwardRef((props, ref) => {
   // if (layout) Layout.setLayout(layout);
   // const WaxRender = Layout.layoutComponent;
 
-  // const WaviewMemo = useMemo(
-  //   () => (
-
-  //   ),
-  //   [],
-  // );
+  // const WaviewMemo = () =>
+  //   useMemo(
+  //     () => ({
+  //       // eslint-disable-next-line no-shadow
+  //       if(application) {
+  //         const Layout = application.container.get('Layout');
+  //         if (layout) Layout.setLayout(layout);
+  //         return () => Layout.layoutComponent;
+  //       },
+  //     }),
+  //     [],
+  //   );
   // console.log(WaviewMemo);
+  // let WaviewMemo = null;
+  // if (application) {
+  //   const Layout = application.container.get('Layout');
+  //   if (layout) Layout.setLayout(layout);
+  //   WaviewMemo = Layout.layoutComponent;
+  // }
+  if (!application || !WaviewMemo) return null;
 
-  if (!application || !WaxRender) return null;
-
+  console.log(WaviewMemo);
   return (
     <WaxProvider app={application}>
       <PortalProvider>
-        <WaxView
+        <WaviewMemo
+          className={className}
+          autoFocus={autoFocus}
+          browserSpellCheck={browserSpellCheck}
+          customValues={customValues}
+          fileUpload={fileUpload}
+          onChange={finalOnChange || (() => true)}
+          placeholder={placeholder}
+          readonly={readonly}
+          ref={ref}
+          scrollMargin={scrollMargin}
+          scrollThreshold={scrollThreshold}
+          serializer={serializer}
+          targetFormat={targetFormat}
+          TrackChange={
+            application.config.get('config.EnableTrackChangeService') ||
+            undefined
+          }
+          user={user}
+        />
+        {/* <WaxView
           autoFocus={autoFocus}
           browserSpellCheck={browserSpellCheck}
           customValues={customValues}
@@ -122,9 +156,7 @@ const Wax = forwardRef((props, ref) => {
           }
           user={user}
           value={value}
-        >
-          {({ editor }) => <WaxRender className={className} editor={editor} />}
-        </WaxView>
+        /> */}
       </PortalProvider>
     </WaxProvider>
   );

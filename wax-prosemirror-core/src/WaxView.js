@@ -147,8 +147,17 @@ const WaxView = forwardRef((props, ref) => {
     if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
       props.onChange(docContent);
   };
+  console.log(view);
 
-  const editor = (
+  // const editor = (
+  //   <EditorContainer>
+  //     <div ref={setEditorRef} />
+  //     <WaxOverlays activeViewId="main" group="main" />
+  //     <WaxPortals />
+  //   </EditorContainer>
+  // );
+
+  return (
     <EditorContainer>
       <div ref={setEditorRef} />
       <WaxOverlays activeViewId="main" group="main" />
@@ -156,13 +165,13 @@ const WaxView = forwardRef((props, ref) => {
     </EditorContainer>
   );
 
-  return useMemo(
-    () =>
-      props.children({
-        editor,
-      }),
-    [readonly, customValues, context.app.id],
-  );
+  // return useMemo(
+  //   () =>
+  //     props.children({
+  //       editor,
+  //     }),
+  //   [readonly, customValues, context.app.id],
+  // );
 });
 
 export default WaxView;

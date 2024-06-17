@@ -46,44 +46,46 @@ const Editoria = () => {
     key = 'editoriaMobile';
   }
   const editorRef = useRef();
+  return (
+    <>
+      <button
+        onClick={() => {
+          console.log(myConfig);
+          myConfig.PmPlugins = [];
+          myConfig.services = [...myConfig.services, new TablesService()];
+          setMyConfig({ ...myConfig });
+        }}
+      >
+        {' '}
+        change config
+      </button>
 
-  const EditoriaComponent = useMemo(
-    () => (
-      <>
-        <button
-          onClick={() => {
-            console.log(myConfig);
-            myConfig.PmPlugins = [];
-            myConfig.services = [...myConfig.services, new TablesService()];
-            setMyConfig({ ...myConfig });
-          }}
-        >
-          {' '}
-          change config
-        </button>
-
-        <Wax
-          ref={editorRef}
-          key={key}
-          config={myConfig}
-          autoFocus
-          placeholder="Type Something..."
-          fileUpload={file => renderImage(file)}
-          // value={demo}
-          // readonly
-          layout={layout}
-          // onChange={debounce(source => {
-          //   console.log(JSON.stringify(source));
-          // }, 200)}
-          user={user}
-          scrollMargin={200}
-          scrollThreshold={200}
-        />
-      </>
-    ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [layout, myConfig],
+      <Wax
+        ref={editorRef}
+        key={key}
+        config={myConfig}
+        autoFocus
+        placeholder="Type Something..."
+        fileUpload={file => renderImage(file)}
+        // value={demo}
+        // readonly
+        layout={layout}
+        // onChange={debounce(source => {
+        //   console.log(JSON.stringify(source));
+        // }, 200)}
+        user={user}
+        scrollMargin={200}
+        scrollThreshold={200}
+      />
+    </>
   );
+  // const EditoriaComponent = useMemo(
+  //   () => (
+
+  //   ),
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [layout, myConfig],
+  // );
   return <>{EditoriaComponent}</>;
 };
 

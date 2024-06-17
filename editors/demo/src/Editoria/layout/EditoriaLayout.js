@@ -215,11 +215,19 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
+const DummyCompo = () => {
+  console.log('dummy');
+  return <div>MY DIV</div>;
+};
+
 const EditoriaLayout = ({ editor }) => {
   const {
     pmViews: { main },
     options,
   } = useContext(WaxContext);
+  const Dummy = useMemo(() => {
+    return <DummyCompo />;
+  }, []);
 
   let fullScreenStyles = {};
 
@@ -251,7 +259,7 @@ const EditoriaLayout = ({ editor }) => {
   };
 
   const delayedShowedNotes = useCallback(
-    setTimeout(() => showNotes(), 100),
+    // setTimeout(() => showNotes(), 100),
     [],
   );
 
@@ -265,6 +273,7 @@ const EditoriaLayout = ({ editor }) => {
 
   return (
     <ThemeProvider theme={cokoTheme}>
+      {Dummy}
       <Wrapper style={fullScreenStyles} id="wax-container">
         <TopMenu>
           <MainMenuToolBar />

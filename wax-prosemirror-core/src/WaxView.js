@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useEffect,
   forwardRef,
+  useState,
   useImperativeHandle,
 } from 'react';
 import styled from 'styled-components';
@@ -15,9 +16,7 @@ import trackedTransaction from './utilities/track-changes/trackedTransaction';
 import { WaxContext } from './WaxContext';
 import { PortalContext } from './PortalContext';
 import ComponentPlugin from './ComponentPlugin';
-import WaxOptions, { parser } from './WaxOptions';
-import Placeholder from './config/plugins/placeholder';
-import defaultPlugins from './config/plugins/defaultPlugins';
+import WaxOptions from './WaxOptions';
 
 import helpers from './helpers/helpers';
 import './styles/styles.css';
@@ -40,7 +39,6 @@ const WaxView = forwardRef((props, ref) => {
     readonly,
     autoFocus,
     user,
-    placeholder,
     targetFormat,
     serializer,
     scrollMargin,
@@ -49,7 +47,7 @@ const WaxView = forwardRef((props, ref) => {
 
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
-  // const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
@@ -85,7 +83,7 @@ const WaxView = forwardRef((props, ref) => {
           },
         );
 
-        // setMounted(true);
+        setMounted(true);
 
         context.updateView(
           {
@@ -109,39 +107,6 @@ const WaxView = forwardRef((props, ref) => {
   useEffect(() => {
     return () => (view = null);
   }, []);
-
-  useEffect(() => {
-    // const parse = parser(schema);
-    if (context.app.config.get('config.PmPlugins').length === 0) {
-      console.log('reconfigure>');
-      let finalPlugins = [];
-
-      const createPlaceholder = () => {
-        return Placeholder({ content: placeholder });
-      };
-
-      finalPlugins = defaultPlugins.concat([
-        createPlaceholder(placeholder),
-        ...context.app.getPlugins(),
-      ]);
-
-      const reconfigureOptions = {
-        // doc: parse(value),
-        schema,
-        plugins: finalPlugins,
-      };
-
-      context.pmViews.main.updateState(EditorState.create(reconfigureOptions));
-
-      if (context.pmViews.main.dispatch) {
-        context.pmViews.main.dispatch(
-          context.pmViews?.main.state.tr.setMeta('addToHistory', false),
-        );
-      }
-    }
-
-    return true;
-  }, [context.app.id]);
 
   useImperativeHandle(ref, () => ({
     getContent() {
@@ -196,7 +161,7 @@ const WaxView = forwardRef((props, ref) => {
       props.children({
         editor,
       }),
-    [readonly, customValues],
+    [readonly, customValues, context.app.id],
   );
 });
 

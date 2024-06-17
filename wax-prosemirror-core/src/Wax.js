@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, useState, forwardRef, useMemo } from 'react';
 import { DOMSerializer } from 'prosemirror-model';
 import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from 'crypto-js';
@@ -46,7 +46,6 @@ const Wax = forwardRef((props, ref) => {
     layout,
     placeholder,
     readonly,
-    reconfigureState,
     value,
     user,
     onChange,
@@ -65,13 +64,21 @@ const Wax = forwardRef((props, ref) => {
   // }, []);
 
   useEffect(() => {
-    console.log('updated application', configHash);
+    console.log('create application from config. hash:', configHash);
     const newApplication = createApplication(props);
 
     setApplication(newApplication);
   }, [configHash]);
 
-  if (!application) return null;
+  const [WaxRender, setLayout] = useState(null);
+
+  useEffect(() => {
+    if (application) {
+      const Layout = application.container.get('Layout');
+      if (layout) Layout.setLayout(layout);
+      setLayout(() => Layout.layoutComponent);
+    }
+  }, [application?.id]);
 
   const finalOnChange = content => {
     if (!onChange) return;
@@ -79,9 +86,20 @@ const Wax = forwardRef((props, ref) => {
     helpers.saveContent(content, onChange, schema, serializer, targetFormat);
   };
 
-  const Layout = application.container.get('Layout');
-  if (layout) Layout.setLayout(layout);
-  const WaxRender = Layout.layoutComponent;
+  // const Layout = application.container.get('Layout');
+  // if (layout) Layout.setLayout(layout);
+  // const WaxRender = Layout.layoutComponent;
+
+  // const WaviewMemo = useMemo(
+  //   () => (
+
+  //   ),
+  //   [],
+  // );
+  // console.log(WaviewMemo);
+
+  if (!application || !WaxRender) return null;
+
   return (
     <WaxProvider app={application}>
       <PortalProvider>
@@ -93,7 +111,6 @@ const Wax = forwardRef((props, ref) => {
           onChange={finalOnChange || (() => true)}
           placeholder={placeholder}
           readonly={readonly}
-          reconfigureState={reconfigureState}
           ref={ref}
           scrollMargin={scrollMargin}
           scrollThreshold={scrollThreshold}

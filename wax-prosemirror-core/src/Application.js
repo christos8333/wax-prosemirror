@@ -114,13 +114,13 @@ export default class Application {
 
     Set base bindings for the App to work
     */
-    container.bind('PmPlugins').to(PmPlugins);
+    container.bind('PmPlugins').to(PmPlugins).inSingletonScope();
 
     container.bind('Wax').toFactory(() => new Application(container));
 
     console.log(appConfig);
-    container.bind('config').toFactory(() => appConfig);
-    container.bind('Config').to(Config);
+    container.bind('config').toConstantValue(appConfig);
+    container.bind('Config').to(Config).inSingletonScope();
 
     /*
     Start the App

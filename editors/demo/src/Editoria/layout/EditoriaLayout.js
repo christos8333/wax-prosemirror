@@ -11,7 +11,7 @@ import {
   WaxContext,
   ComponentPlugin,
   DocumentHelpers,
-  useWaxView,
+  WaxView,
 } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
@@ -216,86 +216,51 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
+const WaxPortals = ComponentPlugin('waxPortals');
+const WaxOverlays = ComponentPlugin('waxOverlays');
+
 const DummyCompo = () => {
   console.log('dummy');
   return <div>MY DIV</div>;
 };
 
-const EditorComponent = props => {
-  useWaxView(props);
+const EditoriaLayout = props => {
   const {
     pmViews: { main },
+    options,
   } = useContext(WaxContext);
-
-  const editorRef = useCallback(
-    element => {
-      if (element && main) {
-        element.replaceChildren(main?.dom);
-      }
-    },
-    [main],
-  );
-
-  useEffect(() => {
-    if (props.autoFocus) {
-      main?.focus();
-    }
-  }, [props.autoFocus, main]);
-
-  return <div ref={editorRef} className="prosemirror-editor" />;
-};
-
-const EditoriaLayout = ({
-  className,
-  browserSpellCheck,
-  customValues,
-  readonly,
-  autoFocus,
-  user,
-  targetFormat,
-  serializer,
-  scrollMargin,
-  scrollThreshold,
-  fileUpload,
-  finalOnChange,
-  placeholder,
-}) => {
-  // const {
-  //   pmViews: { main },
-  //   options,
-  // } = useContext(WaxContext);
   const Dummy = useMemo(() => {
     return <DummyCompo />;
   }, []);
 
   let fullScreenStyles = {};
 
-  // if (options.fullScreen) {
-  //   fullScreenStyles = {
-  //     backgroundColor: '#fff',
-  //     height: '100%',
-  //     left: '0',
-  //     margin: '0',
-  //     padding: '0',
-  //     position: 'fixed',
-  //     top: '0',
-  //     width: '100%',
-  //     zIndex: '99999',
-  //   };
-  // }
-  // const notes = main && getNotes(main);
-  // const commentsTracksCount =
-  //   main && DocumentHelpers.getCommentsTracksCount(main);
-  // const trackBlockNodesCount =
-  //   main && DocumentHelpers.getTrackBlockNodesCount(main);
+  if (options.fullScreen) {
+    fullScreenStyles = {
+      backgroundColor: '#fff',
+      height: '100%',
+      left: '0',
+      margin: '0',
+      padding: '0',
+      position: 'fixed',
+      top: '0',
+      width: '100%',
+      zIndex: '99999',
+    };
+  }
+  const notes = main && getNotes(main);
+  const commentsTracksCount =
+    main && DocumentHelpers.getCommentsTracksCount(main);
+  const trackBlockNodesCount =
+    main && DocumentHelpers.getTrackBlockNodesCount(main);
 
-  // const areNotes = notes && !!notes.length && notes.length > 0;
+  const areNotes = notes && !!notes.length && notes.length > 0;
 
-  // const [hasNotes, setHasNotes] = useState(areNotes);
+  const [hasNotes, setHasNotes] = useState(areNotes);
 
-  // const showNotes = () => {
-  //   setHasNotes(areNotes);
-  // };
+  const showNotes = () => {
+    setHasNotes(areNotes);
+  };
 
   const delayedShowedNotes = useCallback(
     // setTimeout(() => showNotes(), 100),
@@ -304,13 +269,14 @@ const EditoriaLayout = ({
 
   useEffect(() => {}, [delayedShowedNotes]);
 
-  // const users = [{
-  //   userId: '1',
-  //   displayName: 'test test',
-  //   currentUser: true,
-  // }]
+  const users = [
+    {
+      userId: '1',
+      displayName: 'test test',
+      currentUser: true,
+    },
+  ];
 
-  console.log('ssss');
   return (
     <ThemeProvider theme={cokoTheme}>
       {Dummy}
@@ -334,31 +300,13 @@ const EditoriaLayout = ({
               onResizeEnd={onResizeEnd}
             >
               <WaxSurfaceScroll>
-                <EditorComponent
-                  className={className}
-                  autoFocus={autoFocus}
-                  browserSpellCheck={browserSpellCheck}
-                  customValues={customValues}
-                  fileUpload={fileUpload}
-                  onChange={finalOnChange || (() => true)}
-                  placeholder={placeholder}
-                  readonly={readonly}
-                  // ref={ref}
-                  scrollMargin={scrollMargin}
-                  scrollThreshold={scrollThreshold}
-                  serializer={serializer}
-                  targetFormat={targetFormat}
-                  // TrackChange={
-                  //   application.config.get('config.EnableTrackChangeService') ||
-                  //   undefined
-                  // }
-                  user={user}
-                />
-                {/* <EditorContainer>{editor}</EditorContainer> */}
+                <EditorContainer>
+                  <WaxView {...props} />
+                </EditorContainer>
                 <CommentsContainer>
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>
-                      {/* {commentsTracksCount + trackBlockNodesCount} COMMENTS AND */}
+                      {commentsTracksCount + trackBlockNodesCount} COMMENTS AND
                       SUGGESTIONS
                       <CommentTrackOptions>
                         <CommentTrackToolBar />
@@ -368,6 +316,16 @@ const EditoriaLayout = ({
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
+              {hasNotes && (
+                <NotesAreaContainer>
+                  <NotesContainer id="notes-container">
+                    <NotesArea view={main} />
+                  </NotesContainer>
+                  <CommentsContainerNotes>
+                    <RightArea area="notes" />
+                  </CommentsContainerNotes>
+                </NotesAreaContainer>
+              )}
             </PanelGroup>
           </EditorArea>
         </Main>

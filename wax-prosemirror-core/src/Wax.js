@@ -1,16 +1,13 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useState, forwardRef, useMemo } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { DOMSerializer } from 'prosemirror-model';
-import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from 'crypto-js';
 import stringify from 'safe-stable-stringify';
 import DefaultSchema from './utilities/schema/DefaultSchema';
 import WaxProvider from './WaxContext';
 import PortalProvider from './PortalContext';
 import Application from './Application';
-import WaxView from './WaxView';
 import helpers from './helpers/helpers';
-import useWaxView from './useWaxView';
 
 const serializer = schema => {
   const WaxSerializer = DOMSerializer.fromSchema(schema);
@@ -39,14 +36,12 @@ const createConfigWithHash = config => {
 const setupLayout = (application, layout) => {
   const Layout = application.container.get('Layout');
   if (layout) Layout.setLayout(layout);
-
-  console.log(Layout.layoutComponent);
-  return WaviewMemo || Layout.layoutComponent;
+  return WaxLayout || Layout.layoutComponent;
 };
 
-let WaviewMemo = null;
+let WaxLayout = null;
 
-const Wax = forwardRef((props, ref) => {
+const Wax = forwardRef((props, innerViewRef) => {
   const {
     autoFocus,
     browserSpellCheck,
@@ -69,16 +64,17 @@ const Wax = forwardRef((props, ref) => {
   const configHash = createConfigWithHash(config);
 
   // useEffect(() => {
-  //   const newApplication = createApplication(props);
-  //   setApplication(newApplication);
-  //   return () => newApplication.resetApp();
+  //   // const newApplication = createApplication(props);
+  //   // setApplication(newApplication);
+  //   return () => application.resetApp();
   // }, []);
 
   useEffect(() => {
     console.log('create application from config. hash:', configHash);
+    // if (application) application.resetApp();
     const newApplication = createApplication(props);
 
-    WaviewMemo = setupLayout(newApplication, layout);
+    WaxLayout = setupLayout(newApplication, layout);
     setApplication(newApplication);
   }, [configHash]);
 
@@ -88,64 +84,21 @@ const Wax = forwardRef((props, ref) => {
     helpers.saveContent(content, onChange, schema, serializer, targetFormat);
   };
 
-  // const Layout = application.container.get('Layout');
-  // if (layout) Layout.setLayout(layout);
-  // const WaxRender = Layout.layoutComponent;
+  if (!application || !WaxLayout) return null;
 
-  // const WaviewMemo = () =>
-  //   useMemo(
-  //     () => ({
-  //       // eslint-disable-next-line no-shadow
-  //       if(application) {
-  //         const Layout = application.container.get('Layout');
-  //         if (layout) Layout.setLayout(layout);
-  //         return () => Layout.layoutComponent;
-  //       },
-  //     }),
-  //     [],
-  //   );
-  // console.log(WaviewMemo);
-  // let WaviewMemo = null;
-  // if (application) {
-  //   const Layout = application.container.get('Layout');
-  //   if (layout) Layout.setLayout(layout);
-  //   WaviewMemo = Layout.layoutComponent;
-  // }
-  if (!application || !WaviewMemo) return null;
-
-  console.log(WaviewMemo);
   return (
     <WaxProvider app={application}>
       <PortalProvider>
-        <WaviewMemo
+        <WaxLayout
+          autoFocus={autoFocus}
+          browserSpellCheck={browserSpellCheck}
           className={className}
-          autoFocus={autoFocus}
-          browserSpellCheck={browserSpellCheck}
           customValues={customValues}
           fileUpload={fileUpload}
+          innerViewRef={innerViewRef}
           onChange={finalOnChange || (() => true)}
           placeholder={placeholder}
           readonly={readonly}
-          ref={ref}
-          scrollMargin={scrollMargin}
-          scrollThreshold={scrollThreshold}
-          serializer={serializer}
-          targetFormat={targetFormat}
-          TrackChange={
-            application.config.get('config.EnableTrackChangeService') ||
-            undefined
-          }
-          user={user}
-        />
-        {/* <WaxView
-          autoFocus={autoFocus}
-          browserSpellCheck={browserSpellCheck}
-          customValues={customValues}
-          fileUpload={fileUpload}
-          onChange={finalOnChange || (() => true)}
-          placeholder={placeholder}
-          readonly={readonly}
-          ref={ref}
           scrollMargin={scrollMargin}
           scrollThreshold={scrollThreshold}
           serializer={serializer}
@@ -156,7 +109,7 @@ const Wax = forwardRef((props, ref) => {
           }
           user={user}
           value={value}
-        /> */}
+        />
       </PortalProvider>
     </WaxProvider>
   );

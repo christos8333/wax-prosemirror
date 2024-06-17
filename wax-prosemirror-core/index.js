@@ -1,7 +1,7 @@
 /* Editor */
 export { default as Wax } from './src/Wax';
 
-export { default as useWaxView } from './src/useWaxView';
+export { default as WaxView } from './src/WaxView';
 
 /* Service Class */
 export { default as Service } from './src/Service';

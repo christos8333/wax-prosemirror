@@ -3,11 +3,10 @@ import 'reflect-metadata';
 import deepmerge from 'deepmerge';
 
 import { v4 as uuidv4 } from 'uuid';
+import { cloneDeep } from 'lodash';
 import Config from './config/Config';
 import defaultConfig from './config/defaultConfig';
 import PmPlugins from './PmPlugins';
-import DefaultSchema from './utilities/schema/DefaultSchema';
-import { cloneDeep } from 'lodash';
 
 export default class Application {
   constructor(container) {
@@ -102,13 +101,10 @@ export default class Application {
       },
     );
 
-    // const appConfig = {
-    //   config: { SchemaService: DefaultSchema, ...defaultConfig() },
-    // };
-
     /*
     Create Container
     */
+
     const container = new Container();
     /*
 
@@ -118,7 +114,6 @@ export default class Application {
 
     container.bind('Wax').toFactory(() => new Application(container));
 
-    console.log(appConfig);
     container.bind('config').toConstantValue(appConfig);
     container.bind('Config').to(Config).inSingletonScope();
 

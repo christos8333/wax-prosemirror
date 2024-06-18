@@ -53,10 +53,12 @@ export default ({ setPosition, position }) => {
         `[data-fileid='${selection.node.attrs.fileid}']`,
       );
 
-    const siblings = [...image.parentElement.children];
-    const figCaption = siblings.find(s => s.localName === 'figcaption');
+    if (!image) return;
 
-    if (!image || !figCaption) return;
+    const siblings = [...image.parentElement.children];
+    const figCaption = siblings.find(s => s.tagName === 'FIGCAPTION');
+
+    if (!figCaption) return;
     const imagePosition = image.getBoundingClientRect();
     const figCaptionPosition = figCaption.getBoundingClientRect().height + 10;
     const left = imagePosition.left - WaxSurface.left;

@@ -6,7 +6,6 @@ import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
 import { debounce } from 'lodash';
-import { TablesService } from 'wax-table-service';
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -27,13 +26,7 @@ const user = {
   username: 'admin',
 };
 
-// const users = [{
-//   userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-//   username: 'admin',
-// }];
-
 const Editoria = () => {
-  const [myConfig, setMyConfig] = useState(config);
   const [width] = useWindowSize();
 
   let layout = EditoriaLayout;
@@ -46,46 +39,32 @@ const Editoria = () => {
     key = 'editoriaMobile';
   }
   const editorRef = useRef();
-  return (
-    <>
-      <button
-        onClick={() => {
-          console.log(myConfig);
-          myConfig.PmPlugins = [];
-          myConfig.services = [...myConfig.services, new TablesService()];
-          setMyConfig({ ...myConfig });
-        }}
-      >
-        {' '}
-        change config
-      </button>
 
-      <Wax
-        ref={editorRef}
-        key={key}
-        config={myConfig}
-        autoFocus
-        placeholder="Type Something..."
-        fileUpload={file => renderImage(file)}
-        // value={demo}
-        // readonly
-        layout={layout}
-        // onChange={debounce(source => {
-        //   console.log(JSON.stringify(source));
-        // }, 200)}
-        user={user}
-        scrollMargin={200}
-        scrollThreshold={200}
-      />
-    </>
+  const EditoriaComponent = useMemo(
+    () => (
+      <>
+        <Wax
+          ref={editorRef}
+          key={key}
+          config={finalConfig}
+          autoFocus
+          placeholder="Type Something..."
+          fileUpload={file => renderImage(file)}
+          // value={demo}
+          // readonly
+          layout={layout}
+          // onChange={debounce(source => {
+          //   console.log(JSON.stringify(source));
+          // }, 200)}
+          user={user}
+          scrollMargin={200}
+          scrollThreshold={200}
+        />
+      </>
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [layout, finalConfig],
   );
-  // const EditoriaComponent = useMemo(
-  //   () => (
-
-  //   ),
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [layout, myConfig],
-  // );
   return <>{EditoriaComponent}</>;
 };
 

@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import {
@@ -216,22 +210,11 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
-const WaxPortals = ComponentPlugin('waxPortals');
-const WaxOverlays = ComponentPlugin('waxOverlays');
-
-const DummyCompo = () => {
-  console.log('dummy');
-  return <div>MY DIV</div>;
-};
-
 const EditoriaLayout = props => {
   const {
     pmViews: { main },
     options,
   } = useContext(WaxContext);
-  const Dummy = useMemo(() => {
-    return <DummyCompo />;
-  }, []);
 
   let fullScreenStyles = {};
 
@@ -263,23 +246,14 @@ const EditoriaLayout = props => {
   };
 
   const delayedShowedNotes = useCallback(
-    // setTimeout(() => showNotes(), 100),
+    setTimeout(() => showNotes(), 100),
     [],
   );
 
   useEffect(() => {}, [delayedShowedNotes]);
 
-  const users = [
-    {
-      userId: '1',
-      displayName: 'test test',
-      currentUser: true,
-    },
-  ];
-
   return (
     <ThemeProvider theme={cokoTheme}>
-      {Dummy}
       <Wrapper style={fullScreenStyles} id="wax-container">
         <TopMenu>
           <MainMenuToolBar />

@@ -63,17 +63,12 @@ const Wax = forwardRef((props, innerViewRef) => {
   const [application, setApplication] = useState();
   const configHash = createConfigWithHash(config);
 
-  // useEffect(() => {
-  //   // const newApplication = createApplication(props);
-  //   // setApplication(newApplication);
-  //   return () => application.resetApp();
-  // }, []);
+  useEffect(() => {
+    return () => application.resetApp();
+  }, []);
 
   useEffect(() => {
-    console.log('create application from config. hash:', configHash);
-    // if (application) application.resetApp();
     const newApplication = createApplication(props);
-
     WaxLayout = setupLayout(newApplication, layout);
     setApplication(newApplication);
   }, [configHash]);

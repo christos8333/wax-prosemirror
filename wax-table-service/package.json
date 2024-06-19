@@ -18,7 +18,7 @@
     "inversify": "^5.0.1",
     "lodash": "^4.17.4",
     "prosemirror-keymap": "1.2.1",
-    "prosemirror-state": "1.4.2",
+    "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.7.1",
     "prosemirror-view": "1.30.2",
     "react-i18next": "^13.3.1",

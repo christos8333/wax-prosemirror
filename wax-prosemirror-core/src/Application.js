@@ -1,12 +1,16 @@
 import { Container } from 'inversify';
 import 'reflect-metadata';
 import deepmerge from 'deepmerge';
+
+import { v4 as uuidv4 } from 'uuid';
+import { cloneDeep } from 'lodash';
 import Config from './config/Config';
 import defaultConfig from './config/defaultConfig';
 import PmPlugins from './PmPlugins';
 
 export default class Application {
   constructor(container) {
+    this.id = uuidv4();
     this.container = container;
     this.PmPlugins = container.get('PmPlugins');
   }
@@ -82,20 +86,25 @@ export default class Application {
 
   static create(config) {
     /* Merge Core Config with User Config */
-    const appConfig = deepmerge({ config: defaultConfig() }, config, {
-      customMerge: key => {
-        if (key === 'services') {
-          return (coreService, configService) => {
-            return coreService.concat(configService);
-          };
-        }
-        return true;
+    const appConfig = deepmerge(
+      { config: defaultConfig() },
+      cloneDeep(config),
+      {
+        customMerge: key => {
+          if (key === 'services') {
+            return (coreService, configService) => {
+              return coreService.concat(configService);
+            };
+          }
+          return true;
+        },
       },
-    });
+    );
 
     /*
     Create Container
     */
+
     const container = new Container();
     /*
 

@@ -11,6 +11,14 @@ class MenuService extends Service {
     if (this.app.config.get('config.MenuService') === undefined) return false;
     const { menus } = this.container.get('MenuCollection');
     const layout = this.container.get('Layout');
+
+    // console.log(layout.components.mainMenuToolBar);
+    menus.forEach(menu => {
+      if (layout.components[menu.config.templateArea]) {
+        layout.components[menu.config.templateArea].clear();
+      }
+    });
+
     menus.forEach(menu => {
       layout.addComponent(menu.config.templateArea, menu.render());
     });

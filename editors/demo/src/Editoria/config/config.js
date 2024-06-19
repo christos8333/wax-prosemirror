@@ -52,8 +52,7 @@ async function DummyPromise(userInput, { askKb }) {
       } else {
         // JSON response test
         const json = JSON.stringify({
-          content:
-            askKb ? 'KB will be queried' : 'Just a normal call',
+          content: askKb ? 'KB will be queried' : 'Just a normal call',
           citations: ['citation 1', 'citation 2', 'citation 3'],
           links: ['https://coko.foundation/', 'https://waxjs.net/about/'],
         });

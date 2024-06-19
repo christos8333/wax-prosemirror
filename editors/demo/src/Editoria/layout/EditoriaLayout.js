@@ -1,16 +1,11 @@
-import React, {
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import {
   WaxContext,
   ComponentPlugin,
   DocumentHelpers,
+  WaxView,
 } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
@@ -215,7 +210,7 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
-const EditoriaLayout = ({ editor }) => {
+const EditoriaLayout = props => {
   const {
     pmViews: { main },
     options,
@@ -257,12 +252,6 @@ const EditoriaLayout = ({ editor }) => {
 
   useEffect(() => {}, [delayedShowedNotes]);
 
-  // const users = [{
-  //   userId: '1',
-  //   displayName: 'test test',
-  //   currentUser: true,
-  // }]
-
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
@@ -285,7 +274,9 @@ const EditoriaLayout = ({ editor }) => {
               onResizeEnd={onResizeEnd}
             >
               <WaxSurfaceScroll>
-                <EditorContainer>{editor}</EditorContainer>
+                <EditorContainer>
+                  <WaxView {...props} />
+                </EditorContainer>
                 <CommentsContainer>
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>
@@ -299,7 +290,6 @@ const EditoriaLayout = ({ editor }) => {
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
-
               {hasNotes && (
                 <NotesAreaContainer>
                   <NotesContainer id="notes-container">

@@ -1,11 +1,12 @@
 /* eslint react/prop-types: 0 */
 import React, { useEffect, useState, forwardRef } from 'react';
 import { DOMSerializer } from 'prosemirror-model';
+import CryptoJS from 'crypto-js';
+import stringify from 'safe-stable-stringify';
 import DefaultSchema from './utilities/schema/DefaultSchema';
 import WaxProvider from './WaxContext';
 import PortalProvider from './PortalContext';
 import Application from './Application';
-import WaxView from './WaxView';
 import helpers from './helpers/helpers';
 
 const serializer = schema => {
@@ -22,25 +23,35 @@ const createApplication = props => {
   return application;
 };
 
-const Wax = forwardRef((props, ref) => {
-  const [application, setApplication] = useState();
+const createObjectHash = obj => {
+  const str = stringify(obj);
+  return CryptoJS.SHA256(str).toString();
+};
 
-  useEffect(() => {
-    const newApplication = createApplication(props);
-    setApplication(newApplication);
-    return () => newApplication.resetApp();
-  }, []);
+const createConfigWithHash = config => {
+  const configHash = createObjectHash(config);
+  return configHash;
+};
 
+const setupLayout = (application, layout) => {
+  const Layout = application.container.get('Layout');
+  if (layout) Layout.setLayout(layout);
+  return WaxLayout || Layout.layoutComponent;
+};
+
+let WaxLayout = null;
+
+const Wax = forwardRef((props, innerViewRef) => {
   const {
     autoFocus,
     browserSpellCheck,
     className,
+    config,
     customValues,
     fileUpload,
     layout,
     placeholder,
     readonly,
-    reconfigureState,
     value,
     user,
     onChange,
@@ -49,7 +60,18 @@ const Wax = forwardRef((props, ref) => {
     scrollThreshold,
   } = props;
 
-  if (!application) return null;
+  const [application, setApplication] = useState();
+  const configHash = createConfigWithHash(config);
+
+  useEffect(() => {
+    return () => application.resetApp();
+  }, []);
+
+  useEffect(() => {
+    const newApplication = createApplication(props);
+    WaxLayout = setupLayout(newApplication, layout);
+    setApplication(newApplication);
+  }, [configHash]);
 
   const finalOnChange = content => {
     if (!onChange) return;
@@ -57,22 +79,21 @@ const Wax = forwardRef((props, ref) => {
     helpers.saveContent(content, onChange, schema, serializer, targetFormat);
   };
 
-  const Layout = application.container.get('Layout');
-  if (layout) Layout.setLayout(layout);
-  const WaxRender = Layout.layoutComponent;
+  if (!application || !WaxLayout) return null;
+
   return (
     <WaxProvider app={application}>
       <PortalProvider>
-        <WaxView
+        <WaxLayout
           autoFocus={autoFocus}
           browserSpellCheck={browserSpellCheck}
+          className={className}
           customValues={customValues}
           fileUpload={fileUpload}
+          innerViewRef={innerViewRef}
           onChange={finalOnChange || (() => true)}
           placeholder={placeholder}
           readonly={readonly}
-          reconfigureState={reconfigureState}
-          ref={ref}
           scrollMargin={scrollMargin}
           scrollThreshold={scrollThreshold}
           serializer={serializer}
@@ -83,9 +104,7 @@ const Wax = forwardRef((props, ref) => {
           }
           user={user}
           value={value}
-        >
-          {({ editor }) => <WaxRender className={className} editor={editor} />}
-        </WaxView>
+        />
       </PortalProvider>
     </WaxProvider>
   );

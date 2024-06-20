@@ -1,5 +1,10 @@
-/* stylelint-disable no-descending-specificity */
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import PanelGroup from 'react-panelgroup';
 import {
@@ -16,7 +21,6 @@ const divider = css`
   .panelGroup {
     background: #fff;
   }
-
   .divider {
     > div {
       background: ${th('colorBorder')};
@@ -33,17 +37,16 @@ const divider = css`
 
 const Wrapper = styled.div`
   background: ${th('colorBackground')};
-  display: flex;
-  flex-direction: column;
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
-  height: 100%;
   line-height: ${grid(4)};
+  display: flex;
+  flex-direction: column;
 
-  overflow: hidden;
+  height: 100%;
   width: 100%;
+  overflow: hidden;
 
-  /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${divider}
 
   * {
@@ -58,26 +61,25 @@ const Main = styled.div`
 `;
 
 const TopMenu = styled.div`
-  background: ${th('colorBackgroundToolBar')};
-  border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   display: flex;
   min-height: 40px;
   user-select: none;
-
-  > div:last-child {
-    margin-left: 0;
-    margin-right: ${grid(5)};
-  }
+  background: ${th('colorBackgroundToolBar')};
+  border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
 
   > div:not(:last-child) {
-    border-right-color: ${th('colorFurniture')};
-    border-right-style: ${th('borderStyle')};
-    border-right-width: ${th('borderWidth')};
+    border-right: ${th('borderWidth')} ${th('borderStyle')}
+      ${th('colorFurniture')};
   }
 
   > div:nth-last-of-type(-n + 2) {
     margin-left: auto;
+  }
+
+  > div:last-child {
+    margin-left: 0;
+    margin-right: ${grid(5)};
   }
 
   > div[data-name='Tables'] {
@@ -86,10 +88,10 @@ const TopMenu = styled.div`
 `;
 
 const SideMenu = styled.div`
-  background: ${th('colorBackgroundToolBar')};
+  background: ${th('colorBackgroundToolBar')}
   border-right: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
-  height: calc(100% - 16px);
   min-width: 250px;
+  height: calc(100% - 16px);
 `;
 
 const EditorArea = styled.div`
@@ -97,19 +99,19 @@ const EditorArea = styled.div`
 `;
 
 const WaxSurfaceScroll = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  height: 100%;
   overflow-y: auto;
-  position: absolute;
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
   width: 100%;
-  /* stylelint-disable-next-line order/properties-alphabetical-order */
-  ${EditorElements}
+  position: absolute;
+  /* PM styles  for main content*/
+  ${EditorElements};
 `;
 
 const EditorContainer = styled.div`
-  height: 100%;
   width: 65%;
+  height: 100%;
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
@@ -121,38 +123,38 @@ const EditorContainer = styled.div`
 const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 35%;
+  height: 100%;
 `;
 
 const CommentsContainerNotes = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 35%;
+  height: 100%;
 `;
 
 const CommentTrackToolsContainer = styled.div`
-  background: white;
   display: flex;
-  padding-top: 5px;
   position: fixed;
+  padding-top: 5px;
   right: 30px;
-  width: 25%;
   z-index: 1;
+  background: white;
+  width: 25%;
 `;
 
 const CommentTrackTools = styled.div`
-  display: flex;
   margin-left: auto;
+  display: flex;
   position: relative;
   z-index: 1;
 `;
 
 const CommentTrackOptions = styled.div`
-  bottom: 5px;
   display: flex;
   margin-left: 10px;
+  bottom: 5px;
   position: relative;
 `;
 
@@ -160,10 +162,10 @@ const NotesAreaContainer = styled.div`
   background: #fff;
   display: flex;
   flex-direction: row;
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
   position: absolute;
-  width: 100%;
   /* PM styles  for note content*/
   .ProseMirror {
     display: inline;
@@ -174,19 +176,18 @@ const NotesContainer = styled.div`
   counter-reset: footnote-view;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  padding-top: 10px;
   padding-bottom: ${grid(4)};
   padding-left: ${grid(10)};
-  padding-top: 10px;
+  height: 100%;
   width: 65%;
-  /* stylelint-disable-next-line order/properties-alphabetical-order */
-  ${EditorElements}
+  ${EditorElements};
 `;
 const WaxBottomRightInfo = styled.div``;
 const InfoContainer = styled.div`
-  bottom: 1px;
   display: flex;
   position: fixed;
+  bottom: 1px;
   right: 21px;
   z-index: 999;
 `;
@@ -215,7 +216,25 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
+const MyComp = ({ name }) => {
+  console.log(name);
+  return (
+    <div>
+      <span>{name}</span>
+      <button
+        onClick={() => {
+          console.log('ffff');
+        }}
+      >
+        {' '}
+        change config
+      </button>
+    </div>
+  );
+};
+
 const EditoriaLayout = props => {
+  console.log('props');
   const {
     pmViews: { main },
     options,
@@ -236,30 +255,41 @@ const EditoriaLayout = props => {
       zIndex: '99999',
     };
   }
-  const notes = main && getNotes(main);
-  const commentsTracksCount =
-    main && DocumentHelpers.getCommentsTracksCount(main);
-  const trackBlockNodesCount =
-    main && DocumentHelpers.getTrackBlockNodesCount(main);
+  // const notes = main && getNotes(main);
+  // const commentsTracksCount =
+  //   main && DocumentHelpers.getCommentsTracksCount(main);
+  // const trackBlockNodesCount =
+  //   main && DocumentHelpers.getTrackBlockNodesCount(main);
 
-  const areNotes = notes && !!notes.length && notes.length > 0;
+  // const areNotes = notes && !!notes.length && notes.length > 0;
 
-  const [hasNotes, setHasNotes] = useState(areNotes);
+  // const [hasNotes, setHasNotes] = useState(areNotes);
 
-  const showNotes = () => {
-    setHasNotes(areNotes);
-  };
+  // const showNotes = () => {
+  //   setHasNotes(areNotes);
+  // };
 
-  const delayedShowedNotes = useCallback(() => {
-    const delayShowNotes = setTimeout(() => showNotes(), 100);
-    return clearInterval(delayShowNotes);
-  }, []);
+  // const delayedShowedNotes = useCallback(() => {
+  //   const delayShowNotes = setTimeout(() => showNotes(), 100);
+  //   return clearInterval(delayShowNotes);
+  // }, []);
 
-  useEffect(() => {}, [delayedShowedNotes]);
+  // useEffect(() => {}, [delayedShowedNotes]);
+
+  const EditoriaComponent = useMemo(
+    () => {
+      console.log('useMemo');
+      return <MyComp name={props?.name} />;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props?.name],
+  );
+  // return <>{EditoriaComponent}</>;
 
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
+        {EditoriaComponent}
         <TopMenu>
           <MainMenuToolBar />
         </TopMenu>
@@ -273,20 +303,24 @@ const EditoriaLayout = props => {
             <PanelGroup
               direction="column"
               panelWidths={[
-                { size: surfaceHeight, resize: 'stretch' },
-                { size: notesHeight, resize: 'resize' },
+                {
+                  size: surfaceHeight,
+                  resize: 'stretch',
+                },
+                {
+                  size: notesHeight,
+                  resize: 'resize',
+                },
               ]}
               onResizeEnd={onResizeEnd}
             >
-              <WaxSurfaceScroll id="wax-surface-scroll" l>
+              <WaxSurfaceScroll>
                 <EditorContainer>
                   <WaxView {...props} />
                 </EditorContainer>
                 <CommentsContainer>
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>
-                      {commentsTracksCount + trackBlockNodesCount} COMMENTS AND
-                      SUGGESTIONS
                       <CommentTrackOptions>
                         <CommentTrackToolBar />
                       </CommentTrackOptions>
@@ -295,16 +329,6 @@ const EditoriaLayout = props => {
                   <RightArea area="main" />
                 </CommentsContainer>
               </WaxSurfaceScroll>
-              {hasNotes && (
-                <NotesAreaContainer>
-                  <NotesContainer id="notes-container">
-                    <NotesArea view={main} />
-                  </NotesContainer>
-                  <CommentsContainerNotes>
-                    <RightArea area="notes" />
-                  </CommentsContainerNotes>
-                </NotesAreaContainer>
-              )}
             </PanelGroup>
           </EditorArea>
         </Main>

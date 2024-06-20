@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import { ComponentPlugin } from 'wax-prosemirror-core';
+import { ComponentPlugin, WaxView } from 'wax-prosemirror-core';
 import { cokoTheme } from '../theme';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import EditorMiniElements from './EditorMiniElements';
@@ -70,7 +70,7 @@ const EditorContainer = styled.div`
 
 const TopBar = ComponentPlugin('topBar');
 
-const EnterLayout = ({ editor }) => (
+const EnterLayout = props => (
   <ThemeProvider theme={cokoTheme}>
     <Wrapper>
       <TopMenu>
@@ -79,7 +79,9 @@ const EnterLayout = ({ editor }) => (
       <Main>
         <EditorArea>
           <WaxSurfaceScroll>
-            <EditorContainer>{editor}</EditorContainer>
+            <EditorContainer>
+              333 <WaxView {...props} />
+            </EditorContainer>
           </WaxSurfaceScroll>
         </EditorArea>
       </Main>

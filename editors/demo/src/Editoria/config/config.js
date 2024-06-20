@@ -227,7 +227,7 @@ export default {
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',
-        // 'Notes',
+        'Notes',
         'Lists',
         'Images',
         'SpecialCharacters',
@@ -279,8 +279,8 @@ export default {
     },
   },
   PmPlugins: [
-    tableEditing(),
-    columnResizing(),
+    // tableEditing(),
+    // columnResizing(),
     invisibles([hardBreak()]),
     disallowPasteImagesPlugin(() =>
       onWarning(
@@ -305,13 +305,14 @@ export default {
     ],
     updateTags: saveTags,
   },
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:5010',
-    // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-    docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
-    YjsType: 'prosemirror',
-  },
+
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:5010',
+  //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
+  //   docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
+  //   YjsType: 'prosemirror',
+  // },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -324,7 +325,7 @@ export default {
   },
 
   services: [
-    new YjsService(),
+    // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),
@@ -336,9 +337,9 @@ export default {
     new TrackChangeService(),
     new CommentsService(),
     new ImageService(),
-    new TablesService(),
+    // new TablesService(),
     new BaseService(),
-    // new NoteService(),
+    new NoteService(),
     new CodeBlockService(),
     new EditingSuggestingService(),
     new DisplayTextToolGroupService(),

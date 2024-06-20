@@ -31,7 +31,10 @@ const WaxView = props => {
       if (element && main) {
         element.replaceChildren(main?.dom);
       }
+
+      // return () => element.remove();
     },
+
     [main],
   );
 

@@ -64,13 +64,13 @@ const Wax = forwardRef((props, innerViewRef) => {
   const configHash = createConfigWithHash(config);
 
   useEffect(() => {
-    return () => application.resetApp();
-  }, []);
-
-  useEffect(() => {
     const newApplication = createApplication(props);
     WaxLayout = setupLayout(newApplication, layout);
     setApplication(newApplication);
+    return () => {
+      newApplication.resetApp();
+      WaxLayout = null;
+    };
   }, [configHash]);
 
   const finalOnChange = content => {

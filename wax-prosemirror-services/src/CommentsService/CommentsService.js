@@ -17,7 +17,7 @@ export default class CommentsService extends Service {
           ? this.app.context.options.currentYdoc.getMap('comments')
           : new Map();
 
-        if (commentsConfig.setComments().length > 0) {
+        if (commentsConfig?.setComments().length > 0) {
           commentsConfig.setComments().forEach(value => {
             map.set(value.id, value);
           });
@@ -46,7 +46,9 @@ export default class CommentsService extends Service {
           );
         }
 
-        commentsConfig.getComments(this.allCommentsFromStates);
+        if (commentsConfig?.getComments) {
+          commentsConfig.getComments(this.allCommentsFromStates);
+        }
         this.app.context.setOption({
           comments: this.allCommentsFromStates,
         });

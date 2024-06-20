@@ -5,6 +5,7 @@ import {
   WaxContext,
   ComponentPlugin,
   DocumentHelpers,
+  WaxView,
 } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
@@ -209,7 +210,7 @@ const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
 
-const EditoriaLayout = ({ editor }) => {
+const EditoriaLayout = props => {
   const {
     pmViews: { main },
     options,
@@ -273,7 +274,9 @@ const EditoriaLayout = ({ editor }) => {
               onResizeEnd={onResizeEnd}
             >
               <WaxSurfaceScroll>
-                <EditorContainer>{editor}</EditorContainer>
+                <EditorContainer>
+                  <WaxView {...props} />
+                </EditorContainer>
                 <CommentsContainer>
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>

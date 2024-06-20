@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useImperativeHandle } from 'react';
+import { useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import trackedTransaction from './utilities/track-changes/trackedTransaction';
@@ -11,7 +11,7 @@ import helpers from './helpers/helpers';
 import './styles/styles.css';
 
 let previousDoc;
-let view;
+
 const useWaxView = props => {
   const {
     browserSpellCheck,
@@ -24,19 +24,21 @@ const useWaxView = props => {
     serializer,
     scrollMargin,
     scrollThreshold,
+    onChange,
   } = props;
-
   const context = useContext(WaxContext);
+  const [WaxView, setWaxView] = useState(null);
   const { createPortal } = useContext(PortalContext);
 
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
-
+  let view;
   useEffect(() => {
     context.app.bootServices();
     context.app.getShortCuts();
     context.app.getRules();
 
+    console.log('all props', props);
     const options = WaxOptions({
       ...props,
       schema,
@@ -57,12 +59,15 @@ const useWaxView = props => {
       },
     });
 
+    setWaxView(view);
+
     context.updateView(
       {
         main: view,
       },
       'main',
     );
+
     setTimeout(() => {
       if (autoFocus && view) {
         view.focus();
@@ -96,7 +101,7 @@ const useWaxView = props => {
     const docContent =
       targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
     if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
-      props.onChange(docContent);
+      if (onChange) onChange(docContent);
 
     /* when a transaction comes from a view other than
       main don't keep updating the view ,as this is
@@ -114,7 +119,7 @@ const useWaxView = props => {
     }
   };
 
-  return view;
+  return WaxView;
 };
 
 export default useWaxView;

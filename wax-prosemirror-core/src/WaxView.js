@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
-import React, { useContext, useCallback, useEffect } from 'react';
+import React, { useContext, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { WaxContext } from './WaxContext';
 import ComponentPlugin from './ComponentPlugin';
@@ -20,25 +20,13 @@ const WaxPortals = ComponentPlugin('waxPortals');
 const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const WaxView = props => {
-  const { autoFocus, configHash } = props;
-  console.log(configHash);
+  const { autoFocus } = props;
+
   const main = useWaxView(props);
-  console.log(main);
+
   // const {
   //   pmViews: { main },
   // } = useContext(WaxContext);
-
-  const editorRef = useCallback(
-    element => {
-      console.log('WAXXXX');
-      if (element && main) {
-        element.replaceChildren(main?.dom);
-      }
-
-      // return () => element.remove();
-    },
-    [main],
-  );
 
   useEffect(() => {
     if (autoFocus && main) {
@@ -46,9 +34,27 @@ const WaxView = props => {
     }
   }, [autoFocus]);
 
+  const divRef = useRef(null);
+
+  const initialize = useCallback(() => {
+    console.log('Initializing only once');
+
+    // You can perform any initialization logic here
+    // This code will only run once when the component mounts
+    if (divRef.current) {
+      console.log('dkddkkdk', main?.dom);
+      divRef.current.replaceChildren(main?.dom);
+      // Perform some operation with divRef.current
+    }
+  }, [main]);
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
   return (
     <EditorContainer>
-      <div ref={editorRef} />
+      <div ref={divRef} />
       <WaxOverlays activeViewId="main" group="main" />
       <WaxPortals />
     </EditorContainer>

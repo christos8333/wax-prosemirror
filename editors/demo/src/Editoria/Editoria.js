@@ -30,6 +30,7 @@ const user = {
 const Editoria = () => {
   const [width] = useWindowSize();
   const [myConfig, setMyConfig] = useState(config);
+  const [myName, setMyName] = useState('COKO');
 
   let layout = EditoriaLayout;
   let finalConfig = config;
@@ -56,6 +57,15 @@ const Editoria = () => {
         change config
       </button>
 
+      <button
+        onClick={() => {
+          setMyName('GIANNIS');
+        }}
+      >
+        {' '}
+        change name
+      </button>
+
       <Wax
         ref={editorRef}
         key={key}
@@ -66,6 +76,7 @@ const Editoria = () => {
         // value={demo}
         // readonly
         layout={layout}
+        name={myName}
         // onChange={debounce(source => {
         //   console.log(JSON.stringify(source));
         // }, 200)}

@@ -20,21 +20,23 @@ const WaxPortals = ComponentPlugin('waxPortals');
 const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const WaxView = props => {
-  const { autoFocus } = props;
-  useWaxView(props);
-  const {
-    pmViews: { main },
-  } = useContext(WaxContext);
+  const { autoFocus, configHash } = props;
+  console.log(configHash);
+  const main = useWaxView(props);
+  console.log(main);
+  // const {
+  //   pmViews: { main },
+  // } = useContext(WaxContext);
 
   const editorRef = useCallback(
     element => {
+      console.log('WAXXXX');
       if (element && main) {
         element.replaceChildren(main?.dom);
       }
 
       // return () => element.remove();
     },
-
     [main],
   );
 

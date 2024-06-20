@@ -11,7 +11,7 @@ import helpers from './helpers/helpers';
 import './styles/styles.css';
 
 let previousDoc;
-
+let view;
 const useWaxView = props => {
   const {
     browserSpellCheck,
@@ -25,8 +25,6 @@ const useWaxView = props => {
     scrollMargin,
     scrollThreshold,
   } = props;
-
-  let view;
 
   const context = useContext(WaxContext);
   const { createPortal } = useContext(PortalContext);
@@ -95,6 +93,11 @@ const useWaxView = props => {
     const state = view.state.apply(tr);
     view.updateState(state);
 
+    const docContent =
+      targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
+    if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
+      props.onChange(docContent);
+
     /* when a transaction comes from a view other than
       main don't keep updating the view ,as this is
       the central point of each transaction
@@ -109,12 +112,9 @@ const useWaxView = props => {
         'main',
       );
     }
-
-    const docContent =
-      targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
-    if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
-      props.onChange(docContent);
   };
+
+  return view;
 };
 
 export default useWaxView;

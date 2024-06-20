@@ -181,14 +181,17 @@ export default ({ area, users }) => {
         )?.allCommentsDataList(),
       ),
     );
+    let firstRunTimeout = () => true;
     if (isFirstRun) {
-      setTimeout(() => {
+      firstRunTimeout = setTimeout(() => {
         setPosition(setTops());
         setFirstRun(false);
       }, 400);
     } else {
       setPosition(setTops());
     }
+
+    return () => clearTimeout(firstRunTimeout);
   }, [
     updateMarks(
       pmViews,

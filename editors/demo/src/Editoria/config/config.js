@@ -237,7 +237,7 @@ export default {
         'SpecialCharacters',
         'CodeBlock',
         'ToggleAi',
-        'Tables',
+        // 'Tables',
         'TrackingAndEditing',
         'FullScreen',
       ],

@@ -250,10 +250,10 @@ const EditoriaLayout = props => {
     setHasNotes(areNotes);
   };
 
-  const delayedShowedNotes = useCallback(
-    setTimeout(() => showNotes(), 100),
-    [],
-  );
+  const delayedShowedNotes = useCallback(() => {
+    const delayShowNotes = setTimeout(() => showNotes(), 100);
+    return clearInterval(delayShowNotes);
+  }, []);
 
   useEffect(() => {}, [delayedShowedNotes]);
 

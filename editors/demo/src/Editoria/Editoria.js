@@ -6,6 +6,7 @@ import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
 import { debounce } from 'lodash';
+import { TablesService } from 'wax-table-service';
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -28,6 +29,7 @@ const user = {
 
 const Editoria = () => {
   const [width] = useWindowSize();
+  const [myConfig, setMyConfig] = useState(config);
 
   let layout = EditoriaLayout;
   let finalConfig = config;
@@ -40,32 +42,78 @@ const Editoria = () => {
   }
   const editorRef = useRef();
 
-  const EditoriaComponent = useMemo(
-    () => (
-      <>
-        <Wax
-          ref={editorRef}
-          key={key}
-          config={finalConfig}
-          autoFocus
-          placeholder="Type Something..."
-          fileUpload={file => renderImage(file)}
-          // value={demo}
-          // readonly
-          layout={layout}
-          // onChange={debounce(source => {
-          //   console.log(JSON.stringify(source));
-          // }, 200)}
-          user={user}
-          scrollMargin={200}
-          scrollThreshold={200}
-        />
-      </>
-    ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [layout, finalConfig],
+  return (
+    <>
+      <button
+        onClick={() => {
+          console.log(myConfig);
+          myConfig.PmPlugins = [];
+          myConfig.services = [...myConfig.services, new TablesService()];
+          setMyConfig({ ...myConfig });
+        }}
+      >
+        {' '}
+        change config
+      </button>
+
+      <Wax
+        ref={editorRef}
+        key={key}
+        config={myConfig}
+        autoFocus
+        placeholder="Type Something..."
+        fileUpload={file => renderImage(file)}
+        // value={demo}
+        // readonly
+        layout={layout}
+        // onChange={debounce(source => {
+        //   console.log(JSON.stringify(source));
+        // }, 200)}
+        user={user}
+        scrollMargin={200}
+        scrollThreshold={200}
+      />
+    </>
   );
-  return <>{EditoriaComponent}</>;
+
+  // const EditoriaComponent = useMemo(
+  //   () => (
+  //     <>
+  //       <button
+  //         onClick={() => {
+  //           console.log(myConfig);
+  //           myConfig.PmPlugins = [];
+  //           myConfig.services = [...myConfig.services, new TablesService()];
+  //           setMyConfig({ ...myConfig });
+  //         }}
+  //       >
+  //         {' '}
+  //         change config
+  //       </button>
+
+  //       <Wax
+  //         ref={editorRef}
+  //         key={key}
+  //         config={myConfig}
+  //         autoFocus
+  //         placeholder="Type Something..."
+  //         fileUpload={file => renderImage(file)}
+  //         // value={demo}
+  //         // readonly
+  //         layout={layout}
+  //         // onChange={debounce(source => {
+  //         //   console.log(JSON.stringify(source));
+  //         // }, 200)}
+  //         user={user}
+  //         scrollMargin={200}
+  //         scrollThreshold={200}
+  //       />
+  //     </>
+  //   ),
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [layout, myConfig],
+  // );
+  // return <>{EditoriaComponent}</>;
 };
 
 function useWindowSize() {

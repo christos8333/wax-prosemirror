@@ -164,9 +164,10 @@ const BlockDropDownComponent = ({ view, tools }) => {
 
   useEffect(() => {
     setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Styles'));
+    let delayedSetLabel = () => true;
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
-        setTimeout(() => {
+        delayedSetLabel = setTimeout(() => {
           setLabel(
             translatedLabel(
               `Wax.BlockLevel.${option.item.label}`,
@@ -176,6 +177,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
         });
       }
     });
+    return () => clearTimeout(delayedSetLabel);
   }, [
     main.state.selection.$from.parent.type.name,
     t('Wax.BlockLevel.Paragraph'),

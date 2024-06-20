@@ -1,5 +1,6 @@
-/* eslint react/prop-types: 0 */
-import React, { useEffect, useState, forwardRef } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState, forwardRef, useMemo } from 'react';
 import { DOMSerializer } from 'prosemirror-model';
 import CryptoJS from 'crypto-js';
 import stringify from 'safe-stable-stringify';
@@ -33,14 +34,6 @@ const createConfigWithHash = config => {
   return configHash;
 };
 
-const setupLayout = (application, layout) => {
-  const Layout = application.container.get('Layout');
-  if (layout) Layout.setLayout(layout);
-  return WaxLayout || Layout.layoutComponent;
-};
-
-let WaxLayout = null;
-
 const Wax = forwardRef((props, innerViewRef) => {
   const {
     autoFocus,
@@ -61,16 +54,15 @@ const Wax = forwardRef((props, innerViewRef) => {
   } = props;
 
   const [application, setApplication] = useState();
+  const [WaxLayout, setWaxLayout] = useState(null);
   const configHash = createConfigWithHash(config);
 
   useEffect(() => {
     const newApplication = createApplication(props);
-    WaxLayout = setupLayout(newApplication, layout);
     setApplication(newApplication);
-    return () => {
-      // newApplication.resetApp();
-      // WaxLayout = null;
-    };
+    const Layout = newApplication.container.get('Layout');
+    if (layout) Layout.setLayout(layout);
+    setWaxLayout(Layout.layoutComponent);
   }, [configHash]);
 
   const finalOnChange = content => {
@@ -79,33 +71,38 @@ const Wax = forwardRef((props, innerViewRef) => {
     helpers.saveContent(content, onChange, schema, serializer, targetFormat);
   };
 
+  const WaxLayoutRender = useMemo(() => {
+    if (!application || !WaxLayout) return null;
+    return (
+      <WaxLayout
+        autoFocus={autoFocus}
+        browserSpellCheck={browserSpellCheck}
+        className={className}
+        customValues={customValues}
+        fileUpload={fileUpload}
+        innerViewRef={innerViewRef}
+        onChange={finalOnChange || (() => true)}
+        placeholder={placeholder}
+        readonly={readonly}
+        scrollMargin={scrollMargin}
+        scrollThreshold={scrollThreshold}
+        serializer={serializer}
+        targetFormat={targetFormat}
+        TrackChange={
+          application.config.get('config.EnableTrackChangeService') || undefined
+        }
+        user={user}
+        value={value}
+        {...props}
+      />
+    );
+  }, [application?.id, { ...props }]);
+
   if (!application || !WaxLayout) return null;
 
   return (
     <WaxProvider app={application}>
-      <PortalProvider>
-        <WaxLayout
-          autoFocus={autoFocus}
-          browserSpellCheck={browserSpellCheck}
-          className={className}
-          customValues={customValues}
-          fileUpload={fileUpload}
-          innerViewRef={innerViewRef}
-          onChange={finalOnChange || (() => true)}
-          placeholder={placeholder}
-          readonly={readonly}
-          scrollMargin={scrollMargin}
-          scrollThreshold={scrollThreshold}
-          serializer={serializer}
-          targetFormat={targetFormat}
-          TrackChange={
-            application.config.get('config.EnableTrackChangeService') ||
-            undefined
-          }
-          user={user}
-          value={value}
-        />
-      </PortalProvider>
+      <PortalProvider>{WaxLayoutRender}</PortalProvider>
     </WaxProvider>
   );
 });

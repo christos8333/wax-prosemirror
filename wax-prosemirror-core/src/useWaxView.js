@@ -67,8 +67,6 @@ const useWaxView = props => {
     );
     setTimeout(() => {
       if (autoFocus && view) {
-        view.state.tr.insertText('', 0);
-        view.dispatch(view.state.tr.scrollIntoView());
         view.focus();
       }
     }, 500);

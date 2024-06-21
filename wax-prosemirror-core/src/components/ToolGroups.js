@@ -3,13 +3,18 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ToolGroupComponent from './ToolGroupComponent';
 
-const ToolGroups = ({ toolGroups, view }) => {
+const ToolGroups = ({ toolGroups, state }) => {
+  console.log(state, 'tool groups ');
   return toolGroups.map(toolGroup => {
     if (toolGroup._toolGroups.length > 0) {
-      return <ToolGroups toolGroups={toolGroup._toolGroups} view={view} />;
+      return <ToolGroups toolGroups={toolGroup._toolGroups} state={state} />;
     }
     return (
-      <ToolGroupComponent key={uuidv4()} tools={toolGroup._tools} view={view} />
+      <ToolGroupComponent
+        key={uuidv4()}
+        tools={toolGroup._tools}
+        state={state}
+      />
     );
   });
 };

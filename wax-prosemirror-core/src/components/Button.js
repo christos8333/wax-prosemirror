@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { WaxContext } from '../WaxContext';
 import MenuButton from './ui/MenuButton';
 
-const Button = ({ view = {}, item }) => {
+const Button = ({ state, item }) => {
+  console.log(state, 'button');
   const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
   const context = useContext(WaxContext);
@@ -19,23 +20,18 @@ const Button = ({ view = {}, item }) => {
     return editable;
   });
 
-  const { state } = view;
+  // const { state } = view;
 
   const handleMouseDown = e => {
     e.preventDefault();
-    run(activeView.state, activeView.dispatch, activeView, context);
+    run(state, activeView.dispatch, activeView, context);
   };
 
   const isActive = !!(
-    active(activeView.state, activeViewId) &&
-    select(state, activeViewId, activeView)
+    active(state, activeViewId) && select(state, activeViewId, activeView)
   );
 
-  let isDisabled = !select(
-    context.activeView.state,
-    context.activeViewId,
-    context.activeView,
-  );
+  let isDisabled = !select(state, context.activeViewId, context.activeView);
   if (!isEditable) isDisabled = true;
   const MenuButtonComponent = useMemo(
     () => (

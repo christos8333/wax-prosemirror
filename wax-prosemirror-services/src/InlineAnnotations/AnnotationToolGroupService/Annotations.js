@@ -32,8 +32,8 @@ class Annotations extends ToolGroup {
     ];
   }
 
-  renderTools(view) {
-    if (isEmpty(view)) return null;
+  renderTools(state) {
+    if (isEmpty(state)) return null;
 
     const { name } = this.constructor;
 
@@ -41,13 +41,13 @@ class Annotations extends ToolGroup {
       () => (
         <ToolGroupComponent
           key={uuidv4()}
-          view={view}
+          state={state}
           tools={this._tools}
           title={this.title}
           name={name}
         />
       ),
-      [view],
+      [state],
     );
 
     return MemorizedToolGroupComponent;

@@ -6,6 +6,7 @@ import CryptoJS from 'crypto-js';
 import stringify from 'safe-stable-stringify';
 import DefaultSchema from './utilities/schema/DefaultSchema';
 import WaxProvider from './WaxContext';
+import StateProvider from './StateContext';
 import PortalProvider from './PortalContext';
 import Application from './Application';
 import helpers from './helpers/helpers';
@@ -60,6 +61,7 @@ const Wax = forwardRef((props, innerViewRef) => {
   useEffect(() => {
     const newApplication = createApplication(props);
     setApplication(newApplication);
+    console.log(configHash);
     const Layout = newApplication.container.get('Layout');
     if (layout) Layout.setLayout(layout);
     setWaxLayout(Layout.layoutComponent);
@@ -102,7 +104,9 @@ const Wax = forwardRef((props, innerViewRef) => {
 
   return (
     <WaxProvider app={application}>
-      <PortalProvider>{WaxLayoutRender}</PortalProvider>
+      <StateProvider>
+        <PortalProvider>{WaxLayoutRender}</PortalProvider>
+      </StateProvider>
     </WaxProvider>
   );
 });

@@ -27,6 +27,7 @@ import {
   BlockDropDownToolGroupService,
   AskAiContentService,
   YjsService,
+  BlockQuoteService,
 } from 'wax-prosemirror-services';
 
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
@@ -52,11 +53,7 @@ async function DummyPromise(userInput, { askKb }) {
       } else {
         // JSON response test
         const json = JSON.stringify({
-          content: askKb
-            ? 'KB will be queried'
-            : `<p>Hello my friend</p>
-<strong>this is a strong</strong>
-<h1>this a title</h1>`,
+          content: askKb ? 'KB will be queried' : 'Just a normal call',
           citations: ['citation 1', 'citation 2', 'citation 3'],
           links: ['https://coko.foundation/', 'https://waxjs.net/about/'],
         });
@@ -216,7 +213,7 @@ export default {
       templateArea: 'mainMenuToolBar',
       toolGroups: [
         'Base',
-        'BlockDropDown',
+        // 'BlockDropDown',
         // 'TitleTool',
         {
           name: 'Annotations',
@@ -228,28 +225,29 @@ export default {
             'StrikeThrough',
           ],
         },
+        'BlockQuoteTool',
         'HighlightToolGroup',
         'TransformToolGroup',
-        'CustomTagInline',
+        // 'CustomTagInline',
         'Notes',
         'Lists',
         'Images',
         'SpecialCharacters',
-        'CodeBlock',
+        // 'CodeBlock',
         'ToggleAi',
         // 'Tables',
         'TrackingAndEditing',
         'FullScreen',
       ],
     },
-    {
-      templateArea: 'leftSideBar',
-      toolGroups: ['DisplayText'],
-    },
-    {
-      templateArea: 'commentTrackToolBar',
-      toolGroups: ['TrackCommentOptions'],
-    },
+    // {
+    //   templateArea: 'leftSideBar',
+    //   toolGroups: ['DisplayText'],
+    // },
+    // {
+    //   templateArea: 'commentTrackToolBar',
+    //   toolGroups: ['TrackCommentOptions'],
+    // },
     {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],
@@ -294,11 +292,11 @@ export default {
   ],
   ImageService: { showAlt: true },
 
-  CommentsService: {
-    showTitle: true,
-    getComments,
-    setComments,
-  },
+  // CommentsService: {
+  //   showTitle: true,
+  //   getComments,
+  //   setComments,
+  // },
 
   CustomTagService: {
     tags: [
@@ -310,13 +308,13 @@ export default {
     updateTags: saveTags,
   },
 
-  // YjsService: {
-  //   // eslint-disable-next-line no-restricted-globals
-  //   connectionUrl: 'ws://localhost:5010',
-  //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-  //   docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
-  //   YjsType: 'prosemirror',
-  // },
+  YjsService: {
+    // eslint-disable-next-line no-restricted-globals
+    connectionUrl: 'ws://localhost:5010',
+    // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
+    docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
+    YjsType: 'prosemirror',
+  },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -325,28 +323,29 @@ export default {
     // GenerateImages: false,
     CustomPromptsOn: true,
     FreeTextPromptsOn: true,
-    CustomPrompts: ['custom promt here!!'],
+    CustomPrompts: [],
   },
 
   services: [
-    // new YjsService(),
-    new BlockDropDownToolGroupService(),
+    new YjsService(),
+    new BlockQuoteService(),
+    // new BlockDropDownToolGroupService(),
     new AskAiContentService(),
-    new CustomTagService(),
-    new DisplayBlockLevelService(),
-    new TextBlockLevelService(),
+    // new CustomTagService(),
+    // new DisplayBlockLevelService(),
+    // new TextBlockLevelService(),
     new ListsService(),
     new LinkService(),
     new InlineAnnotationsService(),
     new TrackChangeService(),
-    new CommentsService(),
+    // new CommentsService(),
     new ImageService(),
-    new TablesService(),
+    // new TablesService(),
     new BaseService(),
     new NoteService(),
-    new CodeBlockService(),
+    // new CodeBlockService(),
     new EditingSuggestingService(),
-    new DisplayTextToolGroupService(),
+    // new DisplayTextToolGroupService(),
     new MathService(),
     new FindAndReplaceService(),
     new FullScreenService(),

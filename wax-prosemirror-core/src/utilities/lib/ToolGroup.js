@@ -59,12 +59,12 @@ class ToolGroup {
     this._tools = tools;
   }
 
-  renderTools(view) {
-    if (isEmpty(view)) return null;
+  renderTools(state) {
+    if (isEmpty(state)) return null;
 
     const { name } = this.constructor;
     if (this._toolGroups > 0) {
-      return <ToolGroups toolGroups={this._toolGroups} view={view} />;
+      return <ToolGroups toolGroups={this._toolGroups} state={state} />;
     }
 
     const MemorizedToolGroupComponent = useMemo(
@@ -74,7 +74,7 @@ class ToolGroup {
           name={name}
           title={this.title}
           tools={this._tools}
-          view={view}
+          state={state}
         />
       ),
       [],

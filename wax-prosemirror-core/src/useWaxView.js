@@ -3,6 +3,7 @@ import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import trackedTransaction from './utilities/track-changes/trackedTransaction';
 import { WaxContext } from './WaxContext';
+import { StateContext } from './StateContext';
 import { PortalContext } from './PortalContext';
 import WaxOptions from './WaxOptions';
 import helpers from './helpers/helpers';
@@ -25,6 +26,7 @@ const useWaxView = props => {
     onChange,
   } = props;
 
+  const stateContext = useContext(StateContext);
   const context = useContext(WaxContext);
   const [WaxView, setWaxView] = useState(null);
   const { createPortal } = useContext(PortalContext);
@@ -67,6 +69,8 @@ const useWaxView = props => {
       'main',
     );
 
+    stateContext.updateState(view.state);
+
     setTimeout(() => {
       if (autoFocus && view) {
         view.focus();
@@ -104,12 +108,7 @@ const useWaxView = props => {
     context.setTransaction(transaction);
 
     if (!transaction.getMeta('outsideView')) {
-      context.updateView(
-        {
-          main: view,
-        },
-        'main',
-      );
+      stateContext.updateState(view.state);
     }
 
     const docContent =

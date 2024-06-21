@@ -1,6 +1,6 @@
 import React, { useMemo, useContext } from 'react';
 import { injectable } from 'inversify';
-import { WaxContext } from '../../../WaxContext';
+import { StateContext } from '../../../StateContext';
 import ToolGroup from '../../../utilities/lib/ToolGroup';
 import MenuWrapper from './MenuWrapper';
 
@@ -35,10 +35,11 @@ class Menu {
 
   render() {
     return () => {
-      const { activeView } = useContext(WaxContext);
+      const context = useContext(StateContext);
+      console.log(context);
       const Bar = useMemo(() => (
         // eslint-disable-next-line react/no-this-in-sfc
-        <MenuWrapper items={this.toolGroups} view={activeView || {}} />
+        <MenuWrapper items={this.toolGroups} state={context.state} />
       ));
       return <>{Bar}</>;
     };

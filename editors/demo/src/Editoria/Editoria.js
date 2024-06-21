@@ -1,4 +1,10 @@
-import React, { useLayoutEffect, useState, useMemo, useRef } from 'react';
+import React, {
+  useLayoutEffect,
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+} from 'react';
 
 import { Wax } from 'wax-prosemirror-core';
 
@@ -31,6 +37,7 @@ const Editoria = () => {
   const [width] = useWindowSize();
   const [myConfig, setMyConfig] = useState(config);
   const [myName, setMyName] = useState('COKO');
+  const [isFirst, setFirst] = useState(true);
 
   let layout = EditoriaLayout;
   let finalConfig = config;
@@ -43,13 +50,30 @@ const Editoria = () => {
   }
   const editorRef = useRef();
 
+  useEffect(() => {
+    console.log('sss');
+    // const configObj = config(yjsProvider, ydoc, 'christos')
+    setTimeout(() => {
+      setFirst(false);
+    }, 5000);
+    // configObj.services = [...configObj.services, new TablesService()]
+  }, [isFirst]);
+
+  if (!isFirst) {
+    // configObj.services = [...configObj.services, new TablesService()]
+    // configObj.name = 'ddd';
+    config.name = 'Ffdfd';
+    // setMyConfig({ ...myConfig });
+  }
+
   return (
     <>
       <button
         onClick={() => {
           console.log(myConfig);
-          myConfig.PmPlugins = [];
-          myConfig.services = [...myConfig.services, new TablesService()];
+          // myConfig.PmPlugins = [];
+          // myConfig.services = [...myConfig.services, new TablesService()];
+          myConfig.name = 'Ffdfd';
           setMyConfig({ ...myConfig });
         }}
       >
@@ -69,7 +93,7 @@ const Editoria = () => {
       <Wax
         ref={editorRef}
         key={key}
-        config={myConfig}
+        config={config}
         autoFocus
         placeholder="Type Something..."
         fileUpload={file => renderImage(file)}

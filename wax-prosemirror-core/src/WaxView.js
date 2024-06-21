@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+/* eslint-disable consistent-return */
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import ComponentPlugin from './ComponentPlugin';
 import './styles/styles.css';
@@ -19,21 +20,19 @@ const WaxOverlays = ComponentPlugin('waxOverlays');
 const WaxView = props => {
   const main = useWaxView(props);
 
-  const divRef = useRef(null);
-
-  const initializeWaxView = useCallback(() => {
-    if (divRef.current) {
-      divRef.current.replaceChildren(main?.dom);
-    }
-  }, [main]);
-
-  useEffect(() => {
-    initializeWaxView();
-  }, [initializeWaxView]);
+  const waxRef = useCallback(
+    node => {
+      if (node) {
+        node.replaceChildren(main?.dom);
+        return node;
+      }
+    },
+    [main],
+  );
 
   return (
     <EditorContainer>
-      <div ref={divRef} />
+      <div ref={waxRef} />
       <WaxOverlays activeViewId="main" group="main" />
       <WaxPortals />
     </EditorContainer>

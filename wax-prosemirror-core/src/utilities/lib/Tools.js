@@ -53,7 +53,6 @@ class Tools {
 
   renderTool(state) {
     if (isEmpty(state)) return null;
-    console.log(state);
     return this._isDisplayed ? (
       <Button item={this.toJSON()} key={uuidv4()} state={state} />
     ) : null;

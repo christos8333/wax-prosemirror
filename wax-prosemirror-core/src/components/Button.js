@@ -6,7 +6,6 @@ import { WaxContext } from '../WaxContext';
 import MenuButton from './ui/MenuButton';
 
 const Button = ({ state, item }) => {
-  console.log(state, 'button');
   const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
   const context = useContext(WaxContext);
@@ -19,8 +18,6 @@ const Button = ({ state, item }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-
-  // const { state } = view;
 
   const handleMouseDown = e => {
     e.preventDefault();

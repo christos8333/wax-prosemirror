@@ -61,7 +61,6 @@ const Wax = forwardRef((props, innerViewRef) => {
   useEffect(() => {
     const newApplication = createApplication(props);
     setApplication(newApplication);
-    console.log(configHash);
     const Layout = newApplication.container.get('Layout');
     if (layout) Layout.setLayout(layout);
     setWaxLayout(Layout.layoutComponent);

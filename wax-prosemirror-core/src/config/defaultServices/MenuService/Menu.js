@@ -36,11 +36,15 @@ class Menu {
   render() {
     return () => {
       const context = useContext(StateContext);
+      const { state } = context;
       console.log('menu context', context);
-      const Bar = useMemo(() => (
-        // eslint-disable-next-line react/no-this-in-sfc
-        <MenuWrapper items={this.toolGroups} state={context.state} />
-      ));
+      const Bar = useMemo(
+        () => (
+          // eslint-disable-next-line react/no-this-in-sfc
+          <MenuWrapper items={this.toolGroups} state={context.state} />
+        ),
+        [state],
+      );
       return <>{Bar}</>;
     };
   }

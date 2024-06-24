@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
-const UndoRedoButton = ({ view = {}, item }) => {
+const UndoRedoButton = ({ state = {}, item }) => {
   const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
 
@@ -17,8 +17,6 @@ const UndoRedoButton = ({ view = {}, item }) => {
   const isEditable = main.props.editable(editable => {
     return editable;
   });
-
-  const { state } = view;
 
   const handleMouseDown = (e, editorState, editorDispatch) => {
     e.preventDefault();

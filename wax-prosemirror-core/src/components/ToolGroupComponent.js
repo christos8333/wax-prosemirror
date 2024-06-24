@@ -20,10 +20,9 @@ const DropWrapper = styled(Wrapper)`
 `;
 
 const ToolGroupComponent = ({ state, tools, name }) => {
-  console.log(state, 'tool group componet');
   const toolsShown = [];
   const rest = [];
-
+  console.log('hahahahaha');
   tools.forEach(tool => {
     tool.isIntoMoreSection() && tool.isDisplayed()
       ? rest.push(tool.renderTool(state))

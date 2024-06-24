@@ -59,7 +59,6 @@ const useWaxView = props => {
         spellcheck: browserSpellCheck ? 'true' : 'false',
       },
     });
-
     setWaxView(view);
 
     context.updateView(

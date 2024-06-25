@@ -85,7 +85,7 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
     // { id: 4, name: 'Title Case', iconName: 'transformCase' },
   ];
 
-  const onClickTransform = (e, id) => {
+  const onClickTransform = id => {
     switch (id) {
       case 1:
         item.run(activeView.state, activeView.dispatch, 'upperCase');
@@ -111,7 +111,11 @@ const TransformCaseComponent = ({ view: { state }, item }) => {
         {transformCaseDropDown.map(data => (
           <Transformer
             key={uuid()}
-            onClick={e => onClickTransform(e, data.id)}
+            onMouseDown={e => {
+              e.preventDefault();
+              onClickTransform(data.id);
+              activeView.focus();
+            }}
             title={data.name}
           >
             <StyledIcon name={data.iconName} />

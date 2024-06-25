@@ -337,7 +337,7 @@ export default {
     new TrackChangeService(),
     new CommentsService(),
     new ImageService(),
-    // new TablesService(),
+    new TablesService(),
     new BaseService(),
     new NoteService(),
     new CodeBlockService(),

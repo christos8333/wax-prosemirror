@@ -1,8 +1,9 @@
+/* eslint-disable react/no-this-in-sfc */
 import React, { useMemo, useContext } from 'react';
 import { injectable } from 'inversify';
-import { StateContext } from '../../../StateContext';
 import ToolGroup from '../../../utilities/lib/ToolGroup';
 import MenuWrapper from './MenuWrapper';
+import { WaxContext } from '../../../WaxContext';
 
 @injectable()
 class Menu {
@@ -35,11 +36,14 @@ class Menu {
 
   render() {
     return () => {
-      const { state } = useContext(StateContext);
+      const context = useContext(WaxContext);
       const Bar = useMemo(
         () => (
           // eslint-disable-next-line react/no-this-in-sfc
-          <MenuWrapper items={this.toolGroups} state={state} />
+          <MenuWrapper
+            items={this.toolGroups}
+            state={context.options.currentState}
+          />
         ),
         [],
       );

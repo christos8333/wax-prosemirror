@@ -103,9 +103,7 @@ const Wax = forwardRef((props, innerViewRef) => {
 
   return (
     <WaxProvider app={application}>
-      <StateProvider>
-        <PortalProvider>{WaxLayoutRender}</PortalProvider>
-      </StateProvider>
+      <PortalProvider>{WaxLayoutRender}</PortalProvider>
     </WaxProvider>
   );
 });

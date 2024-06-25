@@ -4,31 +4,35 @@ import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext, MenuButton } from 'wax-prosemirror-core';
 
-const UndoRedoButton = ({ state = {}, item }) => {
+const UndoRedoButton = ({ item }) => {
   const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
-
+  const context = useContext(WaxContext);
   const {
     pmViews: { main },
     activeViewId,
     activeView,
-  } = useContext(WaxContext);
+  } = context;
 
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = e => {
     e.preventDefault();
-    run(editorState, editorDispatch);
+    run(context.options.currentState, activeView.dispatch);
   };
 
   const isActive = !!(
-    active(activeView.state, activeViewId) &&
-    select(state, activeViewId, activeView)
+    active(context.options.currentState, activeViewId) &&
+    select(context.options.currentState, activeViewId, activeView)
   );
 
-  let isDisabled = !select(state, activeViewId, activeView);
+  let isDisabled = !select(
+    context.options.currentState,
+    activeViewId,
+    activeView,
+  );
   if (!isEditable) isDisabled = true;
 
   const UndoRedoButtonComponent = useMemo(
@@ -38,7 +42,7 @@ const UndoRedoButton = ({ state = {}, item }) => {
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={e => handleMouseDown(e, main.state, main.dispatch)}
+        onMouseDown={e => handleMouseDown(e)}
         title={
           !isEmpty(i18n) && i18n.exists(`Wax.Base.${title}`)
             ? t(`Wax.Base.${title}`)

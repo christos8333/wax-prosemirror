@@ -3,7 +3,6 @@ import React, { useContext, useMemo } from 'react';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext } from '../WaxContext';
-import { StateContext } from '../StateContext';
 import MenuButton from './ui/MenuButton';
 
 const Button = ({ item }) => {
@@ -16,22 +15,25 @@ const Button = ({ item }) => {
     activeView,
   } = context;
 
-  const { state } = useContext(StateContext);
-
   const isEditable = main.props.editable(editable => {
     return editable;
   });
 
   const isActive = !!(
-    active(state, activeViewId) && select(state, activeViewId, activeView)
+    active(context.options.currentState, activeViewId) &&
+    select(context.options.currentState, activeViewId, activeView)
   );
 
-  let isDisabled = !select(state, context.activeViewId, context.activeView);
+  let isDisabled = !select(
+    context.options.currentState,
+    context.activeViewId,
+    context.activeView,
+  );
   if (!isEditable) isDisabled = true;
 
   const onMouseDown = e => {
     e.preventDefault();
-    run(state, activeView.dispatch, activeView, context);
+    run(context.options.currentState, activeView.dispatch, activeView, context);
   };
 
   const MenuButtonComponent = useMemo(() => {

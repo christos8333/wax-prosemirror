@@ -4,8 +4,8 @@
 import React from 'react';
 import { map } from 'lodash';
 
-const MainMenuBar = ({ items = [], state }) => {
-  return <>{map(items, item => item.renderTools(state))}</>;
+const MainMenuBar = ({ items = [], view }) => {
+  return <>{map(items, item => item.renderTools(view))}</>;
 };
 
 export default MainMenuBar;

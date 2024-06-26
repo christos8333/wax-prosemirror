@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { WaxContext } from '../WaxContext';
 import MenuButton from './ui/MenuButton';
 
-const Button = ({ item }) => {
+const Button = ({ view = {}, item }) => {
   const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
   const context = useContext(WaxContext);
@@ -19,39 +19,41 @@ const Button = ({ item }) => {
     return editable;
   });
 
+  const { state } = view;
+
+  const handleMouseDown = e => {
+    e.preventDefault();
+    run(activeView.state, activeView.dispatch, activeView, context);
+  };
+
   const isActive = !!(
-    active(context.options.currentState, activeViewId) &&
-    select(context.options.currentState, activeViewId, activeView)
+    active(activeView.state, activeViewId) &&
+    select(state, activeViewId, activeView)
   );
 
   let isDisabled = !select(
-    context.options.currentState,
+    context.activeView.state,
     context.activeViewId,
     context.activeView,
   );
   if (!isEditable) isDisabled = true;
-
-  const onMouseDown = e => {
-    e.preventDefault();
-    run(context.options.currentState, activeView.dispatch, activeView, context);
-  };
-
-  const MenuButtonComponent = useMemo(() => {
-    return (
+  const MenuButtonComponent = useMemo(
+    () => (
       <MenuButton
         active={isActive || false}
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={onMouseDown}
+        onMouseDown={e => handleMouseDown(e)}
         title={
           !isEmpty(i18n) && i18n.exists(`Wax.Annotations.${title}`)
             ? t(`Wax.Annotations.${title}`)
             : title
         }
       />
-    );
-  }, [isActive, isDisabled, activeViewId, t(`Wax.Annotations.${title}`)]);
+    ),
+    [isActive, isDisabled, activeViewId, t(`Wax.Annotations.${title}`)],
+  );
 
   return MenuButtonComponent;
 };

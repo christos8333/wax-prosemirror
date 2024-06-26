@@ -36,17 +36,11 @@ class Menu {
 
   render() {
     return () => {
-      const context = useContext(WaxContext);
-      const Bar = useMemo(
-        () => (
-          // eslint-disable-next-line react/no-this-in-sfc
-          <MenuWrapper
-            items={this.toolGroups}
-            state={context.options.currentState}
-          />
-        ),
-        [],
-      );
+      const { activeView } = useContext(WaxContext);
+      const Bar = useMemo(() => (
+        // eslint-disable-next-line react/no-this-in-sfc
+        <MenuWrapper items={this.toolGroups} view={activeView || {}} />
+      ));
       return <>{Bar}</>;
     };
   }

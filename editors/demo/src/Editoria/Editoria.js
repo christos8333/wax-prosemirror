@@ -50,14 +50,14 @@ const Editoria = () => {
   }
   const editorRef = useRef();
 
-  // useEffect(() => {
-  //   console.log('sss');
-  //   // const configObj = config(yjsProvider, ydoc, 'christos')
-  //   setTimeout(() => {
-  //     setFirst(false);
-  //   }, 5000);
-  //   // configObj.services = [...configObj.services, new TablesService()]
-  // }, [isFirst]);
+  useEffect(() => {
+    console.log('sss');
+    // const configObj = config(yjsProvider, ydoc, 'christos')
+    setTimeout(() => {
+      setFirst(false);
+    }, 5000);
+    // configObj.services = [...configObj.services, new TablesService()]
+  }, [isFirst]);
 
   if (!isFirst) {
     // configObj.services = [...configObj.services, new TablesService()]
@@ -72,7 +72,7 @@ const Editoria = () => {
         onClick={() => {
           console.log(myConfig);
           // myConfig.PmPlugins = [];
-          // myConfig.services = [...myConfig.services, new TablesService()];
+          myConfig.services = [...myConfig.services, new TablesService()];
           myConfig.name = 'Ffdfd';
           setMyConfig({ ...myConfig });
         }}

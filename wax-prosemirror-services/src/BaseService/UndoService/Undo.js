@@ -25,10 +25,10 @@ export default class Undo extends Tools {
     return undo(state);
   }
 
-  renderTool(state) {
-    if (isEmpty(state)) return null;
+  renderTool(view) {
+    if (isEmpty(view)) return null;
     return this.isDisplayed() ? (
-      <UndoRedoButton item={this.toJSON()} key="Undo" state={state} />
+      <UndoRedoButton item={this.toJSON()} key="Undo" view={view} />
     ) : null;
   }
 }

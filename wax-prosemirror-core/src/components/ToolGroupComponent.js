@@ -19,14 +19,14 @@ const DropWrapper = styled(Wrapper)`
   padding: 4px;
 `;
 
-const ToolGroupComponent = ({ state, tools, name }) => {
+const ToolGroupComponent = ({ view, tools, name }) => {
   const toolsShown = [];
   const rest = [];
-  console.log('hahahahaha');
+
   tools.forEach(tool => {
     tool.isIntoMoreSection() && tool.isDisplayed()
-      ? rest.push(tool.renderTool(state))
-      : toolsShown.push(tool.renderTool(state));
+      ? rest.push(tool.renderTool(view))
+      : toolsShown.push(tool.renderTool(view));
   });
 
   const MemorizedToolGroupComponent = useMemo(

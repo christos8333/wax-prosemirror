@@ -105,7 +105,6 @@ const useWaxView = props => {
 
     if (!transaction.getMeta('outsideView')) {
       context.setOption({ currentState: view.state });
-      context.updateView({}, 'main');
     }
 
     const docContent =

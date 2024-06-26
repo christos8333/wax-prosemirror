@@ -1,7 +1,7 @@
 {
   "name": "wax-prosemirror-core",
   "author": "Christos Kokosias & Giannis Kopanas",
-  "version": "0.9.39",
+  "version": "0.9.40",
   "description": "Wax prosemirror core",
   "license": "MIT",
   "main": "dist/index.js",
@@ -15,12 +15,11 @@
   },
   "dependencies": {
     "@pubsweet/ui-toolkit": "^2.3.1",
+    "crypto-js": "^4.2.0",
     "deepmerge": "^4.2.2",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "lodash": "^4.17.4",
-    "crypto-js": "^4.2.0",
-    "safe-stable-stringify": "^2.4.3",
     "moment": "^2.29.0",
     "prop-types": "^15.7.2",
     "prosemirror-commands": "1.5.1",
@@ -36,6 +35,7 @@
     "prosemirror-view": "1.30.2",
     "react-i18next": "^13.3.1",
     "reflect-metadata": "^0.1.13",
+    "safe-stable-stringify": "^2.4.3",
     "uuid": "^7.0.3"
   },
   "devDependencies": {

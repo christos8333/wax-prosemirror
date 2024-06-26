@@ -58,34 +58,33 @@ const useWaxView = props => {
       attributes: {
         spellcheck: browserSpellCheck ? 'true' : 'false',
       },
-      // handleDOMEvents: {
-      //   focus(editorView) {
-      //     context.updateView(
-      //       {
-      //         main: editorView,
-      //       },
-      //       'main',
-      //     );
-      //     editorView.focus();
-      //   },
-      //   mousedown: editorView => {
-      //     context.updateView(
-      //       {
-      //         main: editorView,
-      //       },
-      //       'main',
-      //     );
-      //     editorView.focus();
-      //   },
-      // },
-      // handleTextInput: editorView => {
-      //   context.updateView(
-      //     {
-      //       main: editorView,
-      //     },
-      //     'main',
-      //   );
-      // },
+      handleDOMEvents: {
+        focus(editorView) {
+          context.updateView(
+            {
+              main: editorView,
+            },
+            'main',
+          );
+        },
+        mousedown: editorView => {
+          context.updateView(
+            {
+              main: editorView,
+            },
+            'main',
+          );
+          editorView.focus();
+        },
+      },
+      handleTextInput: editorView => {
+        context.updateView(
+          {
+            main: editorView,
+          },
+          'main',
+        );
+      },
     });
 
     setWaxView(view);

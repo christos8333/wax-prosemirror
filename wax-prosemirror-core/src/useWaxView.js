@@ -27,6 +27,7 @@ const useWaxView = props => {
 
   const context = useContext(WaxContext);
   const [WaxView, setWaxView] = useState(null);
+
   const { createPortal } = useContext(PortalContext);
 
   context.app.setContext({ ...context, createPortal });
@@ -44,6 +45,7 @@ const useWaxView = props => {
       plugins: context.app.getPlugins(),
     });
 
+    console.log('in view');
     view = new EditorView(null, {
       editable: () => !readonly,
       customValues,
@@ -56,16 +58,43 @@ const useWaxView = props => {
       attributes: {
         spellcheck: browserSpellCheck ? 'true' : 'false',
       },
+      // handleDOMEvents: {
+      //   focus(editorView) {
+      //     context.updateView(
+      //       {
+      //         main: editorView,
+      //       },
+      //       'main',
+      //     );
+      //     editorView.focus();
+      //   },
+      //   mousedown: editorView => {
+      //     context.updateView(
+      //       {
+      //         main: editorView,
+      //       },
+      //       'main',
+      //     );
+      //     editorView.focus();
+      //   },
+      // },
+      // handleTextInput: editorView => {
+      //   context.updateView(
+      //     {
+      //       main: editorView,
+      //     },
+      //     'main',
+      //   );
+      // },
     });
-    setWaxView(view);
 
+    setWaxView(view);
     context.updateView(
       {
         main: view,
       },
       'main',
     );
-    context.setOption({ currentState: view.state });
 
     setTimeout(() => {
       if (autoFocus && view) {
@@ -97,15 +126,11 @@ const useWaxView = props => {
     const state = view.state.apply(tr);
     view.updateState(state);
 
-    /* when a transaction comes from a view other than
-      main don't keep updating the view ,as this is
-      the central point of each transaction
-      */
     context.setTransaction(transaction);
 
-    if (!transaction.getMeta('outsideView')) {
-      context.setOption({ currentState: view.state });
-    }
+    // if (!transaction.getMeta('outsideView')) {
+    //   context.setOption({ currentState: view.state });
+    // }
 
     const docContent =
       targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;

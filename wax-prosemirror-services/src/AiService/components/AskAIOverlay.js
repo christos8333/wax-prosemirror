@@ -1,35 +1,56 @@
+/* stylelint-disable no-descending-specificity */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
-import { capitalize, isEmpty, keys } from 'lodash';
+import { capitalize, debounce, isEmpty, keys } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext, icons } from 'wax-prosemirror-core';
 import { PropTypes } from 'prop-types';
 import replaceSelectedText from '../ReplaceSelectedText';
-import AiSettingsMenu from './AiSettingsMenu';
-import { safeParse, resultsToHtml, getUpdatedPosition } from '../helpers';
+import PromptOptions from './AiSettingsMenu';
+import {
+  safeParse,
+  resultsToHtml,
+  getUpdatedPosition,
+  copyTextContent,
+} from '../helpers';
 
 const AI_TOOL_ID = 'ai-overlay';
 const DEFAULT_KEY = 'content';
+const OPTIONS = {
+  prompt: [
+    {
+      key: 'AskKb',
+      label: 'Ask knowledge base',
+      stateText: val => (val ? ' (enabled)' : ' (disabled)'),
+    },
+    {
+      key: 'GenerateImages',
+      label: 'Generate image',
+      stateText: val => (val ? '' : ''),
+    },
+  ],
+};
 
 // #region STYLED COMPONENTS ------------------------------------------------
 
 // #region MAIN & MISC-------------------
 
 const Root = styled.div`
-  --ai-tool-result-height: 500px;
+  --ai-tool-result-max-height: ${p => (p.$fullScreen ? '100%' : '500px')};
+  --ai-tool-result-height: ${p => (p.$fullScreen ? '100%' : 'fit-content')};
   --ai-tool-width: 100%;
   --ai-tool-border-width: 1px;
-  --ai-tool-border: var(--ai-tool-border-width) solid #0001;
+  --ai-tool-border: var(--ai-tool-border-width) solid #333;
   align-items: flex-end;
   background: #fff;
   border: var(--ai-tool-border);
   display: flex;
-  filter: drop-shadow(0 0 1px #0002);
   flex-direction: column;
+  height: ${p => (p.$fullScreen ? '100%' : 'unset')};
   margin: 0 10px 10px;
-  max-width: 95%;
-  min-width: 500px;
+  max-width: 97.5%;
+  min-width: 600px;
   width: var(--ai-tool-width);
 
   div {
@@ -39,7 +60,7 @@ const Root = styled.div`
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--scrollbar-color, #0004);
+      background: var(--scrollbar-color, #3334);
       width: 5px;
     }
 
@@ -59,10 +80,8 @@ const Heading = styled.header`
   );
   /* border-block: var(--ai-tool-border); */
   display: flex;
-  height: 23px;
+  height: 25px;
   margin: 0;
-  max-height: 23px;
-  min-height: 23px;
   padding-left: 3px;
   width: 100%;
 `;
@@ -88,16 +107,48 @@ const ButtonBase = styled.button.attrs({ type: 'button' })`
   outline: none;
   user-select: none;
 `;
+const MainHeading = styled(Heading)`
+  background: #333;
+  border: none;
+  color: white;
+  height: 60px; /* to avoid clipping */
+  justify-content: space-between;
+  max-height: 30px;
+
+  svg {
+    fill: #fff;
+  }
+
+  > :first-child {
+    align-items: center;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    line-height: 0.5;
+    padding-left: 5px;
+
+    svg {
+      height: 18px;
+      width: 18px;
+    }
+  }
+`;
 
 // #endregion MAIN & MISC----------------
 
 // #region FORM -------------------------
 
 const AskAIForm = styled(FlexCol)`
-  background: #fafafa;
+  align-self: center;
+  background: #fff;
+  border: var(--ai-tool-border);
+  border-color: #aaa;
+  border-radius: 2rem;
   display: ${p => (p.$show ? 'flex' : 'none')};
-  padding: 8px 12px;
+  margin-block: 13px;
+  padding: 8px 15px;
   position: relative;
+  width: 91%;
 `;
 
 const PromptInput = styled.input`
@@ -113,6 +164,7 @@ const PromptInput = styled.input`
 `;
 
 const SendButton = styled(ButtonBase)`
+  --ai-tool-icon-color: #333;
   margin-bottom: 3px;
   padding: 0 0 0 5px;
   transform: scale(1.3);
@@ -128,28 +180,51 @@ const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  height: fit-content;
+  height: var(--ai-tool-result-height);
   justify-content: flex-start;
-  max-height: ${p => (p.$show ? 'var(--ai-tool-result-height)' : '0')};
+  max-height: ${p => (p.$show ? 'var(--ai-tool-result-max-height)' : '0')};
   min-height: ${p => (p.$show ? '200px' : '0')};
   overflow-y: auto;
   padding: 0;
   position: relative;
   transition: all 0.3s;
   width: 100%;
+
+  &::before,
+  &::after {
+    background-image: linear-gradient(to bottom, #fff0, #fff);
+    content: ' ';
+    display: flex;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::after {
+    bottom: 0;
+  }
+
+  &::before {
+    background-image: linear-gradient(to top, #fff0 50%, #fff);
+    top: 35px;
+  }
 `;
 
 const ResultHeading = styled(Heading)`
   align-items: flex-end;
-  padding-left: 0;
+  gap: 5px;
+  height: 34px;
+  padding-left: 5px;
 `;
 
 const ResultTab = styled(ButtonBase)`
   background: ${p => (p.$selected ? '#fff' : '#fff4')};
   border: var(--ai-tool-border);
-  border-bottom-color: ${p => (p.$selected ? '#fff' : '#0001')};
+  border-color: #aaa;
+  border-bottom-color: ${p => (p.$selected ? '#fff' : '#aaa')};
   margin-bottom: -1px;
-  padding: 3px 0.5rem;
+  padding: 6px 1rem;
   text-decoration: underline;
   text-decoration-color: #bbb0;
   text-underline-offset: 5px;
@@ -163,52 +238,59 @@ const ResultTab = styled(ButtonBase)`
 `;
 
 const ResultActions = styled.div`
-  --separation: 7px;
-  align-self: flex-end;
-  background-color: #f8f8f8;
-  border: var(--ai-tool-border);
-  bottom: var(--separation);
   display: flex;
+  justify-content: flex-end;
   max-height: ${p => (p.$show ? '150px' : '0')};
   opacity: ${p => (p.$show ? '1' : '0')};
-  overflow: hidden;
   padding: 0;
-  position: absolute;
-  right: var(--separation);
   transition: all 0.3s;
-  width: fit-content;
+  width: 100%;
 
-  > button:not(:first-child) {
-    border-left: 1px solid #0001;
-  }
+  /* > button:not(:first-child) {
+    border-left: 1px solid #3331;
+  } */
 `;
 
 const ResultActionButton = styled(ButtonBase)`
   background-color: #fff0;
-  outline: none;
+  gap: 5px;
   overflow: hidden;
-  padding: 3.2px;
+  padding: 8px;
   transition: background-color 0.3s;
 
+  svg {
+    height: var(--result-action-icon-size, 18px);
+    stroke: var(--result-action-icon-stroke, #333);
+    width: var(--result-action-icon-size, 18px);
+
+    * {
+      /* stylelint-disable-next-line declaration-no-important */
+      stroke: var(--result-action-icon-stroke, #333) !important;
+    }
+  }
+
   &:hover {
-    background-color: #f2f2f2;
+    background-color: #ebebeb;
   }
 `;
 
 const ResultContent = styled.div`
-  border-top: var(--ai-tool-border);
+  border: none;
+  border-top: 1px solid #aaa;
   color: #555;
   font-family: Roboto, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 19px;
+  min-height: 200px;
+  outline: none;
   overflow-y: scroll;
-  padding: 14px 20px 32px;
+  padding: 32px 6%;
   white-space: pre-line;
   width: 100%;
   word-wrap: break-word;
 
-  * {
+  p {
     margin: 0;
   }
 
@@ -222,35 +304,38 @@ const ResultContent = styled.div`
 // #region CUSTOM PROMPTS ---------------
 
 const CustomPromptContainer = styled.div`
-  border-top: ${p => (p.$show ? 'var(--ai-tool-border)' : '0 solid #0000')};
+  border-top: ${p => (p.$show ? '1px solid #aaa' : '0 solid #3330')};
   display: flex;
   flex-direction: column;
-  max-height: ${p => (p.$show ? '205px' : '0')};
-  overflow: hidden;
+  height: ${p => (p.$show ? 'fit-content' : 'unset')};
   padding: 0;
-  transition: all 0.3s linear;
   width: 100%;
 `;
 
-const CustomPromptsHeading = styled(Heading)`
-  --gradient-direction: to top;
-  color: #777;
-  font-size: 11px;
-  font-style: italic;
-  line-height: 1;
-  padding: 0.4rem;
+const CustomPromptsHeading = styled(ButtonBase)`
+  align-self: flex-end;
+  background: #fffb;
+  border: none;
+  border-top: 1px solid #ddd;
+  font-size: 12px;
+  height: 35px;
+  justify-content: space-between;
+  min-height: 14px; /* to avoid clipping */
+  padding: 5px 5px 5px 15px;
+  width: 100%;
 `;
 
 const CustomPromptsList = styled.div`
   background: #f2f2f2;
   display: flex;
   flex-direction: column;
+  max-height: ${p => (p.$show ? '205px' : '0')};
   overflow-y: scroll;
   padding: 0;
   transition: all 0.3s linear;
 
   > *:not(:first-child) {
-    border-top: var(--ai-tool-border);
+    border-top: 1px solid #ddd;
   }
 `;
 
@@ -259,8 +344,7 @@ const CustomPromptButton = styled(ButtonBase)`
   padding: 0;
 
   p {
-    background-color: ${p => (p.$selected ? '#fffa' : '#fff6')};
-    border: var(--ai-tool-border);
+    background-color: #fff;
     border-left: 4px solid ${p => (p.$selected ? '#ddd' : '#aaa')};
     color: #777;
     margin: 0;
@@ -277,12 +361,6 @@ const CustomPromptButton = styled(ButtonBase)`
     }
   }
 `;
-
-const NoCustomPrompts = styled(FlexRow)`
-  color: #555;
-  justify-content: center;
-  text-align: center;
-`;
 // #endregion CUSTOM PROMPTS ------------
 
 // #endregion STYLED COMPONENTS ---------------------------------------------
@@ -296,15 +374,17 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     pmViews: { main },
     options,
   } = ctx;
+
   const inputRef = useRef(null);
   const resultRef = useRef(null);
   const [userPrompt, setUserPrompt] = useState('');
   const [optionsState, setOptionsState] = useState({ ...options });
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [fullScreen, setFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [result, setResult] = useState({ [DEFAULT_KEY]: '' });
+  const [result, setResult] = useState({
+    [DEFAULT_KEY]: '',
+  });
   const [resultKey, setResultKey] = useState(DEFAULT_KEY);
 
   const aiService = app.config.get('config.AskAiContentService');
@@ -319,11 +399,24 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       end: main.coordsAtPos(main.state.selection.to - 1),
       overlay: aiOverlay.getBoundingClientRect(),
     };
-
+    const waxSurfaceScroll = document.getElementById('wax-surface-scroll');
     const { left, top } = getUpdatedPosition(coords);
 
-    setPosition({ ...position, left, top });
-  }, [position.left, options.AiOn]);
+    setPosition({
+      ...position,
+      left: fullScreen ? 0 : left,
+      top: fullScreen ? waxSurfaceScroll.scrollTop + 20 : top,
+    });
+
+    const { from, to } = main.state.selection;
+    const selectedText = main.state.doc.textBetween(from, to, undefined, '\n');
+    !result[DEFAULT_KEY] &&
+      setResult(prev => ({ ...prev, [DEFAULT_KEY]: selectedText }));
+    aiOverlay.parentNode.style.width = fullScreen ? '100%' : '80%';
+    aiOverlay.parentNode.style.zIndex = '9999';
+    aiOverlay.parentNode.style.height = fullScreen ? '94%' : 'unset';
+    inputRef?.current && debouncedFocus();
+  }, [position.left, options.AiOn, fullScreen]);
 
   // #endregion HOOKS & INIT --------------------
 
@@ -341,6 +434,32 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       : fallback;
   };
 
+  const saveResult = () => {
+    resultRef?.current &&
+      result[resultKey] &&
+      setResult(prev => ({
+        ...prev,
+        [resultKey]: resultRef.current.innerHTML,
+      }));
+  };
+
+  const setOption = (key, state) => {
+    ctx.setOption({ [key]: state });
+    setOptionsState(prev => ({
+      ...prev,
+      [key]: state,
+    }));
+  };
+
+  const copyText = async () => {
+    if (!resultRef?.current) return;
+    copyTextContent(resultRef?.current.textContent);
+  };
+
+  const debouncedFocus = debounce(() => {
+    inputRef.current && inputRef.current.focus();
+  }, 200);
+
   // #endregion HELPERS --------------------------
 
   // #region HANDLERS ----------------------------
@@ -355,34 +474,43 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!enabled.send) {
+  const handleSubmit = async (passedInput = userPrompt, force) => {
+    if (!enabled.send && !force) {
       inputRef.current.focus();
       return;
     }
-    setIsSubmitted(false);
     setIsLoading(true);
 
-    const { from, to } = main.state.selection;
-    const highlightedText = main.state.doc.textBetween(from, to);
-
     // Updated to the new input format from gpt4o, We can pass an array of base64 images under image_url prop
-    const input = { text: [userPrompt, highlightedText] };
+    const input = { text: [passedInput, resultRef?.current?.textContent] };
 
     try {
       const response = await AskAiContentTransformation(input, {
         askKb: optionsState.AskKb,
+        prevResult: result,
       });
+
       const processedRes = safeParse(response, DEFAULT_KEY);
+      saveResult();
       setResultKey(keys(processedRes)[0] ?? DEFAULT_KEY);
 
       setResult(processedRes);
     } catch (error) {
       setResult({ [DEFAULT_KEY]: error });
     } finally {
-      setIsSubmitted(true);
       setIsLoading(false);
+      setUserPrompt('');
     }
+  };
+
+  const handleTabChange = tab => {
+    !['links', 'citations'].includes(resultKey) && saveResult();
+    setResultKey(tab);
+  };
+
+  const handleAddCustomPrompt = async prompt => {
+    fillAndFocusInput(prompt);
+    handleSubmit(prompt, true);
   };
 
   // #endregion HANDLERS -------------------------
@@ -402,13 +530,15 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const enabled = {
     component: !!options?.AiOn,
     input: !!FreeTextPromptsOn,
-    results: isSubmitted && !!result[resultKey],
+    results: !!result[resultKey],
     customprompts: !!options?.CustomPromptsOn,
     send: userPrompt.length > 1,
+    resultEdit: resultKey === DEFAULT_KEY,
   };
 
   const resultActions = {
     replace: {
+      label: 'Replace',
       Icon: icons.replaceIco,
       title: safeTranslation(
         `Wax.AI.Replace selected text`,
@@ -416,26 +546,36 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       ),
       onClick: () => {
         replaceSelectedText(main, resultString, true);
+        main.focus();
       },
-      tabIndex: result.enabled ? 0 : -1,
+      tabIndex: enabled.results ? 0 : -1,
     },
     insert: {
+      label: 'Insert',
       Icon: icons.insertIco,
       title: safeTranslation(`Wax.AI.Insert`, 'Insert'),
       onClick: () => {
         replaceSelectedText(main, resultString);
+        main.focus();
       },
-      tabIndex: result.enabled ? 0 : -1,
+      tabIndex: enabled.results ? 0 : -1,
+    },
+    copy: {
+      Icon: icons.copy,
+      title: 'Copy',
+      onClick: () => copyText(),
+      tabIndex: enabled.results ? 0 : -1,
+      style: { '--result-action-icon-stroke': '#777' },
     },
     tryAgain: {
       Icon: icons.tryAgain,
       title: safeTranslation(`Wax.AI. Try again`, 'Try again'),
       onClick: () => {
-        setIsSubmitted(false);
         setResult({});
         handleSubmit();
       },
-      tabIndex: result.enabled ? 0 : -1,
+      tabIndex: enabled.results ? 0 : -1,
+      style: { '--result-action-icon-size': '16px' },
     },
     discard: {
       Icon: icons.deleteIco,
@@ -443,25 +583,58 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       onClick: () => {
         setUserPrompt('');
         setResult({});
-        setIsSubmitted(false);
       },
-      tabIndex: result.enabled ? 0 : -1,
+      tabIndex: enabled.results ? 0 : -1,
+      style: { '--result-action-icon-size': '16px' },
     },
   };
 
   // #endregion UI -------------------------------
 
   return enabled.component ? (
-    <Root id={AI_TOOL_ID}>
-      <AiSettingsMenu
-        aiService={aiService}
-        optionsState={optionsState}
-        setOptionsState={setOptionsState}
-      />
+    <Root $fullScreen={fullScreen} id={AI_TOOL_ID}>
+      <MainHeading>
+        <span>
+          <icons.ai />
+          AI Assistant
+        </span>
+        <ButtonBase onClick={() => setFullScreen(!fullScreen)}>
+          {fullScreen ? <icons.fullScreenExit /> : <icons.fullScreen />}
+        </ButtonBase>
+      </MainHeading>
+      <ResultContainer $show={enabled.results}>
+        <ResultHeading>
+          {resultKeys?.map(k => (
+            <ResultTab
+              $selected={resultKey === k}
+              key={k}
+              onClick={() => handleTabChange(k)}
+            >
+              {capitalize(k)}
+            </ResultTab>
+          ))}
+          <ResultActions $show={enabled.results}>
+            {Object.values(resultActions).map(
+              ({ title, Icon, label, ...rest }) => (
+                <ResultActionButton key={title} title={title} {...rest}>
+                  <Icon /> {label || ''}
+                </ResultActionButton>
+              ),
+            )}
+          </ResultActions>
+        </ResultHeading>
+        <ResultContent
+          contentEditable={enabled.resultEdit}
+          dangerouslySetInnerHTML={{
+            __html: resultsToHtml(resultKey, result[resultKey]),
+          }}
+          ref={resultRef}
+        />
+      </ResultContainer>
       <AskAIForm $show>
         <FlexRow>
           <PromptInput
-            disabled={!enabled.input}
+            $disabled={!enabled.input}
             id="askAiInput"
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
@@ -473,67 +646,50 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
             type="text"
             value={userPrompt}
           />
-          <SendButton disabled={!enabled.send} onClick={handleSubmit}>
+          <SendButton
+            disabled={!enabled.send}
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
             {submitIcon}
           </SendButton>
+          <PromptOptions
+            aiService={aiService}
+            options={OPTIONS.prompt}
+            optionsState={optionsState}
+            setOption={setOption}
+          />
         </FlexRow>
       </AskAIForm>
 
-      <ResultContainer $show={enabled.results}>
-        <ResultHeading>
-          {resultKeys?.map(k => (
-            <ResultTab
-              $selected={resultKey === k}
-              key={k}
-              onClick={() => setResultKey(k)}
-            >
-              {capitalize(k)}
-            </ResultTab>
-          ))}
-        </ResultHeading>
-        <ResultContent
-          contentEditable
-          dangerouslySetInnerHTML={{
-            __html: resultsToHtml(resultKey, result[resultKey]),
-          }}
-          ref={resultRef} // to get the text from this innerHTML in the future
-        />
-        <ResultActions $show={enabled.results}>
-          {Object.values(resultActions).map(({ title, Icon, ...rest }) => (
-            <ResultActionButton key={title} {...rest}>
-              <Icon />
-            </ResultActionButton>
-          ))}
-        </ResultActions>
-      </ResultContainer>
-
-      <CustomPromptContainer $show={enabled.customprompts}>
-        <CustomPromptsHeading>Custom Prompts</CustomPromptsHeading>
-        <CustomPromptsList>
-          {CustomPrompts.length > 0 ? (
-            CustomPrompts?.map(prompt => (
+      {CustomPrompts.length > 0 && (
+        <CustomPromptContainer>
+          <CustomPromptsHeading
+            onClick={() =>
+              setOption('CustomPromptsOn', !optionsState.CustomPromptsOn)
+            }
+          >
+            <span>Custom Prompts</span>
+            {!optionsState.CustomPromptsOn ? (
+              <icons.arrowDown />
+            ) : (
+              <icons.arrowUp />
+            )}
+          </CustomPromptsHeading>
+          <CustomPromptsList $show={enabled.customprompts}>
+            {CustomPrompts?.map(prompt => (
               <CustomPromptButton
                 $selected={userPrompt === prompt}
                 key={prompt}
-                onClick={() => fillAndFocusInput(prompt)}
+                onClick={() => handleAddCustomPrompt(prompt)}
               >
                 <p>{`"${prompt}"`}</p>
               </CustomPromptButton>
-            ))
-          ) : (
-            <NoCustomPrompts>
-              <p>
-                --
-                {safeTranslation(
-                  `Wax.AI.No custom prompts`,
-                  `You don't have any custom prompts`,
-                )}{' '}
-                --
-              </p>
-            </NoCustomPrompts>
-          )}
-        </CustomPromptsList>
-      </CustomPromptContainer>
+            ))}
+          </CustomPromptsList>
+        </CustomPromptContainer>
+      )}
     </Root>
   ) : null;
 };
@@ -545,6 +701,7 @@ AskAIOverlay.propTypes = {
   setPosition: PropTypes.func,
   config: PropTypes.shape({ AskAiContentTransformation: PropTypes.func }),
 };
+
 AskAIOverlay.defaultProps = {
   position: {},
   setPosition: () => {},

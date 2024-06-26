@@ -9,19 +9,18 @@ export const safeParse = (str, fallbackKey) => {
 
 export const resultsToHtml = (key, value) => {
   const variations = {
-    content: value,
-    citations:
-      typeof value === 'string'
-        ? value
-        : value?.map(item => `<blockquote>${item}</blockquote>`).join(''),
     links:
       typeof value === 'string'
         ? value
         : value
             ?.map(item => `<a href="${item}" target="_blank">${item}</a></br>`)
             .join(''),
+    default:
+      typeof value === 'string'
+        ? value
+        : value?.map(item => `<p>${item}</p>`).join('') ?? '',
   };
-  return variations[key] ?? value;
+  return variations[key] ?? variations.default;
 };
 
 export const getUpdatedPosition = ({ surface, end, overlay }) => {
@@ -38,4 +37,9 @@ export const getUpdatedPosition = ({ surface, end, overlay }) => {
   }
 
   return { left, top };
+};
+
+export const copyTextContent = async text => {
+  if (!text) return;
+  await navigator.clipboard.writeText(text);
 };

@@ -3,8 +3,12 @@ import { TextSelection } from 'prosemirror-state';
 
 const elementFromString = string => {
   const wrappedValue = `<body>${string}</body>`;
+  const { body } = new window.DOMParser().parseFromString(
+    wrappedValue,
+    'text/html',
+  );
 
-  return new window.DOMParser().parseFromString(wrappedValue, 'text/html').body;
+  return body;
 };
 
 const replaceSelectedText = (view, responseText, replace = false) => {
@@ -70,23 +74,22 @@ const replaceSelectedText = (view, responseText, replace = false) => {
 
   view.dispatch(tr);
 
-  // Fetch the most recent state again
-  state = view.state;
+  try {
+    // Fetch the most recent state again
+    state = view.state;
 
-  // Update the selection to the end of the new text
-  const newFrom = replace ? from : to;
-  const newTo = newFrom + responseText.length;
-  const cursorPosition = paragraphNodes.length !== 0 ? newTo + 2 : newTo;
-  const newSelection = TextSelection.create(
-    state.doc,
-    cursorPosition,
-    cursorPosition,
-  );
-  tr = state.tr.setSelection(newSelection);
-
-  // Dispatch the final transaction to update the state
-  view.dispatch(tr);
-  view.focus();
+    // Update the selection to the end of the new text
+    const newFrom = replace ? from : to;
+    const newTo = newFrom + responseText.length;
+    const cursorPosition = paragraphNodes.length !== 0 ? newTo + 2 : newTo;
+    const newSelection = TextSelection.create(state.doc, newTo, newTo);
+    tr = state.tr.setSelection(newSelection);
+    // Dispatch the final transaction to update the state
+    view.dispatch(tr);
+    view.focus();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default replaceSelectedText;

@@ -67,6 +67,14 @@ const useWaxView = props => {
             'main',
           );
         },
+        blur(editorView) {
+          context.updateView(
+            {
+              main: editorView,
+            },
+            'main',
+          );
+        },
         mousedown: editorView => {
           context.updateView(
             {

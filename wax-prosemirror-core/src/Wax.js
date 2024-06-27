@@ -6,7 +6,6 @@ import CryptoJS from 'crypto-js';
 import stringify from 'safe-stable-stringify';
 import DefaultSchema from './utilities/schema/DefaultSchema';
 import WaxProvider from './WaxContext';
-import StateProvider from './StateContext';
 import PortalProvider from './PortalContext';
 import Application from './Application';
 import helpers from './helpers/helpers';

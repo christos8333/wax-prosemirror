@@ -26,11 +26,11 @@ const WaxView = props => {
     if (divRef.current) {
       divRef.current.replaceChildren(main?.dom);
     }
-  }, [main]);
+  }, [main, props.configHash]);
 
   useEffect(() => {
     initialize();
-  }, [initialize]);
+  }, [initialize, props.configHash]);
 
   return (
     <EditorContainer>

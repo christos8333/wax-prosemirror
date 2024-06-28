@@ -60,38 +60,14 @@ const useWaxView = props => {
       },
       handleDOMEvents: {
         focus(editorView) {
-          context.updateView(
-            {
-              main: editorView,
-            },
-            'main',
-          );
-        },
-        blur(editorView) {
-          context.updateView(
-            {
-              main: editorView,
-            },
-            'main',
-          );
+          return udpateEditorContext(editorView);
         },
         mousedown: editorView => {
-          context.updateView(
-            {
-              main: editorView,
-            },
-            'main',
-          );
-          editorView.focus();
+          return udpateEditorContext(editorView);
         },
       },
-      handleTextInput: editorView => {
-        context.updateView(
-          {
-            main: editorView,
-          },
-          'main',
-        );
+      handleKeyDown: editorView => {
+        return udpateEditorContext(editorView);
       },
     });
 
@@ -114,6 +90,17 @@ const useWaxView = props => {
     return () => (view = null);
   }, []);
 
+  const udpateEditorContext = editorView => {
+    setTimeout(() => {
+      context.updateView(
+        {
+          main: editorView,
+        },
+        'main',
+      );
+    }, 50);
+  };
+
   useImperativeHandle(innerViewRef, () => ({
     getContent() {
       return helpers.getDocContent(schema, serializer, targetFormat, context);
@@ -134,10 +121,6 @@ const useWaxView = props => {
     view.updateState(state);
 
     context.setTransaction(transaction);
-
-    // if (!transaction.getMeta('outsideView')) {
-    //   context.setOption({ currentState: view.state });
-    // }
 
     const docContent =
       targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;

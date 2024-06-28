@@ -3,7 +3,7 @@ import ExtractProseService from './ExtractProseService/ExtractProseService';
 import ParagraphContinuedService from './ParagraphContinuedService/ParagraphContinuedService';
 import ParagraphService from './ParagraphService/ParagraphService';
 import SourceNoteService from './SourceNoteService/SourceNoteService';
-import BlockQuoteService from './BlockQuoteService/BlockQuoteService';
+// import BlockQuoteService from './BlockQuoteService/BlockQuoteService';
 import TextToolGroupService from './TextToolGroupService/TextToolGroupService';
 
 export default [
@@ -12,6 +12,6 @@ export default [
   new ParagraphContinuedService(),
   new ParagraphService(),
   new SourceNoteService(),
-  new BlockQuoteService(),
+  // new BlockQuoteService(),
   new TextToolGroupService(),
 ];

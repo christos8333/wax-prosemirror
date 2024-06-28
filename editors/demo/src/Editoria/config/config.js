@@ -26,6 +26,7 @@ import {
   disallowPasteImagesPlugin,
   BlockDropDownToolGroupService,
   AskAiContentService,
+  BlockQuoteService,
   YjsService,
 } from 'wax-prosemirror-services';
 
@@ -228,6 +229,7 @@ export default {
             'StrikeThrough',
           ],
         },
+        'BlockQuoteTool',
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',
@@ -331,6 +333,7 @@ export default {
   services: [
     // new YjsService(),
     new BlockDropDownToolGroupService(),
+    new BlockQuoteService(),
     new AskAiContentService(),
     new CustomTagService(),
     new DisplayBlockLevelService(),

@@ -80,6 +80,10 @@ const TopMenu = styled.div`
     margin-left: auto;
   }
 
+  > div[data-name='FullScreen'] {
+    margin: 0;
+  }
+
   > div[data-name='Tables'] {
     border-right: none;
   }

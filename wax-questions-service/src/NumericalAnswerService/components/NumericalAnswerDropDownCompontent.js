@@ -191,6 +191,12 @@ const NumericalAnswerDropDownCompontent = ({ node }) => {
   };
 
   const onChange = option => {
+    context.updateView(
+      {
+        main: context.pmViews.main,
+      },
+      'main',
+    );
     context.setOption({ [node.attrs.id]: { numericalAnswer: option.value } });
     setLabel(option.label);
     openCloseMenu();

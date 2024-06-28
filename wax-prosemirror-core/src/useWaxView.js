@@ -59,15 +59,15 @@ const useWaxView = props => {
         spellcheck: browserSpellCheck ? 'true' : 'false',
       },
       handleDOMEvents: {
-        focus(editorView) {
-          return udpateEditorContext(editorView);
+        focus() {
+          // return udpateEditorContext(view);
         },
-        mousedown: editorView => {
-          return udpateEditorContext(editorView);
+        mousedown: () => {
+          return udpateEditorContext(view);
         },
       },
-      handleKeyDown: editorView => {
-        return udpateEditorContext(editorView);
+      handleKeyDown: () => {
+        return udpateEditorContext(view);
       },
     });
 

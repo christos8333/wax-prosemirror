@@ -9,6 +9,7 @@ import helpers from './helpers/helpers';
 import './styles/styles.css';
 
 let previousDoc;
+let currentCofingHash;
 
 const useWaxView = props => {
   const {
@@ -18,6 +19,7 @@ const useWaxView = props => {
     autoFocus,
     user,
     innerViewRef,
+    configHash,
     targetFormat,
     serializer,
     scrollMargin,
@@ -58,17 +60,6 @@ const useWaxView = props => {
       attributes: {
         spellcheck: browserSpellCheck ? 'true' : 'false',
       },
-      handleDOMEvents: {
-        focus() {
-          // return udpateEditorContext(view);
-        },
-        mousedown: () => {
-          return udpateEditorContext(view);
-        },
-      },
-      handleKeyDown: () => {
-        return udpateEditorContext(view);
-      },
     });
 
     setWaxView(view);
@@ -90,17 +81,6 @@ const useWaxView = props => {
     return () => (view = null);
   }, []);
 
-  const udpateEditorContext = editorView => {
-    setTimeout(() => {
-      context.updateView(
-        {
-          main: editorView,
-        },
-        'main',
-      );
-    }, 50);
-  };
-
   useImperativeHandle(innerViewRef, () => ({
     getContent() {
       return helpers.getDocContent(schema, serializer, targetFormat, context);
@@ -108,24 +88,36 @@ const useWaxView = props => {
   }));
 
   const dispatchTransaction = transaction => {
-    const { TrackChange } = props;
-    const tr =
-      TrackChange && TrackChange.enabled
-        ? trackedTransaction(transaction, view.state, user, context)
-        : transaction;
+    if (currentCofingHash === configHash) {
+      const { TrackChange } = props;
+      const tr =
+        TrackChange && TrackChange.enabled
+          ? trackedTransaction(transaction, view.state, user, context)
+          : transaction;
 
-    if (!view) return;
+      if (!view) return;
 
-    previousDoc = view.state.doc;
-    const state = view.state.apply(tr);
-    view.updateState(state);
+      previousDoc = view.state.doc;
+      const state = view.state.apply(tr);
+      view.updateState(state);
 
-    context.setTransaction(transaction);
+      context.setTransaction(transaction);
 
-    const docContent =
-      targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
-    if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
-      onChange(docContent);
+      context.updateView(
+        {
+          main: view,
+        },
+        'main',
+      );
+
+      const docContent =
+        targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
+      if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
+        onChange(docContent);
+    }
+    setTimeout(() => {
+      currentCofingHash = configHash;
+    }, 100);
   };
 
   return WaxView;

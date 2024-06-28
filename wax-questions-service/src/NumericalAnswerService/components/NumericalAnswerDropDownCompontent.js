@@ -140,7 +140,6 @@ const NumericalAnswerDropDownCompontent = ({ node }) => {
 
   const onKeyDown = (e, index) => {
     e.preventDefault();
-    updateWaxView();
     // arrow down
     if (e.keyCode === 40) {
       if (index === itemRefs.current.length - 1) {
@@ -192,21 +191,11 @@ const NumericalAnswerDropDownCompontent = ({ node }) => {
   };
 
   const onChange = option => {
-    updateWaxView();
     context.setOption({ [node.attrs.id]: { numericalAnswer: option.value } });
     setLabel(option.label);
     openCloseMenu();
     SaveTypeToNode(option.value);
     activeView.focus();
-  };
-
-  const updateWaxView = () => {
-    context.updateView(
-      {
-        main: context.pmViews.main,
-      },
-      'main',
-    );
   };
 
   const NumericalAnswerDropDown = useMemo(

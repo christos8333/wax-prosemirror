@@ -56,13 +56,14 @@ const Wax = forwardRef((props, innerViewRef) => {
   const [application, setApplication] = useState();
   const [WaxLayout, setWaxLayout] = useState(null);
   const configHash = createConfigWithHash(config);
-
+  console.log(configHash);
   useEffect(() => {
     const newApplication = createApplication(props);
     setApplication(newApplication);
     const Layout = newApplication.container.get('Layout');
     if (layout) Layout.setLayout(layout);
     setWaxLayout(Layout.layoutComponent);
+    setTimeout(() => {}, 100);
   }, [configHash]);
 
   const finalOnChange = content => {
@@ -78,6 +79,7 @@ const Wax = forwardRef((props, innerViewRef) => {
         autoFocus={autoFocus}
         browserSpellCheck={browserSpellCheck}
         className={className}
+        configHash={configHash}
         customValues={customValues}
         fileUpload={fileUpload}
         innerViewRef={innerViewRef}

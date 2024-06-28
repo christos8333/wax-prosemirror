@@ -15,7 +15,6 @@ const FullScreenButton = ({ view = {}, item }) => {
   const { state } = view;
 
   const handleMouseDown = e => {
-    context.updateView({}, 'main');
     e.preventDefault();
     Object.assign(options, { fullScreen: !options.fullScreen });
     activeView.dispatch(

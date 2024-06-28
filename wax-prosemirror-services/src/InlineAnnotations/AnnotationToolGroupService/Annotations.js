@@ -41,10 +41,10 @@ class Annotations extends ToolGroup {
       () => (
         <ToolGroupComponent
           key={uuidv4()}
-          view={view}
-          tools={this._tools}
-          title={this.title}
           name={name}
+          title={this.title}
+          tools={this._tools}
+          view={view}
         />
       ),
       [view],

@@ -7,7 +7,6 @@ const ComponentPlugin = renderArea => layoutProps => {
   const { instance } = useInjection('Layout');
 
   const components = instance.render(renderArea);
-
   return components
     ? components.map(({ component: Component, componentProps }, key) => {
         return (

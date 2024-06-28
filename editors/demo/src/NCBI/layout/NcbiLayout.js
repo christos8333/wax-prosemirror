@@ -77,7 +77,6 @@ const NcbiLayout = props => (
         <EditorArea>
           <WaxSurfaceScroll>
             <EditorContainer>
-              2222
               <WaxView {...props} />
             </EditorContainer>
           </WaxSurfaceScroll>

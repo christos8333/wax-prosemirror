@@ -1,8 +1,9 @@
+/* eslint-disable react/no-this-in-sfc */
 import React, { useMemo, useContext } from 'react';
 import { injectable } from 'inversify';
-import { WaxContext } from '../../../WaxContext';
 import ToolGroup from '../../../utilities/lib/ToolGroup';
 import MenuWrapper from './MenuWrapper';
+import { WaxContext } from '../../../WaxContext';
 
 @injectable()
 class Menu {

@@ -24,7 +24,6 @@ const DropWrapper = styled.div`
 const Dropdown = props => {
   const { className, disabled, dropComponent, iconName, label, title } = props;
   const [isOpen, setIsOpen] = useState(false);
-
   const { t, i18n } = useTranslation();
 
   return (

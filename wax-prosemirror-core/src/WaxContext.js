@@ -8,6 +8,8 @@ export const WaxContext = React.createContext({
   activeViewId: null,
   app: null,
   updateView: null,
+  updateState: null,
+  state: null,
   updateActiveView: null,
   removeView: null,
 });
@@ -15,6 +17,7 @@ export const WaxContext = React.createContext({
 export default props => {
   const [context, setContext] = useState({
     app: props.app,
+    state: props.state,
     pmViews: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
@@ -35,6 +38,12 @@ export default props => {
     <WaxContext.Provider
       value={{
         ...context,
+        updateState: state => {
+          setContext({
+            ...context,
+            state,
+          });
+        },
         updateView: (newView, activeViewId) => {
           const pmViews = Object.assign(context.pmViews, newView);
           const activeView = pmViews[activeViewId || context.activeViewId];

@@ -12,10 +12,10 @@ const FullScreenButton = ({ view = {}, item }) => {
   const context = useContext(WaxContext);
 
   const { activeViewId, activeView, options } = context;
-
   const { state } = view;
 
   const handleMouseDown = e => {
+    context.updateView({}, 'main');
     e.preventDefault();
     Object.assign(options, { fullScreen: !options.fullScreen });
     activeView.dispatch(

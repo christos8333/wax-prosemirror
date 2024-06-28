@@ -80,7 +80,7 @@ const EnterLayout = props => (
         <EditorArea>
           <WaxSurfaceScroll>
             <EditorContainer>
-              333 <WaxView {...props} />
+              <WaxView {...props} />
             </EditorContainer>
           </WaxSurfaceScroll>
         </EditorArea>

@@ -1,8 +1,6 @@
 /* eslint-disable consistent-return */
-/* eslint-disable react/prop-types */
-import React, { useContext, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { WaxContext } from './WaxContext';
 import ComponentPlugin from './ComponentPlugin';
 import './styles/styles.css';
 import useWaxView from './useWaxView';
@@ -20,33 +18,23 @@ const WaxPortals = ComponentPlugin('waxPortals');
 const WaxOverlays = ComponentPlugin('waxOverlays');
 
 const WaxView = props => {
-  const { autoFocus } = props;
-  useWaxView(props);
-  const {
-    pmViews: { main },
-  } = useContext(WaxContext);
+  const divRef = useRef(null);
 
-  const editorRef = useCallback(
-    element => {
-      if (element && main) {
-        element.replaceChildren(main?.dom);
-      }
+  const main = useWaxView(props);
 
-      // return () => element.remove();
-    },
-
-    [main],
-  );
+  const initialize = useCallback(() => {
+    if (divRef.current) {
+      divRef.current.replaceChildren(main?.dom);
+    }
+  }, [main]);
 
   useEffect(() => {
-    if (autoFocus && main) {
-      main.focus();
-    }
-  }, [autoFocus]);
+    initialize();
+  }, [initialize]);
 
   return (
     <EditorContainer>
-      <div ref={editorRef} />
+      <div ref={divRef} />
       <WaxOverlays activeViewId="main" group="main" />
       <WaxPortals />
     </EditorContainer>

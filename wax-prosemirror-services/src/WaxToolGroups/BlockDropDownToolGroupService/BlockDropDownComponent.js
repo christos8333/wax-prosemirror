@@ -109,11 +109,11 @@ const BlockDropDownComponent = ({ view, tools }) => {
       value: '8',
       item: tools[8],
     },
-    {
-      label: translatedLabel(`Wax.BlockLevel.Block Quote`, 'Block Quote'),
-      value: '13',
-      item: tools[13],
-    },
+    // {
+    //   label: translatedLabel(`Wax.BlockLevel.Block Quote`, 'Block Quote'),
+    //   value: '13',
+    //   item: tools[13],
+    // },
   ];
 
   const context = useContext(WaxContext);
@@ -124,7 +124,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
     pmViews: { main },
   } = context;
   const [label, setLabel] = useState(null);
-  const { dispatch, state } = view;
+  const { state } = view;
 
   /* Chapter Title */
   const titleNode = DocumentHelpers.findChildrenByType(
@@ -164,9 +164,10 @@ const BlockDropDownComponent = ({ view, tools }) => {
 
   useEffect(() => {
     setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Styles'));
+    let delayedSetLabel = () => true;
     dropDownOptions.forEach(option => {
       if (option.item.active(main.state, activeViewId)) {
-        setTimeout(() => {
+        delayedSetLabel = setTimeout(() => {
           setLabel(
             translatedLabel(
               `Wax.BlockLevel.${option.item.label}`,
@@ -176,6 +177,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
         });
       }
     });
+    return () => clearTimeout(delayedSetLabel);
   }, [
     main.state.selection.$from.parent.type.name,
     t('Wax.BlockLevel.Paragraph'),

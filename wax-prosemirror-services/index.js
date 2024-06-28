@@ -20,6 +20,7 @@ export { default as HighlightService } from './src/HighlightService/HightlightSe
 export { default as CounterInfoService } from './src/BottomInfoService/CounterInfoService/CounterInfoService';
 export { default as ShortCutsInfoService } from './src/BottomInfoService/ShortCutsInfoService/ShortCutsInfoService';
 export { default as BottomInfoService } from './src/BottomInfoService/BottomInfoService';
+export { default as BlockQuoteService } from './src/TextBlockLevel/BlockQuoteService/BlockQuoteService';
 export { default as TransformService } from './src/TransformService/TransformService';
 export { default as EditingSuggestingService } from './src/EditingSuggestingService/EditingSuggestingService';
 export { default as CustomTagInlineService } from './src/CustomTagService/CustomTagInlineService/CustomTagInlineService';

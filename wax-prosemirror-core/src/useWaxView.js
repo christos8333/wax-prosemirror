@@ -1,6 +1,4 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/prop-types */
-import { useContext, useEffect, useImperativeHandle } from 'react';
+import { useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import trackedTransaction from './utilities/track-changes/trackedTransaction';
@@ -24,15 +22,17 @@ const useWaxView = props => {
     serializer,
     scrollMargin,
     scrollThreshold,
+    onChange,
   } = props;
 
-  let view;
-
   const context = useContext(WaxContext);
+  const [WaxView, setWaxView] = useState(null);
+
   const { createPortal } = useContext(PortalContext);
 
   context.app.setContext({ ...context, createPortal });
   const schema = context.app.getSchema();
+  let view;
 
   useEffect(() => {
     context.app.bootServices();
@@ -45,6 +45,7 @@ const useWaxView = props => {
       plugins: context.app.getPlugins(),
     });
 
+    console.log('in view');
     view = new EditorView(null, {
       editable: () => !readonly,
       customValues,
@@ -57,18 +58,29 @@ const useWaxView = props => {
       attributes: {
         spellcheck: browserSpellCheck ? 'true' : 'false',
       },
+      handleDOMEvents: {
+        focus(editorView) {
+          return udpateEditorContext(editorView);
+        },
+        mousedown: editorView => {
+          return udpateEditorContext(editorView);
+        },
+      },
+      handleKeyDown: editorView => {
+        return udpateEditorContext(editorView);
+      },
     });
 
+    setWaxView(view);
     context.updateView(
       {
         main: view,
       },
       'main',
     );
+
     setTimeout(() => {
       if (autoFocus && view) {
-        view.state.tr.insertText('', 0);
-        view.dispatch(view.state.tr.scrollIntoView());
         view.focus();
       }
     }, 500);
@@ -77,6 +89,17 @@ const useWaxView = props => {
   useEffect(() => {
     return () => (view = null);
   }, []);
+
+  const udpateEditorContext = editorView => {
+    setTimeout(() => {
+      context.updateView(
+        {
+          main: editorView,
+        },
+        'main',
+      );
+    }, 50);
+  };
 
   useImperativeHandle(innerViewRef, () => ({
     getContent() {
@@ -97,26 +120,15 @@ const useWaxView = props => {
     const state = view.state.apply(tr);
     view.updateState(state);
 
-    /* when a transaction comes from a view other than
-      main don't keep updating the view ,as this is
-      the central point of each transaction
-      */
     context.setTransaction(transaction);
-
-    if (!transaction.getMeta('outsideView')) {
-      context.updateView(
-        {
-          main: view,
-        },
-        'main',
-      );
-    }
 
     const docContent =
       targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
     if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
-      props.onChange(docContent);
+      onChange(docContent);
   };
+
+  return WaxView;
 };
 
 export default useWaxView;

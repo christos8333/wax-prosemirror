@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { grid, th } from '@pubsweet/ui-toolkit';
-import { WaxContext, Icon } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext, Icon } from 'wax-prosemirror-core';
 import { v4 as uuidv4 } from 'uuid';
 
 const IconRemove = styled(Icon)`
@@ -88,8 +88,8 @@ const CustomTagInlineOverlayComponent = ({ mark }) => {
     JSON.parse(localStorage.getItem('isInline')),
   );
 
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     pmViews: { main },
   } = useContext(WaxContext);
   const { state, dispatch } = main;

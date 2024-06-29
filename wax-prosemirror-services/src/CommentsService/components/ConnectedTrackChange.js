@@ -1,7 +1,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  DocumentHelpers,
+} from 'wax-prosemirror-core';
 import { last, maxBy } from 'lodash';
 import { TextSelection } from 'prosemirror-state';
 import TrackChangesBox from './ui/trackChanges/TrackChangesBox';
@@ -18,11 +22,12 @@ const ConnectedTrackChangeStyled = styled.div`
 `;
 
 export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
-  const { app, activeView, pmViews } = context;
+  const { activeView, pmViews } = context;
   const user = app.config.get('user');
   const [isActive, setIsActive] = useState(false);
-  const { state, dispatch } = activeView;
+  const { dispatch } = activeView;
   const viewId = trackChange.attrs
     ? trackChange.attrs.viewid
     : trackChange.node.attrs.viewid;

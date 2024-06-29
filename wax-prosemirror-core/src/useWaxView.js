@@ -1,117 +1,116 @@
-/* eslint-disable import/no-named-as-default */
-import { useContext, useEffect, useImperativeHandle, useState } from 'react';
-import { EditorState } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-import trackedTransaction from './utilities/track-changes/trackedTransaction';
-import { WaxContext } from './WaxContext';
-import { PortalContext } from './PortalContext';
-import WaxOptions from './WaxOptions';
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState, forwardRef } from 'react';
+import { DOMSerializer } from 'prosemirror-model';
+import CryptoJS from 'crypto-js';
+import stringify from 'safe-stable-stringify';
+import DefaultSchema from './utilities/schema/DefaultSchema';
+import WaxProvider from './WaxContext';
+import PortalProvider from './PortalContext';
+import ApplicationProvider from './ApplicationContext';
+import Application from './Application';
 import helpers from './helpers/helpers';
-import './styles/styles.css';
 
-let previousDoc;
-
-const useWaxView = props => {
-  const {
-    browserSpellCheck,
-    customValues,
-    readonly,
-    user,
-    app,
-    autoFocus,
-    innerViewRef,
-    targetFormat,
-    serializer,
-    scrollMargin,
-    scrollThreshold,
-    onChange,
-  } = props;
-
-  let view;
-
-  const context = useContext(WaxContext);
-  const [WaxView, setWaxView] = useState(null);
-
-  const { createPortal } = useContext(PortalContext);
-
-  app.setContext({ ...context, createPortal });
-  const schema = app.getSchema();
-
-  useEffect(() => {
-    app.bootServices();
-    app.getShortCuts();
-    app.getRules();
-
-    const options = WaxOptions({
-      ...props,
-      schema,
-      plugins: app.getPlugins(),
-    });
-
-    view = new EditorView(null, {
-      editable: () => !readonly,
-      customValues,
-      state: EditorState.create(options),
-      disallowedTools: [],
-      user,
-      scrollMargin: scrollMargin || 200,
-      scrollThreshold: scrollThreshold || 200,
-      attributes: {
-        spellcheck: browserSpellCheck ? 'true' : 'false',
-      },
-    });
-
-    view.setProps({
-      dispatchTransaction: transaction => {
-        const { TrackChange } = props;
-        const tr =
-          TrackChange && TrackChange.enabled
-            ? trackedTransaction(transaction, view.state, user, app)
-            : transaction;
-
-        previousDoc = view.state.doc;
-        const state = view.state.apply(tr);
-        view.updateState(state);
-
-        context.setTransaction(transaction);
-        if (!transaction.getMeta('outsideView')) {
-          context.updateView({}, 'main');
-        }
-
-        const docContent =
-          targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
-        if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
-          onChange(docContent);
-      },
-    });
-
-    setWaxView({ ...view });
-
-    context.updateView(
-      {
-        main: view,
-      },
-      'main',
-    );
-
-    setTimeout(() => {
-      if (autoFocus && view) {
-        view.focus();
-      }
-    }, 500);
-  }, [readonly, customValues, app.id]);
-
-  useEffect(() => {
-    return () => (view = null);
-  }, []);
-
-  useImperativeHandle(innerViewRef, () => ({
-    getContent() {
-      return helpers.getDocContent(schema, serializer, targetFormat, context);
-    },
-  }));
-
-  return WaxView;
+const serializer = schema => {
+  const WaxSerializer = DOMSerializer.fromSchema(schema);
+  return content => {
+    const container = document.createElement('article');
+    container.appendChild(WaxSerializer.serializeFragment(content));
+    return container.innerHTML;
+  };
 };
 
-export default useWaxView;
+const createApplication = props => {
+  const application = Application.create(props);
+  return application;
+};
+
+const createObjectHash = obj => {
+  const str = stringify(obj);
+  return CryptoJS.SHA256(str).toString();
+};
+
+const createConfigWithHash = config => {
+  const configHash = createObjectHash(config);
+  return configHash;
+};
+
+const Wax = forwardRef((props, innerViewRef) => {
+  const {
+    autoFocus,
+    browserSpellCheck,
+    className,
+    config,
+    customValues,
+    fileUpload,
+    layout,
+    placeholder,
+    readonly,
+    value,
+    user,
+    onChange,
+    targetFormat,
+    scrollMargin,
+    scrollThreshold,
+  } = props;
+
+  const [application, setApplication] = useState();
+  const [WaxLayout, setWaxLayout] = useState(null);
+  const configHash = createConfigWithHash(config);
+
+  useEffect(() => {
+    const newApplication = createApplication(props);
+    if (application) application.resetApp();
+    setApplication(newApplication);
+    const Layout = newApplication.container.get('Layout');
+    if (layout) Layout.setLayout(layout);
+    setWaxLayout(Layout.layoutComponent);
+  }, [configHash]);
+
+  const finalOnChange = content => {
+    if (!onChange) return;
+    const { schema } = application.schema;
+    helpers.saveContent(content, onChange, schema, serializer, targetFormat);
+  };
+
+  if (!application || !WaxLayout) return null;
+
+  return (
+    <ApplicationProvider app={application}>
+      <WaxProvider>
+        <PortalProvider>
+          <WaxLayout
+            app={application}
+            autoFocus={autoFocus}
+            browserSpellCheck={browserSpellCheck}
+            className={className}
+            customValues={customValues}
+            fileUpload={fileUpload}
+            innerViewRef={innerViewRef}
+            onChange={finalOnChange || (() => true)}
+            placeholder={placeholder}
+            readonly={readonly}
+            scrollMargin={scrollMargin}
+            scrollThreshold={scrollThreshold}
+            serializer={serializer}
+            targetFormat={targetFormat}
+            TrackChange={
+              application.config.get('config.EnableTrackChangeService') ||
+              undefined
+            }
+            user={user}
+            value={value}
+            {...props}
+          />
+        </PortalProvider>
+      </WaxProvider>
+    </ApplicationProvider>
+  );
+});
+
+Wax.defaultProps = {
+  config: { SchemaService: DefaultSchema, services: [] },
+  customValues: {},
+};
+
+export default Wax;

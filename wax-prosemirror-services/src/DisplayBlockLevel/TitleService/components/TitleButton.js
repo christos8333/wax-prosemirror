@@ -2,14 +2,19 @@
 import React, { useContext, useMemo, useEffect } from 'react';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  DocumentHelpers,
+  MenuButton,
+} from 'wax-prosemirror-core';
 
 const TitleButton = ({ view = {}, item }) => {
   const { t, i18n } = useTranslation();
   const { active, icon, label, run, select, title } = item;
 
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     pmViews: { main },
     activeViewId,
     activeView,

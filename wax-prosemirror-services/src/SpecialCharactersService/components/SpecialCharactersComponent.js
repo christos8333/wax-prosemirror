@@ -11,7 +11,7 @@ import { filter, groupBy, debounce, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   width: 400px;
@@ -110,7 +110,8 @@ const SpecialCharactersComponent = () => {
   const { t, i18n } = useTranslation();
 
   const searchRef = useRef(null);
-  const { activeView, app } = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
+  const { activeView } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
   const [isFirstRun, setFirstRun] = useState(true);
 

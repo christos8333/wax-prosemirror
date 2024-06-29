@@ -3,7 +3,7 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
 import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
@@ -22,6 +22,7 @@ const ConnectedCommentStyled = styled.div`
 `;
 
 export default ({ comment, top, commentId, users, activeComment }) => {
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
     pmViews,
@@ -30,14 +31,13 @@ export default ({ comment, top, commentId, users, activeComment }) => {
         props: { user },
       },
     },
-    app,
     activeView,
   } = context;
 
   const [isActive, setIsActive] = useState(false);
   const [clickPost, setClickPost] = useState(false);
 
-  const { state, dispatch } = activeView;
+  const { state } = activeView;
   const { viewId, conversation } = comment.data;
   const styles = {
     top: `${top}px`,

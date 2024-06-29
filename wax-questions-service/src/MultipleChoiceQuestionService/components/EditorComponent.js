@@ -12,6 +12,7 @@ import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
 import {
   WaxContext,
+  ApplicationContext,
   ComponentPlugin,
   DocumentHelpers,
   Icon,
@@ -99,10 +100,9 @@ const QuestionEditorComponent = ({
   showDelete = false,
 }) => {
   const editorRef = useRef();
-
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     pmViews: { main },
   } = context;
 

@@ -3,16 +3,20 @@
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy, groupBy } from 'lodash';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  DocumentHelpers,
+} from 'wax-prosemirror-core';
 import BoxList from './BoxList';
 import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
 
 export default ({ area, users }) => {
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
     pmViews,
     pmViews: { main },
-    app,
     activeView,
     options: { activeComment },
   } = context;

@@ -3,7 +3,7 @@ import React, { useContext, useRef, useMemo } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import insertImage from './Upload';
 
@@ -16,9 +16,9 @@ const Wrapper = styled.div`
 const ImageUpload = ({ item, fileUpload, view }) => {
   const { t, i18n } = useTranslation();
   const { title } = item;
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     activeView,
     activeViewId,
     pmViews: { main },

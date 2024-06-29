@@ -41,20 +41,20 @@ class YjsService extends Service {
 
     const type = ydoc.getXmlFragment(YjsType || 'prosemirror');
     console.log('dsf');
-    console.log(this.app.PmPlugins.get('ySyncPlugin'));
+    // console.log(this.app.PmPlugins.get('ySyncPlugin'));
     this.app.PmPlugins.add('ySyncPlugin', ySyncPlugin(type));
 
-    // if (cursorBuilder) {
-    //   this.app.PmPlugins.add(
-    //     'yCursorPlugin',
-    //     yCursorPlugin(provider.awareness, { cursorBuilder }),
-    //   );
-    // } else {
-    //   this.app.PmPlugins.add(
-    //     'yCursorPlugin',
-    //     yCursorPlugin(provider.awareness),
-    //   );
-    // }
+    if (cursorBuilder) {
+      this.app.PmPlugins.add(
+        'yCursorPlugin',
+        yCursorPlugin(provider.awareness, { cursorBuilder }),
+      );
+    } else {
+      this.app.PmPlugins.add(
+        'yCursorPlugin',
+        yCursorPlugin(provider.awareness),
+      );
+    }
 
     this.app.PmPlugins.add('yUndoPlugin', yUndoPlugin());
   }

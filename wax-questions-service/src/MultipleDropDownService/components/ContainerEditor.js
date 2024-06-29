@@ -11,7 +11,7 @@ import {
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, chainCommands } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext, ComponentPlugin } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext, ComponentPlugin } from 'wax-prosemirror-core';
 import FakeCursorPlugin from '../plugins/FakeCursorPlugin';
 
 const EditorWrapper = styled.div`
@@ -47,9 +47,9 @@ let WaxOverlays = () => true;
 const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     pmViews: { main },
   } = context;
 

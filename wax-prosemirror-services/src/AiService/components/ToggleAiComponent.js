@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { WaxContext, MenuButton } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext, MenuButton } from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
 const ToggleAiComponent = ({ item }) => {
   const [checked, setChecked] = useState(false);
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     pmViews: { main },
   } = context;
 

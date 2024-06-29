@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import {
   DocumentHelpers,
   WaxContext,
+  ApplicationContext,
   Icon,
   useOnClickOutside,
 } from 'wax-prosemirror-core';
@@ -116,9 +117,9 @@ const BlockDropDownComponent = ({ view, tools }) => {
     // },
   ];
 
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     activeView,
     activeViewId,
     pmViews: { main },

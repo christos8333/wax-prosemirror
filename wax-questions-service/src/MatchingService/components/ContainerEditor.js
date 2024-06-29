@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { EditorView } from 'prosemirror-view';
 import { EditorState } from 'prosemirror-state';
 import { StepMap } from 'prosemirror-transform';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
   width: 100% !important;
@@ -28,9 +28,8 @@ const EditorWrapper = styled.div`
 
 const ContainerEditor = ({ node, view, getPos }) => {
   const editorRef = useRef();
-
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
-  const { app } = context;
 
   let containerView;
   const questionId = node.attrs.id;

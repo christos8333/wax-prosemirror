@@ -40,18 +40,6 @@ export default props => {
               activeViewId: newActiveViewId,
             };
           });
-
-          // const pmViews = { ...context.pmViews, ...newView };
-          // const activeView = pmViews[activeViewId || context.activeViewId];
-
-          // // const pmViews = Object.assign(context.pmViews, newView);
-          // // const activeView = pmViews[activeViewId || context.activeViewId];
-          // setContext({
-          //   ...context,
-          //   pmViews,
-          //   activeView,
-          //   activeViewId: activeViewId || context.activeViewId,
-          // });
         },
         setTransaction: tr => {
           Object.assign(context.transaction, tr);

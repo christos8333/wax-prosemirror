@@ -77,7 +77,6 @@ const Wax = forwardRef((props, innerViewRef) => {
 
   return (
     <ApplicationProvider app={application}>
-<<<<<<< HEAD
       <WaxProvider>
         <PortalProvider>
           <WaxLayout
@@ -105,35 +104,6 @@ const Wax = forwardRef((props, innerViewRef) => {
           />
         </PortalProvider>
       </WaxProvider>
-=======
-        <WaxProvider>
-          <PortalProvider>
-            <WaxLayout
-              app={application}
-              autoFocus={autoFocus}
-              browserSpellCheck={browserSpellCheck}
-              className={className}
-              customValues={customValues}
-              fileUpload={fileUpload}
-              innerViewRef={innerViewRef}
-              onChange={finalOnChange || (() => true)}
-              placeholder={placeholder}
-              readonly={readonly}
-              scrollMargin={scrollMargin}
-              scrollThreshold={scrollThreshold}
-              serializer={serializer}
-              targetFormat={targetFormat}
-              TrackChange={
-                application.config.get('config.EnableTrackChangeService') ||
-                undefined
-              }
-              user={user}
-              value={value}
-              {...props}
-            />
-          </PortalProvider>
-        </WaxProvider>
->>>>>>> fix(components): fix(core): application context
     </ApplicationProvider>
   );
 });

@@ -24,7 +24,6 @@ const WaxView = props => {
 
   const initialize = useCallback(() => {
     if (divRef.current) {
-      console.log('reinitialize')
       divRef.current.replaceChildren(main?.dom);
     }
   }, [main]);

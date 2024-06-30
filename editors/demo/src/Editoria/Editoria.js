@@ -1,4 +1,10 @@
-import React, { useLayoutEffect, useState, useMemo, useRef } from 'react';
+import React, {
+  useLayoutEffect,
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+} from 'react';
 
 import { Wax } from 'wax-prosemirror-core';
 
@@ -6,6 +12,8 @@ import { EditoriaLayout, EditoriaMobileLayout } from './layout';
 import { config, configMobile } from './config';
 import { demo } from './demo';
 import { debounce } from 'lodash';
+import { TablesService } from 'wax-table-service';
+import { YjsService } from 'wax-prosemirror-services';
 
 const renderImage = file => {
   const reader = new FileReader();
@@ -28,6 +36,9 @@ const user = {
 
 const Editoria = () => {
   const [width] = useWindowSize();
+  const [myConfig, setMyConfig] = useState(config);
+  const [myName, setMyName] = useState('COKO');
+  const [isFirst, setFirst] = useState(true);
 
   let layout = EditoriaLayout;
   let finalConfig = config;
@@ -40,32 +51,106 @@ const Editoria = () => {
   }
   const editorRef = useRef();
 
-  const EditoriaComponent = useMemo(
-    () => (
-      <>
-        <Wax
-          ref={editorRef}
-          key={key}
-          config={finalConfig}
-          autoFocus
-          placeholder="Type Something..."
-          fileUpload={file => renderImage(file)}
-          value={demo}
-          // readonly
-          layout={layout}
-          // onChange={debounce(source => {
-          //   console.log(JSON.stringify(source));
-          // }, 200)}
-          user={user}
-          scrollMargin={200}
-          scrollThreshold={200}
-        />
-      </>
-    ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [layout, finalConfig],
+  // useEffect(() => {
+  //   console.log('sss');
+  //   // const configObj = config(yjsProvider, ydoc, 'christos')
+  //   setTimeout(() => {
+  //     setFirst(false);
+  //   }, 5000);
+  //   // configObj.services = [...configObj.services, new TablesService()]
+  // }, [isFirst]);
+
+  if (!isFirst) {
+    // configObj.services = [...configObj.services, new TablesService()]
+    // configObj.name = 'ddd';
+    config.name = 'Ffdfd';
+    // setMyConfig({ ...myConfig });
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          console.log(myConfig);
+          // myConfig.PmPlugins = [];
+          myConfig.services = [...myConfig.services, new TablesService()];
+          myConfig.name = 'Ffd1fd';
+          setMyConfig({ ...myConfig });
+        }}
+      >
+        {' '}
+        change config
+      </button>
+
+      <button
+        onClick={() => {
+          setMyName('GIANNIS');
+        }}
+      >
+        {' '}
+        change name
+      </button>
+
+      <Wax
+        ref={editorRef}
+        key={key}
+        config={config}
+        autoFocus
+        placeholder="Type Something..."
+        fileUpload={file => renderImage(file)}
+        // value={demo}
+        // readonly
+        layout={layout}
+        name={myName}
+        // onChange={debounce(source => {
+        //   console.log(JSON.stringify(source));
+        // }, 200)}
+        user={user}
+        scrollMargin={200}
+        scrollThreshold={200}
+        value={'<p>fdsfsdf<strong>test</strong>ss</p>'}
+      />
+    </>
   );
-  return <>{EditoriaComponent}</>;
+
+  // const EditoriaComponent = useMemo(
+  //   () => (
+  //     <>
+  //       <button
+  //         onClick={() => {
+  //           console.log(myConfig);
+  //           myConfig.PmPlugins = [];
+  //           myConfig.services = [...myConfig.services, new TablesService()];
+  //           setMyConfig({ ...myConfig });
+  //         }}
+  //       >
+  //         {' '}
+  //         change config
+  //       </button>
+
+  //       <Wax
+  //         ref={editorRef}
+  //         key={key}
+  //         config={myConfig}
+  //         autoFocus
+  //         placeholder="Type Something..."
+  //         fileUpload={file => renderImage(file)}
+  //         // value={demo}
+  //         // readonly
+  //         layout={layout}
+  //         // onChange={debounce(source => {
+  //         //   console.log(JSON.stringify(source));
+  //         // }, 200)}
+  //         user={user}
+  //         scrollMargin={200}
+  //         scrollThreshold={200}
+  //       />
+  //     </>
+  //   ),
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [layout, myConfig],
+  // );
+  // return <>{EditoriaComponent}</>;
 };
 
 function useWindowSize() {

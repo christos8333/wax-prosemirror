@@ -227,7 +227,6 @@ export default ({ node, view, getPos }) => {
 
     const allNodes = getNodes(context.pmViews.main);
     // const allNodesOptions = getOptionsNodes(context.pmViews.main);
-    // console.log(allNodesOptions);
 
     allNodes.forEach(singleNode => {
       if (singleNode.node.attrs.id === node.attrs.id) {
@@ -244,7 +243,7 @@ export default ({ node, view, getPos }) => {
               //         correct: '',
               //       }),
               //   );
-              //   console.log(allNodesOptions);
+              //
               // });
 
               /* eslint-disable-next-line no-param-reassign */

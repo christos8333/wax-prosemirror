@@ -7,7 +7,7 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 
 const EditorWrapper = styled.div`
   > .ProseMirror {
@@ -39,9 +39,9 @@ const ContainerEditor = ({
 }) => {
   const editorRef = useRef();
 
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     pmViews: { main },
   } = context;
 
@@ -70,7 +70,7 @@ const ContainerEditor = ({
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.PmPlugins.getAll()];
 
   finalPlugins = finalPlugins.concat([...plugins]);
 

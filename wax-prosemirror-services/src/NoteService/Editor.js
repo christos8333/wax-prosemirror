@@ -10,6 +10,7 @@ import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 import {
   WaxContext,
+  ApplicationContext,
   ComponentPlugin,
   DocumentHelpers,
   trackedTransaction,
@@ -26,6 +27,7 @@ let WaxOverlays = () => true;
 export default ({ node, view }) => {
   const editorRef = useRef();
   const context = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
   const noteId = node.attrs.id;
   let noteView;
   let clickInNote = false;
@@ -48,7 +50,7 @@ export default ({ node, view }) => {
         editable: () => isEditable,
         state: EditorState.create({
           doc: node,
-          plugins: [keymap(createKeyBindings()), ...context.app.getPlugins()],
+          plugins: [keymap(createKeyBindings()), ...app.PmPlugins.getAll()],
         }),
         dispatchTransaction,
         disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
@@ -94,9 +96,7 @@ export default ({ node, view }) => {
   const dispatchTransaction = transaction => {
     const { user } = view.props;
 
-    const TrackChange = context.app.config.get(
-      'config.EnableTrackChangeService',
-    );
+    const TrackChange = app.config.get('config.EnableTrackChangeService');
 
     let tr = transaction;
 
@@ -135,7 +135,7 @@ export default ({ node, view }) => {
         context.updateView({}, noteId);
     }, 20);
 
-    const findReplace = context.app.PmPlugins.get('findAndReplacePlugin');
+    const findReplace = app.PmPlugins.get('findAndReplacePlugin');
 
     if (findReplace) {
       const matches = findReplace.getState(noteView.state).allMatches;

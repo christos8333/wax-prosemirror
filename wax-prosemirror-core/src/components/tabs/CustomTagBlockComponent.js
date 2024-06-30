@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import MenuButton from '../ui/MenuButton';
 import { WaxContext } from '../../WaxContext';
+import { ApplicationContext } from '../../ApplicationContext';
 
 const activeStyles = css`
   pointer-events: none;
@@ -74,9 +75,8 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const { t, i18n } = useTranslation();
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
-
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     pmViews: { main },
     activeView,
     activeViewId,

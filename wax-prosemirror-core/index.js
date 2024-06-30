@@ -8,6 +8,7 @@ export { default as Service } from './src/Service';
 
 /* Context & ComponentPlugin */
 export { WaxContext, useInjection } from './src/WaxContext';
+export { ApplicationContext } from './src/ApplicationContext';
 export { StateContext } from './src/StateContext';
 export { PortalContext } from './src/PortalContext';
 export { default as ComponentPlugin } from './src/ComponentPlugin';

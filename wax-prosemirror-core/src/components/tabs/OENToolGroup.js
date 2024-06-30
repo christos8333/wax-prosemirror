@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { liftTarget } from 'prosemirror-transform';
 import MenuButton from '../ui/MenuButton';
 import { WaxContext } from '../../WaxContext';
+import { ApplicationContext } from '../../ApplicationContext';
 
 const activeStyles = css`
   pointer-events: none;
@@ -43,8 +44,8 @@ const StyledButton = styled(MenuButton)`
 `;
 
 const OENToolGroup = ({ item }) => {
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     pmViews: { main },
     activeView,
     activeViewId,

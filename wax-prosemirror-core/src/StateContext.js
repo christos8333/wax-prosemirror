@@ -6,24 +6,22 @@ export const StateContext = React.createContext({
   state: null,
 });
 
-export default props => {
-  const [context, setContext] = useState({
-    state: props.state,
-  });
+export default ({ state, children }) => {
+  const [context, setContext] = useState(state);
 
   return (
     <StateContext.Provider
       value={{
         ...context,
-        updateState: state => {
+        updateState: st => {
           setContext({
             ...context,
-            state,
+            state: st,
           });
         },
       }}
     >
-      {props.children}
+      {children}
     </StateContext.Provider>
   );
 };

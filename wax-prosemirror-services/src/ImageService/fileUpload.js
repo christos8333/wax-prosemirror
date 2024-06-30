@@ -7,9 +7,9 @@ const findPlaceholder = (state, id, placeholderPlugin) => {
   return found.length ? found[0].from : null;
 };
 
-export default (view, fileUpload, placeholderPlugin, context) => file => {
+export default (view, fileUpload, placeholderPlugin, context, app) => file => {
   // const { state } = view;
-  const trackChange = context.app.config.get('config.EnableTrackChangeService');
+  const trackChange = app.config.get('config.EnableTrackChangeService');
   if (trackChange?.enabled)
     if (
       context.pmViews.main.state.doc.resolve(

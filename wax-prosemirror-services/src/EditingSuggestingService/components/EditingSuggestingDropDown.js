@@ -3,7 +3,12 @@ import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, ReactDropDownStyles, Icon } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  ReactDropDownStyles,
+  Icon,
+} from 'wax-prosemirror-core';
 import Dropdown from 'react-dropdown';
 
 const Wrapper = styled.span`
@@ -49,7 +54,8 @@ const StyledIcon = styled(Icon)`
 
 // eslint-disable-next-line no-unused-vars
 const EditingSuggesting = ({ view: { dispatch, state }, item }) => {
-  const { app, activeView, pmViews } = useContext(WaxContext);
+  const { activeView, pmViews } = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
   const { t, i18n } = useTranslation();
   const enableService = app.config.get('config.EnableTrackChangeService')
     ? app.config.get('config.EnableTrackChangeService')

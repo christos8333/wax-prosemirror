@@ -20,9 +20,9 @@ const UndoRedoButton = ({ view = {}, item }) => {
 
   const { state } = view;
 
-  const handleMouseDown = (e, editorState, editorDispatch) => {
+  const handleMouseDown = (e) => {
     e.preventDefault();
-    run(editorState, editorDispatch);
+    run(main.state, main.dispatch);
   };
 
   const isActive = !!(
@@ -40,7 +40,8 @@ const UndoRedoButton = ({ view = {}, item }) => {
         disabled={isDisabled}
         iconName={icon}
         label={label}
-        onMouseDown={e => handleMouseDown(e, main.state, main.dispatch)}
+        onMouseDown={e => handleMouseDown(e)}
+        // onMouseDown={e => handleMouseDown(e, main.state, main.dispatch)}
         title={
           !isEmpty(i18n) && i18n.exists(`Wax.Base.${title}`)
             ? t(`Wax.Base.${title}`)

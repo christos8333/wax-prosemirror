@@ -6,7 +6,11 @@ import { StepMap } from 'prosemirror-transform';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { undo, redo } from 'prosemirror-history';
-import { WaxContext, FakeCursorPlugin } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  FakeCursorPlugin,
+} from 'wax-prosemirror-core';
 import Placeholder from '../../MultipleChoiceQuestionService/plugins/placeholder';
 
 const EditorWrapper = styled.div`
@@ -57,9 +61,9 @@ const EditorWrapper = styled.div`
 const EditorComponent = ({ node, view, getPos }) => {
   const editorRef = useRef();
 
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
-    app,
     pmViews: { main },
   } = context;
   let questionView;
@@ -85,7 +89,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.PmPlugins.getAll()];
 
   const createPlaceholder = placeholder => {
     return Placeholder({

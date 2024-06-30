@@ -17,7 +17,7 @@ const trackedTransaction = (
   tr,
   state,
   user,
-  context,
+  app,
   group = 'main',
   viewId = 'main',
 ) => {
@@ -186,7 +186,7 @@ const trackedTransaction = (
     !isEmpty(tr.meta) &&
     Object.keys(tr.meta).every(meta => meta.includes('imagePlaceHolder'))
   ) {
-    const imagePlaceholder = context.app.PmPlugins.get('imagePlaceHolder');
+    const imagePlaceholder = app.PmPlugins.get('imagePlaceHolder');
     return newTr.setMeta(imagePlaceholder, { remove: { id: {} } });
   }
   return newTr;

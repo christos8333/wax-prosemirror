@@ -39,7 +39,6 @@ const rejectTrackChange = (
   if (trackData?.node?.type?.name === 'figure') {
     to = activeTrackChange.from + 3;
   }
-  console.log(activeTrackChange, trackData);
   tr.setMeta('AcceptReject', true);
   const map = new Mapping();
 

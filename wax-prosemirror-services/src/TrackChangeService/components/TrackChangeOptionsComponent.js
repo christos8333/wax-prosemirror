@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { each, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { grid } from '@pubsweet/ui-toolkit';
-import { WaxContext, DocumentHelpers, MenuButton } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  DocumentHelpers,
+  MenuButton,
+} from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -188,7 +193,8 @@ const TrackChangeOptionsComponent = ({
   // const [isShownTrack, setIsShownTrack] = useState(false);
   const { t, i18n } = useTranslation();
   const menuItems = groups[0].items;
-  const { app, pmViews, activeView, activeViewId } = useContext(WaxContext);
+  const { pmViews, activeView, activeViewId } = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
   const { state } = activeView;
   const user = app.config.get('user');
   const hideShowPlugin = app.PmPlugins.get('hideShowPlugin');

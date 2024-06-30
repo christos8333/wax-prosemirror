@@ -4,6 +4,7 @@ import { each, eachRight, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import {
   WaxContext,
+  ApplicationContext,
   DocumentHelpers,
   useDebounce,
   Icon,
@@ -148,7 +149,8 @@ const ExpandedFindAndReplaceComponent = ({
   setMatchCaseValue,
 }) => {
   const { t, i18n } = useTranslation();
-  const { app, pmViews, activeViewId } = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
+  const { pmViews, activeViewId } = useContext(WaxContext);
   const searchRef = useRef(null);
   const replaceRef = useRef(null);
   const [searchValue, setSearchValue] = useState(nonExpandedText);

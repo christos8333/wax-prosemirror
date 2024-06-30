@@ -5,7 +5,12 @@ import { each, eachRight, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { grid } from '@pubsweet/ui-toolkit';
-import { WaxContext, useDebounce, Icon } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  useDebounce,
+  Icon,
+} from 'wax-prosemirror-core';
 import helpers from './helpers';
 
 const Wrapper = styled.div`
@@ -111,8 +116,8 @@ const FindComponent = ({
   findNextMatch,
   findPreviousMatch,
 }) => {
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     pmViews,
     activeViewId,
     pmViews: { main },

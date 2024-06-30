@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 import { useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
@@ -9,17 +10,16 @@ import helpers from './helpers/helpers';
 import './styles/styles.css';
 
 let previousDoc;
-let currentCofingHash;
 
 const useWaxView = props => {
   const {
     browserSpellCheck,
     customValues,
     readonly,
-    autoFocus,
     user,
+    app,
+    autoFocus,
     innerViewRef,
-    configHash,
     targetFormat,
     serializer,
     scrollMargin,
@@ -27,32 +27,31 @@ const useWaxView = props => {
     onChange,
   } = props;
 
+  let view;
+
   const context = useContext(WaxContext);
   const [WaxView, setWaxView] = useState(null);
 
   const { createPortal } = useContext(PortalContext);
 
-  context.app.setContext({ ...context, createPortal });
-  const schema = context.app.getSchema();
-  let view;
+  app.setContext({ ...context, createPortal });
+  const schema = app.getSchema();
 
   useEffect(() => {
-    context.app.bootServices();
-    context.app.getShortCuts();
-    context.app.getRules();
+    app.bootServices();
+    app.getShortCuts();
+    app.getRules();
 
     const options = WaxOptions({
       ...props,
       schema,
-      plugins: context.app.getPlugins(),
+      plugins: app.getPlugins(),
     });
 
-    console.log('in view');
     view = new EditorView(null, {
       editable: () => !readonly,
       customValues,
       state: EditorState.create(options),
-      dispatchTransaction,
       disallowedTools: [],
       user,
       scrollMargin: scrollMargin || 200,
@@ -62,7 +61,32 @@ const useWaxView = props => {
       },
     });
 
-    setWaxView(view);
+    view.setProps({
+      dispatchTransaction: transaction => {
+        const { TrackChange } = props;
+        const tr =
+          TrackChange && TrackChange.enabled
+            ? trackedTransaction(transaction, view.state, user, app)
+            : transaction;
+
+        previousDoc = view.state.doc;
+        const state = view.state.apply(tr);
+        view.updateState(state);
+
+        context.setTransaction(transaction);
+        if (!transaction.getMeta('outsideView')) {
+          context.updateView({}, 'main');
+        }
+
+        const docContent =
+          targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
+        if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
+          onChange(docContent);
+      },
+    });
+
+    setWaxView({ ...view });
+
     context.updateView(
       {
         main: view,
@@ -75,7 +99,7 @@ const useWaxView = props => {
         view.focus();
       }
     }, 500);
-  }, [readonly, customValues, context.app.id]);
+  }, [readonly, customValues, app.id]);
 
   useEffect(() => {
     return () => (view = null);
@@ -86,39 +110,6 @@ const useWaxView = props => {
       return helpers.getDocContent(schema, serializer, targetFormat, context);
     },
   }));
-
-  const dispatchTransaction = transaction => {
-    if (currentCofingHash === configHash) {
-      const { TrackChange } = props;
-      const tr =
-        TrackChange && TrackChange.enabled
-          ? trackedTransaction(transaction, view.state, user, context)
-          : transaction;
-
-      if (!view) return;
-
-      previousDoc = view.state.doc;
-      const state = view.state.apply(tr);
-      view.updateState(state);
-
-      context.setTransaction(transaction);
-
-      context.updateView(
-        {
-          main: view,
-        },
-        'main',
-      );
-
-      const docContent =
-        targetFormat === 'JSON' ? state.doc.toJSON() : state.doc.content;
-      if (!previousDoc.eq(view.state.doc) || tr.getMeta('forceUpdate'))
-        onChange(docContent);
-    }
-    setTimeout(() => {
-      currentCofingHash = configHash;
-    }, 100);
-  };
 
   return WaxView;
 };

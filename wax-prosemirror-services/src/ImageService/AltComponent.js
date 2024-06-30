@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { WaxContext } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 
 const StyledInputAlt = styled.input`
   background: #e2ebff;
@@ -25,8 +25,8 @@ export default ({ setPosition, position }) => {
   const altRef = useRef(null);
   const [altText, setAltText] = useState('');
   const context = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     activeView,
     pmViews: { main },
   } = context;

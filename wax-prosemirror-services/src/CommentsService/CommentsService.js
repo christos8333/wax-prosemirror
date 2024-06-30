@@ -28,7 +28,7 @@ export default class CommentsService extends Service {
       commentsDataMap: this.app.config.get('config.YjsService')
         ? this.app.context.options.currentYdoc.getMap('commentsDataMap')
         : new Map(),
-      context: this.app.context,
+      context: { ...this.app.context, app: this.app },
       onSelectionChange: items => {
         this.allCommentsFromStates = this.allCommentsFromStates.filter(
           comm =>

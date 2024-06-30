@@ -19,8 +19,6 @@ const Button = ({ view = {}, item }) => {
     return editable;
   });
 
-  const { state } = view;
-
   const handleMouseDown = e => {
     e.preventDefault();
     run(activeView.state, activeView.dispatch, activeView, context);
@@ -28,7 +26,7 @@ const Button = ({ view = {}, item }) => {
 
   const isActive = !!(
     active(activeView.state, activeViewId) &&
-    select(state, activeViewId, activeView)
+    select(activeView.state, activeViewId, activeView)
   );
 
   let isDisabled = !select(

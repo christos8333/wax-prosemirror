@@ -4,7 +4,7 @@ import React, { useRef, useLayoutEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { capitalize, debounce, isEmpty, keys } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, icons } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext, icons } from 'wax-prosemirror-core';
 import { PropTypes } from 'prop-types';
 import replaceSelectedText from '../ReplaceSelectedText';
 import PromptOptions from './AiSettingsMenu';
@@ -369,8 +369,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   // #region HOOKS & INIT ------------------------
   const { t, i18n } = useTranslation();
   const ctx = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
   const {
-    app,
     pmViews: { main },
     options,
   } = ctx;

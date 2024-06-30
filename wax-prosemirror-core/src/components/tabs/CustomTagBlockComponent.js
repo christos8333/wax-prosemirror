@@ -75,14 +75,12 @@ const CustomTagBlockComponent = ({ isShowTag, item }) => {
   const { t, i18n } = useTranslation();
   const ref = useRef();
   const [inputValue, setInputValue] = useState('');
-
+  const { app } = useContext(ApplicationContext);
   const {
     pmViews: { main },
     activeView,
     activeViewId,
   } = useContext(WaxContext);
-
-  const { app } = useContext(ApplicationContext);
 
   const { state } = main;
   const { $from } = state.selection;

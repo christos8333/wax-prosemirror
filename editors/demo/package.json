@@ -36,6 +36,7 @@
   ],
   "resolutions": {
     "styled-components": "5.3.1",
+    "prosemirror-model": "1.19.0",
     "prosemirror-transform": "1.7.1"
   },
   "devDependencies": {

@@ -12,7 +12,6 @@ class MenuService extends Service {
     const { menus } = this.container.get('MenuCollection');
     const layout = this.container.get('Layout');
 
-    // console.log(layout.components.mainMenuToolBar);
     menus.forEach(menu => {
       if (layout.components[menu.config.templateArea]) {
         layout.components[menu.config.templateArea].clear();

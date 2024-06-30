@@ -70,7 +70,7 @@ const ContainerEditor = ({
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.PmPlugins.getAll()];
 
   finalPlugins = finalPlugins.concat([...plugins]);
 

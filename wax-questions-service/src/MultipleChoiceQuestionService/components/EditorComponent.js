@@ -156,7 +156,7 @@ const QuestionEditorComponent = ({
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.PmPlugins.getAll()];
 
   const createPlaceholder = placeholder => {
     return Placeholder({

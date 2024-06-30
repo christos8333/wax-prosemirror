@@ -89,7 +89,7 @@ const EditorComponent = ({ node, view, getPos }) => {
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...app.getPlugins()];
+  const plugins = [keymap(createKeyBindings()), ...app.PmPlugins.getAll()];
 
   const createPlaceholder = placeholder => {
     return Placeholder({

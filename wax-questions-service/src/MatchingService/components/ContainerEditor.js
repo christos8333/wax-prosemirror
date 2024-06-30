@@ -43,7 +43,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
         editable: () => false,
         state: EditorState.create({
           doc: node,
-          plugins: [...app.getPlugins()],
+          plugins: [...app.PmPlugins.getAll()],
         }),
         dispatchTransaction,
         disallowedTools: [

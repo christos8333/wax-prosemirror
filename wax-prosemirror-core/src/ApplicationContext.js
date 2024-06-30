@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 export const ApplicationContext = React.createContext({
   app: null,
+  getPlugins: null,
 });
 
 export default ({ app, children }) => {

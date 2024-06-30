@@ -26,8 +26,8 @@ let WaxOverlays = () => true;
 
 export default ({ node, view }) => {
   const editorRef = useRef();
-  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
   const noteId = node.attrs.id;
   let noteView;
   let clickInNote = false;
@@ -50,7 +50,7 @@ export default ({ node, view }) => {
         editable: () => isEditable,
         state: EditorState.create({
           doc: node,
-          plugins: [keymap(createKeyBindings()), ...app.getPlugins()],
+          plugins: [keymap(createKeyBindings()), ...app.PmPlugins.getAll()],
         }),
         dispatchTransaction,
         disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],

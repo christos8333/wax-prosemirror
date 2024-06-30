@@ -199,15 +199,6 @@ const QuestionEditorComponent = ({
                   ),
                 ),
             );
-            // context.pmViews[activeViewId].dispatch(
-            //   context.pmViews[activeViewId].state.tr.setSelection(
-            //     TextSelection.between(
-            //       context.pmViews[activeViewId].state.selection.$anchor,
-            //       context.pmViews[activeViewId].state.selection.$head,
-            //     ),
-            //   ),
-            // );
-
             context.updateView({}, questionId);
 
             if (questionView.hasFocus()) questionView.focus();
@@ -242,10 +233,6 @@ const QuestionEditorComponent = ({
     const { state, transactions } = questionView.state.applyTransaction(tr);
     questionView.updateState(state);
     context.updateView({}, questionId);
-
-    // setTimeout(() => {
-    //   context.updateView({}, questionId);
-    // });
 
     if (!tr.getMeta('fromOutside')) {
       const outerTr = view.state.tr;

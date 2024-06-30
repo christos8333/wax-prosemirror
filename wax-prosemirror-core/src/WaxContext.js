@@ -10,14 +10,12 @@ export const WaxContext = React.createContext({
   activeViewId: null,
   updateView: null,
   updateState: null,
-  state: null,
   updateActiveView: null,
   removeView: null,
 });
 
 export default props => {
   const [context, setContext] = useState({
-    state: props.state,
     pmViews: props.view || {},
     activeView: props.activeView || {},
     activeViewId: props.activeViewId || {},
@@ -30,17 +28,16 @@ export default props => {
       value={{
         ...context,
         updateView: (newView, activeViewId) => {
-          setContext(prevContext => {
-            const updatedPmViews = { ...prevContext.pmViews, ...newView };
-            const newActiveViewId = activeViewId || prevContext.activeViewId;
-            return {
-              ...prevContext,
-              pmViews: updatedPmViews,
-              activeView: updatedPmViews[newActiveViewId],
-              activeViewId: newActiveViewId,
-            };
+          const pmViews = Object.assign(context.pmViews, newView);
+          const activeView = pmViews[activeViewId || context.activeViewId];
+          setContext({
+            ...context,
+            pmViews,
+            activeView,
+            activeViewId: activeViewId || context.activeViewId,
           });
         },
+
         setTransaction: tr => {
           Object.assign(context.transaction, tr);
         },

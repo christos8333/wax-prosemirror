@@ -229,7 +229,7 @@ export default {
             'StrikeThrough',
           ],
         },
-        // 'BlockQuoteTool',
+        'BlockQuoteTool',
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',

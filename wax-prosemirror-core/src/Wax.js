@@ -36,23 +36,7 @@ const createConfigWithHash = config => {
 };
 
 const Wax = forwardRef((props, innerViewRef) => {
-  const {
-    autoFocus,
-    browserSpellCheck,
-    className,
-    config,
-    customValues,
-    fileUpload,
-    layout,
-    placeholder,
-    readonly,
-    value,
-    user,
-    onChange,
-    targetFormat,
-    scrollMargin,
-    scrollThreshold,
-  } = props;
+  const { config, layout, onChange, targetFormat } = props;
 
   const [application, setApplication] = useState();
   const [WaxLayout, setWaxLayout] = useState(null);
@@ -79,27 +63,15 @@ const Wax = forwardRef((props, innerViewRef) => {
       <WaxProvider>
         <PortalProvider>
           <WaxLayout
+            {...props}
             app={application}
-            autoFocus={autoFocus}
-            browserSpellCheck={browserSpellCheck}
-            className={className}
-            customValues={customValues}
-            fileUpload={fileUpload}
             innerViewRef={innerViewRef}
             onChange={finalOnChange || (() => true)}
-            placeholder={placeholder}
-            readonly={readonly}
-            scrollMargin={scrollMargin}
-            scrollThreshold={scrollThreshold}
             serializer={serializer}
-            targetFormat={targetFormat}
             TrackChange={
               application.config.get('config.EnableTrackChangeService') ||
               undefined
             }
-            user={user}
-            value={value}
-            {...props}
           />
         </PortalProvider>
       </WaxProvider>

@@ -13,7 +13,7 @@ class Text extends ToolGroup {
     @inject('ExtractProse') extractProse,
     @inject('ExtractPoetry') extractPoetry,
     @inject('SourceNote') sourceNote,
-    @inject('BlockQuote') blockQuote,
+    // @inject('BlockQuote') blockQuote,
   ) {
     super();
     this.tools = [
@@ -22,7 +22,7 @@ class Text extends ToolGroup {
       extractProse,
       extractPoetry,
       sourceNote,
-      blockQuote,
+      // blockQuote,
     ];
   }
 }

@@ -12,7 +12,10 @@ const defaultOverlay = {
 };
 
 export default options => {
-  const { activeView } = useContext(WaxContext);
+  const {
+    activeView,
+    pmViews: { main },
+  } = useContext(WaxContext);
 
   const [position, setPosition] = useState({
     position: 'absolute',
@@ -25,11 +28,21 @@ export default options => {
   /* Sets Default position at the end of the annotation. You
   can overwrite the default position in your component.
  */
-  const calculatePosition = (focusedView, from, to) => {
-    const WaxSurface = focusedView.dom.getBoundingClientRect();
+  const calculatePosition = (focusedView, from, to, componentType = '') => {
+    let offset = 15;
+    let WaxSurface = focusedView.dom.getBoundingClientRect();
+
+    if (componentType === 'imageAltText') {
+      offset = -25;
+    }
+
+    if (['imageAltText', 'imageLongDesc'].includes(componentType)) {
+      WaxSurface = main.dom.getBoundingClientRect();
+    }
+
     const end = focusedView.coordsAtPos(to);
     const left = end.left - WaxSurface.left;
-    const top = end.top - WaxSurface.top + 15;
+    const top = end.top - WaxSurface.top + offset;
     return {
       top,
       left,
@@ -51,14 +64,24 @@ export default options => {
   };
 
   const displayOnNode = (focusedView, overlayOptions) => {
-    const { nodeType, followCursor, findInParent } = overlayOptions;
+    const {
+      nodeType,
+      followCursor,
+      findInParent,
+      componentType,
+    } = overlayOptions;
     const PMnode = focusedView.state.schema.nodes[nodeType];
 
     node = DocumentHelpers.findNode(focusedView.state, PMnode, findInParent);
     if (!isObject(node)) return defaultOverlay;
     const { from, to } = followCursor ? focusedView.state.selection : node;
 
-    const { left, top } = calculatePosition(focusedView, from, to);
+    const { left, top } = calculatePosition(
+      focusedView,
+      from,
+      to,
+      componentType,
+    );
 
     return {
       left,
@@ -106,6 +129,7 @@ export default options => {
     };
   };
 
+  // eslint-disable-next-line no-unused-vars
   const updatePosition = useCallback((followCursor = true) => {
     if (Object.keys(activeView).length === 0) return defaultOverlay;
 

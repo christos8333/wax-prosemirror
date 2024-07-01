@@ -50,6 +50,7 @@ class ImageService extends Service {
         markType: '',
         followCursor: false,
         selection: false,
+        componentType: 'imageAltText',
       },
     );
 
@@ -62,6 +63,7 @@ class ImageService extends Service {
         markType: '',
         followCursor: false,
         selection: false,
+        componentType: 'imageLongDesc',
       },
     );
   }

@@ -164,6 +164,7 @@ const BlockDropDownComponent = ({ view, tools }) => {
   }, [isDisabled]);
 
   useEffect(() => {
+    console.log('here?');
     setLabel(translatedLabel('Wax.BlockLevel.Block Level', 'Styles'));
     let delayedSetLabel = () => true;
     dropDownOptions.forEach(option => {

@@ -98,30 +98,19 @@ const EditorInfoTool = ({ view: { state }, item }) => {
 
   useEffect(() => {
     const { from, to } = activeView.state.selection;
+    if (from === to) return;
     const currentSelection = activeView.state.doc.textBetween(from, to);
     setCurrentWordCount(
       currentSelection.split(' ').filter(word => word !== '').length,
     );
   }, [activeView.state.selection]);
 
-  const infoDropDownOptions = () => {
-    const docText = main.state.doc.textBetween(
-      0,
-      main.state.doc.content.size,
-      undefined,
-      ' ',
-    );
+  let paragraphCount = 0;
+  let imageCount = 0;
+  let footnoteCount = 0;
+  let tableCount = 0;
 
-    const chars = docText.split('');
-    const wordCount = docText.split(' ').filter(word => word !== '').length;
-    const characterCount = chars.length;
-    const charactersNoSpaceCount = chars.filter(char => char !== ' ').length;
-
-    let paragraphCount = 0;
-    let imageCount = 0;
-    let footnoteCount = 0;
-    let tableCount = 0;
-
+  useEffect(() => {
     state.doc.descendants(node => {
       if (node.type.name === 'paragraph') {
         paragraphCount += 1;
@@ -136,6 +125,20 @@ const EditorInfoTool = ({ view: { state }, item }) => {
         tableCount += 1;
       }
     });
+  }, [isOpen]);
+
+  const infoDropDownOptions = () => {
+    const docText = main.state.doc.textBetween(
+      0,
+      main.state.doc.content.size,
+      undefined,
+      ' ',
+    );
+
+    const chars = docText.split('');
+    const wordCount = docText.split(' ').filter(word => word !== '').length;
+    const characterCount = chars.length;
+    const charactersNoSpaceCount = chars.filter(char => char !== ' ').length;
 
     return [
       {

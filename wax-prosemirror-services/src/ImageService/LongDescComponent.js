@@ -57,10 +57,13 @@ export default ({ setPosition, position }) => {
 
     const siblings = [...image.parentElement.children];
     const figCaption = siblings.find(s => s.tagName === 'FIGCAPTION');
+    let figCaptionPosition = 10;
 
-    if (!figCaption) return;
+    if (figCaption) {
+      figCaptionPosition = figCaption.getBoundingClientRect().height + 10;
+    }
+
     const imagePosition = image.getBoundingClientRect();
-    const figCaptionPosition = figCaption.getBoundingClientRect().height + 10;
     const left = imagePosition.left - WaxSurface.left;
     const top = imagePosition.bottom - WaxSurface.top + figCaptionPosition;
     setPosition({ ...position, left, top });

@@ -72,6 +72,45 @@ const captionPlugin = key =>
         },
 
         keyup(view, e) {
+          if (
+            ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)
+          ) {
+            const captionPlugins = view.state.plugins.find(plugin =>
+              plugin.key.startsWith('caption$'),
+            );
+
+            const selectedImage = document.querySelector(
+              'img.ProseMirror-selectednode',
+            );
+
+            if (!selectedImage) return;
+
+            if (
+              selectedImage.parentNode.lastElementChild.nodeName !==
+              'FIGCAPTION'
+            ) {
+              imgDataId = selectedImage.getAttribute('data-id');
+              let pos = view.posAtDOM(selectedImage);
+              const id = {};
+              const { tr } = view.state;
+              pos += 1;
+              //  insert figure caption node
+              view.dispatch(
+                tr
+                  .replaceWith(
+                    pos,
+                    pos,
+                    view.state.schema.nodes.figcaption.create({
+                      class: 'decoration',
+                      id: imgDataId,
+                    }),
+                  )
+                  .setMeta(captionPlugins, {
+                    add: { id, pos },
+                  }),
+              );
+            }
+          }
           if (e.key === 'Enter') {
             if (
               view.state.selection.$head.path[6] &&

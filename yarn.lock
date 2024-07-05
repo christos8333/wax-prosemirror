@@ -14543,6 +14543,11 @@ typeface-vollkorn@^0.0.54:
   resolved "https://registry.yarnpkg.com/typeface-vollkorn/-/typeface-vollkorn-0.0.54.tgz#1288bcd7d81c3dd7cd419e4448580d2a0b0640b2"
   integrity sha512-eVTGPinLEnT9IJdL/5HhNaily6de5zWB4w2VQyL2u67R4cdvh4i+cE7LVusef9YE5KW6wT4ZU9UQ8lS6qD7wuA==
 
+typescript@^4.8.4:
+  version "4.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
+  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
+
 uglify-js@^3.1.4:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.10.0.tgz#397a7e6e31ce820bfd1cb55b804ee140c587a9e7"
@@ -15426,12 +15431,13 @@ y-leveldb@^0.1.0:
     level "^6.0.1"
     lib0 "^0.2.31"
 
-y-prosemirror@1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/y-prosemirror/-/y-prosemirror-1.2.9.tgz#0202b5f6b164fa35d80bdbcdc876d81fe6da7ac2"
-  integrity sha512-fThGIVmSqrqnG/ckywEGlHM9ElfILC4TcMZd5zxWPe/i+UuP97TEr4swsopRKG3Y+KHBVt4Y/5NVBC3AAsUoUg==
+y-prosemirror@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/y-prosemirror/-/y-prosemirror-1.2.0.tgz#84771bd350834bc7759e946cd14c62ec26243a5c"
+  integrity sha512-t3uxuX4HIkb1GNt8jV+dplRbNH2OmQD/BNeCCbjLD3Mq0o6JEXxHedv58ZIPFDE6ma24jljlL+u8pGvN6B37XQ==
   dependencies:
     lib0 "^0.2.42"
+    typescript "^4.8.4"
 
 y-protocols@1.0.5, y-protocols@^1.0.5:
   version "1.0.5"

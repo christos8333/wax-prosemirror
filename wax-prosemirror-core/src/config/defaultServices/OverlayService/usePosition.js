@@ -106,6 +106,7 @@ export default options => {
     };
   };
 
+  // eslint-disable-next-line no-unused-vars
   const updatePosition = useCallback((followCursor = true) => {
     if (Object.keys(activeView).length === 0) return defaultOverlay;
 

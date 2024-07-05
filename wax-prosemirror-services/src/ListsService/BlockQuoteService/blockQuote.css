@@ -1,0 +1,7 @@
+/* block quote */
+  blockquote {
+    padding-left: 1em;
+    border-left: 3px solid #eee;
+    margin-left: 0;
+    margin-right: 0;
+  }

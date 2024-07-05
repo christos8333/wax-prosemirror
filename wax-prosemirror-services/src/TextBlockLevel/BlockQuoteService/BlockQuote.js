@@ -7,8 +7,9 @@ import { Tools, LeftSideButton } from 'wax-prosemirror-core';
 
 @injectable()
 class BlockQuote extends Tools {
-  title = 'Change to Block Quote';
-  label = 'Block Quote';
+  title = 'Wrap in Block Quote';
+  icon = 'blockquote';
+  label = '';
   name = 'BlockQuote';
 
   get run() {

@@ -5,13 +5,14 @@ import { ToolGroup } from 'wax-prosemirror-core';
 class Lists extends ToolGroup {
   tools = [];
   constructor(
+    @inject('BlockQuote') blockQuote,
     @inject('OrderedList') orderedlist,
     @inject('BulletList') bulletlist,
     @inject('JoinUp') joinup,
     @inject('Lift') lift,
   ) {
     super();
-    this.tools = [orderedlist, bulletlist, joinup, lift];
+    this.tools = [blockQuote, orderedlist, bulletlist, joinup, lift];
   }
 }
 

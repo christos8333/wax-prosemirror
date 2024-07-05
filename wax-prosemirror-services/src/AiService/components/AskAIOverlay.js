@@ -161,6 +161,10 @@ const PromptInput = styled.input`
   line-height: 22px;
   outline: none;
   width: 100%;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
 `;
 
 const SendButton = styled(ButtonBase)`
@@ -381,15 +385,17 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
   const [optionsState, setOptionsState] = useState({ ...options });
   const [fullScreen, setFullScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showCustomPrompts, setShowCustomPrompts] = useState(false);
 
   const [result, setResult] = useState({
     [DEFAULT_KEY]: '',
   });
   const [resultKey, setResultKey] = useState(DEFAULT_KEY);
+  const [textFromSelection, setTextFromSelection] = useState('');
 
   const aiService = app.config.get('config.AskAiContentService');
   const { AskAiContentTransformation } = config;
-  const { CustomPrompts, FreeTextPromptsOn } = aiService;
+  const { CustomPrompts, FreeTextPromptsOn, CustomPromptsOn } = aiService;
 
   useLayoutEffect(() => {
     const aiOverlay = document.getElementById(AI_TOOL_ID);
@@ -410,6 +416,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
 
     const { from, to } = main.state.selection;
     const selectedText = main.state.doc.textBetween(from, to, undefined, '\n');
+    setTextFromSelection(selectedText);
     !result[DEFAULT_KEY] &&
       setResult(prev => ({ ...prev, [DEFAULT_KEY]: selectedText }));
     aiOverlay.parentNode.style.width = fullScreen ? '100%' : '80%';
@@ -521,17 +528,11 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
 
   const resultKeys = Object.keys(result);
 
-  // To ensure we pass the response string in the correct format to the editor
-  const resultString =
-    typeof result[resultKey] === 'string'
-      ? result[resultKey]
-      : result[resultKey]?.join('\n\n') ?? '';
-
   const enabled = {
     component: !!options?.AiOn,
     input: !!FreeTextPromptsOn,
     results: !!result[resultKey],
-    customprompts: !!options?.CustomPromptsOn,
+    customprompts: !!CustomPromptsOn && CustomPrompts.length > 0,
     send: userPrompt.length > 1,
     resultEdit: resultKey === DEFAULT_KEY,
   };
@@ -545,7 +546,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
         'Replace selected text',
       ),
       onClick: () => {
-        replaceSelectedText(main, resultString, true);
+        const content = resultRef.current.innerHTML;
+        replaceSelectedText(main, content, true);
         main.focus();
       },
       tabIndex: enabled.results ? 0 : -1,
@@ -555,7 +557,8 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       Icon: icons.insertIco,
       title: safeTranslation(`Wax.AI.Insert`, 'Insert'),
       onClick: () => {
-        replaceSelectedText(main, resultString);
+        const content = resultRef.current.innerHTML;
+        replaceSelectedText(main, content);
         main.focus();
       },
       tabIndex: enabled.results ? 0 : -1,
@@ -571,8 +574,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       Icon: icons.tryAgain,
       title: safeTranslation(`Wax.AI. Try again`, 'Try again'),
       onClick: () => {
-        setResult({});
-        handleSubmit();
+        handleSubmit(`Try this again: ${userPrompt}`, true);
       },
       tabIndex: enabled.results ? 0 : -1,
       style: { '--result-action-icon-size': '16px' },
@@ -582,7 +584,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       title: safeTranslation(`Wax.AI.Discard`, 'Discard'),
       onClick: () => {
         setUserPrompt('');
-        setResult({});
+        setResult({ [DEFAULT_KEY]: textFromSelection });
       },
       tabIndex: enabled.results ? 0 : -1,
       style: { '--result-action-icon-size': '16px' },
@@ -634,14 +636,18 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
       <AskAIForm $show>
         <FlexRow>
           <PromptInput
-            $disabled={!enabled.input}
+            disabled={!enabled.input}
             id="askAiInput"
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder={safeTranslation(
-              `Wax.AI.Placeholder`,
-              'How can I help you? Type your prompt here.',
-            )}
+            placeholder={
+              enabled.input
+                ? safeTranslation(
+                    `Wax.AI.Placeholder`,
+                    'How can I help you? Type your prompt here.',
+                  )
+                : 'Free Text Prompts must be enabled!'
+            }
             ref={inputRef}
             type="text"
             value={userPrompt}
@@ -654,30 +660,26 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
           >
             {submitIcon}
           </SendButton>
-          <PromptOptions
-            aiService={aiService}
-            options={OPTIONS.prompt}
-            optionsState={optionsState}
-            setOption={setOption}
-          />
+          {enabled.input && (
+            <PromptOptions
+              aiService={aiService}
+              options={OPTIONS.prompt}
+              optionsState={optionsState}
+              setOption={setOption}
+            />
+          )}
         </FlexRow>
       </AskAIForm>
 
-      {CustomPrompts.length > 0 && (
+      {enabled.customprompts && (
         <CustomPromptContainer>
           <CustomPromptsHeading
-            onClick={() =>
-              setOption('CustomPromptsOn', !optionsState.CustomPromptsOn)
-            }
+            onClick={() => setShowCustomPrompts(!showCustomPrompts)}
           >
             <span>Custom Prompts</span>
-            {!optionsState.CustomPromptsOn ? (
-              <icons.arrowDown />
-            ) : (
-              <icons.arrowUp />
-            )}
+            {!showCustomPrompts ? <icons.arrowDown /> : <icons.arrowUp />}
           </CustomPromptsHeading>
-          <CustomPromptsList $show={enabled.customprompts}>
+          <CustomPromptsList $show={showCustomPrompts}>
             {CustomPrompts?.map(prompt => (
               <CustomPromptButton
                 $selected={userPrompt === prompt}

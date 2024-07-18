@@ -72,9 +72,9 @@ const updateTitle = debounce(title => {
   // console.log(title);
 }, 100);
 
-const getComments = debounce(comments => {
+const getComments = comments => {
   console.log(comments);
-}, 2000);
+};
 
 const setComments = (
   comments = [

@@ -7,7 +7,7 @@ import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 const commentPlugin = new PluginKey('commentPlugin');
 
 const getComment = (state, app) => {
-  console.log(app.config.get('config.YjsService'));
+  if (!app.config.get('config.YjsService')) return getCommentNonYjs(state, app);
   const { context } = app;
   const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
   const commentsDataMap = CommentDecorationPluginKey.getState(
@@ -42,6 +42,10 @@ const getComment = (state, app) => {
   }
 
   return undefined;
+};
+
+const getCommentNonYjs = (state, app) => {
+  console.log('non yjs active');
 };
 
 export default (key, app) => {

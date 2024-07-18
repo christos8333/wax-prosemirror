@@ -22,8 +22,15 @@ export default class CommentState {
   }
 
   addCommentNonYjs(action) {
+    const id = randomId();
+    const { map } = this.options;
     const { from, to, data } = action;
-    console.log('non');
+    map.set(id, {
+      id,
+      from,
+      to,
+      data,
+    });
   }
 
   addComment(action, ystate) {

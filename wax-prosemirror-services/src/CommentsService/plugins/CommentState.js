@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
@@ -20,7 +21,25 @@ export default class CommentState {
     this.transactYjsPos = false;
   }
 
+  addCommentNonYjs(action) {
+    const id = randomId();
+    const { map } = this.options;
+    const { from, to, data } = action;
+    map.set(id, {
+      id,
+      from,
+      to,
+      data,
+    });
+  }
+
   addComment(action, ystate) {
+    // NON YJS ADD
+    if (!ystate?.binding && !ystate?.binding.mapping) {
+      return this.addCommentNonYjs(action);
+    }
+
+    //  YJS ADD COMMENT
     this.transactYjsPos = true;
     const { map, commentsDataMap } = this.options;
     const { from, to, data } = action;
@@ -35,9 +54,18 @@ export default class CommentState {
       ystate.type,
       ystate.binding.mapping,
     );
-    map.set(id, { id, from: relativeFrom, to: relativeTo, data });
-    if (ystate?.binding && ystate?.binding.mapping)
-      commentsDataMap.set(id, { id, from: relativeFrom, to: relativeTo, data });
+    map.set(id, {
+      id,
+      from: relativeFrom,
+      to: relativeTo,
+      data,
+    });
+    commentsDataMap.set(id, {
+      id,
+      from: relativeFrom,
+      to: relativeTo,
+      data,
+    });
     setTimeout(() => {
       this.transactYjsPos = false;
     });

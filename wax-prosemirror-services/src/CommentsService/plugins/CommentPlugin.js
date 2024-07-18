@@ -6,7 +6,9 @@ import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
 
 const commentPlugin = new PluginKey('commentPlugin');
 
-const getComment = (state, context) => {
+const getComment = (state, app) => {
+  if (!app.config.get('config.YjsService')) return getCommentNonYjs(state, app);
+  const { context } = app;
   const commentsMap = CommentDecorationPluginKey.getState(state).getMap();
   const commentsDataMap = CommentDecorationPluginKey.getState(
     state,
@@ -42,15 +44,19 @@ const getComment = (state, context) => {
   return undefined;
 };
 
-export default (key, context) => {
+const getCommentNonYjs = (state, app) => {
+  console.log('non yjs active');
+};
+
+export default (key, app) => {
   return new Plugin({
     key: commentPlugin,
     state: {
       init: (_, state) => {
-        return { comment: getComment(state, context) };
+        return { comment: getComment(state, app) };
       },
       apply(tr, prev, _, newState) {
-        const comment = getComment(newState, context);
+        const comment = getComment(newState, app);
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [

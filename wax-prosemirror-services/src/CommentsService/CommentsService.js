@@ -62,7 +62,7 @@ export default class CommentsService extends Service {
 
     this.app.PmPlugins.add(
       'commentPlugin',
-      CommentPlugin('commentPlugin', this.app.context),
+      CommentPlugin('commentPlugin', this.app),
     );
 
     const createOverlay = this.container.get('CreateOverlay');

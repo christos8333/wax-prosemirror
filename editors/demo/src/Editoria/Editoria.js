@@ -1,10 +1,4 @@
-import React, {
-  useLayoutEffect,
-  useState,
-  useMemo,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useLayoutEffect, useState, useMemo, useRef } from 'react';
 
 import { Wax } from 'wax-prosemirror-core';
 
@@ -36,48 +30,7 @@ const Editoria = () => {
   const [width] = useWindowSize();
 
   let layout = EditoriaLayout;
-  const comments = [
-    {
-      id: 'c6863c3e-cfb1-4465-a46e-e89718e10245',
-      from: 83,
-      to: 94,
-      data: {
-        type: 'comment',
-        pmFrom: 83,
-        pmTo: 94,
-        conversation: [
-          {
-            content: '345345435',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1721647289866,
-          },
-          {
-            content: '111',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1721647292430,
-          },
-          {
-            content: '222',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1721647294920,
-          },
-          {
-            content: '444',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1721647307447,
-          },
-        ],
-        title: '353443',
-        group: 'main',
-        viewId: 'main',
-      },
-    },
-  ];
-  let finalConfig = config(comments);
+  let finalConfig = config;
   let key = 'editoria';
 
   if (width < 600) {
@@ -86,8 +39,6 @@ const Editoria = () => {
     key = 'editoriaMobile';
   }
   const editorRef = useRef();
-
-  useEffect(() => {}, []);
 
   const EditoriaComponent = useMemo(
     () => (

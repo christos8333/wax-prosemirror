@@ -177,14 +177,26 @@ export default ({ area, users }) => {
   };
 
   useDeepCompareEffect(() => {
-    setMarksNodes(
-      updateMarks(
-        pmViews,
-        CommentDecorationPluginKey?.getState(
-          activeView.state,
-        )?.allCommentsDataList(),
-      ),
-    );
+    if (app.config.get('config.YjsService')) {
+      setMarksNodes(
+        updateMarks(
+          pmViews,
+          CommentDecorationPluginKey?.getState(
+            activeView.state,
+          )?.allCommentsDataList(),
+        ),
+      );
+    } else {
+      setMarksNodes(
+        updateMarks(
+          pmViews,
+          CommentDecorationPluginKey?.getState(
+            activeView.state,
+          )?.allCommentsList(),
+        ),
+      );
+    }
+
     let firstRunTimeout = () => true;
     if (isFirstRun) {
       firstRunTimeout = setTimeout(() => {

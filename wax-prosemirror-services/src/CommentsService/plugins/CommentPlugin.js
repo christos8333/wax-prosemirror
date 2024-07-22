@@ -75,7 +75,6 @@ export default (key, app) => {
       },
       apply(tr, prev, _, newState) {
         const comment = getComment(newState, app);
-        console.log('thie comment', comment);
         let createDecoration;
         if (comment) {
           createDecoration = DecorationSet.create(newState.doc, [

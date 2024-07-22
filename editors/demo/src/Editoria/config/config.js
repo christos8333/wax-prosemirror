@@ -76,127 +76,8 @@ const getComments = comments => {
   console.log(comments);
 };
 
-const setComments = (
-  comments = [
-    // {
-    //   id: 'a1',
-    //   from: 5,
-    //   to: 10,
-    //   data: {
-    //     type: 'comment',
-    //     yjsFrom: 5,
-    //     yjsTo: 10,
-    //     pmFrom: 5,
-    //     pmTo: 10,
-    //     conversation: [
-    //       {
-    //         content: '1111',
-    //         displayName: 'admin',
-    //         userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-    //         timestamp: 1710501980537,
-    //       },
-    //     ],
-    //     title: '111',
-    //     group: 'main',
-    //     viewId: 'main',
-    //   },
-    //   endHeight: 362.3579406738281,
-    // },
-    // {
-    //   id: 'a2',
-    //   from: 8,
-    //   to: 15,
-    //   data: {
-    //     type: 'comment',
-    //     yjsFrom: 8,
-    //     yjsTo: 15,
-    //     pmFrom: 8,
-    //     pmTo: 15,
-    //     conversation: [
-    //       {
-    //         content: '222',
-    //         displayName: 'admin',
-    //         userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-    //         timestamp: 1710501987197,
-    //       },
-    //     ],
-    //     title: '222',
-    //     group: 'main',
-    //     viewId: 'main',
-    //   },
-    //   endHeight: 266.3579406738281,
-    // },
-    // {
-    //   id: 'b8d907d4-1859-49a9-abcd-13788d497758',
-    //   from: {
-    //     type: {
-    //       client: 2887320119,
-    //       clock: 150,
-    //     },
-    //     tname: null,
-    //     item: {
-    //       client: 2887320119,
-    //       clock: 185,
-    //     },
-    //     assoc: 0,
-    //   },
-    //   to: {
-    //     type: {
-    //       client: 2887320119,
-    //       clock: 150,
-    //     },
-    //     tname: null,
-    //     item: {
-    //       client: 2887320119,
-    //       clock: 195,
-    //     },
-    //     assoc: 0,
-    //   },
-    //   data: {
-    //     yjsFrom: {
-    //       type: {
-    //         client: 2887320119,
-    //         clock: 150,
-    //       },
-    //       tname: null,
-    //       item: {
-    //         client: 2887320119,
-    //         clock: 185,
-    //       },
-    //       assoc: 0,
-    //     },
-    //     yjsTo: {
-    //       type: {
-    //         client: 2887320119,
-    //         clock: 150,
-    //       },
-    //       tname: null,
-    //       item: {
-    //         client: 2887320119,
-    //         clock: 195,
-    //       },
-    //       assoc: 0,
-    //     },
-    //     pmFrom: 164,
-    //     pmTo: 174,
-    //     type: 'comment',
-    //     conversation: [
-    //       {
-    //         content: 'dfgdfgd',
-    //         displayName: 'admin',
-    //         userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-    //         timestamp: 1713699155995,
-    //       },
-    //     ],
-    //     title: 'dgfdgf',
-    //     group: 'main',
-    //     viewId: 'main',
-    //   },
-    //   endHeight: 406.734375,
-    // },
-  ],
-) => {
-  return comments;
+const setComments = () => {
+  return [];
 };
 
 const saveTags = tags => {
@@ -211,7 +92,7 @@ const onWarning = message => {
   alert(message);
 };
 
-export default {
+const config = comments => ({
   MenuService: [
     {
       templateArea: 'mainMenuToolBar',
@@ -298,7 +179,9 @@ export default {
   CommentsService: {
     showTitle: true,
     getComments,
-    setComments,
+    setComments: () => {
+      return comments;
+    },
   },
 
   CustomTagService: {
@@ -356,4 +239,10 @@ export default {
     new BottomInfoService(),
     new TransformService(),
   ],
-};
+});
+
+export default config;
+
+// export default {
+
+// };

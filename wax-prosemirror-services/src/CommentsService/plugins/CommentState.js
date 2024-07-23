@@ -72,7 +72,7 @@ export default class CommentState {
   }
 
   updateComment(action, ystate) {
-    const { map, commentsDataMap } = this.options;
+    const { map, commentsDataMap, onSelectionChange } = this.options;
     const annotationToUpdate = map.get(action.id);
     if (annotationToUpdate) {
       if (ystate?.binding && ystate?.binding.mapping) {
@@ -86,6 +86,7 @@ export default class CommentState {
           data: action.data,
         });
       }
+      onSelectionChange(this.allCommentsList());
     }
   }
 

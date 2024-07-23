@@ -80,12 +80,12 @@ export default class CommentState {
           ...annotationToUpdate,
           data: action.data,
         });
+      } else {
+        map.set(action.id, {
+          ...annotationToUpdate,
+          data: action.data,
+        });
       }
-    } else {
-      map.set(action.id, {
-        ...annotationToUpdate,
-        data: action.data,
-      });
     }
   }
 

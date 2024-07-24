@@ -85,8 +85,8 @@ export default class CommentState {
           ...annotationToUpdate,
           data: action.data,
         });
+        onSelectionChange(this.allCommentsList());
       }
-      onSelectionChange(this.allCommentsList());
     }
   }
 

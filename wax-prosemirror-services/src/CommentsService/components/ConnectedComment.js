@@ -21,7 +21,14 @@ const ConnectedCommentStyled = styled.div`
   ${override('Wax.CommentOuterBox')}
 `;
 
-export default ({ comment, top, commentId, users, activeComment }) => {
+export default ({
+  comment,
+  top,
+  commentId,
+  users,
+  activeComment,
+  recalculateTops,
+}) => {
   const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
@@ -50,6 +57,7 @@ export default ({ comment, top, commentId, users, activeComment }) => {
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
 
   useEffect(() => {
+    recalculateTops();
     if (activeComment && commentId === activeComment.id) {
       setIsActive(true);
     } else if (
@@ -85,6 +93,7 @@ export default ({ comment, top, commentId, users, activeComment }) => {
     );
 
     activeView.focus();
+    recalculateTops();
   };
 
   const onClickBox = () => {

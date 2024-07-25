@@ -82,7 +82,10 @@ export const CommentDecorationPlugin = (name, options) => {
           setTimeout(() => {
             const ids = this.getState(state).decorations.children.map(child => {
               console.log('in map', child, child.constructor.name);
-              if (child.constructor.name === 'DecorationSet') {
+              if (
+                child.constructor.name === 'DecorationSet' ||
+                child.constructor.name === 'kt'
+              ) {
                 console.log('in child');
                 return child.local.map(l => l.type.attrs['data-id']);
               }

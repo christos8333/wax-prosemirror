@@ -81,7 +81,9 @@ export const CommentDecorationPlugin = (name, options) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
           setTimeout(() => {
             const ids = this.getState(state).decorations.children.map(child => {
+              console.log('in map', child);
               if (child.constructor.name === 'DecorationSet') {
+                console.log('in child');
                 return child.local.map(l => l.type.attrs['data-id']);
               }
             });
@@ -105,7 +107,7 @@ export const CommentDecorationPlugin = (name, options) => {
                 );
               });
             }
-          }, 400);
+          }, 1000);
         }
 
         return false;

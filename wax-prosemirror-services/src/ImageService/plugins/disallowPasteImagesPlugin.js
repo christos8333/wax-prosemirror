@@ -15,7 +15,10 @@ export default onWarning => {
 
         let imageFound = false;
         content.forEach(node => {
-          if (node.type.name === 'image' && !node.attrs.extraData) {
+          if (
+            node.type.name === 'image' &&
+            !Object.keys(node.attrs.extraData).length === 0
+          ) {
             node.attrs.id = uuidv4();
             node.attrs.src = '';
             node.attrs.alt = '';

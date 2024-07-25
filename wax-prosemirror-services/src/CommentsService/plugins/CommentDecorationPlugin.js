@@ -90,6 +90,7 @@ export const CommentDecorationPlugin = (name, options) => {
             const deletedComments = this.getState(state)
               .allCommentsList()
               ?.filter(comment => !finalIds.includes(comment.id));
+            console.log(finalIds, deletedComments);
 
             if (deletedComments?.length > 0) {
               deletedComments.forEach(deletedComment => {
@@ -104,7 +105,7 @@ export const CommentDecorationPlugin = (name, options) => {
                 );
               });
             }
-          }, 100);
+          }, 400);
         }
 
         return false;

@@ -81,10 +81,7 @@ export const CommentDecorationPlugin = (name, options) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
           setTimeout(() => {
             const ids = this.getState(state).decorations.children.map(child => {
-              if (
-                child.constructor.name === 'DecorationSet' ||
-                child.constructor.name === 'kt'
-              ) {
+              if (child.constructor.name === 'DecorationSet') {
                 return child.local.map(l => l.type.attrs['data-id']);
               }
             });

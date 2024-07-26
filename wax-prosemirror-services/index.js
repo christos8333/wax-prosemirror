@@ -39,7 +39,3 @@ export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/Bl
 
 /* Plugins */
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';
-export {
-  CommentDecorationPlugin,
-  CommentDecorationPluginKey,
-} from './src/CommentsService/plugins/CommentDecorationPlugin';

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
-import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
+import CommentDecorationPluginKey from '../plugins/CommentDecorationPluginKey';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};

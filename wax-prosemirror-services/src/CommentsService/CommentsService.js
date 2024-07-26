@@ -3,7 +3,7 @@ import CommentBubbleComponent from './components/ui/comments/CommentBubbleCompon
 import RightArea from './components/RightArea';
 import commentMark from './schema/commentMark';
 import CommentPlugin from './plugins/CommentPlugin';
-import { CommentDecorationPlugin } from './plugins/CommentDecorationPlugin';
+import CommentDecorationPlugin from './plugins/CommentDecorationPlugin';
 import './comments.css';
 
 export default class CommentsService extends Service {

@@ -2,7 +2,7 @@
 import { inRange, last, sortBy } from 'lodash';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
+import CommentDecorationPluginKey from './CommentDecorationPluginKey';
 
 const commentPlugin = new PluginKey('commentPlugin');
 

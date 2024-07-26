@@ -2,7 +2,7 @@
 import React, { useLayoutEffect, useContext } from 'react';
 import { WaxContext } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
-import { CommentDecorationPluginKey } from '../../../plugins/CommentDecorationPlugin';
+import CommentDecorationPluginKey from '../../../plugins/CommentDecorationPluginKey';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const context = useContext(WaxContext);

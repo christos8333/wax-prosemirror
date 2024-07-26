@@ -1,14 +1,13 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Plugin } from 'prosemirror-state';
+import { DecorationSet } from 'prosemirror-view';
 import { flatten } from 'lodash';
 import CommentState from './CommentState';
+import CommentDecorationPluginKey from './CommentDecorationPluginKey';
 
 let contentSize = 0;
 let allCommentsCount = 0;
 
-export const CommentDecorationPluginKey = new PluginKey(
-  'commentDecorationPlugin',
-);
-export const CommentDecorationPlugin = (name, options) => {
+const CommentDecorationPlugin = (name, options) => {
   return new Plugin({
     key: CommentDecorationPluginKey,
     state: {
@@ -81,7 +80,7 @@ export const CommentDecorationPlugin = (name, options) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
           setTimeout(() => {
             const ids = this.getState(state).decorations.children.map(child => {
-              if (child.constructor.name === 'DecorationSet') {
+              if (child instanceof DecorationSet) {
                 return child.local.map(l => l.type.attrs['data-id']);
               }
             });
@@ -112,3 +111,5 @@ export const CommentDecorationPlugin = (name, options) => {
     },
   });
 };
+
+export default CommentDecorationPlugin;

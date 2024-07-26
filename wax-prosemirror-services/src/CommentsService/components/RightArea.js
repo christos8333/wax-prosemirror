@@ -9,7 +9,7 @@ import {
   DocumentHelpers,
 } from 'wax-prosemirror-core';
 import BoxList from './BoxList';
-import { CommentDecorationPluginKey } from '../plugins/CommentDecorationPlugin';
+import CommentDecorationPluginKey from '../plugins/CommentDecorationPluginKey';
 
 export default ({ area, users }) => {
   const { app } = useContext(ApplicationContext);

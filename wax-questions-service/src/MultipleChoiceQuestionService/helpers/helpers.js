@@ -3,6 +3,7 @@ import { TextSelection } from 'prosemirror-state';
 import { Commands } from 'wax-prosemirror-core';
 import { Fragment } from 'prosemirror-model';
 import { findWrapping } from 'prosemirror-transform';
+import { GapCursor } from 'prosemirror-gapcursor';
 
 const createEmptyParagraph = (context, newAnswerId) => {
   if (context.pmViews[newAnswerId]) {
@@ -40,7 +41,7 @@ const checkifEmpty = view => {
   state.doc.nodesBetween(from, to, (node, pos) => {
     if (node.textContent !== ' ') Commands.simulateKey(view, 13, 'Enter');
   });
-  if (state.selection.constructor.name === 'GapCursor') {
+  if (state.selection instanceof GapCursor) {
     Commands.simulateKey(view, 13, 'Enter');
     setTimeout(() => {
       view.focus();

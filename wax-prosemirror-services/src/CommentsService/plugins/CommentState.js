@@ -8,7 +8,7 @@ import {
   absolutePositionToRelativePosition,
 } from 'y-prosemirror';
 import CommentDecoration from './CommentDecoration';
-import { CommentDecorationPluginKey } from './CommentDecorationPlugin';
+import CommentDecorationPluginKey from './CommentDecorationPluginKey';
 
 const randomId = () => {
   return uuidv4();

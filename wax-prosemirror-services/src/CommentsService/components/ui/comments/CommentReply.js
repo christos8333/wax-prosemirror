@@ -5,6 +5,8 @@ import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { useOnClickOutside } from 'wax-prosemirror-core';
+import Mentions from 'rc-mentions';
+import './mentions.css';
 
 const Wrapper = styled.div`
   background: ${th('colorBackgroundHue')};
@@ -115,6 +117,8 @@ const CommentReply = props => {
     setTitle('');
   };
 
+  const { Option } = Mentions;
+
   return (
     <Wrapper className={className} ref={ref}>
       <form onSubmit={handleSubmit}>
@@ -135,6 +139,11 @@ const CommentReply = props => {
               value={title}
             />
           )}
+          <Mentions>
+            <Option value="light">Light</Option>
+            <Option value="bamboo">Bamboo</Option>
+            <Option value="cat">Cat</Option>
+          </Mentions>
           <ReplyTextArea
             cols="5"
             onChange={() => setCommentValue(commentInput.current.value)}

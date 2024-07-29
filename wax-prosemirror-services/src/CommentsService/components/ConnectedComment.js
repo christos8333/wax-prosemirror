@@ -55,6 +55,8 @@ export default ({
     commentConfig && commentConfig.readOnly ? commentConfig.readOnly : false;
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
+  const usersMentionList =
+    commentConfig && commentConfig.userList ? commentConfig.userList : [];
 
   useEffect(() => {
     recalculateTops();
@@ -159,6 +161,7 @@ export default ({
           showTitle={showTitle}
           title={comment.data.title}
           users={users}
+          usersMentionList={usersMentionList}
         />
       </ConnectedCommentStyled>
     ),

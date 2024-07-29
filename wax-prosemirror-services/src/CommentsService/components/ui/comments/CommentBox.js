@@ -84,6 +84,7 @@ const CommentBox = props => {
     title,
     showTitle,
     users,
+    usersMentionList,
   } = props;
 
   // send signal to make this comment active
@@ -124,6 +125,7 @@ const CommentBox = props => {
           onClickPost={onClickPost}
           onTextAreaBlur={onTextAreaBlur}
           showTitle={showTitle}
+          usersMentionList={usersMentionList}
         />
       )}
     </Wrapper>

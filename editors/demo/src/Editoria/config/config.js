@@ -299,6 +299,12 @@ export default {
     // showTitle: true,
     getComments,
     setComments,
+    userList: [
+      { id: '1', displayName: 'test1' },
+      { id: '2', displayName: 'test2' },
+      { id: '3', displayName: 'test3' },
+      { id: '4', displayName: 'test4' },
+    ],
   },
 
   CustomTagService: {

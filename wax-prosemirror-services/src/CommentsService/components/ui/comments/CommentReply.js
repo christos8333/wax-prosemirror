@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -91,22 +92,22 @@ const CommentReply = props => {
     isReadOnly,
     onTextAreaBlur,
     showTitle,
+    usersMentionList,
   } = props;
   const { t, i18n } = useTranslation();
   const commentInput = useRef(null);
   const commentTitle = useRef(null);
   const [commentValue, setCommentValue] = useState('');
   const [title, setTitle] = useState('');
-
   const ref = useRef(null);
 
   useOnClickOutside(ref, onTextAreaBlur);
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   if (commentTitle.current && isNewComment) commentTitle.current.focus();
-    //   if (!commentTitle.current && isNewComment) commentInput.current.focus();
-    // });
+    setTimeout(() => {
+      if (commentTitle.current && isNewComment) commentTitle.current.focus();
+      if (!commentTitle.current && isNewComment) commentInput.current.focus();
+    });
   }, []);
 
   const handleSubmit = e => {
@@ -163,9 +164,6 @@ const CommentReply = props => {
                 if (commentValue) handleSubmit(e);
               }
             }}
-            onSelect={option => {
-              console.log(option);
-            }}
             placeholder={
               isNewComment
                 ? `${
@@ -182,10 +180,16 @@ const CommentReply = props => {
             ref={commentInput}
             rows="4"
             value={commentValue}
+            onSelect={option => {
+              console.log(option);
+            }}
           >
-            <Option value="test1">test1</Option>
-            <Option value="test2">test2</Option>
-            <Option value="test3">test3</Option>
+            {usersMentionList &&
+              usersMentionList.map(item => (
+                <Option key={item.id} value={item.displayName}>
+                  {item.displayName}
+                </Option>
+              ))}
           </StyledMentions>
         </TextWrapper>
 

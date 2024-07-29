@@ -32,20 +32,6 @@ const CommentTitle = styled.input`
   ${override('Wax.CommentTitle')}
 `;
 
-const ReplyTextArea = styled.textarea`
-  background: ${th('colorBackgroundHue')};
-  border: 3px solid ${th('colorBackgroundTabs')};
-  font-family: ${th('fontWriting')};
-  position: relative;
-  width: 100%;
-
-  &:focus {
-    outline: 1px solid ${th('colorPrimary')};
-  }
-
-  ${override('Wax.CommentTextArea')}
-`;
-
 const ActionWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -77,6 +63,26 @@ const ButtonGroup = styled.div`
   ${override('Wax.CommentButtonGroup')}
 `;
 
+const StyledMentions = styled(Mentions)`
+  border: none;
+  > textarea {
+    font-size: 14px;
+    background: ${th('colorBackgroundHue')};
+    border: 3px solid ${th('colorBackgroundTabs')};
+    font-family: ${th('fontWriting')};
+    padding: 2px;
+
+    &:focus {
+      outline: 1px solid ${th('colorPrimary')};
+    }
+
+    &:focus {
+      outline: 1px solid ${th('colorPrimary')};
+    }
+  }
+  ${override('Wax.CommentTextArea')}
+`;
+
 const CommentReply = props => {
   const {
     className,
@@ -97,10 +103,10 @@ const CommentReply = props => {
   useOnClickOutside(ref, onTextAreaBlur);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (commentTitle.current && isNewComment) commentTitle.current.focus();
-      if (!commentTitle.current && isNewComment) commentInput.current.focus();
-    });
+    // setTimeout(() => {
+    //   if (commentTitle.current && isNewComment) commentTitle.current.focus();
+    //   if (!commentTitle.current && isNewComment) commentInput.current.focus();
+    // });
   }, []);
 
   const handleSubmit = e => {
@@ -139,19 +145,26 @@ const CommentReply = props => {
               value={title}
             />
           )}
-          <Mentions>
-            <Option value="light">Light</Option>
-            <Option value="bamboo">Bamboo</Option>
-            <Option value="cat">Cat</Option>
-          </Mentions>
-          <ReplyTextArea
-            cols="5"
-            onChange={() => setCommentValue(commentInput.current.value)}
-            onKeyDown={e => {
-              if (e.keyCode === 13 && !e.shiftKey) {
+          <StyledMentions
+            onChange={text => {
+              setCommentValue(text);
+            }}
+            onPressEnter={e => {
+              const mentionsOptionsEl = document.getElementsByClassName(
+                'rc-mentions-measure',
+              );
+
+              if (
+                e.keyCode === 13 &&
+                !e.shiftKey &&
+                mentionsOptionsEl.length === 0
+              ) {
                 e.preventDefault();
                 if (commentValue) handleSubmit(e);
               }
+            }}
+            onSelect={option => {
+              console.log(option);
             }}
             placeholder={
               isNewComment
@@ -167,9 +180,13 @@ const CommentReply = props => {
                   }...`
             }
             ref={commentInput}
-            rows="3"
+            rows="4"
             value={commentValue}
-          />
+          >
+            <Option value="test1">test1</Option>
+            <Option value="test2">test2</Option>
+            <Option value="test3">test3</Option>
+          </StyledMentions>
         </TextWrapper>
 
         <ActionWrapper>

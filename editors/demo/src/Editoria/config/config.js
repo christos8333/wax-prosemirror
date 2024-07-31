@@ -299,6 +299,9 @@ export default {
     // showTitle: true,
     getComments,
     setComments,
+    getMentionedUsers: (users, text) => {
+      console.log(users, text);
+    },
     userList: [
       { id: '1', displayName: 'test1' },
       { id: '2', displayName: 'test2' },

@@ -180,9 +180,6 @@ const CommentReply = props => {
             ref={commentInput}
             rows="4"
             value={commentValue}
-            onSelect={option => {
-              console.log(option);
-            }}
           >
             {usersMentionList &&
               usersMentionList.map(item => (

@@ -57,6 +57,10 @@ export default ({
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
   const usersMentionList =
     commentConfig && commentConfig.userList ? commentConfig.userList : [];
+  const getMentionedUsers =
+    commentConfig && commentConfig.getMentionedUsers
+      ? commentConfig.getMentionedUsers
+      : () => true;
 
   useEffect(() => {
     recalculateTops();
@@ -71,6 +75,7 @@ export default ({
   }, [activeComment]);
 
   const onClickPost = ({ commentValue, title }) => {
+    getUsersFromComment(commentValue);
     setClickPost(true);
     const currentUser = user || (users || []).find(u => u.currentUser === true);
 
@@ -96,6 +101,18 @@ export default ({
 
     activeView.focus();
     recalculateTops();
+  };
+
+  const getUsersFromComment = commentText => {
+    if (usersMentionList.length === 0) return false;
+    const mentionedUsers = [];
+    usersMentionList.forEach(mentionUser => {
+      if (commentText.includes(mentionUser.displayName)) {
+        mentionedUsers.push(mentionUser);
+      }
+    });
+    if (mentionedUsers.length > 0)
+      getMentionedUsers(mentionedUsers, commentText);
   };
 
   const onClickBox = () => {

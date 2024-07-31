@@ -296,9 +296,18 @@ export default {
   ImageService: { showAlt: true },
 
   CommentsService: {
-    showTitle: true,
+    // showTitle: true,
     getComments,
     setComments,
+    getMentionedUsers: (users, text) => {
+      console.log(users, text);
+    },
+    userList: [
+      { id: '1', displayName: 'test1' },
+      { id: '2', displayName: 'test2' },
+      { id: '3', displayName: 'test3' },
+      { id: '4', displayName: 'test4' },
+    ],
   },
 
   CustomTagService: {

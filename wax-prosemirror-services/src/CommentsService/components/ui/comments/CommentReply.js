@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -5,6 +6,8 @@ import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { grid, th, override } from '@pubsweet/ui-toolkit';
 import { useOnClickOutside } from 'wax-prosemirror-core';
+import Mentions from 'rc-mentions';
+import './mentions.css';
 
 const Wrapper = styled.div`
   background: ${th('colorBackgroundHue')};
@@ -28,20 +31,6 @@ const CommentTitle = styled.input`
   }
 
   ${override('Wax.CommentTitle')}
-`;
-
-const ReplyTextArea = styled.textarea`
-  background: ${th('colorBackgroundHue')};
-  border: 3px solid ${th('colorBackgroundTabs')};
-  font-family: ${th('fontWriting')};
-  position: relative;
-  width: 100%;
-
-  &:focus {
-    outline: 1px solid ${th('colorPrimary')};
-  }
-
-  ${override('Wax.CommentTextArea')}
 `;
 
 const ActionWrapper = styled.div`
@@ -75,6 +64,26 @@ const ButtonGroup = styled.div`
   ${override('Wax.CommentButtonGroup')}
 `;
 
+const StyledMentions = styled(Mentions)`
+  border: none;
+  > textarea {
+    font-size: 14px;
+    background: ${th('colorBackgroundHue')};
+    border: 3px solid ${th('colorBackgroundTabs')};
+    font-family: ${th('fontWriting')};
+    padding: 2px;
+
+    &:focus {
+      outline: 1px solid ${th('colorPrimary')};
+    }
+
+    &:focus {
+      outline: 1px solid ${th('colorPrimary')};
+    }
+  }
+  ${override('Wax.CommentTextArea')}
+`;
+
 const CommentReply = props => {
   const {
     className,
@@ -83,13 +92,13 @@ const CommentReply = props => {
     isReadOnly,
     onTextAreaBlur,
     showTitle,
+    usersMentionList,
   } = props;
   const { t, i18n } = useTranslation();
   const commentInput = useRef(null);
   const commentTitle = useRef(null);
   const [commentValue, setCommentValue] = useState('');
   const [title, setTitle] = useState('');
-
   const ref = useRef(null);
 
   useOnClickOutside(ref, onTextAreaBlur);
@@ -115,6 +124,8 @@ const CommentReply = props => {
     setTitle('');
   };
 
+  const { Option } = Mentions;
+
   return (
     <Wrapper className={className} ref={ref}>
       <form onSubmit={handleSubmit}>
@@ -135,11 +146,20 @@ const CommentReply = props => {
               value={title}
             />
           )}
-          <ReplyTextArea
-            cols="5"
-            onChange={() => setCommentValue(commentInput.current.value)}
-            onKeyDown={e => {
-              if (e.keyCode === 13 && !e.shiftKey) {
+          <StyledMentions
+            onChange={text => {
+              setCommentValue(text);
+            }}
+            onPressEnter={e => {
+              const mentionsOptionsEl = document.getElementsByClassName(
+                'rc-mentions-measure',
+              );
+
+              if (
+                e.keyCode === 13 &&
+                !e.shiftKey &&
+                mentionsOptionsEl.length === 0
+              ) {
                 e.preventDefault();
                 if (commentValue) handleSubmit(e);
               }
@@ -158,9 +178,16 @@ const CommentReply = props => {
                   }...`
             }
             ref={commentInput}
-            rows="3"
+            rows="4"
             value={commentValue}
-          />
+          >
+            {usersMentionList &&
+              usersMentionList.map(item => (
+                <Option key={item.id} value={item.displayName}>
+                  {item.displayName}
+                </Option>
+              ))}
+          </StyledMentions>
         </TextWrapper>
 
         <ActionWrapper>

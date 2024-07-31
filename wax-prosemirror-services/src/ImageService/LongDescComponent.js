@@ -42,10 +42,18 @@ export default ({ setPosition, position }) => {
   const imageId = selection?.node?.attrs.id;
   let image = document.querySelector(`[data-id='${imageId}']`);
 
+  const imageConfig = app.config.get('config.ImageService');
+  const showLongDesc = imageConfig && imageConfig.showLongDesc;
+
   useLayoutEffect(() => {
     const WaxSurface = main.dom.getBoundingClientRect();
 
-    if (!selection || !selection.node || selection.node.type.name !== 'image')
+    if (
+      !showLongDesc ||
+      !selection ||
+      !selection.node ||
+      selection.node.type.name !== 'image'
+    )
       return;
 
     if (!image)
@@ -78,9 +86,6 @@ export default ({ setPosition, position }) => {
       }),
     );
   };
-
-  const imageConfig = app.config.get('config.ImageService');
-  const showLongDesc = imageConfig && imageConfig.showLongDesc;
 
   return !readOnly && showLongDesc ? (
     <StyledInputLongDesc

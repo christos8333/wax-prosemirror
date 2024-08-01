@@ -1,5 +1,5 @@
 import { Plugin } from 'prosemirror-state';
-import { DecorationSet } from 'prosemirror-view';
+import { DecorationSet, Decoration } from 'prosemirror-view';
 import { flatten } from 'lodash';
 import CommentState from './CommentState';
 import CommentDecorationPluginKey from './CommentDecorationPluginKey';
@@ -84,8 +84,14 @@ const CommentDecorationPlugin = (name, options) => {
                 return child.local.map(l => l.type.attrs['data-id']);
               }
             });
-
-            const finalIds = flatten(ids.filter(id => id));
+            const idsLocal = this.getState(state).decorations.local.map(
+              child => {
+                if (child instanceof Decoration) {
+                  return child.type.attrs['data-id'];
+                }
+              },
+            );
+            const finalIds = flatten(ids.filter(id => id)).concat(idsLocal);
             const deletedComments = this.getState(state)
               .allCommentsList()
               ?.filter(comment => !finalIds.includes(comment.id));

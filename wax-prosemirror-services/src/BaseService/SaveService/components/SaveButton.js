@@ -19,7 +19,7 @@ const SaveButton = ({ view = {}, item }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleMouseDown = () => {
-    // view.props.onChange(state.doc.content);
+    main.props.onChange(state.doc.content);
     setIsSaving(true);
     setTimeout(() => {
       setIsSaving(false);

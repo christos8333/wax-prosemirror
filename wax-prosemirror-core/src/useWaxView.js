@@ -54,7 +54,8 @@ const useWaxView = props => {
       state: EditorState.create(options),
       disallowedTools: [],
       user,
-      onChange,
+      serializer,
+      targetFormat,
       scrollMargin: scrollMargin || 200,
       scrollThreshold: scrollThreshold || 200,
       attributes: {

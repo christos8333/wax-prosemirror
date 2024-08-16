@@ -2,9 +2,15 @@
 import React, { useContext, useMemo, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { WaxContext, MenuButton } from 'wax-prosemirror-core';
+import {
+  ApplicationContext,
+  WaxContext,
+  MenuButton,
+} from 'wax-prosemirror-core';
+import helpers from './helpers';
 
 const SaveButton = ({ view = {}, item }) => {
+  const { app } = useContext(ApplicationContext);
   const { t, i18n } = useTranslation();
   const { icon, label, select, title } = item;
 
@@ -19,7 +25,16 @@ const SaveButton = ({ view = {}, item }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleMouseDown = () => {
-    main.props.onChange(state.doc.content);
+    const saveConfig = app.config.get('config.SaveService');
+    if (saveConfig) {
+      helpers.saveContent(
+        state.doc.content,
+        saveConfig.saveSource,
+        state.config.schema,
+        main.props.serializer,
+        main.props.targetFormat,
+      );
+    }
     setIsSaving(true);
     setTimeout(() => {
       setIsSaving(false);

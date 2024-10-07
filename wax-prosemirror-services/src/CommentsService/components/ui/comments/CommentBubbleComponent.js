@@ -6,7 +6,11 @@ import CommentDecorationPluginKey from '../../../plugins/CommentDecorationPlugin
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const context = useContext(WaxContext);
-  const { activeView, activeViewId } = context;
+  const {
+    activeView,
+    activeViewId,
+    pmViews: { main },
+  } = context;
   const { state, dispatch } = activeView;
 
   useLayoutEffect(() => {
@@ -73,8 +77,13 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     return allowed;
   };
 
+  const isEditable = main.props.editable(editable => {
+    return editable;
+  });
+
   return (
-    isCommentAllowed() && (
+    isCommentAllowed() &&
+    isEditable && (
       <CommentBubble
         onClick={event => {
           createComment(event);

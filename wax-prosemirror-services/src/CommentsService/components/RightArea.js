@@ -256,6 +256,8 @@ const updateMarks = (views, comments) => {
             mark.type.name === 'deletion' ||
             mark.type.name === 'format_change'
           ) {
+            mark.data = {};
+            mark.data.pmFrom = node.pos;
             mark.from = node.pos;
             finalMarks.push(mark);
           }

@@ -162,15 +162,15 @@ const Hhmi = () => {
         </SubmitButton>
       </ButtonContainer>
       <Wax
-        config={config}
         autoFocus
-        ref={editorRef}
+        config={config}
         customValues={{ showFeedBack: submitted, testMode }}
         fileUpload={file => renderImage(file)}
-        value={content}
+        layout={HhmiLayout}
         // targetFormat="JSON"
         readonly={readOnly}
-        layout={HhmiLayout}
+        ref={editorRef}
+        value={content}
         // onChange={source => console.log(source)}
       />
     </>

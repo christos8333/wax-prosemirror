@@ -26,6 +26,7 @@ export default class MultipleChoiceSingleCorrectNodeView extends QuestionsNodeVi
     if (
       !event.target.type ||
       event.target.type === 'button' ||
+      event.target.type === 'text' ||
       event.target.type === 'textarea'
     ) {
       return true;

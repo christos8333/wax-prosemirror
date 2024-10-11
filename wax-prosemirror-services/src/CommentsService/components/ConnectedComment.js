@@ -10,9 +10,9 @@ import CommentDecorationPluginKey from '../plugins/CommentDecorationPluginKey';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
+  position: absolute;
   transition: ${props =>
     props.active && props.length ? `none!important` : `all 1.3s`};
-  position: absolute;
   width: 205px;
   @media (max-width: 600px) {
     margin-left: 15px;

@@ -15,6 +15,7 @@ import rejectTrackChange from './ui/trackChanges/RejectTrackChange';
 const ConnectedTrackChangeStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
   position: absolute;
+  transition: all 1.3s;
   width: 205px;
   @media (max-width: 600px) {
     margin-left: 15px;

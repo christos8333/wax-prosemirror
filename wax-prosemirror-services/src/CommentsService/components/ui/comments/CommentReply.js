@@ -30,6 +30,7 @@ const CommentTitle = styled.input`
     outline: 1px solid ${th('colorPrimary')};
   }
 
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${override('Wax.CommentTitle')}
 `;
 
@@ -50,7 +51,8 @@ const Button = styled.button`
   color: gray;
   cursor: pointer;
   padding: ${grid(2)} ${grid(4)};
-
+  
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${props => props.primary && primary}
   ${props => props.disabled && `cursor: not-allowed; opacity: 0.3;`}
 
@@ -61,26 +63,25 @@ const ButtonGroup = styled.div`
   > button:not(:last-of-type) {
     margin-right: 8px;
   }
+
   ${override('Wax.CommentButtonGroup')}
 `;
 
 const StyledMentions = styled(Mentions)`
   border: none;
+
   > textarea {
-    font-size: 14px;
     background: ${th('colorBackgroundHue')};
     border: 3px solid ${th('colorBackgroundTabs')};
     font-family: ${th('fontWriting')};
+    font-size: 14px;
     padding: 2px;
 
     &:focus {
       outline: 1px solid ${th('colorPrimary')};
     }
-
-    &:focus {
-      outline: 1px solid ${th('colorPrimary')};
-    }
   }
+
   ${override('Wax.CommentTextArea')}
 `;
 
@@ -128,88 +129,88 @@ const CommentReply = props => {
 
   return (
     <Wrapper className={className} ref={ref}>
-      <form onSubmit={handleSubmit}>
-        <TextWrapper>
-          {isNewComment && showTitle && (
-            <CommentTitle
-              name="title"
-              onChange={e => {
-                setTitle(e.target.value);
-              }}
-              placeholder={`${
-                !isEmpty(i18n) && i18n.exists(`Wax.Comments.Write title`)
-                  ? t(`Wax.Comments.Write title`)
-                  : 'Write title'
-              }...`}
-              ref={commentTitle}
-              type="text"
-              value={title}
-            />
-          )}
-          <StyledMentions
-            onChange={text => {
-              setCommentValue(text);
+      <TextWrapper>
+        {isNewComment && showTitle && (
+          <CommentTitle
+            name="title"
+            onChange={e => {
+              setTitle(e.target.value);
             }}
-            onPressEnter={e => {
-              const mentionsOptionsEl = document.getElementsByClassName(
-                'rc-mentions-measure',
-              );
+            placeholder={`${
+              !isEmpty(i18n) && i18n.exists(`Wax.Comments.Write title`)
+                ? t(`Wax.Comments.Write title`)
+                : 'Write title'
+            }...`}
+            ref={commentTitle}
+            type="text"
+            value={title}
+          />
+        )}
 
-              if (
-                e.keyCode === 13 &&
-                !e.shiftKey &&
-                mentionsOptionsEl.length === 0
-              ) {
-                e.preventDefault();
-                if (commentValue) handleSubmit(e);
-              }
-            }}
-            placeholder={
-              isNewComment
-                ? `${
-                    !isEmpty(i18n) && i18n.exists(`Wax.Comments.Write comment`)
-                      ? t(`Wax.Comments.Write comment`)
-                      : 'Write comment'
-                  }...`
-                : `${
-                    !isEmpty(i18n) && i18n.exists(`Wax.Comments.Reply`)
-                      ? t(`Wax.Comments.Reply`)
-                      : 'Reply'
-                  }...`
+        <StyledMentions
+          onChange={text => {
+            setCommentValue(text);
+          }}
+          onPressEnter={e => {
+            const mentionsOptionsEl = document.getElementsByClassName(
+              'rc-mentions-measure',
+            );
+
+            if (
+              e.keyCode === 13 &&
+              !e.shiftKey &&
+              mentionsOptionsEl.length === 0
+            ) {
+              e.preventDefault();
+              if (commentValue) handleSubmit(e);
             }
-            ref={commentInput}
-            rows="4"
-            value={commentValue}
+          }}
+          placeholder={
+            isNewComment
+              ? `${
+                  !isEmpty(i18n) && i18n.exists(`Wax.Comments.Write comment`)
+                    ? t(`Wax.Comments.Write comment`)
+                    : 'Write comment'
+                }...`
+              : `${
+                  !isEmpty(i18n) && i18n.exists(`Wax.Comments.Reply`)
+                    ? t(`Wax.Comments.Reply`)
+                    : 'Reply'
+                }...`
+          }
+          ref={commentInput}
+          rows="4"
+          value={commentValue}
+        >
+          {usersMentionList &&
+            usersMentionList.map(item => (
+              <Option key={item.id} value={item.displayName}>
+                {item.displayName}
+              </Option>
+            ))}
+        </StyledMentions>
+      </TextWrapper>
+
+      <ActionWrapper>
+        <ButtonGroup>
+          <Button
+            disabled={commentValue.length === 0 || isReadOnly}
+            onClick={handleSubmit}
+            primary
+            type="submit"
           >
-            {usersMentionList &&
-              usersMentionList.map(item => (
-                <Option key={item.id} value={item.displayName}>
-                  {item.displayName}
-                </Option>
-              ))}
-          </StyledMentions>
-        </TextWrapper>
+            {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Post`)
+              ? t(`Wax.Comments.Post`)
+              : 'Post'}
+          </Button>
 
-        <ActionWrapper>
-          <ButtonGroup>
-            <Button
-              disabled={commentValue.length === 0 || isReadOnly}
-              primary
-              type="submit"
-            >
-              {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Post`)
-                ? t(`Wax.Comments.Post`)
-                : 'Post'}
-            </Button>
-
-            <Button disabled={commentValue.length === 0} onClick={resetValue}>
-              {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Cancel`)
-                ? t(`Wax.Comments.Cancel`)
-                : 'Cancel'}
-            </Button>
-          </ButtonGroup>
-        </ActionWrapper>
-      </form>
+          <Button disabled={commentValue.length === 0} onClick={resetValue}>
+            {!isEmpty(i18n) && i18n.exists(`Wax.Comments.Cancel`)
+              ? t(`Wax.Comments.Cancel`)
+              : 'Cancel'}
+          </Button>
+        </ButtonGroup>
+      </ActionWrapper>
     </Wrapper>
   );
 };

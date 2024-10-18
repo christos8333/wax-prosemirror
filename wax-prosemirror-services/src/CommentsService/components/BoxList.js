@@ -16,10 +16,7 @@ export default ({
     <>
       {commentsTracks.map((commentTrack, index) => {
         let id = '';
-
-        if (commentTrack?.node?.attrs.id) {
-          id = commentTrack.node.attrs.id;
-        } else if (commentTrack?.attrs?.id) {
+        if (commentTrack?.attrs?.id) {
           id = commentTrack.attrs.id;
         } else {
           id = commentTrack.id;

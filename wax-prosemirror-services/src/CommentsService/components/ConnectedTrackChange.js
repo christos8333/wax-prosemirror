@@ -42,7 +42,11 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     .trackChange;
 
   const onClickBox = trackData => {
-    if (trackData.node) return focusOnBlcock(trackData);
+    if (
+      trackData.type.groups &&
+      trackData.type.groups.find(type => type.includes('block'))
+    )
+      return focusOnBlcock(trackData);
 
     if (viewId !== 'main') context.updateView({}, viewId);
 
@@ -64,11 +68,12 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   };
 
   const focusOnBlcock = trackData => {
+    const {
+      data: { pmFrom },
+    } = trackData;
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
-        new TextSelection(
-          pmViews[viewId].state.tr.doc.resolve(trackData.pos + 1),
-        ),
+        new TextSelection(pmViews[viewId].state.tr.doc.resolve(pmFrom + 1)),
       ),
     );
 

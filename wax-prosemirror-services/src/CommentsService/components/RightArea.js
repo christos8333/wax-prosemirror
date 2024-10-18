@@ -267,7 +267,9 @@ const updateMarks = (views, comments) => {
 
     allBlockNodes.map(node => {
       if (node.node.attrs.track && node.node.attrs.track.length > 0) {
-        finalNodes.push(node);
+        node.node.data = {};
+        node.node.data.pmFrom = node.pos;
+        finalNodes.push(node.node);
       }
     });
 
@@ -275,14 +277,10 @@ const updateMarks = (views, comments) => {
 
     const groupedMarkNodes = { main: [], notes: [] };
     nodesAndMarks.forEach(markNode => {
-      const markNodeAttrs = markNode.attrs
-        ? markNode.attrs
-        : markNode.node.attrs;
-
-      if (!groupedMarkNodes[markNodeAttrs.group]) {
-        groupedMarkNodes[markNodeAttrs.group] = [markNode];
+      if (!groupedMarkNodes[markNode.attrs.group]) {
+        groupedMarkNodes[markNode.attrs.group] = [markNode];
       } else {
-        groupedMarkNodes[markNodeAttrs.group].push(markNode);
+        groupedMarkNodes[markNode.attrs.group].push(markNode);
       }
     });
     if (newComments?.main?.length > 0) {

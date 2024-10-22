@@ -111,13 +111,13 @@ const TrackChangesBox = props => {
     onClickBox(trackData);
   };
 
-  const username = trackData.attrs
-    ? trackData.attrs.username
-    : trackData.node.attrs.track[0].username;
+  const username = trackData.attrs.track
+    ? trackData.attrs.track[0].username
+    : trackData.attrs.username;
 
-  const date = trackData.attrs
-    ? trackData.attrs.date
-    : trackData.node.attrs.track[0].date;
+  const date = trackData.attrs.track
+    ? trackData.attrs.track[0].date
+    : trackData.attrs.date;
 
   const labelRemoved = `removed `;
   let textRemoved = '';
@@ -149,16 +149,16 @@ const TrackChangesBox = props => {
     }
   }
 
-  if (trackData.node) {
-    const track = trackData.node.attrs.track[0];
+  if (trackData.attrs.track) {
+    const track = trackData.attrs.track[0];
     if (track.type === 'insertion') {
-      textBlockInsert = trackData.node.type.name;
+      textBlockInsert = trackData.type.name;
     }
     if (track.type === 'block_change') {
-      textBlockChange = `${track.before.type} to ${trackData.node.type.name}`;
+      textBlockChange = `${track.before.type} to ${trackData.type.name}`;
     }
     if (track.type === 'deletion') {
-      textBlockRemoved = trackData.node.type.name;
+      textBlockRemoved = trackData.type.name;
     }
   }
 

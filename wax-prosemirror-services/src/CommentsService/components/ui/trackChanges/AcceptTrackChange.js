@@ -33,6 +33,8 @@ const acceptTrackChange = (
 
   if (trackData?.node?.type?.name === 'figure') {
     to = activeTrackChange.from + 3;
+  } else if (activeTrackChange.from === to) {
+    to += 1;
   }
 
   tr.setMeta('AcceptReject', true);

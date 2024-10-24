@@ -10,11 +10,14 @@ export default class CommentsService extends Service {
   allCommentsFromStates = [];
   boot() {
     const commentsConfig = this.app.config.get('config.CommentsService');
+    const YjsType = this.app.config.get('config.YjsService')
+      ? this.app.config.get('config.YjsService').yjsType
+      : 'yjs';
 
     const options = {
       existingComments: () => {
         const map = this.app.config.get('config.YjsService')
-          ? this.app.context.options.currentYdoc.getMap('comments')
+          ? this.app.context.options.currentYdoc.getMap(`comments-${YjsType}`)
           : new Map();
 
         if (commentsConfig?.setComments().length > 0) {
@@ -26,7 +29,9 @@ export default class CommentsService extends Service {
         return map;
       },
       commentsDataMap: this.app.config.get('config.YjsService')
-        ? this.app.context.options.currentYdoc.getMap('commentsDataMap')
+        ? this.app.context.options.currentYdoc.getMap(
+            `commentsDataMap-${YjsType}`,
+          )
         : new Map(),
       context: { ...this.app.context, app: this.app },
       onSelectionChange: items => {

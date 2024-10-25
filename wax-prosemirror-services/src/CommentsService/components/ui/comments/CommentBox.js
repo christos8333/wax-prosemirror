@@ -101,8 +101,8 @@ const CommentBox = props => {
         <Head>
           <Resolve
             isReadOnly={isReadOnly}
-            onClick={() => {
-              if (!isReadOnly) return onClickResolve(commentId);
+            onClick={e => {
+              if (!isReadOnly) return onClickResolve(e, commentId);
               return false;
             }}
           >

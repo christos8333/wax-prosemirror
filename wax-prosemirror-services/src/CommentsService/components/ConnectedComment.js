@@ -137,7 +137,9 @@ export default ({
     return true;
   };
 
-  const onClickResolve = () => {
+  const onClickResolve = e => {
+    e.preventDefault();
+    e.stopPropagation();
     context.setOption({ resolvedComment: activeComment.id });
     context.activeView.dispatch(
       state.tr.setMeta(CommentDecorationPluginKey, {
@@ -149,7 +151,6 @@ export default ({
     context.activeView.dispatch(state.tr);
     activeView.focus();
   };
-
   const onTextAreaBlur = () => {
     if (conversation.length === 0 && !clickPost) {
       onClickResolve();

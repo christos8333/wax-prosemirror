@@ -59,11 +59,15 @@ function tableNodes(options) {
     colspan: { default: 1 },
     rowspan: { default: 1 },
     colwidth: { default: null },
+    style: { default: null },
   };
   for (const prop in extraAttrs)
     cellAttrs[prop] = { default: extraAttrs[prop].default };
   return {
     table: {
+      attrs: {
+        style: { default: null },
+      },
       // content: 'table_caption? table_head? table_body* table_foot?',
       content: 'table_caption? table_body*',
       tableRole: 'table',
@@ -75,6 +79,9 @@ function tableNodes(options) {
       },
     },
     table_caption: {
+      attrs: {
+        style: { default: null },
+      },
       content: 'block+',
       tableRole: 'caption',
       isolating: true,
@@ -84,6 +91,9 @@ function tableNodes(options) {
       },
     },
     table_head: {
+      attrs: {
+        style: { default: null },
+      },
       content: 'table_row+',
       tableRole: 'head',
       isolating: true,
@@ -93,6 +103,9 @@ function tableNodes(options) {
       },
     },
     table_foot: {
+      attrs: {
+        style: { default: null },
+      },
       content: 'table_row+',
       tableRole: 'foot',
       isolating: true,
@@ -102,6 +115,9 @@ function tableNodes(options) {
       },
     },
     table_body: {
+      attrs: {
+        style: { default: null },
+      },
       content: 'table_row+',
       tableRole: 'body',
       isolating: true,
@@ -111,6 +127,9 @@ function tableNodes(options) {
       },
     },
     table_row: {
+      attrs: {
+        style: { default: null },
+      },
       content: '(table_cell | table_header)*',
       tableRole: 'row',
       parseDOM: [{ tag: 'tr' }],

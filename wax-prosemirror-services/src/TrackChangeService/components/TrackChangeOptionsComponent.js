@@ -9,6 +9,7 @@ import {
   ApplicationContext,
   DocumentHelpers,
   MenuButton,
+  Commands,
 } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
@@ -239,6 +240,7 @@ const TrackChangeOptionsComponent = ({
                 });
                 return false;
               }
+              Commands.simulateKey(activeView, 66, 'Caps-Lock');
               return menuItem.run(activeView.state, activeView.dispatch, user);
             }}
           />

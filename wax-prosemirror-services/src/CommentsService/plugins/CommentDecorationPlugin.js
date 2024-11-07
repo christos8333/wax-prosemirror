@@ -77,7 +77,11 @@ const CommentDecorationPlugin = (name, options) => {
           this.getState(state).setTransactYjsPos(false);
         }
 
-        if (event.key === 'Backspace' || event.key === 'Delete') {
+        if (
+          event.key === 'Backspace' ||
+          event.key === 'Delete' ||
+          event.key === 'Caps-Lock'
+        ) {
           setTimeout(() => {
             const ids = this.getState(state).decorations.children.map(child => {
               if (child instanceof DecorationSet) {

@@ -74,8 +74,8 @@ function tableNodes(options) {
       isolating: true,
       group: options.tableGroup,
       parseDOM: [{ tag: 'table' }],
-      toDOM() {
-        return ['table', 0];
+      toDOM(node) {
+        return ['table', node.attrs, 0];
       },
     },
     table_caption: {
@@ -86,8 +86,8 @@ function tableNodes(options) {
       tableRole: 'caption',
       isolating: true,
       parseDOM: [{ tag: 'caption' }],
-      toDOM() {
-        return ['caption', 0];
+      toDOM(node) {
+        return ['caption', node.attrs, 0];
       },
     },
     table_head: {
@@ -98,8 +98,8 @@ function tableNodes(options) {
       tableRole: 'head',
       isolating: true,
       parseDOM: [{ tag: 'thead' }],
-      toDOM() {
-        return ['thead', 0];
+      toDOM(node) {
+        return ['thead', node.attrs, 0];
       },
     },
     table_foot: {
@@ -110,8 +110,8 @@ function tableNodes(options) {
       tableRole: 'foot',
       isolating: true,
       parseDOM: [{ tag: 'tfoot' }],
-      toDOM() {
-        return ['tfoot', 0];
+      toDOM(node) {
+        return ['tfoot', node.attrs, 0];
       },
     },
     table_body: {
@@ -122,8 +122,8 @@ function tableNodes(options) {
       tableRole: 'body',
       isolating: true,
       parseDOM: [{ tag: 'tbody' }],
-      toDOM() {
-        return ['tbody', 0];
+      toDOM(node) {
+        return ['tbody', node.attrs, 0];
       },
     },
     table_row: {
@@ -133,8 +133,8 @@ function tableNodes(options) {
       content: '(table_cell | table_header)*',
       tableRole: 'row',
       parseDOM: [{ tag: 'tr' }],
-      toDOM() {
-        return ['tr', 0];
+      toDOM(node) {
+        return ['tr', node.attrs, 0];
       },
     },
     table_cell: {

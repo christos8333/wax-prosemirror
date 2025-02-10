@@ -256,7 +256,8 @@ const ExpandedFindAndReplaceComponent = ({
     setReplaceValue(replaceRef.current.value);
   };
 
-  const replace = () => {
+  const replace = e => {
+    e.preventDefault();
     if (match.length === 1) {
       const { from, to } = match[0];
       pmViews[activeViewId].dispatch(
@@ -266,7 +267,8 @@ const ExpandedFindAndReplaceComponent = ({
     }
   };
 
-  const replaceAll = () => {
+  const replaceAll = e => {
+    e.preventDefault();
     each(pmViews, singleView => {
       const results = DocumentHelpers.findMatches(
         singleView.state.doc,
@@ -371,11 +373,11 @@ const ExpandedFindAndReplaceComponent = ({
         />
       </CheckBoxWrapper>
       <ControlContainer>
-        <ButtonReplace onClick={replace}>
+        <ButtonReplace onClick={e => replace(e)}>
           {' '}
           <Translation label="Replace" />
         </ButtonReplace>
-        <ButtonReplaceAll onClick={replaceAll}>
+        <ButtonReplaceAll onClick={e => replaceAll(e)}>
           {' '}
           <Translation label="Replace" /> <Translation label="All" />
         </ButtonReplaceAll>

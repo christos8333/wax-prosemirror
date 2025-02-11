@@ -121,6 +121,7 @@ export default {
         'ToggleAi',
         'Tables',
         'TrackingAndEditing',
+        'FindAndReplaceTool',
         'FullScreen',
       ],
     },

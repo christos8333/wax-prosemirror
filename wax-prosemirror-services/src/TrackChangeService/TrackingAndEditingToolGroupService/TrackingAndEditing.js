@@ -6,10 +6,10 @@ class TrackingAndEditing extends ToolGroup {
   tools = [];
   constructor(
     @inject('EditingSuggesting') editingSuggesting,
-    @inject('FindAndReplace') findAndReplace,
+    // @inject('FindAndReplace') findAndReplace,
   ) {
     super();
-    this.tools = [findAndReplace, editingSuggesting];
+    this.tools = [editingSuggesting];
   }
 }
 

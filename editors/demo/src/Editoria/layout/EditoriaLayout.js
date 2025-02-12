@@ -76,15 +76,15 @@ const TopMenu = styled.div`
     border-right-width: ${th('borderWidth')};
   }
 
-  > div:nth-last-of-type(-n + 2) {
+  // > div:nth-last-of-type(-n + 2) {
+  //   margin-left: auto;
+  // }
+
+  > div[data-name='FullScreen'] {
     margin-left: auto;
   }
 
-  > div[data-name='FullScreen'] {
-    margin: 0;
-  }
-
-  > div[data-name='Tables'] {
+  > div[data-name='FindAndReplaceTool'] {
     border-right: none;
   }
 `;

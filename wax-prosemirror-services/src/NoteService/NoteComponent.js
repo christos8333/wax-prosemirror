@@ -1,6 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useContext, useState, useMemo } from 'react';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { differenceBy } from 'lodash';
 import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import NoteEditor from './NoteEditor';
@@ -44,10 +43,10 @@ export default ({ view }) => {
     }
   };
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     setNotes(updateNotes(context.pmViews.main));
     cleanUpNoteViews();
-  }, [updateNotes(main)]);
+  }, [JSON.stringify(updateNotes(main))]);
 
   const noteComponent = useMemo(
     () => <NoteEditor notes={notes} view={main} />,

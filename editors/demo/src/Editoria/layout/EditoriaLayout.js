@@ -246,21 +246,12 @@ const EditoriaLayout = props => {
   const trackBlockNodesCount =
     main && DocumentHelpers.getTrackBlockNodesCount(main);
 
-  const areNotes = notes && !!notes.length && notes.length > 0;
+  const [hasNotes, setHasNotes] = useState(false);
 
-  const [hasNotes, setHasNotes] = useState(areNotes);
-
-  const showNotes = () => {
+  useEffect(() => {
+    const areNotes = notes && !!notes.length && notes.length > 0;
     setHasNotes(areNotes);
-  };
-
-  const delayedShowedNotes = useCallback(
-    setTimeout(() => showNotes(), 100),
-    [],
-  );
-
-  useEffect(() => {}, [delayedShowedNotes]);
-
+  }, [notes?.length]);
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">

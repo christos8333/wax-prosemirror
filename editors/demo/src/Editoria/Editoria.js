@@ -50,12 +50,12 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value={demo}
+          value={`<p class="paragraph">this is <footnote id="d42f8b14-ccd1-4d16-919a-9adecab62656">a</footnote>some text with some more text</p>`}
           // readonly
           layout={layout}
-          // onChange={debounce(source => {
-          //   console.log(source);
-          // }, 200)}
+          onChange={debounce(source => {
+            console.log(source);
+          }, 200)}
           user={user}
           scrollMargin={200}
           scrollThreshold={200}

@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useRef, useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { filter } from 'lodash';
 import { EditorView } from 'prosemirror-view';
@@ -25,7 +25,6 @@ const NoteContainer = styled.div`
 let WaxOverlays = () => true;
 
 export default ({ node, view }) => {
-  const editorRef = useRef();
   const context = useContext(WaxContext);
   const { app } = useContext(ApplicationContext);
   const noteId = node.attrs.id;
@@ -42,55 +41,58 @@ export default ({ node, view }) => {
     return editable;
   });
 
-  useEffect(() => {
-    WaxOverlays = ComponentPlugin('waxOverlays');
-    noteView = new EditorView(
-      { mount: editorRef.current },
-      {
-        editable: () => isEditable,
-        state: EditorState.create({
-          doc: node,
-          plugins: [keymap(createKeyBindings()), ...app.PmPlugins.getAll()],
-        }),
-        dispatchTransaction,
-        disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
-        handleDOMEvents: {
-          blur: (editorView, event) => {
-            if (pmViews[noteId]) {
-              pmViews[noteId].dispatch(
-                pmViews[noteId].state.tr.setSelection(
-                  new TextSelection(pmViews[noteId].state.tr.doc.resolve(0)),
-                ),
-              );
-            }
+  const setEditorRef = useCallback(noteNode => {
+    if (noteNode) {
+      WaxOverlays = ComponentPlugin('waxOverlays');
+      noteView = new EditorView(
+        { mount: noteNode },
+        {
+          editable: () => isEditable,
+          state: EditorState.create({
+            doc: node,
+            plugins: [keymap(createKeyBindings()), ...app.PmPlugins.getAll()],
+          }),
+          dispatchTransaction,
+          disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],
+          handleDOMEvents: {
+            blur: (editorView, event) => {
+              if (pmViews[noteId]) {
+                pmViews[noteId].dispatch(
+                  pmViews[noteId].state.tr.setSelection(
+                    new TextSelection(pmViews[noteId].state.tr.doc.resolve(0)),
+                  ),
+                );
+              }
+            },
+
+            mousedown: () => {
+              context.updateView({}, noteId);
+              clickInNote = true;
+              // if (noteView.hasFocus()) noteView.focus();
+            },
+          },
+          handleTextInput: (editorView, from, to, text) => {
+            typing = true;
           },
 
-          mousedown: () => {
-            context.updateView({}, noteId);
-            clickInNote = true;
-            // if (noteView.hasFocus()) noteView.focus();
+          attributes: {
+            spellcheck: 'false',
           },
         },
-        handleTextInput: (editorView, from, to, text) => {
-          typing = true;
-        },
+      );
 
-        attributes: {
-          spellcheck: 'false',
+      // Set Each note into Wax's Context
+      context.updateView(
+        {
+          [noteId]: noteView,
         },
-      },
-    );
-
-    // Set Each note into Wax's Context
-    context.updateView(
-      {
-        [noteId]: noteView,
-      },
-      noteId,
-    );
-    if (pmViews[noteId]) {
-      pmViews[noteId].focus();
+        noteId,
+      );
+      if (pmViews[noteId]) {
+        pmViews[noteId].focus();
+      }
     }
+    return noteNode;
   }, []);
 
   const dispatchTransaction = transaction => {
@@ -191,7 +193,7 @@ export default ({ node, view }) => {
     }
   }
   const NoteEditorContainerComponent = useMemo(
-    () => <NoteEditorContainer ref={editorRef} />,
+    () => <NoteEditorContainer ref={setEditorRef} />,
     [],
   );
 

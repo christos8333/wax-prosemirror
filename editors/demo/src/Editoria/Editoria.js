@@ -50,7 +50,7 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value={`<p class="paragraph">this is <footnote id="d42f8b14-ccd1-4d16-919a-9adecab62656">a</footnote>some text with some more text</p>`}
+          value={demo}
           // readonly
           layout={layout}
           onChange={debounce(source => {

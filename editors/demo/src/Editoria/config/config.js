@@ -76,31 +76,7 @@ const getComments = comments => {
   console.log(comments);
 };
 
-const setComments = (
-  comments = [
-    {
-      id: '82831f2d-281c-4a0f-b326-c4cfb4ff2752',
-      from: 20,
-      to: 25,
-      data: {
-        type: 'comment',
-        pmFrom: 20,
-        pmTo: 25,
-        conversation: [
-          {
-            content: '111',
-            displayName: 'admin',
-            userId: 'b3cfc28e-0f2e-45b5-b505-e66783d4f946',
-            timestamp: 1739471420783,
-          },
-        ],
-        title: '',
-        group: 'main',
-        viewId: 'main',
-      },
-    },
-  ],
-) => {
+const setComments = () => {
   return comments;
 };
 

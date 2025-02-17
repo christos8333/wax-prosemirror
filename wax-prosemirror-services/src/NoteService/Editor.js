@@ -41,6 +41,10 @@ export default ({ node, view }) => {
     return editable;
   });
 
+  // const filteredplugins = app.PmPlugins.getAll().filter(
+  //   plugin => !plugin.key.includes('comment') && !plugin.key.includes('yjs'),
+  // );
+
   const setEditorRef = useCallback(noteNode => {
     if (noteNode) {
       WaxOverlays = ComponentPlugin('waxOverlays');

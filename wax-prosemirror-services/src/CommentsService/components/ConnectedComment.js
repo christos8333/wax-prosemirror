@@ -151,9 +151,9 @@ export default ({
     context.activeView.dispatch(state.tr);
     activeView.focus();
   };
-  const onTextAreaBlur = () => {
+  const onTextAreaBlur = e => {
     if (conversation.length === 0 && !clickPost) {
-      onClickResolve();
+      onClickResolve(e);
       activeView.focus();
     }
   };
@@ -175,7 +175,7 @@ export default ({
           onClickBox={onClickBox}
           onClickPost={onClickPost}
           onClickResolve={onClickResolve}
-          onTextAreaBlur={onTextAreaBlur}
+          onTextAreaBlur={e => onTextAreaBlur(e)}
           showTitle={showTitle}
           title={comment.data.title}
           users={users}

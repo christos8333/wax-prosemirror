@@ -19,14 +19,14 @@ import {
 } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
   display: flex;
+  opacity: ${props => (props.disabled ? '0.4' : '1')};
 `;
 
 const ButtonWrapper = styled.div`
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 const DropDownButton = styled.button`
@@ -44,18 +44,18 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
   background: #fff;
-  display: flex;
-  flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
+  display: flex;
+  flex-direction: column;
   margin: 32px auto auto;
-  position: absolute;
-  width: 160px;
   max-height: 180px;
   overflow-y: auto;
+  position: absolute;
+  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  width: 160px;
   z-index: 2;
 
   option {
@@ -68,16 +68,17 @@ const DropDownMenu = styled.div`
     background: #f2f9fc;
     outline: 2px solid #f2f9fc;
   }
+
   option:disabled {
-    opacity: 0.3;
     cursor: not-allowed;
+    opacity: 0.3;
   }
 `;
 
 const StyledIcon = styled(Icon)`
   height: 18px;
-  width: 18px;
   margin-left: auto;
+  width: 18px;
 `;
 
 const BlockDropDownComponent = ({ view, tools }) => {

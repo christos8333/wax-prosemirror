@@ -110,11 +110,6 @@ const BlockDropDownComponent = ({ view, tools }) => {
       value: '8',
       item: tools[8],
     },
-    // {
-    //   label: translatedLabel(`Wax.BlockLevel.Block Quote`, 'Block Quote'),
-    //   value: '13',
-    //   item: tools[13],
-    // },
   ];
 
   const { app } = useContext(ApplicationContext);

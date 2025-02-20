@@ -113,6 +113,7 @@ export default {
         'HighlightToolGroup',
         'TransformToolGroup',
         'CustomTagInline',
+        'CustomTagBlock',
         'Notes',
         'Lists',
         'Images',

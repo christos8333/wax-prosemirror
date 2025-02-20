@@ -1,4 +1,11 @@
-import React, { useContext, useMemo, useRef, useState, createRef } from 'react';
+import React, {
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+  createRef,
+  useEffect,
+} from 'react';
 import styled from 'styled-components';
 import {
   DocumentHelpers,
@@ -71,7 +78,7 @@ const StyledIcon = styled(Icon)`
   width: 18px;
 `;
 
-const CustomBlockDropDownComponent = ({ view, tools }) => {
+const CustomBlockDropDownComponent = ({ view, item }) => {
   const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
   const {
@@ -91,6 +98,16 @@ const CustomBlockDropDownComponent = ({ view, tools }) => {
 
   const [label, setLabel] = useState(null);
   const { state } = view;
+  const { $from } = state.selection;
+
+  const className = $from.parent.attrs.class ? $from.parent.attrs.class : '';
+
+  const tagStatus = item.active(
+    activeView.state,
+    activeViewId,
+    className,
+    configTags,
+  );
 
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
@@ -99,9 +116,26 @@ const CustomBlockDropDownComponent = ({ view, tools }) => {
     return editable;
   });
 
-  const isDisabled = !isEditable;
+  let isDisabled = !item.select(state, activeViewId, activeView);
+  if (!isEditable) isDisabled = true;
 
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
+
+  useEffect(() => {
+    if (isDisabled) setIsOpen(false);
+  }, [isDisabled]);
+
+  useEffect(() => {
+    const filteredStatus = blockTags.filter(
+      tag => tagStatus[tag.label] === true,
+    );
+
+    if (filteredStatus?.length === 1) {
+      setLabel(filteredStatus[0].label);
+    } else {
+      setLabel('Custom Block');
+    }
+  }, [tagStatus]);
 
   const openCloseMenu = () => {
     if (!isDisabled) setIsOpen(!isOpen);
@@ -170,29 +204,22 @@ const CustomBlockDropDownComponent = ({ view, tools }) => {
           </DropDownButton>
         </ButtonWrapper>
         <DropDownMenu
-          aria-label="Choose a block level action"
-          id="block-level-options"
+          aria-label="Choose a custom block level action"
+          id="custom-block-level-options"
           isOpen={isOpen}
           role="menu"
         >
           {blockTags.map((option, index) => {
-            console.log(option);
             itemRefs.current[index] = itemRefs.current[index] || createRef();
             return (
               <option
-                // disabled={
-                //   !tools[option.value].select(
-                //     main.state,
-                //     activeViewId,
-                //     activeView,
-                //   )
-                // }
+                disabled={isDisabled}
                 key={option.label}
-                // onClick={() => {
-                //   tools[option.value].run(main.state, main.dispatch);
+                onClick={() => {
+                  item.run(activeView.state, activeView.dispatch, option.label);
 
-                //   openCloseMenu();
-                // }}
+                  openCloseMenu();
+                }}
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}
                 role="menuitem"

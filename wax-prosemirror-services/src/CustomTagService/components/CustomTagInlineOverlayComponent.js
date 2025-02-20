@@ -24,6 +24,7 @@ const Wrapper = styled.div`
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
   padding: ${grid(2)} ${grid(1)} ${grid(2)} ${grid(2)};
   transform-origin: 50% 50% 0px;
+  width: 200px;
 `;
 
 const CustomWrapper = styled.div`
@@ -129,9 +130,15 @@ const CustomTagInlineOverlayComponent = ({ mark }) => {
   const onClickAdd = () => {
     if (inputValue.trim() === '') return;
 
-    configTags.push({ label: inputValue, tagType: 'inline' });
+    configTags.push({
+      label: inputValue,
+      tagType: 'inline',
+    });
     setAllTags(configTags);
-    saveTags({ label: inputValue, tagType: 'inline' });
+    saveTags({
+      label: inputValue,
+      tagType: 'inline',
+    });
     setInputValue('');
     if (ref.current) ref.current.focus();
     setInputValue('');
@@ -187,9 +194,28 @@ const CustomTagInlineOverlayComponent = ({ mark }) => {
     setCustomTag(JSON.parse(localStorage.getItem('isInline')));
   }, []);
 
+  // GET the deleted tags from db but still exisiting in text
   const inlineTags = allTags.filter(tag => {
     return tag.tagType === 'inline';
   });
+
+  let missingValues = [];
+
+  if (mark && mark.attrs.tags) {
+    missingValues = mark.attrs.tags.filter(
+      item => !inlineTags.some(tag => tag.label === item),
+    );
+  }
+
+  if (missingValues.length > 0) {
+    missingValues.forEach(value => {
+      inlineTags.push({
+        label: value,
+        tagType: 'inline',
+      });
+    });
+  }
+  // until here GET the deleted tags from db but still exisiting in text
 
   const disabledStyles = {
     cursor: 'default',
@@ -237,7 +263,7 @@ const CustomTagInlineOverlayComponent = ({ mark }) => {
           </ListStyle>
         );
       })}
-      <CustomWrapper>
+      {/* <CustomWrapper>
         <Input
           onChange={onChangeTagName}
           onKeyPress={handleKeyDown}
@@ -250,7 +276,7 @@ const CustomTagInlineOverlayComponent = ({ mark }) => {
         <StyledButton onClick={onClickAdd} type="button">
           Add
         </StyledButton>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </Wrapper>
   ) : null;
 };

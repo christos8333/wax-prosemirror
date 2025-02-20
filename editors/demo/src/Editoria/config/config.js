@@ -76,7 +76,7 @@ const getComments = comments => {
   console.log(comments);
 };
 
-const setComments = () => {
+const setComments = (comments = []) => {
   return comments;
 };
 

@@ -20,7 +20,6 @@ const Wrapper = styled.div`
     rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
   font-family: ${th('fontTools')};
   font-size: 15px;
-  height: 300px;
   padding: ${grid(2)};
   transform-origin: 50% 50% 0px;
   width: 400px;

@@ -30,145 +30,92 @@ export default ({ area, users }) => {
 
   const setTops = useCallback(() => {
     const result = [];
-    let markNodeEl = null;
-    let annotationTop = 0;
-    let boxHeight = 0;
-    let top = 0;
-    let WaxSurface = {};
-    let WaxSurfaceMarginTop = '';
     const allCommentsTop = [];
-    let panelWrapper = {};
-    let panelWrapperHeight = {};
-    if (main) {
-      WaxSurface = main.dom.getBoundingClientRect();
-      WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
-    }
+    
+    // Cache DOM queries
+    const waxSurface = main?.dom.getBoundingClientRect();
+    const waxSurfaceMarginTop = main ? window.getComputedStyle(main.dom).marginTop : '';
+    const panelWrapper = document.getElementsByClassName('panelWrapper');
+    const panelWrapperHeight = panelWrapper[0]?.getBoundingClientRect().height || 0;
+    const notesContainer = document.querySelector('#notes-container');
+    const waxContainer = document.querySelector('#wax-container');
+    const waxContainerTop = waxContainer?.getBoundingClientRect().top || 0;
 
-    each(marksNodes[area], (markNode, pos) => {
-      let id = '';
+    // Cache active track change state
+    const activeTrackChange = trakChangePlugin?.getState(activeView.state).trackChange;
 
-      if (markNode?.node?.attrs.id) {
-        id = markNode.node.attrs.id;
-      } else if (markNode?.attrs?.id) {
-        id = markNode.attrs.id;
-      } else {
-        id = markNode.id;
-      }
+    // Pre-calculate common values
+    const marginTopValue = parseInt(waxSurfaceMarginTop.slice(0, -2), 10) || 0;
+    const baseOffset = area === 'main' ? 
+      (waxSurface?.top || 0) + marginTopValue :
+      panelWrapperHeight + waxContainerTop + 50;
 
-      let activeTrackChange = null;
+    marksNodes[area]?.forEach((markNode, pos) => {
+      const id = markNode?.node?.attrs?.id || markNode?.attrs?.id || markNode.id;
+      const isActive = (activeComment && id === activeComment.id) || 
+                      (activeTrackChange && id === activeTrackChange.attrs.id);
 
-      if (trakChangePlugin)
-        activeTrackChange = trakChangePlugin.getState(activeView.state)
-          .trackChange;
-
-      let isActive = false;
-      if (
-        (activeComment && id === activeComment.id) ||
-        (activeTrackChange && id === activeTrackChange.attrs.id)
-      )
-        isActive = true;
-
-      // annotation top
+      // Get annotation position
+      let annotationTop = 0;
       if (area === 'main') {
-        markNodeEl = document.querySelector(`[data-id="${id}"]`);
-        if (!markNodeEl && marksNodes[area][pos - 1]) {
-          markNodeEl = document.querySelector(
-            `[data-id="${marksNodes[area][pos - 1].id}"]`,
-          );
-        }
-
+        const markNodeEl = document.querySelector(`[data-id="${id}"]`) || 
+                          (pos > 0 ? document.querySelector(`[data-id="${marksNodes[area][pos - 1].id}"]`) : null);
         if (markNodeEl) {
-          annotationTop =
-            markNodeEl.getBoundingClientRect().top -
-            WaxSurface.top +
-            parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
+          annotationTop = markNodeEl.getBoundingClientRect().top - baseOffset;
         }
-      } else {
-        // Notes
-        panelWrapper = document.getElementsByClassName('panelWrapper');
-        panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
-
-        markNodeEl = document
-          .querySelector('#notes-container')
-          .querySelector(`[data-id="${id}"]`);
+      } else if (notesContainer) {
+        const markNodeEl = notesContainer.querySelector(`[data-id="${id}"]`);
         if (markNodeEl) {
-          const WaxContainerTop = document
-            .querySelector('#wax-container')
-            .getBoundingClientRect().top;
-
-          annotationTop =
-            markNodeEl.getBoundingClientRect().top -
-            panelWrapperHeight -
-            WaxContainerTop -
-            50;
+          annotationTop = markNodeEl.getBoundingClientRect().top - baseOffset;
         }
       }
 
-      let boxEl = null;
-      // get height of this markNode box
-      if (markNodeEl) {
-        boxEl = document.querySelector(`div[data-box="${id}"]`);
-      }
-      if (boxEl) {
-        boxHeight = parseInt(boxEl.offsetHeight, 10);
-        // where the box should move to
-        top = annotationTop;
-      }
-      // if the above comment box has already taken up the height, move down
+      // Calculate box position
+      let top = annotationTop;
+      const boxEl = document.querySelector(`div[data-box="${id}"]`);
+      const boxHeight = boxEl ? parseInt(boxEl.offsetHeight, 10) : 0;
+
+      // Handle overlaps with previous boxes
       if (pos > 0) {
         const previousBox = marksNodes[area][pos - 1];
-        const previousEndHeight = previousBox.endHeight;
-        if (annotationTop < previousEndHeight) {
-          top = previousEndHeight + 2;
+        if (annotationTop < previousBox.endHeight) {
+          top = previousBox.endHeight + 2;
         }
       }
-      // store where the box ends to be aware of overlaps in the next box
+
+      // Store end height for next iteration
       markNode.endHeight = top + boxHeight + 4;
       result[pos] = top;
       allCommentsTop.push({ [id]: result[pos] });
 
-      // if active, move as many boxes above as needed to bring it to the annotation's height
+      // Handle active state positioning
       if (isActive) {
         markNode.endHeight = annotationTop + boxHeight + 3;
         result[pos] = annotationTop;
         allCommentsTop[pos][id] = result[pos];
-        let b = true;
-        let i = pos;
 
-        // first one active, none above
-        if (i === 0) b = false;
-
-        while (b) {
+        // Adjust positions of boxes above active comment
+        for (let i = pos; i > 0; i--) {
           const boxAbove = marksNodes[area][i - 1];
           const boxAboveEnds = boxAbove.endHeight;
           const currentTop = result[i];
 
-          const doesOverlap = boxAboveEnds > currentTop;
-
-          if (doesOverlap) {
+          if (boxAboveEnds > currentTop) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
-            let previousMarkNode = '';
-
-            if (marksNodes[area][i - 1]?.node?.attrs.id) {
-              previousMarkNode = marksNodes[area][i - 1].node.attrs.id;
-            } else if (marksNodes[area][i - 1]?.attrs?.id) {
-              previousMarkNode = marksNodes[area][i - 1].attrs.id;
-            } else {
-              previousMarkNode = marksNodes[area][i - 1].id;
-            }
-
-            allCommentsTop[i - 1][previousMarkNode] = result[i - 1];
+            const previousId = marksNodes[area][i - 1]?.node?.attrs?.id || 
+                             marksNodes[area][i - 1]?.attrs?.id || 
+                             marksNodes[area][i - 1].id;
+            allCommentsTop[i - 1][previousId] = result[i - 1];
+          } else {
+            break;
           }
-
-          if (!doesOverlap) b = false;
-          if (i <= 1) b = false;
-          i -= 1;
         }
       }
     });
+
     return allCommentsTop;
-  });
+  }, [area, marksNodes, main, activeView.state, activeComment, trakChangePlugin]);
 
   const recalculateTops = () => {
     setTimeout(() => {

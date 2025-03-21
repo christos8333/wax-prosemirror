@@ -59,7 +59,7 @@ const Resolve = styled.button`
     border: none;
   }
 
-  ${props => props.isReadOnly && inactiveButton}
+  ${props => props.isReadOnlyResolve && inactiveButton}
 
   ${override('Wax.CommentResolve')}
 `;
@@ -76,7 +76,8 @@ const CommentBox = props => {
     className,
     commentId,
     commentData,
-    isReadOnly,
+    isReadOnlyResolve,
+    isReadOnlyPost,
     onClickBox,
     onClickPost,
     onClickResolve,
@@ -100,9 +101,9 @@ const CommentBox = props => {
       {active && commentData.length > 0 && (
         <Head>
           <Resolve
-            isReadOnly={isReadOnly}
+            isReadOnlyResolve={isReadOnlyResolve}
             onClick={e => {
-              if (!isReadOnly) return onClickResolve(e, commentId);
+              if (!isReadOnlyResolve) return onClickResolve(e, commentId);
               return false;
             }}
           >
@@ -121,7 +122,7 @@ const CommentBox = props => {
       {active && (
         <StyledReply
           isNewComment={commentData.length === 0}
-          isReadOnly={isReadOnly}
+          isReadOnlyPost={isReadOnlyPost}
           onClickPost={onClickPost}
           onTextAreaBlur={onTextAreaBlur}
           showTitle={showTitle}
@@ -135,7 +136,8 @@ const CommentBox = props => {
 CommentBox.propTypes = {
   /** Whether this is the current active comment */
   active: PropTypes.bool,
-  isReadOnly: PropTypes.bool.isRequired,
+  isReadOnlyResolve: PropTypes.bool.isRequired,
+  isReadOnlyPost: PropTypes.bool.isRequired,
   /** List of objects containing data for comment items */
   commentData: PropTypes.arrayOf(
     PropTypes.shape({

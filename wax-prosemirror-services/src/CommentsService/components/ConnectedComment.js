@@ -51,8 +51,14 @@ export default ({
   };
 
   const commentConfig = app.config.get('config.CommentsService');
-  const isReadOnly =
-    commentConfig && commentConfig.readOnly ? commentConfig.readOnly : false;
+  const isReadOnlyResolve =
+    commentConfig && commentConfig.readOnlyResolve
+      ? commentConfig.readOnlyResolve
+      : false;
+  const isReadOnlyPost =
+    commentConfig && commentConfig.readOnlyPost
+      ? commentConfig.readOnlyPost
+      : false;
   const showTitle =
     commentConfig && commentConfig.showTitle ? commentConfig.showTitle : false;
   const usersMentionList =
@@ -170,7 +176,8 @@ export default ({
           active={isActive}
           commentData={conversation}
           commentId={commentId}
-          isReadOnly={isReadOnly}
+          isReadOnlyPost={isReadOnlyPost}
+          isReadOnlyResolve={isReadOnlyResolve}
           key={commentId}
           onClickBox={onClickBox}
           onClickPost={onClickPost}

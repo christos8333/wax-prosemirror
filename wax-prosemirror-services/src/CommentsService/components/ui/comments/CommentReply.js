@@ -90,7 +90,7 @@ const CommentReply = props => {
     className,
     isNewComment,
     onClickPost,
-    isReadOnly,
+    isReadOnlyPost,
     onTextAreaBlur,
     showTitle,
     usersMentionList,
@@ -194,7 +194,7 @@ const CommentReply = props => {
       <ActionWrapper>
         <ButtonGroup>
           <Button
-            disabled={commentValue.length === 0 || isReadOnly}
+            disabled={commentValue.length === 0 || isReadOnlyPost}
             onClick={handleSubmit}
             primary
             type="submit"
@@ -218,7 +218,7 @@ const CommentReply = props => {
 CommentReply.propTypes = {
   isNewComment: PropTypes.bool.isRequired,
   onClickPost: PropTypes.func.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
+  isReadOnlyPost: PropTypes.bool.isRequired,
   onTextAreaBlur: PropTypes.func.isRequired,
   showTitle: PropTypes.bool.isRequired,
 };

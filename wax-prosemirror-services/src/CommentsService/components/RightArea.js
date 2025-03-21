@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
 import React, { useContext, useState, useMemo, useCallback } from 'react';
@@ -24,42 +25,61 @@ export default ({ area, users }) => {
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
   const [marksNodes, setMarksNodes] = useState([]);
-
   const [position, setPosition] = useState();
   const [isFirstRun, setFirstRun] = useState(true);
+
+  // Memoize the updateMarks function
+  const updateMarksMemoized = useMemo(() => {
+    return updateMarks(
+      pmViews,
+      CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
+    );
+  }, [pmViews, activeView.state]);
 
   const setTops = useCallback(() => {
     const result = [];
     const allCommentsTop = [];
-    
+
     // Cache DOM queries
     const waxSurface = main?.dom.getBoundingClientRect();
-    const waxSurfaceMarginTop = main ? window.getComputedStyle(main.dom).marginTop : '';
+    const waxSurfaceMarginTop = main
+      ? window.getComputedStyle(main.dom).marginTop
+      : '';
     const panelWrapper = document.getElementsByClassName('panelWrapper');
-    const panelWrapperHeight = panelWrapper[0]?.getBoundingClientRect().height || 0;
+    const panelWrapperHeight =
+      panelWrapper[0]?.getBoundingClientRect().height || 0;
     const notesContainer = document.querySelector('#notes-container');
     const waxContainer = document.querySelector('#wax-container');
     const waxContainerTop = waxContainer?.getBoundingClientRect().top || 0;
 
     // Cache active track change state
-    const activeTrackChange = trakChangePlugin?.getState(activeView.state).trackChange;
+    const activeTrackChange = trakChangePlugin?.getState(activeView.state)
+      .trackChange;
 
     // Pre-calculate common values
     const marginTopValue = parseInt(waxSurfaceMarginTop.slice(0, -2), 10) || 0;
-    const baseOffset = area === 'main' ? 
-      (waxSurface?.top || 0) + marginTopValue :
-      panelWrapperHeight + waxContainerTop + 50;
+    const baseOffset =
+      area === 'main'
+        ? (waxSurface?.top || 0) + marginTopValue
+        : panelWrapperHeight + waxContainerTop + 50;
 
     marksNodes[area]?.forEach((markNode, pos) => {
-      const id = markNode?.node?.attrs?.id || markNode?.attrs?.id || markNode.id;
-      const isActive = (activeComment && id === activeComment.id) || 
-                      (activeTrackChange && id === activeTrackChange.attrs.id);
+      const id =
+        markNode?.node?.attrs?.id || markNode?.attrs?.id || markNode.id;
+      const isActive =
+        (activeComment && id === activeComment.id) ||
+        (activeTrackChange && id === activeTrackChange.attrs.id);
 
       // Get annotation position
       let annotationTop = 0;
       if (area === 'main') {
-        const markNodeEl = document.querySelector(`[data-id="${id}"]`) || 
-                          (pos > 0 ? document.querySelector(`[data-id="${marksNodes[area][pos - 1].id}"]`) : null);
+        const markNodeEl =
+          document.querySelector(`[data-id="${id}"]`) ||
+          (pos > 0
+            ? document.querySelector(
+                `[data-id="${marksNodes[area][pos - 1].id}"]`,
+              )
+            : null);
         if (markNodeEl) {
           annotationTop = markNodeEl.getBoundingClientRect().top - baseOffset;
         }
@@ -103,9 +123,10 @@ export default ({ area, users }) => {
           if (boxAboveEnds > currentTop) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
-            const previousId = marksNodes[area][i - 1]?.node?.attrs?.id || 
-                             marksNodes[area][i - 1]?.attrs?.id || 
-                             marksNodes[area][i - 1].id;
+            const previousId =
+              marksNodes[area][i - 1]?.node?.attrs?.id ||
+              marksNodes[area][i - 1]?.attrs?.id ||
+              marksNodes[area][i - 1].id;
             allCommentsTop[i - 1][previousId] = result[i - 1];
           } else {
             break;
@@ -115,13 +136,20 @@ export default ({ area, users }) => {
     });
 
     return allCommentsTop;
-  }, [area, marksNodes, main, activeView.state, activeComment, trakChangePlugin]);
+  }, [
+    area,
+    marksNodes,
+    main,
+    activeView.state,
+    activeComment,
+    trakChangePlugin,
+  ]);
 
-  const recalculateTops = () => {
+  const recalculateTops = useCallback(() => {
     setTimeout(() => {
       setPosition(setTops());
     });
-  };
+  }, [setTops]);
 
   useDeepCompareEffect(() => {
     if (app.config.get('config.YjsService')) {
@@ -134,14 +162,7 @@ export default ({ area, users }) => {
         ),
       );
     } else {
-      setMarksNodes(
-        updateMarks(
-          pmViews,
-          CommentDecorationPluginKey?.getState(
-            activeView.state,
-          )?.allCommentsList(),
-        ),
-      );
+      setMarksNodes(updateMarksMemoized);
     }
 
     let firstRunTimeout = () => true;
@@ -155,12 +176,12 @@ export default ({ area, users }) => {
     }
 
     return () => clearTimeout(firstRunTimeout);
-  }, [
-    updateMarks(
-      pmViews,
-      CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
-    ),
-    setTops(),
+  }, [updateMarksMemoized, setTops, isFirstRun, app.config]);
+
+  // Memoize the marks nodes for the current area
+  const currentAreaMarks = useMemo(() => marksNodes[area] || [], [
+    marksNodes,
+    area,
   ]);
 
   const CommentTrackComponent = useMemo(
@@ -168,15 +189,24 @@ export default ({ area, users }) => {
       <BoxList
         activeComment={context.options.activeComment}
         area={area}
-        commentsTracks={marksNodes[area] || []}
+        commentsTracks={currentAreaMarks}
         position={position}
         recalculateTops={recalculateTops}
         users={users}
         view={main}
       />
     ),
-    [marksNodes[area] || [], position, users, context.options.activeComment],
+    [
+      currentAreaMarks,
+      position,
+      users,
+      context.options.activeComment,
+      area,
+      recalculateTops,
+      main,
+    ],
   );
+
   return <>{CommentTrackComponent}</>;
 };
 

@@ -49,6 +49,8 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
   };
 
   const isCommentAllowed = () => {
+    if (activeViewId !== 'main') return false;
+
     let allowed = true;
     state.doc.nodesBetween(
       state.selection.$from.pos,
@@ -77,13 +79,12 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
     return allowed;
   };
 
-  const isEditable = main.props.editable(editable => {
-    return editable;
-  });
+  // const isEditable = main.props.editable(editable => {
+  //   return editable;
+  // });
 
   return (
-    isCommentAllowed() &&
-    isEditable && (
+    isCommentAllowed() && (
       <CommentBubble
         onClick={event => {
           createComment(event);

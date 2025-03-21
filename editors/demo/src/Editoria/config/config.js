@@ -184,6 +184,8 @@ export default {
   },
   CommentsService: {
     // showTitle: true,
+    readOnlyPost: false,
+    readOnlyResolve: false,
     getComments,
     setComments,
     getMentionedUsers: (users, text) => {

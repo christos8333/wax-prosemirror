@@ -40,7 +40,6 @@ class YjsService extends Service {
     });
 
     const type = ydoc.getXmlFragment(YjsType || 'prosemirror');
-    console.log('dsf');
 
     this.app.PmPlugins.add('ySyncPlugin', ySyncPlugin(type));
 

@@ -184,6 +184,8 @@ export default {
   },
   CommentsService: {
     // showTitle: true,
+    readOnlyPost: false,
+    readOnlyResolve: false,
     getComments,
     setComments,
     getMentionedUsers: (users, text) => {
@@ -211,7 +213,7 @@ export default {
   //   // eslint-disable-next-line no-restricted-globals
   //   connectionUrl: 'ws://localhost:5010',
   //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-  //   docIdentifier: 'prosemirror-r5dw4q2fe2eedreeeeeweewwewerc',
+  //   docIdentifier: 'prosemirror-r5dw4dd5eeee344w22rq254werc',
   //   YjsType: 'prosemirror',
   // },
 

@@ -41,9 +41,13 @@ export default ({ node, view }) => {
     return editable;
   });
 
-  // const filteredplugins = app.PmPlugins.getAll().filter(
-  //   plugin => !plugin.key.includes('comment') && !plugin.key.includes('yjs'),
-  // );
+  const filteredplugins = app.PmPlugins.getAll().filter(
+    plugin =>
+      !plugin.key.includes('y-sync') &&
+      !plugin.key.includes('y-undo') &&
+      !plugin.key.includes('yjs') &&
+      !plugin.key.includes('comment'),
+  );
 
   const setEditorRef = useCallback(noteNode => {
     if (noteNode) {
@@ -54,7 +58,7 @@ export default ({ node, view }) => {
           editable: () => isEditable,
           state: EditorState.create({
             doc: node,
-            plugins: [keymap(createKeyBindings()), ...app.PmPlugins.getAll()],
+            plugins: [keymap(createKeyBindings()), ...filteredplugins],
           }),
           dispatchTransaction,
           disallowedTools: ['Tables', 'Images', 'Lists', 'CodeBlock'],

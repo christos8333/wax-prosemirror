@@ -6,6 +6,7 @@ import { capitalize, debounce, isEmpty, keys } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { WaxContext, ApplicationContext, icons } from 'wax-prosemirror-core';
 import { PropTypes } from 'prop-types';
+import { DOMSerializer } from 'prosemirror-model';
 import replaceSelectedText from '../ReplaceSelectedText';
 import PromptOptions from './AiSettingsMenu';
 import {
@@ -415,10 +416,18 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     });
 
     const { from, to } = main.state.selection;
-    const selectedText = main.state.doc.textBetween(from, to, undefined, '\n');
-    setTextFromSelection(selectedText);
+    
+    const selectedFragment = main.state.doc.slice(from, to);
+    const serializer = DOMSerializer.fromSchema(main.state.schema);
+    const tempDiv = document.createElement('div');
+    const fragment = serializer.serializeFragment(selectedFragment.content);
+    tempDiv.appendChild(fragment);
+    
+    const selectedHtml = tempDiv.innerHTML;
+    setTextFromSelection(selectedHtml);
     !result[DEFAULT_KEY] &&
-      setResult(prev => ({ ...prev, [DEFAULT_KEY]: selectedText }));
+      setResult(prev => ({ ...prev, [DEFAULT_KEY]: selectedHtml }));
+      
     aiOverlay.parentNode.style.width = fullScreen ? '100%' : '80%';
     aiOverlay.parentNode.style.zIndex = '9999';
     aiOverlay.parentNode.style.height = fullScreen ? '94%' : 'unset';

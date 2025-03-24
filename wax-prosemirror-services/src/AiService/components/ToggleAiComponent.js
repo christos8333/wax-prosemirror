@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { WaxContext, ApplicationContext, MenuButton } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  MenuButton,
+} from 'wax-prosemirror-core';
 import PropTypes from 'prop-types';
 
 const ToggleAiComponent = ({ item }) => {

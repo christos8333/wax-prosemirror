@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
 import React, { useContext, useState, useMemo, useCallback } from 'react';
@@ -25,131 +24,157 @@ export default ({ area, users }) => {
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
   const [marksNodes, setMarksNodes] = useState([]);
+
   const [position, setPosition] = useState();
   const [isFirstRun, setFirstRun] = useState(true);
 
-  // Memoize the updateMarks function
-  const updateMarksMemoized = useMemo(() => {
-    return updateMarks(
-      pmViews,
-      CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
-    );
-  }, [pmViews, activeView.state]);
-
   const setTops = useCallback(() => {
     const result = [];
+    let markNodeEl = null;
+    let annotationTop = 0;
+    let boxHeight = 0;
+    let top = 0;
+    let WaxSurface = {};
+    let WaxSurfaceMarginTop = '';
     const allCommentsTop = [];
+    let panelWrapper = {};
+    let panelWrapperHeight = {};
+    if (main) {
+      WaxSurface = main.dom.getBoundingClientRect();
+      WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
+    }
 
-    // Cache DOM queries
-    const waxSurface = main?.dom.getBoundingClientRect();
-    const waxSurfaceMarginTop = main
-      ? window.getComputedStyle(main.dom).marginTop
-      : '';
-    const panelWrapper = document.getElementsByClassName('panelWrapper');
-    const panelWrapperHeight =
-      panelWrapper[0]?.getBoundingClientRect().height || 0;
-    const notesContainer = document.querySelector('#notes-container');
-    const waxContainer = document.querySelector('#wax-container');
-    const waxContainerTop = waxContainer?.getBoundingClientRect().top || 0;
+    each(marksNodes[area], (markNode, pos) => {
+      let id = '';
 
-    // Cache active track change state
-    const activeTrackChange = trakChangePlugin?.getState(activeView.state)
-      .trackChange;
+      if (markNode?.node?.attrs.id) {
+        id = markNode.node.attrs.id;
+      } else if (markNode?.attrs?.id) {
+        id = markNode.attrs.id;
+      } else {
+        id = markNode.id;
+      }
 
-    // Pre-calculate common values
-    const marginTopValue = parseInt(waxSurfaceMarginTop.slice(0, -2), 10) || 0;
-    const baseOffset =
-      area === 'main'
-        ? (waxSurface?.top || 0) + marginTopValue
-        : panelWrapperHeight + waxContainerTop + 50;
+      let activeTrackChange = null;
 
-    marksNodes[area]?.forEach((markNode, pos) => {
-      const id =
-        markNode?.node?.attrs?.id || markNode?.attrs?.id || markNode.id;
-      const isActive =
+      if (trakChangePlugin)
+        activeTrackChange = trakChangePlugin.getState(activeView.state)
+          .trackChange;
+
+      let isActive = false;
+      if (
         (activeComment && id === activeComment.id) ||
-        (activeTrackChange && id === activeTrackChange.attrs.id);
+        (activeTrackChange && id === activeTrackChange.attrs.id)
+      )
+        isActive = true;
 
-      // Get annotation position
-      let annotationTop = 0;
+      // annotation top
       if (area === 'main') {
-        const markNodeEl =
-          document.querySelector(`[data-id="${id}"]`) ||
-          (pos > 0
-            ? document.querySelector(
-                `[data-id="${marksNodes[area][pos - 1].id}"]`,
-              )
-            : null);
-        if (markNodeEl) {
-          annotationTop = markNodeEl.getBoundingClientRect().top - baseOffset;
+        markNodeEl = document.querySelector(`[data-id="${id}"]`);
+        if (!markNodeEl && marksNodes[area][pos - 1]) {
+          markNodeEl = document.querySelector(
+            `[data-id="${marksNodes[area][pos - 1].id}"]`,
+          );
         }
-      } else if (notesContainer) {
-        const markNodeEl = notesContainer.querySelector(`[data-id="${id}"]`);
+
         if (markNodeEl) {
-          annotationTop = markNodeEl.getBoundingClientRect().top - baseOffset;
+          annotationTop =
+            markNodeEl.getBoundingClientRect().top -
+            WaxSurface.top +
+            parseInt(WaxSurfaceMarginTop.slice(0, -2), 10);
+        }
+      } else {
+        // Notes
+        panelWrapper = document.getElementsByClassName('panelWrapper');
+        panelWrapperHeight = panelWrapper[0].getBoundingClientRect().height;
+
+        markNodeEl = document
+          .querySelector('#notes-container')
+          .querySelector(`[data-id="${id}"]`);
+        if (markNodeEl) {
+          const WaxContainerTop = document
+            .querySelector('#wax-container')
+            .getBoundingClientRect().top;
+
+          annotationTop =
+            markNodeEl.getBoundingClientRect().top -
+            panelWrapperHeight -
+            WaxContainerTop -
+            50;
         }
       }
 
-      // Calculate box position
-      let top = annotationTop;
-      const boxEl = document.querySelector(`div[data-box="${id}"]`);
-      const boxHeight = boxEl ? parseInt(boxEl.offsetHeight, 10) : 0;
-
-      // Handle overlaps with previous boxes
+      let boxEl = null;
+      // get height of this markNode box
+      if (markNodeEl) {
+        boxEl = document.querySelector(`div[data-box="${id}"]`);
+      }
+      if (boxEl) {
+        boxHeight = parseInt(boxEl.offsetHeight, 10);
+        // where the box should move to
+        top = annotationTop;
+      }
+      // if the above comment box has already taken up the height, move down
       if (pos > 0) {
         const previousBox = marksNodes[area][pos - 1];
-        if (annotationTop < previousBox.endHeight) {
-          top = previousBox.endHeight + 2;
+        const previousEndHeight = previousBox.endHeight;
+        if (annotationTop < previousEndHeight) {
+          top = previousEndHeight + 2;
         }
       }
-
-      // Store end height for next iteration
+      // store where the box ends to be aware of overlaps in the next box
       markNode.endHeight = top + boxHeight + 4;
       result[pos] = top;
       allCommentsTop.push({ [id]: result[pos] });
 
-      // Handle active state positioning
+      // if active, move as many boxes above as needed to bring it to the annotation's height
       if (isActive) {
         markNode.endHeight = annotationTop + boxHeight + 3;
         result[pos] = annotationTop;
         allCommentsTop[pos][id] = result[pos];
+        let b = true;
+        let i = pos;
 
-        // Adjust positions of boxes above active comment
-        for (let i = pos; i > 0; i--) {
+        // first one active, none above
+        if (i === 0) b = false;
+
+        while (b) {
           const boxAbove = marksNodes[area][i - 1];
           const boxAboveEnds = boxAbove.endHeight;
           const currentTop = result[i];
 
-          if (boxAboveEnds > currentTop) {
+          const doesOverlap = boxAboveEnds > currentTop;
+
+          if (doesOverlap) {
             const overlap = boxAboveEnds - currentTop;
             result[i - 1] -= overlap;
-            const previousId =
-              marksNodes[area][i - 1]?.node?.attrs?.id ||
-              marksNodes[area][i - 1]?.attrs?.id ||
-              marksNodes[area][i - 1].id;
-            allCommentsTop[i - 1][previousId] = result[i - 1];
-          } else {
-            break;
+            let previousMarkNode = '';
+
+            if (marksNodes[area][i - 1]?.node?.attrs.id) {
+              previousMarkNode = marksNodes[area][i - 1].node.attrs.id;
+            } else if (marksNodes[area][i - 1]?.attrs?.id) {
+              previousMarkNode = marksNodes[area][i - 1].attrs.id;
+            } else {
+              previousMarkNode = marksNodes[area][i - 1].id;
+            }
+
+            allCommentsTop[i - 1][previousMarkNode] = result[i - 1];
           }
+
+          if (!doesOverlap) b = false;
+          if (i <= 1) b = false;
+          i -= 1;
         }
       }
     });
-
     return allCommentsTop;
-  }, [
-    area,
-    marksNodes,
-    main,
-    activeView.state,
-    activeComment,
-    trakChangePlugin,
-  ]);
+  });
 
-  const recalculateTops = useCallback(() => {
+  const recalculateTops = () => {
     setTimeout(() => {
       setPosition(setTops());
     });
-  }, [setTops]);
+  };
 
   useDeepCompareEffect(() => {
     if (app.config.get('config.YjsService')) {
@@ -162,7 +187,14 @@ export default ({ area, users }) => {
         ),
       );
     } else {
-      setMarksNodes(updateMarksMemoized);
+      setMarksNodes(
+        updateMarks(
+          pmViews,
+          CommentDecorationPluginKey?.getState(
+            activeView.state,
+          )?.allCommentsList(),
+        ),
+      );
     }
 
     let firstRunTimeout = () => true;
@@ -176,12 +208,12 @@ export default ({ area, users }) => {
     }
 
     return () => clearTimeout(firstRunTimeout);
-  }, [updateMarksMemoized, setTops, isFirstRun, app.config]);
-
-  // Memoize the marks nodes for the current area
-  const currentAreaMarks = useMemo(() => marksNodes[area] || [], [
-    marksNodes,
-    area,
+  }, [
+    updateMarks(
+      pmViews,
+      CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
+    ),
+    setTops(),
   ]);
 
   const CommentTrackComponent = useMemo(
@@ -189,24 +221,15 @@ export default ({ area, users }) => {
       <BoxList
         activeComment={context.options.activeComment}
         area={area}
-        commentsTracks={currentAreaMarks}
+        commentsTracks={marksNodes[area] || []}
         position={position}
         recalculateTops={recalculateTops}
         users={users}
         view={main}
       />
     ),
-    [
-      currentAreaMarks,
-      position,
-      users,
-      context.options.activeComment,
-      area,
-      recalculateTops,
-      main,
-    ],
+    [marksNodes[area] || [], position, users, context.options.activeComment],
   );
-
   return <>{CommentTrackComponent}</>;
 };
 

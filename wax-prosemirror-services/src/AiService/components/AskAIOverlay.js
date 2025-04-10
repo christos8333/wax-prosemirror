@@ -416,18 +416,18 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     });
 
     const { from, to } = main.state.selection;
-    
+
     const selectedFragment = main.state.doc.slice(from, to);
     const serializer = DOMSerializer.fromSchema(main.state.schema);
     const tempDiv = document.createElement('div');
     const fragment = serializer.serializeFragment(selectedFragment.content);
     tempDiv.appendChild(fragment);
-    
+
     const selectedHtml = tempDiv.innerHTML;
     setTextFromSelection(selectedHtml);
     !result[DEFAULT_KEY] &&
       setResult(prev => ({ ...prev, [DEFAULT_KEY]: selectedHtml }));
-      
+
     aiOverlay.parentNode.style.width = fullScreen ? '100%' : '80%';
     aiOverlay.parentNode.style.zIndex = '9999';
     aiOverlay.parentNode.style.height = fullScreen ? '94%' : 'unset';
@@ -541,7 +541,7 @@ const AskAIOverlay = ({ setPosition, position, config }) => {
     component: !!options?.AiOn,
     input: !!FreeTextPromptsOn,
     results: !!result[resultKey],
-    customprompts: !!CustomPromptsOn && CustomPrompts.length > 0,
+    customprompts: !!CustomPromptsOn && CustomPrompts?.length > 0,
     send: userPrompt.length > 1,
     resultEdit: resultKey === DEFAULT_KEY,
   };

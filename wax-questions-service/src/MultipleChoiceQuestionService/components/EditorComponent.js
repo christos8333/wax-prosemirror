@@ -156,7 +156,15 @@ const QuestionEditorComponent = ({
     };
   };
 
-  const plugins = [keymap(createKeyBindings()), ...app.PmPlugins.getAll()];
+  const filteredplugins = app.PmPlugins.getAll().filter(
+    plugin =>
+      !plugin.key.includes('y-sync') &&
+      !plugin.key.includes('y-undo') &&
+      !plugin.key.includes('yjs') &&
+      !plugin.key.includes('comment'),
+  );
+
+  const plugins = [keymap(createKeyBindings()), ...filteredplugins];
 
   const createPlaceholder = placeholder => {
     return Placeholder({

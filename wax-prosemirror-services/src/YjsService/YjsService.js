@@ -25,19 +25,20 @@ class YjsService extends Service {
       provider = new WebsocketProvider(connectionUrl, docIdentifier, ydoc);
     }
     this.app.context.setOption({ currentYdoc: ydoc });
+    this.app.context.setOption({ YjsProvider: provider });
 
-    provider.on('sync', args => {
-      console.log({ sync: args });
-    });
-    provider.on('status', args => {
-      console.log({ status: args });
-    });
-    provider.on('connection-close', args => {
-      console.log({ connectioClose: args });
-    });
-    provider.on('connection-error', args => {
-      console.log({ connectioError: args });
-    });
+    // provider.on('sync', args => {
+    //   console.log({ sync: args });
+    // });
+    // provider.on('status', args => {
+    //   console.log({ status: args });
+    // });
+    // provider.on('connection-close', args => {
+    //   console.log({ connectioClose: args });
+    // });
+    // provider.on('connection-error', args => {
+    //   console.log({ connectioError: args });
+    // });
 
     const type = ydoc.getXmlFragment(YjsType || 'prosemirror');
 

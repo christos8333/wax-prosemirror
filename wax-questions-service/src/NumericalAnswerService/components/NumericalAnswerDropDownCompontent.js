@@ -188,6 +188,10 @@ const NumericalAnswerDropDownCompontent = ({ node }) => {
         );
       }
     });
+    setTimeout(() => {
+      options.YjsProvider.awareness.setLocalStateField('sync', true);
+      options.YjsProvider.awareness.emit('change', [{ sync: true }]);
+    });
   };
 
   const onChange = option => {

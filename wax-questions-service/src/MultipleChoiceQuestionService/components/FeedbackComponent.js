@@ -98,6 +98,8 @@ export default ({ node, getPos, readOnly }) => {
     });
   }, []);
 
+  // console.log(node.attrs.feedback);
+
   return useMemo(
     () => (
       <FeedBack>
@@ -111,11 +113,11 @@ export default ({ node, getPos, readOnly }) => {
           rows="1"
           style={{ height: setHeight() }}
           type="text"
-          value={feedBack}
+          value={node.attrs.feedback}
         />
       </FeedBack>
     ),
-    [feedBack, isFirstRun],
+    [feedBack, isFirstRun, node.attrs.feedback],
   );
 };
 

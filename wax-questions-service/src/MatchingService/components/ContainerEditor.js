@@ -32,7 +32,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
 
   let containerView;
-  const questionId = node.attrs.id;
+  const questionId = node?.attrs?.id;
 
   const filteredplugins = app.PmPlugins.getAll().filter(
     plugin =>

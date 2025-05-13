@@ -127,6 +127,17 @@ export default ({ node, view, getPos }) => {
     setInfoMsgIsOpen(!infoMsgIsOpen);
   };
 
+  const getUpdatedNode = () => {
+    let nodeFound = node;
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        nodeFound = singNode;
+      }
+    });
+    return nodeFound;
+  };
+
   return (
     <NumericalAnswerWrapper>
       <div>
@@ -160,7 +171,7 @@ export default ({ node, view, getPos }) => {
       <NumericalAnswerContainer className="numerical-answer">
         <EditorComponent
           getPos={getPos}
-          node={node}
+          node={getUpdatedNode()?.node}
           QuestionType="NumericalAnswer"
           view={view}
         />
@@ -170,7 +181,7 @@ export default ({ node, view, getPos }) => {
           )}
           {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
             <ExactAnswerComponent
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               showFeedBack={showFeedBack}
               testMode={testMode}
@@ -178,7 +189,7 @@ export default ({ node, view, getPos }) => {
           )}
           {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
             <RangeAnswerComponent
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               showFeedBack={showFeedBack}
               testMode={testMode}
@@ -186,7 +197,7 @@ export default ({ node, view, getPos }) => {
           )}
           {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
             <PreciseAnswerComponent
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               showFeedBack={showFeedBack}
               testMode={testMode}
@@ -196,7 +207,7 @@ export default ({ node, view, getPos }) => {
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
-            node={node}
+            node={getUpdatedNode()?.node}
             readOnly={readOnly}
             view={view}
           />

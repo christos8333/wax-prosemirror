@@ -51,14 +51,14 @@ export default ({ node, getPos, readOnly }) => {
   } = context;
 
   const [isFirstRun, setFirstRun] = useState(true);
-  const [feedBack, setFeedBack] = useState(node.attrs.feedback);
+  const [feedBack, setFeedBack] = useState(node?.attrs?.feedback || '');
   const feedBackRef = useRef(null);
 
   const feedBackInput = () => {
     setFeedBack(feedBackRef.current.value);
     const allNodes = getNodes(main);
     allNodes.forEach(singleNode => {
-      if (singleNode.node.attrs.id === node.attrs.id) {
+      if (singleNode.node.attrs.id === node?.attrs?.id) {
         main.dispatch(
           main.state.tr.setNodeMarkup(getPos(), undefined, {
             ...singleNode.node.attrs,
@@ -98,8 +98,6 @@ export default ({ node, getPos, readOnly }) => {
     });
   }, []);
 
-  // console.log(node.attrs.feedback);
-
   return useMemo(
     () => (
       <FeedBack>
@@ -113,11 +111,11 @@ export default ({ node, getPos, readOnly }) => {
           rows="1"
           style={{ height: setHeight() }}
           type="text"
-          value={node.attrs.feedback}
+          value={node?.attrs?.feedback || feedBack}
         />
       </FeedBack>
     ),
-    [feedBack, isFirstRun, node.attrs.feedback],
+    [feedBack, isFirstRun, node?.attrs?.feedback],
   );
 };
 

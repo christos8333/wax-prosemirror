@@ -107,7 +107,8 @@ const QuestionEditorComponent = ({
   } = context;
 
   let questionView;
-  const questionId = node.attrs.id;
+  const questionId = node?.attrs?.id;
+
   let isEditable = main.props.editable(editable => {
     return editable;
   });

@@ -58,7 +58,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
   } = context;
 
   let multipleDropDownContainerNodeView;
-  const questionId = node.attrs.id;
+  const questionId = node?.attrs?.id;
   const isEditable = main.props.editable(editable => {
     return editable;
   });

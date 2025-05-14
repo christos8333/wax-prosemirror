@@ -55,7 +55,7 @@ const StyledIconWrong = styled(Icon)`
 const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [precise, setPrecise] = useState(
-    node.attrs.answersPrecise.preciseAnswer || '',
+    node?.attrs?.answersPrecise?.preciseAnswer || '',
   );
 
   const [preciseStudent, setPreciseStudent] = useState(

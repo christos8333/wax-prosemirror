@@ -55,14 +55,14 @@ const StyledIconWrong = styled(Icon)`
 const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
   const [minValue, setMinValue] = useState(
-    node.attrs.answersRange.minAnswer || '',
+    node?.attrs?.answersRange?.minAnswer || '',
   );
   const [maxValue, setMaxValue] = useState(
-    node.attrs.answersRange.maxAnswer || '',
+    node?.attrs?.answersRange?.maxAnswer || '',
   );
 
   const [rangeStudentValue, setRangeStudentValue] = useState(
-    node.attrs.answerRange || '',
+    node?.attrs?.answerRange || '',
   );
 
   const minRef = useRef(null);

@@ -54,12 +54,14 @@ const StyledIconWrong = styled(Icon)`
 
 const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   const context = useContext(WaxContext);
-  const [exact, setExact] = useState(node.attrs.answersExact.exactAnswer || '');
+  const [exact, setExact] = useState(
+    node?.attrs?.answersExact?.exactAnswer || '',
+  );
   const [marginError, setMarginError] = useState(
     node?.attrs?.answersExact?.marginError || '',
   );
   const [exactStudent, setExactStudent] = useState(
-    node.attrs.answerExact || '',
+    node?.attrs?.answerExact || '',
   );
   const exactRef = useRef(null);
   const errorRef = useRef(null);

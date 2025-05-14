@@ -59,7 +59,7 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
   );
 
   const [preciseStudent, setPreciseStudent] = useState(
-    node.attrs.answerPrecise || '',
+    node?.attrs?.answerPrecise || '',
   );
 
   const preciseRef = useRef(null);

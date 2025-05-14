@@ -135,7 +135,7 @@ const PreciseAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
                 onChange={onChangePrecice}
                 ref={preciseRef}
                 type="text"
-                value={precise}
+                value={node?.attrs?.answersPrecise?.preciseAnswer || precise}
               />
             </ValueInnerContainer>
           </label>

@@ -138,6 +138,8 @@ export default ({ node, view, getPos }) => {
     return nodeFound;
   };
 
+  console.log(getUpdatedNode());
+
   return (
     <NumericalAnswerWrapper>
       <div>

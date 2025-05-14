@@ -150,7 +150,7 @@ const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
                   onChange={onChangeExact}
                   ref={exactRef}
                   type="text"
-                  value={exact}
+                  value={node?.attrs?.answersExact?.exactAnswer || exact}
                 />
               </ValueInnerContainer>
             </label>
@@ -165,7 +165,7 @@ const ExactAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
                   onChange={onChangeError}
                   ref={errorRef}
                   type="text"
-                  value={marginError}
+                  value={node?.attrs?.answersExact?.marginError || marginError}
                 />
               </ValueInnerContainer>
             </label>

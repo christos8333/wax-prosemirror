@@ -152,7 +152,7 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
                   onChange={onChangeMin}
                   ref={minRef}
                   type="text"
-                  value={minValue}
+                  value={node?.attrs?.answersRange?.minAnswer || minValue}
                 />
               </ValueInnerContainer>
             </label>
@@ -167,7 +167,7 @@ const RangeAnswerComponent = ({ node, readOnly, testMode, showFeedBack }) => {
                   onChange={onChangeMax}
                   ref={maxRef}
                   type="text"
-                  value={maxValue}
+                  value={node?.attrs?.answersRange?.maxAnswer || maxValue}
                 />
               </ValueInnerContainer>
             </label>

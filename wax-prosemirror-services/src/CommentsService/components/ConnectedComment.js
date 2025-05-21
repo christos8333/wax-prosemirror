@@ -164,8 +164,8 @@ export default ({
     }
   };
 
-  const MemorizedComponent = useMemo(() => {
-    return top > 40 ? (
+  const MemorizedComponent = useMemo(
+    () => (
       <ConnectedCommentStyled
         active={isActive}
         data-box={commentId}
@@ -189,8 +189,37 @@ export default ({
           usersMentionList={usersMentionList}
         />
       </ConnectedCommentStyled>
-    ) : null;
-  }, [isActive, top, conversation.length, users]);
+    ),
+    [isActive, top, conversation.length, users],
+  );
+
+  // const MemorizedComponent = useMemo(() => {
+  //   return top > 40 ? (
+  //     <ConnectedCommentStyled
+  //       active={isActive}
+  //       data-box={commentId}
+  //       length={conversation.length === 0}
+  //       style={styles}
+  //     >
+  //       <CommentBox
+  //         active={isActive}
+  //         commentData={conversation}
+  //         commentId={commentId}
+  //         isReadOnlyPost={isReadOnlyPost}
+  //         isReadOnlyResolve={isReadOnlyResolve}
+  //         key={commentId}
+  //         onClickBox={onClickBox}
+  //         onClickPost={onClickPost}
+  //         onClickResolve={onClickResolve}
+  //         onTextAreaBlur={e => onTextAreaBlur(e)}
+  //         showTitle={showTitle}
+  //         title={comment.data.title}
+  //         users={users}
+  //         usersMentionList={usersMentionList}
+  //       />
+  //     </ConnectedCommentStyled>
+  //   ) : null;
+  // }, [isActive, top, conversation.length, users]);
 
   return <>{MemorizedComponent}</>;
 };

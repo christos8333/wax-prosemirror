@@ -192,5 +192,6 @@ export default ({
     ),
     [isActive, top, conversation.length, users],
   );
+  if (top <= 40) return null;
   return <>{MemorizedComponent}</>;
 };

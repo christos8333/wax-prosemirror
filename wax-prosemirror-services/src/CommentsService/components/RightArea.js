@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
+
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { each, uniqBy, sortBy, groupBy } from 'lodash';
@@ -182,7 +183,7 @@ export default ({ area, users }) => {
         updateMarks(
           pmViews,
           CommentDecorationPluginKey?.getState(
-            activeView.state,
+            main.state,
           )?.allCommentsDataList(),
         ),
       );
@@ -190,9 +191,7 @@ export default ({ area, users }) => {
       setMarksNodes(
         updateMarks(
           pmViews,
-          CommentDecorationPluginKey?.getState(
-            activeView.state,
-          )?.allCommentsList(),
+          CommentDecorationPluginKey?.getState(main.state)?.allCommentsList(),
         ),
       );
     }
@@ -211,10 +210,50 @@ export default ({ area, users }) => {
   }, [
     updateMarks(
       pmViews,
-      CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
+      CommentDecorationPluginKey?.getState(main.state)?.allCommentsList(),
     ),
     setTops(),
   ]);
+
+  // useDeepCompareEffect(() => {
+  //   if (app.config.get('config.YjsService')) {
+  //     setMarksNodes(
+  //       updateMarks(
+  //         pmViews,
+  //         CommentDecorationPluginKey?.getState(
+  //           activeView.state,
+  //         )?.allCommentsDataList(),
+  //       ),
+  //     );
+  //   } else {
+  //     setMarksNodes(
+  //       updateMarks(
+  //         pmViews,
+  //         CommentDecorationPluginKey?.getState(
+  //           activeView.state,
+  //         )?.allCommentsList(),
+  //       ),
+  //     );
+  //   }
+
+  //   let firstRunTimeout = () => true;
+  //   if (isFirstRun) {
+  //     firstRunTimeout = setTimeout(() => {
+  //       setPosition(setTops());
+  //       setFirstRun(false);
+  //     }, 400);
+  //   } else {
+  //     setPosition(setTops());
+  //   }
+
+  //   return () => clearTimeout(firstRunTimeout);
+  // }, [
+  //   updateMarks(
+  //     pmViews,
+  //     CommentDecorationPluginKey?.getState(activeView.state)?.allCommentsList(),
+  //   ),
+  //   setTops(),
+  // ]);
 
   const CommentTrackComponent = useMemo(
     () => (

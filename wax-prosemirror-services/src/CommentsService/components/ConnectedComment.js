@@ -164,8 +164,8 @@ export default ({
     }
   };
 
-  const MemorizedComponent = useMemo(
-    () => (
+  const MemorizedComponent = useMemo(() => {
+    return top > 40 ? (
       <ConnectedCommentStyled
         active={isActive}
         data-box={commentId}
@@ -189,9 +189,8 @@ export default ({
           usersMentionList={usersMentionList}
         />
       </ConnectedCommentStyled>
-    ),
-    [isActive, top, conversation.length, users],
-  );
-  if (top <= 40) return null;
+    ) : null;
+  }, [isActive, top, conversation.length, users]);
+
   return <>{MemorizedComponent}</>;
 };

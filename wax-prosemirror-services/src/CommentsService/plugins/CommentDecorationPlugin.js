@@ -6,6 +6,7 @@ import CommentDecorationPluginKey from './CommentDecorationPluginKey';
 
 let contentSize = 0;
 let allCommentsCount = 0;
+let decorationUpdateTimeout = null;
 
 const CommentDecorationPlugin = (name, options) => {
   return new Plugin({
@@ -20,52 +21,70 @@ const CommentDecorationPlugin = (name, options) => {
         });
       },
       apply(transaction, pluginState, oldState, newState) {
+        const action = transaction.getMeta(CommentDecorationPluginKey);
+        // Force decoration creation for comment-related actions
+        if (
+          action &&
+          (action.type === 'addComment' ||
+            action.type === 'updateComment' ||
+            action.type === 'deleteComment')
+        ) {
+          pluginState.createDecorations(newState);
+        }
         return pluginState.apply(transaction, newState);
       },
     },
     props: {
       decorations(state) {
         const { decorations } = this.getState(state);
+        const currentContentSize = state.doc.content.size;
+        const currentCommentsCount = this.getState(state).allCommentsList()
+          .length;
 
+        // Only update decorations if content or comments have changed
         if (
-          options.context.app.config.get('config.YjsService') &&
-          this.getState(state).allCommentsList().length !== allCommentsCount
+          currentContentSize !== contentSize ||
+          currentCommentsCount !== allCommentsCount
         ) {
-          this.getState(state)
-            .getMap()
-            .observe(() => {
+          // Clear any pending updates
+          if (decorationUpdateTimeout) {
+            clearTimeout(decorationUpdateTimeout);
+          }
+
+          // Debounce decoration updates
+          decorationUpdateTimeout = setTimeout(() => {
+            options.onSelectionChange(this.getState(state).allCommentsList());
+            this.getState(state).createDecorations(state);
+            contentSize = currentContentSize;
+            allCommentsCount = currentCommentsCount;
+          }, 100);
+        }
+
+        // Handle Yjs updates separately with debouncing
+        if (options.context.app.config.get('config.YjsService')) {
+          const yjsUpdate = () => {
+            if (decorationUpdateTimeout) {
+              clearTimeout(decorationUpdateTimeout);
+            }
+            decorationUpdateTimeout = setTimeout(() => {
               const transaction = options.context.pmViews.main.state.tr.setMeta(
                 CommentDecorationPluginKey,
                 {
                   type: 'createDecorations',
                 },
               );
-
               options.context.pmViews.main.dispatch(transaction);
-            });
-          this.getState(state)
-            .getCommentsDataMap()
-            .observe(() => {
-              const transaction = options.context.pmViews.main.state.tr.setMeta(
-                CommentDecorationPluginKey,
-                {
-                  type: 'createDecorations',
-                },
-              );
+            }, 100);
+          };
 
-              options.context.pmViews.main.dispatch(transaction);
-            });
+          // Only set up observers once
+          if (!this._observersSet) {
+            this.getState(state).getMap().observe(yjsUpdate);
+            this.getState(state).getCommentsDataMap().observe(yjsUpdate);
+            this._observersSet = true;
+          }
         }
 
-        if (
-          contentSize !== state.doc.content.size ||
-          this.getState(state).allCommentsList().length !== allCommentsCount
-        ) {
-          options.onSelectionChange(this.getState(state).allCommentsList());
-          this.getState(state).createDecorations(state);
-        }
-        contentSize = state.doc.content.size;
-        allCommentsCount = this.getState(state).allCommentsList().length;
         return decorations;
       },
       handleKeyDown(view, event) {

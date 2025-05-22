@@ -229,36 +229,36 @@ export default class CommentState {
         let newFrom = deco.from;
         let newTo = deco.to;
         const { id } = deco.spec;
-        if (this.transactYjsPos) {
-          newFrom = absolutePositionToRelativePosition(
-            deco.from,
-            ystate.type,
-            ystate.binding.mapping,
-          );
-          newTo = absolutePositionToRelativePosition(
-            deco.to,
-            ystate.type,
-            ystate.binding.mapping,
-          );
-        }
+        // if (this.transactYjsPos) {
+        newFrom = absolutePositionToRelativePosition(
+          deco.from,
+          ystate.type,
+          ystate.binding.mapping,
+        );
+        newTo = absolutePositionToRelativePosition(
+          deco.to,
+          ystate.type,
+          ystate.binding.mapping,
+        );
+        // }
         const annotation = this.options.map.get(id);
 
-        if (this.transactYjsPos) {
-          annotation.from = newFrom;
-          annotation.to = newTo;
-          annotation.data.pmFrom = relativePositionToAbsolutePosition(
-            ystate.doc,
-            ystate.type,
-            newFrom,
-            ystate.binding.mapping,
-          );
-          annotation.data.pmTo = relativePositionToAbsolutePosition(
-            ystate.doc,
-            ystate.type,
-            newTo,
-            ystate.binding.mapping,
-          );
-        }
+        // if (this.transactYjsPos) {
+        annotation.from = newFrom;
+        annotation.to = newTo;
+        annotation.data.pmFrom = relativePositionToAbsolutePosition(
+          ystate.doc,
+          ystate.type,
+          newFrom,
+          ystate.binding.mapping,
+        );
+        annotation.data.pmTo = relativePositionToAbsolutePosition(
+          ystate.doc,
+          ystate.type,
+          newTo,
+          ystate.binding.mapping,
+        );
+        // }
 
         this.options.map.set(id, annotation);
       });

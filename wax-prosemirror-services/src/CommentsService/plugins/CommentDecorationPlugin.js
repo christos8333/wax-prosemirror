@@ -90,11 +90,11 @@ const CommentDecorationPlugin = (name, options) => {
       handleKeyDown(view, event) {
         const { state } = view;
 
-        if (event.key === 'Enter' && !event.shiftKey) {
-          this.getState(state).setTransactYjsPos(true);
-        } else {
-          this.getState(state).setTransactYjsPos(false);
-        }
+        // if (event.key === 'Enter' && !event.shiftKey) {
+        //   this.getState(state).setTransactYjsPos(true);
+        // } else {
+        //   this.getState(state).setTransactYjsPos(false);
+        // }
 
         if (
           event.key === 'Backspace' ||

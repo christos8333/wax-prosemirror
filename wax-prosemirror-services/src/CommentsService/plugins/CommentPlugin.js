@@ -16,7 +16,9 @@ const getComment = (state, app) => {
   let commentData = [];
 
   commentsMap.forEach(comment => {
-    if (inRange(state.selection.from, comment.data.pmFrom, comment.data.pmTo)) {
+    if (
+      inRange(state.selection.from, comment?.data?.pmFrom, comment?.data?.pmTo)
+    ) {
       commentData.push(comment);
     } else if (state.selection.from === state.selection.to) {
       context.setOption({ activeComment: undefined });

@@ -73,9 +73,9 @@ export default class CommentState {
     });
     // Force decoration creation after adding comment
     this._decorationCache.clear();
-    setTimeout(() => {
-      this.transactYjsPos = false;
-    });
+    // setTimeout(() => {
+    //   this.transactYjsPos = false;
+    // });
   }
 
   updateComment(action, ystate) {
@@ -243,22 +243,22 @@ export default class CommentState {
         // }
         const annotation = this.options.map.get(id);
 
-        // if (this.transactYjsPos) {
-        annotation.from = newFrom;
-        annotation.to = newTo;
-        annotation.data.pmFrom = relativePositionToAbsolutePosition(
-          ystate.doc,
-          ystate.type,
-          newFrom,
-          ystate.binding.mapping,
-        );
-        annotation.data.pmTo = relativePositionToAbsolutePosition(
-          ystate.doc,
-          ystate.type,
-          newTo,
-          ystate.binding.mapping,
-        );
-        // }
+        if (annotation) {
+          annotation.from = newFrom;
+          annotation.to = newTo;
+          annotation.data.pmFrom = relativePositionToAbsolutePosition(
+            ystate.doc,
+            ystate.type,
+            newFrom,
+            ystate.binding.mapping,
+          );
+          annotation.data.pmTo = relativePositionToAbsolutePosition(
+            ystate.doc,
+            ystate.type,
+            newTo,
+            ystate.binding.mapping,
+          );
+        }
 
         this.options.map.set(id, annotation);
       });

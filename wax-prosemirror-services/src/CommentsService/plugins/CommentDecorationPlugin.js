@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Plugin } from 'prosemirror-state';
 import { DecorationSet, Decoration } from 'prosemirror-view';
 import { flatten } from 'lodash';
@@ -90,49 +91,33 @@ const CommentDecorationPlugin = (name, options) => {
       handleKeyDown(view, event) {
         const { state } = view;
 
-        // if (event.key === 'Enter' && !event.shiftKey) {
-        //   this.getState(state).setTransactYjsPos(true);
-        // } else {
-        //   this.getState(state).setTransactYjsPos(false);
-        // }
+        if (event.key === 'Backspace' || event.key === 'Delete') {
+          // Get the current selection
+          const { from, to } = state.selection;
 
-        if (
-          event.key === 'Backspace' ||
-          event.key === 'Delete' ||
-          event.key === 'Caps-Lock'
-        ) {
-          setTimeout(() => {
-            const ids = this.getState(state).decorations.children.map(child => {
-              if (child instanceof DecorationSet) {
-                return child.local.map(l => l.type.attrs['data-id']);
-              }
-            });
-            const idsLocal = this.getState(state).decorations.local.map(
-              child => {
-                if (child instanceof Decoration) {
-                  return child.type.attrs['data-id'];
-                }
-              },
-            );
-            const finalIds = flatten(ids.filter(id => id)).concat(idsLocal);
-            const deletedComments = this.getState(state)
-              .allCommentsList()
-              ?.filter(comment => !finalIds.includes(comment.id));
+          // Find all comments that overlap with the deleted text
+          const comments = this.getState(state).allCommentsList();
+          const deletedComments = comments.filter(comment => {
+            const commentFrom = comment.data.pmFrom;
+            const commentTo = comment.data.pmTo;
+            // Check if comment overlaps with deleted text
+            return commentFrom <= to && commentTo >= from;
+          });
 
-            if (deletedComments?.length > 0) {
-              deletedComments.forEach(deletedComment => {
-                options.context.setOption({
-                  resolvedComment: deletedComment.id,
-                });
-                view.dispatch(
-                  view.state.tr.setMeta(CommentDecorationPluginKey, {
-                    type: 'deleteComment',
-                    id: deletedComment.id,
-                  }),
-                );
+          // Delete the comments that overlap with the deleted text
+          if (deletedComments.length > 0) {
+            deletedComments.forEach(deletedComment => {
+              options.context.setOption({
+                resolvedComment: deletedComment.id,
               });
-            }
-          }, 100);
+              view.dispatch(
+                view.state.tr.setMeta(CommentDecorationPluginKey, {
+                  type: 'deleteComment',
+                  id: deletedComment.id,
+                }),
+              );
+            });
+          }
         }
 
         return false;

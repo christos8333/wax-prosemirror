@@ -196,44 +196,31 @@ export default class CommentState {
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
-  updateCommentPostions(ystate) {
+  updateCommentPositions(ystate) {
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
-        let newFrom = deco.from;
-        let newTo = deco.to;
         const { id } = deco.spec;
-        // if (this.transactYjsPos) {
-        newFrom = absolutePositionToRelativePosition(
-          deco.from,
-          ystate.type,
-          ystate.binding.mapping,
-        );
-        newTo = absolutePositionToRelativePosition(
-          deco.to,
-          ystate.type,
-          ystate.binding.mapping,
-        );
-        // }
         const annotation = this.options.map.get(id);
 
         if (annotation) {
-          annotation.from = newFrom;
-          annotation.to = newTo;
-          annotation.data.pmFrom = relativePositionToAbsolutePosition(
-            ystate.doc,
+          // Convert current decoration positions to relative positions
+          annotation.from = absolutePositionToRelativePosition(
+            deco.from,
             ystate.type,
-            newFrom,
             ystate.binding.mapping,
           );
-          annotation.data.pmTo = relativePositionToAbsolutePosition(
-            ystate.doc,
+          annotation.to = absolutePositionToRelativePosition(
+            deco.to,
             ystate.type,
-            newTo,
             ystate.binding.mapping,
           );
-        }
 
-        this.options.map.set(id, annotation);
+          // Store the absolute positions for reference
+          annotation.data.pmFrom = deco.from;
+          annotation.data.pmTo = deco.to;
+
+          this.options.map.set(id, annotation);
+        }
       });
     }, CommentDecorationPluginKey);
   }
@@ -241,6 +228,7 @@ export default class CommentState {
   apply(transaction, state) {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     const ystate = ySyncPluginKey.getState(state);
+
     if (action && action.type) {
       if (action.type === 'addComment') {
         this.addComment(action, ystate);
@@ -258,32 +246,16 @@ export default class CommentState {
     }
 
     if (ystate?.isChangeOrigin) {
-      // this.updateCommentPostions(ystate);
       this.createDecorations(state);
-
       return this;
     }
 
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
+    if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
+      this.updateCommentPositions(ystate);
+    }
 
-    this.options.map.forEach((annotation, _) => {
-      if ('from' in annotation && 'to' in annotation) {
-        annotation.data.pmFrom = transaction.mapping.map(
-          annotation.data.pmFrom,
-        );
-        annotation.data.pmTo = transaction.mapping.map(annotation.data.pmTo);
-      }
-    });
-
-    if (ystate?.binding && ystate?.binding.mapping) {
-      this.updateCommentPostions(ystate);
-      this.createDecorations(state);
-      return this;
-      // eslint-disable-next-line no-else-return
-    } else {
+    // non yjs version
+    if (!ystate.binding) {
       this.options.map.forEach((annotation, _) => {
         if ('from' in annotation && 'to' in annotation) {
           annotation.from = transaction.mapping.map(annotation.from);
@@ -293,5 +265,12 @@ export default class CommentState {
       this.createDecorations(state);
       return this;
     }
+
+    this.decorations = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
+
+    return this;
   }
 }

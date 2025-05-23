@@ -19,8 +19,6 @@ export default class CommentState {
     this.decorations = DecorationSet.empty;
     this.options = options;
     this.transactYjsPos = false;
-    this._decorationCache = new Map();
-    this._lastDocSize = 0;
   }
 
   addCommentNonYjs(action) {
@@ -39,8 +37,6 @@ export default class CommentState {
     // NON YJS ADD
     if (!ystate?.binding && !ystate?.binding.mapping) {
       this.addCommentNonYjs(action);
-      // Force decoration creation after adding comment
-      this._decorationCache.clear();
       return;
     }
 
@@ -71,11 +67,6 @@ export default class CommentState {
       to: relativeTo,
       data,
     });
-    // Force decoration creation after adding comment
-    this._decorationCache.clear();
-    // setTimeout(() => {
-    //   this.transactYjsPos = false;
-    // });
   }
 
   updateComment(action, ystate) {
@@ -141,21 +132,6 @@ export default class CommentState {
   }
 
   createDecorations(state) {
-    // Only use cache if document hasn't changed and we have decorations
-    if (
-      this._lastDocSize === state.doc.content.size &&
-      this._decorationCache.size > 0 &&
-      this._decorationCache.size === this.allCommentsList().length
-    ) {
-      this.decorations = DecorationSet.create(
-        state.doc,
-        Array.from(this._decorationCache.values()),
-      );
-      return;
-    }
-
-    // Clear cache if document changed or comment count changed
-    this._decorationCache.clear();
     const decorations = [];
     const ystate = ySyncPluginKey.getState(state);
 
@@ -193,7 +169,6 @@ export default class CommentState {
           },
         );
         decorations.push(decoration);
-        this._decorationCache.set(annotation.id, decoration);
       });
     } else {
       this.allCommentsList().forEach(annotation => {
@@ -215,11 +190,9 @@ export default class CommentState {
           },
         );
         decorations.push(decoration);
-        this._decorationCache.set(annotation.id, decoration);
       });
     }
 
-    this._lastDocSize = state.doc.content.size;
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 

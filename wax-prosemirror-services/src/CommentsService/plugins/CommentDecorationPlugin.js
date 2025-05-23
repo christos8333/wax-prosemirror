@@ -91,6 +91,7 @@ const CommentDecorationPlugin = (name, options) => {
         const { state } = view;
 
         if (event.key === 'Backspace' || event.key === 'Delete') {
+          // Get the current selection
           const { from, to } = state.selection;
 
           // Find all comments that overlap with the deleted text
@@ -98,11 +99,12 @@ const CommentDecorationPlugin = (name, options) => {
           const deletedComments = comments.filter(comment => {
             const commentFrom = comment.data.pmFrom;
             const commentTo = comment.data.pmTo;
-            // Only delete if the comment positions are 1 position apart and is part of deleted text
+            // Delete if either:
+            // 1. Comment is 1 character long and overlaps with deleted text
+            // 2. Comment is completely contained within the selection
             return (
-              commentTo - commentFrom === 1 &&
-              commentFrom <= to &&
-              commentTo >= from
+              (commentTo - commentFrom === 1 && commentFrom <= to && commentTo >= from) ||
+              (commentFrom >= from && commentTo <= to)
             );
           });
 

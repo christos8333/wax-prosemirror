@@ -139,18 +139,23 @@ export default class CommentState {
       const { doc, type, binding } = ystate;
       this.allCommentsList().forEach((annotation, id) => {
         // Use the stored absolute positions if available
-        const from = annotation.data.pmFrom || relativePositionToAbsolutePosition(
-          doc,
-          type,
-          annotation.from,
-          binding.mapping,
-        );
-        const to = annotation.data.pmTo || relativePositionToAbsolutePosition(
-          doc,
-          type,
-          annotation.to,
-          binding.mapping,
-        );
+        const from =
+          annotation.data.pmFrom ||
+          relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.from,
+            binding.mapping,
+          );
+
+        const to =
+          annotation.data.pmTo ||
+          relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.to,
+            binding.mapping,
+          );
 
         if (!from || !to) {
           return;
@@ -197,7 +202,7 @@ export default class CommentState {
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
-  updateCommentPositions(ystate, transaction) {
+  updateCommentPositions(ystate) {
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
         const { id } = deco.spec;
@@ -232,12 +237,13 @@ export default class CommentState {
     if (action?.type) {
       if (action.type === 'addComment') this.addComment(action, ystate);
       if (action.type === 'updateComment') this.updateComment(action, ystate);
-      if (action.type === 'deleteComment') this.deleteComment(action.id, ystate);
+      if (action.type === 'deleteComment')
+        this.deleteComment(action.id, ystate);
       if (action.type === 'createDecorations') this.createDecorations(state);
       return this;
     }
 
-   this.decorations = this.decorations.map(
+    this.decorations = this.decorations.map(
       transaction.mapping,
       transaction.doc,
     );
@@ -252,8 +258,7 @@ export default class CommentState {
       this.createDecorations(state);
     }
 
-
-      // non yjs version
+    // non yjs version
     if (!ystate?.binding) {
       this.options.map.forEach((annotation, _) => {
         if ('from' in annotation && 'to' in annotation) {
@@ -264,9 +269,6 @@ export default class CommentState {
       this.createDecorations(state);
       return this;
     }
-
-
- 
 
     return this;
   }

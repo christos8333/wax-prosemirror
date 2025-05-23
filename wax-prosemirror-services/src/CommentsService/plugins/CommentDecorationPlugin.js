@@ -100,8 +100,8 @@ const CommentDecorationPlugin = (name, options) => {
           const deletedComments = comments.filter(comment => {
             const commentFrom = comment.data.pmFrom;
             const commentTo = comment.data.pmTo;
-            // Check if comment overlaps with deleted text
-            return commentFrom <= to && commentTo >= from;
+            // Only delete if the comment positions are 1 position apart and is part of deleted text
+            return commentTo - commentFrom === 1 && commentFrom <= to && commentTo >= from;
           });
 
           // Delete the comments that overlap with the deleted text

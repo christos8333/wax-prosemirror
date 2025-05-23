@@ -138,13 +138,14 @@ export default class CommentState {
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
       this.allCommentsList().forEach((annotation, id) => {
-        const from = relativePositionToAbsolutePosition(
+        // Use the stored absolute positions if available
+        const from = annotation.data.pmFrom || relativePositionToAbsolutePosition(
           doc,
           type,
           annotation.from,
           binding.mapping,
         );
-        const to = relativePositionToAbsolutePosition(
+        const to = annotation.data.pmTo || relativePositionToAbsolutePosition(
           doc,
           type,
           annotation.to,
@@ -196,14 +197,17 @@ export default class CommentState {
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
 
-  updateCommentPositions(ystate) {
+  updateCommentPositions(ystate, transaction) {
     this.options.map.doc.transact(() => {
       this.decorations.find().forEach(deco => {
         const { id } = deco.spec;
         const annotation = this.options.map.get(id);
-
         if (annotation) {
-          // Convert current decoration positions to relative positions
+          // Store the current absolute positions
+          annotation.data.pmFrom = deco.from;
+          annotation.data.pmTo = deco.to;
+
+          // Convert to relative positions
           annotation.from = absolutePositionToRelativePosition(
             deco.from,
             ystate.type,
@@ -215,10 +219,6 @@ export default class CommentState {
             ystate.binding.mapping,
           );
 
-          // Store the absolute positions for reference
-          annotation.data.pmFrom = deco.from;
-          annotation.data.pmTo = deco.to;
-
           this.options.map.set(id, annotation);
         }
       });
@@ -229,47 +229,44 @@ export default class CommentState {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     const ystate = ySyncPluginKey.getState(state);
 
-    if (action && action.type) {
-      if (action.type === 'addComment') {
-        this.addComment(action, ystate);
-      }
-      if (action.type === 'updateComment') {
-        this.updateComment(action, ystate);
-      }
-      if (action.type === 'deleteComment') {
-        this.deleteComment(action.id, ystate);
-      }
-      if (action.type === 'createDecorations') {
-        this.createDecorations(state);
-      }
+    if (action?.type) {
+      if (action.type === 'addComment') this.addComment(action, ystate);
+      if (action.type === 'updateComment') this.updateComment(action, ystate);
+      if (action.type === 'deleteComment') this.deleteComment(action.id, ystate);
+      if (action.type === 'createDecorations') this.createDecorations(state);
       return this;
     }
+
+   this.decorations = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
 
     if (ystate?.isChangeOrigin) {
       this.createDecorations(state);
       return this;
     }
 
-    if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
-      this.updateCommentPositions(ystate);
+    if (ystate?.binding && ystate?.binding.mapping) {
+      this.updateCommentPositions(ystate, transaction);
+      this.createDecorations(state);
     }
 
-    // non yjs version
-    // if (!ystate?.binding) {
-    //   this.options.map.forEach((annotation, _) => {
-    //     if ('from' in annotation && 'to' in annotation) {
-    //       annotation.from = transaction.mapping.map(annotation.from);
-    //       annotation.to = transaction.mapping.map(annotation.to);
-    //     }
-    //   });
-    //   this.createDecorations(state);
-    //   return this;
-    // }
 
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
+      // non yjs version
+    if (!ystate?.binding) {
+      this.options.map.forEach((annotation, _) => {
+        if ('from' in annotation && 'to' in annotation) {
+          annotation.from = transaction.mapping.map(annotation.from);
+          annotation.to = transaction.mapping.map(annotation.to);
+        }
+      });
+      this.createDecorations(state);
+      return this;
+    }
+
+
+ 
 
     return this;
   }

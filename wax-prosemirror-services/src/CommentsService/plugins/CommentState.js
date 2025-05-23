@@ -138,9 +138,24 @@ export default class CommentState {
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
       this.allCommentsList().forEach(annotation => {
-        // Always use stored absolute positions for Yjs
-        const from = annotation.data.pmFrom;
-        const to = annotation.data.pmTo;
+        // Use the stored absolute positions if available
+        const from =
+          annotation.data.pmFrom ||
+          relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.from,
+            binding.mapping,
+          );
+
+        const to =
+          annotation.data.pmTo ||
+          relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.to,
+            binding.mapping,
+          );
 
         if (!from || !to) {
           return;
@@ -193,30 +208,23 @@ export default class CommentState {
         const { id } = deco.spec;
         const annotation = this.options.map.get(id);
         if (annotation) {
-          // Get current absolute positions from decoration
-          const currentFrom = deco.from;
-          const currentTo = deco.to;
+          // Store the current absolute positions
+          annotation.data.pmFrom = deco.from;
+          annotation.data.pmTo = deco.to;
 
-          // Update absolute positions first
-          annotation.data.pmFrom = currentFrom;
-          annotation.data.pmTo = currentTo;
-
-          // Then convert to relative positions
+          // Convert to relative positions
           annotation.from = absolutePositionToRelativePosition(
-            currentFrom,
+            deco.from,
             ystate.type,
             ystate.binding.mapping,
           );
           annotation.to = absolutePositionToRelativePosition(
-            currentTo,
+            deco.to,
             ystate.type,
             ystate.binding.mapping,
           );
 
           this.options.map.set(id, annotation);
-          if (this.options.commentsDataMap.has(id)) {
-            this.options.commentsDataMap.set(id, annotation);
-          }
         }
       });
     }, CommentDecorationPluginKey);
@@ -229,38 +237,37 @@ export default class CommentState {
     if (action?.type) {
       if (action.type === 'addComment') this.addComment(action, ystate);
       if (action.type === 'updateComment') this.updateComment(action, ystate);
-      if (action.type === 'deleteComment') this.deleteComment(action.id, ystate);
+      if (action.type === 'deleteComment')
+        this.deleteComment(action.id, ystate);
       if (action.type === 'createDecorations') this.createDecorations(state);
       return this;
     }
 
-    // // First map decorations through the transaction
     this.decorations = this.decorations.map(
       transaction.mapping,
       transaction.doc,
     );
 
-    if (ystate?.isChangeOrigin) {
-       this.updateCommentPositions(ystate);
+    // if (ystate?.isChangeOrigin) {
+    //   this.createDecorations(state);
+    //   return this;
+    // }
+
+    if (ystate?.binding && ystate?.binding.mapping) {
+      this.updateCommentPositions(ystate, transaction);
       this.createDecorations(state);
-      return this;
     }
 
-    if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
-      // For Yjs changes, update positions and recreate decorations
-      this.updateCommentPositions(ystate);
-      this.createDecorations(state);
-    } else {
-      // For non-Yjs changes, update positions directly
+    // non yjs version
+    if (!ystate?.binding) {
       this.options.map.forEach((annotation, _) => {
         if ('from' in annotation && 'to' in annotation) {
           annotation.from = transaction.mapping.map(annotation.from);
           annotation.to = transaction.mapping.map(annotation.to);
-          annotation.data.pmFrom = transaction.mapping.map(annotation.data.pmFrom);
-          annotation.data.pmTo = transaction.mapping.map(annotation.data.pmTo);
         }
       });
       this.createDecorations(state);
+      return this;
     }
 
     return this;

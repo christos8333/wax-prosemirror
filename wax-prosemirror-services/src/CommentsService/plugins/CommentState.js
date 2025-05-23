@@ -234,13 +234,19 @@ export default class CommentState {
       return this;
     }
 
-    // First map decorations through the transaction
+    // // First map decorations through the transaction
     this.decorations = this.decorations.map(
       transaction.mapping,
       transaction.doc,
     );
 
-    if (ystate?.binding && ystate?.binding.mapping) {
+    if (ystate?.isChangeOrigin) {
+       this.updateCommentPositions(ystate);
+      this.createDecorations(state);
+      return this;
+    }
+
+    if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
       // For Yjs changes, update positions and recreate decorations
       this.updateCommentPositions(ystate);
       this.createDecorations(state);

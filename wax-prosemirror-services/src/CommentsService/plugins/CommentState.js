@@ -255,16 +255,16 @@ export default class CommentState {
     }
 
     // non yjs version
-    if (!ystate.binding) {
-      this.options.map.forEach((annotation, _) => {
-        if ('from' in annotation && 'to' in annotation) {
-          annotation.from = transaction.mapping.map(annotation.from);
-          annotation.to = transaction.mapping.map(annotation.to);
-        }
-      });
-      this.createDecorations(state);
-      return this;
-    }
+    // if (!ystate?.binding) {
+    //   this.options.map.forEach((annotation, _) => {
+    //     if ('from' in annotation && 'to' in annotation) {
+    //       annotation.from = transaction.mapping.map(annotation.from);
+    //       annotation.to = transaction.mapping.map(annotation.to);
+    //     }
+    //   });
+    //   this.createDecorations(state);
+    //   return this;
+    // }
 
     this.decorations = this.decorations.map(
       transaction.mapping,

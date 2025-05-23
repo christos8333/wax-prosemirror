@@ -248,10 +248,10 @@ export default class CommentState {
       transaction.doc,
     );
 
-    if (ystate?.isChangeOrigin) {
-      this.createDecorations(state);
-      return this;
-    }
+    // if (ystate?.isChangeOrigin) {
+    //   this.createDecorations(state);
+    //   return this;
+    // }
 
     if (ystate?.binding && ystate?.binding.mapping) {
       this.updateCommentPositions(ystate, transaction);

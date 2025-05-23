@@ -42,7 +42,6 @@ const CommentDecorationPlugin = (name, options) => {
         const currentCommentsCount = this.getState(state).allCommentsList()
           .length;
 
-        // Only update decorations if content or comments have changed
         if (
           currentContentSize !== contentSize ||
           currentCommentsCount !== allCommentsCount
@@ -92,7 +91,6 @@ const CommentDecorationPlugin = (name, options) => {
         const { state } = view;
 
         if (event.key === 'Backspace' || event.key === 'Delete') {
-          // Get the current selection
           const { from, to } = state.selection;
 
           // Find all comments that overlap with the deleted text
@@ -101,7 +99,11 @@ const CommentDecorationPlugin = (name, options) => {
             const commentFrom = comment.data.pmFrom;
             const commentTo = comment.data.pmTo;
             // Only delete if the comment positions are 1 position apart and is part of deleted text
-            return commentTo - commentFrom === 1 && commentFrom <= to && commentTo >= from;
+            return (
+              commentTo - commentFrom === 1 &&
+              commentFrom <= to &&
+              commentTo >= from
+            );
           });
 
           // Delete the comments that overlap with the deleted text

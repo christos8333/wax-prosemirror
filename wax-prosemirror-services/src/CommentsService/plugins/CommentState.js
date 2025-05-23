@@ -137,7 +137,7 @@ export default class CommentState {
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
-      this.allCommentsList().forEach((annotation, id) => {
+      this.allCommentsList().forEach(annotation => {
         // Use the stored absolute positions if available
         const from =
           annotation.data.pmFrom ||

@@ -137,38 +137,70 @@ export default class CommentState {
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
-      this.allCommentsList().forEach((annotation, id) => {
-        const from = relativePositionToAbsolutePosition(
+
+      const mappedDecos = this.decorations.map(state.tr.mapping, state.doc);
+
+      this.allCommentsList().forEach(annotation => {
+        // First try Yjs positions
+        let from = relativePositionToAbsolutePosition(
           doc,
           type,
           annotation.from,
           binding.mapping,
         );
-        const to = relativePositionToAbsolutePosition(
+        let to = relativePositionToAbsolutePosition(
           doc,
           type,
           annotation.to,
           binding.mapping,
         );
 
+        // If Yjs fails, try finding current mapped decoration for that ID
         if (!from || !to) {
-          return;
+          const fallbackDeco = mappedDecos.find(
+            undefined,
+            undefined,
+            spec => spec.id === annotation.id,
+          )[0];
+          if (fallbackDeco) {
+            from = fallbackDeco.from;
+            to = fallbackDeco.to;
+
+            // Update annotation to reflect new positions
+            annotation.from = absolutePositionToRelativePosition(
+              from,
+              type,
+              binding.mapping,
+            );
+            annotation.to = absolutePositionToRelativePosition(
+              to,
+              type,
+              binding.mapping,
+            );
+            this.options.map.set(annotation.id, annotation);
+
+            // Store the absolute positions for future fallback
+            annotation.data.pmFrom = from;
+            annotation.data.pmTo = to;
+          }
         }
 
-        const decoration = Decoration.inline(
-          from,
-          to,
-          {
-            class: 'comment',
-            'data-id': annotation.id,
-          },
-          {
-            id: annotation.id,
-            data: annotation,
-            inclusiveEnd: true,
-          },
-        );
-        decorations.push(decoration);
+        if (from != null && to != null && from < to) {
+          const decoration = Decoration.inline(
+            from,
+            to,
+            {
+              class: 'comment',
+              'data-id': annotation.id,
+            },
+            {
+              id: annotation.id,
+              data: annotation,
+              inclusiveEnd: true,
+            },
+          );
+          decorations.push(decoration);
+        }
       });
     } else {
       this.allCommentsList().forEach(annotation => {
@@ -176,20 +208,22 @@ export default class CommentState {
           data: { pmFrom, pmTo },
         } = annotation;
 
-        const decoration = Decoration.inline(
-          pmFrom,
-          pmTo,
-          {
-            class: 'comment',
-            'data-id': annotation.id,
-          },
-          {
-            id: annotation.id,
-            data: annotation,
-            inclusiveEnd: true,
-          },
-        );
-        decorations.push(decoration);
+        if (pmFrom != null && pmTo != null && pmFrom < pmTo) {
+          const decoration = Decoration.inline(
+            pmFrom,
+            pmTo,
+            {
+              class: 'comment',
+              'data-id': annotation.id,
+            },
+            {
+              id: annotation.id,
+              data: annotation,
+              inclusiveEnd: true,
+            },
+          );
+          decorations.push(decoration);
+        }
       });
     }
 
@@ -197,32 +231,30 @@ export default class CommentState {
   }
 
   updateCommentPositions(ystate) {
-    this.options.map.doc.transact(() => {
-      this.decorations.find().forEach(deco => {
-        const { id } = deco.spec;
-        const annotation = this.options.map.get(id);
+    this.decorations.find().forEach(deco => {
+      const { id } = deco.spec;
+      const annotation = this.options.map.get(id);
 
-        if (annotation) {
-          // Convert current decoration positions to relative positions
-          annotation.from = absolutePositionToRelativePosition(
-            deco.from,
-            ystate.type,
-            ystate.binding.mapping,
-          );
-          annotation.to = absolutePositionToRelativePosition(
-            deco.to,
-            ystate.type,
-            ystate.binding.mapping,
-          );
+      if (annotation) {
+        // Convert current decoration positions to relative positions
+        annotation.from = absolutePositionToRelativePosition(
+          deco.from,
+          ystate.type,
+          ystate.binding.mapping,
+        );
+        annotation.to = absolutePositionToRelativePosition(
+          deco.to,
+          ystate.type,
+          ystate.binding.mapping,
+        );
 
-          // Store the absolute positions for reference
-          annotation.data.pmFrom = deco.from;
-          annotation.data.pmTo = deco.to;
+        // Store the absolute positions for reference
+        annotation.data.pmFrom = deco.from;
+        annotation.data.pmTo = deco.to;
 
-          this.options.map.set(id, annotation);
-        }
-      });
-    }, CommentDecorationPluginKey);
+        this.options.map.set(id, annotation);
+      }
+    });
   }
 
   apply(transaction, state) {
@@ -255,7 +287,9 @@ export default class CommentState {
     }
 
     if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
-      this.updateCommentPositions(ystate);
+      this.options.map.doc.transact(() => {
+        this.updateCommentPositions(ystate);
+      }, CommentDecorationPluginKey);
     }
 
     this.decorations = this.decorations.map(
@@ -264,16 +298,16 @@ export default class CommentState {
     );
 
     // non yjs version
-    if (!ystate?.binding) {
-      this.options.map.forEach((annotation, _) => {
-        if ('from' in annotation && 'to' in annotation) {
-          annotation.from = transaction.mapping.map(annotation.from);
-          annotation.to = transaction.mapping.map(annotation.to);
-        }
-      });
-      this.createDecorations(state);
-      return this;
-    }
+    // if (!ystate?.binding) {
+    //   this.options.map.forEach((annotation, _) => {
+    //     if ('from' in annotation && 'to' in annotation) {
+    //       annotation.from = transaction.mapping.map(annotation.from);
+    //       annotation.to = transaction.mapping.map(annotation.to);
+    //     }
+    //   });
+    //   this.createDecorations(state);
+    //   return this;
+    // }
 
     return this;
   }

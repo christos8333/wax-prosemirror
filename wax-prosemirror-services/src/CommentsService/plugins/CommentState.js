@@ -255,7 +255,7 @@ export default class CommentState {
     });
   }
 
-  handleParagraphSplit(state, ystate) {
+  handleParagraphSplit(state, ystate, transaction) {
     if (!ystate?.binding) return;
 
     const { doc, type, binding } = ystate;
@@ -294,7 +294,7 @@ export default class CommentState {
           );
         });
 
-        // Update positions for affected comments and recreate their decorations
+        // Update positions for affected comments using transaction mapping
         affectedComments.forEach(annotation => {
           const absFrom = relativePositionToAbsolutePosition(
             doc,
@@ -310,19 +310,23 @@ export default class CommentState {
           );
 
           if (absFrom != null && absTo != null && absFrom < absTo) {
+            // Use transaction mapping to get new positions
+            const newFrom = transaction.mapping.map(absFrom);
+            const newTo = transaction.mapping.map(absTo);
+
             // Update both relative and absolute positions
             annotation.from = absolutePositionToRelativePosition(
-              absFrom,
+              newFrom,
               type,
               binding.mapping,
             );
             annotation.to = absolutePositionToRelativePosition(
-              absTo,
+              newTo,
               type,
               binding.mapping,
             );
-            annotation.data.pmFrom = absFrom;
-            annotation.data.pmTo = absTo;
+            annotation.data.pmFrom = newFrom;
+            annotation.data.pmTo = newTo;
 
             this.options.map.set(annotation.id, annotation);
           }
@@ -384,7 +388,7 @@ export default class CommentState {
 
       if (paragraphWasSplit && ystate?.binding) {
         // Handle the paragraph split properly
-        this.handleParagraphSplit(state, ystate);
+        this.handleParagraphSplit(state, ystate, transaction);
         // Recreate all decorations to ensure consistency
         this.createDecorations(state, mappedDecos);
         return this;

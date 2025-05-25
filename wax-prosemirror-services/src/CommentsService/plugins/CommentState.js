@@ -137,25 +137,19 @@ export default class CommentState {
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
-      this.allCommentsList().forEach(annotation => {
-        // Use the stored absolute positions if available
-        const from =
-          annotation.data.pmFrom ||
-          relativePositionToAbsolutePosition(
-            doc,
-            type,
-            annotation.from,
-            binding.mapping,
-          );
-
-        const to =
-          annotation.data.pmTo ||
-          relativePositionToAbsolutePosition(
-            doc,
-            type,
-            annotation.to,
-            binding.mapping,
-          );
+      this.allCommentsList().forEach((annotation, id) => {
+        const from = relativePositionToAbsolutePosition(
+          doc,
+          type,
+          annotation.from,
+          binding.mapping,
+        );
+        const to = relativePositionToAbsolutePosition(
+          doc,
+          type,
+          annotation.to,
+          binding.mapping,
+        );
 
         if (!from || !to) {
           return;
@@ -207,12 +201,9 @@ export default class CommentState {
       this.decorations.find().forEach(deco => {
         const { id } = deco.spec;
         const annotation = this.options.map.get(id);
-        if (annotation) {
-          // Store the current absolute positions
-          annotation.data.pmFrom = deco.from;
-          annotation.data.pmTo = deco.to;
 
-          // Convert to relative positions
+        if (annotation) {
+          // Convert current decoration positions to relative positions
           annotation.from = absolutePositionToRelativePosition(
             deco.from,
             ystate.type,
@@ -224,6 +215,10 @@ export default class CommentState {
             ystate.binding.mapping,
           );
 
+          // Store the absolute positions for reference
+          annotation.data.pmFrom = deco.from;
+          annotation.data.pmTo = deco.to;
+
           this.options.map.set(id, annotation);
         }
       });
@@ -234,29 +229,39 @@ export default class CommentState {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     const ystate = ySyncPluginKey.getState(state);
 
-    if (action?.type) {
-      if (action.type === 'addComment') this.addComment(action, ystate);
-      if (action.type === 'updateComment') this.updateComment(action, ystate);
-      if (action.type === 'deleteComment')
+    if (action && action.type) {
+      if (action.type === 'addComment') {
+        this.addComment(action, ystate);
+        this.createDecorations(state);
+      }
+      if (action.type === 'updateComment') {
+        this.updateComment(action, ystate);
+      }
+      if (action.type === 'deleteComment') {
         this.deleteComment(action.id, ystate);
-      if (action.type === 'createDecorations') this.createDecorations(state);
+        this.createDecorations(state);
+      }
+      if (action.type === 'createDecorations') {
+        this.createDecorations(state);
+      }
       return this;
+    }
+
+    if (ystate?.isChangeOrigin) {
+      this.options.map.doc.transact(() => {
+        this.createDecorations(state);
+      }, CommentDecorationPluginKey);
+      return this;
+    }
+
+    if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
+      this.updateCommentPositions(ystate);
     }
 
     this.decorations = this.decorations.map(
       transaction.mapping,
       transaction.doc,
     );
-
-    // if (ystate?.isChangeOrigin) {
-    //   this.createDecorations(state);
-    //   return this;
-    // }
-
-    if (ystate?.binding && ystate?.binding.mapping) {
-      this.updateCommentPositions(ystate, transaction);
-      this.createDecorations(state);
-    }
 
     // non yjs version
     if (!ystate?.binding) {

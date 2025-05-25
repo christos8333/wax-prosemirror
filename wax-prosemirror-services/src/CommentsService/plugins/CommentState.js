@@ -154,7 +154,7 @@ export default class CommentState {
         );
 
         // If Yjs fails, try finding current mapped decoration for that ID
-        if (from != null && to != null && from < to) {
+        if (from == null || to == null || from >= to) {
           const fallbackDeco = mappedDecos.find(
             undefined,
             undefined,
@@ -255,34 +255,82 @@ export default class CommentState {
     });
   }
 
-  recreateParagraphDecorationsFromYjs(state, mappedDecos) {
-    const { doc, selection } = state;
+  handleParagraphSplit(state, ystate) {
+    if (!ystate?.binding) return;
+
+    const { doc, type, binding } = ystate;
+    const { selection } = state;
     const $pos = selection.$from;
 
+    // Get the current paragraph range
     for (let depth = $pos.depth; depth >= 0; depth--) {
       const node = $pos.node(depth);
       if (node.isBlock) {
         const from = $pos.start(depth);
         const to = $pos.end(depth);
 
-        // Filter Yjs comments within this range
-        const relevant = this.allCommentsList().filter(
-          c => c.data.pmFrom >= from && c.data.pmTo <= to,
-        );
+        // Find all comments that overlap with this paragraph
+        const affectedComments = this.allCommentsList().filter(annotation => {
+          // Convert relative positions to absolute to check overlap
+          const absFrom = relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.from,
+            binding.mapping,
+          );
+          const absTo = relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.to,
+            binding.mapping,
+          );
 
-        const decorations = relevant.map(c =>
-          Decoration.inline(c.from, c.to, {
-            class: 'comment',
-          }),
-        );
+          return (
+            absFrom != null &&
+            absTo != null &&
+            ((absFrom >= from && absFrom <= to) ||
+              (absTo >= from && absTo <= to) ||
+              (absFrom <= from && absTo >= to))
+          );
+        });
 
-        console.log(decorations);
+        // Update positions for affected comments and recreate their decorations
+        affectedComments.forEach(annotation => {
+          const absFrom = relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.from,
+            binding.mapping,
+          );
+          const absTo = relativePositionToAbsolutePosition(
+            doc,
+            type,
+            annotation.to,
+            binding.mapping,
+          );
 
-        return DecorationSet.create(doc, decorations);
+          if (absFrom != null && absTo != null && absFrom < absTo) {
+            // Update both relative and absolute positions
+            annotation.from = absolutePositionToRelativePosition(
+              absFrom,
+              type,
+              binding.mapping,
+            );
+            annotation.to = absolutePositionToRelativePosition(
+              absTo,
+              type,
+              binding.mapping,
+            );
+            annotation.data.pmFrom = absFrom;
+            annotation.data.pmTo = absTo;
+
+            this.options.map.set(annotation.id, annotation);
+          }
+        });
+
+        break;
       }
     }
-
-    return DecorationSet.empty;
   }
 
   apply(transaction, state) {
@@ -325,16 +373,7 @@ export default class CommentState {
       }, CommentDecorationPluginKey);
     }
 
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
-
-    // const paraDecos = this.recreateParagraphDecorationsFromYjs(state);
-    // this.decorations = this.decorations
-    //   .remove(this.decorations.find(state.selection.from, state.selection.to))
-    //   .add(state.doc, paraDecos.find());
-
+    // Handle paragraph splits
     if (transaction.docChanged && transaction.selection?.$from) {
       const $from = transaction.selection.$from;
       const oldParent = transaction.before.nodeAt($from.before($from.depth));
@@ -343,29 +382,20 @@ export default class CommentState {
       const paragraphWasSplit =
         oldParent && newParent && oldParent.childCount < newParent.childCount;
 
-      if (paragraphWasSplit) {
-        const paraDecos = this.recreateParagraphDecorationsFromYjs(state);
-        this.decorations = this.decorations
-          .remove(
-            this.decorations.find(state.selection.from, state.selection.to),
-          )
-          .add(state.doc, paraDecos.find());
+      if (paragraphWasSplit && ystate?.binding) {
+        // Handle the paragraph split properly
+        this.handleParagraphSplit(state, ystate);
+        // Recreate all decorations to ensure consistency
+        this.createDecorations(state, mappedDecos);
+        return this;
       }
     }
 
-    console.log('this.deco', this.decorations);
-
-    // non yjs version
-    // if (!ystate?.binding) {
-    //   this.options.map.forEach((annotation, _) => {
-    //     if ('from' in annotation && 'to' in annotation) {
-    //       annotation.from = transaction.mapping.map(annotation.from);
-    //       annotation.to = transaction.mapping.map(annotation.to);
-    //     }
-    //   });
-    //   this.createDecorations(state);
-    //   return this;
-    // }
+    // Default decoration mapping
+    this.decorations = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
 
     return this;
   }

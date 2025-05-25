@@ -131,14 +131,12 @@ export default class CommentState {
     return this.options.commentsDataMap;
   }
 
-  createDecorations(state) {
+  createDecorations(state, mappedDecos = DecorationSet.empty) {
     const decorations = [];
     const ystate = ySyncPluginKey.getState(state);
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
-
-      const mappedDecos = this.decorations.map(state.tr.mapping, state.doc);
 
       this.allCommentsList().forEach(annotation => {
         // First try Yjs positions
@@ -156,7 +154,7 @@ export default class CommentState {
         );
 
         // If Yjs fails, try finding current mapped decoration for that ID
-        if (!from || !to) {
+        if (from != null && to != null && from < to) {
           const fallbackDeco = mappedDecos.find(
             undefined,
             undefined,
@@ -261,17 +259,22 @@ export default class CommentState {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     const ystate = ySyncPluginKey.getState(state);
 
+    const mappedDecos = this.decorations.map(
+      transaction.mapping,
+      transaction.doc,
+    );
+
     if (action && action.type) {
       if (action.type === 'addComment') {
         this.addComment(action, ystate);
-        this.createDecorations(state);
+        this.createDecorations(state, mappedDecos);
       }
       if (action.type === 'updateComment') {
         this.updateComment(action, ystate);
       }
       if (action.type === 'deleteComment') {
         this.deleteComment(action.id, ystate);
-        this.createDecorations(state);
+        this.createDecorations(state, mappedDecos);
       }
       if (action.type === 'createDecorations') {
         this.createDecorations(state);
@@ -281,7 +284,7 @@ export default class CommentState {
 
     if (ystate?.isChangeOrigin) {
       this.options.map.doc.transact(() => {
-        this.createDecorations(state);
+        this.createDecorations(state, mappedDecos);
       }, CommentDecorationPluginKey);
       return this;
     }

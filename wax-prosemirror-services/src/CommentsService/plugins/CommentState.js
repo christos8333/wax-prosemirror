@@ -255,7 +255,7 @@ export default class CommentState {
     });
   }
 
-  recreateParagraphDecorationsFromYjs(state) {
+  recreateParagraphDecorationsFromYjs(state, mappedDecos) {
     const { doc, selection } = state;
     const $pos = selection.$from;
 
@@ -330,7 +330,30 @@ export default class CommentState {
       transaction.doc,
     );
 
-    this.recreateParagraphDecorationsFromYjs(state);
+    // const paraDecos = this.recreateParagraphDecorationsFromYjs(state);
+    // this.decorations = this.decorations
+    //   .remove(this.decorations.find(state.selection.from, state.selection.to))
+    //   .add(state.doc, paraDecos.find());
+
+    if (transaction.docChanged && transaction.selection?.$from) {
+      const $from = transaction.selection.$from;
+      const oldParent = transaction.before.nodeAt($from.before($from.depth));
+      const newParent = transaction.doc.nodeAt($from.before($from.depth));
+
+      const paragraphWasSplit =
+        oldParent && newParent && oldParent.childCount < newParent.childCount;
+
+      if (paragraphWasSplit) {
+        const paraDecos = this.recreateParagraphDecorationsFromYjs(state);
+        this.decorations = this.decorations
+          .remove(
+            this.decorations.find(state.selection.from, state.selection.to),
+          )
+          .add(state.doc, paraDecos.find());
+      }
+    }
+
+    console.log('this.deco', this.decorations);
 
     // non yjs version
     // if (!ystate?.binding) {

@@ -255,6 +255,36 @@ export default class CommentState {
     });
   }
 
+  recreateParagraphDecorationsFromYjs(state) {
+    const { doc, selection } = state;
+    const $pos = selection.$from;
+
+    for (let depth = $pos.depth; depth >= 0; depth--) {
+      const node = $pos.node(depth);
+      if (node.isBlock) {
+        const from = $pos.start(depth);
+        const to = $pos.end(depth);
+
+        // Filter Yjs comments within this range
+        const relevant = this.allCommentsList().filter(
+          c => c.data.pmFrom >= from && c.data.pmTo <= to,
+        );
+
+        const decorations = relevant.map(c =>
+          Decoration.inline(c.from, c.to, {
+            class: 'comment',
+          }),
+        );
+
+        console.log(decorations);
+
+        return DecorationSet.create(doc, decorations);
+      }
+    }
+
+    return DecorationSet.empty;
+  }
+
   apply(transaction, state) {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     const ystate = ySyncPluginKey.getState(state);
@@ -299,6 +329,8 @@ export default class CommentState {
       transaction.mapping,
       transaction.doc,
     );
+
+    this.recreateParagraphDecorationsFromYjs(state);
 
     // non yjs version
     // if (!ystate?.binding) {

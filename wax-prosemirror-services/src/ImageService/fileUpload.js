@@ -26,7 +26,7 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
   const id = {};
 
   // Replace the selection with a placeholder
-  const { tr } = context.pmViews.main.state;
+  let { tr } = context.pmViews.main.state;
 
   if (!tr.selection.empty) tr.deleteSelection();
 
@@ -46,39 +46,46 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
       }
 
       const pos = findPlaceholder(view.state, id, placeholderPlugin);
-      // If the content around the placeholder has been deleted, drop
-      // the image
+
       if (pos == null) {
-        return;
+        return; // Placeholder was removed (e.g., content deleted)
       }
 
-      // if paragraph is empty don't break into new line
-      // if (context.pmViews.main.state.doc.resolve(pos).parent.nodeSize === 2) {
-      //   pos -= 1;
-      // }
+      const { state, dispatch } = context.pmViews.main;
+      const { schema } = state;
+      const resolved = state.doc.resolve(pos);
+      const { parent } = resolved;
 
-      // Otherwise, insert it at the placeholder's position, and remove
-      // the placeholder
+      const isEmptyParagraph =
+        parent.type.name === 'paragraph' && parent.content.size === 0;
+
+      const imageNode = schema.nodes.image.create({
+        src: url,
+        id: uuidv4(),
+        extraData,
+        ...(showLongDesc ? { 'aria-describedby': uuidv4() } : {}),
+      });
+
+      if (isEmptyParagraph) {
+        const from = resolved.before(); // Start of paragraph
+        const to = resolved.after(); // End of paragraph
+        tr = tr.replaceWith(from, to, imageNode);
+      } else {
+        tr = tr.replaceWith(pos, pos, imageNode);
+      }
+
+      tr.setMeta(placeholderPlugin, { remove: { id } });
 
       context.setOption({ uploading: false });
-      context.pmViews.main.dispatch(
-        context.pmViews.main.state.tr
-          .replaceWith(
-            pos,
-            pos,
-            context.pmViews.main.state.schema.nodes.image.create({
-              src: url,
-              id: uuidv4(),
-              extraData,
-              ...(showLongDesc ? { 'aria-describedby': uuidv4() } : {}),
-            }),
-          )
-          .setMeta(placeholderPlugin, { remove: { id } }),
-      );
+      dispatch(tr);
     },
     () => {
       // On failure, just clean up the placeholder
-      view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
+      view.dispatch(
+        context.pmViews.main.state.tr.setMeta(placeholderPlugin, {
+          remove: { id },
+        }),
+      );
       context.setOption({ uploading: false });
     },
   );

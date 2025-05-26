@@ -219,6 +219,7 @@ export default class CommentState {
 
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
+
   updateCommentPositions(ystate) {
     this.decorations.find().forEach(deco => {
       const { id } = deco.spec;

@@ -139,7 +139,6 @@ export default class CommentState {
       const { doc, type, binding } = ystate;
 
       this.allCommentsList().forEach(annotation => {
-        // First try Yjs positions
         let from = relativePositionToAbsolutePosition(
           doc,
           type,
@@ -153,59 +152,41 @@ export default class CommentState {
           binding.mapping,
         );
 
-        // If Yjs fails, try finding current mapped decoration for that ID
-        if (from != null && to != null && from < to) {
-          const fallbackDeco = mappedDecos.find(
-            undefined,
-            undefined,
-            spec => spec.id === annotation.id,
-          )[0];
-          if (fallbackDeco) {
-            from = fallbackDeco.from;
-            to = fallbackDeco.to;
-
-            // Update annotation to reflect new positions
-            annotation.from = absolutePositionToRelativePosition(
+        if (from == null || to == null || from >= to) {
+          console.warn(
+            `[CommentPlugin] Skipping decoration for id ${annotation.id}: invalid Yjs positions`,
+            {
               from,
-              type,
-              binding.mapping,
-            );
-            annotation.to = absolutePositionToRelativePosition(
               to,
-              type,
-              binding.mapping,
-            );
-            this.options.map.set(annotation.id, annotation);
-
-            // Store the absolute positions for future fallback
-            annotation.data.pmFrom = from;
-            annotation.data.pmTo = to;
-          }
-        }
-
-        if (from != null && to != null && from < to) {
-          const decoration = Decoration.inline(
-            from,
-            to,
-            {
-              class: 'comment',
-              'data-id': annotation.id,
-            },
-            {
-              id: annotation.id,
-              data: annotation,
-              inclusiveEnd: true,
+              annotation,
             },
           );
-          decorations.push(decoration);
+          return; // Skip invalid range
         }
+
+        const decoration = Decoration.inline(
+          from,
+          to,
+          {
+            class: 'comment',
+            'data-id': annotation.id,
+          },
+          {
+            id: annotation.id,
+            data: annotation,
+            inclusiveEnd: true,
+          },
+        );
+        decorations.push(decoration);
+
+        // Update pmFrom / pmTo for fallback in non-Yjs mode
+        annotation.data.pmFrom = from;
+        annotation.data.pmTo = to;
       });
     } else {
+      // Fallback mode — use pmFrom / pmTo stored in comment data
       this.allCommentsList().forEach(annotation => {
-        const {
-          data: { pmFrom, pmTo },
-        } = annotation;
-
+        const { pmFrom, pmTo } = annotation.data;
         if (pmFrom != null && pmTo != null && pmFrom < pmTo) {
           const decoration = Decoration.inline(
             pmFrom,
@@ -221,6 +202,15 @@ export default class CommentState {
             },
           );
           decorations.push(decoration);
+        } else {
+          console.warn(
+            `[CommentPlugin] Skipping fallback decoration for id ${annotation.id}: invalid pmFrom/pmTo`,
+            {
+              pmFrom,
+              pmTo,
+              annotation,
+            },
+          );
         }
       });
     }
@@ -264,21 +254,25 @@ export default class CommentState {
       transaction.doc,
     );
 
-    if (action && action.type) {
+    if (action?.type) {
       if (action.type === 'addComment') {
         this.addComment(action, ystate);
         this.createDecorations(state, mappedDecos);
       }
+
       if (action.type === 'updateComment') {
         this.updateComment(action, ystate);
       }
+
       if (action.type === 'deleteComment') {
-        this.deleteComment(action.id, ystate);
+        this.deleteComment(action.id);
         this.createDecorations(state, mappedDecos);
       }
+
       if (action.type === 'createDecorations') {
-        this.createDecorations(state);
+        this.createDecorations(state, mappedDecos);
       }
+
       return this;
     }
 
@@ -286,31 +280,28 @@ export default class CommentState {
       this.options.map.doc.transact(() => {
         this.createDecorations(state, mappedDecos);
       }, CommentDecorationPluginKey);
+
       return this;
     }
 
-    if (ystate?.binding && ystate?.binding.mapping && !ystate.isChangeOrigin) {
+    if (ystate?.binding && ystate?.binding.mapping) {
       this.options.map.doc.transact(() => {
         this.updateCommentPositions(ystate);
       }, CommentDecorationPluginKey);
     }
 
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
+    this.decorations = mappedDecos;
 
-    // non yjs version
-    // if (!ystate?.binding) {
-    //   this.options.map.forEach((annotation, _) => {
-    //     if ('from' in annotation && 'to' in annotation) {
-    //       annotation.from = transaction.mapping.map(annotation.from);
-    //       annotation.to = transaction.mapping.map(annotation.to);
-    //     }
-    //   });
-    //   this.createDecorations(state);
-    //   return this;
-    // }
+    if (!ystate?.binding) {
+      this.options.map.forEach((annotation, _) => {
+        if ('from' in annotation && 'to' in annotation) {
+          annotation.from = transaction.mapping.map(annotation.from);
+          annotation.to = transaction.mapping.map(annotation.to);
+        }
+      });
+      this.createDecorations(state);
+      return this;
+    }
 
     return this;
   }

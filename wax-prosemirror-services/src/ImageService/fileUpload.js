@@ -45,7 +45,7 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
         extraData = fileData.extraData;
       }
 
-      let pos = findPlaceholder(view.state, id, placeholderPlugin);
+      const pos = findPlaceholder(view.state, id, placeholderPlugin);
       // If the content around the placeholder has been deleted, drop
       // the image
       if (pos == null) {
@@ -53,9 +53,9 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
       }
 
       // if paragraph is empty don't break into new line
-      if (context.pmViews.main.state.doc.resolve(pos).parent.nodeSize === 2) {
-        pos -= 1;
-      }
+      // if (context.pmViews.main.state.doc.resolve(pos).parent.nodeSize === 2) {
+      //   pos -= 1;
+      // }
 
       // Otherwise, insert it at the placeholder's position, and remove
       // the placeholder

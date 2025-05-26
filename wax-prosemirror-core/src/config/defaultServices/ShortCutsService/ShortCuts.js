@@ -72,13 +72,13 @@ const pressEnter = (state, dispatch) => {
   if (state.doc.resolve(from).parent.type.name === 'figcaption') {
     return true;
   }
-  if (state.selection.node && state.selection.node.type.name === 'image') {
-    const same = $from.sharedDepth(to);
+  // if (state.selection.node && state.selection.node.type.name === 'image') {
+  // const same = $from.sharedDepth(to);
 
-    const pos = $from.before(same);
-    dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
-    return true;
-  }
+  // const pos = $from.before(same);
+  // dispatch(state.tr.setSelection(NodeSelection.create(state.doc, pos)));
+  // return true;
+  // }
 
   // LISTS
   if (splitListItem(state.schema.nodes.list_item)(state)) {

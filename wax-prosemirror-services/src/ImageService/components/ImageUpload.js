@@ -76,6 +76,26 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const isDisabled =
     context.options.uploading || !item.select(activeView) || !isEditable;
 
+  const onChangeFileManager = async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    context.setOption({ uploading: true });
+
+    try {
+      await fileUpload(file);
+    } finally {
+      context.setOption({ uploading: false });
+      if (inputRef.current) inputRef.current.value = '';
+    }
+  };
+
+  const onChange = e => {
+    fileUpload(e.target.files[0]);
+    context.setOption({ uploading: true });
+    if (inputRef.current) inputRef.current.value = '';
+  };
+
   const ImageUploadComponent = useMemo(
     () => (
       <Wrapper>
@@ -98,11 +118,11 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           <input
             accept="image/*"
             id="file-upload"
-            onChange={e => {
-              fileUpload(e.target.files[0]);
-              context.setOption({ uploading: true });
-              if (inputRef.current) inputRef.current.value = '';
-            }}
+            onChange={
+              imageServiceConfig && imageServiceConfig.handleAssetManager
+                ? onChangeFileManager
+                : onChange
+            }
             ref={inputRef}
             type="file"
           />

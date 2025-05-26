@@ -280,6 +280,7 @@ export default class CommentState {
 
     if (ystate?.isChangeOrigin) {
       this.options.map.doc.transact(() => {
+        this.decorations = DecorationSet.empty;
         this.createDecorations(state, mappedDecos);
       }, CommentDecorationPluginKey);
 

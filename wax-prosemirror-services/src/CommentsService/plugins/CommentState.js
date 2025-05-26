@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
+
 import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import {
@@ -55,6 +56,7 @@ export default class CommentState {
       ystate.type,
       ystate.binding.mapping,
     );
+
     map.set(id, {
       id,
       from: relativeFrom,
@@ -160,7 +162,7 @@ export default class CommentState {
             undefined,
             spec => spec.id === annotation.id,
           )[0];
-          if (fallbackDeco) {
+          if (fallbackDeco && fallbackDeco.from < fallbackDeco.to) {
             from = fallbackDeco.from;
             to = fallbackDeco.to;
 
@@ -255,88 +257,6 @@ export default class CommentState {
     });
   }
 
-  handleParagraphSplit(state, ystate, transaction) {
-    if (!ystate?.binding) return;
-
-    const { doc, type, binding } = ystate;
-    const { selection } = state;
-    const $pos = selection.$from;
-
-    // Get the current paragraph range
-    for (let depth = $pos.depth; depth >= 0; depth--) {
-      const node = $pos.node(depth);
-      if (node.isBlock) {
-        const from = $pos.start(depth);
-        const to = $pos.end(depth);
-
-        // Find all comments that overlap with this paragraph
-        const affectedComments = this.allCommentsList().filter(annotation => {
-          // Convert relative positions to absolute to check overlap
-          const absFrom = relativePositionToAbsolutePosition(
-            doc,
-            type,
-            annotation.from,
-            binding.mapping,
-          );
-          const absTo = relativePositionToAbsolutePosition(
-            doc,
-            type,
-            annotation.to,
-            binding.mapping,
-          );
-
-          return (
-            absFrom != null &&
-            absTo != null &&
-            ((absFrom >= from && absFrom <= to) ||
-              (absTo >= from && absTo <= to) ||
-              (absFrom <= from && absTo >= to))
-          );
-        });
-
-        // Update positions for affected comments using transaction mapping
-        affectedComments.forEach(annotation => {
-          const absFrom = relativePositionToAbsolutePosition(
-            doc,
-            type,
-            annotation.from,
-            binding.mapping,
-          );
-          const absTo = relativePositionToAbsolutePosition(
-            doc,
-            type,
-            annotation.to,
-            binding.mapping,
-          );
-
-          if (absFrom != null && absTo != null && absFrom < absTo) {
-            // Use transaction mapping to get new positions
-            const newFrom = transaction.mapping.map(absFrom);
-            const newTo = transaction.mapping.map(absTo);
-
-            // Update both relative and absolute positions
-            annotation.from = absolutePositionToRelativePosition(
-              newFrom,
-              type,
-              binding.mapping,
-            );
-            annotation.to = absolutePositionToRelativePosition(
-              newTo,
-              type,
-              binding.mapping,
-            );
-            annotation.data.pmFrom = newFrom;
-            annotation.data.pmTo = newTo;
-
-            this.options.map.set(annotation.id, annotation);
-          }
-        });
-
-        break;
-      }
-    }
-  }
-
   apply(transaction, state) {
     const action = transaction.getMeta(CommentDecorationPluginKey);
     const ystate = ySyncPluginKey.getState(state);
@@ -377,29 +297,20 @@ export default class CommentState {
       }, CommentDecorationPluginKey);
     }
 
-    // Handle paragraph splits
-    if (transaction.docChanged && transaction.selection?.$from) {
-      const $from = transaction.selection.$from;
-      const oldParent = transaction.before.nodeAt($from.before($from.depth));
-      const newParent = transaction.doc.nodeAt($from.before($from.depth));
+    // Use mapped decorations for normal typing operations
+    this.decorations = mappedDecos;
 
-      const paragraphWasSplit =
-        oldParent && newParent && oldParent.childCount < newParent.childCount;
-
-      if (paragraphWasSplit && ystate?.binding) {
-        // Handle the paragraph split properly
-        this.handleParagraphSplit(state, ystate, transaction);
-        // Recreate all decorations to ensure consistency
-        this.createDecorations(state, mappedDecos);
-        return this;
-      }
+    // Only recreate decorations if we're not in Yjs mode or if decorations are missing
+    if (!ystate?.binding) {
+      this.options.map.forEach((annotation, _) => {
+        if ('from' in annotation && 'to' in annotation) {
+          annotation.from = transaction.mapping.map(annotation.from);
+          annotation.to = transaction.mapping.map(annotation.to);
+        }
+      });
+      this.createDecorations(state);
+      return this;
     }
-
-    // Default decoration mapping
-    this.decorations = this.decorations.map(
-      transaction.mapping,
-      transaction.doc,
-    );
 
     return this;
   }

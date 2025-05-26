@@ -1,7 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import { Plugin } from 'prosemirror-state';
-import { DecorationSet, Decoration } from 'prosemirror-view';
-import { flatten } from 'lodash';
 import CommentState from './CommentState';
 import CommentDecorationPluginKey from './CommentDecorationPluginKey';
 
@@ -103,7 +101,9 @@ const CommentDecorationPlugin = (name, options) => {
             // 1. Comment is 1 character long and overlaps with deleted text
             // 2. Comment is completely contained within the selection
             return (
-              (commentTo - commentFrom === 1 && commentFrom <= to && commentTo >= from) ||
+              (commentTo - commentFrom === 1 &&
+                commentFrom <= to &&
+                commentTo >= from) ||
               (commentFrom >= from && commentTo <= to)
             );
           });

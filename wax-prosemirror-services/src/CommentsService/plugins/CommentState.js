@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
+
 import { v4 as uuidv4 } from 'uuid';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import {
@@ -55,6 +56,7 @@ export default class CommentState {
       ystate.type,
       ystate.binding.mapping,
     );
+
     map.set(id, {
       id,
       from: relativeFrom,
@@ -152,10 +154,26 @@ export default class CommentState {
           binding.mapping,
         );
 
+<<<<<<< HEAD
         if (from == null || to == null || from >= to) {
           console.warn(
             `[CommentPlugin] Skipping decoration for id ${annotation.id}: invalid Yjs positions`,
             {
+=======
+        // If Yjs fails, try finding current mapped decoration for that ID
+        if (from == null || to == null || from >= to) {
+          const fallbackDeco = mappedDecos.find(
+            undefined,
+            undefined,
+            spec => spec.id === annotation.id,
+          )[0];
+          if (fallbackDeco && fallbackDeco.from < fallbackDeco.to) {
+            from = fallbackDeco.from;
+            to = fallbackDeco.to;
+
+            // Update annotation to reflect new positions
+            annotation.from = absolutePositionToRelativePosition(
+>>>>>>> c8d8f74ec6b3521ae206ad1f2cdda07e904b078a
               from,
               to,
               annotation,
@@ -291,8 +309,10 @@ export default class CommentState {
       }, CommentDecorationPluginKey);
     }
 
+    // Use mapped decorations for normal typing operations
     this.decorations = mappedDecos;
 
+    // Only recreate decorations if we're not in Yjs mode or if decorations are missing
     if (!ystate?.binding) {
       this.options.map.forEach((annotation, _) => {
         if ('from' in annotation && 'to' in annotation) {

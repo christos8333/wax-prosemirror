@@ -154,26 +154,10 @@ export default class CommentState {
           binding.mapping,
         );
 
-<<<<<<< HEAD
         if (from == null || to == null || from >= to) {
           console.warn(
             `[CommentPlugin] Skipping decoration for id ${annotation.id}: invalid Yjs positions`,
             {
-=======
-        // If Yjs fails, try finding current mapped decoration for that ID
-        if (from == null || to == null || from >= to) {
-          const fallbackDeco = mappedDecos.find(
-            undefined,
-            undefined,
-            spec => spec.id === annotation.id,
-          )[0];
-          if (fallbackDeco && fallbackDeco.from < fallbackDeco.to) {
-            from = fallbackDeco.from;
-            to = fallbackDeco.to;
-
-            // Update annotation to reflect new positions
-            annotation.from = absolutePositionToRelativePosition(
->>>>>>> c8d8f74ec6b3521ae206ad1f2cdda07e904b078a
               from,
               to,
               annotation,
@@ -235,7 +219,6 @@ export default class CommentState {
 
     this.decorations = DecorationSet.create(state.doc, decorations);
   }
-
   updateCommentPositions(ystate) {
     this.decorations.find().forEach(deco => {
       const { id } = deco.spec;

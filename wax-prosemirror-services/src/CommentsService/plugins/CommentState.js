@@ -287,6 +287,7 @@ export default class CommentState {
     if (ystate?.binding && ystate?.binding.mapping) {
       this.options.map.doc.transact(() => {
         this.updateCommentPositions(ystate);
+        this.createDecorations(state, mappedDecos);
       }, CommentDecorationPluginKey);
     }
 

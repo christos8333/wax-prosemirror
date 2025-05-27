@@ -20,6 +20,8 @@ export default class CommentState {
     this.decorations = DecorationSet.empty;
     this.options = options;
     this.transactYjsPos = false;
+    // Keep a backup of last known good positions for each comment
+    this.lastKnownPositions = new Map();
   }
 
   addCommentNonYjs(action) {
@@ -94,6 +96,8 @@ export default class CommentState {
     const { map, commentsDataMap } = this.options;
     if (commentsDataMap.get(id)) commentsDataMap.delete(id);
     map.delete(id);
+    // Clean up backup position data
+    this.lastKnownPositions.delete(id);
   }
 
   commentsAt(position, to) {
@@ -133,9 +137,121 @@ export default class CommentState {
     return this.options.commentsDataMap;
   }
 
-  createDecorations(state, mappedDecos = DecorationSet.empty) {
+  // Store backup positions for failed decorations
+  storeBackupPosition(id, from, to) {
+    this.lastKnownPositions.set(id, { from, to, timestamp: Date.now() });
+  }
+
+  // Try multiple fallback strategies to recreate a decoration
+  tryRecreateDecoration(annotation, mappedDecos, state) {
+    // First check if the comment still exists in the main map
+    if (!this.options.map.has(annotation.id)) {
+      console.log(`[CommentPlugin] Skipping recreation for deleted comment ${annotation.id}`);
+      return null;
+    }
+
+    const strategies = [
+      // Strategy 1: Try mappedDecos fallback
+      () => {
+        const fallback = mappedDecos.find(
+          undefined,
+          undefined,
+          spec => spec.id === annotation.id,
+        )[0];
+
+        if (fallback && fallback.from < fallback.to) {
+          console.log(
+            `[CommentPlugin] Using mappedDecos fallback for ${annotation.id}`,
+          );
+          return {
+            from: fallback.from,
+            to: fallback.to,
+            attrs: fallback.type.attrs,
+            spec: fallback.spec,
+          };
+        }
+        return null;
+      },
+
+      // Strategy 2: Use stored pmFrom/pmTo from annotation data
+      () => {
+        const { pmFrom, pmTo } = annotation.data || {};
+        if (
+          pmFrom != null &&
+          pmTo != null &&
+          pmFrom < pmTo &&
+          pmTo <= state.doc.content.size
+        ) {
+          console.log(
+            `[CommentPlugin] Using stored pmFrom/pmTo for ${annotation.id}`,
+          );
+          return {
+            from: pmFrom,
+            to: pmTo,
+          };
+        }
+        return null;
+      },
+
+      // Strategy 3: Use last known good positions
+      () => {
+        const backup = this.lastKnownPositions.get(annotation.id);
+        if (
+          backup &&
+          backup.from < backup.to &&
+          backup.to <= state.doc.content.size
+        ) {
+          console.log(
+            `[CommentPlugin] Using backup positions for ${annotation.id}`,
+          );
+          return {
+            from: backup.from,
+            to: backup.to,
+          };
+        }
+        return null;
+      },
+
+      // Strategy 4: Try to find the comment content in the document
+      () => {
+        if (annotation.data?.originalText) {
+          const docText = state.doc.textContent;
+          const index = docText.indexOf(annotation.data.originalText);
+          if (index !== -1) {
+            const from = index;
+            const to = index + annotation.data.originalText.length;
+            console.log(
+              `[CommentPlugin] Found comment by text search for ${annotation.id}`,
+            );
+            return { from, to };
+          }
+        }
+        return null;
+      },
+    ];
+
+    // Try each strategy in order
+    for (const strategy of strategies) {
+      try {
+        const result = strategy();
+        if (result) {
+          return result;
+        }
+      } catch (error) {
+        console.warn(
+          `[CommentPlugin] Fallback strategy failed for ${annotation.id}:`,
+          error,
+        );
+      }
+    }
+
+    return null;
+  }
+
+  createDecorations(state, mappedDecos = DecorationSet.empty, skip = true) {
     const decorations = [];
     const ystate = ySyncPluginKey.getState(state);
+    const failedDecorations = [];
 
     if (ystate?.binding) {
       const { doc, type, binding } = ystate;
@@ -156,14 +272,48 @@ export default class CommentState {
 
         if (from == null || to == null || from >= to) {
           console.warn(
-            `[CommentPlugin] Skipping decoration for id ${annotation.id}: invalid Yjs positions`,
-            {
+            `[CommentPlugin] Invalid Yjs pos for ${annotation.id}, trying fallback strategies`,
+          );
+
+          // Try multiple fallback strategies
+          const fallbackResult = this.tryRecreateDecoration(
+            annotation,
+            mappedDecos,
+            state,
+          );
+
+          if (fallbackResult) {
+            from = fallbackResult.from;
+            to = fallbackResult.to;
+
+            // Store as backup for future use
+            this.storeBackupPosition(annotation.id, from, to);
+
+            const decoration = Decoration.inline(
               from,
               to,
-              annotation,
-            },
-          );
-          return; // Skip invalid range
+              fallbackResult.attrs || {
+                class: 'comment',
+                'data-id': annotation.id,
+              },
+              fallbackResult.spec || {
+                id: annotation.id,
+                data: annotation,
+                inclusiveEnd: true,
+              },
+            );
+            decorations.push(decoration);
+
+            // Update the annotation with recovered positions
+            annotation.data.pmFrom = from;
+            annotation.data.pmTo = to;
+          } else {
+            console.warn(
+              `[CommentPlugin] All fallback strategies failed for ${annotation.id}`,
+            );
+            failedDecorations.push(annotation.id);
+          }
+          return;
         }
 
         const decoration = Decoration.inline(
@@ -179,9 +329,11 @@ export default class CommentState {
             inclusiveEnd: true,
           },
         );
+
         decorations.push(decoration);
 
-        // Update pmFrom / pmTo for fallback in non-Yjs mode
+        // Store backup positions and update pmFrom/pmTo
+        this.storeBackupPosition(annotation.id, from, to);
         annotation.data.pmFrom = from;
         annotation.data.pmTo = to;
       });
@@ -189,7 +341,13 @@ export default class CommentState {
       // Fallback mode — use pmFrom / pmTo stored in comment data
       this.allCommentsList().forEach(annotation => {
         const { pmFrom, pmTo } = annotation.data;
-        if (pmFrom != null && pmTo != null && pmFrom < pmTo) {
+
+        if (
+          pmFrom != null &&
+          pmTo != null &&
+          pmFrom < pmTo &&
+          pmTo <= state.doc.content.size
+        ) {
           const decoration = Decoration.inline(
             pmFrom,
             pmTo,
@@ -204,6 +362,7 @@ export default class CommentState {
             },
           );
           decorations.push(decoration);
+          this.storeBackupPosition(annotation.id, pmFrom, pmTo);
         } else {
           console.warn(
             `[CommentPlugin] Skipping fallback decoration for id ${annotation.id}: invalid pmFrom/pmTo`,
@@ -213,11 +372,25 @@ export default class CommentState {
               annotation,
             },
           );
+          failedDecorations.push(annotation.id);
         }
       });
     }
 
     this.decorations = DecorationSet.create(state.doc, decorations);
+
+    // Notify about failed decorations if needed
+    if (failedDecorations.length > 0) {
+      console.warn(
+        `[CommentPlugin] Failed to recreate ${failedDecorations.length} decorations:`,
+        failedDecorations,
+      );
+
+      // Optional: trigger a callback to handle failed decorations
+      if (this.options.onDecorationsFailed) {
+        this.options.onDecorationsFailed(failedDecorations);
+      }
+    }
   }
 
   updateCommentPositions(ystate) {
@@ -238,9 +411,10 @@ export default class CommentState {
           ystate.binding.mapping,
         );
 
-        // Store the absolute positions for reference
+        // Store the absolute positions for reference and backup
         annotation.data.pmFrom = deco.from;
         annotation.data.pmTo = deco.to;
+        this.storeBackupPosition(id, deco.from, deco.to);
 
         this.options.map.set(id, annotation);
       }
@@ -258,8 +432,9 @@ export default class CommentState {
 
     if (action?.type) {
       if (action.type === 'addComment') {
+        const skip = false;
         this.addComment(action, ystate);
-        this.createDecorations(state, mappedDecos);
+        this.createDecorations(state, mappedDecos, skip);
       }
 
       if (action.type === 'updateComment') {
@@ -301,8 +476,12 @@ export default class CommentState {
     if (!ystate?.binding) {
       this.options.map.forEach((annotation, _) => {
         if ('from' in annotation && 'to' in annotation) {
-          annotation.from = transaction.mapping.map(annotation.from);
-          annotation.to = transaction.mapping.map(annotation.to);
+          const newFrom = transaction.mapping.map(annotation.from);
+          const newTo = transaction.mapping.map(annotation.to);
+          annotation.from = newFrom;
+          annotation.to = newTo;
+          // Update backup positions
+          this.storeBackupPosition(annotation.id, newFrom, newTo);
         }
       });
       this.createDecorations(state);

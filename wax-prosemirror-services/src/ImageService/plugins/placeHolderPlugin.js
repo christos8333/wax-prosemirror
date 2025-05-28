@@ -37,6 +37,12 @@ export default key =>
             set = set.remove(toRemove);
           }
 
+          // HACK to fix
+          if (set?.find().length >= 1) {
+            set = set.remove(set.find()[0]);
+            set.children = [];
+          }
+
           // Additional cleanup - sometimes decorations can persist
           const allDecorations = set.find();
           const persistentDecorations = allDecorations.filter(

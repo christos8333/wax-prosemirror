@@ -24,13 +24,22 @@ export default onWarning => {
             node.attrs.alt = '';
             imageFound = true;
           }
+
           if (node.type.name === 'figure') {
-            if (node.firstChild && node.firstChild.type.name === 'image') {
+            if (
+              node.firstChild &&
+              node.firstChild.type.name === 'image' &&
+              !Object.keys(node.firstChild.attrs.extraData).length === 0
+            ) {
               node.firstChild.attrs.id = uuidv4();
               node.firstChild.attrs.src = '';
               node.firstChild.attrs.alt = '';
               imageFound = true;
-            } else if (node.lastChild && node.lastChild.type.name === 'image') {
+            } else if (
+              node.lastChild &&
+              node.lastChild.type.name === 'image' &&
+              !Object.keys(node.lastChild.attrs.extraData).length === 0
+            ) {
               node.lastChild.attrs.id = uuidv4();
               node.lastChild.attrs.src = '';
               node.lastChild.attrs.alt = '';

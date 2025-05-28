@@ -23,6 +23,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const { title } = item;
   const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
+
   const {
     activeView,
     activeViewId,
@@ -37,8 +38,10 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
   const imageServiceConfig = app.config.get('config.ImageService');
 
-  const handleMouseDown = () => {
-    if (activeViewId !== 'main') {
+  const handleMouseDown = async e => {
+    e.preventDefault();
+
+    if (activeViewId && activeViewId !== 'main') {
       const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
       let nodeFound = '';
       allNodes.forEach(node => {
@@ -60,8 +63,9 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           ),
       );
     }
+
     if (imageServiceConfig && imageServiceConfig.handleAssetManager) {
-      insertThroughFileMAnager();
+      await insertThroughFileMAnager();
     } else {
       inputRef.current.click();
     }
@@ -91,6 +95,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   };
 
   const onChange = e => {
+    e.preventDefault();
     fileUpload(e.target.files[0]);
     context.setOption({ uploading: true });
     if (inputRef.current) inputRef.current.value = '';
@@ -104,10 +109,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
             active={false}
             disabled={isDisabled}
             iconName={item.icon}
-            onMouseDown={e => {
-              e.preventDefault();
-              handleMouseDown();
-            }}
+            onMouseDown={handleMouseDown}
             title={
               !isEmpty(i18n) && i18n.exists(`Wax.Images.${title}`)
                 ? t(`Wax.Images.${title}`)
@@ -123,7 +125,10 @@ const ImageUpload = ({ item, fileUpload, view }) => {
                 ? onChangeFileManager
                 : onChange
             }
-            ref={inputRef}
+            // ref={inputRef}
+            ref={el => {
+              inputRef.current = el;
+            }}
             type="file"
           />
         </label>
@@ -134,4 +139,5 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
   return ImageUploadComponent;
 };
+
 export default ImageUpload;

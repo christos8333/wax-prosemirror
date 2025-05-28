@@ -2,6 +2,7 @@ import { Service } from 'wax-prosemirror-core';
 import { imageNode, figureCaptionNode, figureNode } from './schema';
 import PlaceHolderPlugin from './plugins/placeHolderPlugin';
 import captionPlugin from './plugins/captionPlugin';
+import selectFigureOnCutPlugin from './plugins/selectFigureOnCutPlugin';
 import Image from './Image';
 import AltComponent from './AltComponent';
 import LongDescComponent from './LongDescComponent';
@@ -12,6 +13,11 @@ class ImageService extends Service {
   name = 'ImageService';
 
   boot() {
+    this.app.PmPlugins.add(
+      'selectFigureOnCutPlugin',
+      selectFigureOnCutPlugin('selectFigureOnCutPlugin'),
+    );
+
     this.app.PmPlugins.add(
       'imagePlaceHolder',
       PlaceHolderPlugin('imagePlaceHolder'),

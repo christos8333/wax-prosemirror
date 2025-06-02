@@ -144,10 +144,16 @@ export default class CommentState {
 
   // Try multiple fallback strategies to recreate a decoration
   tryRecreateDecoration(annotation, mappedDecos, state) {
+    if (!this.options.map.has(annotation.id)) {
+      return null;
+    }
+
     // Check if this comment is managed by Yjs
     const ystate = ySyncPluginKey.getState(state);
+
     if (ystate?.binding) {
       const existingComment = this.options.commentsDataMap.get(annotation.id);
+
       if (!existingComment) {
         console.log(
           `[CommentPlugin] Comment ${annotation.id} is managed by Yjs, skipping recreation`,
@@ -263,13 +269,17 @@ export default class CommentState {
       const { doc, type, binding } = ystate;
 
       this.allCommentsList().forEach(annotation => {
-        // Skip if this comment is managed by Yjs
-        const existingComment = this.options.commentsDataMap.get(annotation.id);
-        if (!existingComment) {
-          console.log(
-            `[CommentPlugin] Comment ${annotation.id} is managed by Yjs, using Yjs positions`,
+        if (ystate?.binding) {
+          const existingComment = this.options.commentsDataMap.get(
+            annotation.id,
           );
-          return;
+
+          if (!existingComment) {
+            console.log(
+              `[CommentPlugin] Comment ${annotation.id} is managed by Yjs, skipping recreation`,
+            );
+            return;
+          }
         }
 
         let from = relativePositionToAbsolutePosition(

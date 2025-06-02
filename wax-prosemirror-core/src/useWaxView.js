@@ -96,11 +96,11 @@ const useWaxView = props => {
       'main',
     );
 
-    setTimeout(() => {
-      if (autoFocus && view) {
-        view.focus();
-      }
-    }, 500);
+    if (autoFocus && view) {
+      view.state.tr.setMeta('scrollIntoView', false);
+      view.focus();
+    }
+    setTimeout(() => {}, 500);
   }, [readonly, customValues, app.id]);
 
   useEffect(() => {

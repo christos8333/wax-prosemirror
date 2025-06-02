@@ -48,6 +48,7 @@ export default onWarning => {
           }
         });
         if (imageFound) onWarning();
+
         return slice;
       },
     },

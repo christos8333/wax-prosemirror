@@ -1,0 +1,11 @@
+ /* Comments */
+
+  span.comment {
+    border-bottom: 2px solid gold;
+    border-radius: 3px 3px 0 0;
+  }
+
+.active-comment {
+       background-color: gold;
+      /* color: black; */
+  }

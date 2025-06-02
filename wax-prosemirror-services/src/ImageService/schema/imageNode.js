@@ -1,5 +1,5 @@
 // import { SchemaHelpers } from 'wax-prosemirror-core';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
 const imageNode = {
   attrs: {
@@ -28,23 +28,28 @@ const imageNode = {
           fileid: hook.dom.dataset.fileid,
           'aria-describedby': hook.dom.dataset['aria-describedby'],
           'aria-description': hook.dom.getAttribute('aria-description'),
-        });
-        next();
+          extraData: hook.dom.dataset.fileid
+            ? { fileId: hook.dom.dataset.fileid }
+            : {}, // <- RECREATE HERE
+        })
+        next()
       },
     },
   ],
   toDOM(hook, next) {
-    const attrs = {};
+    const attrs = {}
     if (hook.node.attrs.track && hook.node.attrs.track.length) {
       // attrs['data-track'] = JSON.stringify(hook.node.attrs.track);
-      attrs['data-id'] = hook.node.attrs.id;
+      attrs['data-id'] = hook.node.attrs.id
     }
 
-    const { src, alt, title, id, fileid } = hook.node.attrs;
-    const longDescId = hook.node.attrs['aria-describedby'];
-    const longDesc = hook.node.attrs['aria-description'];
+    console.log(hook.node.attrs)
 
-    const { extraData } = hook.node.attrs;
+    const { src, alt, title, id, fileid } = hook.node.attrs
+    const longDescId = hook.node.attrs['aria-describedby']
+    const longDesc = hook.node.attrs['aria-description']
+
+    const { extraData } = hook.node.attrs
     // eslint-disable-next-line no-param-reassign
     hook.value = [
       'img',
@@ -60,8 +65,8 @@ const imageNode = {
         'data-fileid': fileid,
         ...Object.keys(extraData).reduce((obj, key) => {
           // eslint-disable-next-line no-param-reassign
-          obj[`data-${key}`] = extraData[key];
-          return obj;
+          obj[`data-${key}`] = extraData[key]
+          return obj
         }, {}),
         ...(longDescId && longDescId !== ''
           ? {
@@ -70,10 +75,10 @@ const imageNode = {
             }
           : {}),
       },
-    ];
+    ]
 
-    next();
+    next()
   },
-};
+}
 
-export default imageNode;
+export default imageNode

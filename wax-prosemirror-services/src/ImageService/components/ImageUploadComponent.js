@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import { WaxContext, ApplicationContext } from 'wax-prosemirror-core'
-import { isEmpty } from 'lodash'
-import fileUpload from '../fileUpload'
-import ImageUpload from './ImageUpload'
+import React, { useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
+import { isEmpty } from 'lodash';
+import fileUpload from '../fileUpload';
+import ImageUpload from './ImageUpload';
 
 const ImageUploadComponent = ({ view, displayed, config, pmplugins, item }) => {
-  const context = useContext(WaxContext)
-  const { app } = useContext(ApplicationContext)
-  if (isEmpty(view)) return null
+  const context = useContext(WaxContext);
+  const { app } = useContext(ApplicationContext);
+  if (isEmpty(view)) return null;
 
   const upload = fileUpload(
     view,
@@ -17,7 +17,7 @@ const ImageUploadComponent = ({ view, displayed, config, pmplugins, item }) => {
     pmplugins.get('imagePlaceHolder'),
     context,
     app,
-  )
+  );
 
   return (
     <ImageUpload
@@ -26,7 +26,7 @@ const ImageUploadComponent = ({ view, displayed, config, pmplugins, item }) => {
       key="image-upload"
       view={view}
     />
-  )
+  );
 
   // return displayed ? (
   //   <ImageUpload
@@ -36,6 +36,6 @@ const ImageUploadComponent = ({ view, displayed, config, pmplugins, item }) => {
   //     view={view}
   //   />
   // ) : null;
-}
+};
 
-export default ImageUploadComponent
+export default ImageUploadComponent;

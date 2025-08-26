@@ -13,8 +13,9 @@ const removeFigureOnTyping = () => {
         ) {
           const $pos = state.doc.resolve(selection.from);
 
-          for (let depth = $pos.depth; depth >= 0; depth--) {
+          for (let { depth } = $pos; depth >= 0; depth--) {
             const node = $pos.node(depth);
+
             if (node.type.name === 'figure') {
               const figureStart = $pos.before(depth);
               const figureEnd = $pos.after(depth);

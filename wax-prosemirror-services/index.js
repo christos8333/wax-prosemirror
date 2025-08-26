@@ -39,3 +39,6 @@ export { default as BlockDropDownToolGroupService } from './src/WaxToolGroups/Bl
 
 /* Plugins */
 export { default as disallowPasteImagesPlugin } from './src/ImageService/plugins/disallowPasteImagesPlugin';
+
+/* Various */
+export { default as insertImage } from './src/ImageService/components/Upload';

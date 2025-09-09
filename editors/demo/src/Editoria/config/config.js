@@ -32,6 +32,8 @@ import {
 
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
+import { CitationService } from 'wax-citation-service';
+
 import { EditoriaSchema } from 'wax-prosemirror-core';
 
 import invisibles, {
@@ -228,6 +230,7 @@ export default {
   },
 
   services: [
+    new CitationService(),
     new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),

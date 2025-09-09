@@ -1,6 +1,6 @@
 {
   "name": "wax-prosemirror-monorepo",
-  "version": "0.0.13",
+  "version": "0.0.99",
   "private": true,
   "description": "Monorepo for wax-prosemirror, its components and its integrations",
   "repository": {
@@ -15,6 +15,7 @@
     "wax-prosemirror-services",
     "wax-questions-service",
     "wax-table-service",
+    "wax-citation-service",
     "editors/*"
   ],
   "scripts": {

@@ -23,6 +23,10 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-table-service/index',
       ),
+      'wax-citation-service': path.resolve(
+        __dirname,
+        '../../wax-citation-service/index',
+      ),
     };
   }
 

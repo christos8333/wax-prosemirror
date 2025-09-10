@@ -98,6 +98,33 @@ const SideMenu = styled.div`
 
 const EditorArea = styled.div`
   flex-grow: 1;
+  position: relative;
+`;
+
+const ToggleButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: ${th('colorBackgroundToolBar')};
+  border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: ${th('colorText')};
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: ${th('colorBackground')};
+    border-color: ${th('colorPrimary')};
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px ${th('colorPrimary')}20;
+  }
 `;
 
 const WaxSurfaceScroll = styled.div`
@@ -248,11 +275,13 @@ const EditoriaLayout = props => {
     main && DocumentHelpers.getTrackBlockNodesCount(main);
 
   const [hasNotes, setHasNotes] = useState(false);
+  const [showCitationManager, setShowCitationManager] = useState(false);
 
   useEffect(() => {
     const areNotes = notes && !!notes.length && notes.length > 0;
     setHasNotes(areNotes);
   }, [notes?.length]);
+
   return (
     <ThemeProvider theme={cokoTheme}>
       <Wrapper style={fullScreenStyles} id="wax-container">
@@ -266,6 +295,11 @@ const EditoriaLayout = props => {
           </SideMenu>
 
           <EditorArea>
+            <ToggleButton
+              onClick={() => setShowCitationManager(!showCitationManager)}
+            >
+              {showCitationManager ? 'Comments' : 'Citations'}
+            </ToggleButton>
             <PanelGroup
               direction="column"
               panelWidths={[
@@ -279,17 +313,22 @@ const EditoriaLayout = props => {
                   <WaxView {...props} />
                 </EditorContainer>
                 <CommentsContainer>
-                  <CommentTrackToolsContainer>
-                    <CommentTrackTools>
-                      {commentsTracksCount + trackBlockNodesCount} COMMENTS AND
-                      SUGGESTIONS
-                      <CommentTrackOptions>
-                        <CommentTrackToolBar />
-                      </CommentTrackOptions>
-                    </CommentTrackTools>
-                  </CommentTrackToolsContainer>
-                  <RightArea area="main" />
-                  <CitationRightArea />
+                  {!showCitationManager && (
+                    <CommentTrackToolsContainer>
+                      <CommentTrackTools>
+                        {commentsTracksCount + trackBlockNodesCount} COMMENTS
+                        AND SUGGESTIONS
+                        <CommentTrackOptions>
+                          <CommentTrackToolBar />
+                        </CommentTrackOptions>
+                      </CommentTrackTools>
+                    </CommentTrackToolsContainer>
+                  )}
+                  {showCitationManager ? (
+                    <CitationRightArea />
+                  ) : (
+                    <RightArea area="main" />
+                  )}
                 </CommentsContainer>
               </WaxSurfaceScroll>
               {hasNotes && (

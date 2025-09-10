@@ -103,8 +103,8 @@ const EditorArea = styled.div`
 
 const ToggleButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 25px;
+  right: 16px;
   background: ${th('colorBackgroundToolBar')};
   border: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-radius: 4px;
@@ -131,16 +131,34 @@ const WaxSurfaceScroll = styled.div`
   box-sizing: border-box;
   display: flex;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: ${props => (props.citationMode ? 'hidden' : 'auto')};
   position: absolute;
   width: 100%;
   /* stylelint-disable-next-line order/properties-alphabetical-order */
   ${EditorElements}
 `;
 
+const EditorScrollContainer = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  overflow-y: auto;
+  width: 65%;
+  /* stylelint-disable-next-line order/properties-alphabetical-order */
+  ${EditorElements}
+`;
+
+const CitationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 35%;
+`;
+
 const EditorContainer = styled.div`
   height: 100%;
   width: 65%;
+  overflow-y: ${props => (props.citationMode ? 'auto' : 'visible')};
 
   .ProseMirror {
     box-shadow: 0 0 8px #ecedf1;
@@ -308,12 +326,19 @@ const EditoriaLayout = props => {
               ]}
               onResizeEnd={onResizeEnd}
             >
-              <WaxSurfaceScroll id="wax-surface-scroll" l>
-                <EditorContainer>
+              <WaxSurfaceScroll
+                id="wax-surface-scroll"
+                citationMode={showCitationManager}
+              >
+                <EditorContainer citationMode={showCitationManager}>
                   <WaxView {...props} />
                 </EditorContainer>
-                <CommentsContainer>
-                  {!showCitationManager && (
+                {showCitationManager ? (
+                  <CitationContainer>
+                    <CitationRightArea />
+                  </CitationContainer>
+                ) : (
+                  <CommentsContainer>
                     <CommentTrackToolsContainer>
                       <CommentTrackTools>
                         {commentsTracksCount + trackBlockNodesCount} COMMENTS
@@ -323,13 +348,9 @@ const EditoriaLayout = props => {
                         </CommentTrackOptions>
                       </CommentTrackTools>
                     </CommentTrackToolsContainer>
-                  )}
-                  {showCitationManager ? (
-                    <CitationRightArea />
-                  ) : (
                     <RightArea area="main" />
-                  )}
-                </CommentsContainer>
+                  </CommentsContainer>
+                )}
               </WaxSurfaceScroll>
               {hasNotes && (
                 <NotesAreaContainer>

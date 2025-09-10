@@ -1,11 +1,14 @@
 import { Service } from 'wax-prosemirror-core';
 import citationCallout from './schema/citationCallout';
+import CitationRightArea from './components/CitationRightArea';
 
 class CitationService extends Service {
   name = 'QuestionsService';
 
   boot() {
-    console.log('in boot');
+    console.log('booting');
+    const layout = this.container.get('Layout');
+    layout.addComponent('citationRightArea', CitationRightArea);
   }
 
   register() {

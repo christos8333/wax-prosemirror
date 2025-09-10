@@ -215,6 +215,7 @@ const getNotes = main => {
 const LeftSideBar = ComponentPlugin('leftSideBar');
 const MainMenuToolBar = ComponentPlugin('mainMenuToolBar');
 const NotesArea = ComponentPlugin('notesArea');
+const CitationRightArea = ComponentPlugin('citationRightArea');
 const RightArea = ComponentPlugin('rightArea');
 const CommentTrackToolBar = ComponentPlugin('commentTrackToolBar');
 const BottomRightInfo = ComponentPlugin('BottomRightInfo');
@@ -288,6 +289,7 @@ const EditoriaLayout = props => {
                     </CommentTrackTools>
                   </CommentTrackToolsContainer>
                   <RightArea area="main" />
+                  <CitationRightArea />
                 </CommentsContainer>
               </WaxSurfaceScroll>
               {hasNotes && (

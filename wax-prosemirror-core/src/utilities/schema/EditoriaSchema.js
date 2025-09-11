@@ -3,7 +3,7 @@ import SchemaHelpers from './SchemaHelpers';
 export default {
   nodes: {
     doc: {
-      content: 'block+',
+      content: 'block+ citations_data_node',
     },
     text: {
       group: 'inline',

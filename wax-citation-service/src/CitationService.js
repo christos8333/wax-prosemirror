@@ -3,7 +3,9 @@ import citationsDataNode from './schema/citationsDataNode';
 import citationCallout from './schema/citationCallout';
 import CitationRightArea from './components/CitationRightArea';
 import CitationsFooterPlugin from './plugins/CitationsFooterPlugin';
+import CitationFooterContainerNodeView from './CitationFooterContainerNodeView';
 import CitationsPlugin from './plugins/CitationsPlugin';
+import CitationFooterList from './components/CitationFooterList';
 
 class CitationService extends Service {
   name = 'QuestionsService';
@@ -33,6 +35,12 @@ class CitationService extends Service {
 
     createNode({
       citation_callout: citationCallout,
+    });
+
+    addPortal({
+      nodeView: CitationFooterContainerNodeView,
+      component: CitationFooterList,
+      context: this.app,
     });
   }
 

@@ -1,5 +1,7 @@
 import React, { useContext, useState, useMemo, useCallback } from 'react';
+import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 const CitationManagerContainer = styled.div`
   background-color: #f8f9fa;
@@ -192,15 +194,40 @@ const AddToTextButton = styled.button`
   }
 `;
 
-const CitationManager = ({ area, users }) => {
+const CitationManager = () => {
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterValue, setFilterValue] = useState('');
 
+  const { app } = useContext(ApplicationContext);
+  const context = useContext(WaxContext);
+
+  const {
+    pmViews: { main },
+    activeView,
+  } = context;
+
   const handleAddToText = (citationText, style) => {
-    console.log(`Adding ${style} citation to text:`, citationText);
-    // TODO: Implement actual citation insertion logic
-    // This could integrate with ProseMirror to insert the citation at cursor position
+    const citationId = uuidv4();
+
+    const citationCalloutType = main.state.schema.nodes.citation_callout;
+
+    const citationCalloutNode = citationCalloutType.create(
+      {
+        id: citationId,
+        class: 'citation-callout',
+      },
+      main.state.schema.text(citationText),
+    );
+
+    // Get current selection position
+    const { from } = main.state.selection;
+
+    // Create transaction to insert the citation callout
+    const tr = main.state.tr.insert(from, citationCalloutNode);
+
+    // Dispatch the transaction
+    main.dispatch(tr);
   };
 
   const tabs = [

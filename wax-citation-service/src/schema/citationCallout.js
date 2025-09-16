@@ -7,6 +7,7 @@ const citationCallout = {
   content: 'text*',
   inline: true,
   atom: true,
+  draggable: true,
   excludes: 'citation_callout',
   parseDOM: [
     {

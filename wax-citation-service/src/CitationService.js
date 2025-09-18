@@ -13,7 +13,6 @@ class CitationService extends Service {
   name = 'QuestionsService';
 
   boot() {
-    console.log('booting', this.schema);
     // this.app.PmPlugins.add(
     //   'citationsPlugin',
     //   CitationsPlugin('citationsPlugin', this.app),

@@ -24,6 +24,7 @@
     "prosemirror-model": "1.19.0",
     "react-i18next": "^13.3.1",
     "uuid": "^7.0.3",
+    "citeproc": "^2.4.63",
     "wax-prosemirror-core": "^0.9.99"
   },
   "devDependencies": {

@@ -8,7 +8,7 @@ const CitationListWrapper = styled.div`
   width: 100%;
 `;
 
-const CitationFooterList = ({ area, users }) => {
+const CitationFooterList = () => {
   return (
     <CitationListWrapper>
       <h1>Citations</h1>

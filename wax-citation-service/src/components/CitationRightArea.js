@@ -207,7 +207,124 @@ const CitationManager = () => {
     activeView,
   } = context;
 
-  const handleAddToText = (citationText, style) => {
+  const sampleCitations = [
+    {
+      id: 'journal-article-1',
+      type: 'article-journal',
+      title:
+        'Collaboration in Virtual Environments: A Study of Remote Team Dynamics',
+      author: [
+        { family: 'Smith', given: 'John A.' },
+        { family: 'Doe', given: 'Rebecca L.' },
+      ],
+      issued: { 'date-parts': [[2023]] },
+      'container-title': 'Journal of Digital Research',
+      volume: '15',
+      issue: '2',
+      page: '123-135',
+      DOI: '10.1000/jdr.2023.15.2.123',
+    },
+    {
+      id: 'book-1',
+      type: 'book',
+      title: 'The Future of Artificial Intelligence in Education',
+      author: [{ family: 'Johnson', given: 'Michael' }],
+      issued: { 'date-parts': [[2023]] },
+      publisher: 'Academic Press',
+      'publisher-place': 'Boston, MA',
+    },
+    {
+      id: 'book-chapter-1',
+      type: 'chapter',
+      title: 'Machine Learning Applications in Healthcare',
+      author: [
+        { family: 'Williams', given: 'Sarah' },
+        { family: 'Brown', given: 'David' },
+      ],
+      issued: { 'date-parts': [[2023]] },
+      'container-title': 'Advances in Medical Technology',
+      'container-author': [{ family: 'Davis', given: 'Emma' }],
+      publisher: 'Medical Publishers',
+      page: '45-67',
+    },
+    {
+      id: 'website-1',
+      type: 'webpage',
+      title: 'Understanding Climate Change: A Comprehensive Guide',
+      author: [{ family: 'Wilson', given: 'Jennifer' }],
+      issued: { 'date-parts': [[2023, 6, 15]] },
+      URL: 'https://climate-guide.org/understanding-climate-change',
+      accessed: { 'date-parts': [[2023, 12, 1]] },
+    },
+    {
+      id: 'conference-1',
+      type: 'paper-conference',
+      title: 'Blockchain Technology in Supply Chain Management',
+      author: [
+        { family: 'Garcia', given: 'Carlos' },
+        { family: 'Lee', given: 'Amy' },
+      ],
+      issued: { 'date-parts': [[2023]] },
+      'container-title':
+        'Proceedings of the International Conference on Technology',
+      event: 'International Conference on Technology',
+      'event-place': 'San Francisco, CA',
+      publisher: 'Tech Conference Publications',
+    },
+    {
+      id: 'thesis-1',
+      type: 'thesis',
+      title: 'Sustainable Energy Solutions for Rural Communities',
+      author: [{ family: 'Anderson', given: 'Robert' }],
+      issued: { 'date-parts': [[2023]] },
+      'publisher-place': 'Stanford, CA',
+      genre: 'PhD dissertation',
+      'container-title': 'Stanford University',
+    },
+    {
+      id: 'report-1',
+      type: 'report',
+      title: 'Global Economic Outlook 2023: Challenges and Opportunities',
+      author: [{ family: 'Thompson', given: 'Lisa' }],
+      issued: { 'date-parts': [[2023]] },
+      publisher: 'World Economic Forum',
+      'publisher-place': 'Geneva, Switzerland',
+    },
+    {
+      id: 'newspaper-1',
+      type: 'article-newspaper',
+      title:
+        'The Rise of Remote Work: How Technology is Changing the Workplace',
+      author: [{ family: 'Martinez', given: 'Ana' }],
+      issued: { 'date-parts': [[2023, 8, 20]] },
+      'container-title': 'The New York Times',
+      section: 'Business',
+      page: 'B1',
+    },
+    {
+      id: 'video-1',
+      type: 'video',
+      title: 'Introduction to Quantum Computing',
+      author: [{ family: 'Kumar', given: 'Raj' }],
+      issued: { 'date-parts': [[2023]] },
+      URL: 'https://youtube.com/watch?v=quantum-intro',
+      'container-title': 'YouTube',
+      medium: 'Video',
+      duration: '45:30',
+    },
+    {
+      id: 'software-1',
+      type: 'software',
+      title: 'OpenAI GPT-4: Advanced Language Model',
+      author: [{ family: 'OpenAI', given: '' }],
+      issued: { 'date-parts': [[2023]] },
+      URL: 'https://openai.com/gpt-4',
+      version: '4.0',
+      medium: 'Computer software',
+    },
+  ];
+
+  const handleAddToText = citationData => {
     const citationId = uuidv4();
 
     const citationCalloutType = main.state.schema.nodes.citation_callout;
@@ -217,7 +334,7 @@ const CitationManager = () => {
         id: citationId,
         class: 'citation-callout',
       },
-      main.state.schema.text(citationText),
+      main.state.schema.text(citationData.title || 'Citation'),
     );
 
     // Get current selection position
@@ -277,131 +394,75 @@ const CitationManager = () => {
       <SectionHeading>Reference List</SectionHeading>
 
       <CitationExamplesContainer>
-        <CitationExample>
-          <CitationStyleTitle>
-            APA (7th edition) – Common in psychology, social sciences
-          </CitationStyleTitle>
-          <CitationText>
-            Smith, J. A., & Doe, R. L. (2020). Collaboration in virtual
-            environments. Journal of Digital Research, 15(2), 123–135.
-            https://doi.org/10.1000/jdr.2020.15.2.123
-          </CitationText>
-          <AddToTextButton
-            onClick={() =>
-              handleAddToText(
-                'Smith, J. A., & Doe, R. L. (2020). Collaboration in virtual environments. Journal of Digital Research, 15(2), 123–135. https://doi.org/10.1000/jdr.2020.15.2.123',
-                'APA',
-              )
-            }
-          >
-            Add to Text
-          </AddToTextButton>
-        </CitationExample>
+        {sampleCitations.map((citation, index) => {
+          const getCitationTypeLabel = type => {
+            const typeLabels = {
+              'article-journal': 'Journal Article',
+              book: 'Book',
+              chapter: 'Book Chapter',
+              webpage: 'Website',
+              'paper-conference': 'Conference Paper',
+              thesis: 'Thesis/Dissertation',
+              report: 'Report',
+              'article-newspaper': 'Newspaper Article',
+              video: 'Video',
+              software: 'Software',
+            };
+            return typeLabels[type] || 'Citation';
+          };
 
-        <CitationExample>
-          <CitationStyleTitle>
-            MLA (9th edition) – Common in humanities, literature
-          </CitationStyleTitle>
-          <CitationText>
-            Smith, John A., and Rebecca L. Doe. "Collaboration in Virtual
-            Environments." Journal of Digital Research, vol. 15, no. 2, 2020,
-            pp. 123–135. DOI:10.1000/jdr.2020.15.2.123.
-          </CitationText>
-          <AddToTextButton
-            onClick={() =>
-              handleAddToText(
-                'Smith, John A., and Rebecca L. Doe. "Collaboration in Virtual Environments." Journal of Digital Research, vol. 15, no. 2, 2020, pp. 123–135. DOI:10.1000/jdr.2020.15.2.123.',
-                'MLA',
-              )
+          const formatAuthors = authors => {
+            if (!authors || authors.length === 0) return 'Unknown Author';
+            if (authors.length === 1) {
+              return `${authors[0].family}, ${authors[0].given}`;
             }
-          >
-            Add to Text
-          </AddToTextButton>
-        </CitationExample>
+            if (authors.length === 2) {
+              return `${authors[0].family}, ${authors[0].given} and ${authors[1].family}, ${authors[1].given}`;
+            }
+            return `${authors[0].family}, ${authors[0].given} et al.`;
+          };
 
-        <CitationExample>
-          <CitationStyleTitle>
-            Chicago (17th edition) – Used in history, arts, publishing
-          </CitationStyleTitle>
-          <CitationSubtitle>
-            Notes & Bibliography style (humanities):
-          </CitationSubtitle>
-          <CitationText>
-            John A. Smith and Rebecca L. Doe, "Collaboration in Virtual
-            Environments," Journal of Digital Research 15, no. 2 (2020): 123–35.
-            https://doi.org/10.1000/jdr.2020.15.2.123.
-          </CitationText>
-          <AddToTextButton
-            onClick={() =>
-              handleAddToText(
-                'John A. Smith and Rebecca L. Doe, "Collaboration in Virtual Environments," Journal of Digital Research 15, no. 2 (2020): 123–35. https://doi.org/10.1000/jdr.2020.15.2.123.',
-                'Chicago Notes & Bibliography',
-              )
+          const formatYear = issued => {
+            if (issued && issued['date-parts'] && issued['date-parts'][0]) {
+              return issued['date-parts'][0][0];
             }
-          >
-            Add to Text
-          </AddToTextButton>
-          <CitationSubtitle>
-            Author–Date style (sciences, social sciences):
-          </CitationSubtitle>
-          <CitationText>
-            Smith, John A., and Rebecca L. Doe. 2020. "Collaboration in Virtual
-            Environments." Journal of Digital Research 15 (2): 123–35.
-            https://doi.org/10.1000/jdr.2020.15.2.123.
-          </CitationText>
-          <AddToTextButton
-            onClick={() =>
-              handleAddToText(
-                'Smith, John A., and Rebecca L. Doe. 2020. "Collaboration in Virtual Environments." Journal of Digital Research 15 (2): 123–35. https://doi.org/10.1000/jdr.2020.15.2.123.',
-                'Chicago Author-Date',
-              )
-            }
-          >
-            Add to Text
-          </AddToTextButton>
-        </CitationExample>
+            return 'n.d.';
+          };
 
-        <CitationExample>
-          <CitationStyleTitle>
-            IEEE – Common in engineering, computer science
-          </CitationStyleTitle>
-          <CitationText>
-            [1] J. A. Smith and R. L. Doe, "Collaboration in virtual
-            environments," Journal of Digital Research, vol. 15, no. 2, pp.
-            123–135, 2020, doi: 10.1000/jdr.2020.15.2.123.
-          </CitationText>
-          <AddToTextButton
-            onClick={() =>
-              handleAddToText(
-                '[1] J. A. Smith and R. L. Doe, "Collaboration in virtual environments," Journal of Digital Research, vol. 15, no. 2, pp. 123–135, 2020, doi: 10.1000/jdr.2020.15.2.123.',
-                'IEEE',
-              )
-            }
-          >
-            Add to Text
-          </AddToTextButton>
-        </CitationExample>
+          const formatCitationText = citation => {
+            const authors = formatAuthors(citation.author);
+            const year = formatYear(citation.issued);
+            const title = citation.title;
 
-        <CitationExample>
-          <CitationStyleTitle>
-            Harvard – Common in UK, social sciences, business
-          </CitationStyleTitle>
-          <CitationText>
-            Smith, J.A. and Doe, R.L., 2020. Collaboration in virtual
-            environments. Journal of Digital Research, 15(2), pp.123–135.
-            https://doi.org/10.1000/jdr.2020.15.2.123
-          </CitationText>
-          <AddToTextButton
-            onClick={() =>
-              handleAddToText(
-                'Smith, J.A. and Doe, R.L., 2020. Collaboration in virtual environments. Journal of Digital Research, 15(2), pp.123–135. https://doi.org/10.1000/jdr.2020.15.2.123',
-                'Harvard',
-              )
+            let citationText = `${authors}. ${year}. ${title}`;
+
+            if (citation['container-title']) {
+              citationText += `. ${citation['container-title']}`;
             }
-          >
-            Add to Text
-          </AddToTextButton>
-        </CitationExample>
+
+            if (citation.publisher) {
+              citationText += `. ${citation.publisher}`;
+            }
+
+            if (citation.URL) {
+              citationText += `. ${citation.URL}`;
+            }
+
+            return citationText;
+          };
+
+          return (
+            <CitationExample key={citation.id}>
+              <CitationStyleTitle>
+                {getCitationTypeLabel(citation.type)} - {citation.title}
+              </CitationStyleTitle>
+              <CitationText>{formatCitationText(citation)}</CitationText>
+              <AddToTextButton onClick={() => handleAddToText(citation)}>
+                Add to Text
+              </AddToTextButton>
+            </CitationExample>
+          );
+        })}
       </CitationExamplesContainer>
     </CitationManagerContainer>
   );

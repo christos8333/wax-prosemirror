@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <title>Simple Author-Date Style</title>
+    <title-short>Simple</title-short>
+    <id>http://www.zotero.org/styles/simple-author-date</id>
+    <author>
+      <name>Simple Style</name>
+    </author>
+    <category citation-format="author-date"/>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+  </info>
+  <locale xml:lang="en">
+    <terms>
+      <term name="editor" form="long">
+        <single>editor</single>
+        <multiple>editors</multiple>
+      </term>
+      <term name="translator" form="long">
+        <single>translator</single>
+        <multiple>translators</multiple>
+      </term>
+    </terms>
+    <date form="text">
+      <date-part name="year"/>
+    </date>
+  </locale>
+  <macro name="author">
+    <names variable="author">
+      <name form="long" name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter=", " delimiter-precedes-last="always"/>
+    </names>
+  </macro>
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+  <macro name="year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+    </choose>
+  </macro>
+  <citation et-al-min="3" et-al-use-first="1">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group>
+        <text macro="author"/>
+        <text prefix=", " macro="year"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography et-al-min="8" et-al-use-first="6">
+    <sort>
+      <key macro="author"/>
+    </sort>
+    <layout>
+      <text macro="author"/>
+      <text prefix=". " macro="title"/>
+      <text prefix=" (" macro="year" suffix=")."/>
+    </layout>
+  </bibliography>
+</style>

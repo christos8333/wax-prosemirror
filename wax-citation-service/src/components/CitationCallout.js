@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import CSL from 'citeproc';
+import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
+import simpleStyle from '../styles/simple-author-date.csl?raw'; // Simple author-date style
 import apaStyle from '../styles/apa.csl?raw'; // APA CSL XML as string
+import jmIndigoStyle from '../styles/jm-indigo.csl?raw'; // JM Indigo CSL XML as string (for future use)
+import localeEnUS from '../styles/locales-en-US.xml?raw'; // Complete English US locale
 
 const CitationCalloutNode = styled.span`
   color: red;
@@ -12,276 +16,116 @@ const items = {
     id: 'ITEM-1',
     type: 'book',
     title: 'The Example Book',
-    author: [{ family: 'Smith', given: 'John' }],
-    issued: { 'date-parts': [[2020]] },
+    author: [
+      {
+        family: 'Smith',
+        given: 'John'
+      }
+    ],
+    issued: {
+      'date-parts': [[2020]]
+    },
     publisher: 'Example Publisher',
+    'publisher-place': 'New York'
   },
 };
 
-const localeXML = `<?xml version="1.0" encoding="utf-8"?>
-<locale xmlns="http://purl.org/net/xbiblio/csl" xml:lang="en">
-  <terms>
-    <term name="editortranslator" form="long">
-      <single>editor &amp; translator</single>
-      <multiple>editors &amp; translators</multiple>
-    </term>
-    <term name="editortranslator" form="short">
-      <single>ed. &amp; trans.</single>
-      <multiple>eds. &amp; trans.</multiple>
-    </term>
-    <term name="translator" form="long">
-      <single>translator</single>
-      <multiple>translators</multiple>
-    </term>
-    <term name="translator" form="short">
-      <single>trans.</single>
-      <multiple>trans.</multiple>
-    </term>
-    <term name="editor" form="long">
-      <single>editor</single>
-      <multiple>editors</multiple>
-    </term>
-    <term name="editor" form="short">
-      <single>ed.</single>
-      <multiple>eds.</multiple>
-    </term>
-    <term name="editortranslator" form="verb">
-      <single>edited &amp; translated by</single>
-      <multiple>edited &amp; translated by</multiple>
-    </term>
-    <term name="translator" form="verb">
-      <single>translated by</single>
-      <multiple>translated by</multiple>
-    </term>
-    <term name="editor" form="verb">
-      <single>edited by</single>
-      <multiple>edited by</multiple>
-    </term>
-    <term name="editortranslator" form="verb-short">
-      <single>ed. &amp; trans.</single>
-      <multiple>eds. &amp; trans.</multiple>
-    </term>
-    <term name="translator" form="verb-short">
-      <single>trans.</single>
-      <multiple>trans.</multiple>
-    </term>
-    <term name="editor" form="verb-short">
-      <single>ed.</single>
-      <multiple>eds.</multiple>
-    </term>
-    <term name="container-title" form="long">
-      <single>in</single>
-      <multiple>in</multiple>
-    </term>
-    <term name="container-title" form="short">
-      <single>in</single>
-      <multiple>in</multiple>
-    </term>
-    <term name="collection-title" form="long">
-      <single>in</single>
-      <multiple>in</multiple>
-    </term>
-    <term name="collection-title" form="short">
-      <single>in</single>
-      <multiple>in</multiple>
-    </term>
-    <term name="archive" form="long">
-      <single>from</single>
-      <multiple>from</multiple>
-    </term>
-    <term name="archive" form="short">
-      <single>from</single>
-      <multiple>from</multiple>
-    </term>
-    <term name="event" form="long">
-      <single>presented at</single>
-      <multiple>presented at</multiple>
-    </term>
-    <term name="event" form="short">
-      <single>presented at</single>
-      <multiple>presented at</multiple>
-    </term>
-    <term name="event" form="verb">
-      <single>presented at</single>
-      <multiple>presented at</multiple>
-    </term>
-    <term name="event" form="verb-short">
-      <single>presented at</single>
-      <multiple>presented at</multiple>
-    </term>
-    <term name="event" form="noun">
-      <single>presentation</single>
-      <multiple>presentations</multiple>
-    </term>
-    <term name="event" form="noun-short">
-      <single>presentation</single>
-      <multiple>presentations</multiple>
-    </term>
-    <term name="recalled" form="long">
-      <single>retrieved</single>
-      <multiple>retrieved</multiple>
-    </term>
-    <term name="recalled" form="short">
-      <single>retrieved</single>
-      <multiple>retrieved</multiple>
-    </term>
-    <term name="original-date" form="long">
-      <single>originally published</single>
-      <multiple>originally published</multiple>
-    </term>
-    <term name="original-date" form="short">
-      <single>orig. pub.</single>
-      <multiple>orig. pub.</multiple>
-    </term>
-    <term name="original-date" form="verb">
-      <single>originally published</single>
-      <multiple>originally published</multiple>
-    </term>
-    <term name="original-date" form="verb-short">
-      <single>orig. pub.</single>
-      <multiple>orig. pub.</multiple>
-    </term>
-    <term name="original-date" form="noun">
-      <single>original publication</single>
-      <multiple>original publications</multiple>
-    </term>
-    <term name="original-date" form="noun-short">
-      <single>orig. pub.</single>
-      <multiple>orig. pub.</multiple>
-    </term>
-    <term name="issued" form="long">
-      <single>published</single>
-      <multiple>published</multiple>
-    </term>
-    <term name="issued" form="short">
-      <single>pub.</single>
-      <multiple>pub.</multiple>
-    </term>
-    <term name="issued" form="verb">
-      <single>published</single>
-      <multiple>published</multiple>
-    </term>
-    <term name="issued" form="verb-short">
-      <single>pub.</single>
-      <multiple>pub.</multiple>
-    </term>
-    <term name="issued" form="noun">
-      <single>publication</single>
-      <multiple>publications</multiple>
-    </term>
-    <term name="issued" form="noun-short">
-      <single>pub.</single>
-      <multiple>pub.</multiple>
-    </term>
-    <term name="accessed" form="long">
-      <single>accessed</single>
-      <multiple>accessed</multiple>
-    </term>
-    <term name="accessed" form="short">
-      <single>accessed</single>
-      <multiple>accessed</multiple>
-    </term>
-    <term name="accessed" form="verb">
-      <single>accessed</single>
-      <multiple>accessed</multiple>
-    </term>
-    <term name="accessed" form="verb-short">
-      <single>accessed</single>
-      <multiple>accessed</multiple>
-    </term>
-    <term name="accessed" form="noun">
-      <single>access</single>
-      <multiple>access</multiple>
-    </term>
-    <term name="accessed" form="noun-short">
-      <single>access</single>
-      <multiple>access</multiple>
-    </term>
-    <term name="submitted" form="long">
-      <single>submitted</single>
-      <multiple>submitted</multiple>
-    </term>
-    <term name="submitted" form="short">
-      <single>submitted</single>
-      <multiple>submitted</multiple>
-    </term>
-    <term name="submitted" form="verb">
-      <single>submitted</single>
-      <multiple>submitted</multiple>
-    </term>
-    <term name="submitted" form="verb-short">
-      <single>submitted</single>
-      <multiple>submitted</multiple>
-    </term>
-    <term name="submitted" form="noun">
-      <single>submission</single>
-      <multiple>submissions</multiple>
-    </term>
-    <term name="submitted" form="noun-short">
-      <single>submission</single>
-      <multiple>submissions</multiple>
-    </term>
-    <term name="abstract" form="long">
-      <single>abstract</single>
-      <multiple>abstracts</multiple>
-    </term>
-    <term name="abstract" form="short">
-      <single>abstract</single>
-      <multiple>abstracts</multiple>
-    </term>
-    <term name="annote" form="long">
-      <single>annotation</single>
-      <multiple>annotations</multiple>
-    </term>
-    <term name="annote" form="short">
-      <single>annotation</single>
-      <multiple>annotations</multiple>
-    </term>
-    <term name="reference" form="long">
-      <single>reference</single>
-      <multiple>references</multiple>
-    </term>
-    <term name="reference" form="short">
-      <single>reference</single>
-      <multiple>references</multiple>
-    </term>
-    <term name="references" form="long">
-      <single>references</single>
-      <multiple>references</multiple>
-    </term>
-    <term name="references" form="short">
-      <single>references</single>
-      <multiple>references</multiple>
-    </term>
-  </terms>
-  <date form="text">
-    <date-part name="year"/>
-  </date>
-</locale>`;
+// Use the complete English US locale
+const localeXML = localeEnUS;
 
 function getProcessor(styleXML, items, localeXML) {
   const sys = {
-    retrieveLocale: () => localeXML,
-    retrieveItem: id => items[id],
+    retrieveLocale: (lang) => {
+      console.log('Retrieving locale for lang:', lang);
+      return localeXML;
+    },
+    retrieveItem: (id) => {
+      console.log('Retrieving item for id:', id);
+      const item = items[id];
+      console.log('Retrieved item:', item);
+      return item;
+    },
   };
-  return new CSL.Engine(sys, styleXML);
+  
+  console.log('Creating CSL processor with style XML length:', styleXML.length);
+  const processor = new CSL.Engine(sys, styleXML);
+  console.log('CSL processor created:', processor);
+  return processor;
 }
 
 const CitationCallout = ({ citationId = 'ITEM-1' }) => {
   const citationText = useMemo(() => {
     try {
-      const processor = getProcessor(apaStyle, items, localeXML);
+      console.log('Processing citation with ID:', citationId);
+      console.log('Available items:', items);
+      
+      // Use Chicago style (known to work well)
+      const processor = getProcessor(chicagoStyle, items, localeXML);
+      
+      // Set up the processor properly - use plain text instead of HTML
+      processor.setOutputFormat('text');
       processor.updateItems([citationId]);
 
-      const [citation] = processor.makeCitationCluster({
+      console.log('Processor state after updateItems:', processor);
+      
+      // Try bibliography approach first
+      console.log('Trying bibliography approach...');
+      const bibliography = processor.makeBibliography();
+      console.log('Bibliography result:', bibliography);
+      
+      // Check different parts of the bibliography result
+      if (bibliography && bibliography.length > 0) {
+        console.log('Bibliography length:', bibliography.length);
+        console.log('Bibliography[0]:', bibliography[0]);
+        console.log('Bibliography[1]:', bibliography[1]);
+        
+        if (bibliography[1] && bibliography[1].length > 0) {
+          console.log('Found bibliography entry:', bibliography[1][0]);
+          return bibliography[1][0];
+        }
+      }
+
+      // Try citation cluster approach
+      console.log('Trying citation cluster approach...');
+      const citationResult = processor.makeCitationCluster({
         citationID: citationId,
         citationItems: [{ id: citationId }],
         properties: {},
       });
-
-      return citation[1] || `[${citationId}]`;
+      
+      console.log('Citation cluster result:', citationResult);
+      
+      // Try a simpler approach - just get the citation text directly
+      if (citationResult && citationResult.length > 0) {
+        const citation = citationResult[0];
+        console.log('Citation object:', citation);
+        
+        // Try to extract the text from the citation
+        if (citation && citation.length > 1) {
+          const citationText = citation[1];
+          console.log('Citation text:', citationText);
+          
+          if (citationText && citationText !== '[NO_PRINTED_FORM]') {
+            return citationText;
+          }
+        }
+      }
+      
+      // If all else fails, try to manually format the citation
+      console.log('Manual fallback - creating simple citation...');
+      const item = items[citationId];
+      if (item && item.author && item.author.length > 0) {
+        const author = item.author[0];
+        const year = item.issued && item.issued['date-parts'] ? item.issued['date-parts'][0][0] : 'n.d.';
+        const simpleCitation = `(${author.family}, ${year})`;
+        console.log('Manual citation:', simpleCitation);
+        return simpleCitation;
+      }
+      
+      return `[${citationId}]`;
     } catch (error) {
       console.error('Error processing citation:', error);
+      console.error('Error details:', error.message, error.stack);
       return `[${citationId}]`;
     }
   }, [citationId]);

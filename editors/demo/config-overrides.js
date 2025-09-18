@@ -74,6 +74,10 @@ module.exports = function override(config, env) {
             test: /\.csl$/,
             use: 'raw-loader',
           },
+          {
+            test: /\.xml$/,
+            use: 'raw-loader',
+          },
         ],
       },
     ],

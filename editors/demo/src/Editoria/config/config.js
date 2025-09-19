@@ -123,6 +123,7 @@ export default {
         'CodeBlock',
         'ToggleAi',
         'Tables',
+        'Citation',
         'TrackingAndEditing',
         'FindAndReplaceTool',
         'FullScreen',

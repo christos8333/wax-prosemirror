@@ -5,9 +5,11 @@ import CitationRightArea from './components/CitationRightArea';
 import CitationsFooterPlugin from './plugins/CitationsFooterPlugin';
 import CitationFooterContainerNodeView from './CitationFooterContainerNodeView';
 import CitationsPlugin from './plugins/CitationsPlugin';
+import CitationDropDownOptions from './CitationDropDownOptions';
 import CitationFooterList from './components/CitationFooterList';
 import CitationCalloutNodeView from './CitationCalloutNodeView';
 import CitationCallout from './components/CitationCallout';
+import CitationToolGroupService from './CitationToolGroupService/CitationToolGroupService';
 
 class CitationService extends Service {
   name = 'QuestionsService';
@@ -27,6 +29,7 @@ class CitationService extends Service {
   }
 
   register() {
+    this.container.bind('CitationDropDownOptions').to(CitationDropDownOptions);
     const createNode = this.container.get('CreateNode');
     const addPortal = this.container.get('AddPortal');
 
@@ -51,7 +54,7 @@ class CitationService extends Service {
     });
   }
 
-  dependencies = [];
+  dependencies = [new CitationToolGroupService()];
 }
 
 export default CitationService;

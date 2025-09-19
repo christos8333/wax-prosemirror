@@ -12,22 +12,41 @@ const CitationCalloutNode = styled.span`
   color: red;
 `;
 
+// const items = {
+//   'ITEM-1': {
+//     id: 'ITEM-1',
+//     type: 'book',
+//     title: 'The Example Book',
+//     author: [
+//       {
+//         family: 'Smith',
+//         given: 'John',
+//       },
+//     ],
+//     issued: {
+//       'date-parts': [[2020]],
+//     },
+//     publisher: 'Example Publisher',
+//     'publisher-place': 'New York',
+//   },
+// };
+
 const items = {
   'ITEM-1': {
     id: 'ITEM-1',
-    type: 'book',
-    title: 'The Example Book',
+    type: 'article-journal',
+    title:
+      'Collaboration in Virtual Environments: A Study of Remote Team Dynamics',
     author: [
-      {
-        family: 'Smith',
-        given: 'John',
-      },
+      { family: 'Smith', given: 'John A.' },
+      { family: 'Doe', given: 'Rebecca L.' },
     ],
-    issued: {
-      'date-parts': [[2020]],
-    },
-    publisher: 'Example Publisher',
-    'publisher-place': 'New York',
+    issued: { 'date-parts': [[2023]] },
+    'container-title': 'Journal of Digital Research',
+    volume: '15',
+    issue: '2',
+    page: '123-135',
+    DOI: '10.1000/jdr.2023.15.2.123',
   },
 };
 
@@ -44,6 +63,24 @@ function getProcessor(styleXML, items, localeXML) {
       console.log('Retrieving item for id:', id);
       const item = items[id];
       console.log('Retrieved item:', item);
+      // Ensure the item has all required properties
+      if (item) {
+        // Add missing properties that CSL might expect
+        const enhancedItem = {
+          ...item,
+          'citation-label': item['citation-label'] || id,
+          'citation-number': item['citation-number'] || 1,
+          'first-reference-note-number':
+            item['first-reference-note-number'] || 1,
+          'near-note': item['near-note'] || false,
+          'original-date': item['original-date'] || null,
+          status: item['status'] || 'published',
+          'suppress-author': item['suppress-author'] || false,
+          withheld: item['withheld'] || false,
+        };
+        console.log('Enhanced item:', enhancedItem);
+        return enhancedItem;
+      }
       return item;
     },
   };
@@ -60,12 +97,22 @@ const CitationCallout = ({ citationId = 'ITEM-1' }) => {
       console.log('Processing citation with ID:', citationId);
       console.log('Available items:', items);
 
-      // Use Chicago style (known to work well)
-      const processor = getProcessor(chicagoStyle, items, localeXML);
+      // Try using a simpler style first to avoid disambig errors
+      const processor = getProcessor(simpleStyle, items, localeXML);
 
       // Set up the processor properly - use plain text instead of HTML
       processor.setOutputFormat('text');
-      processor.updateItems([citationId]);
+
+      // Add error handling around updateItems
+      try {
+        console.log('Calling updateItems with citationId:', citationId);
+        processor.updateItems([citationId]);
+        console.log('updateItems completed successfully');
+      } catch (updateError) {
+        console.error('Error in updateItems:', updateError);
+        // Try to continue with a simpler approach
+        console.log('Attempting to continue without updateItems...');
+      }
 
       console.log('Processor state after updateItems:', processor);
 

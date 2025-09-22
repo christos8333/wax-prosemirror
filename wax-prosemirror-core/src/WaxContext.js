@@ -42,10 +42,7 @@ export default props => {
           Object.assign(context.transaction, tr);
         },
         setOption: option => {
-          setContext({
-            ...context,
-            options: { ...context.options, ...option },
-          });
+          Object.assign(context.options, option);
         },
         removeView: deletedView => {
           delete context.pmViews[deletedView];

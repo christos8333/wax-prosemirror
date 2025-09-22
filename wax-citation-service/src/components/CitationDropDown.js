@@ -10,7 +10,7 @@ import React, {
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
-import { WaxContext, Icon, useOnClickOutside } from 'wax-prosemirror-core';
+import { WaxContext, Icon, useOnClickOutside, PortalContext } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
   opacity: ${props => (props.disabled ? '0.4' : '1')};
@@ -124,6 +124,7 @@ const CitationDropDown = ({ item }) => {
 
   const context = useContext(WaxContext);
   const { activeView } = context;
+  const { setCitationFormat } = useContext(PortalContext);
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -218,7 +219,7 @@ const CitationDropDown = ({ item }) => {
               <span
                 key={option.value}
                 onClick={() => {
-                  context.setOption({ citationFormat: option.value });
+                  setCitationFormat(option.value);
                   openCloseMenu();
                 }}
                 onKeyDown={e => onKeyDown(e, index)}

@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import CSL from 'citeproc';
+import { PortalContext } from 'wax-prosemirror-core';
 import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
 import simpleStyle from '../styles/simple-author-date.csl?raw'; // Simple author-date style
 import apaStyle from '../styles/apa.csl?raw'; // APA CSL XML as string
@@ -102,13 +103,16 @@ function getProcessor(styleXML, items, localeXML) {
 }
 
 const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
-  useEffect(() => {
-    console.log('Context passed as prop:', context);
-  }, [context?.options?.citationFormat]);
+  const { citationFormat } = useContext(PortalContext);
 
-  // Get citation format from context, default to 'simple'
-  const citationFormat = context?.options?.citationFormat || 'simple';
-  console.log('Citation format:', citationFormat);
+  useEffect(() => {
+    console.log(
+      'CitationCallout rendered with citationFormat:',
+      citationFormat,
+    );
+  }, [citationFormat]);
+
+  console.log('Citation format from PortalContext:', citationFormat);
 
   const citationText = useMemo(() => {
     try {
@@ -117,25 +121,25 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
       console.log('Using citation format:', citationFormat);
 
       // Select style based on context option
-      let selectedStyle = simpleStyle; // default
+      let selectedStyle = simpleStyle;
       switch (citationFormat) {
         case 'APA':
           selectedStyle = apaStyle;
           break;
         case 'MLA':
-          selectedStyle = simpleStyle; // You can add MLA style
+          selectedStyle = simpleStyle;
           break;
         case 'chicago':
           selectedStyle = chicagoStyle;
           break;
         case 'harvard':
-          selectedStyle = simpleStyle; // You can add Harvard style
+          selectedStyle = simpleStyle;
           break;
         case 'vancouver':
-          selectedStyle = simpleStyle; // You can add Vancouver style
+          selectedStyle = simpleStyle;
           break;
         case 'ieee':
-          selectedStyle = simpleStyle; // You can add IEEE style
+          selectedStyle = simpleStyle;
           break;
         default:
           selectedStyle = simpleStyle;

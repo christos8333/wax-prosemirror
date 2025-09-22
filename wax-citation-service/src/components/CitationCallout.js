@@ -106,13 +106,42 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
     console.log('Context passed as prop:', context);
   }, [context?.options?.citationFormat]);
 
+  // Get citation format from context, default to 'simple'
+  const citationFormat = context?.options?.citationFormat || 'simple';
+  console.log('Citation format:', citationFormat);
+
   const citationText = useMemo(() => {
     try {
       console.log('Processing citation with ID:', citationId);
       console.log('Available items:', items);
+      console.log('Using citation format:', citationFormat);
 
-      // Try using a simpler style first to avoid disambig errors
-      const processor = getProcessor(simpleStyle, items, localeXML);
+      // Select style based on context option
+      let selectedStyle = simpleStyle; // default
+      switch (citationFormat) {
+        case 'APA':
+          selectedStyle = apaStyle;
+          break;
+        case 'MLA':
+          selectedStyle = simpleStyle; // You can add MLA style
+          break;
+        case 'chicago':
+          selectedStyle = chicagoStyle;
+          break;
+        case 'harvard':
+          selectedStyle = simpleStyle; // You can add Harvard style
+          break;
+        case 'vancouver':
+          selectedStyle = simpleStyle; // You can add Vancouver style
+          break;
+        case 'ieee':
+          selectedStyle = simpleStyle; // You can add IEEE style
+          break;
+        default:
+          selectedStyle = simpleStyle;
+      }
+
+      const processor = getProcessor(selectedStyle, items, localeXML);
 
       // Set up the processor properly - use plain text instead of HTML
       processor.setOutputFormat('text');
@@ -193,7 +222,7 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
       console.error('Error details:', error.message, error.stack);
       return `[${citationId}]`;
     }
-  }, [citationId]);
+  }, [citationId, citationFormat]);
 
   return <CitationCalloutNode>{citationText}</CitationCalloutNode>;
 };

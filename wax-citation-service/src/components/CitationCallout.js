@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import CSL from 'citeproc';
 import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
@@ -15,7 +15,7 @@ const CitationCalloutNode = styled.span`
   display: inline-block;
   vertical-align: baseline;
   pointer-events: none;
-  
+
   &.ProseMirror-selectednode {
     outline: 2px solid #68cef8;
     outline-offset: 1px;
@@ -84,9 +84,9 @@ function getProcessor(styleXML, items, localeXML) {
             item['first-reference-note-number'] || 1,
           'near-note': item['near-note'] || false,
           'original-date': item['original-date'] || null,
-          status: item['status'] || 'published',
+          status: item.status || 'published',
           'suppress-author': item['suppress-author'] || false,
-          withheld: item['withheld'] || false,
+          withheld: item.withheld || false,
         };
         console.log('Enhanced item:', enhancedItem);
         return enhancedItem;
@@ -101,7 +101,11 @@ function getProcessor(styleXML, items, localeXML) {
   return processor;
 }
 
-const CitationCallout = ({ citationId = 'ITEM-1' }) => {
+const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
+  useEffect(() => {
+    console.log('Context passed as prop:', context);
+  }, [context?.options?.citationFormat]);
+
   const citationText = useMemo(() => {
     try {
       console.log('Processing citation with ID:', citationId);

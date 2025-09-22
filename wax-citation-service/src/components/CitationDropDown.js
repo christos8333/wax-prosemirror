@@ -107,39 +107,28 @@ const CitationDropDown = ({ item }) => {
       value: 'chicago',
     },
     {
-      label: (
-        <Translation
-          defaultTrans="Add column before"
-          label="Wax.Tables.Add column before"
-        />
-      ),
-      value: 'addColumnBefore',
+      label: <Translation defaultTrans="Harvard" label="Wax.Tables.Harvard" />,
+      value: 'harvard',
     },
     {
       label: (
-        <Translation
-          defaultTrans="Add column after"
-          label="Wax.Tables.Add column after"
-        />
+        <Translation defaultTrans="Vancouver" label="Wax.Tables.Vancouver" />
       ),
-      value: 'addColumnAfter',
+      value: 'vancouver',
     },
     {
-      label: (
-        <Translation
-          defaultTrans="Delete column"
-          label="Wax.Tables.Delete column"
-        />
-      ),
-      value: 'deleteColumn',
+      label: <Translation defaultTrans="IEEE" label="Wax.Tables.IEEE" />,
+      value: 'ieee',
     },
   ];
 
-  const { activeView } = useContext(WaxContext);
+  const context = useContext(WaxContext);
+  const { activeView } = context;
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
-  const isDisabled = !item.select(activeView.state);
+  // const isDisabled = !item.select(activeView.state);
+  const isDisabled = false;
 
   useOnClickOutside(wrapperRef, () => setIsOpen(false));
 
@@ -210,9 +199,9 @@ const CitationDropDown = ({ item }) => {
             type="button"
           >
             <span>
-              {!isEmpty(i18n) && i18n.exists('Wax.Tables.Table Options')
-                ? t('Wax.Tables.Table Options')
-                : 'Table Options'}
+              {!isEmpty(i18n) && i18n.exists('Wax.Tables.Citation display')
+                ? t('Wax.Tables.Citation display')
+                : 'Citation display'}
             </span>
             <StyledIcon name="expand" />
           </DropDownButton>
@@ -229,12 +218,7 @@ const CitationDropDown = ({ item }) => {
               <span
                 key={option.value}
                 onClick={() => {
-                  //   item.run(
-                  //     activeView.state,
-                  //     activeView.dispatch,
-                  //     tablesFn[option.value],
-                  //   );
-
+                  context.setOption({ citationFormat: option.value });
                   openCloseMenu();
                 }}
                 onKeyDown={e => onKeyDown(e, index)}

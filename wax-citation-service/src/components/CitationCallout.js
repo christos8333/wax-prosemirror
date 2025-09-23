@@ -120,12 +120,24 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
       console.log('Available items:', items);
       console.log('Using citation format:', citationFormat);
 
-      // Select style based on context option
+      // For APA inline citations, use simple format: (Author, Year)
+      if (citationFormat === 'APA') {
+        const item = items[citationId];
+        if (item && item.author && item.author.length > 0) {
+          const author = item.author[0];
+          const year = item.issued && item.issued['date-parts'] 
+            ? item.issued['date-parts'][0][0] 
+            : 'n.d.';
+          const apaInline = `(${author.family}, ${year})`;
+          console.log('APA inline citation:', apaInline);
+          return apaInline;
+        }
+        return `[${citationId}]`;
+      }
+
+      // For other styles, use CSL processor
       let selectedStyle = simpleStyle;
       switch (citationFormat) {
-        case 'APA':
-          selectedStyle = apaStyle;
-          break;
         case 'MLA':
           selectedStyle = simpleStyle;
           break;

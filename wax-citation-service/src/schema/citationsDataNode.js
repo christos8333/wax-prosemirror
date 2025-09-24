@@ -7,6 +7,8 @@ const citationsDataNode = {
   atom: true,
   selectable: false,
   draggable: false,
+  defining: true,
+  isolating: true,
   toDOM(node) {
     return ['div', { class: 'citations-data' }, node.attrs.text];
   },

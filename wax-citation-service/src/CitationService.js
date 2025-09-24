@@ -3,6 +3,7 @@ import citationsDataNode from './schema/citationsDataNode';
 import citationCallout from './schema/citationCallout';
 import CitationRightArea from './components/CitationRightArea';
 import CitationsFooterPlugin from './plugins/CitationsFooterPlugin';
+import CitationFooterSelectionPlugin from './plugins/CitationFooterSelectionPlugin';
 import CitationFooterContainerNodeView from './CitationFooterContainerNodeView';
 import CitationDropDownOptions from './CitationDropDownOptions';
 import CitationFooterList from './components/CitationFooterList';
@@ -15,12 +16,21 @@ class CitationService extends Service {
   name = 'QuestionsService';
 
   boot() {
+  
     this.app.PmPlugins.add(
       'citationsFooterPlugin',
       CitationsFooterPlugin('citationsFooterPlugin', this.app),
     );
 
-    this.app.PmPlugins.add('citationCleanupPlugin', CitationCleanupPlugin());
+    this.app.PmPlugins.add(
+      'citationFooterSelectionPlugin',
+      CitationFooterSelectionPlugin(),
+    );
+
+    this.app.PmPlugins.add(
+      'citationCleanupPlugin',
+      CitationCleanupPlugin(),
+    );
 
     const layout = this.container.get('Layout');
     layout.addComponent('citationRightArea', CitationRightArea);

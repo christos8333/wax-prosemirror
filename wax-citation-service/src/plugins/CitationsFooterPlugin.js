@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { TextSelection } from 'prosemirror-state';
 
 const citationsFooterPlugin = new PluginKey('citationsFooterPlugin');
 
@@ -10,13 +11,61 @@ export default (key, app) => {
   return new Plugin({
     key: citationsFooterPlugin,
     appendTransaction(transactions, oldState, newState) {
+      const { doc, tr } = newState;
+      const { citations_data_node } = newState.schema.nodes;
+
+      // Check if there's a footer and if cursor is trying to type after it
+      let footerPos = null;
+      let footerSize = null;
+      
+      doc.descendants((node, pos) => {
+        if (node.type.name === 'citations_data_node') {
+          footerPos = pos;
+          footerSize = node.nodeSize;
+        }
+      });
+
+      // If footer exists and cursor is after it, move cursor to before the footer
+      if (footerPos !== null && footerSize !== null) {
+        const footerEnd = footerPos + footerSize;
+        const selection = newState.selection;
+        
+        // Check if selection is after the footer
+        if (selection.from >= footerEnd) {
+          const newTr = newState.tr;
+          // Move cursor to just before the footer
+          const newPos = Math.max(0, footerPos - 1);
+          const newSelection = TextSelection.near(doc.resolve(newPos));
+          newTr.setSelection(newSelection);
+          return newTr;
+        }
+      }
+
+      // Only run citation management if document actually changed
       if (oldState.doc.eq(newState.doc)) {
         return null;
       }
 
-      const { doc, tr } = newState;
+      // Count citations in old and new state
+      let oldCitationCount = 0;
+      let newCitationCount = 0;
+      
+      oldState.doc.descendants(node => {
+        if (node.type.name === 'citation_callout') {
+          oldCitationCount++;
+        }
+      });
+      
+      newState.doc.descendants(node => {
+        if (node.type.name === 'citation_callout') {
+          newCitationCount++;
+        }
+      });
 
-      const { citations_data_node } = newState.schema.nodes;
+      // Only run if citation count changed
+      if (oldCitationCount === newCitationCount) {
+        return null;
+      }
 
       // Check if we need to do anything at all
       let footerCount = 0;

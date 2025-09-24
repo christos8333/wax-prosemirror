@@ -1,7 +1,8 @@
-import React, { useContext, useState, useMemo, useCallback } from 'react';
+import React, { useContext, useState } from 'react';
 import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import citationDataService from '../services/CitationDataService';
 
 const CitationManagerContainer = styled.div`
   background-color: #f8f9fa;
@@ -326,6 +327,8 @@ const CitationManager = () => {
 
   const handleAddToText = citationData => {
     const citationId = uuidv4();
+    // Store the citation data in the service
+    citationDataService.addCitation(citationId, citationData);
 
     const citationCalloutType = main.state.schema.nodes.citation_callout;
 
@@ -339,12 +342,18 @@ const CitationManager = () => {
 
     // Get current selection position
     const { from } = main.state.selection;
+    console.log('Inserting citation at position:', from);
 
     // Create transaction to insert the citation callout
     const tr = main.state.tr.insert(from, citationCalloutNode);
 
     // Dispatch the transaction
     main.dispatch(tr);
+    console.log('Citation inserted successfully');
+    console.log(
+      'New citation should be visible in document with ID:',
+      citationId,
+    );
   };
 
   const tabs = [

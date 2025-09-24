@@ -1,9 +1,6 @@
 /* eslint-disable no-plusplus */
-
 /* eslint-disable camelcase */
-
-import { Plugin, PluginKey } from 'prosemirror-state';
-import { TextSelection } from 'prosemirror-state';
+import { TextSelection, Plugin, PluginKey } from 'prosemirror-state';
 
 const citationsFooterPlugin = new PluginKey('citationsFooterPlugin');
 
@@ -17,7 +14,7 @@ export default (key, app) => {
       // Check if there's a footer and if cursor is trying to type after it
       let footerPos = null;
       let footerSize = null;
-      
+
       doc.descendants((node, pos) => {
         if (node.type.name === 'citations_data_node') {
           footerPos = pos;
@@ -28,8 +25,8 @@ export default (key, app) => {
       // If footer exists and cursor is after it, move cursor to before the footer
       if (footerPos !== null && footerSize !== null) {
         const footerEnd = footerPos + footerSize;
-        const selection = newState.selection;
-        
+        const { selection } = newState;
+
         // Check if selection is after the footer
         if (selection.from >= footerEnd) {
           const newTr = newState.tr;
@@ -49,13 +46,13 @@ export default (key, app) => {
       // Count citations in old and new state
       let oldCitationCount = 0;
       let newCitationCount = 0;
-      
+
       oldState.doc.descendants(node => {
         if (node.type.name === 'citation_callout') {
           oldCitationCount++;
         }
       });
-      
+
       newState.doc.descendants(node => {
         if (node.type.name === 'citation_callout') {
           newCitationCount++;

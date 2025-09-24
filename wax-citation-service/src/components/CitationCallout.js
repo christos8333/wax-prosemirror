@@ -149,9 +149,10 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
         return `[${citationId}]`;
       }
 
-      // For Chicago inline citations, use format: (Author Year, Page)
-      if (citationFormat === 'Chicago') {
+      if (citationFormat === 'chicago') {
+        console.log('Processing Chicago citation...');
         const item = items[citationId];
+        console.log('Chicago item:', item);
         if (item && item.author && item.author.length > 0) {
           const author = item.author[0];
           const year = item.issued && item.issued['date-parts'] 
@@ -160,21 +161,19 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
           // For Chicago, we can include page numbers if available
           const page = item.page ? `, ${item.page.split('-')[0]}` : ''; // Use first page if range
           const chicagoInline = `(${author.family} ${year}${page})`;
-          console.log('Chicago inline citation:', chicagoInline);
+          console.log('Chicago inline citation result:', chicagoInline);
           return chicagoInline;
         }
+        console.log('Chicago citation fallback to ID');
         return `[${citationId}]`;
       }
 
       // For other styles, use CSL processor
+      console.log('Falling through to CSL processor for format:', citationFormat);
       let selectedStyle = simpleStyle;
       switch (citationFormat) {
         case 'MLA':
           selectedStyle = simpleStyle;
-          break;
-        case 'Chicago':
-        case 'chicago':
-          selectedStyle = chicagoStyle;
           break;
         case 'harvard':
           selectedStyle = simpleStyle;

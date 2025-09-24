@@ -10,7 +10,6 @@ export default (key, app) => {
   return new Plugin({
     key: citationsFooterPlugin,
     appendTransaction(transactions, oldState, newState) {
-      // Only process if the document structure actually changed
       if (oldState.doc.eq(newState.doc)) {
         return null;
       }

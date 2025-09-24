@@ -1,6 +1,6 @@
-import { QuestionsNodeView } from 'wax-prosemirror-core';
+import { AbstractNodeView } from 'wax-prosemirror-core';
 
-export default class CitationCalloutNodeView extends QuestionsNodeView {
+export default class CitationCalloutNodeView extends AbstractNodeView {
   constructor(
     node,
     view,

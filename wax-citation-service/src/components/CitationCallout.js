@@ -135,12 +135,44 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
         return `[${citationId}]`;
       }
 
+      // For MLA inline citations, use format: (Author Page)
+      if (citationFormat === 'MLA') {
+        const item = items[citationId];
+        if (item && item.author && item.author.length > 0) {
+          const author = item.author[0];
+          // For MLA, we typically don't include page numbers in inline citations unless specified
+          // You can add page number logic here if needed
+          const mlaInline = `(${author.family})`;
+          console.log('MLA inline citation:', mlaInline);
+          return mlaInline;
+        }
+        return `[${citationId}]`;
+      }
+
+      // For Chicago inline citations, use format: (Author Year, Page)
+      if (citationFormat === 'Chicago') {
+        const item = items[citationId];
+        if (item && item.author && item.author.length > 0) {
+          const author = item.author[0];
+          const year = item.issued && item.issued['date-parts'] 
+            ? item.issued['date-parts'][0][0] 
+            : 'n.d.';
+          // For Chicago, we can include page numbers if available
+          const page = item.page ? `, ${item.page.split('-')[0]}` : ''; // Use first page if range
+          const chicagoInline = `(${author.family} ${year}${page})`;
+          console.log('Chicago inline citation:', chicagoInline);
+          return chicagoInline;
+        }
+        return `[${citationId}]`;
+      }
+
       // For other styles, use CSL processor
       let selectedStyle = simpleStyle;
       switch (citationFormat) {
         case 'MLA':
           selectedStyle = simpleStyle;
           break;
+        case 'Chicago':
         case 'chicago':
           selectedStyle = chicagoStyle;
           break;

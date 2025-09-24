@@ -1,6 +1,7 @@
 class CitationDataService {
   constructor() {
     this.citations = {};
+    this.visibleCitations = new Set();
   }
 
   addCitation(citationId, citationData) {
@@ -21,6 +22,21 @@ class CitationDataService {
 
   getAllCitations() {
     return this.citations;
+  }
+
+  setVisibleCitations(visibleCitations) {
+    this.visibleCitations = visibleCitations;
+  }
+
+  getVisibleCitations() {
+    // Return only citations that are currently visible in the document
+    const visibleCitationsArray = [];
+    this.visibleCitations.forEach(citationId => {
+      if (this.citations[citationId]) {
+        visibleCitationsArray.push(this.citations[citationId]);
+      }
+    });
+    return visibleCitationsArray;
   }
 }
 

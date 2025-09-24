@@ -1,5 +1,5 @@
 /* eslint-disable no-else-return */
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { PortalContext } from 'wax-prosemirror-core';
 import citationDataService from '../services/CitationDataService';
@@ -13,10 +13,24 @@ const CitationListWrapper = styled.div`
 
 const CitationFooterList = () => {
   const { citationFormat } = useContext(PortalContext);
+  const [citations, setCitations] = useState([]);
 
-  // Get citations from the service instead of hardcoded data
-  const allCitations = citationDataService.getAllCitations();
-  const citations = Object.values(allCitations);
+  // Update citations when the service changes
+  useEffect(() => {
+    const updateCitations = () => {
+      const visibleCitations = citationDataService.getVisibleCitations();
+      setCitations(visibleCitations);
+    };
+
+    // Initial load
+    updateCitations();
+
+    // Set up a simple polling mechanism to check for changes
+    // In a real app, you might want to use a more sophisticated event system
+    const interval = setInterval(updateCitations, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const formatCitation = citation => {
     if (citationFormat === 'APA') {

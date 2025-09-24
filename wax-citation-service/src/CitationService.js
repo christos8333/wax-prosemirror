@@ -10,6 +10,7 @@ import CitationFooterList from './components/CitationFooterList';
 import CitationCalloutNodeView from './CitationCalloutNodeView';
 import CitationCallout from './components/CitationCallout';
 import CitationToolGroupService from './CitationToolGroupService/CitationToolGroupService';
+import CitationCleanupPlugin from './plugins/CitationCleanupPlugin';
 
 class CitationService extends Service {
   name = 'QuestionsService';
@@ -22,6 +23,11 @@ class CitationService extends Service {
     this.app.PmPlugins.add(
       'citationsFooterPlugin',
       CitationsFooterPlugin('citationsFooterPlugin', this.app),
+    );
+
+    this.app.PmPlugins.add(
+      'citationCleanupPlugin',
+      CitationCleanupPlugin(),
     );
 
     const layout = this.container.get('Layout');

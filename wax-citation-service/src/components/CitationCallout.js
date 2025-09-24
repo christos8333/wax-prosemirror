@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CSL from 'citeproc';
 import { PortalContext } from 'wax-prosemirror-core';
 import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
+import harvardStyle from '../styles/harvard.csl?raw'; // Harvard author-date style
 import simpleStyle from '../styles/simple-author-date.csl?raw'; // Simple author-date style
 import apaStyle from '../styles/apa.csl?raw'; // APA CSL XML as string
 import jmIndigoStyle from '../styles/jm-indigo.csl?raw'; // JM Indigo CSL XML as string (for future use)
@@ -168,6 +169,24 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
         return `[${citationId}]`;
       }
 
+      // For Harvard inline citations, use format: (Author, Year)
+      if (citationFormat === 'harvard') {
+        console.log('Processing Harvard citation...');
+        const item = items[citationId];
+        console.log('Harvard item:', item);
+        if (item && item.author && item.author.length > 0) {
+          const author = item.author[0];
+          const year = item.issued && item.issued['date-parts'] 
+            ? item.issued['date-parts'][0][0] 
+            : 'n.d.';
+          const harvardInline = `(${author.family}, ${year})`;
+          console.log('Harvard inline citation result:', harvardInline);
+          return harvardInline;
+        }
+        console.log('Harvard citation fallback to ID');
+        return `[${citationId}]`;
+      }
+
       // For other styles, use CSL processor
       console.log('Falling through to CSL processor for format:', citationFormat);
       let selectedStyle = simpleStyle;
@@ -176,7 +195,7 @@ const CitationCallout = ({ citationId = 'ITEM-1', context }) => {
           selectedStyle = simpleStyle;
           break;
         case 'harvard':
-          selectedStyle = simpleStyle;
+          selectedStyle = harvardStyle;
           break;
         case 'vancouver':
           selectedStyle = simpleStyle;

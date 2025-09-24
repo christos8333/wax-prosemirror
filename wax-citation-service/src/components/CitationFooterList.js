@@ -59,6 +59,30 @@ const CitationFooterList = () => {
       return `${author.family}, ${author.given}. ${year}. ${citation.title}. ${citation.publisher}.`;
     }
     
+    if (citationFormat === 'harvard') {
+      // Harvard format: Author, Initial. Year. Title. Publisher/Journal.
+      const author = citation.author[0];
+      const year = citation.issued && citation.issued['date-parts'] 
+        ? citation.issued['date-parts'][0][0] 
+        : 'n.d.';
+      // Use first initial of given name
+      const initial = author.given ? author.given.charAt(0) + '.' : '';
+      
+      // Handle different citation types
+      if (citation.type === 'article-journal') {
+        // For journal articles: Author, Initial. Year. Title. Journal, Volume(Issue), pages.
+        const journal = citation['container-title'] || 'Unknown Journal';
+        const volume = citation.volume ? `, ${citation.volume}` : '';
+        const issue = citation.issue ? `(${citation.issue})` : '';
+        const pages = citation.page ? `, ${citation.page}` : '';
+        return `${author.family}, ${initial} ${year}. ${citation.title}. ${journal}${volume}${issue}${pages}.`;
+      } else {
+        // For books: Author, Initial. Year. Title. Publisher.
+        const publisher = citation.publisher || 'Unknown Publisher';
+        return `${author.family}, ${initial} ${year}. ${citation.title}. ${publisher}.`;
+      }
+    }
+    
     // Default format for other styles
     return `${citation.author[0].family}, ${citation.author[0].given}. ${citation.title}.`;
   };
@@ -70,6 +94,8 @@ const CitationFooterList = () => {
       case 'APA':
         return 'References';
       case 'Chicago':
+        return 'References';
+      case 'harvard':
         return 'References';
       default:
         return 'References';

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { QuestionsNodeView } from 'wax-prosemirror-core';
 
 export default class CitationFooterContainerNodeView extends QuestionsNodeView {
@@ -31,9 +32,7 @@ export default class CitationFooterContainerNodeView extends QuestionsNodeView {
       return true;
     }
 
-    // Prevent keyboard events that could delete the node view
     if (event.type === 'keydown') {
-      // Prevent backspace and delete from deleting the citation footer
       if (event.key === 'Backspace' || event.key === 'Delete') {
         return true;
       }
@@ -47,14 +46,11 @@ export default class CitationFooterContainerNodeView extends QuestionsNodeView {
   }
 
   handleKeyDown(view, event) {
-    // Prevent deletion of the citation footer node
     if (event.key === 'Backspace' || event.key === 'Delete') {
-      // Check if the selection is at the beginning of the document or right after the footer
       const { state } = view;
       const { selection } = state;
       const { from } = selection;
-      
-      // If cursor is right after the footer node, prevent backspace
+
       if (from === state.doc.content.size) {
         event.preventDefault();
         return true;

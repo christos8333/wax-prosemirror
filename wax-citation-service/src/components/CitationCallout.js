@@ -154,6 +154,15 @@ const CitationCallout = props => {
         return `[${citationId}]`;
       }
 
+      // For IEEE inline citations, use format: [1], [2], etc. (same as Vancouver)
+      if (citationFormat === 'ieee') {
+        const ieeeNumber = citationDataService.getVancouverNumber(citationId);
+        if (ieeeNumber) {
+          return `[${ieeeNumber}]`;
+        }
+        return `[${citationId}]`;
+      }
+
       // For other styles, use CSL processor
       let selectedStyle = simpleStyle;
       switch (citationFormat) {
@@ -162,9 +171,6 @@ const CitationCallout = props => {
           break;
         case 'harvard':
           selectedStyle = harvardStyle;
-          break;
-        case 'ieee':
-          selectedStyle = simpleStyle;
           break;
         default:
           selectedStyle = simpleStyle;

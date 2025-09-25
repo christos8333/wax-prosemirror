@@ -18,15 +18,13 @@ const CitationFooterList = () => {
   // Update citations when the service changes
   useEffect(() => {
     const updateCitations = () => {
-      if (citationFormat === 'vancouver') {
-        // Vancouver: Show only unique citations (no duplicates)
-        const vancouverCitations = citationDataService.getCitationsInVancouverOrder();
-        
-        setCitations(vancouverCitations);
+      if (citationFormat === 'vancouver' || citationFormat === 'ieee') {
+        // Vancouver and IEEE: Show only unique citations (no duplicates)
+        const uniqueCitations = citationDataService.getCitationsInVancouverOrder();
+        setCitations(uniqueCitations);
       } else {
         // Other styles: Show all citation instances (including duplicates)
         const visibleCitations = citationDataService.getVisibleCitationInstances();
-      
         setCitations(visibleCitations);
       }
     };
@@ -115,6 +113,26 @@ const CitationFooterList = () => {
       return `${author.family} ${initial}. ${title}. ${publisher}; ${year}.`;
     }
 
+    if (citationFormat === 'ieee') {
+      // IEEE format: [number] J. Smith, Title. Publisher, Year.
+      if (!citation.author || !citation.author[0]) {
+        return `[Citation ${citation.id || 'Unknown'}]`;
+      }
+
+      const author = citation.author[0];
+      const year =
+        citation.issued && citation.issued['date-parts']
+          ? citation.issued['date-parts'][0][0]
+          : 'n.d.';
+      // Use first initial of given name
+      const initial = author.given ? author.given.charAt(0) : '';
+      const publisher = citation.publisher || 'Unknown Publisher';
+      const title = citation.title || 'Unknown Title';
+      return `[${citation.vancouverNumber || '?'}] ${initial}. ${
+        author.family
+      }, ${title}. ${publisher}, ${year}.`;
+    }
+
     // Default format for other styles
     return `${citation.author[0].family}, ${citation.author[0].given}. ${citation.title}.`;
   };
@@ -122,7 +140,7 @@ const CitationFooterList = () => {
   return (
     <CitationListWrapper>
       <h1>References</h1>
-      {citationFormat === 'vancouver' ? (
+      {citationFormat === 'vancouver' || citationFormat === 'ieee' ? (
         <ol>
           {citations.map((citation, index) => (
             <li key={`${citation.id}-${index}`}>{formatCitation(citation)}</li>

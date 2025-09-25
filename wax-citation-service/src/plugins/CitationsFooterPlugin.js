@@ -66,19 +66,19 @@ export default (key, app) => {
         // Even if count didn't change, check if order changed (for drag & drop)
         const oldOrder = [];
         const newOrder = [];
-        
+
         oldState.doc.descendants(node => {
           if (node.type.name === 'citation_callout') {
             oldOrder.push(node.attrs?.id);
           }
         });
-        
+
         newState.doc.descendants(node => {
           if (node.type.name === 'citation_callout') {
             newOrder.push(node.attrs?.id);
           }
         });
-        
+
         // If order is the same, don't run
         if (JSON.stringify(oldOrder) === JSON.stringify(newOrder)) {
           return null;
@@ -88,14 +88,14 @@ export default (key, app) => {
       // Track citations for Vancouver numbering (unique IDs only)
       const citationIdsInOrder = [];
       const allCitationInstances = []; // Track all instances (including duplicates)
-      
+
       newState.doc.descendants((node, pos) => {
         if (node.type.name === 'citation_callout') {
           const citationId = node.attrs?.id;
           if (citationId) {
             // Track all instances (including duplicates)
             allCitationInstances.push(citationId);
-            
+
             // Track unique IDs for Vancouver numbering
             if (!citationIdsInOrder.includes(citationId)) {
               citationIdsInOrder.push(citationId);
@@ -105,11 +105,10 @@ export default (key, app) => {
         }
       });
 
-      
-
       // Update citation order if it changed
       const currentOrder = citationDataService.citationOrder;
-      const hasChanged = JSON.stringify(currentOrder) !== JSON.stringify(citationIdsInOrder);
+      const hasChanged =
+        JSON.stringify(currentOrder) !== JSON.stringify(citationIdsInOrder);
       if (hasChanged) {
         citationDataService.setCitationOrder(citationIdsInOrder);
         // Reorder Vancouver numbers based on new document order

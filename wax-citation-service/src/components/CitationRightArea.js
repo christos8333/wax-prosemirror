@@ -1,5 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { WaxContext, ApplicationContext, PortalContext } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  PortalContext,
+} from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import citationDataService from '../services/CitationDataService';
 
@@ -328,8 +332,7 @@ const CitationManager = () => {
   const handleAddToText = citationData => {
     // Use hash-based ID for ALL citation formats (same content = same ID)
     const citationId = citationDataService.generateCitationId(citationData);
-    console.log(`Using hash-based ID ${citationId} for citation (format: ${citationFormat})`);
-    
+
     // Store the citation data in the service
     citationDataService.addCitation(citationId, citationData);
 
@@ -345,18 +348,12 @@ const CitationManager = () => {
 
     // Get current selection position
     const { from } = main.state.selection;
-    console.log('Inserting citation at position:', from);
 
     // Create transaction to insert the citation callout
     const tr = main.state.tr.insert(from, citationCalloutNode);
 
     // Dispatch the transaction
     main.dispatch(tr);
-    console.log('Citation inserted successfully');
-    console.log(
-      'New citation should be visible in document with ID:',
-      citationId,
-    );
   };
 
   const tabs = [

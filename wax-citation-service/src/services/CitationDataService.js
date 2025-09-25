@@ -62,7 +62,7 @@ class CitationDataService {
   }
 
   getVisibleCitationInstances() {
-    // Return all citation instances (including duplicates) for non-Vancouver styles
+    // Return all citation instances (including duplicates) for non-Vancouver and IEEE styles
     return this.visibleCitationInstances
       .map(citationId => {
         if (this.citations[citationId]) {
@@ -73,16 +73,16 @@ class CitationDataService {
       .filter(citation => citation !== null);
   }
 
-  // Assign a permanent number to a citation ID when first encountered (Vancouver)
+  // Assign a permanent number to a citation ID when first encountered (Vancouver and IEEE)
   assignNumber(citationId) {
     if (!this.citationNumbers.has(citationId)) {
       this.citationNumbers.set(citationId, this.nextNumber);
-      this.nextNumber++;
+      this.nextNumber += 1;
     }
     return this.citationNumbers.get(citationId);
   }
 
-  // Reorder Vancouver numbers based on current document order
+  // Reorder Vancouver and IEEE numbers based on current document order
   reorderVancouverNumbers(citationIdsInOrder) {
     // Clear existing numbers
     this.citationNumbers.clear();
@@ -91,11 +91,11 @@ class CitationDataService {
     // Assign new numbers based on document order
     citationIdsInOrder.forEach(citationId => {
       this.citationNumbers.set(citationId, this.nextNumber);
-      this.nextNumber++;
+      this.nextNumber += 1;
     });
 
     // Increment counter to notify components of changes
-    this.updateCounter++;
+    this.updateCounter += 1;
   }
 
   // Get the update counter (for component re-renders)
@@ -103,7 +103,7 @@ class CitationDataService {
     return this.updateCounter;
   }
 
-  // Get Vancouver number for a citation (permanent number)
+  // Get Vancouver and IEEE number for a citation (permanent number)
   getVancouverNumber(citationId) {
     if (this.citationNumbers.has(citationId)) {
       return this.citationNumbers.get(citationId);

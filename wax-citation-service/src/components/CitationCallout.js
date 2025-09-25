@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useMemo, useContext } from 'react';
+import React, { useMemo, useContext } from 'react';
 import styled from 'styled-components';
 import CSL from 'citeproc';
 import { PortalContext } from 'wax-prosemirror-core';
 import citationDataService from '../services/CitationDataService';
-import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
+// import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
 import harvardStyle from '../styles/harvard.csl?raw'; // Harvard author-date style
 import simpleStyle from '../styles/simple-author-date.csl?raw'; // Simple author-date style
-import apaStyle from '../styles/apa.csl?raw'; // APA CSL XML as string
-import jmIndigoStyle from '../styles/jm-indigo.csl?raw'; // JM Indigo CSL XML as string (for future use)
+// import apaStyle from '../styles/apa.csl?raw'; // APA CSL XML as string
+// import jmIndigoStyle from '../styles/jm-indigo.csl?raw'; // JM Indigo CSL XML as string (for future use)
 import localeEnUS from '../styles/locales-en-US.xml?raw'; // Complete English US locale
 
 const CitationCalloutNode = styled.span`
@@ -30,7 +30,7 @@ const localeXML = localeEnUS;
 
 function getProcessor(styleXML, items) {
   const sys = {
-    retrieveLocale: lang => {
+    retrieveLocale: () => {
       return localeXML;
     },
     retrieveItem: id => {

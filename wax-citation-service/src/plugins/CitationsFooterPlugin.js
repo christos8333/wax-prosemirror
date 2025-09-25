@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
 import { TextSelection, Plugin, PluginKey } from 'prosemirror-state';

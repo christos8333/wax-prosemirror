@@ -1,3 +1,5 @@
+/* eslint-disable prefer-template */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-else-return */
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -136,6 +138,8 @@ const CitationFooterList = () => {
     // Default format for other styles
     return `${citation.author[0].family}, ${citation.author[0].given}. ${citation.title}.`;
   };
+
+  if (citations.length === 0) return null;
 
   return (
     <CitationListWrapper>

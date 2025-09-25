@@ -27,9 +27,9 @@ const Title = styled.h1`
 const TabContainer = styled.div`
   background-color: #e9ecef;
   border-radius: 8px;
-  padding: 4px;
   display: flex;
   margin-bottom: 24px;
+  padding: 4px;
   width: fit-content;
 `;
 
@@ -403,7 +403,7 @@ const CitationManager = () => {
       <SectionHeading>Reference List</SectionHeading>
 
       <CitationExamplesContainer>
-        {sampleCitations.map((citation, index) => {
+        {sampleCitations.map(citation => {
           const getCitationTypeLabel = type => {
             const typeLabels = {
               'article-journal': 'Journal Article',
@@ -441,7 +441,7 @@ const CitationManager = () => {
           const formatCitationText = citation => {
             const authors = formatAuthors(citation.author);
             const year = formatYear(citation.issued);
-            const title = citation.title;
+            const { title } = citation;
 
             let citationText = `${authors}. ${year}. ${title}`;
 

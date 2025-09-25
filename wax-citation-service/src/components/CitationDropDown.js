@@ -242,13 +242,13 @@ const CitationDropDown = () => {
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}
                 role="menuitem"
-                tabIndex="-1"
                 style={{
                   backgroundColor:
                     option.value === citationFormat ? '#e3f2fd' : 'transparent',
                   fontWeight:
                     option.value === citationFormat ? 'bold' : 'normal',
                 }}
+                tabIndex="-1"
               >
                 {option.label}
               </span>

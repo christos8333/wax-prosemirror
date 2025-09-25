@@ -18,14 +18,14 @@ import {
 } from 'wax-prosemirror-core';
 
 const Wrapper = styled.div`
-  opacity: ${props => (props.disabled ? '0.4' : '1')};
   display: flex;
+  opacity: ${props => (props.disabled ? '0.4' : '1')};
 `;
 
 const ButtonWrapper = styled.div`
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 const DropDownButton = styled.button`
@@ -43,18 +43,18 @@ const DropDownButton = styled.button`
 `;
 
 const DropDownMenu = styled.div`
-  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
   background: #fff;
-  display: flex;
-  flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   box-shadow: 0 0.2rem 0.4rem rgb(0 0 0 / 10%);
+  display: flex;
+  flex-direction: column;
   margin: 29px auto auto;
-  position: absolute;
-  width: 170px;
   max-height: 180px;
   overflow-y: scroll;
+  position: absolute;
+  visibility: ${props => (props.isOpen ? 'visible' : 'hidden')};
+  width: 170px;
   z-index: 2;
 
   span {
@@ -71,11 +71,11 @@ const DropDownMenu = styled.div`
 
 const StyledIcon = styled(Icon)`
   height: 18px;
-  width: 18px;
   margin-left: auto;
+  width: 18px;
 `;
 
-const CitationDropDown = ({ item }) => {
+const CitationDropDown = () => {
   const { t, i18n } = useTranslation();
   const Translation = ({ label, defaultTrans }) => {
     return (
@@ -83,7 +83,23 @@ const CitationDropDown = ({ item }) => {
     );
   };
 
+  const getCurrentFormatLabel = () => {
+    const currentOption = dropDownOptions.find(
+      option => option.value === citationFormat,
+    );
+    if (currentOption) {
+      return currentOption.label;
+    }
+    return !isEmpty(i18n) && i18n.exists('Wax.Tables.Citation display')
+      ? t('Wax.Tables.Citation display')
+      : 'Citation display';
+  };
+
   const dropDownOptions = [
+    {
+      label: <Translation defaultTrans="Simple" label="Wax.Citation.Simple" />,
+      value: 'simple',
+    },
     {
       label: (
         <Translation
@@ -129,7 +145,7 @@ const CitationDropDown = ({ item }) => {
 
   const context = useContext(WaxContext);
   const { activeView } = context;
-  const { setCitationFormat } = useContext(PortalContext);
+  const { citationFormat, setCitationFormat } = useContext(PortalContext);
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -204,11 +220,7 @@ const CitationDropDown = ({ item }) => {
             onMouseDown={openCloseMenu}
             type="button"
           >
-            <span>
-              {!isEmpty(i18n) && i18n.exists('Wax.Tables.Citation display')
-                ? t('Wax.Tables.Citation display')
-                : 'Citation display'}
-            </span>
+            <span>{getCurrentFormatLabel()}</span>
             <StyledIcon name="expand" />
           </DropDownButton>
         </ButtonWrapper>
@@ -231,6 +243,12 @@ const CitationDropDown = ({ item }) => {
                 ref={itemRefs.current[index]}
                 role="menuitem"
                 tabIndex="-1"
+                style={{
+                  backgroundColor:
+                    option.value === citationFormat ? '#e3f2fd' : 'transparent',
+                  fontWeight:
+                    option.value === citationFormat ? 'bold' : 'normal',
+                }}
               >
                 {option.label}
               </span>

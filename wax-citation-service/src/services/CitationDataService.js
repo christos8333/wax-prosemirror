@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 class CitationDataService {
   constructor() {
     this.citations = {};
@@ -6,6 +7,7 @@ class CitationDataService {
     this.citationOrder = []; // Track order of first appearance of unique citation IDs
     this.citationNumbers = new Map(); // Map citation IDs to their permanent Vancouver numbers
     this.nextNumber = 1; // Next available Vancouver number
+    this.updateCounter = 0; // Counter to force re-renders when Vancouver numbers change
   }
 
   // Generate hash-based ID from citation content (same content = same ID)
@@ -13,9 +15,11 @@ class CitationDataService {
     const citationContent = JSON.stringify({
       title: citationData.title,
       author: citationData.author,
-      issued: citationData.issued
+      issued: citationData.issued,
     });
-    return btoa(citationContent).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
+    return btoa(citationContent)
+      .replace(/[^a-zA-Z0-9]/g, '')
+      .substring(0, 16);
   }
 
   addCitation(citationId, citationData) {
@@ -59,22 +63,44 @@ class CitationDataService {
 
   getVisibleCitationInstances() {
     // Return all citation instances (including duplicates) for non-Vancouver styles
-    return this.visibleCitationInstances.map(citationId => {
-      if (this.citations[citationId]) {
-        return this.citations[citationId];
-      }
-      return null;
-    }).filter(citation => citation !== null);
+    return this.visibleCitationInstances
+      .map(citationId => {
+        if (this.citations[citationId]) {
+          return this.citations[citationId];
+        }
+        return null;
+      })
+      .filter(citation => citation !== null);
   }
 
   // Assign a permanent number to a citation ID when first encountered (Vancouver)
   assignNumber(citationId) {
     if (!this.citationNumbers.has(citationId)) {
       this.citationNumbers.set(citationId, this.nextNumber);
-      console.log(`Service: Assigned number ${this.nextNumber} to citation ${citationId}`);
       this.nextNumber++;
     }
     return this.citationNumbers.get(citationId);
+  }
+
+  // Reorder Vancouver numbers based on current document order
+  reorderVancouverNumbers(citationIdsInOrder) {
+    // Clear existing numbers
+    this.citationNumbers.clear();
+    this.nextNumber = 1;
+
+    // Assign new numbers based on document order
+    citationIdsInOrder.forEach(citationId => {
+      this.citationNumbers.set(citationId, this.nextNumber);
+      this.nextNumber++;
+    });
+
+    // Increment counter to notify components of changes
+    this.updateCounter++;
+  }
+
+  // Get the update counter (for component re-renders)
+  getUpdateCounter() {
+    return this.updateCounter;
   }
 
   // Get Vancouver number for a citation (permanent number)
@@ -95,17 +121,19 @@ class CitationDataService {
 
   // Get citations in Vancouver order (unique citations only, for Vancouver footer)
   getCitationsInVancouverOrder() {
-    return this.citationOrder.map(citationId => {
-      const citation = this.citations[citationId];
-      if (citation) {
-        return {
-          ...citation,
-          id: citationId,
-          vancouverNumber: this.getVancouverNumber(citationId)
-        };
-      }
-      return null;
-    }).filter(citation => citation && this.visibleCitations.has(citation.id));
+    return this.citationOrder
+      .map(citationId => {
+        const citation = this.citations[citationId];
+        if (citation) {
+          return {
+            ...citation,
+            id: citationId,
+            vancouverNumber: this.getVancouverNumber(citationId),
+          };
+        }
+        return null;
+      })
+      .filter(citation => citation && this.visibleCitations.has(citation.id));
   }
 
   // Set the citation order based on document position

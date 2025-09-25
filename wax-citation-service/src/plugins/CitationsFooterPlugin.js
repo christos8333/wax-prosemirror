@@ -60,9 +60,29 @@ export default (key, app) => {
         }
       });
 
-      // Only run if citation count changed
-      if (oldCitationCount === newCitationCount) {
-        return null;
+      // Run if citation count changed OR if we need to check for order changes
+      const citationCountChanged = oldCitationCount !== newCitationCount;
+      if (!citationCountChanged) {
+        // Even if count didn't change, check if order changed (for drag & drop)
+        const oldOrder = [];
+        const newOrder = [];
+        
+        oldState.doc.descendants(node => {
+          if (node.type.name === 'citation_callout') {
+            oldOrder.push(node.attrs?.id);
+          }
+        });
+        
+        newState.doc.descendants(node => {
+          if (node.type.name === 'citation_callout') {
+            newOrder.push(node.attrs?.id);
+          }
+        });
+        
+        // If order is the same, don't run
+        if (JSON.stringify(oldOrder) === JSON.stringify(newOrder)) {
+          return null;
+        }
       }
 
       // Track citations for Vancouver numbering (unique IDs only)
@@ -85,11 +105,15 @@ export default (key, app) => {
         }
       });
 
+      
+
       // Update citation order if it changed
       const currentOrder = citationDataService.citationOrder;
       const hasChanged = JSON.stringify(currentOrder) !== JSON.stringify(citationIdsInOrder);
       if (hasChanged) {
         citationDataService.setCitationOrder(citationIdsInOrder);
+        // Reorder Vancouver numbers based on new document order
+        citationDataService.reorderVancouverNumbers(citationIdsInOrder);
       }
 
       // Update visible citation instances (for non-Vancouver styles)

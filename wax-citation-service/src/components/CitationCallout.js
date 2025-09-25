@@ -145,8 +145,9 @@ const CitationCallout = props => {
 
       // For Vancouver inline citations, use format: [1], [2], etc.
       if (citationFormat === 'vancouver') {
-        const vancouverNumber = citationDataService.getVancouverNumber(citationId);
-        console.log(`CitationCallout: ${citationId} -> [${vancouverNumber}]`);
+        const vancouverNumber = citationDataService.getVancouverNumber(
+          citationId,
+        );
         if (vancouverNumber) {
           return `[${vancouverNumber}]`;
         }
@@ -226,7 +227,7 @@ const CitationCallout = props => {
     } catch (error) {
       return `[${citationId}]`;
     }
-  }, [citationId, citationFormat]);
+  }, [citationId, citationFormat, citationDataService.getUpdateCounter()]);
 
   return <CitationCalloutNode>{citationText}</CitationCalloutNode>;
 };

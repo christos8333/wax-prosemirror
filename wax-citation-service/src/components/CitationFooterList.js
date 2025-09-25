@@ -21,12 +21,12 @@ const CitationFooterList = () => {
       if (citationFormat === 'vancouver') {
         // Vancouver: Show only unique citations (no duplicates)
         const vancouverCitations = citationDataService.getCitationsInVancouverOrder();
-        console.log('Footer: Vancouver citations (unique only):', vancouverCitations);
+        
         setCitations(vancouverCitations);
       } else {
         // Other styles: Show all citation instances (including duplicates)
         const visibleCitations = citationDataService.getVisibleCitationInstances();
-        console.log('Footer: Other style citations (all instances):', visibleCitations);
+      
         setCitations(visibleCitations);
       }
     };
@@ -102,7 +102,7 @@ const CitationFooterList = () => {
       if (!citation.author || !citation.author[0]) {
         return `[Citation ${citation.id || 'Unknown'}]`;
       }
-      
+
       const author = citation.author[0];
       const year =
         citation.issued && citation.issued['date-parts']
@@ -125,17 +125,13 @@ const CitationFooterList = () => {
       {citationFormat === 'vancouver' ? (
         <ol>
           {citations.map((citation, index) => (
-            <li key={`${citation.id}-${index}`}>
-              {formatCitation(citation)}
-            </li>
+            <li key={`${citation.id}-${index}`}>{formatCitation(citation)}</li>
           ))}
         </ol>
       ) : (
         <ul>
           {citations.map((citation, index) => (
-            <li key={`${citation.id}-${index}`}>
-              {formatCitation(citation)}
-            </li>
+            <li key={`${citation.id}-${index}`}>{formatCitation(citation)}</li>
           ))}
         </ul>
       )}

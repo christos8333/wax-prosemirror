@@ -143,6 +143,16 @@ const CitationCallout = props => {
         return `[${citationId}]`;
       }
 
+      // For Vancouver inline citations, use format: [1], [2], etc.
+      if (citationFormat === 'vancouver') {
+        const vancouverNumber = citationDataService.getVancouverNumber(citationId);
+        console.log(`CitationCallout: ${citationId} -> [${vancouverNumber}]`);
+        if (vancouverNumber) {
+          return `[${vancouverNumber}]`;
+        }
+        return `[${citationId}]`;
+      }
+
       // For other styles, use CSL processor
       let selectedStyle = simpleStyle;
       switch (citationFormat) {
@@ -151,9 +161,6 @@ const CitationCallout = props => {
           break;
         case 'harvard':
           selectedStyle = harvardStyle;
-          break;
-        case 'vancouver':
-          selectedStyle = simpleStyle;
           break;
         case 'ieee':
           selectedStyle = simpleStyle;

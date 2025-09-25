@@ -18,8 +18,17 @@ const CitationFooterList = () => {
   // Update citations when the service changes
   useEffect(() => {
     const updateCitations = () => {
-      const visibleCitations = citationDataService.getVisibleCitations();
-      setCitations(visibleCitations);
+      if (citationFormat === 'vancouver') {
+        // Vancouver: Show only unique citations (no duplicates)
+        const vancouverCitations = citationDataService.getCitationsInVancouverOrder();
+        console.log('Footer: Vancouver citations (unique only):', vancouverCitations);
+        setCitations(vancouverCitations);
+      } else {
+        // Other styles: Show all citation instances (including duplicates)
+        const visibleCitations = citationDataService.getVisibleCitationInstances();
+        console.log('Footer: Other style citations (all instances):', visibleCitations);
+        setCitations(visibleCitations);
+      }
     };
 
     // Initial load
@@ -30,7 +39,7 @@ const CitationFooterList = () => {
     const interval = setInterval(updateCitations, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [citationFormat]);
 
   const formatCitation = citation => {
     if (citationFormat === 'APA') {
@@ -88,6 +97,24 @@ const CitationFooterList = () => {
       }
     }
 
+    if (citationFormat === 'vancouver') {
+      // Vancouver format: Author Surname Initial. Title. Publisher; Year.
+      if (!citation.author || !citation.author[0]) {
+        return `[Citation ${citation.id || 'Unknown'}]`;
+      }
+      
+      const author = citation.author[0];
+      const year =
+        citation.issued && citation.issued['date-parts']
+          ? citation.issued['date-parts'][0][0]
+          : 'n.d.';
+      // Use first initial of given name
+      const initial = author.given ? author.given.charAt(0) : '';
+      const publisher = citation.publisher || 'Unknown Publisher';
+      const title = citation.title || 'Unknown Title';
+      return `${author.family} ${initial}. ${title}. ${publisher}; ${year}.`;
+    }
+
     // Default format for other styles
     return `${citation.author[0].family}, ${citation.author[0].given}. ${citation.title}.`;
   };
@@ -95,11 +122,23 @@ const CitationFooterList = () => {
   return (
     <CitationListWrapper>
       <h1>References</h1>
-      <ul>
-        {citations.map(citation => (
-          <li key={citation.id}>{formatCitation(citation)}</li>
-        ))}
-      </ul>
+      {citationFormat === 'vancouver' ? (
+        <ol>
+          {citations.map((citation, index) => (
+            <li key={`${citation.id}-${index}`}>
+              {formatCitation(citation)}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <ul>
+          {citations.map((citation, index) => (
+            <li key={`${citation.id}-${index}`}>
+              {formatCitation(citation)}
+            </li>
+          ))}
+        </ul>
+      )}
     </CitationListWrapper>
   );
 };

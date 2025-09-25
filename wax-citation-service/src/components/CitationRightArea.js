@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { WaxContext, ApplicationContext } from 'wax-prosemirror-core';
+import { WaxContext, ApplicationContext, PortalContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 import citationDataService from '../services/CitationDataService';
 
 const CitationManagerContainer = styled.div`
@@ -197,6 +196,7 @@ const AddToTextButton = styled.button`
 
 const CitationManager = () => {
   const [activeTab, setActiveTab] = useState('search');
+  const { citationFormat } = useContext(PortalContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterValue, setFilterValue] = useState('');
 
@@ -326,7 +326,10 @@ const CitationManager = () => {
   ];
 
   const handleAddToText = citationData => {
-    const citationId = uuidv4();
+    // Use hash-based ID for ALL citation formats (same content = same ID)
+    const citationId = citationDataService.generateCitationId(citationData);
+    console.log(`Using hash-based ID ${citationId} for citation (format: ${citationFormat})`);
+    
     // Store the citation data in the service
     citationDataService.addCitation(citationId, citationData);
 

@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable camelcase */
 import { TextSelection, Plugin, PluginKey } from 'prosemirror-state';
+import citationDataService from '../services/CitationDataService';
 
 const citationsFooterPlugin = new PluginKey('citationsFooterPlugin');
 
@@ -63,6 +64,36 @@ export default (key, app) => {
       if (oldCitationCount === newCitationCount) {
         return null;
       }
+
+      // Track citations for Vancouver numbering (unique IDs only)
+      const citationIdsInOrder = [];
+      const allCitationInstances = []; // Track all instances (including duplicates)
+      
+      newState.doc.descendants((node, pos) => {
+        if (node.type.name === 'citation_callout') {
+          const citationId = node.attrs?.id;
+          if (citationId) {
+            // Track all instances (including duplicates)
+            allCitationInstances.push(citationId);
+            
+            // Track unique IDs for Vancouver numbering
+            if (!citationIdsInOrder.includes(citationId)) {
+              citationIdsInOrder.push(citationId);
+              citationDataService.assignNumber(citationId);
+            }
+          }
+        }
+      });
+
+      // Update citation order if it changed
+      const currentOrder = citationDataService.citationOrder;
+      const hasChanged = JSON.stringify(currentOrder) !== JSON.stringify(citationIdsInOrder);
+      if (hasChanged) {
+        citationDataService.setCitationOrder(citationIdsInOrder);
+      }
+
+      // Update visible citation instances (for non-Vancouver styles)
+      citationDataService.setVisibleCitationInstances(allCitationInstances);
 
       // Check if we need to do anything at all
       let footerCount = 0;

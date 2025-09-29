@@ -16,6 +16,7 @@ import {
   useOnClickOutside,
   PortalContext,
 } from 'wax-prosemirror-core';
+import citationDataService from '../services/CitationDataService';
 
 const Wrapper = styled.div`
   display: flex;
@@ -237,6 +238,7 @@ const CitationDropDown = () => {
                 key={option.value}
                 onClick={() => {
                   setCitationFormat(option.value);
+                  citationDataService.setCurrentFormat(option.value);
                   openCloseMenu();
                 }}
                 onKeyDown={e => onKeyDown(e, index)}

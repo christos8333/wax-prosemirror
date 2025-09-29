@@ -8,6 +8,7 @@ class CitationDataService {
     this.citationNumbers = new Map(); // Map citation IDs to their permanent Vancouver numbers
     this.nextNumber = 1; // Next available Vancouver number
     this.updateCounter = 0; // Counter to force re-renders when Vancouver numbers change
+    this.currentFormat = 'simple'; // Track current citation format for export
   }
 
   // Generate hash-based ID from citation content (same content = same ID)
@@ -101,6 +102,16 @@ class CitationDataService {
   // Get the update counter (for component re-renders)
   getUpdateCounter() {
     return this.updateCounter;
+  }
+
+  // Set the current citation format (for export)
+  setCurrentFormat(format) {
+    this.currentFormat = format;
+  }
+
+  // Get the current citation format (for export)
+  getCurrentFormat() {
+    return this.currentFormat;
   }
 
   // Get Vancouver and IEEE number for a citation (permanent number)

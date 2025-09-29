@@ -50,12 +50,13 @@ const Editoria = () => {
           autoFocus
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
-          value={demo}
+          // value={demo}
+          value={`<p class="paragraph">a sdd d asda sda<span id="eyJ0aXRsZSI6IkNv" class="citation-callout">Collaboration in Virtual Environments: A Study of Remote Team Dynamics</span> dadsa</p><div class="citations-data">This content is uneditable.</div>`}
           // readonly
           layout={layout}
-          // onChange={debounce(source => {
-          //   console.log(source);
-          // }, 200)}
+          onChange={debounce(source => {
+            console.log(source);
+          }, 200)}
           user={user}
           scrollMargin={200}
           scrollThreshold={200}

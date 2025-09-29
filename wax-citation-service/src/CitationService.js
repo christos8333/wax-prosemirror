@@ -16,7 +16,6 @@ class CitationService extends Service {
   name = 'QuestionsService';
 
   boot() {
-  
     this.app.PmPlugins.add(
       'citationsFooterPlugin',
       CitationsFooterPlugin('citationsFooterPlugin', this.app),
@@ -27,10 +26,7 @@ class CitationService extends Service {
       CitationFooterSelectionPlugin(),
     );
 
-    this.app.PmPlugins.add(
-      'citationCleanupPlugin',
-      CitationCleanupPlugin(),
-    );
+    this.app.PmPlugins.add('citationCleanupPlugin', CitationCleanupPlugin());
 
     const layout = this.container.get('Layout');
     layout.addComponent('citationRightArea', CitationRightArea);

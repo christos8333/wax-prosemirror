@@ -55,6 +55,11 @@ export default () => {
 
       // Intercept selection changes to prevent selections that include the footer
       handleKeyDown(view, event) {
+        // Handle Ctrl+A (select all) - allow it to work normally
+        if (event.ctrlKey && event.key === 'a') {
+          return false; // Let the default behavior handle Ctrl+A
+        }
+
         if (event.key === 'Backspace' || event.key === 'Delete') {
           const { state } = view;
           const { selection } = state;
@@ -110,14 +115,34 @@ export default () => {
       if (footerPos !== null && footerSize !== null) {
         const footerEnd = footerPos + footerSize;
 
-        // If selection overlaps with footer, move cursor to a safe position
-        if (selection.from < footerEnd && selection.to > footerPos) {
+        // Allow full document selections (like Ctrl+A) - they should select everything up to the footer
+        const isFullDocumentSelection =
+          selection.from === 0 && selection.to >= footerPos;
+
+        // If selection overlaps with footer but it's NOT a full document selection, move cursor to safe position
+        if (
+          selection.from < footerEnd &&
+          selection.to > footerPos &&
+          !isFullDocumentSelection
+        ) {
           const { tr } = newState;
           const safePos = Math.max(0, footerPos - 1);
           const newSelection = TextSelection.near(
             newState.doc.resolve(safePos),
           );
           tr.setSelection(newSelection);
+          return tr;
+        }
+
+        // For full document selections (Ctrl+A), adjust the selection to end just before the footer
+        if (isFullDocumentSelection) {
+          const { tr } = newState;
+          const adjustedSelection = TextSelection.create(
+            newState.doc,
+            0,
+            Math.max(0, footerPos - 1),
+          );
+          tr.setSelection(adjustedSelection);
           return tr;
         }
       }

@@ -83,7 +83,7 @@ const citationCallout = {
       }
     }
 
-    return ['span', node.attrs, citationText];
+    return ['span', { ...node.attrs, 'data-id': citationId }, citationText];
   },
 };
 

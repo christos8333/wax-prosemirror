@@ -159,6 +159,22 @@ const CitationDropDown = () => {
     if (isDisabled) setIsOpen(false);
   }, [isDisabled]);
 
+  // Listen for imported citation format changes
+  useEffect(() => {
+    const handleFormatImport = (event) => {
+      const { format } = event.detail;
+      console.log('CitationDropDown: Format imported, updating to:', format);
+      setCitationFormat(format);
+      citationDataService.setCurrentFormat(format);
+    };
+
+    window.addEventListener('citationFormatImported', handleFormatImport);
+    
+    return () => {
+      window.removeEventListener('citationFormatImported', handleFormatImport);
+    };
+  }, [setCitationFormat]);
+
   const openCloseMenu = () => {
     if (!isDisabled) setIsOpen(!isOpen);
     if (isOpen)

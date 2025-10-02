@@ -48,12 +48,27 @@ const citationsDataNode = {
       referencesHtml += '</ul>';
     }
     
-    return ['div', { class: 'citations-data' }, referencesHtml];
+    return ['div', { class: 'citations-data', 'data-citation-format': citationFormat }, referencesHtml];
   },
   parseDOM: [
     {
       tag: 'div.citations-data',
       getAttrs(dom) {
+        // Extract the citation format from the data attribute
+        const citationFormat = dom.getAttribute('data-citation-format');
+        if (citationFormat) {
+          console.log('Import: Found citation format:', citationFormat);
+          // Set the citation format in the service
+          citationDataService.setCurrentFormat(citationFormat);
+          
+          // Dispatch a custom event to notify the UI of the format change
+          // This will help update the dropdown and other components
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('citationFormatImported', { 
+              detail: { format: citationFormat } 
+            }));
+          }
+        }
         return { text: dom.textContent };
       },
     },

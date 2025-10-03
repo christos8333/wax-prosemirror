@@ -1,0 +1,53 @@
+{
+  "name": "wax-citation-service",
+  "author": "Christos Kokosias & Giannis Kopanas",
+  "version": "0.9.99",
+  "description": "Wax Table Service",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "style": "dist/index.css",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "BABEL_ENV=production rollup -c"
+  },
+  "dependencies": {
+    "@pubsweet/ui-toolkit": "^2.3.1",
+    "citeproc": "^2.4.63",
+    "inversify": "^5.0.1",
+    "lodash": "^4.17.4",
+    "prosemirror-keymap": "1.2.1",
+    "prosemirror-model": "1.19.0",
+    "prosemirror-state": "1.4.3",
+    "prosemirror-transform": "1.7.1",
+    "prosemirror-view": "1.30.2",
+    "react-i18next": "^13.3.1",
+    "uuid": "^7.0.3",
+    "wax-prosemirror-core": "^0.9.99"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-url": "^8.0.2",
+    "babel-plugin-parameter-decorator": "1.0.12",
+    "mocha": "^3.4.2",
+    "prosemirror-test-builder": "^1.0.1",
+    "rollup": "^2.2.0",
+    "rollup-plugin-import-css": "^3.0.2",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-terser": "^5.3.0"
+  },
+  "peerDependencies": {
+    "i18next": "^23.6.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.1"
+  }
+}

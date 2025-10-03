@@ -32,6 +32,8 @@ import {
 
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
+import { CitationService } from 'wax-citation-service';
+
 import { EditoriaSchema } from 'wax-prosemirror-core';
 
 import invisibles, {
@@ -121,6 +123,7 @@ export default {
         'CodeBlock',
         'ToggleAi',
         'Tables',
+        'Citation',
         'TrackingAndEditing',
         'FindAndReplaceTool',
         'FullScreen',
@@ -209,13 +212,13 @@ export default {
     updateTags: saveTags,
   },
 
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:5010',
-    // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-    docIdentifier: 'prosemirror-r5dwdfddgffefdeegdfd54eeeffedd2rq254werc',
-    YjsType: 'prosemirror',
-  },
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:5010',
+  //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
+  //   docIdentifier: 'prosemirror-r5dwdfddgffefdeegdfd54eeeffedd2rq254werc',
+  //   YjsType: 'prosemirror',
+  // },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -228,7 +231,8 @@ export default {
   },
 
   services: [
-    new YjsService(),
+    new CitationService(),
+    // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),

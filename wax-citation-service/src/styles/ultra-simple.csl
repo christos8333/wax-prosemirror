@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <title>Ultra Simple Style</title>
+    <title-short>Ultra Simple</title-short>
+    <id>http://www.zotero.org/styles/ultra-simple</id>
+    <author>
+      <name>Ultra Simple</name>
+    </author>
+    <category citation-format="author-date"/>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+  </info>
+  <locale xml:lang="en">
+    <date form="text">
+      <date-part name="year"/>
+    </date>
+  </locale>
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <text variable="author"/>
+      <text prefix=", " variable="issued" form="text"/>
+    </layout>
+  </citation>
+  <bibliography>
+    <layout>
+      <text variable="author"/>
+      <text prefix=". " variable="title"/>
+      <text prefix=" (" variable="issued" form="text" suffix=")."/>
+    </layout>
+  </bibliography>
+</style>

@@ -10,6 +10,7 @@ export default class CommentsService extends Service {
   allCommentsFromStates = [];
   boot() {
     const commentsConfig = this.app.config.get('config.CommentsService');
+
     const YjsType = this.app.config.get('config.YjsService')
       ? this.app.config.get('config.YjsService').yjsType
       : 'yjs';
@@ -54,6 +55,7 @@ export default class CommentsService extends Service {
         if (commentsConfig?.getComments) {
           commentsConfig.getComments(this.allCommentsFromStates);
         }
+
         this.app.context.setOption({
           comments: this.allCommentsFromStates,
         });

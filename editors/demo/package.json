@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",
+    "raw-loader": "^4.0.2",
     "react-app-rewired": "^2.1.1",
     "react-scripts": "3.4"
   }

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded">
+  <info>
+    <title>JM Indigo Book Citation Style</title>
+    <title-short>JM Indigo</title-short>
+    <id>http://www.zotero.org/styles/jm-indigo</id>
+    <link href="http://www.zotero.org/styles/jm-indigo" rel="self"/>
+    <author>
+      <name>Jurism Team</name>
+    </author>
+    <category citation-format="author-date"/>
+    <category field="law"/>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="en">
+    <terms>
+      <term name="editor" form="long">
+        <single>editor</single>
+        <multiple>editors</multiple>
+      </term>
+      <term name="editor" form="short">
+        <single>ed.</single>
+        <multiple>eds.</multiple>
+      </term>
+      <term name="translator" form="long">
+        <single>translator</single>
+        <multiple>translators</multiple>
+      </term>
+      <term name="translator" form="short">
+        <single>trans.</single>
+        <multiple>trans.</multiple>
+      </term>
+    </terms>
+    <date form="text">
+      <date-part name="year"/>
+    </date>
+  </locale>
+  <macro name="author">
+    <names variable="author">
+      <name form="long" name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter=", " delimiter-precedes-last="always"/>
+      <label form="long" prefix=" (" suffix=")"/>
+    </names>
+  </macro>
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter=", " delimiter-precedes-last="always"/>
+    </names>
+  </macro>
+  <macro name="title">
+    <choose>
+      <if type="book chapter paper-conference entry-dictionary entry-encyclopedia" match="any">
+        <text variable="title" quotes="true"/>
+      </if>
+      <else>
+        <text variable="title" quotes="true"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="year-date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <date variable="original-date">
+          <date-part name="year"/>
+        </date>
+      </else>
+    </choose>
+  </macro>
+  <macro name="publisher">
+    <choose>
+      <if variable="publisher-place publisher">
+        <group delimiter=": ">
+          <text variable="publisher-place"/>
+          <text variable="publisher"/>
+        </group>
+      </if>
+      <else>
+        <text variable="publisher"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="container-contributors">
+    <choose>
+      <if type="chapter paper-conference entry-dictionary entry-encyclopedia" match="any">
+        <group prefix=", " suffix=",">
+          <names variable="container-author">
+            <name form="short" name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter=", " delimiter-precedes-last="always"/>
+          </names>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="container">
+    <choose>
+      <if type="chapter paper-conference entry-dictionary entry-encyclopedia" match="any">
+        <group prefix=", " suffix=",">
+          <text variable="container-title" font-style="italic"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="issued">
+    <choose>
+      <if variable="issued">
+        <group prefix=", " suffix=".">
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="locators">
+    <choose>
+      <if locator="page">
+        <label variable="locator" form="short" strip-periods="true" suffix=" "/>
+        <text variable="locator"/>
+      </if>
+      <else-if locator="chapter">
+        <label variable="locator" form="short" strip-periods="true" suffix=" "/>
+        <text variable="locator"/>
+      </else-if>
+      <else-if locator="section">
+        <label variable="locator" form="short" strip-periods="true" suffix=" "/>
+        <text variable="locator"/>
+      </else-if>
+      <else>
+        <label variable="locator" form="short" strip-periods="true" suffix=" "/>
+        <text variable="locator"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-date">
+    <group>
+      <text macro="author"/>
+      <text macro="year-date"/>
+    </group>
+  </macro>
+  <macro name="author-date-norepeat">
+    <group>
+      <text macro="author"/>
+      <choose>
+        <if position="ibid-with-locator">
+          <text macro="year-date"/>
+        </if>
+        <else-if position="ibid">
+          <text macro="year-date"/>
+        </if>
+        <else>
+          <text macro="year-date"/>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <macro name="author-short-date">
+    <group>
+      <text macro="author-short"/>
+      <text macro="year-date"/>
+    </group>
+  </macro>
+  <macro name="author-short-date-norepeat">
+    <group>
+      <text macro="author-short"/>
+      <choose>
+        <if position="ibid-with-locator">
+          <text macro="year-date"/>
+        </if>
+        <else-if position="ibid">
+          <text macro="year-date"/>
+        </if>
+        <else>
+          <text macro="year-date"/>
+        </else>
+      </choose>
+    </group>
+  </macro>
+  <macro name="author-noname">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-date"/>
+      </if>
+      <else>
+        <text macro="author-date"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-noname-norepeat">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-date-norepeat"/>
+      </if>
+      <else>
+        <text macro="author-date-norepeat"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-short-noname">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-short-date"/>
+      </if>
+      <else>
+        <text macro="author-short-date"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-short-noname-norepeat">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-short-date-norepeat"/>
+      </if>
+      <else>
+        <text macro="author-short-date-norepeat"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-num">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-date"/>
+        <text macro="locators"/>
+      </if>
+      <else>
+        <text macro="author-date"/>
+        <text macro="locators"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-num-norepeat">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-date-norepeat"/>
+        <text macro="locators"/>
+      </if>
+      <else>
+        <text macro="author-date-norepeat"/>
+        <text macro="locators"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-short-num">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-short-date"/>
+        <text macro="locators"/>
+      </if>
+      <else>
+        <text macro="author-short-date"/>
+        <text macro="locators"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-short-num-noname">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-short-date"/>
+        <text macro="locators"/>
+      </if>
+      <else>
+        <text macro="author-short-date"/>
+        <text macro="locators"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="author-short-num-noname-norepeat">
+    <choose>
+      <if type="legal_case" match="none">
+        <text macro="author-short-date-norepeat"/>
+        <text macro="locators"/>
+      </if>
+      <else>
+        <text macro="author-short-date-norepeat"/>
+        <text macro="locators"/>
+      </else>
+    </choose>
+  </macro>
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group>
+        <text macro="author-num-noname"/>
+      </group>
+    </layout>
+  </citation>
+  <bibliography et-al-min="8" et-al-use-first="6" line-spacing="2" entry-spacing="0" second-field-align="flush">
+    <sort>
+      <key macro="author-noname"/>
+    </sort>
+    <layout>
+      <text macro="author-noname"/>
+      <text macro="title"/>
+      <text macro="container-contributors"/>
+      <text macro="container"/>
+      <text macro="issued"/>
+      <text macro="publisher"/>
+    </layout>
+  </bibliography>
+</style>

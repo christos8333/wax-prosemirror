@@ -111,95 +111,6 @@ const SectionHeading = styled.h2`
   line-height: 1.3;
 `;
 
-const EmptyStateContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  text-align: center;
-`;
-
-const EmptyStateTitle = styled.div`
-  color: #2c3e50;
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 8px;
-`;
-
-const EmptyStateSubtitle = styled.div`
-  color: #6c757d;
-  font-size: 14px;
-  line-height: 1.4;
-`;
-
-const CitationExamplesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const CitationExample = styled.div`
-  background: #ffffff;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 20px;
-`;
-
-const CitationStyleTitle = styled.h3`
-  color: #2c3e50;
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 0 12px 0;
-  line-height: 1.3;
-`;
-
-const CitationSubtitle = styled.h4`
-  color: #495057;
-  font-size: 14px;
-  font-weight: 500;
-  margin: 16px 0 8px 0;
-  line-height: 1.3;
-`;
-
-const CitationText = styled.div`
-  color: #2c3e50;
-  font-size: 14px;
-  line-height: 1.6;
-  font-family: 'Courier New', monospace;
-  background: #f8f9fa;
-  padding: 12px;
-  border-radius: 4px;
-  border-left: 3px solid #007bff;
-  margin-bottom: 12px;
-`;
-
-const AddToTextButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #0056b3;
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-  }
-`;
-
 const LoadingSpinner = styled.div`
   display: flex;
   justify-content: center;
@@ -294,7 +205,6 @@ const CitationManager = () => {
   const [crossrefResults, setCrossrefResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchError, setSearchError] = useState(null);
-  const [currentCitations, setCurrentCitations] = useState([]);
 
   // Crossref search function
   const searchCrossref = async (query, filters = {}) => {
@@ -346,10 +256,6 @@ const CitationManager = () => {
     // Store the citation data in the service
     citationDataService.addCitation(citationId, citationData);
 
-    // Update local state immediately
-    const citations = citationDataService.getAllCitations();
-    setCurrentCitations(Object.values(citations));
-
     const citationCalloutType = main.state.schema.nodes.citation_callout;
 
     const citationCalloutNode = citationCalloutType.create(
@@ -372,8 +278,8 @@ const CitationManager = () => {
 
   const tabs = [
     { id: 'search', label: 'Search' },
-    { id: 'add', label: 'Add Citation' },
-    { id: 'structure', label: 'Structure Citation' },
+    // { id: 'add', label: 'Add Citation' },
+    // { id: 'structure', label: 'Structure Citation' },
   ];
 
   return (
@@ -400,7 +306,7 @@ const CitationManager = () => {
           value={searchQuery}
         />
 
-        <FilterContainer>
+        {/* <FilterContainer>
           <FilterDropdown
             onChange={e => setFilterValue(e.target.value)}
             value={filterValue}
@@ -411,7 +317,7 @@ const CitationManager = () => {
             <option value="website">Websites</option>
             <option value="conference">Conference Papers</option>
           </FilterDropdown>
-        </FilterContainer>
+        </FilterContainer> */}
       </SearchContainer>
 
       {/* Crossref Search Results */}
@@ -477,7 +383,7 @@ const CitationManager = () => {
         </SearchResultsContainer>
       )}
 
-      {currentCitations.length <= 1 && (
+      {crossrefResults.length === 0 && !isLoading && !searchQuery.trim() && (
         <CitationEmptyStateContainer>
           <CitationEmptyStateTitle>
             Search for citations above to add them to your document

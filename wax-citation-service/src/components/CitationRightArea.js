@@ -1,9 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useContext, useState, useEffect } from 'react';
-import {
-  WaxContext,
-  PortalContext,
-} from 'wax-prosemirror-core';
+import { WaxContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import citationDataService from '../services/CitationDataService';
 import crossrefService from '../services/CrossrefService';

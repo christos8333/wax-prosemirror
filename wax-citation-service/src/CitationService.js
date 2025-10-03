@@ -4,6 +4,7 @@ import citationCallout from './schema/citationCallout';
 import CitationRightArea from './components/CitationRightArea';
 import CitationsFooterPlugin from './plugins/CitationsFooterPlugin';
 import CitationFooterSelectionPlugin from './plugins/CitationFooterSelectionPlugin';
+import CitationDragDropPlugin from './plugins/CitationDragDropPlugin';
 import CitationFooterContainerNodeView from './CitationFooterContainerNodeView';
 import CitationDropDownOptions from './CitationDropDownOptions';
 import CitationFooterList from './components/CitationFooterList';
@@ -25,6 +26,8 @@ class CitationService extends Service {
       'citationFooterSelectionPlugin',
       CitationFooterSelectionPlugin(),
     );
+
+    this.app.PmPlugins.add('citationDragDropPlugin', CitationDragDropPlugin());
 
     this.app.PmPlugins.add('citationCleanupPlugin', CitationCleanupPlugin());
 

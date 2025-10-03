@@ -135,12 +135,23 @@ const SearchResultItem = styled.div`
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
-  cursor: pointer;
+  cursor: grab;
   transition: all 0.2s ease;
+  user-select: none;
 
   &:hover {
     border-color: #007bff;
     box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+  }
+
+  &:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+  }
+
+  &.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
   }
 `;
 
@@ -194,6 +205,31 @@ const CitationEmptyStateText = styled.p`
   line-height: 1.5;
 `;
 
+// Global styles for drag and drop
+const GlobalDragStyles = styled.div`
+  .drag-over {
+    border: 2px dashed #007bff !important;
+    background-color: rgba(0, 123, 255, 0.05) !important;
+    border-radius: 8px !important;
+  }
+
+  .drag-over::after {
+    content: 'Drop citation here';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 123, 255, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 1000;
+  }
+`;
+
 const CitationManager = () => {
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
@@ -201,6 +237,7 @@ const CitationManager = () => {
   const [crossrefResults, setCrossrefResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchError, setSearchError] = useState(null);
+  const [draggedCitation, setDraggedCitation] = useState(null);
 
   // Crossref search function
   const searchCrossref = async (query, filters = {}) => {
@@ -272,6 +309,51 @@ const CitationManager = () => {
     main.dispatch(tr);
   };
 
+  // Drag and drop handlers
+  const handleDragStart = (e, citationData) => {
+    setDraggedCitation(citationData);
+    e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData(
+      'application/json',
+      JSON.stringify({
+        type: 'citation',
+        data: citationData,
+      }),
+    );
+
+    // Create a custom drag image
+    const dragImage = document.createElement('div');
+    dragImage.innerHTML = `
+      <div style="
+        background: white;
+        border: 2px solid #007bff;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        font-size: 14px;
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      ">
+        📚 ${citationData.title || 'Citation'}
+      </div>
+    `;
+    dragImage.style.position = 'absolute';
+    dragImage.style.top = '-1000px';
+    document.body.appendChild(dragImage);
+    e.dataTransfer.setDragImage(dragImage, 10, 10);
+
+    // Clean up drag image after a short delay
+    setTimeout(() => {
+      document.body.removeChild(dragImage);
+    }, 0);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedCitation(null);
+  };
+
   const tabs = [
     { id: 'search', label: 'Search' },
     // { id: 'add', label: 'Add Citation' },
@@ -279,30 +361,32 @@ const CitationManager = () => {
   ];
 
   return (
-    <CitationManagerContainer>
-      <Title>Citation Manager</Title>
+    <>
+      <GlobalDragStyles />
+      <CitationManagerContainer>
+        <Title>Citation Manager</Title>
 
-      <TabContainer>
-        {tabs.map(tab => (
-          <Tab
-            active={activeTab === tab.id}
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.label}
-          </Tab>
-        ))}
-      </TabContainer>
+        <TabContainer>
+          {tabs.map(tab => (
+            <Tab
+              active={activeTab === tab.id}
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </Tab>
+          ))}
+        </TabContainer>
 
-      <SearchContainer>
-        <SearchInput
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Search citations..."
-          type="text"
-          value={searchQuery}
-        />
+        <SearchContainer>
+          <SearchInput
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Search citations..."
+            type="text"
+            value={searchQuery}
+          />
 
-        {/* <FilterContainer>
+          {/* <FilterContainer>
           <FilterDropdown
             onChange={e => setFilterValue(e.target.value)}
             value={filterValue}
@@ -314,81 +398,91 @@ const CitationManager = () => {
             <option value="conference">Conference Papers</option>
           </FilterDropdown>
         </FilterContainer> */}
-      </SearchContainer>
+        </SearchContainer>
 
-      {/* Crossref Search Results */}
-      {searchQuery.trim() && (
-        <SearchResultsContainer>
-          <SectionHeading>Search Results from Crossref</SectionHeading>
+        {/* Crossref Search Results */}
+        {searchQuery.trim() && (
+          <SearchResultsContainer>
+            <SectionHeading>
+              Search Results from Crossref. Click or Drag and drop to add to
+              your document
+            </SectionHeading>
 
-          {isLoading && <LoadingSpinner>Searching Crossref...</LoadingSpinner>}
-
-          {searchError && (
-            <ErrorMessage>Search error: {searchError}</ErrorMessage>
-          )}
-
-          {!isLoading &&
-            !searchError &&
-            crossrefResults.length === 0 &&
-            searchQuery.trim() && (
-              <div
-                style={{
-                  textAlign: 'center',
-                  padding: '20px',
-                  color: '#6c757d',
-                }}
-              >
-                No results found for "{searchQuery}"
-              </div>
+            {isLoading && (
+              <LoadingSpinner>Searching Crossref...</LoadingSpinner>
             )}
 
-          {!isLoading && crossrefResults.length > 0 && (
-            <div>
-              {crossrefResults.map((result, index) => (
-                <SearchResultItem
-                  key={result.id || index}
-                  onClick={() => handleAddToText(result)}
-                >
-                  <SearchResultTitle>{result.title}</SearchResultTitle>
-                  <SearchResultAuthor>
-                    {result.author
-                      ?.map(
-                        author =>
-                          `${author.family}${
-                            author.given ? `, ${author.given}` : ''
-                          }`,
-                      )
-                      .join('; ') || 'Unknown Author'}
-                  </SearchResultAuthor>
-                  <SearchResultJournal>
-                    {result['container-title']}
-                    {result.issued?.['date-parts']?.[0]?.[0] &&
-                      ` (${result.issued['date-parts'][0][0]})`}
-                    {result.volume && `, Vol. ${result.volume}`}
-                    {result.issue && `, Issue ${result.issue}`}
-                  </SearchResultJournal>
-                  {result.DOI && (
-                    <SearchResultDOI>DOI: {result.DOI}</SearchResultDOI>
-                  )}
-                </SearchResultItem>
-              ))}
-            </div>
-          )}
-        </SearchResultsContainer>
-      )}
+            {searchError && (
+              <ErrorMessage>Search error: {searchError}</ErrorMessage>
+            )}
 
-      {crossrefResults.length === 0 && !isLoading && !searchQuery.trim() && (
-        <CitationEmptyStateContainer>
-          <CitationEmptyStateTitle>
-            Search for citations above to add them to your document
-          </CitationEmptyStateTitle>
-          <CitationEmptyStateText>
-            Use the search box to find real academic citations from the Crossref
-            database
-          </CitationEmptyStateText>
-        </CitationEmptyStateContainer>
-      )}
-    </CitationManagerContainer>
+            {!isLoading &&
+              !searchError &&
+              crossrefResults.length === 0 &&
+              searchQuery.trim() && (
+                <div
+                  style={{
+                    textAlign: 'center',
+                    padding: '20px',
+                    color: '#6c757d',
+                  }}
+                >
+                  No results found for "{searchQuery}"
+                </div>
+              )}
+
+            {!isLoading && crossrefResults.length > 0 && (
+              <div>
+                {crossrefResults.map((result, index) => (
+                  <SearchResultItem
+                    className={draggedCitation === result ? 'dragging' : ''}
+                    draggable
+                    key={result.id || index}
+                    onClick={() => handleAddToText(result)}
+                    onDragEnd={handleDragEnd}
+                    onDragStart={e => handleDragStart(e, result)}
+                  >
+                    <SearchResultTitle>{result.title}</SearchResultTitle>
+                    <SearchResultAuthor>
+                      {result.author
+                        ?.map(
+                          author =>
+                            `${author.family}${
+                              author.given ? `, ${author.given}` : ''
+                            }`,
+                        )
+                        .join('; ') || 'Unknown Author'}
+                    </SearchResultAuthor>
+                    <SearchResultJournal>
+                      {result['container-title']}
+                      {result.issued?.['date-parts']?.[0]?.[0] &&
+                        ` (${result.issued['date-parts'][0][0]})`}
+                      {result.volume && `, Vol. ${result.volume}`}
+                      {result.issue && `, Issue ${result.issue}`}
+                    </SearchResultJournal>
+                    {result.DOI && (
+                      <SearchResultDOI>DOI: {result.DOI}</SearchResultDOI>
+                    )}
+                  </SearchResultItem>
+                ))}
+              </div>
+            )}
+          </SearchResultsContainer>
+        )}
+
+        {crossrefResults.length === 0 && !isLoading && !searchQuery.trim() && (
+          <CitationEmptyStateContainer>
+            <CitationEmptyStateTitle>
+              Search for citations above to add them to your document
+            </CitationEmptyStateTitle>
+            <CitationEmptyStateText>
+              Use the search box to find real academic citations from the
+              Crossref database
+            </CitationEmptyStateText>
+          </CitationEmptyStateContainer>
+        )}
+      </CitationManagerContainer>
+    </>
   );
 };
 

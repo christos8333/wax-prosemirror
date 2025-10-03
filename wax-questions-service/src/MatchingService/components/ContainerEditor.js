@@ -32,7 +32,15 @@ const ContainerEditor = ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
 
   let containerView;
-  const questionId = node.attrs.id;
+  const questionId = node?.attrs?.id;
+
+  const filteredplugins = app.PmPlugins.getAll().filter(
+    plugin =>
+      !plugin.key.includes('y-sync') &&
+      !plugin.key.includes('y-undo') &&
+      !plugin.key.includes('yjs') &&
+      !plugin.key.includes('comment'),
+  );
 
   useEffect(() => {
     containerView = new EditorView(
@@ -43,7 +51,7 @@ const ContainerEditor = ({ node, view, getPos }) => {
         editable: () => false,
         state: EditorState.create({
           doc: node,
-          plugins: [...app.PmPlugins.getAll()],
+          plugins: [...filteredplugins],
         }),
         dispatchTransaction,
         disallowedTools: [

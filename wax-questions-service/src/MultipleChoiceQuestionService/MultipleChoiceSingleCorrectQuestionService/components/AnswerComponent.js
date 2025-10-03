@@ -238,7 +238,7 @@ export default ({ node, view, getPos }) => {
           <QuestionData>
             <EditorComponent
               getPos={getPos}
-              node={node}
+              node={getUpdatedNode()?.node}
               placeholderText="Type option"
               view={view}
             />

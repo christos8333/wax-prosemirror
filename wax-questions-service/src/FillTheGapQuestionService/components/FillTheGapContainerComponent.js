@@ -116,6 +116,17 @@ export default ({ node, view, getPos }) => {
     });
   };
 
+  const getUpdatedNode = () => {
+    let nodeFound = node;
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        nodeFound = singNode;
+      }
+    });
+    return nodeFound;
+  };
+
   return (
     <FillTheGapWrapper>
       <div>
@@ -161,7 +172,7 @@ export default ({ node, view, getPos }) => {
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
-            node={node}
+            node={getUpdatedNode()?.node}
             readOnly={readOnly}
             view={view}
           />

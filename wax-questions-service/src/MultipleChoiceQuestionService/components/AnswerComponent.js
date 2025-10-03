@@ -264,7 +264,7 @@ export default ({ node, view, getPos }) => {
           {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent
               getPos={getPos}
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               view={view}
             />

@@ -203,7 +203,7 @@ export default ({ node, view, getPos }) => {
     });
 
     let count = -1;
-    parentContainer.descendants((element, position) => {
+    parentContainer.descendants(element => {
       if (element.type.name === 'true_false_single_correct') {
         count += 1;
       }
@@ -246,7 +246,7 @@ export default ({ node, view, getPos }) => {
           {!testMode && !(readOnly && feedback === '') && (
             <FeedbackComponent
               getPos={getPos}
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               view={view}
             />

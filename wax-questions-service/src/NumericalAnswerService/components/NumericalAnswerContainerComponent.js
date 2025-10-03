@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { th } from '@pubsweet/ui-toolkit';
 import { WaxContext, DocumentHelpers, Icon } from 'wax-prosemirror-core';
@@ -79,7 +79,7 @@ const StyledIconActionRemove = styled(Icon)`
 export default ({ node, view, getPos }) => {
   const context = useContext(WaxContext);
   const {
-    options,
+    // options,
     pmViews: { main },
     setOption,
   } = context;
@@ -111,11 +111,13 @@ export default ({ node, view, getPos }) => {
     });
   };
 
-  useEffect(() => {
-    setOption({
-      [node.attrs.id]: { numericalAnswer: node.attrs.answerType },
-    });
-  }, []);
+  // useEffect(() => {
+  //   setOption({
+  //     [getUpdatedNode().node.attrs.id]: {
+  //       numericalAnswer: node.attrs.answerType,
+  //     },
+  //   });
+  // }, []);
 
   const displayInfoMsg = () => {
     if (infoMsgRef.current && !infoMsgIsOpen)
@@ -125,6 +127,17 @@ export default ({ node, view, getPos }) => {
       infoMsgRef.current.style.display = 'none';
 
     setInfoMsgIsOpen(!infoMsgIsOpen);
+  };
+
+  const getUpdatedNode = () => {
+    let nodeFound = node;
+    const allNodes = getNodes(context.pmViews.main);
+    allNodes.forEach(singNode => {
+      if (singNode.node.attrs.id === node.attrs.id) {
+        nodeFound = singNode;
+      }
+    });
+    return nodeFound;
   };
 
   return (
@@ -140,7 +153,7 @@ export default ({ node, view, getPos }) => {
             >
               <StyledIconActionRemove name="deleteOutlinedQuestion" />
             </ActionButton>
-            {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
+            {getUpdatedNode()?.node?.attrs?.answerType === 'preciseAnswer' && (
               <StyledIconContainer
                 onClick={displayInfoMsg}
                 onKeyPress={() => {}}
@@ -160,33 +173,33 @@ export default ({ node, view, getPos }) => {
       <NumericalAnswerContainer className="numerical-answer">
         <EditorComponent
           getPos={getPos}
-          node={node}
+          node={getUpdatedNode()?.node}
           QuestionType="NumericalAnswer"
           view={view}
         />
         <NumericalAnswerOption>
-          {options[node.attrs.id]?.numericalAnswer === '' && (
+          {getUpdatedNode()?.node?.attrs?.answerType === '' && (
             <>No Type Selected</>
           )}
-          {options[node.attrs.id]?.numericalAnswer === 'exactAnswer' && (
+          {getUpdatedNode()?.node?.attrs?.answerType === 'exactAnswer' && (
             <ExactAnswerComponent
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               showFeedBack={showFeedBack}
               testMode={testMode}
             />
           )}
-          {options[node.attrs.id]?.numericalAnswer === 'rangeAnswer' && (
+          {getUpdatedNode()?.node?.attrs?.answerType === 'rangeAnswer' && (
             <RangeAnswerComponent
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               showFeedBack={showFeedBack}
               testMode={testMode}
             />
           )}
-          {options[node.attrs.id]?.numericalAnswer === 'preciseAnswer' && (
+          {getUpdatedNode()?.node?.attrs?.answerType === 'preciseAnswer' && (
             <PreciseAnswerComponent
-              node={node}
+              node={getUpdatedNode()?.node}
               readOnly={readOnly}
               showFeedBack={showFeedBack}
               testMode={testMode}
@@ -196,7 +209,7 @@ export default ({ node, view, getPos }) => {
         {!testMode && !(readOnly && feedback === '') && (
           <FeedbackComponent
             getPos={getPos}
-            node={node}
+            node={getUpdatedNode()?.node}
             readOnly={readOnly}
             view={view}
           />

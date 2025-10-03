@@ -30,6 +30,8 @@ import {
   YjsService,
 } from 'wax-prosemirror-services';
 
+import { QuestionsService } from 'wax-questions-service';
+
 import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { CitationService } from 'wax-citation-service';
@@ -119,6 +121,7 @@ export default {
         'Notes',
         'Lists',
         'Images',
+        'QuestionsDropDown',
         'SpecialCharacters',
         'CodeBlock',
         'ToggleAi',
@@ -140,6 +143,14 @@ export default {
     {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],
+    },
+    {
+      templateArea: 'fillTheGap',
+      toolGroups: ['FillTheGap'],
+    },
+    {
+      templateArea: 'MultipleDropDown',
+      toolGroups: ['MultipleDropDown'],
     },
   ],
 

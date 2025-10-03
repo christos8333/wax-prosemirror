@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { Plugin, PluginKey, TextSelection } from 'prosemirror-state';
 import citationDataService from '../services/CitationDataService';
 

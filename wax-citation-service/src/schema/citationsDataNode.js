@@ -24,8 +24,10 @@ const citationsDataNode = {
     if (citationFormat === 'vancouver' || citationFormat === 'ieee') {
       citations = citationDataService.getCitationsInVancouverOrder();
     } else {
+      // For other formats, show all citation instances (including duplicates)
       citations = citationDataService.getVisibleCitationInstances();
     }
+
 
     if (!citations || citations.length === 0) {
       return [

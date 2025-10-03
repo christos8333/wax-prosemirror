@@ -1,3 +1,6 @@
+/* eslint-disable no-bitwise */
+/* eslint-disable operator-assignment */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable class-methods-use-this */
 class CitationDataService {
   constructor() {
@@ -9,22 +12,78 @@ class CitationDataService {
     this.nextNumber = 1; // Next available Vancouver number
     this.updateCounter = 0; // Counter to force re-renders when Vancouver numbers change
     this.currentFormat = 'simple'; // Track current citation format for export
+    this.citationCounter = 0; // Counter to ensure unique IDs for each citation instance
+    this.contentToIdMap = new Map(); // Map citation content to their canonical ID
   }
 
-  // Generate hash-based ID from citation content (same content = same ID)
+  // Generate content-based ID (same content = same ID)
   generateCitationId(citationData) {
+    // Create a normalized content string for comparison
     const citationContent = JSON.stringify({
+      issued: citationData.issued,
       title: citationData.title,
       author: citationData.author,
-      issued: citationData.issued,
     });
-    return btoa(citationContent)
-      .replace(/[^a-zA-Z0-9]/g, '')
-      .substring(0, 16);
+
+    // Check if we already have an ID for this content
+    if (this.contentToIdMap.has(citationContent)) {
+      const existingId = this.contentToIdMap.get(citationContent);
+
+      return existingId;
+    }
+
+    // Generate new ID for new content using a more robust method
+    const hash = this.simpleHash(citationContent);
+    const baseId = hash.toString(36).substring(0, 16);
+
+    // Store the mapping from content to ID
+    this.contentToIdMap.set(citationContent, baseId);
+
+    return baseId;
   }
 
   addCitation(citationId, citationData) {
-    this.citations[citationId] = citationData;
+    // Only store citation data if it doesn't exist or if it's more complete
+    if (
+      !this.citations[citationId] ||
+      this.isCitationDataMoreComplete(citationData, this.citations[citationId])
+    ) {
+      this.citations[citationId] = citationData;
+    }
+  }
+
+  // Helper method to check if new citation data is more complete than existing
+  isCitationDataMoreComplete(newData, existingData) {
+    // Simple heuristic: if new data has more fields or longer strings, it's more complete
+    const newFields = Object.keys(newData).length;
+    const existingFields = Object.keys(existingData).length;
+
+    if (newFields > existingFields) return true;
+    if (newFields < existingFields) return false;
+
+    // If same number of fields, check if any fields are longer (more complete)
+    for (const key in newData) {
+      if (
+        typeof newData[key] === 'string' &&
+        typeof existingData[key] === 'string'
+      ) {
+        if (newData[key].length > existingData[key].length) return true;
+      }
+    }
+
+    return false;
+  }
+
+  // Simple hash function for generating unique IDs
+  simpleHash(str) {
+    let hash = 0;
+    if (str.length === 0) return hash;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
   }
 
   getCitation(citationId) {
@@ -56,22 +115,34 @@ class CitationDataService {
     const visibleCitationsArray = [];
     this.visibleCitations.forEach(citationId => {
       if (this.citations[citationId]) {
-        visibleCitationsArray.push(this.citations[citationId]);
+        visibleCitationsArray.push({
+          ...this.citations[citationId],
+          id: citationId,
+        });
       }
     });
+
     return visibleCitationsArray;
   }
 
   getVisibleCitationInstances() {
     // Return all citation instances (including duplicates) for non-Vancouver and IEEE styles
-    return this.visibleCitationInstances
-      .map(citationId => {
-        if (this.citations[citationId]) {
-          return this.citations[citationId];
-        }
-        return null;
-      })
-      .filter(citation => citation !== null);
+    const instances = [];
+
+    this.visibleCitationInstances.forEach(citationId => {
+      const citation = this.citations[citationId];
+      if (citation) {
+        // Ensure each citation has the correct ID
+        instances.push({
+          ...citation,
+          id: citationId,
+        });
+      } else {
+        console.warn(`Citation data not found for ID: ${citationId}`);
+      }
+    });
+
+    return instances;
   }
 
   // Assign a permanent number to a citation ID when first encountered (Vancouver and IEEE)
@@ -132,19 +203,20 @@ class CitationDataService {
 
   // Get citations in Vancouver order (unique citations only, for Vancouver footer)
   getCitationsInVancouverOrder() {
-    return this.citationOrder
-      .map(citationId => {
-        const citation = this.citations[citationId];
-        if (citation) {
-          return {
-            ...citation,
-            id: citationId,
-            vancouverNumber: this.getVancouverNumber(citationId),
-          };
-        }
-        return null;
-      })
-      .filter(citation => citation && this.visibleCitations.has(citation.id));
+    const citations = [];
+
+    this.citationOrder.forEach(citationId => {
+      const citation = this.citations[citationId];
+      if (citation && this.visibleCitations.has(citationId)) {
+        citations.push({
+          ...citation,
+          id: citationId,
+          vancouverNumber: this.getVancouverNumber(citationId),
+        });
+      }
+    });
+
+    return citations;
   }
 
   // Set the citation order based on document position

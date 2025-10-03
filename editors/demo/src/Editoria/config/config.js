@@ -121,7 +121,7 @@ export default {
         'Notes',
         'Lists',
         'Images',
-        'QuestionsDropDown',
+        // 'QuestionsDropDown',
         'SpecialCharacters',
         'CodeBlock',
         'ToggleAi',
@@ -144,14 +144,14 @@ export default {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],
     },
-    {
-      templateArea: 'fillTheGap',
-      toolGroups: ['FillTheGap'],
-    },
-    {
-      templateArea: 'MultipleDropDown',
-      toolGroups: ['MultipleDropDown'],
-    },
+    // {
+    //   templateArea: 'fillTheGap',
+    //   toolGroups: ['FillTheGap'],
+    // },
+    // {
+    //   templateArea: 'MultipleDropDown',
+    //   toolGroups: ['MultipleDropDown'],
+    // },
   ],
 
   // CommentsService: { readOnly: true },

@@ -8,7 +8,6 @@ const findPlaceholder = (state, id, placeholderPlugin) => {
 };
 
 export default (view, fileUpload, placeholderPlugin, context, app) => file => {
-  // const { state } = view;
   const trackChange = app.config.get('config.EnableTrackChangeService');
   const imageConfig = app.config.get('config.ImageService');
   const showLongDesc = imageConfig && imageConfig.showLongDesc;
@@ -23,7 +22,8 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
     }
 
   // A fresh object to act as the ID for this upload
-  const id = {};
+  // const id = {}
+  const id = uuidv4();
 
   // Replace the selection with a placeholder
   const { tr } = context.pmViews.main.state;
@@ -34,22 +34,29 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
     add: { id, pos: tr.selection.from },
   });
 
-  view.dispatch(tr);
+  context.pmViews.main.dispatch(tr);
 
   fileUpload(file).then(
     fileData => {
       let url = fileData;
       let extraData = {};
+
       if (typeof fileData === 'object') {
         url = fileData.url;
         extraData = fileData.extraData;
       }
 
-      let pos = findPlaceholder(view.state, id, placeholderPlugin);
+      let pos = findPlaceholder(
+        context.pmViews.main.state,
+        id,
+        placeholderPlugin,
+      );
       // If the content around the placeholder has been deleted, drop
       // the image
+
       if (pos == null) {
-        return;
+        pos = context.pmViews.main.state.selection.from;
+        // return
       }
 
       // if paragraph is empty don't break into new line
@@ -69,6 +76,7 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
             context.pmViews.main.state.schema.nodes.image.create({
               src: url,
               id: uuidv4(),
+              fileid: extraData.fileId,
               extraData,
               ...(showLongDesc ? { 'aria-describedby': uuidv4() } : {}),
             }),
@@ -78,7 +86,9 @@ export default (view, fileUpload, placeholderPlugin, context, app) => file => {
     },
     () => {
       // On failure, just clean up the placeholder
-      view.dispatch(tr.setMeta(placeholderPlugin, { remove: { id } }));
+      context.pmViews.main.dispatch(
+        tr.setMeta(placeholderPlugin, { remove: { id } }),
+      );
       context.setOption({ uploading: false });
     },
   );

@@ -18,14 +18,24 @@ const ImageUploadComponent = ({ view, displayed, config, pmplugins, item }) => {
     context,
     app,
   );
-  return displayed ? (
+
+  return (
     <ImageUpload
       fileUpload={upload}
       item={item.toJSON()}
-      key={uuidv4()}
+      key="image-upload"
       view={view}
     />
-  ) : null;
+  );
+
+  // return displayed ? (
+  //   <ImageUpload
+  //     fileUpload={upload}
+  //     item={item.toJSON()}
+  //     key={uuidv4()}
+  //     view={view}
+  //   />
+  // ) : null;
 };
 
 export default ImageUploadComponent;

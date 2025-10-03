@@ -6,9 +6,13 @@ import { v4 as uuidv4 } from 'uuid';
 export const PortalContext = React.createContext({
   createPortal: () => {},
   portals: {},
+  citationFormat: 'simple',
+  setCitationFormat: () => {},
 });
 
 export default props => {
+  const [citationFormat, setCitationFormat] = useState('simple');
+  
   const [portal, setPortal] = useState({
     createPortal: (
       element,
@@ -43,6 +47,8 @@ export default props => {
     <PortalContext.Provider
       value={{
         ...portal,
+        citationFormat,
+        setCitationFormat,
       }}
     >
       {props.children}

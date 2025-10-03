@@ -14,22 +14,28 @@ export default key =>
         set = set.map(tr.mapping, tr.doc);
         // See if the transaction adds or removes any placeholders
         const action = tr.getMeta(this);
+
         if (action && action.add) {
           const widget = document.createElement('placeholder');
+
           const deco = Decoration.widget(action.add.pos, widget, {
             id: action.add.id,
+            side: 1,
           });
+
           set = set.add(tr.doc, [deco]);
         } else if (action && action.remove) {
           set = set.remove(
             set.find(null, null, spec => spec.id === action.remove.id),
           );
+
           // HACK to fix
-          if (set?.find().length >= 1) {
-            set = set.remove(set.find()[0]);
-            set.children = [];
-          }
+          // if (set?.find().length >= 1) {
+          //   set = set.remove(set.find()[0])
+          //   set.children = []
+          // }
         }
+
         return set;
       },
     },

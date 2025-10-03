@@ -17,6 +17,7 @@ export default () => {
             node,
             view,
             getPos,
+            context,
           }) => {
             return ReactDOM.createPortal(
               <Component
@@ -25,6 +26,7 @@ export default () => {
                 key={id}
                 node={node}
                 view={view}
+                context={context}
               />,
               element,
               id,

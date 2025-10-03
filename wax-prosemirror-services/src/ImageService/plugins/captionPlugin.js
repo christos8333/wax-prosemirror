@@ -111,6 +111,7 @@ const captionPlugin = key =>
               );
             }
           }
+
           if (e.key === 'Enter') {
             if (
               view.state.selection.$head.path[6] &&
@@ -152,17 +153,26 @@ const captionPlugin = key =>
               counter = 0;
             }
           }
-          // delete caption if figure is deleted
+
           if (e.key === 'Delete' || e.code === 'Backspace') {
             const figCap = view.state.selection.$head.path;
+
             if (figCap[6] && figCap[6].type.name === 'figcaption') {
               const figCapEl = document.getElementById(figCap[6].attrs.id);
 
-              if (
-                figCapEl &&
-                figCapEl.parentElement.firstChild.tagName === 'FIGCAPTION'
-              ) {
-                figCapEl.parentElement.remove();
+              if (figCapEl && figCapEl.parentElement) {
+                const figureElement = figCapEl.closest('figure');
+
+                if (figureElement) {
+                  const figurePos = view.posAtDOM(figureElement);
+                  view.dispatch(
+                    view.state.tr.setSelection(
+                      NodeSelection.create(view.state.doc, figurePos),
+                    ),
+                  );
+
+                  Commands.simulateKey(view, 46, 'Delete');
+                }
               }
             }
           }

@@ -23,6 +23,10 @@ module.exports = function override(config, env) {
         __dirname,
         '../../wax-table-service/index',
       ),
+      'wax-citation-service': path.resolve(
+        __dirname,
+        '../../wax-citation-service/index',
+      ),
     };
   }
 
@@ -65,6 +69,14 @@ module.exports = function override(config, env) {
                 },
               },
             ],
+          },
+          {
+            test: /\.csl$/,
+            use: 'raw-loader',
+          },
+          {
+            test: /\.xml$/,
+            use: 'raw-loader',
           },
         ],
       },

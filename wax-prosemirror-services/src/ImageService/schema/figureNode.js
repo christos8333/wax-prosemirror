@@ -9,6 +9,8 @@ const figureNode = {
   },
   content: 'image* figcaption{0,1}',
   group: 'block',
+  selectable: true,
+  isolating: true,
   marks: '',
   parseDOM: [
     {

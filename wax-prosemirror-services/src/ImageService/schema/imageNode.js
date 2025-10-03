@@ -28,6 +28,9 @@ const imageNode = {
           fileid: hook.dom.dataset.fileid,
           'aria-describedby': hook.dom.dataset['aria-describedby'],
           'aria-description': hook.dom.getAttribute('aria-description'),
+          extraData: hook.dom.dataset.fileid
+            ? { fileId: hook.dom.dataset.fileid }
+            : {}, // <- RECREATE HERE
         });
         next();
       },

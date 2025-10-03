@@ -1,0 +1,67 @@
+import { Service } from 'wax-prosemirror-core';
+import citationsDataNode from './schema/citationsDataNode';
+import citationCallout from './schema/citationCallout';
+import CitationRightArea from './components/CitationRightArea';
+import CitationsFooterPlugin from './plugins/CitationsFooterPlugin';
+import CitationFooterSelectionPlugin from './plugins/CitationFooterSelectionPlugin';
+import CitationDragDropPlugin from './plugins/CitationDragDropPlugin';
+import CitationFooterContainerNodeView from './CitationFooterContainerNodeView';
+import CitationDropDownOptions from './CitationDropDownOptions';
+import CitationFooterList from './components/CitationFooterList';
+import CitationCalloutNodeView from './CitationCalloutNodeView';
+import CitationCallout from './components/CitationCallout';
+import CitationToolGroupService from './CitationToolGroupService/CitationToolGroupService';
+import CitationCleanupPlugin from './plugins/CitationCleanupPlugin';
+
+class CitationService extends Service {
+  name = 'QuestionsService';
+
+  boot() {
+    this.app.PmPlugins.add(
+      'citationsFooterPlugin',
+      CitationsFooterPlugin('citationsFooterPlugin', this.app),
+    );
+
+    this.app.PmPlugins.add(
+      'citationFooterSelectionPlugin',
+      CitationFooterSelectionPlugin(),
+    );
+
+    this.app.PmPlugins.add('citationDragDropPlugin', CitationDragDropPlugin());
+
+    this.app.PmPlugins.add('citationCleanupPlugin', CitationCleanupPlugin());
+
+    const layout = this.container.get('Layout');
+    layout.addComponent('citationRightArea', CitationRightArea);
+  }
+
+  register() {
+    this.container.bind('CitationDropDownOptions').to(CitationDropDownOptions);
+    const createNode = this.container.get('CreateNode');
+    const addPortal = this.container.get('AddPortal');
+
+    createNode({
+      citations_data_node: citationsDataNode,
+    });
+
+    createNode({
+      citation_callout: citationCallout,
+    });
+
+    addPortal({
+      nodeView: CitationFooterContainerNodeView,
+      component: CitationFooterList,
+      context: this.app,
+    });
+
+    addPortal({
+      nodeView: CitationCalloutNodeView,
+      component: CitationCallout,
+      context: this.app,
+    });
+  }
+
+  dependencies = [new CitationToolGroupService()];
+}
+
+export default CitationService;

@@ -10,7 +10,6 @@ import {
   MenuButton,
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';
-import insertImage from './Upload';
 
 const Wrapper = styled.div`
   input {
@@ -23,6 +22,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   const { title } = item;
   const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
+
   const {
     activeView,
     activeViewId,
@@ -34,11 +34,12 @@ const ImageUpload = ({ item, fileUpload, view }) => {
   });
 
   const inputRef = useRef(null);
-  const placeholderPlugin = app.PmPlugins.get('imagePlaceHolder');
   const imageServiceConfig = app.config.get('config.ImageService');
 
-  const handleMouseDown = () => {
-    if (activeViewId !== 'main') {
+  const handleMouseDown = async e => {
+    e.preventDefault();
+
+    if (activeViewId && activeViewId !== 'main') {
       const allNodes = DocumentHelpers.findBlockNodes(view.state.doc);
       let nodeFound = '';
       allNodes.forEach(node => {
@@ -60,8 +61,9 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           ),
       );
     }
+
     if (imageServiceConfig && imageServiceConfig.handleAssetManager) {
-      insertThroughFileMAnager();
+      await insertThroughFileMAnager();
     } else {
       inputRef.current.click();
     }
@@ -69,12 +71,32 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
   async function insertThroughFileMAnager() {
     const handler = imageServiceConfig.handleAssetManager;
-    const urls = await handler();
-    insertImage(urls, view, placeholderPlugin);
+    await handler();
   }
 
   const isDisabled =
     context.options.uploading || !item.select(activeView) || !isEditable;
+
+  const onChangeFileManager = async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    context.setOption({ uploading: true });
+
+    try {
+      await fileUpload(file);
+    } finally {
+      context.setOption({ uploading: false });
+      if (inputRef.current) inputRef.current.value = '';
+    }
+  };
+
+  const onChange = e => {
+    e.preventDefault();
+    fileUpload(e.target.files[0]);
+    context.setOption({ uploading: true });
+    if (inputRef.current) inputRef.current.value = '';
+  };
 
   const ImageUploadComponent = useMemo(
     () => (
@@ -84,10 +106,7 @@ const ImageUpload = ({ item, fileUpload, view }) => {
             active={false}
             disabled={isDisabled}
             iconName={item.icon}
-            onMouseDown={e => {
-              e.preventDefault();
-              handleMouseDown();
-            }}
+            onMouseDown={handleMouseDown}
             title={
               !isEmpty(i18n) && i18n.exists(`Wax.Images.${title}`)
                 ? t(`Wax.Images.${title}`)
@@ -98,12 +117,15 @@ const ImageUpload = ({ item, fileUpload, view }) => {
           <input
             accept="image/*"
             id="file-upload"
-            onChange={e => {
-              fileUpload(e.target.files[0]);
-              context.setOption({ uploading: true });
-              if (inputRef.current) inputRef.current.value = '';
+            onChange={
+              imageServiceConfig && imageServiceConfig.handleAssetManager
+                ? onChangeFileManager
+                : onChange
+            }
+            // ref={inputRef}
+            ref={el => {
+              inputRef.current = el;
             }}
-            ref={inputRef}
             type="file"
           />
         </label>
@@ -114,4 +136,5 @@ const ImageUpload = ({ item, fileUpload, view }) => {
 
   return ImageUploadComponent;
 };
+
 export default ImageUpload;

@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
 
@@ -40,6 +41,7 @@ export default ({ area, users }) => {
     const allCommentsTop = [];
     let panelWrapper = {};
     let panelWrapperHeight = {};
+
     if (main) {
       WaxSurface = main.dom.getBoundingClientRect();
       WaxSurfaceMarginTop = window.getComputedStyle(main.dom).marginTop;
@@ -72,10 +74,15 @@ export default ({ area, users }) => {
       // annotation top
       if (area === 'main') {
         markNodeEl = document.querySelector(`[data-id="${id}"]`);
+
         if (!markNodeEl && marksNodes[area][pos - 1]) {
-          markNodeEl = document.querySelector(
-            `[data-id="${marksNodes[area][pos - 1].id}"]`,
-          );
+          markNodeEl = marksNodes[area][pos + 1]?.id
+            ? document.querySelector(
+                `[data-id="${marksNodes[area][pos + 1].id}"]`,
+              )
+            : document.querySelector(
+                `[data-id="${marksNodes[area][pos - 1].id}"]`,
+              );
         }
 
         if (markNodeEl) {

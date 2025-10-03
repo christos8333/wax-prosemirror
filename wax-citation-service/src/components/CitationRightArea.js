@@ -2,7 +2,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import {
   WaxContext,
-  ApplicationContext,
   PortalContext,
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';

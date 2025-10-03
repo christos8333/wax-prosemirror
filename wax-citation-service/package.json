@@ -15,16 +15,16 @@
   },
   "dependencies": {
     "@pubsweet/ui-toolkit": "^2.3.1",
+    "citeproc": "^2.4.63",
     "inversify": "^5.0.1",
     "lodash": "^4.17.4",
     "prosemirror-keymap": "1.2.1",
+    "prosemirror-model": "1.19.0",
     "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.7.1",
     "prosemirror-view": "1.30.2",
-    "prosemirror-model": "1.19.0",
     "react-i18next": "^13.3.1",
     "uuid": "^7.0.3",
-    "citeproc": "^2.4.63",
     "wax-prosemirror-core": "^0.9.99"
   },
   "devDependencies": {
@@ -35,6 +35,7 @@
     "@babel/preset-react": "^7.0.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-url": "^8.0.2",
     "babel-plugin-parameter-decorator": "1.0.12",
     "mocha": "^3.4.2",
     "prosemirror-test-builder": "^1.0.1",

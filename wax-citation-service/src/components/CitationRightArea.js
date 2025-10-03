@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable react/no-unescaped-entities */
+import React, { useContext, useState, useEffect } from 'react';
 import {
   WaxContext,
   ApplicationContext,
@@ -6,6 +7,7 @@ import {
 } from 'wax-prosemirror-core';
 import styled from 'styled-components';
 import citationDataService from '../services/CitationDataService';
+import crossrefService from '../services/CrossrefService';
 
 const CitationManagerContainer = styled.div`
   background-color: #f8f9fa;
@@ -198,136 +200,144 @@ const AddToTextButton = styled.button`
   }
 `;
 
+const LoadingSpinner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #6c757d;
+  font-size: 14px;
+`;
+
+const ErrorMessage = styled.div`
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 16px 0;
+  font-size: 14px;
+`;
+
+const SearchResultsContainer = styled.div`
+  margin-top: 16px;
+`;
+
+const SearchResultItem = styled.div`
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+  }
+`;
+
+const SearchResultTitle = styled.h4`
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+`;
+
+const SearchResultAuthor = styled.div`
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 8px;
+`;
+
+const SearchResultJournal = styled.div`
+  color: #495057;
+  font-size: 13px;
+  font-style: italic;
+  margin-bottom: 4px;
+`;
+
+const SearchResultDOI = styled.div`
+  color: #007bff;
+  font-size: 12px;
+  text-decoration: none;
+`;
+
+const CitationEmptyStateContainer = styled.div`
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  margin-top: 16px;
+`;
+
+const CitationEmptyStateTitle = styled.h3`
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #495057;
+`;
+
+const CitationEmptyStateText = styled.p`
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+`;
+
 const CitationManager = () => {
   const [activeTab, setActiveTab] = useState('search');
-  const { citationFormat } = useContext(PortalContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterValue, setFilterValue] = useState('');
+  const [crossrefResults, setCrossrefResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchError, setSearchError] = useState(null);
+  const [currentCitations, setCurrentCitations] = useState([]);
 
-  const { app } = useContext(ApplicationContext);
+  // Crossref search function
+  const searchCrossref = async (query, filters = {}) => {
+    if (!query.trim()) {
+      setCrossrefResults([]);
+      return;
+    }
+
+    setIsLoading(true);
+    setSearchError(null);
+
+    try {
+      const results = await crossrefService.searchWithFilters(query, {
+        type: filterValue || undefined,
+        ...filters,
+      });
+      setCrossrefResults(results);
+    } catch (error) {
+      setSearchError(error.message);
+      setCrossrefResults([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Search when query or filter changes
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery.trim()) {
+        searchCrossref(searchQuery);
+      } else {
+        setCrossrefResults([]);
+      }
+    }, 500); // Debounce search
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, filterValue]);
+
   const context = useContext(WaxContext);
 
   const {
     pmViews: { main },
-    activeView,
   } = context;
-
-  const sampleCitations = [
-    {
-      id: 'journal-article-1',
-      type: 'article-journal',
-      title:
-        'Collaboration in Virtual Environments: A Study of Remote Team Dynamics',
-      author: [
-        { family: 'Smith', given: 'John A.' },
-        { family: 'Doe', given: 'Rebecca L.' },
-      ],
-      issued: { 'date-parts': [[2023]] },
-      'container-title': 'Journal of Digital Research',
-      volume: '15',
-      issue: '2',
-      page: '123-135',
-      DOI: '10.1000/jdr.2023.15.2.123',
-    },
-    {
-      id: 'book-1',
-      type: 'book',
-      title: 'The Future of Artificial Intelligence in Education',
-      author: [{ family: 'Johnson', given: 'Michael' }],
-      issued: { 'date-parts': [[2023]] },
-      publisher: 'Academic Press',
-      'publisher-place': 'Boston, MA',
-    },
-    {
-      id: 'book-chapter-1',
-      type: 'chapter',
-      title: 'Machine Learning Applications in Healthcare',
-      author: [
-        { family: 'Williams', given: 'Sarah' },
-        { family: 'Brown', given: 'David' },
-      ],
-      issued: { 'date-parts': [[2023]] },
-      'container-title': 'Advances in Medical Technology',
-      'container-author': [{ family: 'Davis', given: 'Emma' }],
-      publisher: 'Medical Publishers',
-      page: '45-67',
-    },
-    {
-      id: 'website-1',
-      type: 'webpage',
-      title: 'Understanding Climate Change: A Comprehensive Guide',
-      author: [{ family: 'Wilson', given: 'Jennifer' }],
-      issued: { 'date-parts': [[2023, 6, 15]] },
-      URL: 'https://climate-guide.org/understanding-climate-change',
-      accessed: { 'date-parts': [[2023, 12, 1]] },
-    },
-    {
-      id: 'conference-1',
-      type: 'paper-conference',
-      title: 'Blockchain Technology in Supply Chain Management',
-      author: [
-        { family: 'Garcia', given: 'Carlos' },
-        { family: 'Lee', given: 'Amy' },
-      ],
-      issued: { 'date-parts': [[2023]] },
-      'container-title':
-        'Proceedings of the International Conference on Technology',
-      event: 'International Conference on Technology',
-      'event-place': 'San Francisco, CA',
-      publisher: 'Tech Conference Publications',
-    },
-    {
-      id: 'thesis-1',
-      type: 'thesis',
-      title: 'Sustainable Energy Solutions for Rural Communities',
-      author: [{ family: 'Anderson', given: 'Robert' }],
-      issued: { 'date-parts': [[2023]] },
-      'publisher-place': 'Stanford, CA',
-      genre: 'PhD dissertation',
-      'container-title': 'Stanford University',
-    },
-    {
-      id: 'report-1',
-      type: 'report',
-      title: 'Global Economic Outlook 2023: Challenges and Opportunities',
-      author: [{ family: 'Thompson', given: 'Lisa' }],
-      issued: { 'date-parts': [[2023]] },
-      publisher: 'World Economic Forum',
-      'publisher-place': 'Geneva, Switzerland',
-    },
-    {
-      id: 'newspaper-1',
-      type: 'article-newspaper',
-      title:
-        'The Rise of Remote Work: How Technology is Changing the Workplace',
-      author: [{ family: 'Martinez', given: 'Ana' }],
-      issued: { 'date-parts': [[2023, 8, 20]] },
-      'container-title': 'The New York Times',
-      section: 'Business',
-      page: 'B1',
-    },
-    {
-      id: 'video-1',
-      type: 'video',
-      title: 'Introduction to Quantum Computing',
-      author: [{ family: 'Kumar', given: 'Raj' }],
-      issued: { 'date-parts': [[2023]] },
-      URL: 'https://youtube.com/watch?v=quantum-intro',
-      'container-title': 'YouTube',
-      medium: 'Video',
-      duration: '45:30',
-    },
-    {
-      id: 'software-1',
-      type: 'software',
-      title: 'OpenAI GPT-4: Advanced Language Model',
-      author: [{ family: 'OpenAI', given: '' }],
-      issued: { 'date-parts': [[2023]] },
-      URL: 'https://openai.com/gpt-4',
-      version: '4.0',
-      medium: 'Computer software',
-    },
-  ];
 
   const handleAddToText = citationData => {
     // Use hash-based ID for ALL citation formats (same content = same ID)
@@ -335,6 +345,10 @@ const CitationManager = () => {
 
     // Store the citation data in the service
     citationDataService.addCitation(citationId, citationData);
+
+    // Update local state immediately
+    const citations = citationDataService.getAllCitations();
+    setCurrentCitations(Object.values(citations));
 
     const citationCalloutType = main.state.schema.nodes.citation_callout;
 
@@ -400,79 +414,80 @@ const CitationManager = () => {
         </FilterContainer>
       </SearchContainer>
 
-      <SectionHeading>Reference List</SectionHeading>
+      {/* Crossref Search Results */}
+      {searchQuery.trim() && (
+        <SearchResultsContainer>
+          <SectionHeading>Search Results from Crossref</SectionHeading>
 
-      <CitationExamplesContainer>
-        {sampleCitations.map(citation => {
-          const getCitationTypeLabel = type => {
-            const typeLabels = {
-              'article-journal': 'Journal Article',
-              book: 'Book',
-              chapter: 'Book Chapter',
-              webpage: 'Website',
-              'paper-conference': 'Conference Paper',
-              thesis: 'Thesis/Dissertation',
-              report: 'Report',
-              'article-newspaper': 'Newspaper Article',
-              video: 'Video',
-              software: 'Software',
-            };
-            return typeLabels[type] || 'Citation';
-          };
+          {isLoading && (
+            <LoadingSpinner>🔍 Searching Crossref...</LoadingSpinner>
+          )}
 
-          const formatAuthors = authors => {
-            if (!authors || authors.length === 0) return 'Unknown Author';
-            if (authors.length === 1) {
-              return `${authors[0].family}, ${authors[0].given}`;
-            }
-            if (authors.length === 2) {
-              return `${authors[0].family}, ${authors[0].given} and ${authors[1].family}, ${authors[1].given}`;
-            }
-            return `${authors[0].family}, ${authors[0].given} et al.`;
-          };
+          {searchError && (
+            <ErrorMessage>❌ Search error: {searchError}</ErrorMessage>
+          )}
 
-          const formatYear = issued => {
-            if (issued && issued['date-parts'] && issued['date-parts'][0]) {
-              return issued['date-parts'][0][0];
-            }
-            return 'n.d.';
-          };
+          {!isLoading &&
+            !searchError &&
+            crossrefResults.length === 0 &&
+            searchQuery.trim() && (
+              <div
+                style={{
+                  textAlign: 'center',
+                  padding: '20px',
+                  color: '#6c757d',
+                }}
+              >
+                No results found for "{searchQuery}"
+              </div>
+            )}
 
-          const formatCitationText = citation => {
-            const authors = formatAuthors(citation.author);
-            const year = formatYear(citation.issued);
-            const { title } = citation;
+          {!isLoading && crossrefResults.length > 0 && (
+            <div>
+              {crossrefResults.map((result, index) => (
+                <SearchResultItem
+                  key={result.id || index}
+                  onClick={() => handleAddToText(result)}
+                >
+                  <SearchResultTitle>{result.title}</SearchResultTitle>
+                  <SearchResultAuthor>
+                    {result.author
+                      ?.map(
+                        author =>
+                          `${author.family}${
+                            author.given ? `, ${author.given}` : ''
+                          }`,
+                      )
+                      .join('; ') || 'Unknown Author'}
+                  </SearchResultAuthor>
+                  <SearchResultJournal>
+                    {result['container-title']}
+                    {result.issued?.['date-parts']?.[0]?.[0] &&
+                      ` (${result.issued['date-parts'][0][0]})`}
+                    {result.volume && `, Vol. ${result.volume}`}
+                    {result.issue && `, Issue ${result.issue}`}
+                  </SearchResultJournal>
+                  {result.DOI && (
+                    <SearchResultDOI>DOI: {result.DOI}</SearchResultDOI>
+                  )}
+                </SearchResultItem>
+              ))}
+            </div>
+          )}
+        </SearchResultsContainer>
+      )}
 
-            let citationText = `${authors}. ${year}. ${title}`;
-
-            if (citation['container-title']) {
-              citationText += `. ${citation['container-title']}`;
-            }
-
-            if (citation.publisher) {
-              citationText += `. ${citation.publisher}`;
-            }
-
-            if (citation.URL) {
-              citationText += `. ${citation.URL}`;
-            }
-
-            return citationText;
-          };
-
-          return (
-            <CitationExample key={citation.id}>
-              <CitationStyleTitle>
-                {getCitationTypeLabel(citation.type)} - {citation.title}
-              </CitationStyleTitle>
-              <CitationText>{formatCitationText(citation)}</CitationText>
-              <AddToTextButton onClick={() => handleAddToText(citation)}>
-                Add to Text
-              </AddToTextButton>
-            </CitationExample>
-          );
-        })}
-      </CitationExamplesContainer>
+      {currentCitations.length <= 1 && (
+        <CitationEmptyStateContainer>
+          <CitationEmptyStateTitle>
+            Search for citations above to add them to your document
+          </CitationEmptyStateTitle>
+          <CitationEmptyStateText>
+            Use the search box to find real academic citations from the Crossref
+            database
+          </CitationEmptyStateText>
+        </CitationEmptyStateContainer>
+      )}
     </CitationManagerContainer>
   );
 };

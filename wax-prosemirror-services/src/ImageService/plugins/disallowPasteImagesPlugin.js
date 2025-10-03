@@ -17,7 +17,7 @@ export default onWarning => {
         content.forEach(node => {
           if (
             node.type.name === 'image' &&
-            !Object.keys(node.attrs.extraData).length === 0
+            Object.keys(node.attrs.extraData).length === 0
           ) {
             node.attrs.id = uuidv4();
             node.attrs.src = '';
@@ -29,7 +29,7 @@ export default onWarning => {
             if (
               node.firstChild &&
               node.firstChild.type.name === 'image' &&
-              !Object.keys(node.firstChild.attrs.extraData).length === 0
+              Object.keys(node.firstChild.attrs.extraData).length === 0
             ) {
               node.firstChild.attrs.id = uuidv4();
               node.firstChild.attrs.src = '';
@@ -38,7 +38,7 @@ export default onWarning => {
             } else if (
               node.lastChild &&
               node.lastChild.type.name === 'image' &&
-              !Object.keys(node.lastChild.attrs.extraData).length === 0
+              Object.keys(node.lastChild.attrs.extraData).length === 0
             ) {
               node.lastChild.attrs.id = uuidv4();
               node.lastChild.attrs.src = '';

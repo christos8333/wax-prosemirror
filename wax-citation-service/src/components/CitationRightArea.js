@@ -321,12 +321,10 @@ const CitationManager = () => {
         <SearchResultsContainer>
           <SectionHeading>Search Results from Crossref</SectionHeading>
 
-          {isLoading && (
-            <LoadingSpinner>🔍 Searching Crossref...</LoadingSpinner>
-          )}
+          {isLoading && <LoadingSpinner>Searching Crossref...</LoadingSpinner>}
 
           {searchError && (
-            <ErrorMessage>❌ Search error: {searchError}</ErrorMessage>
+            <ErrorMessage>Search error: {searchError}</ErrorMessage>
           )}
 
           {!isLoading &&

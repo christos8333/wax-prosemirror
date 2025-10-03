@@ -161,15 +161,14 @@ const CitationDropDown = () => {
 
   // Listen for imported citation format changes
   useEffect(() => {
-    const handleFormatImport = (event) => {
+    const handleFormatImport = event => {
       const { format } = event.detail;
-      console.log('CitationDropDown: Format imported, updating to:', format);
       setCitationFormat(format);
       citationDataService.setCurrentFormat(format);
     };
 
     window.addEventListener('citationFormatImported', handleFormatImport);
-    
+
     return () => {
       window.removeEventListener('citationFormatImported', handleFormatImport);
     };
@@ -256,6 +255,17 @@ const CitationDropDown = () => {
                   setCitationFormat(option.value);
                   citationDataService.setCurrentFormat(option.value);
                   openCloseMenu();
+
+                  // Trigger a document change to update export format
+                  // This forces ProseMirror to recognize the format change
+                  const { state, dispatch } = activeView;
+                  const { tr } = state;
+
+                  tr.insertText(' ', state.doc.content.size - 1);
+                  tr.delete(state.doc.content.size, state.doc.content.size);
+                  tr.setMeta('addToHistory', false);
+
+                  dispatch(tr);
                 }}
                 onKeyDown={e => onKeyDown(e, index)}
                 ref={itemRefs.current[index]}

@@ -54,9 +54,9 @@ const Editoria = () => {
           // value={`<p class="paragraph">a sdd d redsdsf fsdf<span id="eyJ0aXRsZSI6IkNv" class="citation-callout" data-id="eyJ0aXRsZSI6IkNv">[1]</span>erwe</p><div class="citations-data" data-citation-format="vancouver">h1References<ol><li data-id="eyJ0aXRsZSI6IkNv">Smith J. Collaboration in Virtual Environments: A Study of Remote Team Dynamics. Journal of Digital Research. 2023;15(2):123-135.</li></ol></div>`}
           // readonly
           layout={layout}
-          // onChange={debounce(source => {
-          //   console.log(source);
-          // }, 200)}
+          onChange={debounce(source => {
+            console.log(source);
+          }, 200)}
           user={user}
           scrollMargin={200}
           scrollThreshold={200}

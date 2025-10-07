@@ -14,14 +14,22 @@ import localeEnUS from '../styles/locales-en-US.xml?raw'; // Complete English US
 const CitationCalloutNode = styled.span`
   color: red;
   user-select: none;
-  cursor: default;
-  display: inline-block;
+  cursor: text;
+  display: inline;
   vertical-align: baseline;
-  pointer-events: none;
+  position: relative;
 
   &.ProseMirror-selectednode {
     outline: 2px solid #68cef8;
     outline-offset: 1px;
+  }
+  
+  /* Firefox-specific fix for cursor visibility */
+  @-moz-document url-prefix() {
+    & {
+      display: inline;
+      pointer-events: auto;
+    }
   }
 `;
 

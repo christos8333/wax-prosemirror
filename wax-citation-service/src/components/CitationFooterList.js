@@ -25,9 +25,9 @@ const CitationFooterList = () => {
         const uniqueCitations = citationDataService.getCitationsInVancouverOrder();
         setCitations(uniqueCitations);
       } else {
-        // Other styles: Show unique citations only (not all instances)
-        const uniqueCitations = citationDataService.getVisibleCitations();
-        setCitations(uniqueCitations);
+        // Other styles: Show all citation instances (including duplicates)
+        const visibleCitations = citationDataService.getVisibleCitationInstances();
+        setCitations(visibleCitations);
       }
     };
 

@@ -132,6 +132,8 @@ class CitationDataService {
   getVisibleCitationInstances() {
     // Return all citation instances (including duplicates) for non-Vancouver and IEEE styles
     const instances = [];
+    
+   
 
     this.visibleCitationInstances.forEach(citationId => {
       const citation = this.citations[citationId];
@@ -142,8 +144,7 @@ class CitationDataService {
           id: citationId,
         });
       } else {
-        console.warn(`Citation data not found for ID: ${citationId}`);
-      }
+        
     });
 
     return instances;

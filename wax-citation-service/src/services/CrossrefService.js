@@ -4,7 +4,9 @@
 class CrossrefService {
   constructor() {
     this.baseUrl = 'https://api.crossref.org/works';
-    this.userAgent =
+    // Note: User-Agent cannot be set in browser fetch requests due to CORS restrictions
+    // The browser will automatically send its own User-Agent header
+    this.appIdentifier =
       'Wax-ProseMirror-Citation-Service/1.0 (https://example.com; mailto:contact@example.com)';
   }
 
@@ -34,7 +36,6 @@ class CrossrefService {
       const response = await fetch(`${this.baseUrl}?${params}`, {
         method: 'GET',
         headers: {
-          'User-Agent': this.userAgent,
           Accept: 'application/json',
         },
       });
@@ -125,7 +126,6 @@ class CrossrefService {
       const response = await fetch(`${this.baseUrl}/${doi}`, {
         method: 'GET',
         headers: {
-          'User-Agent': this.userAgent,
           Accept: 'application/json',
         },
       });

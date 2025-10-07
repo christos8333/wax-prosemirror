@@ -12,7 +12,6 @@ class CitationDataService {
     this.nextNumber = 1; // Next available Vancouver number
     this.updateCounter = 0; // Counter to force re-renders when Vancouver numbers change
     this.currentFormat = 'simple'; // Track current citation format for export
-    this.citationCounter = 0; // Counter to ensure unique IDs for each citation instance
     this.contentToIdMap = new Map(); // Map citation content to their canonical ID
   }
 
@@ -107,12 +106,19 @@ class CitationDataService {
   }
 
   setVisibleCitationInstances(visibleCitationInstances) {
-    this.visibleCitationInstances = visibleCitationInstances;
+    // Ensure all IDs are strings and filter out any non-strings
+    const stringIds = visibleCitationInstances.filter(
+      id => typeof id === 'string',
+    );
+
+    // Create a new array to avoid reference issues
+    this.visibleCitationInstances = [...stringIds];
   }
 
   getVisibleCitations() {
     // Return only citations that are currently visible in the document (unique IDs only)
     const visibleCitationsArray = [];
+
     this.visibleCitations.forEach(citationId => {
       if (this.citations[citationId]) {
         visibleCitationsArray.push({
@@ -137,8 +143,6 @@ class CitationDataService {
           ...citation,
           id: citationId,
         });
-      } else {
-        console.warn(`Citation data not found for ID: ${citationId}`);
       }
     });
 
@@ -159,7 +163,6 @@ class CitationDataService {
     // Clear existing numbers
     this.citationNumbers.clear();
     this.nextNumber = 1;
-
     // Assign new numbers based on document order
     citationIdsInOrder.forEach(citationId => {
       this.citationNumbers.set(citationId, this.nextNumber);
@@ -178,6 +181,28 @@ class CitationDataService {
   // Set the current citation format (for export)
   setCurrentFormat(format) {
     this.currentFormat = format;
+
+    // Reset Vancouver numbering when switching formats
+    if (format === 'vancouver' || format === 'ieee') {
+      this.resetVancouverNumbering();
+    }
+  }
+
+  resetVancouverNumbering() {
+    this.nextNumber = 1;
+    this.citationNumbers.clear();
+  }
+
+  // Detect citation format from HTML string
+  detectFormatFromHTML(html) {
+    // Look for data-citation-format attribute in the HTML
+    const formatMatch = html.match(/data-citation-format="([^"]+)"/);
+    if (formatMatch) {
+      const detectedFormat = formatMatch[1];
+      this.setCurrentFormat(detectedFormat);
+      return detectedFormat;
+    }
+    return null;
   }
 
   // Get the current citation format (for export)
@@ -188,7 +213,8 @@ class CitationDataService {
   // Get Vancouver and IEEE number for a citation (permanent number)
   getVancouverNumber(citationId) {
     if (this.citationNumbers.has(citationId)) {
-      return this.citationNumbers.get(citationId);
+      const number = this.citationNumbers.get(citationId);
+      return number;
     }
     // If not assigned yet, assign it now
     return this.assignNumber(citationId);
@@ -207,11 +233,14 @@ class CitationDataService {
 
     this.citationOrder.forEach(citationId => {
       const citation = this.citations[citationId];
-      if (citation && this.visibleCitations.has(citationId)) {
+      const isVisible = this.visibleCitations.has(citationId);
+
+      if (citation && isVisible) {
+        const vancouverNumber = this.getVancouverNumber(citationId);
         citations.push({
           ...citation,
           id: citationId,
-          vancouverNumber: this.getVancouverNumber(citationId),
+          vancouverNumber,
         });
       }
     });

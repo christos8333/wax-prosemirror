@@ -28,7 +28,6 @@ const citationsDataNode = {
       citations = citationDataService.getVisibleCitationInstances();
     }
 
-
     if (!citations || citations.length === 0) {
       return [
         'div',
@@ -87,34 +86,26 @@ const citationsDataNode = {
               );
 
               // Update the citation data in the service
+              // Ensure the citation ID is set correctly
+              const citationDataWithId = { ...parsedData, id: citationId };
+              
               if (citationDataService.getCitation(citationId)) {
-                citationDataService.updateCitation(citationId, parsedData);
+                citationDataService.updateCitation(citationId, citationDataWithId);
               } else {
-                citationDataService.addCitation(citationId, parsedData);
+                citationDataService.addCitation(citationId, citationDataWithId);
               }
             }
           });
 
           // For Vancouver/IEEE, we need to reorder numbers based on document order
           if (citationFormat === 'vancouver' || citationFormat === 'ieee') {
-            // Get all visible citation instances to determine order
-            const visibleInstances = citationDataService.getVisibleCitationInstances();
-            if (visibleInstances.length > 0) {
-              // Get unique IDs in document order
-              const uniqueIds = [...new Set(visibleInstances)];
-              citationDataService.reorderVancouverNumbers(uniqueIds);
+            // Use the citation IDs that were just parsed from the footer
+            const parsedCitationIds = Array.from(listItems).map(li => li.getAttribute('data-id'));
+            if (parsedCitationIds.length > 0) {
+              citationDataService.reorderVancouverNumbers(parsedCitationIds);
             }
           }
 
-          // Dispatch a custom event to notify the UI of the format change
-          // This will help update the dropdown and other components
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(
-              new CustomEvent('citationFormatImported', {
-                detail: { format: citationFormat },
-              }),
-            );
-          }
         }
         return { text: dom.textContent };
       },
@@ -219,6 +210,36 @@ function parseCitationText(text, citationFormat) {
       const titleMatch = titlePart.match(/^"(.+)"$/);
       if (titleMatch) {
         citation.title = titleMatch[1];
+      }
+    }
+  } else if (citationFormat === 'simple') {
+    // Simple format: Author, A. (Year). Title. Journal, Volume(Issue), pages.
+    // Example: "Wells, H. (2017). The Machine. The Time Machine."
+    
+    // Try to match the pattern: Author, A. (Year). Title. Journal...
+    const simpleMatch = text.match(/^(.+?),\s*([A-Z])\.\s*\((\d{4})\)\.\s*(.+?)\.\s*(.+)$/);
+    if (simpleMatch) {
+      citation.author = [
+        {
+          family: simpleMatch[1].trim(),
+          given: simpleMatch[2] + '.',
+        },
+      ];
+      citation.issued = { 'date-parts': [[parseInt(simpleMatch[3])]] };
+      citation.title = simpleMatch[4].trim();
+      citation['container-title'] = simpleMatch[5].trim();
+    } else {
+      // Try simpler pattern: Author, A. (Year). Title.
+      const simpleMatch2 = text.match(/^(.+?),\s*([A-Z])\.\s*\((\d{4})\)\.\s*(.+)$/);
+      if (simpleMatch2) {
+        citation.author = [
+          {
+            family: simpleMatch2[1].trim(),
+            given: simpleMatch2[2] + '.',
+          },
+        ];
+        citation.issued = { 'date-parts': [[parseInt(simpleMatch2[3])]] };
+        citation.title = simpleMatch2[4].trim();
       }
     }
   }

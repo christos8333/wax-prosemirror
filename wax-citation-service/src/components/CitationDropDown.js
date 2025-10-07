@@ -86,7 +86,7 @@ const CitationDropDown = () => {
 
   const getCurrentFormatLabel = () => {
     const currentOption = dropDownOptions.find(
-      option => option.value === citationFormat,
+      option => option.value === effectiveFormat,
     );
     if (currentOption) {
       return currentOption.label;
@@ -147,6 +147,11 @@ const CitationDropDown = () => {
   const context = useContext(WaxContext);
   const { activeView } = context;
   const { citationFormat, setCitationFormat } = useContext(PortalContext);
+  const serviceFormat = citationDataService.getCurrentFormat();
+
+  // Use service format if it's different from context format
+  const effectiveFormat =
+    serviceFormat !== 'simple' ? serviceFormat : citationFormat;
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -158,21 +163,6 @@ const CitationDropDown = () => {
   useEffect(() => {
     if (isDisabled) setIsOpen(false);
   }, [isDisabled]);
-
-  // Listen for imported citation format changes
-  useEffect(() => {
-    const handleFormatImport = event => {
-      const { format } = event.detail;
-      setCitationFormat(format);
-      citationDataService.setCurrentFormat(format);
-    };
-
-    window.addEventListener('citationFormatImported', handleFormatImport);
-
-    return () => {
-      window.removeEventListener('citationFormatImported', handleFormatImport);
-    };
-  }, [setCitationFormat]);
 
   const openCloseMenu = () => {
     if (!isDisabled) setIsOpen(!isOpen);
@@ -272,9 +262,11 @@ const CitationDropDown = () => {
                 role="menuitem"
                 style={{
                   backgroundColor:
-                    option.value === citationFormat ? '#e3f2fd' : 'transparent',
+                    option.value === effectiveFormat
+                      ? '#e3f2fd'
+                      : 'transparent',
                   fontWeight:
-                    option.value === citationFormat ? 'bold' : 'normal',
+                    option.value === effectiveFormat ? 'bold' : 'normal',
                 }}
                 tabIndex="-1"
               >

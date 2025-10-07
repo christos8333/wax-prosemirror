@@ -5,13 +5,25 @@ const CitationCleanupPlugin = () => {
   return new Plugin({
     appendTransaction(transactions, oldState, newState) {
       const visibleCitations = new Set();
+      const visibleCitationInstances = [];
+      const citationOrder = [];
+
       newState.doc.descendants(node => {
         if (node.type.name === 'citation_callout') {
-          visibleCitations.add(node.attrs.id);
+          const citationId = node.attrs.id;
+          visibleCitations.add(citationId);
+          visibleCitationInstances.push(citationId);
+
+          // Track unique IDs for Vancouver numbering (first occurrence only)
+          if (!citationOrder.includes(citationId)) {
+            citationOrder.push(citationId);
+          }
         }
       });
 
       citationDataService.setVisibleCitations(visibleCitations);
+      citationDataService.setVisibleCitationInstances(visibleCitationInstances);
+      citationDataService.setCitationOrder(citationOrder);
 
       return null;
     },

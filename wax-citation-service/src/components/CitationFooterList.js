@@ -20,7 +20,12 @@ const CitationFooterList = () => {
   // Update citations when the service changes
   useEffect(() => {
     const updateCitations = () => {
-      if (citationFormat === 'vancouver' || citationFormat === 'ieee') {
+      const serviceFormat = citationDataService.getCurrentFormat();
+      
+      // Use service format if it's different from context format
+      const effectiveFormat = serviceFormat !== 'simple' ? serviceFormat : citationFormat;
+      
+      if (effectiveFormat === 'vancouver' || effectiveFormat === 'ieee') {
         // Vancouver and IEEE: Show only unique citations (no duplicates)
         const uniqueCitations = citationDataService.getCitationsInVancouverOrder();
         setCitations(uniqueCitations);

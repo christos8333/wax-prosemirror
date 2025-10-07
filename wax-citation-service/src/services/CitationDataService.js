@@ -162,7 +162,6 @@ class CitationDataService {
     // Clear existing numbers
     this.citationNumbers.clear();
     this.nextNumber = 1;
-
     // Assign new numbers based on document order
     citationIdsInOrder.forEach(citationId => {
       this.citationNumbers.set(citationId, this.nextNumber);
@@ -181,6 +180,28 @@ class CitationDataService {
   // Set the current citation format (for export)
   setCurrentFormat(format) {
     this.currentFormat = format;
+    
+    // Reset Vancouver numbering when switching formats
+    if (format === 'vancouver' || format === 'ieee') {
+      this.resetVancouverNumbering();
+    }
+  }
+
+  resetVancouverNumbering() {
+    this.nextNumber = 1;
+    this.citationNumbers.clear();
+  }
+
+  // Detect citation format from HTML string
+  detectFormatFromHTML(html) {
+    // Look for data-citation-format attribute in the HTML
+    const formatMatch = html.match(/data-citation-format="([^"]+)"/);
+    if (formatMatch) {
+      const detectedFormat = formatMatch[1];
+      this.setCurrentFormat(detectedFormat);
+      return detectedFormat;
+    }
+    return null;
   }
 
   // Get the current citation format (for export)
@@ -191,7 +212,8 @@ class CitationDataService {
   // Get Vancouver and IEEE number for a citation (permanent number)
   getVancouverNumber(citationId) {
     if (this.citationNumbers.has(citationId)) {
-      return this.citationNumbers.get(citationId);
+      const number = this.citationNumbers.get(citationId);
+      return number;
     }
     // If not assigned yet, assign it now
     return this.assignNumber(citationId);
@@ -207,20 +229,13 @@ class CitationDataService {
   // Get citations in Vancouver order (unique citations only, for Vancouver footer)
   getCitationsInVancouverOrder() {
     const citations = [];
-    
-    console.log('getCitationsInVancouverOrder called');
-    console.log('Citation order:', this.citationOrder);
-    console.log('Visible citations:', Array.from(this.visibleCitations));
-    console.log('Available citations:', Object.keys(this.citations));
 
     this.citationOrder.forEach(citationId => {
       const citation = this.citations[citationId];
       const isVisible = this.visibleCitations.has(citationId);
-      console.log(`Citation ${citationId}: citation data exists: ${!!citation}, is visible: ${isVisible}`);
       
       if (citation && isVisible) {
         const vancouverNumber = this.getVancouverNumber(citationId);
-        console.log(`Adding citation ${citationId} with Vancouver number ${vancouverNumber}`);
         citations.push({
           ...citation,
           id: citationId,
@@ -229,7 +244,6 @@ class CitationDataService {
       }
     });
 
-    console.log('Returning Vancouver ordered citations:', citations.length);
     return citations;
   }
 

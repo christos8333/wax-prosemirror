@@ -70,6 +70,10 @@ function getProcessor(styleXML, items) {
 
 const CitationCallout = props => {
   const { citationFormat } = useContext(PortalContext);
+  const serviceFormat = citationDataService.getCurrentFormat();
+  
+  // Use service format if it's different from context format
+  const effectiveFormat = serviceFormat !== 'simple' ? serviceFormat : citationFormat;
   const { node } = props;
   const citationId = node?.attrs?.id;
 
@@ -83,7 +87,7 @@ const CitationCallout = props => {
       const item = citationDataService.getCitation(citationId);
 
       // For APA inline citations, use simple format: (Author, Year)
-      if (citationFormat === 'APA') {
+      if (effectiveFormat === 'APA') {
         if (item && item.author && item.author.length > 0) {
           const author = item.author[0];
           const year =
@@ -97,7 +101,7 @@ const CitationCallout = props => {
       }
 
       // For MLA inline citations, use format: (Author Page)
-      if (citationFormat === 'MLA') {
+      if (effectiveFormat === 'MLA') {
         if (item && item.author && item.author.length > 0) {
           const author = item.author[0];
           // For MLA, we typically don't include page numbers in inline citations unless specified
@@ -108,7 +112,7 @@ const CitationCallout = props => {
         return `[${citationId}]`;
       }
 
-      if (citationFormat === 'chicago') {
+      if (effectiveFormat === 'chicago') {
         if (item && item.author && item.author.length > 0) {
           const author = item.author[0];
           const year =
@@ -124,7 +128,7 @@ const CitationCallout = props => {
       }
 
       // For Harvard inline citations, use format: (Author, Year)
-      if (citationFormat === 'harvard') {
+      if (effectiveFormat === 'harvard') {
         if (item && item.author && item.author.length > 0) {
           const author = item.author[0];
           const year =
@@ -138,7 +142,7 @@ const CitationCallout = props => {
       }
 
       // For simple inline citations, use format: (Author, Year)
-      if (citationFormat === 'simple') {
+      if (effectiveFormat === 'simple') {
         if (item && item.author && item.author.length > 0) {
           const author = item.author[0];
           const year =
@@ -152,7 +156,7 @@ const CitationCallout = props => {
       }
 
       // For Vancouver inline citations, use format: [1], [2], etc.
-      if (citationFormat === 'vancouver') {
+      if (effectiveFormat === 'vancouver') {
         const vancouverNumber = citationDataService.getVancouverNumber(
           citationId,
         );
@@ -163,7 +167,7 @@ const CitationCallout = props => {
       }
 
       // For IEEE inline citations, use format: [1], [2], etc. (same as Vancouver)
-      if (citationFormat === 'ieee') {
+      if (effectiveFormat === 'ieee') {
         const ieeeNumber = citationDataService.getVancouverNumber(citationId);
         if (ieeeNumber) {
           return `[${ieeeNumber}]`;
@@ -173,7 +177,7 @@ const CitationCallout = props => {
 
       // For other styles, use CSL processor
       let selectedStyle = simpleStyle;
-      switch (citationFormat) {
+      switch (effectiveFormat) {
         case 'MLA':
           selectedStyle = simpleStyle;
           break;
@@ -241,7 +245,7 @@ const CitationCallout = props => {
     } catch (error) {
       return `[${citationId}]`;
     }
-  }, [citationId, citationFormat, citationDataService.getUpdateCounter()]);
+  }, [citationId, effectiveFormat, citationDataService.getUpdateCounter()]);
 
   return <CitationCalloutNode>{citationText}</CitationCalloutNode>;
 };

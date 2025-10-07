@@ -1,6 +1,6 @@
 {
   "name": "demo",
-  "version": "0.9.100",
+  "version": "0.9.101",
   "private": true,
   "dependencies": {
     "@guardian/prosemirror-invisibles": "^1.2.0",
@@ -15,10 +15,10 @@
     "typeface-fira-sans-condensed": "^0.0.54",
     "typeface-inter": "^1.1.13",
     "typeface-vollkorn": "^0.0.54",
-    "wax-prosemirror-core": "^0.9.100",
-    "wax-prosemirror-services": "^0.9.100",
-    "wax-questions-service": "^0.9.100",
-    "wax-table-service": "^0.9.100"
+    "wax-prosemirror-core": "^0.9.101",
+    "wax-prosemirror-services": "^0.9.101",
+    "wax-questions-service": "^0.9.101",
+    "wax-table-service": "^0.9.101"
   },
   "scripts": {
     "start": "react-app-rewired start",

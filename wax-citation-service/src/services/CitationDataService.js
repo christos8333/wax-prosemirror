@@ -12,7 +12,6 @@ class CitationDataService {
     this.nextNumber = 1; // Next available Vancouver number
     this.updateCounter = 0; // Counter to force re-renders when Vancouver numbers change
     this.currentFormat = 'simple'; // Track current citation format for export
-    this.citationCounter = 0; // Counter to ensure unique IDs for each citation instance
     this.contentToIdMap = new Map(); // Map citation content to their canonical ID
   }
 
@@ -107,12 +106,17 @@ class CitationDataService {
   }
 
   setVisibleCitationInstances(visibleCitationInstances) {
-    this.visibleCitationInstances = visibleCitationInstances;
+    // Ensure all IDs are strings and filter out any non-strings
+    const stringIds = visibleCitationInstances.filter(id => typeof id === 'string');
+
+    // Create a new array to avoid reference issues
+    this.visibleCitationInstances = [...stringIds];
   }
 
   getVisibleCitations() {
     // Return only citations that are currently visible in the document (unique IDs only)
     const visibleCitationsArray = [];
+    
     this.visibleCitations.forEach(citationId => {
       if (this.citations[citationId]) {
         visibleCitationsArray.push({

@@ -88,9 +88,12 @@ const citationsDataNode = {
               // Update the citation data in the service
               // Ensure the citation ID is set correctly
               const citationDataWithId = { ...parsedData, id: citationId };
-              
+
               if (citationDataService.getCitation(citationId)) {
-                citationDataService.updateCitation(citationId, citationDataWithId);
+                citationDataService.updateCitation(
+                  citationId,
+                  citationDataWithId,
+                );
               } else {
                 citationDataService.addCitation(citationId, citationDataWithId);
               }
@@ -100,12 +103,13 @@ const citationsDataNode = {
           // For Vancouver/IEEE, we need to reorder numbers based on document order
           if (citationFormat === 'vancouver' || citationFormat === 'ieee') {
             // Use the citation IDs that were just parsed from the footer
-            const parsedCitationIds = Array.from(listItems).map(li => li.getAttribute('data-id'));
+            const parsedCitationIds = Array.from(listItems).map(li =>
+              li.getAttribute('data-id'),
+            );
             if (parsedCitationIds.length > 0) {
               citationDataService.reorderVancouverNumbers(parsedCitationIds);
             }
           }
-
         }
         return { text: dom.textContent };
       },
@@ -215,9 +219,11 @@ function parseCitationText(text, citationFormat) {
   } else if (citationFormat === 'simple') {
     // Simple format: Author, A. (Year). Title. Journal, Volume(Issue), pages.
     // Example: "Wells, H. (2017). The Machine. The Time Machine."
-    
+
     // Try to match the pattern: Author, A. (Year). Title. Journal...
-    const simpleMatch = text.match(/^(.+?),\s*([A-Z])\.\s*\((\d{4})\)\.\s*(.+?)\.\s*(.+)$/);
+    const simpleMatch = text.match(
+      /^(.+?),\s*([A-Z])\.\s*\((\d{4})\)\.\s*(.+?)\.\s*(.+)$/,
+    );
     if (simpleMatch) {
       citation.author = [
         {
@@ -230,7 +236,9 @@ function parseCitationText(text, citationFormat) {
       citation['container-title'] = simpleMatch[5].trim();
     } else {
       // Try simpler pattern: Author, A. (Year). Title.
-      const simpleMatch2 = text.match(/^(.+?),\s*([A-Z])\.\s*\((\d{4})\)\.\s*(.+)$/);
+      const simpleMatch2 = text.match(
+        /^(.+?),\s*([A-Z])\.\s*\((\d{4})\)\.\s*(.+)$/,
+      );
       if (simpleMatch2) {
         citation.author = [
           {

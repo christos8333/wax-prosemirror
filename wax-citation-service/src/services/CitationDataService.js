@@ -133,7 +133,6 @@ class CitationDataService {
     // Return all citation instances (including duplicates) for non-Vancouver and IEEE styles
     const instances = [];
     
-   
 
     this.visibleCitationInstances.forEach(citationId => {
       const citation = this.citations[citationId];
@@ -143,8 +142,7 @@ class CitationDataService {
           ...citation,
           id: citationId,
         });
-      } else {
-        
+      } 
     });
 
     return instances;

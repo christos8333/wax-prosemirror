@@ -4,6 +4,8 @@ const citationCallout = {
   attrs: {
     id: { default: '' },
     class: { default: 'citation-callout' },
+    citationData: { default: null },
+    citationText: { default: '' },
   },
   group: 'inline',
   content: 'text*',

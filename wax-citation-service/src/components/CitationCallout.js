@@ -1,15 +1,7 @@
-/* eslint-disable react/prop-types */
-import React, { useMemo, useContext } from 'react';
-import styled from 'styled-components';
-import CSL from 'citeproc';
+import React, { useContext, useEffect, useState } from 'react';
 import { PortalContext } from 'wax-prosemirror-core';
 import citationDataService from '../services/CitationDataService';
-// import chicagoStyle from '../styles/chicago-author-date.csl?raw'; // Chicago author-date style
-import harvardStyle from '../styles/harvard.csl?raw'; // Harvard author-date style
-import simpleStyle from '../styles/simple-author-date.csl?raw'; // Simple author-date style
-// import apaStyle from '../styles/apa.csl?raw'; // APA CSL XML as string
-// import jmIndigoStyle from '../styles/jm-indigo.csl?raw'; // JM Indigo CSL XML as string (for future use)
-import localeEnUS from '../styles/locales-en-US.xml?raw'; // Complete English US locale
+import styled from 'styled-components';
 
 const CitationCalloutNode = styled.span`
   color: red;
@@ -33,222 +25,133 @@ const CitationCalloutNode = styled.span`
   }
 `;
 
-// Use the complete English US locale
-const localeXML = localeEnUS;
-
-function getProcessor(styleXML, items) {
-  const sys = {
-    retrieveLocale: () => {
-      return localeXML;
-    },
-    retrieveItem: id => {
-      const item = items[id];
-      // Ensure the item has all required properties
-      if (item) {
-        // Add missing properties that CSL might expect
-        const enhancedItem = {
-          ...item,
-          'citation-label': item['citation-label'] || id,
-          'citation-number': item['citation-number'] || 1,
-          'first-reference-note-number':
-            item['first-reference-note-number'] || 1,
-          'near-note': item['near-note'] || false,
-          'original-date': item['original-date'] || null,
-          status: item.status || 'published',
-          'suppress-author': item['suppress-author'] || false,
-          withheld: item.withheld || false,
-        };
-        return enhancedItem;
-      }
-      return item;
-    },
-  };
-
-  const processor = new CSL.Engine(sys, styleXML);
-  return processor;
-}
-
 const CitationCallout = props => {
   const { citationFormat } = useContext(PortalContext);
   const serviceFormat = citationDataService.getCurrentFormat();
-
-  // Use service format if it's different from context format
-  const effectiveFormat =
-    serviceFormat !== 'simple' ? serviceFormat : citationFormat;
-  const { node } = props;
+  const { node, view, getPos } = props;
   const citationId = node?.attrs?.id;
 
-  const citationText = useMemo(() => {
-    try {
-      if (!citationId) {
-        return '[No Citation ID]';
-      }
+  // Use service format if it's different from context format
+  const effectiveFormat = serviceFormat !== 'simple' ? serviceFormat : citationFormat;
 
-      // Get citation data from service instead of hardcoded items
-      const item = citationDataService.getCitation(citationId);
+  const [citationText, setCitationText] = useState(`[${citationId}]`);
 
-      // For APA inline citations, use simple format: (Author, Year)
-      if (effectiveFormat === 'APA') {
-        if (item && item.author && item.author.length > 0) {
-          const author = item.author[0];
-          const year =
-            item.issued && item.issued['date-parts']
-              ? item.issued['date-parts'][0][0]
-              : 'n.d.';
-          const apaInline = `(${author.family}, ${year})`;
-          return apaInline;
-        }
-        return `[${citationId}]`;
-      }
+  console.log('CitationCallout: Component rendered for ID:', citationId);
+  console.log('CitationCallout: Node attrs:', node?.attrs);
+  console.log('CitationCallout: Effective format:', effectiveFormat);
 
-      // For MLA inline citations, use format: (Author Page)
-      if (effectiveFormat === 'MLA') {
-        if (item && item.author && item.author.length > 0) {
-          const author = item.author[0];
-          // For MLA, we typically don't include page numbers in inline citations unless specified
-          // You can add page number logic here if needed
-          const mlaInline = `(${author.family})`;
-          return mlaInline;
-        }
-        return `[${citationId}]`;
-      }
-
-      if (effectiveFormat === 'chicago') {
-        if (item && item.author && item.author.length > 0) {
-          const author = item.author[0];
-          const year =
-            item.issued && item.issued['date-parts']
-              ? item.issued['date-parts'][0][0]
-              : 'n.d.';
-          // For Chicago, we can include page numbers if available
-          const page = item.page ? `, ${item.page.split('-')[0]}` : ''; // Use first page if range
-          const chicagoInline = `(${author.family} ${year}${page})`;
-          return chicagoInline;
-        }
-        return `[${citationId}]`;
-      }
-
-      // For Harvard inline citations, use format: (Author, Year)
-      if (effectiveFormat === 'harvard') {
-        if (item && item.author && item.author.length > 0) {
-          const author = item.author[0];
-          const year =
-            item.issued && item.issued['date-parts']
-              ? item.issued['date-parts'][0][0]
-              : 'n.d.';
-          const harvardInline = `(${author.family}, ${year})`;
-          return harvardInline;
-        }
-        return `[${citationId}]`;
-      }
-
-      // For simple inline citations, use format: (Author, Year)
-      if (effectiveFormat === 'simple') {
-        if (item && item.author && item.author.length > 0) {
-          const author = item.author[0];
-          const year =
-            item.issued && item.issued['date-parts']
-              ? item.issued['date-parts'][0][0]
-              : 'n.d.';
-          const simpleInline = `(${author.family}, ${year})`;
-          return simpleInline;
-        }
-        return `[${citationId}]`;
-      }
-
-      // For Vancouver inline citations, use format: [1], [2], etc.
-      if (effectiveFormat === 'vancouver') {
-        const vancouverNumber = citationDataService.getVancouverNumber(
-          citationId,
-        );
-        if (vancouverNumber) {
-          return `[${vancouverNumber}]`;
-        }
-        return `[${citationId}]`;
-      }
-
-      // For IEEE inline citations, use format: [1], [2], etc. (same as Vancouver)
-      if (effectiveFormat === 'ieee') {
-        const ieeeNumber = citationDataService.getVancouverNumber(citationId);
-        if (ieeeNumber) {
-          return `[${ieeeNumber}]`;
-        }
-        return `[${citationId}]`;
-      }
-
-      // For other styles, use CSL processor
-      let selectedStyle = simpleStyle;
-      switch (effectiveFormat) {
-        case 'MLA':
-          selectedStyle = simpleStyle;
-          break;
-        case 'harvard':
-          selectedStyle = harvardStyle;
-          break;
-        default:
-          selectedStyle = simpleStyle;
-      }
-
-      // Create a temporary items object with just the current citation for CSL processing
-      const tempItems = { [citationId]: item };
-      const processor = getProcessor(selectedStyle, tempItems, localeXML);
-
-      // Set up the processor properly - use plain text instead of HTML
-      processor.setOutputFormat('text');
-
-      // Add error handling around updateItems
-      try {
-        processor.updateItems([citationId]);
-      } catch (updateError) {}
-
-      const bibliography = processor.makeBibliography();
-
-      // Check different parts of the bibliography result
-      if (bibliography && bibliography.length > 0) {
-        if (bibliography[1] && bibliography[1].length > 0) {
-          return bibliography[1][0];
-        }
-      }
-
-      // Try citation cluster approach
-      const citationResult = processor.makeCitationCluster({
-        citationID: citationId,
-        citationItems: [{ id: citationId }],
-        properties: {},
-      });
-
-      // Try a simpler approach - just get the citation text directly
-      if (citationResult && citationResult.length > 0) {
-        const citation = citationResult[0];
-
-        // Try to extract the text from the citation
-        if (citation && citation.length > 1) {
-          const citationText = citation[1];
-
-          if (citationText && citationText !== '[NO_PRINTED_FORM]') {
-            return citationText;
-          }
-        }
-      }
-
-      // If all else fails, try to manually format the citation
-      if (item && item.author && item.author.length > 0) {
-        const author = item.author[0];
-        const year =
-          item.issued && item.issued['date-parts']
-            ? item.issued['date-parts'][0][0]
-            : 'n.d.';
-        const simpleCitation = `(${author.family}, ${year})`;
-        return simpleCitation;
-      }
-
-      return `[${citationId}]`;
-    } catch (error) {
+  // Generate citation text based on format and data
+  const generateCitationText = (format, data) => {
+    if (!data) {
       return `[${citationId}]`;
     }
-  }, [citationId, effectiveFormat, citationDataService.getUpdateCounter()]);
 
-  return <CitationCalloutNode>{citationText}</CitationCalloutNode>;
+    switch (format) {
+      case 'vancouver':
+      case 'ieee':
+        const vancouverNumber = citationDataService.getVancouverNumber(citationId);
+        return `[${vancouverNumber || '?'}]`;
+      
+      case 'APA':
+        if (data.author && data.author[0]) {
+          const author = data.author[0];
+          const year = data.issued && data.issued['date-parts'] 
+            ? data.issued['date-parts'][0][0] 
+            : 'n.d.';
+          return `(${author.family}, ${year})`;
+        }
+        return `[${citationId}]`;
+      
+      case 'MLA':
+        if (data.author && data.author[0]) {
+          const author = data.author[0];
+          return `(${author.family})`;
+        }
+        return `[${citationId}]`;
+      
+      case 'harvard':
+        if (data.author && data.author[0]) {
+          const author = data.author[0];
+          const year = data.issued && data.issued['date-parts'] 
+            ? data.issued['date-parts'][0][0] 
+            : 'n.d.';
+          return `(${author.family}, ${year})`;
+        }
+        return `[${citationId}]`;
+      
+      default: // simple and others
+        if (data.author && data.author[0]) {
+          const author = data.author[0];
+          const year = data.issued && data.issued['date-parts'] 
+            ? data.issued['date-parts'][0][0] 
+            : 'n.d.';
+          return `(${author.family}, ${year})`;
+        }
+        return `[${citationId}]`;
+    }
+  };
+
+  // Update citation text when format or data changes
+  useEffect(() => {
+    if (!citationId) return;
+
+    // First check if citation data exists in node attributes (YJS persistence)
+    let citationData = node?.attrs?.citationData;
+    
+    // If not in node attributes, check service
+    if (!citationData) {
+      citationData = citationDataService.getCitation(citationId);
+    }
+    
+    // If still no data, create placeholder (only for truly new citations)
+    if (!citationData) {
+      console.log('CitationCallout: Creating citation data for', citationId);
+      citationData = {
+        id: citationId,
+        title: `Citation ${citationId.substring(0, 8)}...`,
+        author: [{ family: 'Unknown', given: 'Author' }],
+        issued: { 'date-parts': [[2023]] },
+        type: 'article-journal',
+        'container-title': 'Unknown Journal',
+        volume: '1',
+        issue: '1',
+        page: '1-10',
+        DOI: `10.1000/placeholder.${citationId.substring(0, 8)}`,
+      };
+      citationDataService.addCitation(citationId, citationData);
+    } else {
+      console.log('CitationCallout: Found existing citation data:', citationData);
+      // Make sure it's also in the service for consistency
+      if (!citationDataService.getCitation(citationId)) {
+        citationDataService.addCitation(citationId, citationData);
+      }
+    }
+
+    // Generate and set citation text
+    const newCitationText = generateCitationText(effectiveFormat, citationData);
+    setCitationText(newCitationText);
+
+    // Update node attributes for YJS persistence
+    if (view && getPos) {
+      view.dispatch(
+        view.state.tr.setNodeMarkup(getPos(), undefined, {
+          ...node.attrs,
+          citationData: citationData,
+          citationText: newCitationText,
+        })
+      );
+    }
+  }, [effectiveFormat, citationId, node?.attrs?.citationData, view, getPos]);
+
+  return (
+    <CitationCalloutNode
+      className="citation-callout"
+      data-id={citationId}
+      contentEditable={false}
+    >
+      {citationText}
+    </CitationCalloutNode>
+  );
 };
 
 export default CitationCallout;

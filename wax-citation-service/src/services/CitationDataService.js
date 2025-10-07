@@ -207,18 +207,29 @@ class CitationDataService {
   // Get citations in Vancouver order (unique citations only, for Vancouver footer)
   getCitationsInVancouverOrder() {
     const citations = [];
+    
+    console.log('getCitationsInVancouverOrder called');
+    console.log('Citation order:', this.citationOrder);
+    console.log('Visible citations:', Array.from(this.visibleCitations));
+    console.log('Available citations:', Object.keys(this.citations));
 
     this.citationOrder.forEach(citationId => {
       const citation = this.citations[citationId];
-      if (citation && this.visibleCitations.has(citationId)) {
+      const isVisible = this.visibleCitations.has(citationId);
+      console.log(`Citation ${citationId}: citation data exists: ${!!citation}, is visible: ${isVisible}`);
+      
+      if (citation && isVisible) {
+        const vancouverNumber = this.getVancouverNumber(citationId);
+        console.log(`Adding citation ${citationId} with Vancouver number ${vancouverNumber}`);
         citations.push({
           ...citation,
           id: citationId,
-          vancouverNumber: this.getVancouverNumber(citationId),
+          vancouverNumber,
         });
       }
     });
 
+    console.log('Returning Vancouver ordered citations:', citations.length);
     return citations;
   }
 

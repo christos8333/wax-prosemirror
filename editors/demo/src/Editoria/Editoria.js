@@ -51,7 +51,7 @@ const Editoria = () => {
           placeholder="Type Something..."
           fileUpload={file => renderImage(file)}
           // value={demo}
-          value={`<p class="paragraph">sd fsd<span id="a1orez" class="citation-callout" data-id="a1orez">(Wells, 2017)</span>f sfdsd f fsdf s<span id="rhn1zf" class="citation-callout" data-id="rhn1zf">(Morrish, 2015)</span>ds sdff sf</p><div class="citations-data" data-citation-format="simple">h1References<ul><li data-id="a1orez">Wells, H. (2017). The Machine. The Time Machine.</li><li data-id="rhn1zf">Morrish, J. (2015). Business models for machine-to-machine (M2M) communications. Machine-to-machine (M2M) Communications, 339-353.</li></ul></div>`}
+          value={`<p class="paragraph">sd fsd<span id="a1orez" class="citation-callout" data-id="a1orez">[1]</span>f sfdsd f fsdf s<span id="rhn1zf" class="citation-callout" data-id="rhn1zf">[2]</span>ds sdff <span id="a1orez" class="citation-callout" data-id="a1orez">[1]</span>sf</p><div class="citations-data" data-citation-format="vancouver">h1References<ol><li data-id="a1orez">Wells H. The Machine. The Time Machine. 2017.</li><li data-id="rhn1zf">Morrish J. Business models for machine-to-machine (M2M) communications. Machine-to-machine (M2M) Communications, 339-353.. 2015.</li></ol></div>`}
           // readonly
           layout={layout}
           onChange={debounce(source => {

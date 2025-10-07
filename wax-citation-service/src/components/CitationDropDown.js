@@ -148,9 +148,10 @@ const CitationDropDown = () => {
   const { activeView } = context;
   const { citationFormat, setCitationFormat } = useContext(PortalContext);
   const serviceFormat = citationDataService.getCurrentFormat();
-  
+
   // Use service format if it's different from context format
-  const effectiveFormat = serviceFormat !== 'simple' ? serviceFormat : citationFormat;
+  const effectiveFormat =
+    serviceFormat !== 'simple' ? serviceFormat : citationFormat;
   const itemRefs = useRef([]);
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -162,7 +163,6 @@ const CitationDropDown = () => {
   useEffect(() => {
     if (isDisabled) setIsOpen(false);
   }, [isDisabled]);
-
 
   const openCloseMenu = () => {
     if (!isDisabled) setIsOpen(!isOpen);
@@ -262,7 +262,9 @@ const CitationDropDown = () => {
                 role="menuitem"
                 style={{
                   backgroundColor:
-                    option.value === effectiveFormat ? '#e3f2fd' : 'transparent',
+                    option.value === effectiveFormat
+                      ? '#e3f2fd'
+                      : 'transparent',
                   fontWeight:
                     option.value === effectiveFormat ? 'bold' : 'normal',
                 }}

@@ -23,7 +23,7 @@ const CitationCalloutNode = styled.span`
     outline: 2px solid #68cef8;
     outline-offset: 1px;
   }
-  
+
   /* Firefox-specific fix for cursor visibility */
   @-moz-document url-prefix() {
     & {
@@ -71,9 +71,10 @@ function getProcessor(styleXML, items) {
 const CitationCallout = props => {
   const { citationFormat } = useContext(PortalContext);
   const serviceFormat = citationDataService.getCurrentFormat();
-  
+
   // Use service format if it's different from context format
-  const effectiveFormat = serviceFormat !== 'simple' ? serviceFormat : citationFormat;
+  const effectiveFormat =
+    serviceFormat !== 'simple' ? serviceFormat : citationFormat;
   const { node } = props;
   const citationId = node?.attrs?.id;
 

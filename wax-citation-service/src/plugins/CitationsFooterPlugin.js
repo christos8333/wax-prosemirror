@@ -89,7 +89,7 @@ export default (key, app) => {
       // Track citations for Vancouver numbering (unique IDs only)
       const citationIdsInOrder = [];
       const allCitationInstances = []; // Track all instances (including duplicates)
-      
+
       newState.doc.descendants((node, pos) => {
         if (node.type.name === 'citation_callout') {
           const citationId = node.attrs?.id;

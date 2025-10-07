@@ -107,7 +107,9 @@ class CitationDataService {
 
   setVisibleCitationInstances(visibleCitationInstances) {
     // Ensure all IDs are strings and filter out any non-strings
-    const stringIds = visibleCitationInstances.filter(id => typeof id === 'string');
+    const stringIds = visibleCitationInstances.filter(
+      id => typeof id === 'string',
+    );
 
     // Create a new array to avoid reference issues
     this.visibleCitationInstances = [...stringIds];
@@ -116,7 +118,7 @@ class CitationDataService {
   getVisibleCitations() {
     // Return only citations that are currently visible in the document (unique IDs only)
     const visibleCitationsArray = [];
-    
+
     this.visibleCitations.forEach(citationId => {
       if (this.citations[citationId]) {
         visibleCitationsArray.push({
@@ -132,7 +134,6 @@ class CitationDataService {
   getVisibleCitationInstances() {
     // Return all citation instances (including duplicates) for non-Vancouver and IEEE styles
     const instances = [];
-    
 
     this.visibleCitationInstances.forEach(citationId => {
       const citation = this.citations[citationId];
@@ -142,7 +143,7 @@ class CitationDataService {
           ...citation,
           id: citationId,
         });
-      } 
+      }
     });
 
     return instances;
@@ -180,7 +181,7 @@ class CitationDataService {
   // Set the current citation format (for export)
   setCurrentFormat(format) {
     this.currentFormat = format;
-    
+
     // Reset Vancouver numbering when switching formats
     if (format === 'vancouver' || format === 'ieee') {
       this.resetVancouverNumbering();
@@ -233,7 +234,7 @@ class CitationDataService {
     this.citationOrder.forEach(citationId => {
       const citation = this.citations[citationId];
       const isVisible = this.visibleCitations.has(citationId);
-      
+
       if (citation && isVisible) {
         const vancouverNumber = this.getVancouverNumber(citationId);
         citations.push({

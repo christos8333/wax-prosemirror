@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable no-lonely-if */
 import React, { useContext, useEffect, useState } from 'react';
 import { PortalContext } from 'wax-prosemirror-core';
 import citationDataService from '../services/CitationDataService';
@@ -32,13 +34,10 @@ const CitationCallout = props => {
   const citationId = node?.attrs?.id;
 
   // Use service format if it's different from context format
-  const effectiveFormat = serviceFormat !== 'simple' ? serviceFormat : citationFormat;
+  const effectiveFormat =
+    serviceFormat !== 'simple' ? serviceFormat : citationFormat;
 
   const [citationText, setCitationText] = useState(`[${citationId}]`);
-
-  console.log('CitationCallout: Component rendered for ID:', citationId);
-  console.log('CitationCallout: Node attrs:', node?.attrs);
-  console.log('CitationCallout: Effective format:', effectiveFormat);
 
   // Generate citation text based on format and data
   const generateCitationText = (format, data) => {
@@ -49,42 +48,48 @@ const CitationCallout = props => {
     switch (format) {
       case 'vancouver':
       case 'ieee':
-        const vancouverNumber = citationDataService.getVancouverNumber(citationId);
+        const vancouverNumber = citationDataService.getVancouverNumber(
+          citationId,
+        );
         return `[${vancouverNumber || '?'}]`;
-      
+
       case 'APA':
         if (data.author && data.author[0]) {
           const author = data.author[0];
-          const year = data.issued && data.issued['date-parts'] 
-            ? data.issued['date-parts'][0][0] 
-            : 'n.d.';
+          const year =
+            data.issued && data.issued['date-parts']
+              ? data.issued['date-parts'][0][0]
+              : 'n.d.';
           return `(${author.family}, ${year})`;
         }
         return `[${citationId}]`;
-      
+
       case 'MLA':
         if (data.author && data.author[0]) {
           const author = data.author[0];
           return `(${author.family})`;
         }
         return `[${citationId}]`;
-      
+
       case 'harvard':
         if (data.author && data.author[0]) {
           const author = data.author[0];
-          const year = data.issued && data.issued['date-parts'] 
-            ? data.issued['date-parts'][0][0] 
-            : 'n.d.';
+          const year =
+            data.issued && data.issued['date-parts']
+              ? data.issued['date-parts'][0][0]
+              : 'n.d.';
           return `(${author.family}, ${year})`;
         }
         return `[${citationId}]`;
-      
-      default: // simple and others
+
+      default:
+        // simple and others
         if (data.author && data.author[0]) {
           const author = data.author[0];
-          const year = data.issued && data.issued['date-parts'] 
-            ? data.issued['date-parts'][0][0] 
-            : 'n.d.';
+          const year =
+            data.issued && data.issued['date-parts']
+              ? data.issued['date-parts'][0][0]
+              : 'n.d.';
           return `(${author.family}, ${year})`;
         }
         return `[${citationId}]`;
@@ -97,15 +102,14 @@ const CitationCallout = props => {
 
     // First check if citation data exists in node attributes (YJS persistence)
     let citationData = node?.attrs?.citationData;
-    
+
     // If not in node attributes, check service
     if (!citationData) {
       citationData = citationDataService.getCitation(citationId);
     }
-    
+
     // If still no data, create placeholder (only for truly new citations)
     if (!citationData) {
-      console.log('CitationCallout: Creating citation data for', citationId);
       citationData = {
         id: citationId,
         title: `Citation ${citationId.substring(0, 8)}...`,
@@ -120,7 +124,6 @@ const CitationCallout = props => {
       };
       citationDataService.addCitation(citationId, citationData);
     } else {
-      console.log('CitationCallout: Found existing citation data:', citationData);
       // Make sure it's also in the service for consistency
       if (!citationDataService.getCitation(citationId)) {
         citationDataService.addCitation(citationId, citationData);
@@ -136,9 +139,9 @@ const CitationCallout = props => {
       view.dispatch(
         view.state.tr.setNodeMarkup(getPos(), undefined, {
           ...node.attrs,
-          citationData: citationData,
+          citationData,
           citationText: newCitationText,
-        })
+        }),
       );
     }
   }, [effectiveFormat, citationId, node?.attrs?.citationData, view, getPos]);
@@ -146,8 +149,8 @@ const CitationCallout = props => {
   return (
     <CitationCalloutNode
       className="citation-callout"
-      data-id={citationId}
       contentEditable={false}
+      data-id={citationId}
     >
       {citationText}
     </CitationCalloutNode>

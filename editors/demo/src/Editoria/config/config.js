@@ -223,13 +223,13 @@ export default {
     updateTags: saveTags,
   },
 
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:5010',
-    // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-    docIdentifier: 'prosemirror-r5dwdfddgffefdsseegdfd54eeeffedd2rq254werc',
-    YjsType: 'prosemirror',
-  },
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:5010',
+  //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
+  //   docIdentifier: 'prosemirror-r5dwdfddgffefdsseegdfd54eeeffedd2rq254werc',
+  //   YjsType: 'prosemirror',
+  // },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -243,7 +243,7 @@ export default {
 
   services: [
     new CitationService(),
-    new YjsService(),
+    // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),

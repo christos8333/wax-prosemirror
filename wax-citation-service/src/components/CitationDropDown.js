@@ -145,7 +145,9 @@ const CitationDropDown = () => {
   ];
 
   const context = useContext(WaxContext);
-  const { activeView } = context;
+  const {
+    pmViews: { main },
+  } = context;
   const { citationFormat, setCitationFormat } = useContext(PortalContext);
   const serviceFormat = citationDataService.getCurrentFormat();
 
@@ -248,7 +250,7 @@ const CitationDropDown = () => {
 
                   // Trigger a document change to update export format
                   // This forces ProseMirror to recognize the format change
-                  const { state, dispatch } = activeView;
+                  const { state, dispatch } = main;
                   const { tr } = state;
 
                   tr.insertText(' ', state.doc.content.size - 1);

@@ -7,9 +7,9 @@ import crossrefService from '../services/CrossrefService';
 
 const CitationManagerContainer = styled.div`
   background-color: #f8f9fa;
-  height: 100vh;
-  padding: 24px;
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+  padding: 24px;
     sans-serif;
   overflow-y: auto;
 `;
@@ -355,7 +355,7 @@ const CitationManager = () => {
   };
 
   const tabs = [
-    { id: 'search', label: 'Search' },
+    // { id: 'search', label: 'Search' },
     // { id: 'add', label: 'Add Citation' },
     // { id: 'structure', label: 'Structure Citation' },
   ];

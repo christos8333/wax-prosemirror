@@ -170,7 +170,7 @@ const CitationDropDown = () => {
     if (!isDisabled) setIsOpen(!isOpen);
     if (isOpen)
       setTimeout(() => {
-        activeView.focus();
+        main.focus();
       });
   };
 

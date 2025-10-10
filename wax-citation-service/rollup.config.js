@@ -55,7 +55,7 @@ export default {
       exclude: 'node_modules/**',
     }),
     commonjs(),
-    terser(),
+    // terser(),
   ],
   external: ['uuid', 'react', 'react-dom', 'lodash', 'prosemirror-model'],
 };

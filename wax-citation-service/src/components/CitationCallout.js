@@ -28,7 +28,6 @@ const CitationCalloutNode = styled.span`
 `;
 
 const CitationCallout = props => {
-  console.log('props', props);
   const { citationFormat } = useContext(PortalContext);
   const serviceFormat = citationDataService.getCurrentFormat();
   const { node, view, getPos } = props;
@@ -136,9 +135,7 @@ const CitationCallout = props => {
     setCitationText(newCitationText);
 
     // Update node attributes for YJS persistence
-    console.log('the view', view);
     if (view && getPos) {
-      console.log('format');
       view.dispatch(
         view.state.tr.setNodeMarkup(getPos(), undefined, {
           ...node.attrs,
@@ -147,7 +144,7 @@ const CitationCallout = props => {
         }),
       );
     }
-  }, [effectiveFormat]);
+  }, [effectiveFormat, citationId, node?.attrs?.citationData, view, getPos]);
 
   return (
     <CitationCalloutNode

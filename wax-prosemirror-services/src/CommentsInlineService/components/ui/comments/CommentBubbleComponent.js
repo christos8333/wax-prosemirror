@@ -1,7 +1,8 @@
 /* eslint react/prop-types: 0 */
 import React, { useLayoutEffect, useContext } from 'react';
-import { WaxContext, Commands, DocumentHelpers } from 'wax-prosemirror-core';
+import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
 import CommentBubble from './CommentBubble';
+import Commands from './Commands';
 
 const CommentBubbleComponent = ({ setPosition, position, group }) => {
   const { activeView, activeViewId } = useContext(WaxContext);

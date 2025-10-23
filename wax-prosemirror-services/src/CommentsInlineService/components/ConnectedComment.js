@@ -4,9 +4,14 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy, minBy } from 'lodash';
 import styled from 'styled-components';
-import { WaxContext, DocumentHelpers, Commands } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  DocumentHelpers,
+  ApplicationContext,
+} from 'wax-prosemirror-core';
 import { override } from '@pubsweet/ui-toolkit';
 import CommentBox from './ui/comments/CommentBox';
+import Commands from './ui/comments/Commands';
 
 const ConnectedCommentStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
@@ -30,10 +35,10 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
         props: { user },
       },
     },
-    app,
     activeView,
-    activeViewId,
   } = context;
+
+  const { app } = useContext(ApplicationContext);
 
   const [isActive, setIsActive] = useState(false);
   const [clickPost, setClickPost] = useState(false);

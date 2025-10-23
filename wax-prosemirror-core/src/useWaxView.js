@@ -65,7 +65,6 @@ const useWaxView = props => {
 
     view.setProps({
       dispatchTransaction: transaction => {
-        if (!view) return;
         const { TrackChange } = props;
         const tr =
           TrackChange && TrackChange.enabled

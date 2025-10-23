@@ -144,7 +144,7 @@ const CitationCallout = props => {
         }),
       );
     }
-  }, [effectiveFormat, citationId, node?.attrs?.citationData, getPos]);
+  }, [effectiveFormat, citationId, node?.attrs?.citationData, view, getPos]);
 
   return (
     <CitationCalloutNode

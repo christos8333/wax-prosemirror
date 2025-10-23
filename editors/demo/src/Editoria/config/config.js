@@ -11,7 +11,7 @@ import {
   TextBlockLevelService,
   NoteService,
   TrackChangeService,
-  CommentsService,
+  CommentsInlineService,
   CodeBlockService,
   DisplayTextToolGroupService,
   MathService,
@@ -154,7 +154,7 @@ export default {
     // },
   ],
 
-  // CommentsService: { readOnly: true },
+  // CommentsInlineService: { readOnly: true },
   // OrderedListService: { subList: false },
   // BulletListService: { subList: false },
   // JoinUpService: { subList: false },
@@ -223,13 +223,13 @@ export default {
     updateTags: saveTags,
   },
 
-  YjsService: {
-    // eslint-disable-next-line no-restricted-globals
-    connectionUrl: 'ws://localhost:5010',
-    // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
-    docIdentifier: 'prosemirror-r5dwdfddgffefdsseegdfd54eeeffedd2rq254werc',
-    YjsType: 'prosemirror',
-  },
+  // YjsService: {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   connectionUrl: 'ws://localhost:5010',
+  //   // connectionUrl: 'ws://0.tcp.ap.ngrok.io:17607',
+  //   docIdentifier: 'prosemirror-r5dwdfddgffefdsseegdfd54eeeffedd2rq254werc',
+  //   YjsType: 'prosemirror',
+  // },
 
   AskAiContentService: {
     AskAiContentTransformation: DummyPromise,
@@ -243,7 +243,7 @@ export default {
 
   services: [
     new CitationService(),
-    new YjsService(),
+    // new YjsService(),
     new BlockDropDownToolGroupService(),
     new AskAiContentService(),
     new CustomTagService(),
@@ -253,7 +253,7 @@ export default {
     new LinkService(),
     new InlineAnnotationsService(),
     new TrackChangeService(),
-    new CommentsService(),
+    new CommentsInlineService(),
     new ImageService(),
     new TablesService(),
     new BaseService(),

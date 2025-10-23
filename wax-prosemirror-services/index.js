@@ -9,6 +9,7 @@ export { default as TextBlockLevelService } from './src/TextBlockLevel/TextBlock
 export { default as DisplayBlockLevelService } from './src/DisplayBlockLevel/DisplayBlockLevelService';
 export { default as NoteService } from './src/NoteService/NoteService';
 export { default as CommentsService } from './src/CommentsService/CommentsService';
+export { default as CommentsInlineService } from './src/CommentsInlineService/CommentsInlineService';
 export { default as CodeBlockService } from './src/CodeBlockService/CodeBlockService';
 export { default as LinkService } from './src/LinkService/LinkService';
 export { default as TrackChangeService } from './src/TrackChangeService/TrackChangeService';

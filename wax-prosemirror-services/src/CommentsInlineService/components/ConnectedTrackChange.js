@@ -1,7 +1,11 @@
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { WaxContext, DocumentHelpers } from 'wax-prosemirror-core';
+import {
+  WaxContext,
+  ApplicationContext,
+  DocumentHelpers,
+} from 'wax-prosemirror-core';
 import { last, maxBy } from 'lodash';
 import { TextSelection } from 'prosemirror-state';
 import TrackChangesBox from './ui/trackChanges/TrackChangesBox';
@@ -11,6 +15,7 @@ import rejectTrackChange from './ui/trackChanges/RejectTrackChange';
 const ConnectedTrackChangeStyled = styled.div`
   margin-left: ${props => (props.active ? `${-20}px` : `${50}px`)};
   position: absolute;
+  transition: all 1.3s;
   width: 205px;
   @media (max-width: 600px) {
     margin-left: 15px;
@@ -18,11 +23,12 @@ const ConnectedTrackChangeStyled = styled.div`
 `;
 
 export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
+  const { app } = useContext(ApplicationContext);
   const context = useContext(WaxContext);
-  const { app, activeView, pmViews } = context;
+  const { activeView, pmViews } = context;
   const user = app.config.get('user');
   const [isActive, setIsActive] = useState(false);
-  const { state, dispatch } = activeView;
+  const { dispatch } = activeView;
   const viewId = trackChange.attrs
     ? trackChange.attrs.viewid
     : trackChange.node.attrs.viewid;
@@ -36,7 +42,11 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     .trackChange;
 
   const onClickBox = trackData => {
-    if (trackData.node) return focusOnBlcock(trackData);
+    if (
+      trackData.type.groups &&
+      trackData.type.groups.find(type => type.includes('block'))
+    )
+      return focusOnBlcock(trackData);
 
     if (viewId !== 'main') context.updateView({}, viewId);
 
@@ -58,11 +68,12 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
   };
 
   const focusOnBlcock = trackData => {
+    const {
+      data: { pmFrom },
+    } = trackData;
     pmViews[viewId].dispatch(
       pmViews[viewId].state.tr.setSelection(
-        new TextSelection(
-          pmViews[viewId].state.tr.doc.resolve(trackData.pos + 1),
-        ),
+        new TextSelection(pmViews[viewId].state.tr.doc.resolve(pmFrom + 1)),
       ),
     );
 
@@ -75,7 +86,6 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     recalculateTops();
     if (activeTrackChange && trackChangeId === activeTrackChange.attrs.id) {
       setIsActive(true);
-      recalculateTops();
     }
   }, [activeTrackChange]);
 

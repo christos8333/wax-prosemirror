@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint react/prop-types: 0 */
 import React, {
   useRef,
@@ -110,6 +111,8 @@ const SpecialCharactersComponent = () => {
   const { t, i18n } = useTranslation();
 
   const searchRef = useRef(null);
+  const storedTextareaRef = useRef(null);
+  const storedTextareaSelectionRef = useRef({ start: null, end: null });
   const { app } = useContext(ApplicationContext);
   const { activeView } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
@@ -142,19 +145,178 @@ const SpecialCharactersComponent = () => {
     delayedSearch();
     if (isFirstRun) {
       setTimeout(() => {
-        searchRef.current.focus();
+        // searchRef.current.focus();
         setFirstRun(false);
       });
     }
   }, [searchValue, delayedSearch]);
 
+  // Monitor ProseMirror selection - if from === null, user clicked on textarea
+  useEffect(() => {
+    if (!activeView) return;
+
+    let lastFrom = null;
+    let lastActiveElement = null;
+
+    const checkSelection = () => {
+      try {
+        const { state } = activeView;
+        const { from } = state.selection;
+        const activeEl = document.activeElement;
+
+        // Only log/check if something changed
+        if (from === lastFrom && activeEl === lastActiveElement) {
+          return;
+        }
+
+        lastFrom = from;
+        lastActiveElement = activeEl;
+
+        // Check if active element is a textarea (regardless of from value)
+        // This catches when user clicks on textarea
+        const isTextarea =
+          activeEl &&
+          activeEl !== searchRef.current &&
+          (activeEl.tagName === 'TEXTAREA' ||
+            (activeEl.tagName === 'INPUT' &&
+              (activeEl.type === 'text' ||
+                activeEl.type === 'textarea' ||
+                !activeEl.type)));
+
+        if (isTextarea) {
+          // Store the textarea and its selection
+          storedTextareaRef.current = activeEl;
+          storedTextareaSelectionRef.current = {
+            start:
+              activeEl.selectionStart !== null
+                ? activeEl.selectionStart
+                : activeEl.value.length,
+            end:
+              activeEl.selectionEnd !== null
+                ? activeEl.selectionEnd
+                : activeEl.value.length,
+          };
+        }
+        // Note: We don't clear stored textarea when from !== null because
+        // clicking the toolbar button will give focus to the editor, but we still
+        // want to use the textarea if the user was typing there
+      } catch (error) {
+        // Ignore errors if view is not ready
+      }
+    };
+
+    // Check on focus changes and mouse clicks
+    const handleFocus = () => {
+      setTimeout(checkSelection, 0);
+    };
+
+    document.addEventListener('focusin', handleFocus, true);
+    document.addEventListener('mousedown', handleFocus, true);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocus, true);
+      document.removeEventListener('mousedown', handleFocus, true);
+    };
+  }, [activeView]);
+
   const insertCharacter = character => {
     const { state, dispatch } = activeView;
     const { from, to } = state.selection;
-    dispatch(state.tr.insertText(character.unicode, from, to));
-    setTimeout(() => {
-      activeView.focus();
-    });
+
+    // If from === null and we don't have a stored textarea, check if there's a currently focused textarea
+    let targetTextarea = storedTextareaRef.current;
+    let targetSelection = storedTextareaSelectionRef.current;
+
+    if (
+      from === null &&
+      (!targetTextarea || !document.body.contains(targetTextarea))
+    ) {
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        activeEl !== searchRef.current &&
+        (activeEl.tagName === 'TEXTAREA' ||
+          (activeEl.tagName === 'INPUT' &&
+            (activeEl.type === 'text' ||
+              activeEl.type === 'textarea' ||
+              !activeEl.type)))
+      ) {
+        targetTextarea = activeEl;
+        targetSelection = {
+          start:
+            activeEl.selectionStart !== null
+              ? activeEl.selectionStart
+              : activeEl.value.length,
+          end:
+            activeEl.selectionEnd !== null
+              ? activeEl.selectionEnd
+              : activeEl.value.length,
+        };
+      } else {
+        // Fallback: query all textareas and find one with a valid selection
+        const allTextareas = document.querySelectorAll(
+          'textarea, input[type="text"]',
+        );
+        for (let i = 0; i < allTextareas.length; i++) {
+          const el = allTextareas[i];
+          if (el !== searchRef.current && document.body.contains(el)) {
+            // Check if it has a selection position (indicates it was recently used)
+            if (el.selectionStart !== null) {
+              targetTextarea = el;
+              targetSelection = {
+                start: el.selectionStart,
+                end: el.selectionEnd,
+              };
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    // Check if we have a textarea to use (prioritize this)
+    if (
+      targetTextarea &&
+      document.body.contains(targetTextarea) &&
+      targetSelection.start !== null
+    ) {
+      // Insert into textarea
+      const targetElement = targetTextarea;
+      const { start, end } = targetSelection;
+      const value = targetElement.value || '';
+      const newValue =
+        value.substring(0, start) + character.unicode + value.substring(end);
+      targetElement.value = newValue;
+
+      // Update cursor position
+      const newCursorPos = start + character.unicode.length;
+      targetElement.focus();
+      targetElement.setSelectionRange(newCursorPos, newCursorPos);
+
+      // Update stored selection and reference
+      storedTextareaRef.current = targetElement;
+      storedTextareaSelectionRef.current = {
+        start: newCursorPos,
+        end: newCursorPos,
+      };
+
+      // Trigger input event to notify React
+      const event = new Event('input', { bubbles: true });
+      targetElement.dispatchEvent(event);
+    } else {
+      // Insert into ProseMirror editor
+      // Note: if from was null, we need to get a valid selection
+      if (from === null) {
+        // Try to get a valid selection - use the end of the document
+        const docSize = state.doc.content.size;
+        dispatch(state.tr.insertText(character.unicode, docSize));
+      } else {
+        dispatch(state.tr.insertText(character.unicode, from, to));
+      }
+      setTimeout(() => {
+        activeView.focus();
+      });
+    }
   };
 
   const renderList = () => {

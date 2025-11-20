@@ -8,6 +8,7 @@ import {
   DisplayTextToolGroupService,
   MathService,
   FullScreenService,
+  SpecialCharactersService,
 } from 'wax-prosemirror-services';
 
 import { QuestionsService } from 'wax-questions-service';
@@ -15,6 +16,8 @@ import { TablesService, tableEditing, columnResizing } from 'wax-table-service';
 
 import { DefaultSchema } from 'wax-prosemirror-core';
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles';
+
+import CharactersList from '../../Editoria/config/CharactersList';
 
 export default {
   MenuService: [
@@ -37,6 +40,7 @@ export default {
         'Images',
         'Tables',
         'QuestionsDropDown',
+        'SpecialCharacters',
         'FullScreen',
       ],
     },
@@ -50,12 +54,14 @@ export default {
     },
   ],
 
+  SpecialCharactersService: CharactersList,
   SchemaService: DefaultSchema,
   RulesService: [emDash, ellipsis],
   ImageService: { showAlt: true, showLongDesc: true },
 
   PmPlugins: [invisibles([hardBreak()]), tableEditing(), columnResizing()],
   services: [
+    new SpecialCharactersService(),
     new QuestionsService(),
     new ListsService(),
     new LinkService(),

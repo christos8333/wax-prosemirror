@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint react/prop-types: 0 */
 import React, {
   useRef,
@@ -111,7 +112,7 @@ const SpecialCharactersComponent = () => {
 
   const searchRef = useRef(null);
   const { app } = useContext(ApplicationContext);
-  const { activeView } = useContext(WaxContext);
+  const { activeView, options, setOption } = useContext(WaxContext);
   const [searchValue, setSearchValue] = useState('');
   const [isFirstRun, setFirstRun] = useState(true);
 
@@ -142,16 +143,148 @@ const SpecialCharactersComponent = () => {
     delayedSearch();
     if (isFirstRun) {
       setTimeout(() => {
-        searchRef.current.focus();
+        // searchRef.current.focus();
         setFirstRun(false);
       });
     }
   }, [searchValue, delayedSearch]);
 
+  // Clear activeTextareaId when ProseMirror is focused
+  useEffect(() => {
+    if (!activeView || !setOption) return;
+
+    const checkProseMirrorFocus = () => {
+      try {
+        const { state } = activeView;
+        const { from } = state.selection;
+        const activeEl = document.activeElement;
+
+        // If ProseMirror has focus (from !== null) and activeElement is ProseMirror, clear textarea ID
+        if (
+          from !== null &&
+          activeEl &&
+          activeEl.classList &&
+          activeEl.classList.contains('ProseMirror') &&
+          activeEl !== searchRef.current
+        ) {
+          setOption({ activeTextareaId: null });
+        }
+      } catch (error) {
+        // Ignore errors if view is not ready
+      }
+    };
+
+    const handleFocus = () => {
+      setTimeout(checkProseMirrorFocus, 10);
+    };
+
+    const handleClick = () => {
+      setTimeout(checkProseMirrorFocus, 10);
+    };
+
+    document.addEventListener('focusin', handleFocus, true);
+    document.addEventListener('mousedown', handleClick, true);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocus, true);
+      document.removeEventListener('mousedown', handleClick, true);
+    };
+  }, [activeView, setOption]);
+
   const insertCharacter = character => {
     const { state, dispatch } = activeView;
     const { from, to } = state.selection;
-    dispatch(state.tr.insertText(character.unicode, from, to));
+    const activeEl = document.activeElement;
+
+    // Priority 1: If ProseMirror has focus (from !== null), insert into ProseMirror
+    // Also check if activeElement is ProseMirror to be sure
+    const isProseMirrorFocused =
+      from !== null &&
+      activeEl &&
+      activeEl.classList &&
+      activeEl.classList.contains('ProseMirror');
+
+    if (isProseMirrorFocused) {
+      // Insert into ProseMirror editor
+      dispatch(state.tr.insertText(character.unicode, from, to));
+      setTimeout(() => {
+        activeView.focus();
+      });
+      return;
+    }
+
+    // Priority 2: If ProseMirror doesn't have focus, check for textarea
+    const activeTextareaId = options?.activeTextareaId;
+
+    if (activeTextareaId && from === null) {
+      // Find textarea by ID
+      const targetTextarea = document.querySelector(
+        `[data-textarea-id="${activeTextareaId}"]`,
+      );
+
+      if (targetTextarea && document.body.contains(targetTextarea)) {
+        // Use current selection if available, otherwise use end of value
+        const start =
+          targetTextarea.selectionStart !== null
+            ? targetTextarea.selectionStart
+            : targetTextarea.value.length;
+        const end =
+          targetTextarea.selectionEnd !== null
+            ? targetTextarea.selectionEnd
+            : targetTextarea.value.length;
+
+        // Insert into textarea
+        const value = targetTextarea.value || '';
+        const newValue =
+          value.substring(0, start) + character.unicode + value.substring(end);
+
+        // Update cursor position
+        const newCursorPos = start + character.unicode.length;
+
+        // Update the value using native setter to bypass React's control temporarily
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+          window.HTMLTextAreaElement.prototype,
+          'value',
+        )?.set;
+        if (nativeInputValueSetter) {
+          nativeInputValueSetter.call(targetTextarea, newValue);
+        } else {
+          targetTextarea.value = newValue;
+        }
+
+        // Set cursor immediately
+        targetTextarea.setSelectionRange(newCursorPos, newCursorPos);
+
+        // Create and dispatch input event to trigger React's onChange
+        // Use InputEvent constructor for better compatibility
+        let inputEvent;
+        try {
+          inputEvent = new InputEvent('input', {
+            bubbles: true,
+            cancelable: true,
+            data: character.unicode,
+            inputType: 'insertText',
+          });
+        } catch (e) {
+          // Fallback to Event if InputEvent not supported
+          inputEvent = new Event('input', { bubbles: true, cancelable: true });
+        }
+        targetTextarea.dispatchEvent(inputEvent);
+
+        // Ensure focus stays on textarea
+        targetTextarea.focus();
+        return;
+      }
+    }
+
+    // Fallback: Insert into ProseMirror editor (if from is null, insert at end)
+    if (from === null) {
+      // Try to get a valid selection - use the end of the document
+      const docSize = state.doc.content.size;
+      dispatch(state.tr.insertText(character.unicode, docSize));
+    } else {
+      dispatch(state.tr.insertText(character.unicode, from, to));
+    }
     setTimeout(() => {
       activeView.focus();
     });

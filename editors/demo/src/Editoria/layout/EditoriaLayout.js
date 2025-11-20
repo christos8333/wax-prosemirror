@@ -62,6 +62,7 @@ const TopMenu = styled.div`
   border-bottom: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   border-top: ${th('borderWidth')} ${th('borderStyle')} ${th('colorBorder')};
   display: flex;
+  align-items: center;
   min-height: 40px;
   user-select: none;
 
@@ -86,6 +87,25 @@ const TopMenu = styled.div`
 
   > div[data-name='FindAndReplaceTool'] {
     border-right: none;
+  }
+
+  > div[data-name='TrackOptions'] {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    button {
+      top: 6px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    svg {
+      display: block;
+      margin: 0;
+    }
   }
 `;
 

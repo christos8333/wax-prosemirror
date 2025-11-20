@@ -128,6 +128,7 @@ export default {
         'Tables',
         'Citation',
         'TrackingAndEditing',
+        'TrackOptions',
         'FindAndReplaceTool',
         'FullScreen',
       ],

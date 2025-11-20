@@ -24,9 +24,13 @@ const ToolGroupComponent = ({ view, tools, name }) => {
   const rest = [];
 
   tools.forEach(tool => {
-    tool.isIntoMoreSection() && tool.isDisplayed()
-      ? rest.push(tool.renderTool(view))
-      : toolsShown.push(tool.renderTool(view));
+    if (tool.isIntoMoreSection() && tool.isDisplayed()) {
+      tool.showLabel();
+      rest.push(tool.renderTool(view));
+    } else {
+      tool.hideLabel();
+      toolsShown.push(tool.renderTool(view));
+    }
   });
 
   const MemorizedToolGroupComponent = useMemo(

@@ -35,7 +35,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     : trackChange.node.attrs.viewid;
 
   const styles = {
-    top: `${top + 70}px`,
+    top: `${top + 93}px`,
   };
 
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');

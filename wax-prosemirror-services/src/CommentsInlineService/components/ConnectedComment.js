@@ -57,7 +57,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   const commentMark = state.schema.marks.comment;
 
   const styles = {
-    top: `${top + 70}px`,
+    top: `${top + 93}px`,
   };
 
   const commentConfig = app.config.get('config.CommentsService');

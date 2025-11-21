@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint react/prop-types: 0 */
 import React, { useContext, useMemo, useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { TextSelection } from 'prosemirror-state';
 import { last, maxBy, minBy } from 'lodash';
 import styled from 'styled-components';
@@ -56,7 +57,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
   const commentMark = state.schema.marks.comment;
 
   const styles = {
-    top: `${top}px`,
+    top: `${top + 70}px`,
   };
 
   const commentConfig = app.config.get('config.CommentsService');
@@ -179,6 +180,7 @@ export default ({ comment, top, commentId, recalculateTops, users }) => {
       <ConnectedCommentStyled
         active={isActive}
         data-box={commentId}
+        id={`wax-comment-box-${uuidv4()}`}
         length={comment.attrs.conversation.length === 0}
         style={styles}
       >

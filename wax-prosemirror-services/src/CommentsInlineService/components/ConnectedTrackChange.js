@@ -6,6 +6,7 @@ import {
   ApplicationContext,
   DocumentHelpers,
 } from 'wax-prosemirror-core';
+import { v4 as uuidv4 } from 'uuid';
 import { last, maxBy } from 'lodash';
 import { TextSelection } from 'prosemirror-state';
 import TrackChangesBox from './ui/trackChanges/TrackChangesBox';
@@ -34,7 +35,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
     : trackChange.node.attrs.viewid;
 
   const styles = {
-    top: `${top}px`,
+    top: `${top + 70}px`,
   };
 
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
@@ -120,6 +121,7 @@ export default ({ trackChangeId, top, recalculateTops, trackChange }) => {
       <ConnectedTrackChangeStyled
         active={isActive}
         data-box={trackChangeId}
+        id={`wax-track-box-${uuidv4()}`}
         style={styles}
       >
         <TrackChangesBox

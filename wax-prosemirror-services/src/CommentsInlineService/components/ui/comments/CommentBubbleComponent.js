@@ -56,12 +56,13 @@ const CommentBubbleComponent = ({ setPosition, position, group }) => {
 
   return (
     isCommentAllowed() && (
-      <CommentBubble
-        id="wax-comment-bubble"
-        onClick={event => {
-          createComment(event);
-        }}
-      />
+      <span id="wax-comment-bubble">
+        <CommentBubble
+          onClick={event => {
+            createComment(event);
+          }}
+        />
+      </span>
     )
   );
 };

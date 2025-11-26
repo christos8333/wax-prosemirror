@@ -28,6 +28,7 @@ import {
   AskAiContentService,
   BlockQuoteService,
   YjsService,
+  ContentUpdateService,
 } from 'wax-prosemirror-services';
 
 import { QuestionsService } from 'wax-questions-service';
@@ -242,6 +243,15 @@ export default {
     CustomPrompts: ['custom promt here!!'],
   },
 
+  ContentUpdateService: {
+    onContentUpdate: (htmlContent, newState) => {
+      console.log('Content updated:', htmlContent, newState);
+    },
+    onError: error => {
+      console.error('Error updating content:', error);
+    },
+  },
+
   services: [
     new CitationService(),
     // new YjsService(),
@@ -269,5 +279,14 @@ export default {
     new HighlightService(),
     new BottomInfoService(),
     new TransformService(),
+    new ContentUpdateService(),
   ],
 };
+
+// Example: How to use ContentUpdateService from outside
+// Once the app is initialized, you can call:
+// app.updateContent('<p>Your HTML content here</p>');
+//
+// Or from a component with access to the app:
+// const { app } = useContext(ApplicationContext);
+// app.updateContent('<h1>New Content</h1><p>This will replace the editor content</p>');

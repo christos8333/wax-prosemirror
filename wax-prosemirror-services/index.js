@@ -31,7 +31,7 @@ export { default as OENContainersService } from './src/OENContainersService/OENC
 export { default as YjsService } from './src/YjsService/YjsService';
 export { default as ExternalAPIContentService } from './src/ExternalAPIContentService/ExternalAPIContentService';
 export { default as AskAiContentService } from './src/AiService/AskAiContentService';
-
+export { default as ContentUpdateService } from './src/ContentUpdateService/ContentUpdateService';
 /*
 ToolGroups
 */

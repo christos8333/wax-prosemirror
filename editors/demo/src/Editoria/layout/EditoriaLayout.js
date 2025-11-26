@@ -7,6 +7,7 @@ import {
   ComponentPlugin,
   DocumentHelpers,
   WaxView,
+  ApplicationContext,
 } from 'wax-prosemirror-core';
 import { grid, th } from '@pubsweet/ui-toolkit';
 import { cokoTheme } from '../theme';
@@ -290,6 +291,22 @@ const EditoriaLayout = props => {
     pmViews: { main },
     options,
   } = useContext(WaxContext);
+
+  /* UPDATE CONTENT EXTERNALLY */
+
+  // const { app } = useContext(ApplicationContext);
+
+  // if (app && typeof app.updateContent === 'function') {
+  //   app.updateContent(
+  //     '<h1>New Content</h1><p>This replaces the editor content</p>',
+  //     main,
+  //   );
+  // }
+
+  // const plugin = app?.PmPlugins?.get('contentUpdatePlugin');
+  // if (plugin && main) {
+  //   plugin.props.updateContent('<h1>New Content</h1>', main);
+  // }
 
   let fullScreenStyles = {};
 

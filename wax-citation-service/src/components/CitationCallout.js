@@ -1,9 +1,9 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-lonely-if */
 import React, { useContext, useEffect, useState } from 'react';
-import { PortalContext } from 'wax-prosemirror-core';
-import citationDataService from '../services/CitationDataService';
+import { PortalContext, ApplicationContext } from 'wax-prosemirror-core';
 import styled from 'styled-components';
+import citationDataService from '../services/CitationDataService';
 
 const CitationCalloutNode = styled.span`
   color: red;
@@ -29,6 +29,7 @@ const CitationCalloutNode = styled.span`
 
 const CitationCallout = props => {
   const { citationFormat } = useContext(PortalContext);
+  const { app } = useContext(ApplicationContext);
   const serviceFormat = citationDataService.getCurrentFormat();
   const { node, view, getPos } = props;
   const citationId = node?.attrs?.id;
@@ -134,8 +135,11 @@ const CitationCallout = props => {
     const newCitationText = generateCitationText(effectiveFormat, citationData);
     setCitationText(newCitationText);
 
-    // Update node attributes for YJS persistence
-    if (view && getPos) {
+    const hasYjs = app.PmPlugins.getAll().some(plugin =>
+      plugin.key.includes('y-sync'),
+    );
+
+    if (view && getPos && hasYjs) {
       view.dispatch(
         view.state.tr.setNodeMarkup(getPos(), undefined, {
           ...node.attrs,

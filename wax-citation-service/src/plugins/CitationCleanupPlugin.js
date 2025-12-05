@@ -1,8 +1,11 @@
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import citationDataService from '../services/CitationDataService';
+
+const citationCleanupPlugin = new PluginKey('citationCleanupPlugin');
 
 const CitationCleanupPlugin = () => {
   return new Plugin({
+    key: citationCleanupPlugin,
     appendTransaction(transactions, oldState, newState) {
       const visibleCitations = new Set();
       const visibleCitationInstances = [];

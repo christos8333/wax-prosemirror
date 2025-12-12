@@ -18,6 +18,7 @@ export default ({ area, users }) => {
   } = useContext(WaxContext);
   const { app } = useContext(ApplicationContext);
 
+  const editorId = app.config.get('editorId');
   const commentPlugin = app.PmPlugins.get('commentPlugin');
   const trakChangePlugin = app.PmPlugins.get('trackChangePlugin');
 
@@ -60,7 +61,7 @@ export default ({ area, users }) => {
 
       // annotation top
       if (area === 'main') {
-        markNodeEl = document.querySelector(`[data-id="${id}"]`);
+        markNodeEl = document.querySelector(`#${editorId} [data-id="${id}"]`);
         if (markNodeEl)
           annotationTop =
             markNodeEl.getBoundingClientRect().top -

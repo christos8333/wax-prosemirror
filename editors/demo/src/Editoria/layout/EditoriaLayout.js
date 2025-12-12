@@ -349,7 +349,7 @@ const EditoriaLayout = props => {
             <LeftSideBar />
           </SideMenu>
 
-          <EditorArea>
+          <EditorArea id={props.editorId}>
             <ToggleButton
               onClick={() => setShowCitationManager(!showCitationManager)}
             >

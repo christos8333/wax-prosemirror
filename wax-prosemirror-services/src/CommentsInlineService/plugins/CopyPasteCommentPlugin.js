@@ -11,7 +11,7 @@ export default (props, context) => {
     key: copyPasteCommentPugin,
     props: {
       transformPasted: slice => {
-        const { activeView } = context.app.context;
+        const activeView = context.pmViews.main;
         const { content } = slice;
         const commentNodes = DocumentHelpers.findChildrenByMark(
           content,

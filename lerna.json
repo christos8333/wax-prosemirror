@@ -1,6 +1,20 @@
 {
   "lerna": "2.6.0",
   "npmClient": "yarn",
-  "version": "0.9.118",
-  "packages": ["wax-citation-service", "wax-prosemirror-core", "wax-prosemirror-services", "wax-questions-service", "wax-table-service"]
+  "version": "0.9.128",
+  "packages": [
+    "wax-citation-service",
+    "wax-prosemirror-core",
+    "wax-prosemirror-services",
+    "wax-questions-service",
+    "wax-table-service"
+  ],
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "yes": true,
+      "registry": "https://registry.npmjs.org/",
+      "otp": "CI" 
+    }
+  }
 }

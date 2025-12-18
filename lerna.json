@@ -1,6 +1,11 @@
 {
-  "lerna": "2.6.0",
   "npmClient": "npm",
-  "version": "0.9.118",
-  "useWorkspaces": true
+  "version": "independent",
+  "packages": [
+    "wax-citation-service",
+    "wax-prosemirror-core",
+    "wax-prosemirror-services",
+    "wax-questions-service",
+    "wax-table-service"
+  ]
 }

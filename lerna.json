@@ -2,5 +2,5 @@
   "lerna": "2.6.0",
   "npmClient": "npm",
   "version": "0.9.118",
-   "useWorkspaces": true
+  "useWorkspaces": true
 }

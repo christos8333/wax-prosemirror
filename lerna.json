@@ -1,6 +1,6 @@
 {
   "npmClient": "npm",
-  "version": "independent",
+  "version": "0.9.118",
   "packages": [
     "wax-citation-service",
     "wax-prosemirror-core",

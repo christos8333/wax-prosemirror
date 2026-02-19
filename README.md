@@ -1,3 +1,5 @@
+This repo has been moved to https://github.com/Coko-Foundation/wax-prosemirror
+
 <div width="100%" align="center">
   <h1>Wax Editor</h1>
 </div>

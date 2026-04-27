@@ -35,7 +35,7 @@ const configEnter = getContent => ({
   ShortCutsService: {},
   LinkService: {},
   SchemaService: DefaultSchema,
-  PmPlugins: [invisibles([hardBreak()])],
+  // PmPlugins: [invisibles([hardBreak()])],
   EnterService: {
     getContentOnEnter: source => {
       getContent(source);

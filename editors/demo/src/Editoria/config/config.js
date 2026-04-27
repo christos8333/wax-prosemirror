@@ -183,9 +183,8 @@ export default {
     },
   },
   PmPlugins: [
-    // tableEditing(),
-    // columnResizing(),
-    invisibles([hardBreak()]),
+    tableEditing(),
+    columnResizing(),
     disallowPasteImagesPlugin(() =>
       onWarning(
         'Images are not allowed. Please upload them through filemanager',
@@ -282,11 +281,3 @@ export default {
     new ContentUpdateService(),
   ],
 };
-
-// Example: How to use ContentUpdateService from outside
-// Once the app is initialized, you can call:
-// app.updateContent('<p>Your HTML content here</p>');
-//
-// Or from a component with access to the app:
-// const { app } = useContext(ApplicationContext);
-// app.updateContent('<h1>New Content</h1><p>This will replace the editor content</p>');

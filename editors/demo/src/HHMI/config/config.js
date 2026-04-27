@@ -59,7 +59,8 @@ export default {
   RulesService: [emDash, ellipsis],
   ImageService: { showAlt: true, showLongDesc: true },
 
-  PmPlugins: [invisibles([hardBreak()]), tableEditing(), columnResizing()],
+  // PmPlugins: [invisibles([hardBreak()]), tableEditing(), columnResizing()],
+  PmPlugins: [tableEditing(), columnResizing()],
   services: [
     new SpecialCharactersService(),
     new QuestionsService(),

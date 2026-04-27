@@ -27,7 +27,7 @@
     "prosemirror-schema-list": "1.5.1",
     "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.7.1",
-    "prosemirror-view": "1.30.2",
+    "prosemirror-view": "1.41.8",
     "rc-switch": "^3.2.2",
     "react-i18next": "^13.3.1",
     "use-dynamic-refs": "^1.0.0",

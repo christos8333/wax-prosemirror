@@ -32,7 +32,7 @@
     "prosemirror-schema-list": "1.5.1",
     "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.7.1",
-    "prosemirror-view": "1.30.2",
+    "prosemirror-view": "1.41.8",
     "react-i18next": "^13.3.1",
     "reflect-metadata": "^0.1.13",
     "safe-stable-stringify": "^2.4.3",

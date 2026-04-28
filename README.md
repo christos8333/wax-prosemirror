@@ -10,14 +10,14 @@ This repo has been moved to https://github.com/Coko-Foundation/wax-prosemirror
 
 Wax Editor is built on top of the Prosemirror library. Check Prosemirror [website](https://prosemirror.net/) and [GitHub repo](https://github.com/ProseMirror) for more information.
 
-## [Various Demos.](https://demo.waxjs.net/)
+## [Various Demos.](https://christos8333.github.io/editor-demo/)
 
 
 ## Get up and running
 
 Run a local version of the demos
 
-1.  `yarn with node >= 14`
+1.  `yarn with node >= 16`
 
 2.  `yarn build`
 
@@ -25,4 +25,3 @@ Run a local version of the demos
 
 ## Documentation
 
-Documentation can be found [here](https://waxjs.net/docs/wax/).

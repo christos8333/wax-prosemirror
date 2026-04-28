@@ -134,14 +134,14 @@ export default {
         'FullScreen',
       ],
     },
-    {
-      templateArea: 'leftSideBar',
-      toolGroups: ['DisplayText'],
-    },
-    {
-      templateArea: 'commentTrackToolBar',
-      toolGroups: ['TrackCommentOptions'],
-    },
+    // {
+    //   templateArea: 'leftSideBar',
+    //   toolGroups: ['DisplayText'],
+    // },
+    // {
+    //   templateArea: 'commentTrackToolBar',
+    //   toolGroups: ['TrackCommentOptions'],
+    // },
     {
       templateArea: 'BottomRightInfo',
       toolGroups: ['InfoToolGroup'],

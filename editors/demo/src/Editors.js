@@ -106,19 +106,19 @@ const Editors = () => {
             isActive={project === 'hhmi'}
             onClick={() => setProject('hhmi')}
           >
-            Widget Example
+            Widgets
           </ProjectButton>
           <ProjectButton
             isActive={project === 'editoria'}
             onClick={() => setProject('editoria')}
           >
-            Ketida
+            Full Editor
           </ProjectButton>
           <ProjectButton
             isActive={project === 'oen'}
             onClick={() => setProject('oen')}
           >
-            OEN
+            Block Editor
           </ProjectButton>
           <ProjectButton
             isActive={project === 'ncbi'}

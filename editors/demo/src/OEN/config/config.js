@@ -170,7 +170,7 @@ export default {
       reject: true,
     },
   },
-  PmPlugins: [invisibles([hardBreak()])],
+  // PmPlugins: [invisibles([hardBreak()])],
   CustomTagService: {
     tags: [
       { label: 'custom-tag-label-1', tagType: 'inline' },
